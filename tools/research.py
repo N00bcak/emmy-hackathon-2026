@@ -17,7 +17,7 @@ except ImportError:
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--root", type=Path, help="NFS record root; EMMY_RESEARCH_ROOT otherwise")
+    parser.add_argument("--root", type=Path, help="Durable record root; required here or via EMMY_RESEARCH_ROOT")
     parser.add_argument("--work-root", type=Path, help="Mutable workspace root")
     commands = parser.add_subparsers(dest="command", required=True)
     init = commands.add_parser("init", help="Create evidence store from baseline source tree")
@@ -79,8 +79,8 @@ def main(argv=None):
     gate=commands.add_parser('published-gate',help='Verify an existing exact-source/suite all15 correctness gate')
     gate.add_argument('source_id'); gate.add_argument('suite_id')
     args = parser.parse_args(argv)
-    store = Store(args.root, args.work_root)
     try:
+        store = Store(args.root, args.work_root)
         if args.command == "init":
             result = store.init(args.baseline)
         elif args.command == "status":

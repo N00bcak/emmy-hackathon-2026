@@ -40,7 +40,8 @@ using their filename and metadata, preserving the host's prescribed stage order.
 
 The full source, exact inputs/references, IR/meta, both-target PTX/cubin/SASS,
 commands, tool versions, admission telemetry, and per-launch checks are retained
-on NFS. Paths in the JSON summary are relative to the private artifact root.
+in the original private artifact store. Paths in the JSON summary are relative
+to that artifact root; they do not prescribe a storage backend for other users.
 Earlier failed compiler versions and diagnostics remain there too.
 
 Published correctness is the minimum gate for future evaluation. It does not

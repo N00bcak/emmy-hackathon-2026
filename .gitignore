@@ -9,3 +9,4 @@ experiments/**/artifacts/
 candidates/
 *.cubin
 /out.ptx
+/.emmy/

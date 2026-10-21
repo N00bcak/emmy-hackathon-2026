@@ -15,6 +15,22 @@ class StopAfterGate(Exception):
 
 
 class Qualification(unittest.TestCase):
+    def test_preparation_requires_explicit_compiler_and_uses_selected_root_for_cache(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root=Path(temporary)/'qualification'
+            source=Path(temporary)/'compiler'
+            args=['verify','--root',str(root),'--prepare']
+            with mock.patch('sys.argv',args), mock.patch('sys.stderr'):
+                with self.assertRaises(SystemExit) as stopped: verify.main()
+            self.assertEqual(stopped.exception.code,2)
+            self.assertFalse(root.exists())
+            with mock.patch('sys.argv',args+['--source',str(source)]), \
+                 mock.patch.object(verify,'prepare_verification',return_value={}) as prepare, \
+                 mock.patch('builtins.print'):
+                self.assertEqual(verify.main(),0)
+            self.assertEqual(prepare.call_args.args[0:2],(root,source))
+            self.assertEqual(prepare.call_args.args[3],root/'assembly-cache')
+
     def test_full_suite_is_dispatched_in_legal_batches_before_any_timing(self):
         with tempfile.TemporaryDirectory() as temporary:
             root=Path(temporary)

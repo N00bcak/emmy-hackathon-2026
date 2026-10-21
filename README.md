@@ -17,8 +17,8 @@ uv pip install --python .venv/bin/python -r requirements.txt
 ```
 
 Python 3.12+ is required. The challenge is pinned as a public submodule. The owner
-performs future networked Git operations. The Mac's requirements.lock records its
-installed environment; the private Linux runtime has its own dependency lock.
+performs future networked Git operations. requirements.lock records the original
+development environment; evaluation environments should retain their own lock.
 Torch is unnecessary.
 
 ## Working with the agent
@@ -26,27 +26,41 @@ Torch is unnecessary.
 Codex and Claude Code share the three skills in `.agents/skills/`:
 `kernel-strategy`, `kernel-experiment`, and `kernel-reflection`. Claude Code reads
 AGENTS.md through CLAUDE.md and reaches the canonical skills through the tracked
-`.claude/skills` directory symlink. The private runtime skill is ignored.
+`.claude/skills` directory symlink. Machine-specific runtime configuration is
+private and ignored.
 
-**Discovery starts only when you request it.** For example, tell either agent:
+**Discovery is opt-in.** Paste this into either Codex or Claude Code:
 
-> Start a local discovery run using kernel-strategy, kernel-experiment and
-> kernel-reflection. Resume from NFS, verify the all-15 correctness gates, use
-> up to three research subagents, and stop after 30 minutes or ten variants.
-> Keep hosted calibration off for this run.
+```text
+Use kernel-strategy, kernel-experiment, and kernel-reflection to reduce the
+current solution's kernel latency while preserving correctness. Resume from
+<research-root>/START.md and run discovery with up to three research
+agents on distinct ideas. Stop after 30 minutes or ten evaluated variants,
+whichever comes first. Keep hosted calibration off. Save findings and a
+resumable handoff in the research store.
+```
 
-The coordinator inspects state, assigns distinct questions, and invokes bounded
-Python workers. Opening the repo, loading a skill, or running tests starts no
-campaign or background agent service. To do other work, simply ask for it:
+Replace `<research-root>` with your configured durable record directory. Adjust
+the metric, parallelism, and stopping condition as needed. Use the same
+prompt to resume; the agent checks existing jobs and checkpoints first.
 
-> Repair this compiler bug. Do not start discovery, sweeps, or hosted calibration.
-> Run the relevant tests and the all-15 correctness suite before benchmarking.
+To stop:
 
-You can also request one named skill stage without authorizing a full campaign.
-[Research operation and recovery](docs/research-loop.md) gives the actual CLI,
-queue, confirmation, persistence, and activation instructions. Pausing/ending an
-agent session leaves durable records; it does not leave agents researching in the
-background. Inspect recorded live GPU jobs before resuming interrupted work.
+```text
+Stop discovery, safely checkpoint our active work, and leave a resumable research
+handoff. Close the run and leave discovery off.
+```
+
+For ordinary bug repair:
+
+```text
+Fix [bug/reproducer]. Do not start discovery, sweeps, or hosted calibration.
+Run relevant regressions and all 15 published problems before benchmarking.
+```
+
+Opening the repository or loading skills starts no campaign or background
+service. The skills and AGENTS.md supply the execution and correctness rules;
+[the operation guide](docs/research-loop.md) covers manual commands and recovery.
 
 ## Correctness before performance
 
@@ -57,18 +71,20 @@ and evaluator identities. A source change requires a new gate. Partial sweeps
 are useful for correctness debugging and cannot qualify performance evidence.
 Fresh independent confirmation is additionally required for promotion.
 
-Compiler prototypes are developed as plain snapshots on Linux. Only evaluated,
-shortlisted compilers return here. No Git runs on the GPU host. Local commits
+Compiler prototypes are developed as plain snapshots in the evaluation workspace.
+Only evaluated, shortlisted compilers return here. No Git runs on a remote GPU
+host. Local commits
 require an explicit request; all Git remote actions and publication remain yours.
-Connection details and runtime configuration stay private and ignored.
+Connection details and runtime configuration stay private and ignored. The shared
+skills do not prescribe Docker, NFS, SSH, a GPU model, or a machine path.
 
 [Evaluator contract](docs/evaluator-contract.md) explains the loopback runner,
 unchanged upstream client, earlier benign hosted checks, and known limits. Missing
 local service never triggers hosted fallback. Hosted calibration has a separate
 serial request budget and is not an inner-loop dependency.
 
-All Linux workloads run inside the configured container. Invoke GPU commands
-through its private host admission wrapper. These are container commands:
+Run these commands in your configured evaluation environment, with an exclusive
+GPU admission check for GPU work. Set `EMMY_JOB_DIR` to your job artifact directory:
 
 ```sh
 python -m unittest discover -s tests -v

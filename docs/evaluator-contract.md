@@ -47,9 +47,9 @@ in experiments/001-baseline-evaluator/reflection.md.
 
 ## Local usage
 
-Run all GPU commands inside the configured container through its admission
-wrapper. The public tool has no host-specific access information and performs
-no GPU admission itself. Start-and-cleanup test helpers stay within one admitted
+Run GPU commands in a CUDA-capable evaluation environment through its GPU
+admission mechanism. The public tool has no host-specific access information
+and performs no GPU admission itself. Start-and-cleanup test helpers stay within one admitted
 job, keep the service on loopback, and stop it before returning:
 
 ```sh
@@ -58,11 +58,12 @@ python tests/test_compiler.py --generate-fixtures "$EMMY_JOB_DIR/synthetic"
 python tools/check_contract.py --compiler compile.py --out "$EMMY_JOB_DIR/contract-check" --synthetic-dir "$EMMY_JOB_DIR/synthetic"
 ```
 
-The private admission wrapper sets EMMY_JOB_DIR to that job's NFS measurement directory. The first
+Set `EMMY_JOB_DIR` to a per-job artifact directory, manually or through your
+runtime launcher. The first
 helper exercises all 15 published problems and a reordered scale/shift ABI.
 It performs correctness checks by default. Add `--timing` only when indicative
 latencies are wanted; timing is refused unless the same source passed all 15.
-Using `--problem` for a partial diagnostic sweep does not satisfy this gate. CPU tests require the container's ptxas:
+Using `--problem` for a partial diagnostic sweep does not satisfy this gate. Assembly tests require `ptxas` on PATH:
 
 ```sh
 python -m unittest discover -s tests -v

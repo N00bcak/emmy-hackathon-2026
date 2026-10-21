@@ -98,7 +98,7 @@ def _kill_group(pid):
 
 def compile_ir(source, case_dir, ir_name, out, *, timeout=20):
     if sys.platform!='linux' or os.geteuid()!=0:
-        raise RuntimeError('compile boundary requires container root on Linux; no insecure fallback')
+        raise RuntimeError('compile boundary requires Linux effective UID 0 with libseccomp; no insecure fallback')
     if ctypes.CDLL(None,use_errno=True).prctl(36,1,0,0,0):
         raise OSError('cannot install compiler descendant subreaper')
     source,case_dir,out=Path(source),Path(case_dir),Path(out)

@@ -25,13 +25,15 @@ Write a concise mechanism finding: applicable IR conditions, legality assumption
 PTX/SASS effect, supporting experiments, contradictions, prerequisites and next
 uncertainty. Update the experiment handoff and coordinator strategy. Subagent
 returns contain outcome, key finding, evidence links, blocker and next action;
-raw logs stay on NFS. Do not emit hidden reasoning transcripts.
+raw logs stay in the configured durable research store. Storage and execution
+details come from private runtime configuration, not this skill.
+Do not emit hidden reasoning transcripts.
 
 Only the coordinator records shortlist/promotion with evaluator-issued evidence.
 Require the source/evaluator-bound all-15 published correctness gate for baseline
 and candidate before accepting any performance evidence; no partial-family or
 performance-debt exception can waive correctness.
-Preserve the previous Linux baseline and retest stale-parent candidates against
+Preserve the previous evaluated baseline and retest stale-parent candidates against
 the current one before advancement. Coverage records need supplied anchors,
 generated cases and existing regressions; atomic coverage also needs sanitizer.
 Keep both coverage responsibilities until ALL five gaps close, then release them

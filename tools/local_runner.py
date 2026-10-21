@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Loopback-only local implementation of the documented Emmy runner API.
 
-Run inside an admitted CUDA container job, never as a public service. This is a
+Run inside an admitted CUDA job, never as a public service. This is a
 trusted research tool, not a sandbox for hostile PTX. No expected-output files are
 read. Timing uses CUDA events around each launch (excluding reset/copies/context
 startup); backend timing parity with the hosted service is NOT claimed.
@@ -356,7 +356,7 @@ def handler_for(runner):
                 return self.reply(404, {"ok": False, "stage": "request", "stderr": "unknown path"})
             self.reply(200, {"ok": True, "can_compile": True, "can_run": True,
                              "ptxas": runner.ptxas, "default_arch": runner.arch,
-                             "gpu": "admitted container device 0; verified on first run",
+                             "gpu": "admitted CUDA device 0; verified on first run",
                              "implementation": "local research runner; not exact hosted-backend parity"})
         def do_POST(self):
             if self.path not in ("/compile", "/run"):

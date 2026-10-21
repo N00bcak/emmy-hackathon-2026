@@ -20,6 +20,12 @@ contracts. Do not assume inputs followed by outputs is the ABI.
 
 ## Local research loop
 
+Keep shared research policy separate from machine configuration. Research roots,
+storage backends, SSH details, GPU selection, mounts, container settings and
+launch commands belong in ignored private runtime configuration. Resolve the
+user's configured environment; never assume this owner's deployment. The supplied
+restricted evaluator requires Linux/CUDA, but neither Docker nor NFS is required.
+
 Discovery is opt-in. Start or resume a research campaign only when the user
 explicitly requests it. Routine implementation, bug repair, code review, and
 correctness debugging do not start agents, sweeps, calibration, or a discovery
@@ -30,7 +36,7 @@ files through `.claude/skills` and `CLAUDE.md`. Keep one canonical copy.
 
 The active session coordinates up to three native subagents. Check actual
 capacity, give distinct questions and isolated workspaces, and return compact
-findings with NFS evidence links. Use two coverage responsibilities and one speed
+findings with durable evidence links. Use two coverage responsibilities and one speed
 responsibility until ALL five backlog items close: m01_matmul_512,
 m02_matmul_rect, f02_row_softmax, a01_attention, a02_attention_128. Completing one
 assignment means taking the next unresolved item. Blocked workers may explore
@@ -62,7 +68,7 @@ latency or hide regressions in an aggregate.
 
 Persist source, exact cases/inputs/references, IR/PTX/cubin/SASS, commands,
 environment, admission, measurements, failures and resumable handoffs under the
-configured NFS research root. Conversation memory is supplementary. Verify
+configured durable research root. Conversation memory is supplementary. Verify
 identities and inspect recorded live jobs before restarting; never redraw an
 inconvenient confirmation batch or kill by heartbeat age alone.
 
@@ -103,7 +109,7 @@ commit or discard candidates without the owner's instruction. An explicit
 request to commit authorizes a local reviewed commit only; publication remains
 owner-controlled. Local read-only Git checks and requested setup are permitted.
 
-Develop compiler prototypes on the GPU host. Copy only locally GPU-evaluated,
+Develop compiler prototypes in the configured evaluation workspace. Copy only locally GPU-evaluated,
 shortlisted compiler candidates back into the owner's repository, with their
 benchmark/correctness evidence and limitations. Keep rejected prototypes and
-measurement artifacts on the GPU host/NFS. Transfer files without Git.
+measurement artifacts in the configured research store. Transfer files without Git.

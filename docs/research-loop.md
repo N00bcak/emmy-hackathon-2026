@@ -60,27 +60,47 @@ host attestation. Once the same-source/suite gates exist for both arms, a later
 bounded comparison may measure performance. Raw low-level diagnostic timings
 are explicitly unqualified, not valid benchmarks.
 
-Use the private runtime skill to enter the configured container and obtain GPU
-admission. All commands below are container commands. Do not run Git on the
-Linux machine, change prescribed launch metadata, or copy unevaluated compiler
-prototypes back to the owner's machine.
+Use your configured execution environment and GPU admission mechanism. The supplied
+execution adapter requires Linux, CUDA, and a restricted compiler identity; Docker
+is one deployment option, not a requirement. Do not run Git on a remote GPU host,
+change prescribed launch metadata, or copy unevaluated compiler prototypes back
+to the owner's repository.
 
 ## Start and resume
 
-Code and mutable compiler workspaces belong under `/root/bcy/emmy`. Durable
-records belong under `/root/nfs/emmy/research`. The public tools need no SSH,
-Docker socket, or GPU UUID configuration.
+Choose a durable record directory and a separate mutable workspace directory.
+Local disk or shared storage can be used; NFS is not required. Set these paths
+in your shell or private runtime configuration, for example:
 
 ```sh
-python -m tools.research init --baseline /root/bcy/emmy/candidates/correctness15
+export EMMY_RESEARCH_ROOT="$PWD/.emmy/research"
+export EMMY_RESEARCH_WORK_ROOT="$PWD/.emmy/workspaces"
+```
+
+The examples below assume a minimal compiler tree at `./compiler-source`.
+
+The shared skills and tools do not choose a host, storage service, container,
+mount layout or GPU model. Keep those choices in ignored private runtime
+configuration and pass the resolved paths to the tools. Existing installations
+must explicitly configure their current roots before upgrading; do not initialize
+a new store because an old machine-specific default was removed.
+
+The supplied compiler sandbox needs Linux effective UID 0 and libseccomp so it
+can drop the compiler to a separate restricted UID. A rootless container can
+provide that environment, but Docker is not required. On a Mac, strategy and
+record tools can run locally; CUDA execution needs a compatible Linux GPU
+environment. Do not bypass isolation or treat assembly as execution evidence.
+
+```sh
+python -m tools.research init --baseline ./compiler-source
 python -m tools.research start-run setup-smoke --mode smoke
 python -m tools.research status
 python -m tools.research resume
 ```
 
-`--root` or `EMMY_RESEARCH_ROOT` overrides the record directory. `--work-root`
-or `EMMY_RESEARCH_WORK_ROOT` overrides the workspace directory. The default
-workspace root is `/root/bcy/emmy/research-workspaces`. Put global options
+`--root` or `EMMY_RESEARCH_ROOT` is required; there is no machine-specific
+record-directory default. `--work-root` or `EMMY_RESEARCH_WORK_ROOT` selects the
+workspace directory, defaulting to `workspaces/` inside the record root. Put global options
 before the subcommand. Initializing an existing store fails; resume it instead.
 The baseline argument must be a minimal compiler-source tree (`compile.py` and
 its runtime helpers), never the whole repository. Source snapshots reject
@@ -129,7 +149,7 @@ Then write a short JSON brief containing:
 
 ```sh
 python -m tools.research search 'aligned vector loads'
-python -m tools.research propose /root/nfs/emmy/brief.json
+python -m tools.research propose brief.json
 python -m tools.research workspace aligned-loads-01
 ```
 
@@ -144,7 +164,7 @@ It never overwrites an existing workspace. Implement there, record observations
 and failures in the experiment's `notes.md`, then freeze the source:
 
 ```sh
-python -m tools.research freeze aligned-loads-01 /root/bcy/emmy/research-workspaces/aligned-loads-01
+python -m tools.research freeze aligned-loads-01 "$EMMY_RESEARCH_WORK_ROOT/aligned-loads-01"
 python -m tools.research enqueue aligned-loads-01 --hypothesis aligned-loads
 ```
 
@@ -171,7 +191,7 @@ the following operations:
 | `claim_preparation(owner)` | At most two active preparation claims; hypotheses interleaved |
 | `finish_preparation(queue_id, owner, artifact_id, gate)` | Verify retained preparation artifact; `pass` enters GPU-ready work, `inactive`/`invalid`/`failed` screen it out |
 | `claim_gpu(owner)` | One recorded GPU job; returns mode, member IDs, and burst identity |
-| `gpu_job_ids(job_id, owner, external_ids)` | Persist real worker/container job identities before yielding |
+| `gpu_job_ids(job_id, owner, external_ids)` | Persist real worker/runtime job identities before yielding |
 | `finish_gpu(job_id, owner, outcomes)` | Caller first synchronizes or retires its worker; record an outcome for every batch member |
 | `record_pair_block(...)` | Persist paired samples with burst identity, completeness, observations, and immutable block artifact |
 | `issue_evidence(experiment_id, report, artifacts)` | Trusted evaluator issues immutable evidence; no equivalent CLI command exists |
@@ -215,7 +235,7 @@ reference, or generator-policy correction creates a new suite version and
 requires baseline/candidate reevaluation.
 
 ```sh
-python -m tools.research suite cases-v1 /root/nfs/emmy/evaluation-contract.json
+python -m tools.research suite cases-v1 evaluation-contract.json
 python -m tools.research reserve-confirmation aligned-loads-01 SUITE_OBJECT_HASH
 ```
 
@@ -237,12 +257,20 @@ Confirmation has three separate commands:
    --suite-id SUITE_OBJECT_HASH` in a CPU job. This reserves fresh cases and
    prepares both compiler arms before taking GPU admission.
 2. Run `python -m tools.research_pipeline confirm EXPERIMENT --suite-id
-   SUITE_OBJECT_HASH` through the private admitted GPU wrapper. It checkpoints
+   SUITE_OBJECT_HASH` through the configured GPU admission launcher. It checkpoints
    completed isolated cases and can resume safely within another bounded job.
 3. After the GPU wrapper exits, run `python -m tools.research_pipeline
    attest-confirmation EXPERIMENT` in a CPU job. This verifies the host's job,
    UUID, periodic telemetry, process ownership and post-job observations, retains
    all audit bytes, and issues a new immutable receipt.
+
+The runtime launcher sets `EMMY_JOB_DIR` to its per-job artifact directory and
+provides the attestation evidence: `gpu-attestation.json`, `monitor-result.json`,
+`telemetry.jsonl`, admission/before/after GPU and process CSVs, `command.txt`, and
+`environment.json` describing the runtime and dependencies. Legacy container
+launchers may supply `container.json` instead. Device identity, process ownership,
+contention checks and timeouts apply equally to native and container execution;
+the adapter must not invent observations when monitoring is unavailable.
 
 The initial confirmation receipt is provisional and cannot support promotion.
 Missing telemetry, detected foreign work, or a failed post-job observation does
@@ -256,7 +284,7 @@ cases with guard/input integrity checks. It is not a coordinator-supplied
 
 ```sh
 python -m tools.research decide aligned-loads-01 shortlist --evidence-id EVIDENCE_OBJECT_HASH --reason 'Explain evidence and remaining uncertainty'
-python -m tools.research export aligned-loads-01 --inbox /root/bcy/emmy/candidates
+python -m tools.research export aligned-loads-01 --inbox ./candidates
 ```
 
 Only shortlisted/promoted evaluated candidates export, always to a new
@@ -267,7 +295,7 @@ before shortlisting or promotion.
 
 The coverage backlog tracks all five items: `m01_matmul_512`,
 `m02_matmul_rect`, `f02_row_softmax`, `a01_attention`, and `a02_attention_128`.
-Read current status and evidence from NFS rather than assuming these stay open.
+Read current status and evidence from the research store rather than assuming these stay open.
 Two coverage responsibilities remain until all five close with supplied cases,
 independent generated variants, and regressions. Finishing one assignment means
 taking the next unresolved gap. Coverage success is the campaign goal, not a

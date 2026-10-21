@@ -220,6 +220,18 @@ class Pipeline(unittest.TestCase):
         self.store.decide('candidate','shortlist','unit evidence only',attested['evidence_id'])
         self.assertEqual(len(FakeWorker.instances),1)
 
+    def test_native_runtime_attestation_requires_environment_provenance(self):
+        suite,_,_=self.confirmation_setup()
+        with mock.patch.object(pipeline,'GPUWorker',FakeWorker):
+            pipeline.confirm(self.store,'candidate',suite)
+        self.host_records()
+        (self.host/'container.json').unlink()
+        with self.assertRaisesRegex(Invalid,'environment provenance'):
+            pipeline.attest_confirmation(self.store,'candidate')
+        atomic_json(self.host/'environment.json',{'runtime':'native','dependencies':'unit fixture'})
+        receipt=pipeline.attest_confirmation(self.store,'candidate')
+        self.assertEqual(receipt['report']['admission_status'],'observed_no_contention')
+
     def test_failed_timing_cannot_be_promoted_even_if_correctness_passed(self):
         suite,_,_=self.confirmation_setup(); FakeWorker.timing_ok=False
         with mock.patch.object(pipeline,'GPUWorker',FakeWorker):

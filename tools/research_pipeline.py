@@ -1,6 +1,6 @@
-"""Execute CPU preparation and bounded GPU research jobs inside the container.
+"""Execute CPU preparation and bounded GPU research jobs in a configured runtime.
 
-GPU entrypoints MUST be invoked by the private host admission wrapper. Native
+GPU entrypoints MUST be invoked through the configured GPU admission launcher. Native
 agents supply research direction; this module runs and records their experiments.
 """
 from __future__ import annotations
@@ -805,8 +805,12 @@ def attest_confirmation(store,experiment):
         if 'telemetry.jsonl' not in files or not files['telemetry.jsonl'].strip():
             raise Invalid('host telemetry evidence missing')
         required={'monitor-result.json','admission.csv','processes.csv','after.csv',
-                  'processes-after.csv','container.json','command.txt'}
+                  'processes-after.csv','command.txt'}
         if not required.issubset(files): raise Invalid('host admission/provenance records missing')
+        # A runtime launcher may be bare-metal or container-based. Preserve the
+        # legacy private launcher's receipt while accepting generic provenance.
+        if not {'environment.json', 'container.json'}.intersection(files):
+            raise Invalid('runtime environment provenance missing')
         monitor=att.get('monitor',{})
         if monitor!=json.loads(files['monitor-result.json']) or monitor.get('observed') is not True \
                 or type(monitor.get('samples')) is not int or monitor['samples']<1 \

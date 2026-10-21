@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Bounded, replayable infrastructure qualification; never a research speed claim.
 
-Use --prepare in a CPU-admitted container job, then --gpu in a GPU-admitted job.
+Use --prepare in a CPU preparation job, then --gpu in a GPU-admitted job.
 No Git, hosted requests, compiler promotion, or host GPU admission happens here.
-The private host wrapper must supply admission, serialization and outer timeout.
+The configured runtime launcher supplies admission, serialization and outer timeout.
 """
 from __future__ import annotations
 
@@ -349,14 +349,17 @@ def gpu_verification(root, *, repetitions=3, replay_slots=64, budget_seconds=240
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root", type=Path, required=True)
-    parser.add_argument("--source", type=Path, default=Path("/root/bcy/emmy/candidates/correctness15"))
+    parser.add_argument("--source", type=Path, help="Minimal compiler source tree; required with --prepare")
     parser.add_argument("--problems", type=Path, default=Path("emmy-hackathon-2026/problems"))
-    parser.add_argument("--cache", type=Path, default=Path("/root/nfs/emmy/research-cache/assembly"))
+    parser.add_argument("--cache", type=Path, help="Assembly cache; defaults to ROOT/assembly-cache")
     action = parser.add_mutually_exclusive_group(required=True)
     action.add_argument("--prepare", action="store_true")
     action.add_argument("--gpu", action="store_true")
     parser.add_argument("--replay-slots", type=int, default=64)
     args = parser.parse_args()
+    if args.prepare and args.source is None:
+        parser.error("--source is required with --prepare")
+    args.cache = args.cache or args.root / "assembly-cache"
     if not 1 <= args.replay_slots <= 64:
         parser.error("replay slots must be between one and64")
     result = prepare_verification(args.root, args.source, args.problems, args.cache) if args.prepare else gpu_verification(args.root, replay_slots=args.replay_slots)

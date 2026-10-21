@@ -10,7 +10,10 @@ resume discovery only when the user asks.
 
 
 Read root AGENTS.md, its challenge documents and [the research guide](../../../docs/research-loop.md).
-Resume from NFS START.md, current baseline/strategy, assignment handoff and linked
+Resolve the configured research root and execution environment before work;
+never assume an owner's paths, storage service, container, or GPU model. Read
+machine-specific setup only from the user's private runtime configuration.
+Resume from that root's START.md, current baseline/strategy, assignment handoff and linked
 mechanism notes; verify referenced artifacts. Do not rely on inherited chat alone.
 
 The active session coordinates three bounded research workers where supported.

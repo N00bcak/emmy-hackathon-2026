@@ -29,9 +29,7 @@ except ModuleNotFoundError:
 
 COVERAGE = ("m01_matmul_512", "m02_matmul_rect", "f02_row_softmax",
             "a01_attention", "a02_attention_128")
-DEFAULT_ROOT = "/root/nfs/emmy/research"
-DEFAULT_WORK_ROOT = "/root/bcy/emmy/research-workspaces"
-EXCLUDED = {".git", ".agents", ".claude", ".codex", ".ssh", ".aws", ".venv",
+EXCLUDED = {".git", ".agents", ".claude", ".codex", ".ssh", ".aws", ".venv", ".emmy",
             ".env", ".credentials", "venv", "__pycache__", ".pytest_cache", ".DS_Store", "candidates"}
 EVALUATION_TREES = {"emmy-hackathon-2026", "tests", "experiments", "suites", "objects",
                     "control", "knowledge", "assembly-cache", "baseline-preparation",
@@ -153,8 +151,12 @@ class Scheduler:
 
 class Store:
     def __init__(self, root=None, work_root=None):
-        self.root = Path(root or os.environ.get("EMMY_RESEARCH_ROOT", DEFAULT_ROOT)).absolute()
-        self.work_root = Path(work_root or os.environ.get("EMMY_RESEARCH_WORK_ROOT", DEFAULT_WORK_ROOT)).absolute()
+        configured_root = root or os.environ.get("EMMY_RESEARCH_ROOT")
+        if not configured_root:
+            raise Invalid("set --root or EMMY_RESEARCH_ROOT to your durable research directory")
+        self.root = Path(configured_root).expanduser().absolute()
+        configured_work = work_root or os.environ.get("EMMY_RESEARCH_WORK_ROOT")
+        self.work_root = Path(configured_work or self.root / "workspaces").expanduser().absolute()
 
     @contextmanager
     def _lock(self):

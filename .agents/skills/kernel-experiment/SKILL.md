@@ -10,8 +10,13 @@ resume discovery only when the user asks.
 
 
 Read root AGENTS.md and [the research guide](../../../docs/research-loop.md).
-Use an isolated Linux workspace derived from a verified baseline. Record a brief
-and handoff on NFS before substantial work; search prior evidence first. Make
+Use an isolated evaluation workspace derived from a verified baseline, in the
+user-configured runtime. Shared instructions prescribe neither Docker nor NFS;
+connection details, paths, mounts and launch commands belong in private runtime
+configuration. The supplied restricted evaluator requires Linux/CUDA; other
+adapters must preserve its isolation and evidence guarantees, not bypass them.
+Record a brief and handoff in the durable research store before substantial work;
+search prior evidence first. Make
 research choices freely within the authorized question and budget. Explain pivots.
 
 Implement direct typed IR lowering. Preserve ABI/launch, numerical semantics,
@@ -45,6 +50,7 @@ Label warm-cache versus rotating-buffer behavior; never claim streaming throughp
 from warm-cache timings. Keep compiler/assembly/runtime costs separate.
 
 Persist source, IR/meta, realized inputs, references/tolerances, PTX/cubin/SASS,
-commands, environment, admission, output checks and raw samples on NFS. Update the
+commands, environment, admission, output checks and raw samples in that store. Update the
 handoff with live jobs/dependencies/next executable action before yielding. Only
-GPU-evaluated shortlists may return to the Mac; no Git on Linux or Git remote work.
+GPU-evaluated shortlists may return to the owner's repository; no Git on a remote
+GPU host or Git remote work.

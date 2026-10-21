@@ -7,6 +7,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from unittest import mock
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from tools.research_store import COVERAGE, Invalid, Scheduler, Store, read_json
@@ -37,6 +38,22 @@ class ResearchStore(unittest.TestCase):
                 "probe": "inspect SASS vector width", "opportunity": "bound: 4 loads to 1",
                 "budget": {"variants": 4, "seconds": 60},
                 "semantic_overlap_decision": "distinct from prior mechanism or explicit repeat"}
+
+    def test_runtime_paths_require_configuration_and_allow_overrides(self):
+        with mock.patch.dict("os.environ", {}, clear=True):
+            with self.assertRaisesRegex(Invalid, "EMMY_RESEARCH_ROOT"):
+                Store()
+            configured = Store(self.base / "records")
+            self.assertEqual(configured.work_root, configured.root / "workspaces")
+            self.assertFalse(configured.root.exists())
+        with mock.patch.dict("os.environ", {
+                "EMMY_RESEARCH_ROOT": str(self.base / "env-records"),
+                "EMMY_RESEARCH_WORK_ROOT": str(self.base / "env-work")}):
+            self.assertEqual(Store().root, self.base / "env-records")
+            self.assertEqual(Store().work_root, self.base / "env-work")
+            explicit = Store(self.base / "explicit-records", self.base / "explicit-work")
+            self.assertEqual(explicit.root, self.base / "explicit-records")
+            self.assertEqual(explicit.work_root, self.base / "explicit-work")
 
     def frozen(self, name="one", mechanism=None):
         self.store.propose(self.brief(name, mechanism))
