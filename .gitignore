@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+*.pyc
+experiments/**/artifacts/
+.DS_Store
+
+# Machine-specific runtime instructions and configuration
+/.agents/skills/emmy-private-runtime/
+candidates/
+*.cubin
+/out.ptx

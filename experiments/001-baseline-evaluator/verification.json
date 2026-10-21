@@ -1,0 +1,143 @@
+{
+  "compiler_sha256": "690a9cffc5353fcd30b93ef6368f002f5bf4f086929c4f857de7c7a8c27db567",
+  "emitted_ptx": {
+    "version": "8.0",
+    "target": "sm_89"
+  },
+  "local_gpu": "RTX 4090",
+  "local_open_cases": [
+    {
+      "problem": "p00_scalar_add",
+      "pass": true
+    },
+    {
+      "problem": "p01_vector_add",
+      "pass": true
+    },
+    {
+      "problem": "p02_scale_shift",
+      "pass": true
+    },
+    {
+      "problem": "p03_relu_mul",
+      "pass": true
+    },
+    {
+      "problem": "r01_array_sum",
+      "pass": true
+    },
+    {
+      "problem": "r02_big_sum",
+      "pass": true
+    },
+    {
+      "problem": "r03_mean",
+      "pass": true
+    },
+    {
+      "problem": "r04_row_sum",
+      "pass": true
+    },
+    {
+      "problem": "f01_rmsnorm",
+      "pass": true
+    },
+    {
+      "problem": "f03_l2norm",
+      "pass": true
+    },
+    {
+      "problem": "reordered_scale_shift_abi",
+      "pass": true
+    }
+  ],
+  "explicitly_unsupported": [
+    "m01_matmul_512",
+    "m02_matmul_rect",
+    "f02_row_softmax",
+    "a01_attention",
+    "a02_attention_128"
+  ],
+  "synthetic_gpu_cases": [
+    "pointwise14",
+    "sum257"
+  ],
+  "cpu_tests_passed": 16,
+  "hosted_http_requests": 16,
+  "hosted_checks": [
+    "health",
+    "p00_scalar_add_correct",
+    "r01_array_sum_correct",
+    "compile_id_stable",
+    "seed_generation_and_exact_data",
+    "truncation",
+    "scalar_by_value",
+    "warmup_plus_iterations_accumulate",
+    "zero_before_each_launch",
+    "fresh_buffers_each_request",
+    "default_warmup5_iters20"
+  ],
+  "offline_observation": "Truncated f32 output sum matches native float32 accumulation, not float64; local replica aligned.",
+  "source_revision_evidence": "Guard-only final source emits byte-identical PTX for all 10 accepted cases; final p00/r01 PTX additionally compared byte-for-byte to recorded hosted requests.",
+  "benchmarks": [
+    {
+      "problem": "p00_scalar_add",
+      "median_us": 6.943999789655209,
+      "samples_us": [
+        7.168000098317862,
+        7.168000098317862,
+        7.168000098317862,
+        6.144000217318535,
+        6.304000038653612,
+        6.144000217318535,
+        6.144000217318535,
+        6.943999789655209,
+        6.943999789655209,
+        7.168000098317862
+      ],
+      "warmup": 3,
+      "iters": 10
+    },
+    {
+      "problem": "p02_scale_shift",
+      "median_us": 7.151999976485968,
+      "samples_us": [
+        7.168000098317862,
+        7.135999854654074,
+        7.168000098317862,
+        7.168000098317862,
+        6.271999794989824,
+        6.144000217318535,
+        7.168000098317862,
+        6.144000217318535,
+        7.168000098317862,
+        6.207999773323536
+      ],
+      "warmup": 3,
+      "iters": 10
+    },
+    {
+      "problem": "r01_array_sum",
+      "median_us": 7.168000098317862,
+      "samples_us": [
+        7.168000098317862,
+        7.199999876320362,
+        7.168000098317862,
+        7.168000098317862,
+        7.168000098317862,
+        7.168000098317862,
+        6.144000217318535,
+        7.168000098317862,
+        6.240000016987324,
+        6.144000217318535
+      ],
+      "warmup": 3,
+      "iters": 10
+    }
+  ],
+  "limitations": [
+    "Timings are indicative, no comparative speedup established.",
+    "Local/public GPU timing parity and hidden-set correctness are not established.",
+    "Only f32, 1D launch and supported scheduling subset are compiler-covered."
+  ]
+}
