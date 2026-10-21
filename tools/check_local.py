@@ -13,6 +13,8 @@ import time
 import urllib.request
 
 ROOT=Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+from tools.published import PUBLISHED_PROBLEMS, published_status
 
 
 def main():
@@ -21,12 +23,17 @@ def main():
     parser.add_argument('--out',type=Path,required=True)
     parser.add_argument('--problem',action='append')
     parser.add_argument('--port',type=int,default=48702)
+    parser.add_argument('--timing', action='store_true',
+                        help='Opt in to indicative timings after ALL 15 published cases pass')
     args=parser.parse_args()
     compiler=args.compiler.resolve()
     args.out.mkdir(parents=True,exist_ok=False)
-    cases=args.problem or ['p00_scalar_add','p01_vector_add','p02_scale_shift','p03_relu_mul',
-                          'r01_array_sum','r02_big_sum','r03_mean','r04_row_sum','f01_rmsnorm','f03_l2norm']
-    report={'compiler_sha256':hashlib.sha256(compiler.read_bytes()).hexdigest(),'cases':[]}
+    cases=args.problem or list(PUBLISHED_PROBLEMS)
+    if len(cases) != len(set(cases)) or any(p not in PUBLISHED_PROBLEMS for p in cases):
+        parser.error('select distinct published problem IDs')
+    report={'compiler_sha256':hashlib.sha256(compiler.read_bytes()).hexdigest(),'cases':[],
+            'benchmark_qualified':False,
+            'qualification_note':'Standalone correctness smoke; valid research benchmarks require frozen-source/suite Store gates.'}
     server_log=(args.out/'server.log').open('w')
     server=subprocess.Popen([sys.executable,str(ROOT/'tools/local_runner.py'),
                              '--cache',str(args.out/'cache'),'--port',str(args.port),'--arch','sm_89'],
@@ -57,6 +64,9 @@ def main():
             except OSError: time.sleep(.1)
         else: raise RuntimeError('local server did not start')
         for problem in cases: check_case(problem)
+        report['published_correctness'] = published_status(report['cases'], source_unchanged=(
+            hashlib.sha256(compiler.read_bytes()).hexdigest() == report['compiler_sha256']))
+        (args.out/'results.json').write_text(json.dumps(report,indent=2)+'\n')
         # Reorder a noncommutative scale/shift ABI without altering its IR or launch.
         source=ROOT/'emmy-hackathon-2026/problems/p02_scale_shift'
         with tempfile.TemporaryDirectory(prefix='abi-',dir=args.out) as temporary:
@@ -71,6 +81,14 @@ def main():
                 k['args']=[by_name[n] for n in k['arg_order']]
             (fixture/'meta.json').write_text(json.dumps(meta))
             check_case(fixture,'reordered_scale_shift_abi')
+        report['published_correctness'] = published_status(report['cases'], source_unchanged=(
+            hashlib.sha256(compiler.read_bytes()).hexdigest() == report['compiler_sha256']))
+        # Partial/debug sweeps cannot authorize performance evaluation.
+        if not args.timing or not report['published_correctness']['all15_passed']:
+            report['timing_skipped'] = 'not requested' if not args.timing else 'all-15 correctness gate failed'
+            (args.out/'results.json').write_text(json.dumps(report,indent=2)+'\n')
+            return int(any(row['exit_code'] for row in report['cases']) or
+                       (args.timing and not report['published_correctness']['all15_passed']))
         # Warm, repeated indicative timing for correct representative kernels.
         import numpy as np
         report['benchmarks']=[]

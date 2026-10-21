@@ -120,11 +120,33 @@ class CompilerTests(unittest.TestCase):
             mod.compile_path(p)
 
     def test_unsupported_errors_do_not_emit_partial_ptx(self):
-        p=next((ROOT/'m01_matmul_512').glob('*.ir.json'))
+        p=fixture('p00_scalar_add',self.out/'unsupported-scalar-abi')
+        meta=json.loads(p.with_name('meta.json').read_text())
+        meta['kernels'][0]['args'][0]['scalar']=True
+        meta['kernels'][0]['args'][0]['value']=1.0
+        p.with_name('meta.json').write_text(json.dumps(meta))
         r=subprocess.run([sys.executable,str(HERE/'compile.py'),str(p)],capture_output=True,text=True)
         self.assertNotEqual(r.returncode,0)
         self.assertEqual(r.stdout,'')
         self.assertIn('Unsupported',r.stderr)
+
+
+    def test_all_published_lower_and_assemble_for_both_targets(self):
+        from tools.published import PUBLISHED_PROBLEMS
+        for problem in PUBLISHED_PROBLEMS:
+            with self.subTest(problem=problem):
+                source=next((ROOT/problem).glob('*.ir.json'))
+                text=mod.compile_path(source)
+                ptx=self.out/(problem+'.ptx')
+                ptx.write_text(text,encoding='ascii')
+                meta=json.loads(source.with_name('meta.json').read_text())
+                for kernel in meta['kernels']:
+                    self.assertIn('.entry '+kernel['entry']+'(',text)
+                for arch in ('sm_89','sm_120'):
+                    result=subprocess.run(['ptxas','-arch='+arch,str(ptx),'-o',str(self.out/(problem+arch+'.cubin'))],
+                                          capture_output=True,text=True,timeout=30)
+                    self.assertEqual(result.returncode,0,result.stderr)
+
 
 def generate_cases(destination):
     destination.mkdir(parents=True, exist_ok=False)

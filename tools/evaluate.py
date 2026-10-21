@@ -10,6 +10,8 @@ import time
 
 ROOT = Path(__file__).resolve().parents[1]
 CHALLENGE = ROOT / 'emmy-hackathon-2026'
+sys.path.insert(0, str(ROOT))
+from tools.published import published_status
 
 
 def main():
@@ -77,6 +79,11 @@ def main():
         report['cases'].append(record)
         (args.out / 'results.json').write_text(json.dumps(report, indent=2) + '\n')
         print(f"{problem}: {record['status']}", flush=True)
+    report['published_correctness'] = published_status(report['cases'], source_unchanged=(
+        hashlib.sha256(compiler.read_bytes()).hexdigest() == report['compiler_sha256']))
+    report['valid_for_benchmarking'] = False
+    report['qualification_note'] = 'Standalone correctness smoke only; research benchmarks require exact frozen-source/suite Store gates.'
+    (args.out / 'results.json').write_text(json.dumps(report, indent=2) + '\n')
     return 0 if all(r['status'] == 'pass' for r in report['cases']) else 1
 
 

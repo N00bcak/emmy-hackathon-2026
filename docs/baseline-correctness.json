@@ -1,0 +1,146 @@
+{
+  "source_sha256": "d35da050e41fd3a172e5611b69a48ccabecb2f1d359aa9a4204e5e2685c9bcbf",
+  "source_artifact": "correctness15/source-v4/compile.py",
+  "all15_full_output_pass": true,
+  "dual_target_assembly": {
+    "sm_89": 15,
+    "sm_120": 15,
+    "execution": "local sm_89 only"
+  },
+  "cases": [
+    {
+      "problem": "a01_attention",
+      "status": "pass",
+      "checked_values_per_launch": 4096,
+      "max_abs_error": 6.556510925292969e-07,
+      "repetitions": 3
+    },
+    {
+      "problem": "a02_attention_128",
+      "status": "pass",
+      "checked_values_per_launch": 4096,
+      "max_abs_error": 4.470348358154297e-07,
+      "repetitions": 3
+    },
+    {
+      "problem": "f01_rmsnorm",
+      "status": "pass",
+      "checked_values_per_launch": 65536,
+      "max_abs_error": 1.9073486328125e-06,
+      "repetitions": 3
+    },
+    {
+      "problem": "f02_row_softmax",
+      "status": "pass",
+      "checked_values_per_launch": 16384,
+      "max_abs_error": 7.450580596923828e-09,
+      "repetitions": 3
+    },
+    {
+      "problem": "f03_l2norm",
+      "status": "pass",
+      "checked_values_per_launch": 32768,
+      "max_abs_error": 1.4901161193847656e-08,
+      "repetitions": 3
+    },
+    {
+      "problem": "m01_matmul_512",
+      "status": "pass",
+      "checked_values_per_launch": 262144,
+      "max_abs_error": 8.392333984375e-05,
+      "repetitions": 3
+    },
+    {
+      "problem": "m02_matmul_rect",
+      "status": "pass",
+      "checked_values_per_launch": 8192,
+      "max_abs_error": 1.52587890625e-05,
+      "repetitions": 10
+    },
+    {
+      "problem": "p00_scalar_add",
+      "status": "pass",
+      "checked_values_per_launch": 128,
+      "max_abs_error": 0,
+      "repetitions": 3
+    },
+    {
+      "problem": "p01_vector_add",
+      "status": "pass",
+      "checked_values_per_launch": 1024,
+      "max_abs_error": 0,
+      "repetitions": 3
+    },
+    {
+      "problem": "p02_scale_shift",
+      "status": "pass",
+      "checked_values_per_launch": 4096,
+      "max_abs_error": 0,
+      "repetitions": 3
+    },
+    {
+      "problem": "p03_relu_mul",
+      "status": "pass",
+      "checked_values_per_launch": 2048,
+      "max_abs_error": 0,
+      "repetitions": 3
+    },
+    {
+      "problem": "r01_array_sum",
+      "status": "pass",
+      "checked_values_per_launch": 1,
+      "max_abs_error": 3.814697265625e-06,
+      "repetitions": 3
+    },
+    {
+      "problem": "r02_big_sum",
+      "status": "pass",
+      "checked_values_per_launch": 1,
+      "max_abs_error": 1.52587890625e-05,
+      "repetitions": 3
+    },
+    {
+      "problem": "r03_mean",
+      "status": "pass",
+      "checked_values_per_launch": 1,
+      "max_abs_error": 9.313225746154785e-10,
+      "repetitions": 3
+    },
+    {
+      "problem": "r04_row_sum",
+      "status": "pass",
+      "checked_values_per_launch": 64,
+      "max_abs_error": 5.7220458984375e-06,
+      "repetitions": 3
+    }
+  ],
+  "m02_memcheck": {
+    "exit_code": 0,
+    "repetitions": 10,
+    "errors": 0
+  },
+  "artifact_root": "correctness15/validation-v4",
+  "shortlist_status": "GPU-evaluated correctness candidate; owner retains publication decision",
+  "performance": "No speed/discovery campaign or performance claim; copies are conservatively synchronous.",
+  "independent_confirmation": {
+    "published_cases": 15,
+    "fresh_generated_cases": 32,
+    "evaluation_ok": true,
+    "timing_enabled": false,
+    "evaluation_version": "coverage-all15-v3",
+    "source_id": "24bbddb5b5f627910ce3757855a124f94c4f2be78a3d2ca755c93b236e57c446",
+    "suite_id": "38ac421af22b2cee2106537327511b9d034dcabc84022f33483c672b1ebbdf17",
+    "published_gate_id": "c7c9b430aace18dccce302426b534e90814339bc3b2e7ce72a0e14f333bf641a",
+    "evidence_id": "128f5eb7c4a1f39ddd8dd8ac706137e0c28d6d496c138297068d8188e6804521",
+    "scope": "Supplied fused/cooperative anchors plus fresh serial and cooperative softmax schedules; generated attention uses three stages. Hidden fused schedule generalization remains unverified."
+  },
+  "infrastructure": {
+    "cpu_tests_passed": 132,
+    "replayed_baseline_controls": 64,
+    "correctness_width": 2,
+    "qualification_evidence_id": "be6535460e9d3e27865454b230d4f9d497c46662cdafe9d6b57c1f1f678d50b1",
+    "discovery_active": false,
+    "hosted_requests_during_implementation": 0,
+    "speedup_claim": false
+  }
+}

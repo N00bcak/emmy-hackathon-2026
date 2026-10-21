@@ -1,34 +1,50 @@
 ---
 name: kernel-experiment
-description: Implement and evaluate a falsifiable Emmy compiler hypothesis with reproducible correctness and timing evidence.
+description: Execute a kernel compiler hypothesis or bounded sweep with cheap filters, isolated correctness, paired timing and replayable provenance.
 ---
 
-Read root AGENTS.md. Before edits write experiments/<id>/plan.md: strategy,
-hypothesis, predicted observation, implementation idea, baseline, affected semantics,
-correctness cases, performance protocol, budget and rejection criteria.
-Preserve unrelated changes. Implement typed IR lowering, never parse body strings.
-Fail unsupported operations explicitly with nonzero exit and stderr diagnostics.
+Use this skill for an explicitly requested discovery campaign or its named stage.
+It does not start a campaign, background service, workers, sweeps, or hosted calls
+by being read. For ordinary bug repair, follow AGENTS.md and run relevant tests;
+resume discovery only when the user asks.
 
-Check the metadata ABI, tail guards without divergent barriers, index width,
-signedness, vector alignment, reduction identities/order, coupled softmax state,
-shared-memory visibility, async-copy waits, atomic resets and ordered multi-kernel
-execution as applicable. Emit ASCII PTX with target-compatible version.
-Run focused tests, then tools/evaluate.py using upstream submit.py with our compiler.
-Keep reproducing IR, generated PTX and exact diagnostics for failures.
-Assembly alone, output sums and truncated outputs cannot establish correctness.
-Add legal non-fixture shapes/ops, tails, constants and numerical edge cases as
-coverage grows. Generate IR through supported tooling or justified typed fixtures;
-never arbitrarily patch serialized bodies. Emmy frontend generation is allowed,
-but delegating submitted lowering to an existing compiler is not.
 
-Benchmark only correct candidates after regression checks. submit.py uses
-warmup=0/iters=1; its reported latency is smoke feedback, not speedup evidence.
-Implement a separate helper using documented /compile and /run when benchmarking
-is needed; do not alter the upstream harness. Preserve arg_order, metadata launch,
-zero_outputs before EVERY launch, full tolerance checks and intermediate chaining.
-Warm baseline and candidate, alternate paired runs on identical hardware, retain
-raw samples, and report medians and spread. Respect warmup<=20, iters<=200,
-20-second launch limit, sequential shared-runner use and bounded busy retries.
-Record GPU, arch, tool versions, compile time, register count and timing settings.
-Reject gains within observed noise. Derive throughput only from explicit work/byte
-counts; check correctness under repeated launches, especially atomic outputs.
+Read root AGENTS.md and [the research guide](../../../docs/research-loop.md).
+Use an isolated Linux workspace derived from a verified baseline. Record a brief
+and handoff on NFS before substantial work; search prior evidence first. Make
+research choices freely within the authorized question and budget. Explain pivots.
+
+Implement direct typed IR lowering. Preserve ABI/launch, numerical semantics,
+collective participation, memory visibility, atomic resets and pipeline order.
+Do not edit evaluator code, generator policies, tolerances, or expected outputs to
+make your candidate pass. Report suspected evaluator defects for independent repair
+under a new evaluation version. Assembly and output sums never prove correctness.
+
+Freeze actual source before confirmation cases are drawn. CPU preparation runs the
+compiler under its restricted identity and caches cases/references and assembly.
+Inspect both-target SASS activation and resources before GPU timing. A mechanism
+that did not activate needs explanation/revision; more registers alone is not a
+reason to reject it. Preserve diagnostics, failed artifacts and exact reproducers.
+
+All GPU work goes through host admission. Let the shared scheduler own dispatch.
+Concurrent correctness screens guarded private buffers; corruption quarantines
+all implicated batchmates. A familiar mechanism with a new bad parameter is still
+a possible memory bug. m02 atomics always need isolated-first and Compute Sanitizer.
+Before timing or treating any GPU benchmark as valid, both frozen baseline and
+candidate must pass ALL 15 published cases at unchanged metadata tolerances under
+the current evaluator identity, including isolated atomic/reset and sanitizer
+checks. Partial correctness probes are debugging only. Source or evaluator
+changes invalidate this gate. Every survivor still needs fresh isolated
+confirmation before shortlist/promotion.
+
+Use exclusive paired timing with per-case A/A noise, bounded adaptive blocks,
+persisted burst identities, full-value checks and prescribed resets. Finish a
+started paired block before yielding; incomplete hard-timeout blocks are not
+comparison evidence. A sweep winner still needs fresh cases and new measurements.
+Label warm-cache versus rotating-buffer behavior; never claim streaming throughput
+from warm-cache timings. Keep compiler/assembly/runtime costs separate.
+
+Persist source, IR/meta, realized inputs, references/tolerances, PTX/cubin/SASS,
+commands, environment, admission, output checks and raw samples on NFS. Update the
+handoff with live jobs/dependencies/next executable action before yielding. Only
+GPU-evaluated shortlists may return to the Mac; no Git on Linux or Git remote work.

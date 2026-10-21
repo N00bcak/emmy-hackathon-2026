@@ -59,8 +59,10 @@ python tools/check_contract.py --compiler compile.py --out "$EMMY_JOB_DIR/contra
 ```
 
 The private admission wrapper sets EMMY_JOB_DIR to that job's NFS measurement directory. The first
-helper exercises ten supported open problems, a reordered scale/shift ABI, and
-short indicative timings for three cases. CPU tests require the container's ptxas:
+helper exercises all 15 published problems and a reordered scale/shift ABI.
+It performs correctness checks by default. Add `--timing` only when indicative
+latencies are wanted; timing is refused unless the same source passed all 15.
+Using `--problem` for a partial diagnostic sweep does not satisfy this gate. CPU tests require the container's ptxas:
 
 ```sh
 python -m unittest discover -s tests -v
@@ -69,8 +71,8 @@ python -m unittest discover -s tests -v
 For an already running local service, the unchanged challenge client works with
 `--server http://127.0.0.1:48702`. tools/evaluate.py now defaults to that local
 address and uses file hashes rather than Git commands for provenance. It fails
-rather than silently falling back to the public endpoint. Tests of all 15 open
-problems will currently report five explicitly unsupported compiler cases.
+rather than silently falling back to the public endpoint. Its result records whether all 15 published problems passed for unchanged
+source. Partial passes are debugging evidence, never benchmark qualification.
 
 The reusable local server has a content-addressed assembly cache and a fresh CUDA
 subprocess per run, with bounded worker lifetime and serialized GPU execution.

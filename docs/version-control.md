@@ -1,36 +1,35 @@
 # Owner-controlled private repository
 
-This workspace is already a local Git repository on branch `main`, with no
-commits yet. The challenge is a pinned public submodule. No Git command runs on
-the GPU host; no agent performs Git network/remote-management actions here.
+This workspace is a local Git repository with the challenge pinned as a public
+submodule. The requested implementation is committed locally after verification.
+No Git commands run on the GPU host. Agents perform no Git network or remote
+management actions here; the owner controls publication.
 
-Create an **empty private repository** in your Git hosting provider's UI. Do not
-initialize it with a README, license, or gitignore, because those files already
-exist locally. Then review the staged and unstaged changes on this machine:
+Create an **empty private repository** in GitHub’s UI if you do not already have
+one. Leave README, license and gitignore initialization off. Review locally:
 
 ```sh
 git status --short
-git diff
-git diff --cached
+git log -1 --stat
 git check-ignore -v .agents/skills/emmy-private-runtime/SKILL.md
 ```
 
-Choose which files to retain and stage them yourself. Private runtime skills,
-compiler prototypes and generated artifacts are ignored; do not force-add them.
-After reviewing, run the following yourself (replace the URL):
+Private runtime instructions and generated artifacts remain ignored. Do not
+force-add them. Then, **you** run the appropriate commands, replacing the URL:
 
 ```sh
-git add -A
-git diff --cached --check
-git diff --cached
-git commit -m "Add baseline compiler and local CUDA evaluator"
+# If origin has not been configured:
 git remote add origin git@github.com:YOUR_ACCOUNT/YOUR_PRIVATE_REPOSITORY.git
+# Or, if origin already exists and you intend to replace it:
+# git remote set-url origin git@github.com:YOUR_ACCOUNT/YOUR_PRIVATE_REPOSITORY.git
 git push -u origin main
 ```
 
-The push publishes the selected parent-repository files and the submodule
-reference. It does not make the public challenge submodule private. Do not
-change the parent repository to public while it contains unpublished work.
-Future clones need `git submodule update --init --recursive`, run by you.
+The push publishes committed parent-repository files and the submodule reference;
+it does not make the challenge’s public submodule private. Keep the parent private
+while it contains unpublished work. Future clones need
+`git submodule update --init --recursive`, run by you.
 
-No agent has committed, added a remote, fetched, pulled, or pushed this work.
+A local commit is authorized only when requested. It never authorizes an agent to
+push, fetch, manage remotes, or publish. No agent networked Git action was needed
+for this implementation.

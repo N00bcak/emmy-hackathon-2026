@@ -56,10 +56,34 @@ class Emitter:
     def __init__(self, graph, node, meta):
         self.graph, self.node, self.meta = graph, node, meta
         self.lines, self.declarations = [], []
+        self.externals = []
         self.counts = {'r': 0, 'rd': 0, 'f': 0, 'p': 0}
         self.values, self.buffers, self.shared = {}, {}, {}
         self.label_count = 0
         self.accum_ops = {}
+        self.mutable = {}
+        self.shared_offsets = {}
+        shared_bytes = 0
+        def shared_layout(statements):
+            nonlocal shared_bytes
+            for statement in statements:
+                if type(statement).__name__ == 'Smem':
+                    if statement.name in self.shared_offsets:
+                        raise Unsupported('Duplicate shared buffer name')
+                    align = max(4, statement.align)
+                    shared_bytes = (shared_bytes + align - 1) // align * align
+                    self.shared_offsets[statement.name] = shared_bytes
+                    shared_bytes += 4 * math.prod(static(v) for v in statement.extents)
+                for field in ('body', 'else_body'):
+                    nested = getattr(statement, field, ())
+                    if nested:
+                        shared_layout(nested)
+        shared_layout(node.op.body)
+        self.dynamic_shared = bool(shared_bytes and meta.get('smem_bytes', 0) >= shared_bytes)
+        if shared_bytes > 48 * 1024 and not self.dynamic_shared:
+            raise Unsupported('Shared buffers exceed static limit and metadata dynamic allocation')
+        if self.dynamic_shared:
+            self.externals.append('.extern .shared .align 16 .b8 __emmy_smem[];')
         for n in graph.nodes.values():
             for tensor in n.outputs:
                 self.buffers[tensor.name] = (tuple(static(d) for d in tensor.shape), tensor.dtype.name)
@@ -174,7 +198,11 @@ class Emitter:
         self.emit(f'mul.wide.s32 {byte}, {offset}, 4;')
         addr = self.reg('rd')
         if name in self.shared:
-            self.emit(f'mov.u64 {addr}, {ident(name)};')
+            if self.dynamic_shared:
+                self.emit(f'mov.u64 {addr}, __emmy_smem;')
+                self.emit(f'add.u64 {addr}, {addr}, {self.shared_offsets[name]};')
+            else:
+                self.emit(f'mov.u64 {addr}, {ident(name)};')
             base = addr
         else:
             if name not in self.ptrs:
@@ -195,24 +223,34 @@ class Emitter:
             self.emit(f'{binary[op]} {reg}, {operands[0]}, {operands[1]};')
         elif op in unary and len(operands) == 1:
             self.emit(f'{unary[op]} {reg}, {operands[0]};')
+        elif op == 'copy' and len(operands) == 1:
+            self.emit(f'mov.f32 {reg}, {operands[0]};')
+        elif op == 'exp' and len(operands) == 1:
+            scaled = self.reg('f')
+            self.emit(f'mul.f32 {scaled}, {operands[0]}, {f32(math.log2(math.e))};')
+            self.emit(f'ex2.approx.f32 {reg}, {scaled};')
         elif op == 'relu' and len(operands) == 1:
             self.emit(f'max.f32 {reg}, {operands[0]}, {f32(0)};')
         else:
             raise Unsupported(f'Unsupported elementwise operation {op}/{len(args)}')
-        self.values[name] = (reg, 'f32')
+        if name in self.mutable:
+            stable = self.mutable[name]
+            self.emit(f'mov.f32 {stable}, {reg};')
+            self.values[name] = (stable, 'f32')
+        else:
+            self.values[name] = (reg, 'f32')
 
     def init_accums(self, statements):
         for s in statements:
             if type(s).__name__ == 'Accum':
-                if s.base is not None:
-                    raise Unsupported('Accumulator base is unsupported')
                 op = s.op.name
-                identities = {'add': 0.0, 'multiply': 1.0, 'maximum': -math.inf, 'minimum': math.inf}
+                identities = {'add': 0.0, 'multiply': 1.0, 'maximum': -1e30, 'minimum': 1e30}
                 if op not in identities:
                     raise Unsupported(f'Unsupported reduction {op}')
                 reg = self.reg('f')
                 self.emit(f'mov.f32 {reg}, {f32(identities[op])};')
                 self.values[s.name] = (reg, 'f32')
+                self.mutable[s.name] = reg
                 self.accum_ops[s.name] = op
             elif type(s).__name__ == 'Cond':
                 self.init_accums(s.body)
@@ -222,13 +260,29 @@ class Emitter:
         for s in statements:
             kind = type(s).__name__
             if kind == 'Tile':
-                if s.aux_threads or s.raster_axes or s.raster_group or s.raster_orient != 'm':
-                    raise Unsupported('Auxiliary/raster tile scheduling unsupported')
-                if any(a.window is not None for a in s.axes):
-                    raise Unsupported('Windowed tile axes unsupported')
+                if s.aux_threads or s.raster_orient not in ('m', 'n'):
+                    raise Unsupported('Auxiliary tile scheduling unsupported')
+                # Raster metadata only permutes whole CTAs. A row-major CTA
+                # ordering still visits the same coordinate product exactly once.
+                if s.raster_group is not None and (not isinstance(s.raster_group, int) or s.raster_group <= 0):
+                    raise Unsupported('Invalid raster group')
+                for axis in s.axes:
+                    window = axis.window
+                    if window is not None and (window.base is not None or window.bound is not None or window.partition):
+                        raise Unsupported('Nontrivial window bounds unsupported')
                 if self.meta['block'][1:] != [1, 1] or self.meta['grid'][1:] != [1, 1]:
                     raise Unsupported('Only one dimensional launch geometry supported')
                 extents = [static(a.extent) for a in s.axes]
+                if s.block_threads is not None and s.block_threads != math.prod(self.meta['block']):
+                    raise Unsupported('Tile block_threads differs from prescribed launch')
+                if s.raster_axes:
+                    # Prove raster coordinates are block-uniform: all within-CTA
+                    # coordinate factors form a suffix of exactly block_threads.
+                    cuts = [i for i in range(len(extents) + 1)
+                            if math.prod(extents[i:]) == math.prod(self.meta['block'])]
+                    if not cuts or any(name not in [axis.name for axis in s.axes[:max(cuts)]]
+                                       for name in s.raster_axes):
+                        raise Unsupported('Raster axes are not proven block-uniform')
                 n = math.prod(extents)
                 if n <= 0 or n >= (1 << 31):
                     raise Unsupported('Tile size outside supported signed32 range')
@@ -249,7 +303,7 @@ class Emitter:
                     self.values[axis.name] = (r, 'i32')
                 self.statements(s.body)
             elif kind == 'Load':
-                if s.dtype.name != 'f32':
+                if s.dtype is not None and s.dtype.name != 'f32':
                     raise Unsupported('Only f32 loads supported')
                 for i, name in enumerate(s.names):
                     addr, space = self.address(s.input, s.index, i)
@@ -279,15 +333,20 @@ class Emitter:
                 r = self.reg('f')
                 self.emit(f'mov.f32 {r}, {f32(s.identity)};')
                 self.values[s.name] = (r, 'f32')
+                self.mutable[s.name] = r
             elif kind == 'Accum':
                 old = self.value(s.name)
-                self.assign(s.name, s.op, (s.name, s.value), s.dtype)
-                self.emit(f'mov.f32 {old}, {self.value(s.name)};')
+                left = s.base if s.base is not None else s.name
+                self.assign(s.name, s.op, (left, s.value), s.dtype)
+                if self.value(s.name) != old:
+                    self.emit(f'mov.f32 {old}, {self.value(s.name)};')
                 self.values[s.name] = (old, 'f32')
+                self.mutable[s.name] = old
             elif kind in ('StridedLoop', 'Loop'):
-                if not s.seed:
-                    raise Unsupported('Nonseeded loops not yet supported')
-                self.init_accums(s.body)
+                # Seeds apply to accumulators owned immediately by this loop.
+                # Nested reductions seed themselves when their loop is entered.
+                if s.seed:
+                    self.init_accums(s.body)
                 r = self.reg('r')
                 start, step, end = ('0', '1', str(static(s.axis.extent)))
                 if kind == 'StridedLoop':
@@ -309,11 +368,13 @@ class Emitter:
             elif kind == 'WarpShuffle':
                 if s.length > 32 or s.length <= 0 or s.length & (s.length-1):
                     raise Unsupported('Shuffle width must be a power of two <=32')
+                mask = self.reg('r')
+                self.emit(f'activemask.b32 {mask};')
                 offset = s.length // 2
                 while offset:
                     for a, b in zip(s.state, s.state_b, strict=True):
                         r = self.reg('f')
-                        self.emit(f'shfl.sync.bfly.b32 {r}, {self.value(a)}, {offset}, 31, 0xffffffff;')
+                        self.emit(f'shfl.sync.bfly.b32 {r}, {self.value(a)}, {offset}, 31, {mask};')
                         self.values[b] = (r, 'f32')
                     self.statements(s.combine_states)
                     offset //= 2
@@ -323,7 +384,27 @@ class Emitter:
                 ident(s.name)
                 self.buffers[s.name] = (tuple(s.extents), 'f32')
                 self.shared[s.name] = s
-                self.declarations.append(f'.shared .align {max(4, s.align)} .b8 {s.name}[{4*math.prod(s.extents)}];')
+                if not self.dynamic_shared:
+                    self.declarations.append(f'.shared .align {max(4, s.align)} .b8 {s.name}[{4*math.prod(s.extents)}];')
+            elif kind == 'CpAsyncCopy':
+                if s.swizzle not in ('NONE', None) or s.nbytes not in (4, 8, 16):
+                    raise Unsupported('Only nonswizzled f32 copy groups supported')
+                from emmy.compiler.ir.expr import BinaryExpr
+                destination = s.smem_index
+                if s.lane_index is not None:
+                    destination = tuple(BinaryExpr('+', a, b) for a, b in zip(destination, s.lane_index, strict=True))
+                for offset in range(s.nbytes // 4):
+                    src, source_space = self.address(s.src, s.src_index, offset)
+                    dst, destination_space = self.address(s.smem, destination, offset)
+                    if source_space != 'global' or destination_space != 'shared':
+                        raise Unsupported('Copy must transport global to shared')
+                    register = self.reg('f')
+                    self.emit(f'ld.global.f32 {register}, [{src}];')
+                    self.emit(f'st.shared.f32 [{dst}], {register};')
+            elif kind in ('CpAsyncCommit', 'CpAsyncWait'):
+                # Copies above are synchronous. Preserve the IR's existing CTA
+                # barriers; adding barriers inside cooperative copy loops is unsafe.
+                pass
             elif kind == 'Cond':
                 p, dtype = self.expr(s.cond)
                 if dtype != 'pred':
@@ -386,17 +467,25 @@ class Emitter:
         params = ',\n'.join(f'    .param .u64 param_{i}' for i, _ in enumerate(self.meta['arg_order']))
         decl = [f'    .reg .{suffix} %{kind}<{self.counts[kind]+1}>;' for kind,suffix in [('r','b32'),('rd','b64'),('f','f32'),('p','pred')]]
         decl += ['    '+x for x in self.declarations]
-        return '\n'.join(['.version 8.0', '.target sm_89', '.address_size 64', '', f'.visible .entry {ident(self.node.op.name)}(', params, ')', '{', *decl, *self.lines, 'kernel_done:', '    ret;', '}', ''])
+        return '\n'.join(['.version 8.0', '.target sm_89', '.address_size 64', '', *self.externals, f'.visible .entry {ident(self.node.op.name)}(', params, ')', '{', *decl, *self.lines, 'kernel_done:', '    ret;', '}', ''])
 
 
 def compile_path(path):
     path = Path(path)
     graph = Graph.from_dict(json.loads(path.read_text()))
     kernels = [(name,n) for name,n in graph.nodes.items() if type(n.op).__name__ == 'KernelOp']
-    if len(kernels) != 1:
-        raise Unsupported(f'Expected one KernelOp, got {len(kernels)}')
-    name,node = kernels[0]
     metadata = json.loads(path.with_name('meta.json').read_text())
+    if len(kernels) == 1:
+        name,node = kernels[0]
+    else:
+        # Pipeline IR dumps may retain the whole graph. The filename names the
+        # requested kernel; node and entry metadata jointly validate selection.
+        requested = path.name[:-len('.ir.json')] if path.name.endswith('.ir.json') else path.stem
+        selected = [(name, node) for name, node in kernels if node.op.name == requested
+                    and any(k['entry'] == requested and k['node'] == name for k in metadata['kernels'])]
+        if len(selected) != 1:
+            raise Unsupported('Expected a unique filename-selected KernelOp in pipeline graph')
+        name,node = selected[0]
     matches = [k for k in metadata['kernels'] if k['entry'] == node.op.name and k['node'] == name]
     if len(matches) != 1:
         raise Unsupported('Expected exactly one metadata kernel matching node and entry')

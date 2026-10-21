@@ -18,35 +18,77 @@ Read the sibling `meta.json`: entry names, positional arg_order, launch geometry
 shared memory, zero_outputs, tolerances, and ordered multi-kernel execution are
 contracts. Do not assume inputs followed by outputs is the ABI.
 
-## Automated discovery loop
+## Local research loop
 
-Use the repository skills below; these are ordinary Markdown instructions with
-no dependency on an agent vendor. Codex discovers `.agents/skills`; Claude Code
-discovers the same files via the `.claude/skills` directory symlink and `CLAUDE.md`.
+Discovery is opt-in. Start or resume a research campaign only when the user
+explicitly requests it. Routine implementation, bug repair, code review, and
+correctness debugging do not start agents, sweeps, calibration, or a discovery
+run automatically. Reading a skill or opening the repository starts no service.
+When discovery is requested, read [docs/research-loop.md](docs/research-loop.md)
+and use the three shared kernel skills. Codex discovers `.agents/skills`; Claude Code discovers the same
+files through `.claude/skills` and `CLAUDE.md`. Keep one canonical copy.
 
-1. Read `.agents/skills/kernel-strategy/SKILL.md` to select the next strategy.
-2. Read `.agents/skills/kernel-experiment/SKILL.md` to turn one hypothesis into
-   an implementation and measured experiment.
-3. Read `.agents/skills/kernel-reflection/SKILL.md` to decide, retain evidence,
-   and select the next hypothesis. Repeat within the authorized run budget.
+The active session coordinates up to three native subagents. Check actual
+capacity, give distinct questions and isolated workspaces, and return compact
+findings with NFS evidence links. Use two coverage responsibilities and one speed
+responsibility until ALL five backlog items close: m01_matmul_512,
+m02_matmul_rect, f02_row_softmax, a01_attention, a02_attention_128. Completing one
+assignment means taking the next unresolved item. Blocked workers may explore
+speed temporarily without dropping coverage responsibility.
 
-At run start state a wall-time or experiment budget and concrete stop condition.
-If the user supplies neither, use at most 30 minutes or 10 experiments, whichever
-comes first, and report unfinished work. A budget limits execution, not evidence
-standards. Do not spawn workers or saturate the shared GPU runner by default.
-Use sequential remote evaluation, bounded retries, and timeouts. No paid compute,
-public submission, publishing, or dependency upgrades without authorization.
+Research freedom matters: agents may build probes, redesign lowering, combine
+related mechanisms, pivot or reject an idea. Search prior mechanism/experiment
+records before implementation. State the applicable semantics, prediction,
+cheap discriminating test, opportunity and budget. Address prior contradictions;
+do not manufacture a candidate to satisfy a workflow. Rough cost models guide
+priorities; uncertain estimates do not veto unconventional ideas.
 
-Establish correctness across all 8 pointwise/reduction MVP problems first, then
-extend coverage to matmul, fused, and attention. The challenge ranks hidden-set
-correctness, code review, then speed. Within correct coverage, pursue measured
-latency improvements and compiler efficiency; compile in seconds per kernel.
-Never hardcode fixture names, expected values, or open-set shapes as solutions.
-General static-shape specialization derived from the input IR is appropriate.
+The coordinator owns generators/oracles; independently validate and freeze them
+before coverage research. Compiler agents must not edit their own evaluator.
+Use fresh typed IR variants and independent plain NumPy references. Fix numerical
+tolerances per version; changing a generator/tolerance creates a new evaluation
+version and requires reevaluating both baseline and candidate.
 
-Before finishing, run relevant regression cases and report actual pass/fail/
-unverified counts, category coverage, performance evidence and its limitations,
-and the next hypothesis. Missing GPU/network access is unverified, never a pass.
+CPU preparation uses two workers, cached cases/references and bounded sweeps
+(default 16 variants/hypothesis, ready queue 16). Preserve metadata launch/ABI.
+Static activation checks precede GPU timing. Resource increases are warnings.
+GPU jobs use host admission and our shared lock. Concurrent correctness is only
+screening; guard every buffer and quarantine/recheck all implicated batchmates.
+Every promotion requires fresh isolated confirmation; m02 atomics require an
+isolated first check, resets and Compute Sanitizer. Timing is exclusive, paired,
+case-specific in its noise calibration, block-checkpointed and independently
+confirmed after selecting sweep winners. Never infer improvement from one smoke
+latency or hide regressions in an aggregate.
+
+Persist source, exact cases/inputs/references, IR/PTX/cubin/SASS, commands,
+environment, admission, measurements, failures and resumable handoffs under the
+configured NFS research root. Conversation memory is supplementary. Verify
+identities and inspect recorded live jobs before restarting; never redraw an
+inconvenient confirmation batch or kill by heartbeat age alone.
+
+Use explicit bounded runs. Default research/smoke budget is 30 minutes or ten
+variants; infrastructure throughput qualification is at most two hours or 64
+prepared replay variants. Infrastructure acceptance is separate from campaign
+success. Native agents provide research direction; this setup is not an
+unattended provider-specific agent service. No paid compute or publication.
+
+Hosted calibration is authorized only for evaluated shortlists through the
+budgeted calibration helper: at most one batch/run, 25 total HTTP attempts,
+17 planned, serial and >=2 seconds apart, stop on busy/rate-limit/service error.
+Otherwise keep evaluation local; never fall back to the endpoint. Record 4090
+and 5090 evidence separately. Keep unsupported/unverified distinct from passed.
+
+Every candidate and baseline must pass ALL 15 published problems at their exact
+metadata tolerances before its GPU performance evaluation or benchmarking is
+valid. Bind this gate to actual frozen source and evaluator identities; a source
+change invalidates it. Partial sweeps and GPU correctness debugging can diagnose
+failures but cannot authorize timing or promotion. This requirement applies even
+to speed work on a single family and cannot be waived as performance debt.
+
+Never hardcode fixture names/values/shapes as solutions. General specialization
+from typed IR is allowed. Before reporting completion, run relevant regressions
+and state actual coverage, performance evidence and limits. Closing all five
+gaps is the campaign goal; it is not a prerequisite for infrastructure acceptance.
 
 ## Git and compiler transfer boundaries
 
@@ -57,8 +99,9 @@ plain source snapshots and experiment directories, not Git checkouts.
 Do not run Git network or remote-management actions from the local machine:
 no clone, fetch, pull, push, remote changes, or networked submodule operations.
 The owner chooses what to retain and performs repository publication. Do not
-commit or discard candidates on the owner's behalf. Local read-only Git checks
-and requested repository setup are permitted.
+commit or discard candidates without the owner's instruction. An explicit
+request to commit authorizes a local reviewed commit only; publication remains
+owner-controlled. Local read-only Git checks and requested setup are permitted.
 
 Develop compiler prototypes on the GPU host. Copy only locally GPU-evaluated,
 shortlisted compiler candidates back into the owner's repository, with their
