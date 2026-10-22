@@ -1,13 +1,15 @@
 # Correctness-first baseline
 
-The compiler with SHA-256
+The pre-tensor-core compiler snapshot with SHA-256
 `6db2dad4944d87ae46194fd4deaf9331327cda21b21adaa434a1db41f515e6ba`
 passes all 15 published problems on the local RTX 4060 Laptop GPU (sm_89) at
 their original metadata tolerances. [Per-case results](baseline-correctness.json)
 record the observed errors from that complete gate, and
 [the gate report](../experiments/015-rtx4060-f16-scalar-math/gate/results.json)
 binds the pass to the frozen source hash. This is published-case correctness,
-not a claim about the hidden set.
+not a claim about the hidden set. The tensor-core increment is a separate source
+identity, gated independently and summarized in
+[the tensor-core evidence bundle](../experiments/tensor-core-v1/README.md).
 
 ## What changed
 
@@ -41,16 +43,18 @@ The correctness gate and generated variants cover those paths at the hash above.
   against the admitted local runner (`sm_89`, RTX 4060). All 15 cases exited
   zero with `all15_passed: true`, `missing: []`, and `failed: []`. A separate
   reordered-ABI probe also passed.
-- The compiler's 31 local tests pass, including two-target assembly, partial-CTA
-  masking, scalar ABI, integer copy, natural log, reduction aliases, vector-copy
-  emission/runtime fallback, an unaligned-index case, `f16` storage/promotion,
-  the scalar-math lowering, and the m01 invariant-index CSE regression. The
-  tests below assert emitted instructions, not bit-exact numerical equivalence
-  for every approximation or NaN/signed-zero edge case.
-- The full repository suite ran 158 tests: 149 passed and nine preparation tests
-  errored in this non-root environment because the restricted compile boundary
-  requires effective UID 0 and libseccomp. Those errors occur before any
-  compiler invocation.
+- The current non-root runnable suite passes 157 tests, including two-target
+  assembly, partial-CTA masking, scalar ABI, integer copy, natural log, reduction
+  aliases, vector-copy emission/runtime fallback, `f16` storage/promotion, the
+  scalar-math lowering, the m01 invariant-index CSE regression, and 13
+  tensor-core tests. The tests assert emitted instructions and typed proofs, not
+  bit-exact numerical equivalence for every approximation or NaN/signed-zero
+  edge case.
+- Full `unittest discover` finds 171 tests; nine preparation tests error in this
+  non-root environment because the restricted compile boundary requires
+  effective UID 0 and libseccomp. Those errors occur before any compiler
+  invocation. The pre-increment `015` snapshot's 158-test boundary record stays
+  unchanged in [the machine-readable baseline](baseline-correctness.json).
 - [Typed variants](../experiments/015-rtx4060-f16-scalar-math/variants2/gpu-results.json)
   ran 18 generated cases in isolated batches with five repetitions each; all
   checks and guard buffers passed.
@@ -94,13 +98,22 @@ unless a concrete contract-relevant failure requires them.
   typed reference before changing the current `max`/`min` lowering; and the
   scalar `erf`/`gelu`/`gelu_tanh` approximations are validated only on the
   generated variant domain.
+- Performance-transport limits: the current compiler emits `cp.async` only for
+  proven-wide, aligned copies and has no TMA, `ldmatrix`, or `stmatrix` path.
+  TMA, `cp.async.bulk`, and `stmatrix` require `sm_90` or newer; the local
+  RTX 4060 is `sm_89`. PTX targeting `sm_89` cannot be used to claim their
+  execution evidence.
 - Capability limits: non-warp `TreeHalve`, general named-barrier forms, shuffle
   widths above 32 bits, and non-add/integer atomics are unverified or rejected.
   `TASK.md` does not require every constructible form, so these need a concrete
   contract-relevant failure before they enter the work queue.
 - Starred constructs, explicitly outside the challenge contract: `bf16`,
   `CpAsyncCopy` swizzles `B32`/`B64`/`B128`, `raster_group` application,
-  shared atomics, `ZeroPrologue`, TMA, tensor-core fragments, and `wgmma`.
+  shared atomics, `ZeroPrologue`, TMA, Emmy's explicit tensor-core fragment
+  nodes, and `wgmma`. The non-starred SIMT vocabulary is not a restriction on
+  legal instruction selection: the current compiler lowers a proved contraction
+  from ordinary `Load`/`multiply`/`Accum`/`Write` dataflow to `mma.sync` when all
+  plan invariants hold.
 
 ## Limits
 
@@ -108,8 +121,9 @@ This evidence does not establish hidden-set correctness, general support for
 all legal schedules, RTX 5090 behavior, or a comparative speedup on another
 machine. The CSE and `015` results are local RTX 4060 diagnostics rather than an
 evaluator-issued performance qualification. The local runner is an admitted
-research tool, not a hostile kernel sandbox. Tensor-core lowering is deferred;
-the generic typed scalar path remains available. Optimizations stay in the
-typed-IR analysis/emission layer so they do not block a later tensor-core
-recognizer and emitter. The design boundary is documented in
-[tensor-core-plan.md](tensor-core-plan.md).
+research tool, not a hostile kernel sandbox. The current source emits a
+three-term TF32 `mma.sync` path for proved one-atom-per-warp matmul plans; the
+generic typed scalar path remains the byte-identical correctness fallback for
+every unmatched or unsupported case. The implemented path, corpus gate, and
+remaining limits are documented in [tensor-core-plan.md](tensor-core-plan.md)
+and [the tensor-core evidence bundle](../experiments/tensor-core-v1/README.md).

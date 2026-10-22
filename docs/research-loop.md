@@ -225,6 +225,13 @@ compiler development starts. Softmax references use ordinary stable softmax;
 attention references use score matrices, ordinary stable softmax, then value
 contraction. They must not repeat the online lowering algorithm.
 
+For tensor-core recognizer work, the corpus gate in
+[tensor-core-plan.md](tensor-core-plan.md) is stricter than shape variation:
+freeze independently constructed typed-IR dataflows, negative near-misses, and
+expected classifications before recognizer implementation. Do not reuse one
+matmul builder template as the only positive evidence, and do not treat
+`m01`/`m02` as representative of hidden dataflow.
+
 Keep published tolerances unchanged. Generated matmul uses `rtol=0.001,
 atol=0.001`; softmax uses `0.001, 0.00001`; attention uses `0.001, 0.0001`.
 The standard generated matrix/attention dimensions are drawn from 1, 3, 7, 16,

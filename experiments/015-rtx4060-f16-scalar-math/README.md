@@ -96,6 +96,11 @@ rather than reconstructing the launch metadata.
 
 ## Limits
 
+This directory is frozen at compiler hash `6db2dad4...`; it is not evidence for
+the current tensor-core source. Use
+[the tensor-core evidence bundle](../tensor-core-v1/README.md) for that source's
+current identities, classifications, and execution results.
+
 - Published fixtures and generated typed variants do not prove hidden-set
   correctness or arbitrary legal schedules.
 - `bf16`, swizzled `cp.async` (`B32`/`B64`/`B128`), wider-than-32-bit shuffle
@@ -104,6 +109,9 @@ rather than reconstructing the launch metadata.
 - The scalar approximations (`erf`, `gelu`, `gelu_tanh`) are checked against a
   NumPy/SciPy independent reference only on the generated variant domain.
 - The local runner is a trusted research tool, not a hostile-kernel sandbox.
-- Tensor-core lowering is not implemented. The recognizer/emitter boundary and
-  planned precision/split-K work are described in
-  [tensor-core-plan.md](../../docs/tensor-core-plan.md).
+- Tensor-core lowering is not implemented in this frozen source. The later
+  current compiler implements the one-atom TF32 path; split-K atomics remain
+  unimplemented. The completed preflight, corrected m02 warp/tile geometry,
+  typed-IR corpus gate, and evidence are described in
+  [tensor-core-plan.md](../../docs/tensor-core-plan.md) and
+  [the tensor-core evidence bundle](../tensor-core-v1/README.md).

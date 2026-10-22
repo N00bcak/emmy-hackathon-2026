@@ -1,8 +1,9 @@
 # RTX 4060 `cp.async` candidate
 
 > **Superseded by `015-rtx4060-f16-scalar-math`.** This record is valid only for
-> compiler hash `b3b0a3ac...`. Use `015` for the current compiler, gate, and
-> reproduction commands; this directory remains the durable prior-stage evidence.
+> compiler hash `b3b0a3ac...`. Use `015` for that later compiler, gate, and
+> reproduction commands, and the tensor-core evidence bundle for the current
+> source; this directory remains durable prior-stage evidence.
 
 This directory is the durable record for the `cp.async` candidate. It is local
 RTX 4060 (sm_89) evidence. It does not establish hidden-set correctness, RTX
@@ -81,8 +82,9 @@ entire record.
 - `cp.async` currently covers nonswizzled 4/8/16-byte global-to-shared copies.
   Swizzled copies, wider shuffle forms, named-barrier variants, some atomic
   forms, and `f16`/`bf16` storage remain outside the verified surface.
-- Tensor-core lowering is not implemented. The recognizer/emitter boundary and
-  planned precision/split-K work are described in
+- Tensor-core lowering is not implemented in this frozen source. The later
+  current compiler implements the one-atom TF32 path; split-K atomics remain
+  unimplemented. The recognizer/emitter design and remaining work are described in
   [tensor-core-plan.md](../../docs/tensor-core-plan.md).
 - The local runner is a trusted research tool, not a hostile-kernel sandbox.
 

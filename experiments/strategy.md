@@ -3,9 +3,9 @@
 Confirmed target: direct Kernel IR to PTX. Upstream remains pinned in the
 parent repository, and no existing renderer/compiler performs our lowering.
 
-## Current baseline
+## Current baseline and implemented increment
 
-Compiler source `compile.py` has SHA-256
+The pre-tensor-core compiler source `compile.py` has SHA-256
 `6db2dad4944d87ae46194fd4deaf9331327cda21b21adaa434a1db41f515e6ba`. It emits
 PTX 8.0 for `sm_89` and passes all 15 published problems at their metadata
 tolerances on the local RTX 4060 Laptop GPU. The frozen gate, 31 compiler tests,
@@ -13,6 +13,16 @@ tolerances on the local RTX 4060 Laptop GPU. The frozen gate, 31 compiler tests,
 `015-rtx4060-f16-scalar-math`; the authoritative summary is
 [docs/baseline-correctness.md](../docs/baseline-correctness.md). This does not
 establish hidden-set correctness or RTX 5090 behavior.
+
+The current compiler adds a three-term TF32 `mma.sync` path for proved
+one-atom-per-warp matmul plans. m01 and 14 independently generated corpus
+`Plan` cases pass independent CPU references and local `sm_89` execution; all
+15 published cases pass, and every non-`Plan` case keeps its frozen SIMT PTX
+bytes. m02 remains `UnsupportedMatch` because four atoms do not match eight
+warps. The source hashes, corpus, assembly/SASS checks, execution logs, and
+audit dispositions are in
+[the tensor-core evidence bundle](tensor-core-v1/README.md). No tensor-core
+timing, speedup, or promotion claim is made.
 
 The only clear local speed result is `m01_matmul_512` at median `0.4893x` the
 frozen pre-CSE baseline. `m02_matmul_rect` is small and noisy (`0.9831x` here,
@@ -27,9 +37,9 @@ Correctness remains ahead of performance. The published gate is necessary but
 not sufficient: hidden cases vary shapes and op mixes within the five challenge
 categories. The next work should be driven by failures or gaps in the unstarred
 Kernel IR surface documented in `TASK.md`, not by every constructible starred
-form. In particular, tensor-core instructions, TMA, and `wgmma` are explicitly
-outside the challenge contract; the matmul-first tensor-core design remains a
-deferred plan in [docs/tensor-core-plan.md](../docs/tensor-core-plan.md).
+form. The TF32 matmul path is implemented and correctness-gated but not timed;
+attention, TMA, matrix transport, and `wgmma` remain out of scope as recorded in
+[docs/tensor-core-plan.md](../docs/tensor-core-plan.md).
 
 Optimization proceeds concurrently with scope broadening only through
 generality-preserving typed-IR analysis and emission. A candidate must first

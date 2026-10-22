@@ -21,6 +21,19 @@ The hosted GPU is an RTX 5090; the local GPU is a different model. The compiler
 emits PTX 8.0 targeting sm_89; each runner assembles for its own selected target.
 A 4090 latency cannot be treated as the corresponding 5090 latency.
 
+Instruction selection is the compiler's choice. The evaluator checks the ABI,
+launch, entry point, assembly result, and numerical output; it does not require a
+particular PTX opcode for an IR node. A tensor-core lowering is therefore valid
+only when its emitted PTX preserves the IR's semantics and meets the unchanged
+tolerance. The three-term TF32 requirement and fallback rules are in
+[tensor-core-plan.md](tensor-core-plan.md).
+
+The argument ABI contains pointers, scalars, and data buffers. It has no
+tensor-map descriptor argument form, so TMA tensor copies cannot be enabled
+through the current metadata alone. The runner's GPU and `ptxas` support are
+also separate from the PTX `.target`: an `sm_89` target cannot execute
+`cp.async.bulk`, TMA tensor copies, or `stmatrix` even on an `sm_120` host.
+
 ## Benign contract checks
 
 A bounded study made **16 hosted HTTP requests**, including health and OpenAPI.

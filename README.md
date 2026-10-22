@@ -1,29 +1,40 @@
 # Emmy compiler workspace
 
 A direct **Kernel IR → PTX** compiler and a local CUDA research system. The
-correctness baseline covers all 15 published problems at the frozen source hash
-`6db2dad4...`; verification details, local timing evidence, and limits are
-recorded in [the baseline report](docs/baseline-correctness.md). Hidden-set
-correctness and RTX 5090 performance remain unverified.
+current compiler passes all 15 published problems. The pre-tensor-core baseline
+is frozen at source hash `6db2dad4...`; verification details, local timing
+evidence, and limits are recorded in
+[the baseline report](docs/baseline-correctness.md). Hidden-set correctness and
+RTX 5090 performance remain unverified.
 
 The lowering is ours, using Emmy's typed loader and sibling metadata for ABI and
-launch contracts. It emits PTX targeting sm_89; it does not delegate lowering to
-Emmy's renderer, nvcc, or another compiler. The baseline prioritizes correctness.
+launch contracts. The compiler emits PTX targeting sm_89; evidence separately
+assembles the emitted PTX for sm_120. It does not delegate lowering to Emmy's
+renderer, nvcc, or another compiler. The baseline prioritizes correctness.
 On the local sm_89 RTX 4060, a frozen paired comparison shows a clear
 `m01_matmul_512` improvement (median `0.4893x`); `m02_matmul_rect` is small and
 noisy (`0.9831x`, not claimed as stable), and the remaining measured cases are
 neutral within timer resolution. No RTX 5090 or evaluator-issued speed claim is made.
 
-The matmul-first tensor-core design—dataflow recognition, warp-atom lowering,
-three-term TF32 precision evidence, split-K/atomics, and the attention
-follow-on—is recorded in [docs/tensor-core-plan.md](docs/tensor-core-plan.md).
-It is a plan, not an implemented feature.
+The matmul-first tensor-core path is recorded in
+[docs/tensor-core-plan.md](docs/tensor-core-plan.md) and
+[the tensor-core evidence bundle](experiments/tensor-core-v1/README.md).
+`compile.py` now recognizes proved dense contractions from typed
+`Load`/`multiply`/`Accum(add)`/`Write` dataflow and emits direct three-term TF32
+`mma.sync.aligned.m16n8k8.row.col.f32.tf32.tf32.f32` PTX. m01 and 14 frozen
+corpus Plan cases pass independent CPU and GPU references at unchanged
+tolerances. The other 14 published cases and all 9 corpus fallback cases retain
+the frozen SIMT path.
+m02 remains `UnsupportedMatch` under the one-atom-per-warp rule (four atoms,
+eight warps), and its PTX is byte-identical to the baseline. TMA,
+`cp.async.bulk`, `ldmatrix`, `stmatrix`, and `wgmma` are out of scope and are not
+emitted.
 
-Optimization proceeds concurrently with scope broadening, but only as
-generality-preserving typed-IR analysis and emission. Every source change still
-requires all 15 published cases to pass before timing, and tensor-core lowering
-will be a separate recognizer/emitter increment rather than a rewrite of the
-generic path.
+Tensor-core lowering landed as a separate recognizer and emitter increment; the
+generic typed path and its frozen fallback behavior were not rewritten. Further
+optimization proceeds only as generality-preserving typed-IR analysis and
+emission. Every source change still requires all 15 published cases to pass
+before timing.
 
 ```sh
 uv venv --python 3.13
@@ -113,3 +124,17 @@ or establish parity with hosted hardware.
 
 [Private repository publication](docs/version-control.md) describes the owner-run
 GitHub steps. This implementation makes a local commit only; it does not push.
+
+## Documentation map
+
+- [Baseline correctness](docs/baseline-correctness.md) records the frozen
+  correctness and local performance evidence.
+- [Tensor-core plan](docs/tensor-core-plan.md) records the preflight, legality
+  boundary, corpus gate, and implemented one-atom recognizer/emitter stages.
+- [Tensor-core evidence](experiments/tensor-core-v1/README.md) binds the frozen
+  baseline, corpus, assembly, execution, and adversarial audits to exact source
+  hashes.
+- [Research loop](docs/research-loop.md) describes opt-in research, retention,
+  and confirmation rules.
+- [Evaluator contract](docs/evaluator-contract.md) describes the local evaluator
+  and observed hosted behavior.
