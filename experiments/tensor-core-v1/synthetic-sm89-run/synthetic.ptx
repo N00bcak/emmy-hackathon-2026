@@ -1,0 +1,118 @@
+.version 8.0
+.target sm_89
+.address_size 64
+
+.visible .entry synthetic_mma(
+    .param .u64 param_A,
+    .param .u64 param_B,
+    .param .u64 param_C
+)
+{
+    .reg .b32 %r<96>;
+    .reg .b64 %rd<16>;
+    .reg .f32 %f<32>;
+    .reg .pred %p<2>;
+    ld.param.u64 %rd1, [param_A];
+    ld.param.u64 %rd2, [param_B];
+    ld.param.u64 %rd3, [param_C];
+    cvta.to.global.u64 %rd1, %rd1;
+    cvta.to.global.u64 %rd2, %rd2;
+    cvta.to.global.u64 %rd3, %rd3;
+    mov.u32 %r1, %tid.x;
+    and.b32 %r2, %r1, 31;
+    shr.u32 %r3, %r2, 2;
+    and.b32 %r4, %r2, 3;
+    mul.lo.u32 %r5, %r3, 8;
+    add.u32 %r5, %r5, %r4;
+    mul.wide.u32 %rd4, %r5, 4;
+    add.u64 %rd4, %rd1, %rd4;
+    ld.global.f32 %f1, [%rd4];
+    add.u32 %r6, %r5, 64;
+    mul.wide.u32 %rd5, %r6, 4;
+    add.u64 %rd5, %rd1, %rd5;
+    ld.global.f32 %f2, [%rd5];
+    add.u32 %r7, %r5, 4;
+    mul.wide.u32 %rd6, %r7, 4;
+    add.u64 %rd6, %rd1, %rd6;
+    ld.global.f32 %f3, [%rd6];
+    add.u32 %r8, %r5, 68;
+    mul.wide.u32 %rd7, %r8, 4;
+    add.u64 %rd7, %rd1, %rd7;
+    ld.global.f32 %f4, [%rd7];
+    mul.lo.u32 %r9, %r4, 8;
+    add.u32 %r9, %r9, %r3;
+    mul.wide.u32 %rd8, %r9, 4;
+    add.u64 %rd8, %rd2, %rd8;
+    ld.global.f32 %f5, [%rd8];
+    add.u32 %r10, %r9, 32;
+    mul.wide.u32 %rd9, %r10, 4;
+    add.u64 %rd9, %rd2, %rd9;
+    ld.global.f32 %f6, [%rd9];
+    cvt.rna.tf32.f32 %r12, %f1;
+    cvt.rna.tf32.f32 %r13, %f2;
+    cvt.rna.tf32.f32 %r14, %f3;
+    cvt.rna.tf32.f32 %r15, %f4;
+    cvt.rna.tf32.f32 %r16, %f5;
+    cvt.rna.tf32.f32 %r17, %f6;
+    mov.b32 %f19, %r12;
+    sub.f32 %f19, %f1, %f19;
+    cvt.rna.tf32.f32 %r18, %f19;
+    mov.b32 %f20, %r13;
+    sub.f32 %f20, %f2, %f20;
+    cvt.rna.tf32.f32 %r19, %f20;
+    mov.b32 %f21, %r14;
+    sub.f32 %f21, %f3, %f21;
+    cvt.rna.tf32.f32 %r20, %f21;
+    mov.b32 %f22, %r15;
+    sub.f32 %f22, %f4, %f22;
+    cvt.rna.tf32.f32 %r21, %f22;
+    mov.b32 %f23, %r16;
+    sub.f32 %f23, %f5, %f23;
+    cvt.rna.tf32.f32 %r22, %f23;
+    mov.b32 %f24, %r17;
+    sub.f32 %f24, %f6, %f24;
+    cvt.rna.tf32.f32 %r23, %f24;
+    mov.f32 %f7, 0f00000000;
+    mov.f32 %f8, 0f00000000;
+    mov.f32 %f9, 0f00000000;
+    mov.f32 %f10, 0f00000000;
+    mov.f32 %f11, 0f00000000;
+    mov.f32 %f12, 0f00000000;
+    mov.f32 %f13, 0f00000000;
+    mov.f32 %f14, 0f00000000;
+    mov.f32 %f15, 0f00000000;
+    mov.f32 %f16, 0f00000000;
+    mov.f32 %f17, 0f00000000;
+    mov.f32 %f18, 0f00000000;
+    mma.sync.aligned.m16n8k8.row.col.f32.tf32.tf32.f32 {%f7, %f8, %f9, %f10}, {%r12, %r13, %r14, %r15}, {%r16, %r17}, {%f7, %f8, %f9, %f10};
+    mma.sync.aligned.m16n8k8.row.col.f32.tf32.tf32.f32 {%f11, %f12, %f13, %f14}, {%r12, %r13, %r14, %r15}, {%r22, %r23}, {%f11, %f12, %f13, %f14};
+    mma.sync.aligned.m16n8k8.row.col.f32.tf32.tf32.f32 {%f15, %f16, %f17, %f18}, {%r18, %r19, %r20, %r21}, {%r16, %r17}, {%f15, %f16, %f17, %f18};
+    add.f32 %f7, %f7, %f11;
+    add.f32 %f8, %f8, %f12;
+    add.f32 %f9, %f9, %f13;
+    add.f32 %f10, %f10, %f14;
+    add.f32 %f7, %f7, %f15;
+    add.f32 %f8, %f8, %f16;
+    add.f32 %f9, %f9, %f17;
+    add.f32 %f10, %f10, %f18;
+    mul.lo.u32 %r25, %r3, 8;
+    mul.lo.u32 %r26, %r4, 2;
+    add.u32 %r25, %r25, %r26;
+    mov.u32 %r27, %r25;
+    mul.wide.u32 %rd10, %r27, 4;
+    add.u64 %rd10, %rd3, %rd10;
+    st.global.f32 [%rd10], %f7;
+    add.u32 %r28, %r25, 1;
+    mul.wide.u32 %rd11, %r28, 4;
+    add.u64 %rd11, %rd3, %rd11;
+    st.global.f32 [%rd11], %f8;
+    add.u32 %r29, %r25, 64;
+    mul.wide.u32 %rd12, %r29, 4;
+    add.u64 %rd12, %rd3, %rd12;
+    st.global.f32 [%rd12], %f9;
+    add.u32 %r30, %r25, 65;
+    mul.wide.u32 %rd13, %r30, 4;
+    add.u64 %rd13, %rd3, %rd13;
+    st.global.f32 [%rd13], %f10;
+    ret;
+}

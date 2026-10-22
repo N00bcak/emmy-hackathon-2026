@@ -1,0 +1,30 @@
+{
+  "compiler_sha256": "996cf5fcd1b6fd70608d384856e97a9057f20b06b55b99087976c89d947c08d4",
+  "plans": 15,
+  "classifications": {
+    "m01_matmul_512": "Plan",
+    "n01-same-buffer": "NoMatch",
+    "n02-nonaffine-gather": "NoMatch",
+    "n03-unrelated-reduction": "NoMatch",
+    "n04-unsupported-epilogue": "NoMatch",
+    "n05-partial-collective": "UnsupportedMatch",
+    "n06-split-without-atomics": "UnsupportedMatch",
+    "n07-split-atomic": "UnsupportedMatch",
+    "n08-launch-mismatch": "UnsupportedMatch",
+    "n09-tail-partial": "UnsupportedMatch",
+    "p01-direct-16x8": "Plan",
+    "p02-direct-32x16": "Plan",
+    "p03-direct-64x32": "Plan",
+    "p04-staged-32x16": "Plan",
+    "p05-staged-64x32": "Plan",
+    "p06-staged-32x64": "Plan",
+    "p07-b-transpose-32x16": "Plan",
+    "p08-a-transpose-16x16": "Plan",
+    "p09-direct-32x8": "Plan",
+    "p10-staged-16x32": "Plan",
+    "p11-direct-16x32": "Plan",
+    "p12-staged-b-transpose": "Plan",
+    "p13-direct-48x24": "Plan",
+    "p14-staged-48x24": "Plan"
+  }
+}

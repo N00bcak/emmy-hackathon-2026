@@ -1,0 +1,1 @@
+["/opt/cuda/bin/ptxas", "-arch=sm_89", "-v", "experiments/tensor-core-v1/published-sm89/cache/3bd6f0e6f8c31a1d6b8901ac6539bc8c4dced85340b1e93c108919a07ab36279/source.ptx", "-o", "experiments/tensor-core-v1/published-sm89/cache/3bd6f0e6f8c31a1d6b8901ac6539bc8c4dced85340b1e93c108919a07ab36279/module.cubin"]

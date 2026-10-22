@@ -1,0 +1,2 @@
+[k_sum_1_reduce] 17 registers
+[k_sum_1_reduce] PASS  sum_1: max abs err 5.722e-06  (17.823999747633934 us)

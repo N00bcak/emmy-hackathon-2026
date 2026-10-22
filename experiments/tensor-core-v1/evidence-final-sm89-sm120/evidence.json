@@ -1,0 +1,562 @@
+{
+  "architectures": [
+    "sm_89",
+    "sm_120"
+  ],
+  "compiler_sha256": "bd8b2c402ec4eca27252833b460b763c04d1fbfff5967e3dabaee932bfb73226",
+  "ptxas_version": "ptxas: NVIDIA (R) Ptx optimizing assembler",
+  "cases": [
+    {
+      "case": "m01_matmul_512",
+      "classification": "Plan",
+      "reason": "validated one-atom TF32 matmul plan",
+      "ir_sha256": "ed9ab32776ce0de8b0d1f0367da54c586bf993c964efc01482666247a976dc02",
+      "ptx_sha256": "84e26af55cd3c696a891d583a04e13b20d48a2f349223f8140311e3de9f14b9b",
+      "mma_count": 3,
+      "plans": {
+        "m": 512,
+        "n": 512,
+        "k": 512,
+        "active_warps": 16,
+        "block_m": 32,
+        "block_n": 64,
+        "staging": "shared"
+      },
+      "arches": {
+        "sm_89": {
+          "cubin_sha256": "602fd58acbb5e6d621f519a4e449083de2b5acb8305b68a6b3013c062eae0f0b",
+          "mma_lines": [
+            "/*06b0*/                   HMMA.1688.F32.TF32 R12, R16, R26.reuse, R12 ;       /* 0x0000001a100c723c */",
+            "/*06c0*/                   HMMA.1688.F32.TF32 R4, R20, R26, R4 ;               /* 0x0000001a1404723c */",
+            "/*06d0*/                   HMMA.1688.F32.TF32 R8, R16, R28, R8 ;               /* 0x0000001c1008723c */"
+          ]
+        },
+        "sm_120": {
+          "cubin_sha256": "e3b236886d1960338cd554ad921365ebcdf837dd6ade32433cbbc5ff03600a72",
+          "mma_lines": [
+            "/*06d0*/                   HMMA.1688.F32.TF32 R12, R16, R2, R12 ;          /* 0x00000002100c723c */",
+            "/*06e0*/                   HMMA.1688.F32.TF32 R8, R16, R28, R8 ;           /* 0x0000001c1008723c */",
+            "/*06f0*/                   HMMA.1688.F32.TF32 R4, R20, R2, R4 ;            /* 0x000000021404723c */"
+          ]
+        }
+      }
+    },
+    {
+      "case": "n01-same-buffer",
+      "classification": "NoMatch",
+      "reason": "both operands load the same buffer",
+      "ir_sha256": "e6b77ae6f3446bd045575bca27bebd1425eec0556da1f77ec3845425db3b1ddf"
+    },
+    {
+      "case": "n02-nonaffine-gather",
+      "classification": "NoMatch",
+      "reason": "operand coordinate is a non-affine gather",
+      "ir_sha256": "253e7ff0a6ca7ac82881e700e2a61569438835462e1aa140e2448d390575215b"
+    },
+    {
+      "case": "n03-unrelated-reduction",
+      "classification": "NoMatch",
+      "reason": "fold value is not one multiply assignment",
+      "ir_sha256": "804778855878f13a5c8b23779e9cd4e193fbc256ebc492c845eb5512e3576fec"
+    },
+    {
+      "case": "n04-unsupported-epilogue",
+      "classification": "NoMatch",
+      "reason": "one accumulator aliases distinct output cells",
+      "ir_sha256": "979586e4530c96c139d051298a626c5727e4916f34a82ce08fc41aa18b3c871c"
+    },
+    {
+      "case": "n05-partial-collective",
+      "classification": "UnsupportedMatch",
+      "reason": "staged plan lacks a post-compute CTA barrier",
+      "ir_sha256": "77ee00399769e5d92d719f168c7ca3ad1eb32751e565eabda44bb5aec0a6309c"
+    },
+    {
+      "case": "n06-split-without-atomics",
+      "classification": "UnsupportedMatch",
+      "reason": "duplicate non-atomic output coverage (split-K without atomics)",
+      "ir_sha256": "f3bf198579067afdfe1b034f2142c46f8244e8f215f0aac8f2b3adc0245aba89"
+    },
+    {
+      "case": "n07-split-atomic",
+      "classification": "UnsupportedMatch",
+      "reason": "CTA grid does not exactly factor the output tile grid",
+      "ir_sha256": "cec4677d0d651bb6200aed7a8d2d384b8d2c30275c2d4c3b49e843277e21d81c"
+    },
+    {
+      "case": "n08-launch-mismatch",
+      "classification": "UnsupportedMatch",
+      "reason": "launch factorization has 1 atoms for 2 warps",
+      "ir_sha256": "34d6ae032dda3086eb0ec5e28137d17b5cd239c42b2c2104aadd2b6d9a27b75c"
+    },
+    {
+      "case": "n09-tail-partial",
+      "classification": "UnsupportedMatch",
+      "reason": "CTA tile is not an exact atom multiple",
+      "ir_sha256": "313268cee89463ea56cf3ef4b018c59dad02b077b1367b4afeea8e60d3e181c7"
+    },
+    {
+      "case": "p01-direct-16x8",
+      "classification": "Plan",
+      "reason": "validated one-atom TF32 matmul plan",
+      "ir_sha256": "35038498fd2bb109c5c2c9535593b413d3d89ea38cb68c3f3ee0b566c60593ca",
+      "ptx_sha256": "452d6c05e637202c92b4f7ab0a062983890bb7e1a393b8b3d61d70251e4553a8",
+      "mma_count": 3,
+      "plans": {
+        "m": 16,
+        "n": 8,
+        "k": 8,
+        "active_warps": 1,
+        "block_m": 16,
+        "block_n": 8,
+        "staging": "global"
+      },
+      "arches": {
+        "sm_89": {
+          "cubin_sha256": "4c87aebbf26a7b26e26618fd0b5049de4e99f6927c070496aa433dc915f17b20",
+          "mma_lines": [
+            "/*0470*/                   HMMA.1688.F32.TF32 R8, R12.reuse, R8, RZ ;         /* 0x000000080c08723c */",
+            "/*0480*/                   HMMA.1688.F32.TF32 R12, R12, R16.reuse, RZ ;       /* 0x000000100c0c723c */",
+            "/*0490*/                   HMMA.1688.F32.TF32 R4, R4, R16, RZ ;               /* 0x000000100404723c */"
+          ]
+        },
+        "sm_120": {
+          "cubin_sha256": "ac6a51ea17177c6eb1bae15bddf7ba7f65adf0839a50f0fc54d91aaba971c043",
+          "mma_lines": [
+            "/*0480*/                   HMMA.1688.F32.TF32 R8, R12, R8, RZ ;            /* 0x000000080c08723c */",
+            "/*0490*/                   HMMA.1688.F32.TF32 R12, R12, R16.reuse, RZ ;    /* 0x000000100c0c723c */",
+            "/*04a0*/                   HMMA.1688.F32.TF32 R4, R4, R16, RZ ;            /* 0x000000100404723c */"
+          ]
+        }
+      }
+    },
+    {
+      "case": "p02-direct-32x16",
+      "classification": "Plan",
+      "reason": "validated one-atom TF32 matmul plan",
+      "ir_sha256": "ce2ce24dbe5676d147fb46701000bda595a1aa629c61fd8574a9446847e31b53",
+      "ptx_sha256": "0c4541bc0da105a86f05957e7c1736711cdb60b7ae783064de42e3b71c48fcce",
+      "mma_count": 3,
+      "plans": {
+        "m": 32,
+        "n": 16,
+        "k": 16,
+        "active_warps": 1,
+        "block_m": 16,
+        "block_n": 8,
+        "staging": "global"
+      },
+      "arches": {
+        "sm_89": {
+          "cubin_sha256": "1c8ea44e11a2a07033f4a97abd677cae68891c79b12ebda8dd4fb8dbf57cfdaf",
+          "mma_lines": [
+            "/*0830*/                   HMMA.1688.F32.TF32 R12, R20, R12, RZ ;                 /* 0x0000000c140c723c */",
+            "/*0870*/                   HMMA.1688.F32.TF32 R20, R20, R10.reuse, RZ ;           /* 0x0000000a1414723c */",
+            "/*0880*/                   HMMA.1688.F32.TF32 R24, R24, R10, RZ ;                 /* 0x0000000a1818723c */",
+            "/*09a0*/                   HMMA.1688.F32.TF32 R20, R16.reuse, R4, R20 ;           /* 0x000000041014723c */",
+            "/*09b0*/                   HMMA.1688.F32.TF32 R12, R16, R2, R12 ;                 /* 0x00000002100c723c */",
+            "/*09c0*/                   HMMA.1688.F32.TF32 R24, R8, R4, R24 ;                  /* 0x000000040818723c */"
+          ]
+        },
+        "sm_120": {
+          "cubin_sha256": "eb60bbd04693a7495a436378db1c1c8c6fbe75f25484b4dc51ad48870e6fbea0",
+          "mma_lines": [
+            "/*0730*/                   HMMA.1688.F32.TF32 R12, R20, R12, RZ ;          /* 0x0000000c140c723c */",
+            "/*07a0*/                   HMMA.1688.F32.TF32 R20, R20, R16, RZ ;          /* 0x000000101414723c */",
+            "/*07e0*/                   HMMA.1688.F32.TF32 R4, R4, R16, RZ ;            /* 0x000000100404723c */",
+            "/*09d0*/                   HMMA.1688.F32.TF32 R20, R16, R2, R20 ;          /* 0x000000021014723c */",
+            "/*09e0*/                   HMMA.1688.F32.TF32 R12, R16, R28, R12 ;         /* 0x0000001c100c723c */",
+            "/*09f0*/                   HMMA.1688.F32.TF32 R4, R8, R2, R4 ;             /* 0x000000020804723c */"
+          ]
+        }
+      }
+    },
+    {
+      "case": "p03-direct-64x32",
+      "classification": "Plan",
+      "reason": "validated one-atom TF32 matmul plan",
+      "ir_sha256": "3cebd8d34ad7a2c04bfd07334b292647062256091fd6b28e9305614da7dee283",
+      "ptx_sha256": "e56bcc105008e3718193690e11102ac989e0fde9d8673395cbfa05eb2b2c299a",
+      "mma_count": 3,
+      "plans": {
+        "m": 64,
+        "n": 32,
+        "k": 16,
+        "active_warps": 1,
+        "block_m": 16,
+        "block_n": 8,
+        "staging": "global"
+      },
+      "arches": {
+        "sm_89": {
+          "cubin_sha256": "bef9da45789bbd57bda894b741ae0e4a4e9db79e025f5115d7448ae51e7b2e90",
+          "mma_lines": [
+            "/*0830*/                   HMMA.1688.F32.TF32 R12, R20, R12, RZ ;                 /* 0x0000000c140c723c */",
+            "/*0870*/                   HMMA.1688.F32.TF32 R20, R20, R10.reuse, RZ ;           /* 0x0000000a1414723c */",
+            "/*0880*/                   HMMA.1688.F32.TF32 R24, R24, R10, RZ ;                 /* 0x0000000a1818723c */",
+            "/*09a0*/                   HMMA.1688.F32.TF32 R20, R16.reuse, R4, R20 ;           /* 0x000000041014723c */",
+            "/*09b0*/                   HMMA.1688.F32.TF32 R12, R16, R2, R12 ;                 /* 0x00000002100c723c */",
+            "/*09c0*/                   HMMA.1688.F32.TF32 R24, R8, R4, R24 ;                  /* 0x000000040818723c */"
+          ]
+        },
+        "sm_120": {
+          "cubin_sha256": "690cb16959ccaeca8e3c5890540c2fae871f69fafb01ab105962782c74c15662",
+          "mma_lines": [
+            "/*0730*/                   HMMA.1688.F32.TF32 R12, R20, R12, RZ ;          /* 0x0000000c140c723c */",
+            "/*07a0*/                   HMMA.1688.F32.TF32 R20, R20, R16, RZ ;          /* 0x000000101414723c */",
+            "/*07e0*/                   HMMA.1688.F32.TF32 R4, R4, R16, RZ ;            /* 0x000000100404723c */",
+            "/*09d0*/                   HMMA.1688.F32.TF32 R20, R16, R2, R20 ;          /* 0x000000021014723c */",
+            "/*09e0*/                   HMMA.1688.F32.TF32 R12, R16, R28, R12 ;         /* 0x0000001c100c723c */",
+            "/*09f0*/                   HMMA.1688.F32.TF32 R4, R8, R2, R4 ;             /* 0x000000020804723c */"
+          ]
+        }
+      }
+    },
+    {
+      "case": "p04-staged-32x16",
+      "classification": "Plan",
+      "reason": "validated one-atom TF32 matmul plan",
+      "ir_sha256": "f9978a9b93ded4621ce55ade14ec308d6abb702026f8cbedc5b71d030f9c12a9",
+      "ptx_sha256": "89c9ba1b509044fb2aaf12a26882d1e2b7fbcc61a485801e78814fe8ea667744",
+      "mma_count": 3,
+      "plans": {
+        "m": 32,
+        "n": 16,
+        "k": 16,
+        "active_warps": 1,
+        "block_m": 16,
+        "block_n": 8,
+        "staging": "shared"
+      },
+      "arches": {
+        "sm_89": {
+          "cubin_sha256": "ca6fbc05538baac38d10e5d24fdf1a68c15d77765ac830d4817f85a771295807",
+          "mma_lines": [
+            "/*0830*/                   HMMA.1688.F32.TF32 R12, R20, R12, RZ ;                 /* 0x0000000c140c723c */",
+            "/*0870*/                   HMMA.1688.F32.TF32 R20, R20, R10.reuse, RZ ;           /* 0x0000000a1414723c */",
+            "/*0880*/                   HMMA.1688.F32.TF32 R24, R24, R10, RZ ;                 /* 0x0000000a1818723c */",
+            "/*09a0*/                   HMMA.1688.F32.TF32 R20, R16.reuse, R4, R20 ;           /* 0x000000041014723c */",
+            "/*09b0*/                   HMMA.1688.F32.TF32 R12, R16, R2, R12 ;                 /* 0x00000002100c723c */",
+            "/*09c0*/                   HMMA.1688.F32.TF32 R24, R8, R4, R24 ;                  /* 0x000000040818723c */"
+          ]
+        },
+        "sm_120": {
+          "cubin_sha256": "493e7bbff6f14cf28b6f148d4c2baf0ee354a4ae9173f63945a559e304d1b993",
+          "mma_lines": [
+            "/*0730*/                   HMMA.1688.F32.TF32 R12, R20, R12, RZ ;          /* 0x0000000c140c723c */",
+            "/*07a0*/                   HMMA.1688.F32.TF32 R20, R20, R16, RZ ;          /* 0x000000101414723c */",
+            "/*07e0*/                   HMMA.1688.F32.TF32 R4, R4, R16, RZ ;            /* 0x000000100404723c */",
+            "/*09d0*/                   HMMA.1688.F32.TF32 R20, R16, R2, R20 ;          /* 0x000000021014723c */",
+            "/*09e0*/                   HMMA.1688.F32.TF32 R12, R16, R28, R12 ;         /* 0x0000001c100c723c */",
+            "/*09f0*/                   HMMA.1688.F32.TF32 R4, R8, R2, R4 ;             /* 0x000000020804723c */"
+          ]
+        }
+      }
+    },
+    {
+      "case": "p05-staged-64x32",
+      "classification": "Plan",
+      "reason": "validated one-atom TF32 matmul plan",
+      "ir_sha256": "cc3e09b0aa4217dd9e69cc8cec208c6a69de89d77e692b6009ccb14a1077be7f",
+      "ptx_sha256": "ba35c81b76c06d3ae82c652448ee749477eaf47d181705c37c910573c5d91777",
+      "mma_count": 3,
+      "plans": {
+        "m": 64,
+        "n": 32,
+        "k": 16,
+        "active_warps": 1,
+        "block_m": 16,
+        "block_n": 8,
+        "staging": "shared"
+      },
+      "arches": {
+        "sm_89": {
+          "cubin_sha256": "8f9db401b56eb462230e94d97fbbd872fe40fbc8f82a799750d681d51158579a",
+          "mma_lines": [
+            "/*0830*/                   HMMA.1688.F32.TF32 R12, R20, R12, RZ ;                 /* 0x0000000c140c723c */",
+            "/*0870*/                   HMMA.1688.F32.TF32 R20, R20, R10.reuse, RZ ;           /* 0x0000000a1414723c */",
+            "/*0880*/                   HMMA.1688.F32.TF32 R24, R24, R10, RZ ;                 /* 0x0000000a1818723c */",
+            "/*09a0*/                   HMMA.1688.F32.TF32 R20, R16.reuse, R4, R20 ;           /* 0x000000041014723c */",
+            "/*09b0*/                   HMMA.1688.F32.TF32 R12, R16, R2, R12 ;                 /* 0x00000002100c723c */",
+            "/*09c0*/                   HMMA.1688.F32.TF32 R24, R8, R4, R24 ;                  /* 0x000000040818723c */"
+          ]
+        },
+        "sm_120": {
+          "cubin_sha256": "56193ac4e9a9f74a1e0d0694259ef7455c46975af4a0d3b9fd8741f78e4db252",
+          "mma_lines": [
+            "/*0730*/                   HMMA.1688.F32.TF32 R12, R20, R12, RZ ;          /* 0x0000000c140c723c */",
+            "/*07a0*/                   HMMA.1688.F32.TF32 R20, R20, R16, RZ ;          /* 0x000000101414723c */",
+            "/*07e0*/                   HMMA.1688.F32.TF32 R4, R4, R16, RZ ;            /* 0x000000100404723c */",
+            "/*09d0*/                   HMMA.1688.F32.TF32 R20, R16, R2, R20 ;          /* 0x000000021014723c */",
+            "/*09e0*/                   HMMA.1688.F32.TF32 R12, R16, R28, R12 ;         /* 0x0000001c100c723c */",
+            "/*09f0*/                   HMMA.1688.F32.TF32 R4, R8, R2, R4 ;             /* 0x000000020804723c */"
+          ]
+        }
+      }
+    },
+    {
+      "case": "p06-staged-32x64",
+      "classification": "Plan",
+      "reason": "validated one-atom TF32 matmul plan",
+      "ir_sha256": "da61c77f46e6716eb643e2757aa67c7b7005f91c1441bcafd3a22db1bc489206",
+      "ptx_sha256": "8b1585b2b1629bed2969495876fcf91ea2ee9a097ceb480667953c32688533d6",
+      "mma_count": 3,
+      "plans": {
+        "m": 32,
+        "n": 64,
+        "k": 16,
+        "active_warps": 1,
+        "block_m": 16,
+        "block_n": 8,
+        "staging": "shared"
+      },
+      "arches": {
+        "sm_89": {
+          "cubin_sha256": "d30d943f3a93ff4c67ce629df99d74ee3f217faea7b04b87e960562d9c113200",
+          "mma_lines": [
+            "/*0830*/                   HMMA.1688.F32.TF32 R12, R20, R12, RZ ;                 /* 0x0000000c140c723c */",
+            "/*0870*/                   HMMA.1688.F32.TF32 R20, R20, R10.reuse, RZ ;           /* 0x0000000a1414723c */",
+            "/*0880*/                   HMMA.1688.F32.TF32 R24, R24, R10, RZ ;                 /* 0x0000000a1818723c */",
+            "/*09a0*/                   HMMA.1688.F32.TF32 R20, R16.reuse, R4, R20 ;           /* 0x000000041014723c */",
+            "/*09b0*/                   HMMA.1688.F32.TF32 R12, R16, R2, R12 ;                 /* 0x00000002100c723c */",
+            "/*09c0*/                   HMMA.1688.F32.TF32 R24, R8, R4, R24 ;                  /* 0x000000040818723c */"
+          ]
+        },
+        "sm_120": {
+          "cubin_sha256": "28a44f48d19e3c3c18d281a75d1c5fcdb161fa6e9ea331d10190fce087f67d0f",
+          "mma_lines": [
+            "/*0730*/                   HMMA.1688.F32.TF32 R12, R20, R12, RZ ;          /* 0x0000000c140c723c */",
+            "/*07a0*/                   HMMA.1688.F32.TF32 R20, R20, R16, RZ ;          /* 0x000000101414723c */",
+            "/*07e0*/                   HMMA.1688.F32.TF32 R4, R4, R16, RZ ;            /* 0x000000100404723c */",
+            "/*09d0*/                   HMMA.1688.F32.TF32 R20, R16, R2, R20 ;          /* 0x000000021014723c */",
+            "/*09e0*/                   HMMA.1688.F32.TF32 R12, R16, R28, R12 ;         /* 0x0000001c100c723c */",
+            "/*09f0*/                   HMMA.1688.F32.TF32 R4, R8, R2, R4 ;             /* 0x000000020804723c */"
+          ]
+        }
+      }
+    },
+    {
+      "case": "p07-b-transpose-32x16",
+      "classification": "Plan",
+      "reason": "validated one-atom TF32 matmul plan",
+      "ir_sha256": "57d048a21e462e63ce8c5e9984fcebdb94b2624b62a286b81f6ec8d359c5763f",
+      "ptx_sha256": "55cae4e9849e9dc48f2e24a52fd0dee00f4afc576a56de9ff4698427aa1bf4df",
+      "mma_count": 3,
+      "plans": {
+        "m": 32,
+        "n": 16,
+        "k": 16,
+        "active_warps": 1,
+        "block_m": 16,
+        "block_n": 8,
+        "staging": "global"
+      },
+      "arches": {
+        "sm_89": {
+          "cubin_sha256": "a1180fb7c8183bd8643664ff8f7b2d19bddc80af4b2694365db2f6d416ac745d",
+          "mma_lines": [
+            "/*0830*/                   HMMA.1688.F32.TF32 R12, R20, R12, RZ ;                 /* 0x0000000c140c723c */",
+            "/*0870*/                   HMMA.1688.F32.TF32 R20, R20, R10.reuse, RZ ;           /* 0x0000000a1414723c */",
+            "/*0880*/                   HMMA.1688.F32.TF32 R24, R24, R10, RZ ;                 /* 0x0000000a1818723c */",
+            "/*09a0*/                   HMMA.1688.F32.TF32 R20, R16.reuse, R4, R20 ;           /* 0x000000041014723c */",
+            "/*09b0*/                   HMMA.1688.F32.TF32 R12, R16, R2, R12 ;                 /* 0x00000002100c723c */",
+            "/*09c0*/                   HMMA.1688.F32.TF32 R24, R8, R4, R24 ;                  /* 0x000000040818723c */"
+          ]
+        },
+        "sm_120": {
+          "cubin_sha256": "81607d952b80cdafdd56a0dd71c84990327b045f9353bca90070ab27a9240ef7",
+          "mma_lines": [
+            "/*0730*/                   HMMA.1688.F32.TF32 R12, R20, R12, RZ ;          /* 0x0000000c140c723c */",
+            "/*07a0*/                   HMMA.1688.F32.TF32 R20, R20, R16, RZ ;          /* 0x000000101414723c */",
+            "/*07e0*/                   HMMA.1688.F32.TF32 R4, R4, R16, RZ ;            /* 0x000000100404723c */",
+            "/*09d0*/                   HMMA.1688.F32.TF32 R20, R16, R2, R20 ;          /* 0x000000021014723c */",
+            "/*09e0*/                   HMMA.1688.F32.TF32 R12, R16, R28, R12 ;         /* 0x0000001c100c723c */",
+            "/*09f0*/                   HMMA.1688.F32.TF32 R4, R8, R2, R4 ;             /* 0x000000020804723c */"
+          ]
+        }
+      }
+    },
+    {
+      "case": "p08-a-transpose-16x16",
+      "classification": "Plan",
+      "reason": "validated one-atom TF32 matmul plan",
+      "ir_sha256": "3ebfed89d6abbac511998cdaf9386b291a91ccee5a70f1007260d12086504ed1",
+      "ptx_sha256": "addca872906bc60e8380ce400f8e9efc65ff63ff7e88d4588cee5b613bbd5cc7",
+      "mma_count": 3,
+      "plans": {
+        "m": 16,
+        "n": 16,
+        "k": 8,
+        "active_warps": 1,
+        "block_m": 16,
+        "block_n": 8,
+        "staging": "global"
+      },
+      "arches": {
+        "sm_89": {
+          "cubin_sha256": "87e3de60161c593c071d8d33c63327e87fe77bfb30139f7cd7a29ce40ef70be0",
+          "mma_lines": [
+            "/*0590*/                   HMMA.1688.F32.TF32 R8, R12.reuse, R8, RZ ;         /* 0x000000080c08723c */",
+            "/*05a0*/                   HMMA.1688.F32.TF32 R12, R12, R18.reuse, RZ ;       /* 0x000000120c0c723c */",
+            "/*05b0*/                   HMMA.1688.F32.TF32 R4, R4, R18, RZ ;               /* 0x000000120404723c */"
+          ]
+        },
+        "sm_120": {
+          "cubin_sha256": "ac0065d4d0ff9e332c9bd42c647df31d9c548015410ddbb1030401b8d94ddab3",
+          "mma_lines": [
+            "/*0590*/                   HMMA.1688.F32.TF32 R12, R8, R12, RZ ;           /* 0x0000000c080c723c */",
+            "/*0600*/                   HMMA.1688.F32.TF32 R8, R8, R18.reuse, RZ ;      /* 0x000000120808723c */",
+            "/*0610*/                   HMMA.1688.F32.TF32 R4, R4, R18, RZ ;            /* 0x000000120404723c */"
+          ]
+        }
+      }
+    },
+    {
+      "case": "p09-direct-32x8",
+      "classification": "Plan",
+      "reason": "validated one-atom TF32 matmul plan",
+      "ir_sha256": "97edcdb0e969f01f692b64aea0d0e27200309158ca228833802b012a9418c008",
+      "ptx_sha256": "452d6c05e637202c92b4f7ab0a062983890bb7e1a393b8b3d61d70251e4553a8",
+      "mma_count": 3,
+      "plans": {
+        "m": 32,
+        "n": 8,
+        "k": 8,
+        "active_warps": 1,
+        "block_m": 16,
+        "block_n": 8,
+        "staging": "global"
+      },
+      "arches": {
+        "sm_89": {
+          "cubin_sha256": "4c87aebbf26a7b26e26618fd0b5049de4e99f6927c070496aa433dc915f17b20",
+          "mma_lines": [
+            "/*0470*/                   HMMA.1688.F32.TF32 R8, R12.reuse, R8, RZ ;         /* 0x000000080c08723c */",
+            "/*0480*/                   HMMA.1688.F32.TF32 R12, R12, R16.reuse, RZ ;       /* 0x000000100c0c723c */",
+            "/*0490*/                   HMMA.1688.F32.TF32 R4, R4, R16, RZ ;               /* 0x000000100404723c */"
+          ]
+        },
+        "sm_120": {
+          "cubin_sha256": "ac6a51ea17177c6eb1bae15bddf7ba7f65adf0839a50f0fc54d91aaba971c043",
+          "mma_lines": [
+            "/*0480*/                   HMMA.1688.F32.TF32 R8, R12, R8, RZ ;            /* 0x000000080c08723c */",
+            "/*0490*/                   HMMA.1688.F32.TF32 R12, R12, R16.reuse, RZ ;    /* 0x000000100c0c723c */",
+            "/*04a0*/                   HMMA.1688.F32.TF32 R4, R4, R16, RZ ;            /* 0x000000100404723c */"
+          ]
+        }
+      }
+    },
+    {
+      "case": "p10-staged-16x32",
+      "classification": "Plan",
+      "reason": "validated one-atom TF32 matmul plan",
+      "ir_sha256": "abdaa9e7105d6cf768cf4f7cd451b1fe11cc9d2c43ea602a164390d1d66fcc9a",
+      "ptx_sha256": "3894b15d09b8396e88981e291e776a41943ba4ea066fcfcd6233116627c1b128",
+      "mma_count": 3,
+      "plans": {
+        "m": 16,
+        "n": 32,
+        "k": 8,
+        "active_warps": 1,
+        "block_m": 16,
+        "block_n": 8,
+        "staging": "shared"
+      },
+      "arches": {
+        "sm_89": {
+          "cubin_sha256": "4b1886231e42d4ad8bfd4d96576e7c5224a1f2470389efabb9ef0a734ce14757",
+          "mma_lines": [
+            "/*0590*/                   HMMA.1688.F32.TF32 R8, R12.reuse, R8, RZ ;         /* 0x000000080c08723c */",
+            "/*05a0*/                   HMMA.1688.F32.TF32 R12, R12, R18.reuse, RZ ;       /* 0x000000120c0c723c */",
+            "/*05b0*/                   HMMA.1688.F32.TF32 R4, R4, R18, RZ ;               /* 0x000000120404723c */"
+          ]
+        },
+        "sm_120": {
+          "cubin_sha256": "23b1d89ae44bb09e0451cf079f711f5dd05854ae66e09ed69887d8cb5ff9c9d0",
+          "mma_lines": [
+            "/*0590*/                   HMMA.1688.F32.TF32 R12, R8, R12, RZ ;           /* 0x0000000c080c723c */",
+            "/*0600*/                   HMMA.1688.F32.TF32 R8, R8, R18.reuse, RZ ;      /* 0x000000120808723c */",
+            "/*0610*/                   HMMA.1688.F32.TF32 R4, R4, R18, RZ ;            /* 0x000000120404723c */"
+          ]
+        }
+      }
+    },
+    {
+      "case": "p11-direct-16x32",
+      "classification": "Plan",
+      "reason": "validated one-atom TF32 matmul plan",
+      "ir_sha256": "09968cf311e22a08be4fb17425712b1fa57a646c37d6581962101af198aef8bf",
+      "ptx_sha256": "3894b15d09b8396e88981e291e776a41943ba4ea066fcfcd6233116627c1b128",
+      "mma_count": 3,
+      "plans": {
+        "m": 16,
+        "n": 32,
+        "k": 8,
+        "active_warps": 1,
+        "block_m": 16,
+        "block_n": 8,
+        "staging": "global"
+      },
+      "arches": {
+        "sm_89": {
+          "cubin_sha256": "4b1886231e42d4ad8bfd4d96576e7c5224a1f2470389efabb9ef0a734ce14757",
+          "mma_lines": [
+            "/*0590*/                   HMMA.1688.F32.TF32 R8, R12.reuse, R8, RZ ;         /* 0x000000080c08723c */",
+            "/*05a0*/                   HMMA.1688.F32.TF32 R12, R12, R18.reuse, RZ ;       /* 0x000000120c0c723c */",
+            "/*05b0*/                   HMMA.1688.F32.TF32 R4, R4, R18, RZ ;               /* 0x000000120404723c */"
+          ]
+        },
+        "sm_120": {
+          "cubin_sha256": "23b1d89ae44bb09e0451cf079f711f5dd05854ae66e09ed69887d8cb5ff9c9d0",
+          "mma_lines": [
+            "/*0590*/                   HMMA.1688.F32.TF32 R12, R8, R12, RZ ;           /* 0x0000000c080c723c */",
+            "/*0600*/                   HMMA.1688.F32.TF32 R8, R8, R18.reuse, RZ ;      /* 0x000000120808723c */",
+            "/*0610*/                   HMMA.1688.F32.TF32 R4, R4, R18, RZ ;            /* 0x000000120404723c */"
+          ]
+        }
+      }
+    },
+    {
+      "case": "p12-staged-b-transpose",
+      "classification": "Plan",
+      "reason": "validated one-atom TF32 matmul plan",
+      "ir_sha256": "c3f5827b8912118d0954e42b30e6829f5fef5d1b623f56daa9109a70cb04cf00",
+      "ptx_sha256": "55cae4e9849e9dc48f2e24a52fd0dee00f4afc576a56de9ff4698427aa1bf4df",
+      "mma_count": 3,
+      "plans": {
+        "m": 32,
+        "n": 16,
+        "k": 16,
+        "active_warps": 1,
+        "block_m": 16,
+        "block_n": 8,
+        "staging": "shared"
+      },
+      "arches": {
+        "sm_89": {
+          "cubin_sha256": "a1180fb7c8183bd8643664ff8f7b2d19bddc80af4b2694365db2f6d416ac745d",
+          "mma_lines": [
+            "/*0830*/                   HMMA.1688.F32.TF32 R12, R20, R12, RZ ;                 /* 0x0000000c140c723c */",
+            "/*0870*/                   HMMA.1688.F32.TF32 R20, R20, R10.reuse, RZ ;           /* 0x0000000a1414723c */",
+            "/*0880*/                   HMMA.1688.F32.TF32 R24, R24, R10, RZ ;                 /* 0x0000000a1818723c */",
+            "/*09a0*/                   HMMA.1688.F32.TF32 R20, R16.reuse, R4, R20 ;           /* 0x000000041014723c */",
+            "/*09b0*/                   HMMA.1688.F32.TF32 R12, R16, R2, R12 ;                 /* 0x00000002100c723c */",
+            "/*09c0*/                   HMMA.1688.F32.TF32 R24, R8, R4, R24 ;                  /* 0x000000040818723c */"
+          ]
+        },
+        "sm_120": {
+          "cubin_sha256": "81607d952b80cdafdd56a0dd71c84990327b045f9353bca90070ab27a9240ef7",
+          "mma_lines": [
+            "/*0730*/                   HMMA.1688.F32.TF32 R12, R20, R12, RZ ;          /* 0x0000000c140c723c */",
+            "/*07a0*/                   HMMA.1688.F32.TF32 R20, R20, R16, RZ ;          /* 0x000000101414723c */",
+            "/*07e0*/                   HMMA.1688.F32.TF32 R4, R4, R16, RZ ;            /* 0x000000100404723c */",
+            "/*09d0*/                   HMMA.1688.F32.TF32 R20, R16, R2, R20 ;          /* 0x000000021014723c */",
+            "/*09e0*/                   HMMA.1688.F32.TF32 R12, R16, R28, R12 ;         /* 0x0000001c100c723c */",
+            "/*09f0*/                   HMMA.1688.F32.TF32 R4, R8, R2, R4 ;             /* 0x000000020804723c */"
+          ]
+        }
+      }
+    }
+  ],
+  "benchmark": false
+}

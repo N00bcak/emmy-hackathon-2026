@@ -1,0 +1,94 @@
+{
+  "compiler_sha256": "996cf5fcd1b6fd70608d384856e97a9057f20b06b55b99087976c89d947c08d4",
+  "source_sha256": {
+    "compile.py": "996cf5fcd1b6fd70608d384856e97a9057f20b06b55b99087976c89d947c08d4",
+    "tensor_core.py": "ca5af9c9f41826f9e2000de7a8537745c0393007d8eaaaf9fd212b3bfd3364a6",
+    "tf32_emitter.py": "6a9e1af929985911d97de3ab9d967326dd1db0b57a849427b595ed79eb655e9d"
+  },
+  "corpus_manifest_sha256": "0aa2c60421b34cf7135494b15fada15376488a0891e1fcf495906f07637626b8",
+  "baseline_sha256": "82470c6e6f7e6f6c0187e013ae8bfe2741d2022fb2f7f225ea67bcb7c13ae881",
+  "baseline_v2_sha256": "19ca405d2ce1c00f1b54640ce8aa9efbc77645bee24d9781afb10105df6b029c",
+  "published_gate": "passed 15/15 plus reordered ABI",
+  "plans_passed": 15,
+  "fallbacks_checked": "all 9 corpus fallback cases (6 UnsupportedMatch, 3 NoMatch) byte-identical to the frozen baseline; 14 corpus Plan cases re-gated through independent references; the 14 published non-m01 cases retain their frozen SIMT path",
+  "m01": "Plan: 512x512x512, 32x64 tile, 2x8 warps, pipeline staging",
+  "m02": "UnsupportedMatch: 16x32 tile = 4 atoms, launch = 8 warps",
+  "architectures": {
+    "sm_89": {
+      "assembly": "pass",
+      "execution": "pass (local RTX 4060)"
+    },
+    "sm_120": {
+      "assembly": "pass",
+      "execution": "not run (no sm_120 device)"
+    }
+  },
+  "limits": [
+    "No hidden-set claim",
+    "No performance/promotion claim",
+    "Atomic split-K not implemented",
+    "sm_120 execution not run",
+    "Rotating pipeline emitter reads proved global cells rather than replaying cp.async stages",
+    "Nested reduction spelling not supported (P08 probe has undeclared k after renaming)"
+  ],
+  "execution_result": "execution-result.json",
+  "synthetic_result": "synthetic-result.json",
+  "plan_cases": [
+    "m01_matmul_512",
+    "p01-direct-16x8",
+    "p02-direct-32x16",
+    "p03-direct-64x32",
+    "p04-staged-32x16",
+    "p05-staged-64x32",
+    "p06-staged-32x64",
+    "p07-b-transpose-32x16",
+    "p08-a-transpose-16x16",
+    "p09-direct-32x8",
+    "p10-staged-16x32",
+    "p11-direct-16x32",
+    "p12-staged-b-transpose",
+    "p13-direct-48x24",
+    "p14-staged-48x24"
+  ],
+  "all_plan_passed": true,
+  "tests": "157 runnable tests pass; 9 root/libseccomp preparation tests excluded by environment",
+  "evidence_files": {
+    "assembly_and_sass": "evidence.json",
+    "execution": "execution-result.json",
+    "synthetic_128_cell": "synthetic-result.json",
+    "published_gate": "results.json",
+    "test_log": "unittest-nonroot.log",
+    "tensor_core_test_log": "tensor-tests.log",
+    "checksums": "SHA256SUMS",
+    "synthetic_log": "synthetic.log",
+    "execution_log": "execution.log",
+    "assembly_log": "assembly.log",
+    "published_log": "published.log"
+  },
+  "synthetic_result_sha256": "86a5195f4b5c1bba658dd144cbaa44a446fa3b1b64f7d5d317fc85326cee45fa",
+  "synthetic_pass": true,
+  "adversarial_audits": {
+    "first": "experiments/tensor-core-audit/REPORT.md",
+    "second": "experiments/tensor-core-audit-agent2/REPORT.md",
+    "permanent_regressions": "tests/test_tensor_core.py"
+  },
+  "fixed_audit_findings": [
+    "CTA-dependent direct operand drift",
+    "output/operand aliasing",
+    "interior-CTA-only pipeline copy mutation",
+    "direct-operand hidden K phase",
+    "partial CTA barrier accepted as full collective",
+    "valid staged A transpose rejected"
+  ],
+  "execution_result_sha256": "78fbc3c8d56535bdc012c8a76a921a9af238e24cd700030a703852def309a4ee",
+  "published_result_sha256": "8130b04542a3a690cc7f44b6cb3d8fe28af9313ba301fb3f43b483d8eb31c1cc",
+  "audit_source_hashes": {
+    "tensor_core.py_post_repair": "ca5af9c9f41826f9e2000de7a8537745c0393007d8eaaaf9fd212b3bfd3364a6",
+    "tensor_core.py_audited_prefix": "9761280077230a4970d027d4b63761ecc5d3d225af4adccb512b6d29c847932c"
+  },
+  "audit_status": "first audit 21 probes: false accepts fixed; second audit 20 probes: P09/P14/P15 fixed, P20 accepted; P08 malformed (undeclared k) remains fail-closed",
+  "audit_report_sha256": {
+    "first": "13200bf1439e5704ae3953060dfa676af31aa2a156f4c49f280f94e6ec9c980a",
+    "second": "93865a20361ad1082c44b1e6c89abe3649c8204b609f1e23853330946771246a"
+  }
+}

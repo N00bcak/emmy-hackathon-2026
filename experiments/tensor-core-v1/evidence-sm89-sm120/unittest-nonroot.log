@@ -1,0 +1,16 @@
+...............................127.0.0.1 - - [23/Oct/2026 01:47:47] "POST /compile HTTP/1.1" 200 -
+127.0.0.1 - - [23/Oct/2026 01:47:47] "POST /compile HTTP/1.1" 200 -
+127.0.0.1 - - [23/Oct/2026 01:47:47] "POST /compile HTTP/1.1" 200 -
+127.0.0.1 - - [23/Oct/2026 01:47:47] "POST /compile HTTP/1.1" 200 -
+127.0.0.1 - - [23/Oct/2026 01:47:47] "POST /compile HTTP/1.1" 422 -
+/usr/lib/python3.14/tempfile.py:484: ResourceWarning: Implicitly cleaning up <HTTPError 422: 'Unprocessable Content'>
+  _warnings.warn(self.warn_message, ResourceWarning)
+..127.0.0.1 - - [23/Oct/2026 01:47:48] "GET /health HTTP/1.1" 200 -
+127.0.0.1 - - [23/Oct/2026 01:47:48] "POST /run HTTP/1.1" 200 -
+127.0.0.1 - - [23/Oct/2026 01:47:48] "POST /run HTTP/1.1" 200 -
+127.0.0.1 - - [23/Oct/2026 01:47:48] "POST /run HTTP/1.1" 422 -
+............................................................................................................................
+----------------------------------------------------------------------
+Ran 157 tests in 33.482s
+
+OK

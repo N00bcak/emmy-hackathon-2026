@@ -1,0 +1,18 @@
+test_adversarial_typed_mutations_fail_closed (tests.test_tensor_core.TensorCoreTests.test_adversarial_typed_mutations_fail_closed) ... ok
+test_cpu_model_matches_reference_within_tolerance_across_corpus (tests.test_tensor_core.TensorCoreTests.test_cpu_model_matches_reference_within_tolerance_across_corpus) ... ok
+test_every_non_plan_keeps_frozen_simt_bytes (tests.test_tensor_core.TensorCoreTests.test_every_non_plan_keeps_frozen_simt_bytes) ... ok
+test_frozen_baseline_source_identity (tests.test_tensor_core.TensorCoreTests.test_frozen_baseline_source_identity) ... ok
+test_frozen_corpus_classifications_are_fail_closed (tests.test_tensor_core.TensorCoreTests.test_frozen_corpus_classifications_are_fail_closed) ... ok
+test_frozen_corpus_files_match_manifest_hashes (tests.test_tensor_core.TensorCoreTests.test_frozen_corpus_files_match_manifest_hashes) ... ok
+test_m01_is_plan_and_m02_is_unsupported_launch_mismatch (tests.test_tensor_core.TensorCoreTests.test_m01_is_plan_and_m02_is_unsupported_launch_mismatch) ... ok
+test_pipeline_replay_rejects_interior_cta_and_partial_barrier (tests.test_tensor_core.TensorCoreTests.test_pipeline_replay_rejects_interior_cta_and_partial_barrier) ... ok
+test_plan_ptx_preserves_metadata_abi_and_has_no_compiler_delegation (tests.test_tensor_core.TensorCoreTests.test_plan_ptx_preserves_metadata_abi_and_has_no_compiler_delegation) ... ok
+test_shared_prologue_decodes_block_axes_without_thread_stride (tests.test_tensor_core.TensorCoreTests.test_shared_prologue_decodes_block_axes_without_thread_stride) ... ok
+test_tf32_lane_map_is_an_exact_partition (tests.test_tensor_core.TensorCoreTests.test_tf32_lane_map_is_an_exact_partition) ... ok
+test_three_term_model_has_separate_hh_hl_lh_fragments (tests.test_tensor_core.TensorCoreTests.test_three_term_model_has_separate_hh_hl_lh_fragments) ... ok
+test_valid_staged_transpose_and_alias_checks (tests.test_tensor_core.TensorCoreTests.test_valid_staged_transpose_and_alias_checks) ... ok
+
+----------------------------------------------------------------------
+Ran 13 tests in 18.700s
+
+OK
