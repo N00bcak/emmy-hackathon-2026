@@ -28,7 +28,10 @@ address chains was rejected because it regressed attention. Shared transport
 has a vectorized f32 path only when the slab is 16-byte aligned and the index
 residue is proven; it performs a runtime address check and falls back to scalar
 copies otherwise. All publish-facing arithmetic and copies retain a generic
-typed fallback.
+typed fallback. `cp.async` recombines the slab's 32-bit shared-window position
+with each destination's offset; a dynamic slab's window position is nonzero on
+sm_120, so an offset-only destination silently addresses the wrong storage on
+the hosted GPU.
 
 The `015` increment also adds typed `f16` loads/stores and shared-memory
 carriers, `f16` to/from `f32`, `f64`, and integer conversion, and the scalar
@@ -41,6 +44,12 @@ The correctness gate and generated variants cover those paths at the hash above.
   against the admitted local runner (`sm_89`, RTX 4060). All 15 cases exited
   zero with `all15_passed: true`, `missing: []`, and `failed: []`. A separate
   reordered-ABI probe also passed.
+- The hosted runner (RTX 5090, `sm_120`) reproduced the reported
+  `m01_matmul_512` failure on the pre-fix `main` source (`max abs err
+  1.454e+02`). With the shared-window correction, the same source passed m01 on
+  that runner (`max abs err 8.392e-05`) and on the local sm_89 runner
+  (`8.392e-05`). This is one-case hosted execution evidence; the hidden set is
+  still unverified.
 - The compiler's 31 local tests pass, including two-target assembly, partial-CTA
   masking, scalar ABI, integer copy, natural log, reduction aliases, vector-copy
   emission/runtime fallback, an unaligned-index case, `f16` storage/promotion,
@@ -105,9 +114,10 @@ unless a concrete contract-relevant failure requires them.
 ## Limits
 
 This evidence does not establish hidden-set correctness, general support for
-all legal schedules, RTX 5090 behavior, or a comparative speedup on another
-machine. The CSE and `015` results are local RTX 4060 diagnostics rather than an
-evaluator-issued performance qualification. The local runner is an admitted
+all legal schedules, full RTX 5090 behavior, or a comparative speedup on another
+machine. The hosted 5090 evidence covers m01 correctness, not the remaining
+published cases. The CSE and `015` results are local RTX 4060 diagnostics rather
+than an evaluator-issued performance qualification. The local runner is an admitted
 research tool, not a hostile kernel sandbox. Tensor-core lowering is deferred;
 the generic typed scalar path remains available. Optimizations stay in the
 typed-IR analysis/emission layer so they do not block a later tensor-core
