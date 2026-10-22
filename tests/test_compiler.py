@@ -386,7 +386,10 @@ class CompilerTests(unittest.TestCase):
         self.assertEqual(1,sum(count>1 for count in division_counts.values()))
         single_use=sum(count==1 for count in division_counts.values())
 
-        lines=mod.compile_path(source).splitlines()
+        # m01 now takes the tensor-core path; this test guards the preserved
+        # SIMT fallback, so invoke that emitter explicitly.
+        metadata=json.loads(source.with_name('meta.json').read_text())['kernels'][0]
+        lines=mod.Emitter(graph,node,metadata).render().splitlines()
         labels={}
         for index,line in enumerate(lines):
             match=re.fullmatch(r'\s*([A-Za-z_]\w*):\s*',line)

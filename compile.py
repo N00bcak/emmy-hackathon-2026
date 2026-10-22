@@ -1883,6 +1883,27 @@ def compile_path(path):
         raise Unsupported('Expected exactly one metadata kernel matching node and entry')
     if len(set(matches[0]['arg_order'])) != len(matches[0]['arg_order']):
         raise Unsupported('Duplicate argument names in metadata')
+    # The tensor-core path is fail-closed: only an independently validated
+    # one-atom plan bypasses the existing SIMT emitter.  Every other typed
+    # region takes the untouched path below, preserving baseline PTX bytes.
+    try:
+        import tensor_core
+        from tf32_emitter import production_ptx
+        decision = tensor_core.classify(graph, node, matches[0])
+        if (decision.verdict == tensor_core.PLAN and decision.plan is not None
+                and decision.plan.staging in ('global', 'shared', 'pipeline')):
+            try:
+                return production_ptx(decision.plan, matches[0], node=node, graph=graph)
+            except Exception as exc:
+                # A plan is an optimization, never a correctness dependency.
+                # Any emitter rejection falls back to the untouched SIMT path.
+                print(f'compile.py: tensor-core emitter fallback: '
+                      f'{type(exc).__name__}: {exc}', file=sys.stderr)
+                return Emitter(graph, node, matches[0]).render()
+    except (ImportError, ValueError, KeyError, TypeError, AttributeError,
+            IndexError, ArithmeticError) as exc:
+        print(f'compile.py: tensor-core fallback: {type(exc).__name__}: {exc}',
+              file=sys.stderr)
     return Emitter(graph, node, matches[0]).render()
 
 
