@@ -1,0 +1,358 @@
+{"actual": "Plan", "compile_rc": 0, "expected": "Plan", "id": "a00-baseline-direct", "moral_semantics": "ordinary direct 16x8x8 contraction", "plan": {"a_buffer": "lhs", "active_warps": 1, "b_buffer": "rhs", "block_m": 16, "block_n": 8, "grid": [1, 1], "k": 8, "m": 16, "n": 8, "output": "result", "staging": "global"}, "ptx_has_cp_async": false, "ptx_mma_count": 3, "reason": "validated one-atom TF32 matmul plan", "stderr": ""}
+{"actual": "Plan", "compile_rc": 0, "expected": "NoMatch", "id": "a01-cta-row-offset", "moral_semantics": "CTA 1 reads A rows 17..32 but writes C rows 16..31; output is not A@B", "plan": {"a_buffer": "lhs", "active_warps": 1, "b_buffer": "rhs", "block_m": 16, "block_n": 8, "grid": [2, 1], "k": 8, "m": 32, "n": 8, "output": "result", "staging": "global"}, "ptx_has_cp_async": false, "ptx_mma_count": 3, "reason": "validated one-atom TF32 matmul plan", "stderr": ""}
+{"actual": "Plan", "compile_rc": 0, "expected": "NoMatch", "id": "a02-cta-negative-offset", "moral_semantics": "CTA 0 reads A row -1; global read escapes declared operand", "plan": {"a_buffer": "lhs", "active_warps": 1, "b_buffer": "rhs", "block_m": 16, "block_n": 8, "grid": [2, 1], "k": 8, "m": 32, "n": 8, "output": "result", "staging": "global"}, "ptx_has_cp_async": false, "ptx_mma_count": 3, "reason": "validated one-atom TF32 matmul plan", "stderr": ""}
+{"actual": "Plan", "compile_rc": 0, "expected": "NoMatch", "id": "a03-output-aliases-rhs", "moral_semantics": "output write aliases RHS input; stores mutate an operand", "plan": {"a_buffer": "lhs", "active_warps": 1, "b_buffer": "rhs", "block_m": 16, "block_n": 8, "grid": [1, 2], "k": 16, "m": 16, "n": 16, "output": "rhs", "staging": "global"}, "ptx_has_cp_async": false, "ptx_mma_count": 3, "reason": "validated one-atom TF32 matmul plan", "stderr": ""}
+{"actual": "Plan", "compile_rc": 0, "expected": "NoMatch", "id": "a04-output-aliases-lhs", "moral_semantics": "output write aliases LHS input; stores mutate an operand", "plan": {"a_buffer": "lhs", "active_warps": 1, "b_buffer": "rhs", "block_m": 16, "block_n": 8, "grid": [1, 2], "k": 16, "m": 16, "n": 16, "output": "lhs", "staging": "global"}, "ptx_has_cp_async": false, "ptx_mma_count": 3, "reason": "validated one-atom TF32 matmul plan", "stderr": ""}
+{"actual": "Plan", "compile_rc": 0, "expected": "NoMatch", "id": "a05-pipeline-copy-mismatch", "moral_semantics": "cp.async copies (r,k) into shared (r+0,k+1), but compute reads (r,k); staged tensor differs", "plan": {"a_buffer": "lhs", "active_warps": 1, "b_buffer": "rhs", "block_m": 16, "block_n": 8, "grid": [1, 1], "k": 8, "m": 16, "n": 8, "output": "result", "staging": "pipeline"}, "ptx_has_cp_async": false, "ptx_mma_count": 3, "reason": "validated one-atom TF32 matmul plan", "stderr": ""}
+{"actual": "NoMatch", "compile_rc": 0, "expected": "NoMatch", "id": "a06-pipeline-read-outside", "moral_semantics": "copy loads A row r+1, but compute reads shared row r; copy no longer defines the read value", "ptx_has_cp_async": true, "ptx_mma_count": 0, "reason": "copy source leaves the global operand", "stderr": ""}
+{"actual": "Plan", "expected": "Plan", "id": "a07-noop-epilogue", "moral_semantics": "unused elementwise statement cannot change the matmul result", "plan": {"a_buffer": "lhs", "active_warps": 1, "b_buffer": "rhs", "block_m": 16, "block_n": 8, "grid": [1, 1], "k": 8, "m": 16, "n": 8, "output": "result", "staging": "global"}, "reason": "validated one-atom TF32 matmul plan"}
+{"actual": "NoMatch", "compile_rc": 0, "expected": "NoMatch", "id": "a08-accumulator-slot-swap", "moral_semantics": "adjacent C fragment slots carry the other accumulator; output cells are permuted", "ptx_has_cp_async": false, "ptx_mma_count": 0, "reason": "base accumulator is not at its A/B lane coordinate", "stderr": ""}
+{"actual": "NoMatch", "compile_rc": 0, "expected": "NoMatch", "id": "a09-shared-copy-swap", "moral_semantics": "A copy reads transposed global cells while compute indexes shared as row-major A", "ptx_has_cp_async": true, "ptx_mma_count": 0, "reason": "shared row operand has an unexpected K dimension", "stderr": ""}
+{"actual": "UnsupportedMatch", "expected": "UnsupportedMatch", "id": "a10-launch-3-warps", "moral_semantics": "32x16 output tile is four atoms but launch has three warps (near miss)", "reason": "launch factorization has 1 atoms for 3 warps"}
+{"actual": "Plan", "expected": "Plan", "id": "a11-unused-load", "moral_semantics": "unused global load is semantically inert; narrow recognizer may reject", "plan": {"a_buffer": "lhs", "active_warps": 1, "b_buffer": "rhs", "block_m": 16, "block_n": 8, "grid": [1, 1], "k": 8, "m": 16, "n": 8, "output": "result", "staging": "global"}, "reason": "validated one-atom TF32 matmul plan"}
+{"actual": "NoMatch", "expected": "NoMatch", "id": "a12-same-source", "moral_semantics": "both operands load the same graph buffer; must fail closed", "reason": "both operands load the same buffer"}
+{"actual": "UnsupportedMatch", "expected": "UnsupportedMatch", "id": "a13-k1", "moral_semantics": "K=1 is a legal matmul but not TF32-atom aligned", "reason": "K is not TF32-atom aligned"}
+{"actual": "UnsupportedMatch", "expected": "UnsupportedMatch", "id": "a14-m8", "moral_semantics": "M=8 is below the 16-row atom; tail/atom mismatch", "reason": "launch output coverage leaves the output"}
+{"actual": "Plan", "expected": "Plan", "id": "a15-typed-direct", "moral_semantics": "explicit typed nodes with nonstandard names/axis spellings", "plan": {"a_buffer": "A", "active_warps": 1, "b_buffer": "B", "block_m": 16, "block_n": 8, "grid": [1, 1], "k": 8, "m": 16, "n": 8, "output": "C", "staging": "global"}, "reason": "validated one-atom TF32 matmul plan"}
+{"actual": "Plan", "expected": "NoMatch", "id": "a21-typed-cta-row-offset", "moral_semantics": "direct typed IR: CTA 1 reads A rows 17..32 for output rows 16..31", "plan": {"a_buffer": "A", "active_warps": 1, "b_buffer": "B", "block_m": 16, "block_n": 8, "grid": [2, 1], "k": 8, "m": 32, "n": 8, "output": "C", "staging": "global"}, "reason": "validated one-atom TF32 matmul plan"}
+{"actual": "NoMatch", "expected": "UnsupportedMatch", "id": "a16-duplicate-output-cell", "moral_semantics": "coverage has a duplicate C cell and a missing C cell; no exact output partition", "reason": "base accumulator is not at its A/B lane coordinate"}
+{"actual": "NoMatch", "expected": "NoMatch", "id": "a17-write-oob", "moral_semantics": "one C store escapes the declared output extent", "reason": "accumulator write is bound to another C fragment slot"}
+{"actual": "NoMatch", "expected": "NoMatch", "id": "a18-nonzero-seed", "moral_semantics": "accumulator starts at 1, so result is not just A@B", "reason": "accumulator seed is not the zero identity"}
+[
+  {
+    "id": "a00-baseline-direct",
+    "expected": "Plan",
+    "actual": "Plan",
+    "reason": "validated one-atom TF32 matmul plan",
+    "moral_semantics": "ordinary direct 16x8x8 contraction",
+    "plan": {
+      "staging": "global",
+      "output": "result",
+      "a_buffer": "lhs",
+      "b_buffer": "rhs",
+      "m": 16,
+      "n": 8,
+      "k": 8,
+      "block_m": 16,
+      "block_n": 8,
+      "grid": [
+        1,
+        1
+      ],
+      "active_warps": 1
+    },
+    "compile_rc": 0,
+    "ptx_mma_count": 3,
+    "ptx_has_cp_async": false,
+    "stderr": ""
+  },
+  {
+    "id": "a01-cta-row-offset",
+    "expected": "NoMatch",
+    "actual": "Plan",
+    "reason": "validated one-atom TF32 matmul plan",
+    "moral_semantics": "CTA 1 reads A rows 17..32 but writes C rows 16..31; output is not A@B",
+    "plan": {
+      "staging": "global",
+      "output": "result",
+      "a_buffer": "lhs",
+      "b_buffer": "rhs",
+      "m": 32,
+      "n": 8,
+      "k": 8,
+      "block_m": 16,
+      "block_n": 8,
+      "grid": [
+        2,
+        1
+      ],
+      "active_warps": 1
+    },
+    "compile_rc": 0,
+    "ptx_mma_count": 3,
+    "ptx_has_cp_async": false,
+    "stderr": ""
+  },
+  {
+    "id": "a02-cta-negative-offset",
+    "expected": "NoMatch",
+    "actual": "Plan",
+    "reason": "validated one-atom TF32 matmul plan",
+    "moral_semantics": "CTA 0 reads A row -1; global read escapes declared operand",
+    "plan": {
+      "staging": "global",
+      "output": "result",
+      "a_buffer": "lhs",
+      "b_buffer": "rhs",
+      "m": 32,
+      "n": 8,
+      "k": 8,
+      "block_m": 16,
+      "block_n": 8,
+      "grid": [
+        2,
+        1
+      ],
+      "active_warps": 1
+    },
+    "compile_rc": 0,
+    "ptx_mma_count": 3,
+    "ptx_has_cp_async": false,
+    "stderr": ""
+  },
+  {
+    "id": "a03-output-aliases-rhs",
+    "expected": "NoMatch",
+    "actual": "Plan",
+    "reason": "validated one-atom TF32 matmul plan",
+    "moral_semantics": "output write aliases RHS input; stores mutate an operand",
+    "plan": {
+      "staging": "global",
+      "output": "rhs",
+      "a_buffer": "lhs",
+      "b_buffer": "rhs",
+      "m": 16,
+      "n": 16,
+      "k": 16,
+      "block_m": 16,
+      "block_n": 8,
+      "grid": [
+        1,
+        2
+      ],
+      "active_warps": 1
+    },
+    "compile_rc": 0,
+    "ptx_mma_count": 3,
+    "ptx_has_cp_async": false,
+    "stderr": ""
+  },
+  {
+    "id": "a04-output-aliases-lhs",
+    "expected": "NoMatch",
+    "actual": "Plan",
+    "reason": "validated one-atom TF32 matmul plan",
+    "moral_semantics": "output write aliases LHS input; stores mutate an operand",
+    "plan": {
+      "staging": "global",
+      "output": "lhs",
+      "a_buffer": "lhs",
+      "b_buffer": "rhs",
+      "m": 16,
+      "n": 16,
+      "k": 16,
+      "block_m": 16,
+      "block_n": 8,
+      "grid": [
+        1,
+        2
+      ],
+      "active_warps": 1
+    },
+    "compile_rc": 0,
+    "ptx_mma_count": 3,
+    "ptx_has_cp_async": false,
+    "stderr": ""
+  },
+  {
+    "id": "a05-pipeline-copy-mismatch",
+    "expected": "NoMatch",
+    "actual": "Plan",
+    "reason": "validated one-atom TF32 matmul plan",
+    "moral_semantics": "cp.async copies (r,k) into shared (r+0,k+1), but compute reads (r,k); staged tensor differs",
+    "plan": {
+      "staging": "pipeline",
+      "output": "result",
+      "a_buffer": "lhs",
+      "b_buffer": "rhs",
+      "m": 16,
+      "n": 8,
+      "k": 8,
+      "block_m": 16,
+      "block_n": 8,
+      "grid": [
+        1,
+        1
+      ],
+      "active_warps": 1
+    },
+    "compile_rc": 0,
+    "ptx_mma_count": 3,
+    "ptx_has_cp_async": false,
+    "stderr": ""
+  },
+  {
+    "id": "a06-pipeline-read-outside",
+    "expected": "NoMatch",
+    "actual": "NoMatch",
+    "reason": "copy source leaves the global operand",
+    "moral_semantics": "copy loads A row r+1, but compute reads shared row r; copy no longer defines the read value",
+    "compile_rc": 0,
+    "ptx_mma_count": 0,
+    "ptx_has_cp_async": true,
+    "stderr": ""
+  },
+  {
+    "id": "a07-noop-epilogue",
+    "expected": "Plan",
+    "actual": "Plan",
+    "reason": "validated one-atom TF32 matmul plan",
+    "moral_semantics": "unused elementwise statement cannot change the matmul result",
+    "plan": {
+      "staging": "global",
+      "output": "result",
+      "a_buffer": "lhs",
+      "b_buffer": "rhs",
+      "m": 16,
+      "n": 8,
+      "k": 8,
+      "block_m": 16,
+      "block_n": 8,
+      "grid": [
+        1,
+        1
+      ],
+      "active_warps": 1
+    }
+  },
+  {
+    "id": "a08-accumulator-slot-swap",
+    "expected": "NoMatch",
+    "actual": "NoMatch",
+    "reason": "base accumulator is not at its A/B lane coordinate",
+    "moral_semantics": "adjacent C fragment slots carry the other accumulator; output cells are permuted",
+    "compile_rc": 0,
+    "ptx_mma_count": 0,
+    "ptx_has_cp_async": false,
+    "stderr": ""
+  },
+  {
+    "id": "a09-shared-copy-swap",
+    "expected": "NoMatch",
+    "actual": "NoMatch",
+    "reason": "shared row operand has an unexpected K dimension",
+    "moral_semantics": "A copy reads transposed global cells while compute indexes shared as row-major A",
+    "compile_rc": 0,
+    "ptx_mma_count": 0,
+    "ptx_has_cp_async": true,
+    "stderr": ""
+  },
+  {
+    "id": "a10-launch-3-warps",
+    "expected": "UnsupportedMatch",
+    "actual": "UnsupportedMatch",
+    "reason": "launch factorization has 1 atoms for 3 warps",
+    "moral_semantics": "32x16 output tile is four atoms but launch has three warps (near miss)"
+  },
+  {
+    "id": "a11-unused-load",
+    "expected": "Plan",
+    "actual": "Plan",
+    "reason": "validated one-atom TF32 matmul plan",
+    "moral_semantics": "unused global load is semantically inert; narrow recognizer may reject",
+    "plan": {
+      "staging": "global",
+      "output": "result",
+      "a_buffer": "lhs",
+      "b_buffer": "rhs",
+      "m": 16,
+      "n": 8,
+      "k": 8,
+      "block_m": 16,
+      "block_n": 8,
+      "grid": [
+        1,
+        1
+      ],
+      "active_warps": 1
+    }
+  },
+  {
+    "id": "a12-same-source",
+    "expected": "NoMatch",
+    "actual": "NoMatch",
+    "reason": "both operands load the same buffer",
+    "moral_semantics": "both operands load the same graph buffer; must fail closed"
+  },
+  {
+    "id": "a13-k1",
+    "expected": "UnsupportedMatch",
+    "actual": "UnsupportedMatch",
+    "reason": "K is not TF32-atom aligned",
+    "moral_semantics": "K=1 is a legal matmul but not TF32-atom aligned"
+  },
+  {
+    "id": "a14-m8",
+    "expected": "UnsupportedMatch",
+    "actual": "UnsupportedMatch",
+    "reason": "launch output coverage leaves the output",
+    "moral_semantics": "M=8 is below the 16-row atom; tail/atom mismatch"
+  },
+  {
+    "id": "a15-typed-direct",
+    "expected": "Plan",
+    "actual": "Plan",
+    "reason": "validated one-atom TF32 matmul plan",
+    "moral_semantics": "explicit typed nodes with nonstandard names/axis spellings",
+    "plan": {
+      "staging": "global",
+      "output": "C",
+      "a_buffer": "A",
+      "b_buffer": "B",
+      "m": 16,
+      "n": 8,
+      "k": 8,
+      "block_m": 16,
+      "block_n": 8,
+      "grid": [
+        1,
+        1
+      ],
+      "active_warps": 1
+    }
+  },
+  {
+    "id": "a21-typed-cta-row-offset",
+    "expected": "NoMatch",
+    "actual": "Plan",
+    "reason": "validated one-atom TF32 matmul plan",
+    "moral_semantics": "direct typed IR: CTA 1 reads A rows 17..32 for output rows 16..31",
+    "plan": {
+      "staging": "global",
+      "output": "C",
+      "a_buffer": "A",
+      "b_buffer": "B",
+      "m": 32,
+      "n": 8,
+      "k": 8,
+      "block_m": 16,
+      "block_n": 8,
+      "grid": [
+        2,
+        1
+      ],
+      "active_warps": 1
+    }
+  },
+  {
+    "id": "a16-duplicate-output-cell",
+    "expected": "UnsupportedMatch",
+    "actual": "NoMatch",
+    "reason": "base accumulator is not at its A/B lane coordinate",
+    "moral_semantics": "coverage has a duplicate C cell and a missing C cell; no exact output partition"
+  },
+  {
+    "id": "a17-write-oob",
+    "expected": "NoMatch",
+    "actual": "NoMatch",
+    "reason": "accumulator write is bound to another C fragment slot",
+    "moral_semantics": "one C store escapes the declared output extent"
+  },
+  {
+    "id": "a18-nonzero-seed",
+    "expected": "NoMatch",
+    "actual": "NoMatch",
+    "reason": "accumulator seed is not the zero identity",
+    "moral_semantics": "accumulator starts at 1, so result is not just A@B"
+  }
+]

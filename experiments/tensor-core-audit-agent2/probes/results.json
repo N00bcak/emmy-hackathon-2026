@@ -1,0 +1,420 @@
+{
+  "summary": {
+    "probe_count": 20,
+    "expected_counts": {
+      "Plan": 10,
+      "UnsupportedMatch": 6,
+      "NoMatch": 4
+    },
+    "actual_counts": {
+      "Plan": 9,
+      "UnsupportedMatch": 6,
+      "NoMatch": 5
+    },
+    "disagreements": [
+      "P08-nested-k-spelling"
+    ]
+  },
+  "rows": [
+    {
+      "id": "P01-unusual-names-direct",
+      "expected": "Plan",
+      "actual": "Plan",
+      "reason": "validated one-atom TF32 matmul plan",
+      "moral_semantics": "Direct 16x8x16 contraction with arbitrary SSA/buffer names and ABI order.",
+      "agrees": true,
+      "plan": {
+        "m": 16,
+        "n": 8,
+        "k": 16,
+        "block": [
+          16,
+          8
+        ],
+        "grid": [
+          1,
+          1
+        ],
+        "staging": "global"
+      },
+      "compile_rc": 0,
+      "ptx_sha256": "8a9b6a8739b95f8def28f010b8ed2c2c65125585698345bf72fffe2fdbe39f8c",
+      "mma_count": 3,
+      "ptx_has_cp_async": false,
+      "stdout_is_ptx_only": true,
+      "stderr": ""
+    },
+    {
+      "id": "P02-shared-b-transpose",
+      "expected": "Plan",
+      "actual": "Plan",
+      "reason": "validated one-atom TF32 matmul plan",
+      "moral_semantics": "Legal B-transposed operand staged through a proved shared tile.",
+      "agrees": true,
+      "plan": {
+        "m": 32,
+        "n": 16,
+        "k": 16,
+        "block": [
+          16,
+          8
+        ],
+        "grid": [
+          2,
+          2
+        ],
+        "staging": "shared"
+      },
+      "compile_rc": 0,
+      "ptx_sha256": "97f07f93d94f67917b3e6fa252dbea00377c30406ee8361eff9f5bd1dbfc6847",
+      "mma_count": 3,
+      "ptx_has_cp_async": true,
+      "stdout_is_ptx_only": true,
+      "stderr": ""
+    },
+    {
+      "id": "P03-2x1-atom-grid",
+      "expected": "Plan",
+      "actual": "Plan",
+      "reason": "validated one-atom TF32 matmul plan",
+      "moral_semantics": "A 32x8 tile is exactly two 16x8 atoms and two launched warps.",
+      "agrees": true,
+      "plan": {
+        "m": 32,
+        "n": 8,
+        "k": 8,
+        "block": [
+          32,
+          8
+        ],
+        "grid": [
+          1,
+          1
+        ],
+        "staging": "global"
+      },
+      "compile_rc": 0,
+      "ptx_sha256": "24dfbaf3222e2e59da2471eb7a6916fc175c8b04737e002e2bc26760769a9474",
+      "mma_count": 3,
+      "ptx_has_cp_async": false,
+      "stdout_is_ptx_only": true,
+      "stderr": ""
+    },
+    {
+      "id": "P04-1x2-atom-grid",
+      "expected": "Plan",
+      "actual": "Plan",
+      "reason": "validated one-atom TF32 matmul plan",
+      "moral_semantics": "A 16x16 tile is exactly two 16x8 atoms and two launched warps.",
+      "agrees": true,
+      "plan": {
+        "m": 16,
+        "n": 16,
+        "k": 8,
+        "block": [
+          16,
+          16
+        ],
+        "grid": [
+          1,
+          1
+        ],
+        "staging": "global"
+      },
+      "compile_rc": 0,
+      "ptx_sha256": "107b789cc8c7b3602b05f2213632761aa7c9d35d0dd68643b6d61b758151d60b",
+      "mma_count": 3,
+      "ptx_has_cp_async": false,
+      "stdout_is_ptx_only": true,
+      "stderr": ""
+    },
+    {
+      "id": "P05-cta-dependent-direct-read",
+      "expected": "NoMatch",
+      "actual": "NoMatch",
+      "reason": "direct operand coordinate drifts from its output cell",
+      "moral_semantics": "CTA 1 reads A rows shifted by one but writes the canonical C rows.",
+      "agrees": true,
+      "compile_rc": 0,
+      "ptx_sha256": "5e68fbc654ac5ac3d1cb14a1e9c605c45a7942826aa53add45b72662701781da",
+      "mma_count": 0,
+      "ptx_has_cp_async": false,
+      "stdout_is_ptx_only": true,
+      "stderr": ""
+    },
+    {
+      "id": "P06-inert-unused-load",
+      "expected": "Plan",
+      "actual": "Plan",
+      "reason": "validated one-atom TF32 matmul plan",
+      "moral_semantics": "An unused load has no effect on the contraction and is legal to ignore.",
+      "agrees": true,
+      "plan": {
+        "m": 16,
+        "n": 8,
+        "k": 8,
+        "block": [
+          16,
+          8
+        ],
+        "grid": [
+          1,
+          1
+        ],
+        "staging": "global"
+      },
+      "compile_rc": 0,
+      "ptx_sha256": "5dfae22741e1c7c4e54b0c5fb7289af9a345ed2b0e7188dbdb49229f572337bb",
+      "mma_count": 3,
+      "ptx_has_cp_async": false,
+      "stdout_is_ptx_only": true,
+      "stderr": ""
+    },
+    {
+      "id": "P07-output-aliases-A",
+      "expected": "NoMatch",
+      "actual": "NoMatch",
+      "reason": "output buffer aliases a contraction operand",
+      "moral_semantics": "Writing C through A changes operand values while the reduction is running.",
+      "agrees": true,
+      "compile_rc": 0,
+      "ptx_sha256": "3edda151cf4f48d07961da760bc4a2f9c153994d74e37935225f817700da5c3e",
+      "mma_count": 0,
+      "ptx_has_cp_async": false,
+      "stdout_is_ptx_only": true,
+      "stderr": ""
+    },
+    {
+      "id": "P08-nested-k-spelling",
+      "expected": "Plan",
+      "actual": "NoMatch",
+      "reason": "operand K coordinate is not the reduction coordinate",
+      "moral_semantics": "The nested loops enumerate exactly (k0,k1)=(0..7,0,8), i.e. K=0..15.",
+      "agrees": false,
+      "compile_rc": 1,
+      "ptx_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mma_count": 0,
+      "ptx_has_cp_async": false,
+      "stdout_is_ptx_only": false,
+      "stderr": "compile.py: Unsupported: Unknown IR value k"
+    },
+    {
+      "id": "P09-phase-remapped-k",
+      "expected": "NoMatch",
+      "actual": "NoMatch",
+      "reason": "direct operand K coordinate is a non-affine gather",
+      "moral_semantics": "A-phase repeats K=0..7 for k=8..15; the accepted plan would read K=0..15.",
+      "agrees": true,
+      "compile_rc": 0,
+      "ptx_sha256": "90feb4187841eef994f8da462b0e70ca469502d5e5fdf1da1d8fbc49f22add45",
+      "mma_count": 0,
+      "ptx_has_cp_async": false,
+      "stdout_is_ptx_only": true,
+      "stderr": ""
+    },
+    {
+      "id": "P10-m01-output-alias",
+      "expected": "NoMatch",
+      "actual": "NoMatch",
+      "reason": "output buffer aliases a contraction operand",
+      "moral_semantics": "The m01 output pointer aliases x0, so stores corrupt the A operand.",
+      "agrees": true
+    },
+    {
+      "id": "P11-m01-wait-group-3",
+      "expected": "UnsupportedMatch",
+      "actual": "UnsupportedMatch",
+      "reason": "pipeline read consumes an uncommitted or unawaited copy",
+      "moral_semantics": "wait_group(3) leaves all three committed groups in flight; compute may race copies.",
+      "agrees": true,
+      "compile_rc": 0,
+      "ptx_sha256": "3a21978ed3b6e93edd71741969dfc4f57f791b2f0b2641b75ccc732462bb919b",
+      "mma_count": 0,
+      "ptx_has_cp_async": true,
+      "stdout_is_ptx_only": true,
+      "stderr": ""
+    },
+    {
+      "id": "P12-m01-duplicate-fill",
+      "expected": "Plan",
+      "actual": "Plan",
+      "reason": "validated one-atom TF32 matmul plan",
+      "moral_semantics": "Duplicating a copy of the same source into the same slot is semantically inert.",
+      "agrees": true,
+      "plan": {
+        "m": 512,
+        "n": 512,
+        "k": 512,
+        "block": [
+          32,
+          64
+        ],
+        "grid": [
+          16,
+          8
+        ],
+        "staging": "pipeline"
+      },
+      "compile_rc": 0,
+      "ptx_sha256": "84e26af55cd3c696a891d583a04e13b20d48a2f349223f8140311e3de9f14b9b",
+      "mma_count": 3,
+      "ptx_has_cp_async": false,
+      "stdout_is_ptx_only": true,
+      "stderr": ""
+    },
+    {
+      "id": "P13-m01-shifted-b-copy",
+      "expected": "UnsupportedMatch",
+      "actual": "UnsupportedMatch",
+      "reason": "pipeline read receives the wrong global cell",
+      "moral_semantics": "Every B copy is shifted one column, so the MMA consumes the wrong B cells.",
+      "agrees": true,
+      "compile_rc": 0,
+      "ptx_sha256": "edd8b7ef364312432c87e70285d55465128bd7538b0c7cb35a6b753d30a8e390",
+      "mma_count": 0,
+      "ptx_has_cp_async": true,
+      "stdout_is_ptx_only": true,
+      "stderr": ""
+    },
+    {
+      "id": "P14-m01-interior-cta-only-copy",
+      "expected": "UnsupportedMatch",
+      "actual": "UnsupportedMatch",
+      "reason": "pipeline copy has a non-affine CTA coordinate",
+      "moral_semantics": "Only CTA 1 shifts B; both B ports and all CTAs must be proved, not just endpoints.",
+      "agrees": true,
+      "compile_rc": 1,
+      "ptx_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mma_count": 0,
+      "ptx_has_cp_async": false,
+      "stdout_is_ptx_only": false,
+      "stderr": "compile.py: Unsupported: Unsupported expression operator * for pred"
+    },
+    {
+      "id": "P15-m01-partial-barrier",
+      "expected": "UnsupportedMatch",
+      "actual": "UnsupportedMatch",
+      "reason": "staged plan lacks a pre-compute CTA barrier",
+      "moral_semantics": "bar.sync with count=32 only collects one warp; it cannot order a 512-thread CTA.",
+      "agrees": true,
+      "compile_rc": 0,
+      "ptx_sha256": "e4bfaa1530b6f449bfae7af9d6e4ce533c698038f6364cd05f4e5d3e77951960",
+      "mma_count": 0,
+      "ptx_has_cp_async": true,
+      "stdout_is_ptx_only": true,
+      "stderr": ""
+    },
+    {
+      "id": "P16-m01-wait-group-1-safe",
+      "expected": "Plan",
+      "actual": "Plan",
+      "reason": "validated one-atom TF32 matmul plan",
+      "moral_semantics": "A two-group wait window still supplies each three-stage slot before its compute read.",
+      "agrees": true,
+      "plan": {
+        "m": 512,
+        "n": 512,
+        "k": 512,
+        "block": [
+          32,
+          64
+        ],
+        "grid": [
+          16,
+          8
+        ],
+        "staging": "pipeline"
+      },
+      "compile_rc": 0,
+      "ptx_sha256": "84e26af55cd3c696a891d583a04e13b20d48a2f349223f8140311e3de9f14b9b",
+      "mma_count": 3,
+      "ptx_has_cp_async": false,
+      "stdout_is_ptx_only": true,
+      "stderr": ""
+    },
+    {
+      "id": "P17-split-no-atomics",
+      "expected": "UnsupportedMatch",
+      "actual": "UnsupportedMatch",
+      "reason": "duplicate non-atomic output coverage (split-K without atomics)",
+      "moral_semantics": "Two CTAs write the same non-atomic output cells.",
+      "agrees": true,
+      "compile_rc": 0,
+      "ptx_sha256": "77b51ad08d1e578c3c9dcdc0940cd5b81d2d9ee1c2d496b1846a7bd479e50222",
+      "mma_count": 0,
+      "ptx_has_cp_async": false,
+      "stdout_is_ptx_only": true,
+      "stderr": ""
+    },
+    {
+      "id": "P18-split-with-atomic",
+      "expected": "UnsupportedMatch",
+      "actual": "UnsupportedMatch",
+      "reason": "CTA grid does not exactly factor the output tile grid",
+      "moral_semantics": "Atomic split-K is outside the one-atom emitter even with reset metadata.",
+      "agrees": true,
+      "compile_rc": 0,
+      "ptx_sha256": "92bf4e33e8f70ef31dafc65568dd096f05585c41c61cb40401175e4ca59b27de",
+      "mma_count": 0,
+      "ptx_has_cp_async": false,
+      "stdout_is_ptx_only": true,
+      "stderr": ""
+    },
+    {
+      "id": "P19-direct-a-transpose",
+      "expected": "Plan",
+      "actual": "Plan",
+      "reason": "validated one-atom TF32 matmul plan",
+      "moral_semantics": "A is a transposed (K,M) view; the contraction is still A^T @ B.",
+      "agrees": true,
+      "plan": {
+        "m": 16,
+        "n": 16,
+        "k": 16,
+        "block": [
+          16,
+          8
+        ],
+        "grid": [
+          1,
+          2
+        ],
+        "staging": "global"
+      },
+      "compile_rc": 0,
+      "ptx_sha256": "16b317351c99f6d7fd0256393c69bbc491c74a84652239d492b415ede01663fe",
+      "mma_count": 3,
+      "ptx_has_cp_async": false,
+      "stdout_is_ptx_only": true,
+      "stderr": ""
+    },
+    {
+      "id": "P20-staged-a-transpose",
+      "expected": "Plan",
+      "actual": "Plan",
+      "reason": "validated one-atom TF32 matmul plan",
+      "moral_semantics": "A is a transposed (K,M) global view staged into a row-major (M,K) shared tile.",
+      "agrees": true,
+      "plan": {
+        "m": 16,
+        "n": 16,
+        "k": 16,
+        "block": [
+          16,
+          8
+        ],
+        "grid": [
+          1,
+          2
+        ],
+        "staging": "shared"
+      },
+      "compile_rc": 0,
+      "ptx_sha256": "153f2b99c69ee41dad4e8cb86162774a501c24d0a1645e9621488d6cc0ad30a7",
+      "mma_count": 3,
+      "ptx_has_cp_async": true,
+      "stdout_is_ptx_only": true,
+      "stderr": ""
+    }
+  ]
+}
