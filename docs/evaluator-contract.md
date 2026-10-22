@@ -21,6 +21,15 @@ The hosted GPU is an RTX 5090; the local GPU is a different model. The compiler
 emits PTX 8.0 targeting sm_89; each runner assembles for its own selected target.
 A 4090 latency cannot be treated as the corresponding 5090 latency.
 
+The target also changes the representation of dynamic shared memory. On
+`sm_120`, `ptxas` materializes a nonzero shared-window base for an
+`.extern .shared` slab; on `sm_89` the same base folds to zero. A `cp.async`
+destination must therefore be `low32(slab) + (destination - slab)`, not the
+destination's offset alone. Subtracting only the base passed every local
+sm_89 case but made `m01_matmul_512` fail on the hosted sm_120 runner. The
+corrected form passes m01 on both the local sm_89 runner and the hosted sm_120
+runner; this is execution evidence for that case, not a hidden-set guarantee.
+
 Instruction selection is the compiler's choice. The evaluator checks the ABI,
 launch, entry point, assembly result, and numerical output; it does not require a
 particular PTX opcode for an IR node. A tensor-core lowering is therefore valid

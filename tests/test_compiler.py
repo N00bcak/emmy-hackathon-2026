@@ -406,6 +406,13 @@ class CompilerTests(unittest.TestCase):
         preheader=lines[preheader_start:start]
         body='\n'.join(lines[start+1:end])
 
+        # Dynamic shared memory has a nonzero window base on sm_120. Retain it
+        # when adding the destination's offset; subtracting only the slab base
+        # silently writes through a different address on that target.
+        rendered='\n'.join(lines)
+        self.assertRegex(rendered, r'mov\.u64 %rd\d+, __emmy_smem;')
+        self.assertRegex(rendered, r'mov\.u32 %r\d+, __emmy_smem;')
+
         div_re=re.compile(r'\bdiv\.[su]32\s+(%r\d+)\s*,\s*(%r\d+)\s*,\s*(%r\d+|\d+);')
         rem_re=re.compile(r'\brem\.[su]32\s+(%r\d+)\s*,\s*(%r\d+)\s*,\s*(%r\d+|\d+);')
         divisions=[match.groups() for line in preheader
