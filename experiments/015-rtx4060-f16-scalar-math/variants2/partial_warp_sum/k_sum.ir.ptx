@@ -1,0 +1,75 @@
+.version 8.0
+.target sm_89
+.address_size 64
+
+.visible .entry k_sum(
+    .param .u64 param_0,
+    .param .u64 param_1
+)
+{
+    .reg .b32 %r<25>;
+    .reg .b16 %rh<1>;
+    .reg .b64 %rd<7>;
+    .reg .f32 %f<11>;
+    .reg .f64 %fd<1>;
+    .reg .pred %p<6>;
+    ld.param.u64 %rd1, [param_0];
+    cvta.to.global.u64 %rd1, %rd1;
+    ld.param.u64 %rd2, [param_1];
+    cvta.to.global.u64 %rd2, %rd2;
+    mov.u32 %r1, %tid.x;
+    mov.u32 %r2, %tid.y;
+    mov.u32 %r3, %tid.z;
+    mov.u32 %r4, %ctaid.x;
+    mov.u32 %r5, %ctaid.y;
+    mov.u32 %r6, %ctaid.z;
+    mad.lo.u32 %r7, %r1, 1, %r2;
+    mad.lo.u32 %r8, %r7, 1, %r3;
+    mad.lo.u32 %r9, %r4, 1, %r5;
+    mad.lo.u32 %r10, %r9, 1, %r6;
+    mov.u32 %r1, %r8;
+    mov.u32 %r4, %r10;
+    mov.u32 %r11, 6;
+    mad.lo.u32 %r12, %r10, %r11, %r8;
+    and.b32 %r13, %r8, 31;
+    shr.u32 %r14, %r8, 5;
+    setp.ge.u32 %p1, %r12, 6;
+    shr.u32 %r15, %r12, 0;
+    mad.lo.s32 %r16, %r15, 1, 0;
+    mul.wide.s32 %rd3, %r16, 4;
+    add.u64 %rd4, %rd1, %rd3;
+    ld.global.f32 %f1, [%rd4];
+    activemask.b32 %r17;
+    shfl.sync.bfly.b32 %f2, %f1, 4, 31, %r17;
+    xor.b32 %r18, %r13, 4;
+    shr.u32 %r19, %r17, %r18;
+    and.b32 %r19, %r19, 1;
+    setp.ne.u32 %p2, %r19, 0;
+    add.f32 %f3, %f1, %f2;
+    selp.f32 %f4, %f3, %f1, %p2;
+    shfl.sync.bfly.b32 %f5, %f4, 2, 31, %r17;
+    xor.b32 %r20, %r13, 2;
+    shr.u32 %r21, %r17, %r20;
+    and.b32 %r21, %r21, 1;
+    setp.ne.u32 %p3, %r21, 0;
+    add.f32 %f6, %f4, %f5;
+    selp.f32 %f7, %f6, %f4, %p3;
+    shfl.sync.bfly.b32 %f8, %f7, 1, 31, %r17;
+    xor.b32 %r22, %r13, 1;
+    shr.u32 %r23, %r17, %r22;
+    and.b32 %r23, %r23, 1;
+    setp.ne.u32 %p4, %r23, 0;
+    add.f32 %f9, %f7, %f8;
+    selp.f32 %f10, %f9, %f7, %p4;
+    setp.eq.s32 %p5, %r13, 0;
+    @!%p5 bra else_1;
+    mad.lo.s32 %r24, 0, 1, 0;
+    mul.wide.s32 %rd5, %r24, 4;
+    add.u64 %rd6, %rd2, %rd5;
+    st.global.f32 [%rd6], %f10;
+    bra endif_2;
+else_1:
+endif_2:
+kernel_done:
+    ret;
+}

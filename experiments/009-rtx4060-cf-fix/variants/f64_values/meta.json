@@ -1,0 +1,59 @@
+{
+  "atol": 0.0,
+  "graph_inputs": [
+    "x"
+  ],
+  "graph_outputs": [
+    "out"
+  ],
+  "id": "f64_values",
+  "kernels": [
+    {
+      "arg_order": [
+        "x",
+        "out",
+        "delta"
+      ],
+      "args": [
+        {
+          "dtype": "f64",
+          "name": "x",
+          "shape": [
+            4
+          ]
+        },
+        {
+          "dtype": "f64",
+          "name": "out",
+          "output": true,
+          "shape": [
+            4
+          ]
+        },
+        {
+          "dtype": "f64",
+          "name": "delta",
+          "scalar": true,
+          "shape": [],
+          "value": 0.125
+        }
+      ],
+      "block": [
+        8,
+        1,
+        1
+      ],
+      "entry": "k_f64",
+      "final": true,
+      "grid": [
+        1,
+        1,
+        1
+      ],
+      "node": "out",
+      "smem_bytes": 0,
+      "zero_outputs": []
+    }
+  ],
+  "rtol": 0.0
+}

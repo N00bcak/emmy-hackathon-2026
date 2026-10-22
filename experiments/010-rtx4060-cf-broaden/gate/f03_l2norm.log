@@ -1,0 +1,2 @@
+[k_div_reduce] 16 registers
+[k_div_reduce] PASS  div: max abs err 1.490e-08  (20.255999639630318 us)

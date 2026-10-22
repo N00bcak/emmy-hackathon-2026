@@ -1,0 +1,19 @@
+{
+  "mode": "timing",
+  "case": {
+    "id": "a01_attention",
+    "variant": "baseline",
+    "case_dir": "/home/ada/Projects/emmy-hackathon-2026/experiments/008-rtx4060-final/prepared/a01_attention",
+    "cubins": [
+      "/home/ada/Projects/emmy-hackathon-2026/experiments/008-rtx4060-final/prepared/a01_attention/baseline-k_matmul_softmax_reduce_b55365.cubin"
+    ],
+    "baseline_cubins": [
+      "/home/ada/Projects/emmy-hackathon-2026/experiments/008-rtx4060-final/prepared/a01_attention/baseline-k_matmul_softmax_reduce_b55365.cubin"
+    ]
+  },
+  "pairs": 16,
+  "warmup": 3,
+  "seed": 779,
+  "burst_id": "aa-baseline-a01_attention",
+  "out": "/home/ada/Projects/emmy-hackathon-2026/experiments/008-rtx4060-final/aa-baseline-a01_attention.json"
+}

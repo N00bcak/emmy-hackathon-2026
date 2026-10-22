@@ -1,0 +1,67 @@
+{
+  "atol": 1e-06,
+  "graph_inputs": [
+    "x"
+  ],
+  "graph_outputs": [
+    "out"
+  ],
+  "id": "scalar_abi",
+  "kernels": [
+    {
+      "arg_order": [
+        "out",
+        "x",
+        "scale",
+        "bias"
+      ],
+      "args": [
+        {
+          "dtype": "f32",
+          "name": "x",
+          "shape": [
+            23
+          ]
+        },
+        {
+          "dtype": "f32",
+          "name": "out",
+          "output": true,
+          "shape": [
+            23
+          ]
+        },
+        {
+          "dtype": "f32",
+          "name": "scale",
+          "scalar": true,
+          "shape": [],
+          "value": 1.75
+        },
+        {
+          "dtype": "f32",
+          "name": "bias",
+          "scalar": true,
+          "shape": [],
+          "value": -0.5
+        }
+      ],
+      "block": [
+        8,
+        1,
+        1
+      ],
+      "entry": "k_scalar",
+      "final": true,
+      "grid": [
+        3,
+        1,
+        1
+      ],
+      "node": "out",
+      "smem_bytes": 0,
+      "zero_outputs": []
+    }
+  ],
+  "rtol": 1e-05
+}

@@ -1,0 +1,10 @@
+source f87f999a63d51c31f6e9cb3a9c5c55f55ac37c4bc9c1ed621e9a718321d477f2
+manifest f87f999a63d51c31f6e9cb3a9c5c55f55ac37c4bc9c1ed621e9a718321d477f2
+{
+  "all_ok": true,
+  "compiler_sha256": "f87f999a63d51c31f6e9cb3a9c5c55f55ac37c4bc9c1ed621e9a718321d477f2",
+  "batches": [
+    true,
+    true
+  ]
+}

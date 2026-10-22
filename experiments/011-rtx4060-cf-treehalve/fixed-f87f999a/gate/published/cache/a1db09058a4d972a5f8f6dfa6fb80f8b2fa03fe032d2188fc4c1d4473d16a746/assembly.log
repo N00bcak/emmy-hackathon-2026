@@ -1,0 +1,6 @@
+ptxas info    : 0 bytes gmem
+ptxas info    : Compiling entry function 'k_softmax_05263d' for 'sm_89'
+ptxas info    : Function properties for k_softmax_05263d
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 22 registers, used 1 barriers, 32 bytes smem, 368 bytes cmem[0]
+ptxas info    : Compile time = 11.796 ms

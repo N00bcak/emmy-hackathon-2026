@@ -1,0 +1,51 @@
+{
+  "atol": 0.0,
+  "graph_inputs": [
+    "x"
+  ],
+  "graph_outputs": [
+    "out"
+  ],
+  "id": "partial_warp_max",
+  "kernels": [
+    {
+      "arg_order": [
+        "x",
+        "out"
+      ],
+      "args": [
+        {
+          "dtype": "f32",
+          "name": "x",
+          "shape": [
+            6
+          ]
+        },
+        {
+          "dtype": "f32",
+          "name": "out",
+          "output": true,
+          "shape": [
+            1
+          ]
+        }
+      ],
+      "block": [
+        6,
+        1,
+        1
+      ],
+      "entry": "k_max",
+      "final": true,
+      "grid": [
+        1,
+        1,
+        1
+      ],
+      "node": "out",
+      "smem_bytes": 0,
+      "zero_outputs": []
+    }
+  ],
+  "rtol": 0.0
+}

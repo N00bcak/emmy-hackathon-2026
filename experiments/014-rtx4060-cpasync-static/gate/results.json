@@ -1,0 +1,265 @@
+{
+  "compiler_sha256": "b3b0a3acd6b7373cb3707ea50bcf99c621fff865acbc92db650f6c753c4ee045",
+  "cases": [
+    {
+      "problem": "p00_scalar_add",
+      "command": [
+        "/home/ada/Projects/emmy-hackathon-2026/.venv/bin/python",
+        "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/submit.py",
+        "p00_scalar_add",
+        "--compiler",
+        "/home/ada/Projects/emmy-hackathon-2026/compile.py",
+        "--server",
+        "http://127.0.0.1:48736"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 0.7886255900011747
+    },
+    {
+      "problem": "p01_vector_add",
+      "command": [
+        "/home/ada/Projects/emmy-hackathon-2026/.venv/bin/python",
+        "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/submit.py",
+        "p01_vector_add",
+        "--compiler",
+        "/home/ada/Projects/emmy-hackathon-2026/compile.py",
+        "--server",
+        "http://127.0.0.1:48736"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 0.6996377360046608
+    },
+    {
+      "problem": "p02_scale_shift",
+      "command": [
+        "/home/ada/Projects/emmy-hackathon-2026/.venv/bin/python",
+        "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/submit.py",
+        "p02_scale_shift",
+        "--compiler",
+        "/home/ada/Projects/emmy-hackathon-2026/compile.py",
+        "--server",
+        "http://127.0.0.1:48736"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 0.7663382580067264
+    },
+    {
+      "problem": "p03_relu_mul",
+      "command": [
+        "/home/ada/Projects/emmy-hackathon-2026/.venv/bin/python",
+        "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/submit.py",
+        "p03_relu_mul",
+        "--compiler",
+        "/home/ada/Projects/emmy-hackathon-2026/compile.py",
+        "--server",
+        "http://127.0.0.1:48736"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 0.8502419729993562
+    },
+    {
+      "problem": "r01_array_sum",
+      "command": [
+        "/home/ada/Projects/emmy-hackathon-2026/.venv/bin/python",
+        "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/submit.py",
+        "r01_array_sum",
+        "--compiler",
+        "/home/ada/Projects/emmy-hackathon-2026/compile.py",
+        "--server",
+        "http://127.0.0.1:48736"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 0.8270605819998309
+    },
+    {
+      "problem": "r02_big_sum",
+      "command": [
+        "/home/ada/Projects/emmy-hackathon-2026/.venv/bin/python",
+        "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/submit.py",
+        "r02_big_sum",
+        "--compiler",
+        "/home/ada/Projects/emmy-hackathon-2026/compile.py",
+        "--server",
+        "http://127.0.0.1:48736"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 0.8285055599990301
+    },
+    {
+      "problem": "r03_mean",
+      "command": [
+        "/home/ada/Projects/emmy-hackathon-2026/.venv/bin/python",
+        "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/submit.py",
+        "r03_mean",
+        "--compiler",
+        "/home/ada/Projects/emmy-hackathon-2026/compile.py",
+        "--server",
+        "http://127.0.0.1:48736"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 0.7688648909970652
+    },
+    {
+      "problem": "r04_row_sum",
+      "command": [
+        "/home/ada/Projects/emmy-hackathon-2026/.venv/bin/python",
+        "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/submit.py",
+        "r04_row_sum",
+        "--compiler",
+        "/home/ada/Projects/emmy-hackathon-2026/compile.py",
+        "--server",
+        "http://127.0.0.1:48736"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 0.7763141859977623
+    },
+    {
+      "problem": "m01_matmul_512",
+      "command": [
+        "/home/ada/Projects/emmy-hackathon-2026/.venv/bin/python",
+        "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/submit.py",
+        "m01_matmul_512",
+        "--compiler",
+        "/home/ada/Projects/emmy-hackathon-2026/compile.py",
+        "--server",
+        "http://127.0.0.1:48736"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 1.0412224829997285
+    },
+    {
+      "problem": "m02_matmul_rect",
+      "command": [
+        "/home/ada/Projects/emmy-hackathon-2026/.venv/bin/python",
+        "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/submit.py",
+        "m02_matmul_rect",
+        "--compiler",
+        "/home/ada/Projects/emmy-hackathon-2026/compile.py",
+        "--server",
+        "http://127.0.0.1:48736"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 0.7835117670038017
+    },
+    {
+      "problem": "f01_rmsnorm",
+      "command": [
+        "/home/ada/Projects/emmy-hackathon-2026/.venv/bin/python",
+        "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/submit.py",
+        "f01_rmsnorm",
+        "--compiler",
+        "/home/ada/Projects/emmy-hackathon-2026/compile.py",
+        "--server",
+        "http://127.0.0.1:48736"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 0.8652248630023678
+    },
+    {
+      "problem": "f02_row_softmax",
+      "command": [
+        "/home/ada/Projects/emmy-hackathon-2026/.venv/bin/python",
+        "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/submit.py",
+        "f02_row_softmax",
+        "--compiler",
+        "/home/ada/Projects/emmy-hackathon-2026/compile.py",
+        "--server",
+        "http://127.0.0.1:48736"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 0.7630849769993802
+    },
+    {
+      "problem": "f03_l2norm",
+      "command": [
+        "/home/ada/Projects/emmy-hackathon-2026/.venv/bin/python",
+        "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/submit.py",
+        "f03_l2norm",
+        "--compiler",
+        "/home/ada/Projects/emmy-hackathon-2026/compile.py",
+        "--server",
+        "http://127.0.0.1:48736"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 0.8137067029965692
+    },
+    {
+      "problem": "a01_attention",
+      "command": [
+        "/home/ada/Projects/emmy-hackathon-2026/.venv/bin/python",
+        "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/submit.py",
+        "a01_attention",
+        "--compiler",
+        "/home/ada/Projects/emmy-hackathon-2026/compile.py",
+        "--server",
+        "http://127.0.0.1:48736"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 0.8749039600006654
+    },
+    {
+      "problem": "a02_attention_128",
+      "command": [
+        "/home/ada/Projects/emmy-hackathon-2026/.venv/bin/python",
+        "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/submit.py",
+        "a02_attention_128",
+        "--compiler",
+        "/home/ada/Projects/emmy-hackathon-2026/compile.py",
+        "--server",
+        "http://127.0.0.1:48736"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 0.7919880999979796
+    },
+    {
+      "problem": "reordered_scale_shift_abi",
+      "command": [
+        "/home/ada/Projects/emmy-hackathon-2026/.venv/bin/python",
+        "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/submit.py",
+        "/home/ada/Projects/emmy-hackathon-2026/experiments/014-rtx4060-cpasync-static/gate/abi-8j_tg7yn",
+        "--compiler",
+        "/home/ada/Projects/emmy-hackathon-2026/compile.py",
+        "--server",
+        "http://127.0.0.1:48736"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 0.7334516449991497
+    }
+  ],
+  "benchmark_qualified": false,
+  "qualification_note": "Standalone correctness smoke; valid research benchmarks require frozen-source/suite Store gates.",
+  "health": {
+    "ok": true,
+    "can_compile": true,
+    "can_run": true,
+    "ptxas": "/opt/cuda/bin/ptxas",
+    "default_arch": "sm_89",
+    "gpu": "admitted CUDA device 0; verified on first run",
+    "implementation": "local research runner; not exact hosted-backend parity"
+  },
+  "published_correctness": {
+    "required": [
+      "p00_scalar_add",
+      "p01_vector_add",
+      "p02_scale_shift",
+      "p03_relu_mul",
+      "r01_array_sum",
+      "r02_big_sum",
+      "r03_mean",
+      "r04_row_sum",
+      "m01_matmul_512",
+      "m02_matmul_rect",
+      "f01_rmsnorm",
+      "f02_row_softmax",
+      "f03_l2norm",
+      "a01_attention",
+      "a02_attention_128"
+    ],
+    "missing": [],
+    "failed": [],
+    "source_unchanged": true,
+    "all15_passed": true,
+    "scope": "Published correctness only; hidden-set correctness is unverified"
+  },
+  "timing_skipped": "not requested"
+}

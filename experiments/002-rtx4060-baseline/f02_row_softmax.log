@@ -1,0 +1,3 @@
+[k_softmax_05263d] your compiler failed (exit code 1):
+compile.py: Unsupported: Accumulator base is unsupported
+

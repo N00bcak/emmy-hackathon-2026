@@ -1,0 +1,19 @@
+{
+  "mode": "timing",
+  "out": "experiments/014-rtx4060-cpasync-static/timing/pair-m02_matmul_rect.json",
+  "case": {
+    "id": "m02_matmul_rect",
+    "variant": "published",
+    "case_dir": "/home/ada/Projects/emmy-hackathon-2026/experiments/014-rtx4060-cpasync-static/timing/prepared/prepared/m02_matmul_rect",
+    "cubins": [
+      "/home/ada/Projects/emmy-hackathon-2026/experiments/014-rtx4060-cpasync-static/timing/prepared/prepared/m02_matmul_rect/candidate-k_matmul.cubin"
+    ],
+    "baseline_cubins": [
+      "/home/ada/Projects/emmy-hackathon-2026/experiments/014-rtx4060-cpasync-static/timing/prepared/prepared/m02_matmul_rect/baseline-k_matmul.cubin"
+    ]
+  },
+  "pairs": 16,
+  "warmup": 5,
+  "seed": 66001,
+  "burst_id": "014-pair-m02_matmul_rect"
+}

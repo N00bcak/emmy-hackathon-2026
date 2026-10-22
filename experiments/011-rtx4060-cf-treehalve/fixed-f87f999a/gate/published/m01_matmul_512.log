@@ -1,0 +1,2 @@
+[k_matmul_2967be] 40 registers
+[k_matmul_2967be] PASS  matmul: max abs err 8.392e-05  (561.9199872016907 us)

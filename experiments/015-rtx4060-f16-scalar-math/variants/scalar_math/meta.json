@@ -1,0 +1,59 @@
+{
+  "atol": 1e-05,
+  "graph_inputs": [
+    "x"
+  ],
+  "graph_outputs": [
+    "out"
+  ],
+  "id": "scalar_math",
+  "kernels": [
+    {
+      "arg_order": [
+        "x",
+        "out",
+        "two"
+      ],
+      "args": [
+        {
+          "dtype": "f32",
+          "name": "x",
+          "shape": [
+            8
+          ]
+        },
+        {
+          "dtype": "f32",
+          "name": "out",
+          "output": true,
+          "shape": [
+            8
+          ]
+        },
+        {
+          "dtype": "f32",
+          "name": "two",
+          "scalar": true,
+          "shape": [],
+          "value": 2.0
+        }
+      ],
+      "block": [
+        8,
+        1,
+        1
+      ],
+      "entry": "k_math",
+      "final": true,
+      "grid": [
+        1,
+        1,
+        1
+      ],
+      "node": "out",
+      "smem_bytes": 0,
+      "zero_outputs": []
+    }
+  ],
+  "rtol": 1e-05
+}

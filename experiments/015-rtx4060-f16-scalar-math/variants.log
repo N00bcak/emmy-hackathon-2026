@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/home/ada/Projects/emmy-hackathon-2026/tools/variant_suite.py", line 525, in <module>
+    main()
+    ~~~~^^
+  File "/home/ada/Projects/emmy-hackathon-2026/tools/variant_suite.py", line 516, in main
+    report = run_gpu(args.destination, args.destination / 'gpu-results.json',
+                     repetitions=args.repetitions)
+  File "/home/ada/Projects/emmy-hackathon-2026/tools/variant_suite.py", line 483, in run_gpu
+    from tools.research_gpu import Driver, run_job
+ModuleNotFoundError: No module named 'tools'

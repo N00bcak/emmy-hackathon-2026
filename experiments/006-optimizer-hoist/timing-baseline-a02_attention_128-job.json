@@ -1,0 +1,19 @@
+{
+  "mode": "timing",
+  "case": {
+    "id": "a02_attention_128",
+    "variant": "hoist-v2",
+    "case_dir": "/home/ada/Projects/emmy-hackathon-2026/experiments/006-optimizer-hoist/prepared/a02_attention_128",
+    "cubins": [
+      "/home/ada/Projects/emmy-hackathon-2026/experiments/006-optimizer-hoist/prepared/a02_attention_128/candidate-k_matmul_softmax_reduce_6f0029.cubin"
+    ],
+    "baseline_cubins": [
+      "/home/ada/Projects/emmy-hackathon-2026/experiments/006-optimizer-hoist/prepared/a02_attention_128/baseline-k_matmul_softmax_reduce_6f0029.cubin"
+    ]
+  },
+  "pairs": 16,
+  "warmup": 3,
+  "seed": 779,
+  "burst_id": "baseline-aa-a02_attention_128",
+  "out": "experiments/006-optimizer-hoist/timing-baseline-a02_attention_128.json"
+}

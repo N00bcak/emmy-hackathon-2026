@@ -1,0 +1,2856 @@
+{
+  "all_ok": true,
+  "batches": [
+    {
+      "batches": [
+        {
+          "batch_id": 0,
+          "isolated": true,
+          "membership": [
+            {
+              "id": "scalar_abi",
+              "variant": "variant"
+            }
+          ],
+          "quarantined": false,
+          "requires_all_batchmates_isolated": false,
+          "results": [
+            {
+              "checks": [
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 1e-06,
+                      "elements": 23,
+                      "max_abs_error": 2.384185791015625e-07,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 1e-05
+                    }
+                  },
+                  "repetition": 0
+                },
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 1e-06,
+                      "elements": 23,
+                      "max_abs_error": 2.384185791015625e-07,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 1e-05
+                    }
+                  },
+                  "repetition": 1
+                },
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 1e-06,
+                      "elements": 23,
+                      "max_abs_error": 2.384185791015625e-07,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 1e-05
+                    }
+                  },
+                  "repetition": 2
+                },
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 1e-06,
+                      "elements": 23,
+                      "max_abs_error": 2.384185791015625e-07,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 1e-05
+                    }
+                  },
+                  "repetition": 3
+                },
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 1e-06,
+                      "elements": 23,
+                      "max_abs_error": 2.384185791015625e-07,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 1e-05
+                    }
+                  },
+                  "repetition": 4
+                }
+              ],
+              "id": "scalar_abi",
+              "ok": true,
+              "quarantined": false,
+              "resources": [
+                {
+                  "block_threads": 8,
+                  "dynamic_shared_bytes": 0,
+                  "entry": "k_scalar",
+                  "local_bytes": 0,
+                  "max_active_blocks_per_sm": 24,
+                  "max_threads_per_block": 1024,
+                  "note": "Driver occupancy/resource feasibility, not a throughput prediction.",
+                  "registers": 10,
+                  "static_shared_bytes": 0
+                }
+              ],
+              "trusted": true,
+              "variant": "variant"
+            }
+          ],
+          "wall_seconds": 0.0003894440014846623
+        },
+        {
+          "batch_id": 1,
+          "isolated": true,
+          "membership": [
+            {
+              "id": "integer_address",
+              "variant": "variant"
+            }
+          ],
+          "quarantined": false,
+          "requires_all_batchmates_isolated": false,
+          "results": [
+            {
+              "checks": [
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 0.0,
+                      "elements": 64,
+                      "max_abs_error": 0.0,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 0.0
+                    }
+                  },
+                  "repetition": 0
+                },
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 0.0,
+                      "elements": 64,
+                      "max_abs_error": 0.0,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 0.0
+                    }
+                  },
+                  "repetition": 1
+                },
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 0.0,
+                      "elements": 64,
+                      "max_abs_error": 0.0,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 0.0
+                    }
+                  },
+                  "repetition": 2
+                },
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 0.0,
+                      "elements": 64,
+                      "max_abs_error": 0.0,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 0.0
+                    }
+                  },
+                  "repetition": 3
+                },
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 0.0,
+                      "elements": 64,
+                      "max_abs_error": 0.0,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 0.0
+                    }
+                  },
+                  "repetition": 4
+                }
+              ],
+              "id": "integer_address",
+              "ok": true,
+              "quarantined": false,
+              "resources": [
+                {
+                  "block_threads": 8,
+                  "dynamic_shared_bytes": 0,
+                  "entry": "k_int_copy",
+                  "local_bytes": 0,
+                  "max_active_blocks_per_sm": 24,
+                  "max_threads_per_block": 1024,
+                  "note": "Driver occupancy/resource feasibility, not a throughput prediction.",
+                  "registers": 8,
+                  "static_shared_bytes": 0
+                }
+              ],
+              "trusted": true,
+              "variant": "variant"
+            }
+          ],
+          "wall_seconds": 0.0001745369954733178
+        },
+        {
+          "batch_id": 2,
+          "isolated": true,
+          "membership": [
+            {
+              "id": "f64_values",
+              "variant": "variant"
+            }
+          ],
+          "quarantined": false,
+          "requires_all_batchmates_isolated": false,
+          "results": [
+            {
+              "checks": [
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 0.0,
+                      "elements": 4,
+                      "max_abs_error": 0.0,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 0.0
+                    }
+                  },
+                  "repetition": 0
+                },
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 0.0,
+                      "elements": 4,
+                      "max_abs_error": 0.0,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 0.0
+                    }
+                  },
+                  "repetition": 1
+                },
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 0.0,
+                      "elements": 4,
+                      "max_abs_error": 0.0,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 0.0
+                    }
+                  },
+                  "repetition": 2
+                },
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 0.0,
+                      "elements": 4,
+                      "max_abs_error": 0.0,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 0.0
+                    }
+                  },
+                  "repetition": 3
+                },
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 0.0,
+                      "elements": 4,
+                      "max_abs_error": 0.0,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 0.0
+                    }
+                  },
+                  "repetition": 4
+                }
+              ],
+              "id": "f64_values",
+              "ok": true,
+              "quarantined": false,
+              "resources": [
+                {
+                  "block_threads": 8,
+                  "dynamic_shared_bytes": 0,
+                  "entry": "k_f64",
+                  "local_bytes": 0,
+                  "max_active_blocks_per_sm": 24,
+                  "max_threads_per_block": 1024,
+                  "note": "Driver occupancy/resource feasibility, not a throughput prediction.",
+                  "registers": 10,
+                  "static_shared_bytes": 0
+                }
+              ],
+              "trusted": true,
+              "variant": "variant"
+            }
+          ],
+          "wall_seconds": 0.0002635869968798943
+        },
+        {
+          "batch_id": 3,
+          "isolated": true,
+          "membership": [
+            {
+              "id": "flatten_2d",
+              "variant": "variant"
+            }
+          ],
+          "quarantined": false,
+          "requires_all_batchmates_isolated": false,
+          "results": [
+            {
+              "checks": [
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 1e-06,
+                      "elements": 12,
+                      "max_abs_error": 0.0,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 1e-05
+                    }
+                  },
+                  "repetition": 0
+                },
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 1e-06,
+                      "elements": 12,
+                      "max_abs_error": 0.0,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 1e-05
+                    }
+                  },
+                  "repetition": 1
+                },
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 1e-06,
+                      "elements": 12,
+                      "max_abs_error": 0.0,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 1e-05
+                    }
+                  },
+                  "repetition": 2
+                },
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 1e-06,
+                      "elements": 12,
+                      "max_abs_error": 0.0,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 1e-05
+                    }
+                  },
+                  "repetition": 3
+                },
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 1e-06,
+                      "elements": 12,
+                      "max_abs_error": 0.0,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 1e-05
+                    }
+                  },
+                  "repetition": 4
+                }
+              ],
+              "id": "flatten_2d",
+              "ok": true,
+              "quarantined": false,
+              "resources": [
+                {
+                  "block_threads": 32,
+                  "dynamic_shared_bytes": 0,
+                  "entry": "k_flat",
+                  "local_bytes": 0,
+                  "max_active_blocks_per_sm": 24,
+                  "max_threads_per_block": 1024,
+                  "note": "Driver occupancy/resource feasibility, not a throughput prediction.",
+                  "registers": 10,
+                  "static_shared_bytes": 0
+                }
+              ],
+              "trusted": true,
+              "variant": "variant"
+            }
+          ],
+          "wall_seconds": 0.0002398409997113049
+        },
+        {
+          "batch_id": 4,
+          "isolated": true,
+          "membership": [
+            {
+              "id": "reduction_partial",
+              "variant": "variant"
+            }
+          ],
+          "quarantined": false,
+          "requires_all_batchmates_isolated": false,
+          "results": [
+            {
+              "checks": [
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 1e-06,
+                      "elements": 1,
+                      "max_abs_error": 0.0,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 1e-06
+                    }
+                  },
+                  "repetition": 0
+                },
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 1e-06,
+                      "elements": 1,
+                      "max_abs_error": 0.0,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 1e-06
+                    }
+                  },
+                  "repetition": 1
+                },
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 1e-06,
+                      "elements": 1,
+                      "max_abs_error": 0.0,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 1e-06
+                    }
+                  },
+                  "repetition": 2
+                },
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 1e-06,
+                      "elements": 1,
+                      "max_abs_error": 0.0,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 1e-06
+                    }
+                  },
+                  "repetition": 3
+                },
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 1e-06,
+                      "elements": 1,
+                      "max_abs_error": 0.0,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 1e-06
+                    }
+                  },
+                  "repetition": 4
+                }
+              ],
+              "id": "reduction_partial",
+              "ok": true,
+              "quarantined": false,
+              "resources": [
+                {
+                  "block_threads": 32,
+                  "dynamic_shared_bytes": 0,
+                  "entry": "k_max",
+                  "local_bytes": 0,
+                  "max_active_blocks_per_sm": 24,
+                  "max_threads_per_block": 1024,
+                  "note": "Driver occupancy/resource feasibility, not a throughput prediction.",
+                  "registers": 21,
+                  "static_shared_bytes": 4
+                }
+              ],
+              "trusted": true,
+              "variant": "variant"
+            }
+          ],
+          "wall_seconds": 0.00022796800476498902
+        },
+        {
+          "batch_id": 5,
+          "isolated": true,
+          "membership": [
+            {
+              "id": "transcendental",
+              "variant": "variant"
+            }
+          ],
+          "quarantined": false,
+          "requires_all_batchmates_isolated": false,
+          "results": [
+            {
+              "checks": [
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 2e-05,
+                      "elements": 8,
+                      "max_abs_error": 1.8477439880371094e-06,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 2e-05
+                    }
+                  },
+                  "repetition": 0
+                },
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 2e-05,
+                      "elements": 8,
+                      "max_abs_error": 1.8477439880371094e-06,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 2e-05
+                    }
+                  },
+                  "repetition": 1
+                },
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 2e-05,
+                      "elements": 8,
+                      "max_abs_error": 1.8477439880371094e-06,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 2e-05
+                    }
+                  },
+                  "repetition": 2
+                },
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 2e-05,
+                      "elements": 8,
+                      "max_abs_error": 1.8477439880371094e-06,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 2e-05
+                    }
+                  },
+                  "repetition": 3
+                },
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 2e-05,
+                      "elements": 8,
+                      "max_abs_error": 1.8477439880371094e-06,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 2e-05
+                    }
+                  },
+                  "repetition": 4
+                }
+              ],
+              "id": "transcendental",
+              "ok": true,
+              "quarantined": false,
+              "resources": [
+                {
+                  "block_threads": 8,
+                  "dynamic_shared_bytes": 0,
+                  "entry": "k_transcendental",
+                  "local_bytes": 0,
+                  "max_active_blocks_per_sm": 24,
+                  "max_threads_per_block": 1024,
+                  "note": "Driver occupancy/resource feasibility, not a throughput prediction.",
+                  "registers": 10,
+                  "static_shared_bytes": 0
+                }
+              ],
+              "trusted": true,
+              "variant": "variant"
+            }
+          ],
+          "wall_seconds": 0.00021490599465323612
+        },
+        {
+          "batch_id": 6,
+          "isolated": true,
+          "membership": [
+            {
+              "id": "casts_index",
+              "variant": "variant"
+            }
+          ],
+          "quarantined": false,
+          "requires_all_batchmates_isolated": false,
+          "results": [
+            {
+              "checks": [
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 1e-06,
+                      "elements": 8,
+                      "max_abs_error": 0.0,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 1e-05
+                    }
+                  },
+                  "repetition": 0
+                },
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 1e-06,
+                      "elements": 8,
+                      "max_abs_error": 0.0,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 1e-05
+                    }
+                  },
+                  "repetition": 1
+                },
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 1e-06,
+                      "elements": 8,
+                      "max_abs_error": 0.0,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 1e-05
+                    }
+                  },
+                  "repetition": 2
+                },
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 1e-06,
+                      "elements": 8,
+                      "max_abs_error": 0.0,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 1e-05
+                    }
+                  },
+                  "repetition": 3
+                },
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 1e-06,
+                      "elements": 8,
+                      "max_abs_error": 0.0,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 1e-05
+                    }
+                  },
+                  "repetition": 4
+                }
+              ],
+              "id": "casts_index",
+              "ok": true,
+              "quarantined": false,
+              "resources": [
+                {
+                  "block_threads": 8,
+                  "dynamic_shared_bytes": 0,
+                  "entry": "k_cast_index",
+                  "local_bytes": 0,
+                  "max_active_blocks_per_sm": 24,
+                  "max_threads_per_block": 1024,
+                  "note": "Driver occupancy/resource feasibility, not a throughput prediction.",
+                  "registers": 10,
+                  "static_shared_bytes": 0
+                }
+              ],
+              "trusted": true,
+              "variant": "variant"
+            }
+          ],
+          "wall_seconds": 0.00023152900394052267
+        },
+        {
+          "batch_id": 7,
+          "isolated": true,
+          "membership": [
+            {
+              "id": "write_conversion",
+              "variant": "variant"
+            }
+          ],
+          "quarantined": false,
+          "requires_all_batchmates_isolated": false,
+          "results": [
+            {
+              "checks": [
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 0.0,
+                      "elements": 8,
+                      "max_abs_error": 0.0,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 0.0
+                    }
+                  },
+                  "repetition": 0
+                },
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 0.0,
+                      "elements": 8,
+                      "max_abs_error": 0.0,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 0.0
+                    }
+                  },
+                  "repetition": 1
+                },
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 0.0,
+                      "elements": 8,
+                      "max_abs_error": 0.0,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 0.0
+                    }
+                  },
+                  "repetition": 2
+                },
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 0.0,
+                      "elements": 8,
+                      "max_abs_error": 0.0,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 0.0
+                    }
+                  },
+                  "repetition": 3
+                },
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 0.0,
+                      "elements": 8,
+                      "max_abs_error": 0.0,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 0.0
+                    }
+                  },
+                  "repetition": 4
+                }
+              ],
+              "id": "write_conversion",
+              "ok": true,
+              "quarantined": false,
+              "resources": [
+                {
+                  "block_threads": 8,
+                  "dynamic_shared_bytes": 0,
+                  "entry": "k_convert",
+                  "local_bytes": 0,
+                  "max_active_blocks_per_sm": 24,
+                  "max_threads_per_block": 1024,
+                  "note": "Driver occupancy/resource feasibility, not a throughput prediction.",
+                  "registers": 10,
+                  "static_shared_bytes": 0
+                }
+              ],
+              "trusted": true,
+              "variant": "variant"
+            }
+          ],
+          "wall_seconds": 0.00023627799964742735
+        }
+      ],
+      "benchmark_qualified": false,
+      "device": {
+        "clock_rate_khz": 1890000,
+        "compute_major": 8,
+        "compute_minor": 9,
+        "context_identity": "181887:94315972857312",
+        "driver_version": 13040,
+        "memory_clock_khz": 8001000,
+        "multiprocessors": 24,
+        "name": "NVIDIA GeForce RTX 4060 Laptop GPU",
+        "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry.",
+        "uuid": "GPU-01c8f1da-9f9f-fa3e-bbe2-0771199ab74a",
+        "worker_pid": 181887
+      },
+      "identities": [
+        {
+          "/home/ada/Projects/emmy-hackathon-2026/experiments/011-rtx4060-cf-treehalve/variants/fixed/scalar_abi/expected.npz": "8d3109988aff047f0962d623a32a38b8cb553847bcbd8b21f12e7cb475a3498e",
+          "/home/ada/Projects/emmy-hackathon-2026/experiments/011-rtx4060-cf-treehalve/variants/fixed/scalar_abi/inputs.npz": "697993879541112d5a2ba477c2bc46f8c78c01c91397bb16079483f6ec16db42",
+          "/home/ada/Projects/emmy-hackathon-2026/experiments/011-rtx4060-cf-treehalve/variants/fixed/scalar_abi/k_scalar.ir.cubin": "cd9609a6e307cb31472e9b9cdfa378f66918ecda9d6b9b0e08eadf5dd89383ee",
+          "/home/ada/Projects/emmy-hackathon-2026/experiments/011-rtx4060-cf-treehalve/variants/fixed/scalar_abi/meta.json": "5a0509bcb3eba9952ee56dbc4c454ece8fc3683e602755f28a2bf04f7cd336d2"
+        },
+        {
+          "/home/ada/Projects/emmy-hackathon-2026/experiments/011-rtx4060-cf-treehalve/variants/fixed/integer_address/expected.npz": "62d8312d8a05640708ea01feb6401cd02b6f4b1256c33ecb80af59670b5f6514",
+          "/home/ada/Projects/emmy-hackathon-2026/experiments/011-rtx4060-cf-treehalve/variants/fixed/integer_address/inputs.npz": "36a1907abdd2bcc09e208712db171706566ade8b84e071a5c67ea24977b48e1c",
+          "/home/ada/Projects/emmy-hackathon-2026/experiments/011-rtx4060-cf-treehalve/variants/fixed/integer_address/k_int_copy.ir.cubin": "585010bb3ee8ad966ace7ce3afa6aecd17aa119c6e1d62379950a9df9585c158",
+          "/home/ada/Projects/emmy-hackathon-2026/experiments/011-rtx4060-cf-treehalve/variants/fixed/integer_address/meta.json": "92578fdb70177df5c895966f7e8453535b8315c8ac6f755b44c7bd1cac4b440e"
+        },
+        {
+          "/home/ada/Projects/emmy-hackathon-2026/experiments/011-rtx4060-cf-treehalve/variants/fixed/f64_values/expected.npz": "c29d1b5f37fd02e1973a0c432c87222f07ceb8dac8d79e19283910ed04cbbad3",
+          "/home/ada/Projects/emmy-hackathon-2026/experiments/011-rtx4060-cf-treehalve/variants/fixed/f64_values/inputs.npz": "f47c2f0ce19496428bc2d382225f321e0e7fc6ae00e418a3e2ded2b31abb4e13",
+          "/home/ada/Projects/emmy-hackathon-2026/experiments/011-rtx4060-cf-treehalve/variants/fixed/f64_values/k_f64.ir.cubin": "c4adc69678bb6afe3a5e048527899504dcd0c9a15a0b283e1f58f227c0d81c1b",
+          "/home/ada/Projects/emmy-hackathon-2026/experiments/011-rtx4060-cf-treehalve/variants/fixed/f64_values/meta.json": "eb4c5798a3449aeeab63bf2a6e2b51446fe7c81804e42f3aebc25e0c8d723ca5"
+        },
+        {
+          "/home/ada/Projects/emmy-hackathon-2026/experiments/011-rtx4060-cf-treehalve/variants/fixed/flatten_2d/expected.npz": "04745bcd9808082ab56a68b9489be13179ea60d429e813fc79f17c593d4834a4",
+          "/home/ada/Projects/emmy-hackathon-2026/experiments/011-rtx4060-cf-treehalve/variants/fixed/flatten_2d/inputs.npz": "ca84f59da675ad3b7d253cebc2a6c8e2ae9767996b4342229e6a1cd76ffae631",
+          "/home/ada/Projects/emmy-hackathon-2026/experiments/011-rtx4060-cf-treehalve/variants/fixed/flatten_2d/k_flat.ir.cubin": "14c0a9117eaa64f747a995379f7ab959d7b6cbb41b79720cab121ac34ff79d4d",
+          "/home/ada/Projects/emmy-hackathon-2026/experiments/011-rtx4060-cf-treehalve/variants/fixed/flatten_2d/meta.json": "9a03264706611c0a18e3fe6e056d1cbdae2e4f9cbc05bd2f1fa0ba69dd9c0224"
+        },
+        {
+          "/home/ada/Projects/emmy-hackathon-2026/experiments/011-rtx4060-cf-treehalve/variants/fixed/reduction_partial/expected.npz": "e78e660b6a56e5cf4494196178c9ed7df8a7a5332623b57ece69cc5fdad9c662",
+          "/home/ada/Projects/emmy-hackathon-2026/experiments/011-rtx4060-cf-treehalve/variants/fixed/reduction_partial/inputs.npz": "fb6f65ba1001f1dbd2784c4f5dffe9f67d70a95aef7c23fbcf5601c36acefffb",
+          "/home/ada/Projects/emmy-hackathon-2026/experiments/011-rtx4060-cf-treehalve/variants/fixed/reduction_partial/k_max.ir.cubin": "cdf28ded3d3154f1035d3fa65262446938205008c1dec0bab1a6dca15e42c0c3",
+          "/home/ada/Projects/emmy-hackathon-2026/experiments/011-rtx4060-cf-treehalve/variants/fixed/reduction_partial/meta.json": "44a985c7338a2f0cab42cdad030ea232d26b2aab252e18f3023b43a86c164a53"
+        },
+        {
+          "/home/ada/Projects/emmy-hackathon-2026/experiments/011-rtx4060-cf-treehalve/variants/fixed/transcendental/expected.npz": "246ba1ad5fb6a02d08794a08f98438268b1ef1b465af3ec1a7b8b9668b7a1476",
+          "/home/ada/Projects/emmy-hackathon-2026/experiments/011-rtx4060-cf-treehalve/variants/fixed/transcendental/inputs.npz": "9cc3e84bb6e3bdbbd86fdbc6e9a97663c4c2fb02572ade8587b6f6cb66cfa8d1",
+          "/home/ada/Projects/emmy-hackathon-2026/experiments/011-rtx4060-cf-treehalve/variants/fixed/transcendental/k_transcendental.ir.cubin": "17ac0c27149b3685bba857ae7aeb676a6fdad84860414ece5d5864c33801ef3d",
+          "/home/ada/Projects/emmy-hackathon-2026/experiments/011-rtx4060-cf-treehalve/variants/fixed/transcendental/meta.json": "a9ab9db4ce5a31b6b2051a2c6cae16b157e9449480281b1a2eae0b64e5d691f5"
+        },
+        {
+          "/home/ada/Projects/emmy-hackathon-2026/experiments/011-rtx4060-cf-treehalve/variants/fixed/casts_index/expected.npz": "7f334f9115c18025c1091f9dcf52cca17adee90d91f7e3d0fb8569fd6e9705cf",
+          "/home/ada/Projects/emmy-hackathon-2026/experiments/011-rtx4060-cf-treehalve/variants/fixed/casts_index/inputs.npz": "cdab45a17f2827cf95f57289bab8d69f25cd8b86156776a9ff31614fddf14d05",
+          "/home/ada/Projects/emmy-hackathon-2026/experiments/011-rtx4060-cf-treehalve/variants/fixed/casts_index/k_cast_index.ir.cubin": "6c29a44c7a5b92b13d8d6dfbf2fa7db0c03da0e2bb2f08ca906ed3721be95851",
+          "/home/ada/Projects/emmy-hackathon-2026/experiments/011-rtx4060-cf-treehalve/variants/fixed/casts_index/meta.json": "35446817057cb4dcad1a8b20c2e97b60d14384b7f785f5c5aab6f6b6ccefe378"
+        },
+        {
+          "/home/ada/Projects/emmy-hackathon-2026/experiments/011-rtx4060-cf-treehalve/variants/fixed/write_conversion/expected.npz": "02e0e6c12da3bfb0bb132e27f39680139ae086e2af6e6fdfa8c57e03bc64cee9",
+          "/home/ada/Projects/emmy-hackathon-2026/experiments/011-rtx4060-cf-treehalve/variants/fixed/write_conversion/inputs.npz": "121ed14142b0fb3b8fffefe6b4ca8f7c2158173c5d96fb338353cb75aa8fcd8e",
+          "/home/ada/Projects/emmy-hackathon-2026/experiments/011-rtx4060-cf-treehalve/variants/fixed/write_conversion/k_convert.ir.cubin": "0f41fe44396ac140203eee4888099755ad3b971486c208cbf8f29e9bbd8d36ee",
+          "/home/ada/Projects/emmy-hackathon-2026/experiments/011-rtx4060-cf-treehalve/variants/fixed/write_conversion/meta.json": "f3343e7ab98f9aaf9fb002f337e5f1b73a9295cac5f330d9b4da3743956d2a5e"
+        }
+      ],
+      "launch_count": 40,
+      "mode": "correctness",
+      "note": "Concurrent results are screening only; fresh isolated confirmation is mandatory.",
+      "ok": true,
+      "phase_seconds": {
+        "case_loading": 0.005060394003521651,
+        "cuda_initialization": 1.186999725177884e-06,
+        "execution_and_checks": 0.014572080996003933,
+        "total": 0.01963603700278327
+      },
+      "promotion_eligible": false,
+      "qualification_note": "Raw diagnostics; benchmark validity requires evaluator-issued source/suite all-15 gates.",
+      "repetitions": 5,
+      "width": 1
+    },
+    {
+      "batches": [
+        {
+          "batch_id": 0,
+          "isolated": true,
+          "membership": [
+            {
+              "id": "select_ternary",
+              "variant": "variant"
+            }
+          ],
+          "quarantined": false,
+          "requires_all_batchmates_isolated": false,
+          "results": [
+            {
+              "checks": [
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 0.0,
+                      "elements": 4,
+                      "max_abs_error": 0.0,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 0.0
+                    }
+                  },
+                  "repetition": 0
+                },
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 0.0,
+                      "elements": 4,
+                      "max_abs_error": 0.0,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 0.0
+                    }
+                  },
+                  "repetition": 1
+                },
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 0.0,
+                      "elements": 4,
+                      "max_abs_error": 0.0,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 0.0
+                    }
+                  },
+                  "repetition": 2
+                },
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 0.0,
+                      "elements": 4,
+                      "max_abs_error": 0.0,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 0.0
+                    }
+                  },
+                  "repetition": 3
+                },
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 0.0,
+                      "elements": 4,
+                      "max_abs_error": 0.0,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 0.0
+                    }
+                  },
+                  "repetition": 4
+                }
+              ],
+              "id": "select_ternary",
+              "ok": true,
+              "quarantined": false,
+              "resources": [
+                {
+                  "block_threads": 4,
+                  "dynamic_shared_bytes": 0,
+                  "entry": "k_select",
+                  "local_bytes": 0,
+                  "max_active_blocks_per_sm": 24,
+                  "max_threads_per_block": 1024,
+                  "note": "Driver occupancy/resource feasibility, not a throughput prediction.",
+                  "registers": 10,
+                  "static_shared_bytes": 0
+                }
+              ],
+              "trusted": true,
+              "variant": "variant"
+            }
+          ],
+          "wall_seconds": 0.00022321799769997597
+        },
+        {
+          "batch_id": 1,
+          "isolated": true,
+          "membership": [
+            {
+              "id": "integer_division",
+              "variant": "variant"
+            }
+          ],
+          "quarantined": false,
+          "requires_all_batchmates_isolated": false,
+          "results": [
+            {
+              "checks": [
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 0.0,
+                      "elements": 8,
+                      "max_abs_error": 0.0,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 0.0
+                    }
+                  },
+                  "repetition": 0
+                },
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 0.0,
+                      "elements": 8,
+                      "max_abs_error": 0.0,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 0.0
+                    }
+                  },
+                  "repetition": 1
+                },
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 0.0,
+                      "elements": 8,
+                      "max_abs_error": 0.0,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 0.0
+                    }
+                  },
+                  "repetition": 2
+                },
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 0.0,
+                      "elements": 8,
+                      "max_abs_error": 0.0,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 0.0
+                    }
+                  },
+                  "repetition": 3
+                },
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 0.0,
+                      "elements": 8,
+                      "max_abs_error": 0.0,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 0.0
+                    }
+                  },
+                  "repetition": 4
+                }
+              ],
+              "id": "integer_division",
+              "ok": true,
+              "quarantined": false,
+              "resources": [
+                {
+                  "block_threads": 8,
+                  "dynamic_shared_bytes": 0,
+                  "entry": "k_int_div",
+                  "local_bytes": 0,
+                  "max_active_blocks_per_sm": 24,
+                  "max_threads_per_block": 1024,
+                  "note": "Driver occupancy/resource feasibility, not a throughput prediction.",
+                  "registers": 12,
+                  "static_shared_bytes": 0
+                }
+              ],
+              "trusted": true,
+              "variant": "variant"
+            }
+          ],
+          "wall_seconds": 0.0001448540060664527
+        },
+        {
+          "batch_id": 2,
+          "isolated": true,
+          "membership": [
+            {
+              "id": "integer64_division",
+              "variant": "variant"
+            }
+          ],
+          "quarantined": false,
+          "requires_all_batchmates_isolated": false,
+          "results": [
+            {
+              "checks": [
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 0.0,
+                      "elements": 8,
+                      "max_abs_error": 0.0,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 0.0
+                    }
+                  },
+                  "repetition": 0
+                },
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 0.0,
+                      "elements": 8,
+                      "max_abs_error": 0.0,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 0.0
+                    }
+                  },
+                  "repetition": 1
+                },
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 0.0,
+                      "elements": 8,
+                      "max_abs_error": 0.0,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 0.0
+                    }
+                  },
+                  "repetition": 2
+                },
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 0.0,
+                      "elements": 8,
+                      "max_abs_error": 0.0,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 0.0
+                    }
+                  },
+                  "repetition": 3
+                },
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 0.0,
+                      "elements": 8,
+                      "max_abs_error": 0.0,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 0.0
+                    }
+                  },
+                  "repetition": 4
+                }
+              ],
+              "id": "integer64_division",
+              "ok": true,
+              "quarantined": false,
+              "resources": [
+                {
+                  "block_threads": 8,
+                  "dynamic_shared_bytes": 0,
+                  "entry": "k_int64_div",
+                  "local_bytes": 0,
+                  "max_active_blocks_per_sm": 24,
+                  "max_threads_per_block": 1024,
+                  "note": "Driver occupancy/resource feasibility, not a throughput prediction.",
+                  "registers": 20,
+                  "static_shared_bytes": 0
+                }
+              ],
+              "trusted": true,
+              "variant": "variant"
+            }
+          ],
+          "wall_seconds": 0.0001567270010127686
+        },
+        {
+          "batch_id": 3,
+          "isolated": true,
+          "membership": [
+            {
+              "id": "bitcast_roundtrip",
+              "variant": "variant"
+            }
+          ],
+          "quarantined": false,
+          "requires_all_batchmates_isolated": false,
+          "results": [
+            {
+              "checks": [
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 0.0,
+                      "elements": 8,
+                      "max_abs_error": 0.0,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 0.0
+                    }
+                  },
+                  "repetition": 0
+                },
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 0.0,
+                      "elements": 8,
+                      "max_abs_error": 0.0,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 0.0
+                    }
+                  },
+                  "repetition": 1
+                },
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 0.0,
+                      "elements": 8,
+                      "max_abs_error": 0.0,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 0.0
+                    }
+                  },
+                  "repetition": 2
+                },
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 0.0,
+                      "elements": 8,
+                      "max_abs_error": 0.0,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 0.0
+                    }
+                  },
+                  "repetition": 3
+                },
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 0.0,
+                      "elements": 8,
+                      "max_abs_error": 0.0,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 0.0
+                    }
+                  },
+                  "repetition": 4
+                }
+              ],
+              "id": "bitcast_roundtrip",
+              "ok": true,
+              "quarantined": false,
+              "resources": [
+                {
+                  "block_threads": 8,
+                  "dynamic_shared_bytes": 0,
+                  "entry": "k_bitcast",
+                  "local_bytes": 0,
+                  "max_active_blocks_per_sm": 24,
+                  "max_threads_per_block": 1024,
+                  "note": "Driver occupancy/resource feasibility, not a throughput prediction.",
+                  "registers": 8,
+                  "static_shared_bytes": 0
+                }
+              ],
+              "trusted": true,
+              "variant": "variant"
+            }
+          ],
+          "wall_seconds": 0.00022559200442628935
+        },
+        {
+          "batch_id": 4,
+          "isolated": true,
+          "membership": [
+            {
+              "id": "partial_warp_sum",
+              "variant": "variant"
+            }
+          ],
+          "quarantined": false,
+          "requires_all_batchmates_isolated": false,
+          "results": [
+            {
+              "checks": [
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 0.0,
+                      "elements": 1,
+                      "max_abs_error": 0.0,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 0.0
+                    }
+                  },
+                  "repetition": 0
+                },
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 0.0,
+                      "elements": 1,
+                      "max_abs_error": 0.0,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 0.0
+                    }
+                  },
+                  "repetition": 1
+                },
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 0.0,
+                      "elements": 1,
+                      "max_abs_error": 0.0,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 0.0
+                    }
+                  },
+                  "repetition": 2
+                },
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 0.0,
+                      "elements": 1,
+                      "max_abs_error": 0.0,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 0.0
+                    }
+                  },
+                  "repetition": 3
+                },
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 0.0,
+                      "elements": 1,
+                      "max_abs_error": 0.0,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 0.0
+                    }
+                  },
+                  "repetition": 4
+                }
+              ],
+              "id": "partial_warp_sum",
+              "ok": true,
+              "quarantined": false,
+              "resources": [
+                {
+                  "block_threads": 6,
+                  "dynamic_shared_bytes": 0,
+                  "entry": "k_sum",
+                  "local_bytes": 0,
+                  "max_active_blocks_per_sm": 24,
+                  "max_threads_per_block": 1024,
+                  "note": "Driver occupancy/resource feasibility, not a throughput prediction.",
+                  "registers": 10,
+                  "static_shared_bytes": 0
+                }
+              ],
+              "trusted": true,
+              "variant": "variant"
+            }
+          ],
+          "wall_seconds": 0.00023152900394052267
+        },
+        {
+          "batch_id": 5,
+          "isolated": true,
+          "membership": [
+            {
+              "id": "partial_warp_max",
+              "variant": "variant"
+            }
+          ],
+          "quarantined": false,
+          "requires_all_batchmates_isolated": false,
+          "results": [
+            {
+              "checks": [
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 0.0,
+                      "elements": 1,
+                      "max_abs_error": 0.0,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 0.0
+                    }
+                  },
+                  "repetition": 0
+                },
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 0.0,
+                      "elements": 1,
+                      "max_abs_error": 0.0,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 0.0
+                    }
+                  },
+                  "repetition": 1
+                },
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 0.0,
+                      "elements": 1,
+                      "max_abs_error": 0.0,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 0.0
+                    }
+                  },
+                  "repetition": 2
+                },
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 0.0,
+                      "elements": 1,
+                      "max_abs_error": 0.0,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 0.0
+                    }
+                  },
+                  "repetition": 3
+                },
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 0.0,
+                      "elements": 1,
+                      "max_abs_error": 0.0,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 0.0
+                    }
+                  },
+                  "repetition": 4
+                }
+              ],
+              "id": "partial_warp_max",
+              "ok": true,
+              "quarantined": false,
+              "resources": [
+                {
+                  "block_threads": 6,
+                  "dynamic_shared_bytes": 0,
+                  "entry": "k_max",
+                  "local_bytes": 0,
+                  "max_active_blocks_per_sm": 24,
+                  "max_threads_per_block": 1024,
+                  "note": "Driver occupancy/resource feasibility, not a throughput prediction.",
+                  "registers": 10,
+                  "static_shared_bytes": 0
+                }
+              ],
+              "trusted": true,
+              "variant": "variant"
+            }
+          ],
+          "wall_seconds": 0.00021965600171824917
+        },
+        {
+          "batch_id": 6,
+          "isolated": true,
+          "membership": [
+            {
+              "id": "vector_copy_aligned",
+              "variant": "variant"
+            }
+          ],
+          "quarantined": false,
+          "requires_all_batchmates_isolated": false,
+          "results": [
+            {
+              "checks": [
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 2e-06,
+                      "elements": 32,
+                      "max_abs_error": 0.0,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 2e-06
+                    }
+                  },
+                  "repetition": 0
+                },
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 2e-06,
+                      "elements": 32,
+                      "max_abs_error": 0.0,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 2e-06
+                    }
+                  },
+                  "repetition": 1
+                },
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 2e-06,
+                      "elements": 32,
+                      "max_abs_error": 0.0,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 2e-06
+                    }
+                  },
+                  "repetition": 2
+                },
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 2e-06,
+                      "elements": 32,
+                      "max_abs_error": 0.0,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 2e-06
+                    }
+                  },
+                  "repetition": 3
+                },
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 2e-06,
+                      "elements": 32,
+                      "max_abs_error": 0.0,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 2e-06
+                    }
+                  },
+                  "repetition": 4
+                }
+              ],
+              "id": "vector_copy_aligned",
+              "ok": true,
+              "quarantined": false,
+              "resources": [
+                {
+                  "block_threads": 32,
+                  "dynamic_shared_bytes": 512,
+                  "entry": "k_vec",
+                  "local_bytes": 0,
+                  "max_active_blocks_per_sm": 24,
+                  "max_threads_per_block": 1024,
+                  "note": "Driver occupancy/resource feasibility, not a throughput prediction.",
+                  "registers": 22,
+                  "static_shared_bytes": 0
+                }
+              ],
+              "trusted": true,
+              "variant": "variant"
+            }
+          ],
+          "wall_seconds": 0.00021965499763609841
+        },
+        {
+          "batch_id": 7,
+          "isolated": true,
+          "membership": [
+            {
+              "id": "vector_copy_scalar",
+              "variant": "variant"
+            }
+          ],
+          "quarantined": false,
+          "requires_all_batchmates_isolated": false,
+          "results": [
+            {
+              "checks": [
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 2e-06,
+                      "elements": 32,
+                      "max_abs_error": 0.0,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 2e-06
+                    }
+                  },
+                  "repetition": 0
+                },
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 2e-06,
+                      "elements": 32,
+                      "max_abs_error": 0.0,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 2e-06
+                    }
+                  },
+                  "repetition": 1
+                },
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 2e-06,
+                      "elements": 32,
+                      "max_abs_error": 0.0,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 2e-06
+                    }
+                  },
+                  "repetition": 2
+                },
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 2e-06,
+                      "elements": 32,
+                      "max_abs_error": 0.0,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 2e-06
+                    }
+                  },
+                  "repetition": 3
+                },
+                {
+                  "buffers": {
+                    "out": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    },
+                    "x": {
+                      "input_ok": true,
+                      "prefix_ok": true,
+                      "suffix_ok": true
+                    }
+                  },
+                  "ok": true,
+                  "outputs": {
+                    "out": {
+                      "atol": 2e-06,
+                      "elements": 32,
+                      "max_abs_error": 0.0,
+                      "mismatched": 0,
+                      "ok": true,
+                      "rtol": 2e-06
+                    }
+                  },
+                  "repetition": 4
+                }
+              ],
+              "id": "vector_copy_scalar",
+              "ok": true,
+              "quarantined": false,
+              "resources": [
+                {
+                  "block_threads": 32,
+                  "dynamic_shared_bytes": 512,
+                  "entry": "k_vec",
+                  "local_bytes": 0,
+                  "max_active_blocks_per_sm": 24,
+                  "max_threads_per_block": 1024,
+                  "note": "Driver occupancy/resource feasibility, not a throughput prediction.",
+                  "registers": 18,
+                  "static_shared_bytes": 0
+                }
+              ],
+              "trusted": true,
+              "variant": "variant"
+            }
+          ],
+          "wall_seconds": 0.00021490599465323612
+        }
+      ],
+      "benchmark_qualified": false,
+      "device": {
+        "clock_rate_khz": 1890000,
+        "compute_major": 8,
+        "compute_minor": 9,
+        "context_identity": "181887:94315972857312",
+        "driver_version": 13040,
+        "memory_clock_khz": 8001000,
+        "multiprocessors": 24,
+        "name": "NVIDIA GeForce RTX 4060 Laptop GPU",
+        "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry.",
+        "uuid": "GPU-01c8f1da-9f9f-fa3e-bbe2-0771199ab74a",
+        "worker_pid": 181887
+      },
+      "identities": [
+        {
+          "/home/ada/Projects/emmy-hackathon-2026/experiments/011-rtx4060-cf-treehalve/variants/fixed/select_ternary/expected.npz": "0c631e245288ff5178eb573ca25ede89bad0bfd53776a4b25d0409c2f73ecf1e",
+          "/home/ada/Projects/emmy-hackathon-2026/experiments/011-rtx4060-cf-treehalve/variants/fixed/select_ternary/inputs.npz": "d1b894ad90597a9a0bed932a9ea124edb97e6996e83c847ffa2c7d8d80b391d7",
+          "/home/ada/Projects/emmy-hackathon-2026/experiments/011-rtx4060-cf-treehalve/variants/fixed/select_ternary/k_select.ir.cubin": "49c53055c66c4bc426d68d07b5f83e56c192f8ae8145fe2622ec6021aaf6dec6",
+          "/home/ada/Projects/emmy-hackathon-2026/experiments/011-rtx4060-cf-treehalve/variants/fixed/select_ternary/meta.json": "f20d8f418836d78b35e9402d69f12d5c0627ed32832d6fd94d36a078fd14bcf9"
+        },
+        {
+          "/home/ada/Projects/emmy-hackathon-2026/experiments/011-rtx4060-cf-treehalve/variants/fixed/integer_division/expected.npz": "3293aa3511d1832bfdc9bf44657d1818cb7f2109248ec694b2b8d5870214c952",
+          "/home/ada/Projects/emmy-hackathon-2026/experiments/011-rtx4060-cf-treehalve/variants/fixed/integer_division/inputs.npz": "4d71923485ac61cceb6bee687e7d17427cae3af79a510ffb959db9b23624fa9e",
+          "/home/ada/Projects/emmy-hackathon-2026/experiments/011-rtx4060-cf-treehalve/variants/fixed/integer_division/k_int_div.ir.cubin": "cf684bae4b524ac213dd244b716c5d2107f192bb69d0b05bca9843d6520872f4",
+          "/home/ada/Projects/emmy-hackathon-2026/experiments/011-rtx4060-cf-treehalve/variants/fixed/integer_division/meta.json": "7af9ef1df05def0ac9d0b6996abb3d8ec9025893f1f95326483852615bf2b0b8"
+        },
+        {
+          "/home/ada/Projects/emmy-hackathon-2026/experiments/011-rtx4060-cf-treehalve/variants/fixed/integer64_division/expected.npz": "bbac0ae65c35517cff885a654b52a04bfb9f650fb5a4b113b7ded1b973005b54",
+          "/home/ada/Projects/emmy-hackathon-2026/experiments/011-rtx4060-cf-treehalve/variants/fixed/integer64_division/inputs.npz": "88ca4fc24f3f9cddd372c69329243fcb5487c6f31e394857c5e7ba45886e91da",
+          "/home/ada/Projects/emmy-hackathon-2026/experiments/011-rtx4060-cf-treehalve/variants/fixed/integer64_division/k_int64_div.ir.cubin": "3ea240ef2b51834ae8e3da4c0d09f15112f330256a323233bd086bd5c359dea8",
+          "/home/ada/Projects/emmy-hackathon-2026/experiments/011-rtx4060-cf-treehalve/variants/fixed/integer64_division/meta.json": "20f81b9aa08b24f038573d768717842526a93226e55b0a2506c42e724936590d"
+        },
+        {
+          "/home/ada/Projects/emmy-hackathon-2026/experiments/011-rtx4060-cf-treehalve/variants/fixed/bitcast_roundtrip/expected.npz": "82ed027247f6adb8456b8050a4de28878326798c6d65c33c8a22c840f8633849",
+          "/home/ada/Projects/emmy-hackathon-2026/experiments/011-rtx4060-cf-treehalve/variants/fixed/bitcast_roundtrip/inputs.npz": "18ce6cc705a4194440cf7b177cddc48e4baf6b482228a11daf7c927a04b6744f",
+          "/home/ada/Projects/emmy-hackathon-2026/experiments/011-rtx4060-cf-treehalve/variants/fixed/bitcast_roundtrip/k_bitcast.ir.cubin": "7411d78959a77a25f74d066ce1b70f22c9c7b585846eeedaa45c09e0ca628a11",
+          "/home/ada/Projects/emmy-hackathon-2026/experiments/011-rtx4060-cf-treehalve/variants/fixed/bitcast_roundtrip/meta.json": "3aaa81ea75deba53bca8c03145451e57faf6abc46d37801e2b2ab40bd9f03c08"
+        },
+        {
+          "/home/ada/Projects/emmy-hackathon-2026/experiments/011-rtx4060-cf-treehalve/variants/fixed/partial_warp_sum/expected.npz": "c58e02405b9eeffcdffa10a3da0f383525f01f8ef46accf5823dfc4aacbd056c",
+          "/home/ada/Projects/emmy-hackathon-2026/experiments/011-rtx4060-cf-treehalve/variants/fixed/partial_warp_sum/inputs.npz": "8effeaa77da478ccc252d28311d7b8bce29517f4158ed515c2b53d654323fad2",
+          "/home/ada/Projects/emmy-hackathon-2026/experiments/011-rtx4060-cf-treehalve/variants/fixed/partial_warp_sum/k_sum.ir.cubin": "bf42d51c518368117cfcc48e1dd39643181bfa1f7323566b921466a8a8044e7a",
+          "/home/ada/Projects/emmy-hackathon-2026/experiments/011-rtx4060-cf-treehalve/variants/fixed/partial_warp_sum/meta.json": "073be9c85f10b5629df32e3bf859443785166dda2b625661a5b2eec38d71a4d8"
+        },
+        {
+          "/home/ada/Projects/emmy-hackathon-2026/experiments/011-rtx4060-cf-treehalve/variants/fixed/partial_warp_max/expected.npz": "9d3283f6c657c377e185336ad18558ec10cb835270269d36c9ab928b8866bde4",
+          "/home/ada/Projects/emmy-hackathon-2026/experiments/011-rtx4060-cf-treehalve/variants/fixed/partial_warp_max/inputs.npz": "8effeaa77da478ccc252d28311d7b8bce29517f4158ed515c2b53d654323fad2",
+          "/home/ada/Projects/emmy-hackathon-2026/experiments/011-rtx4060-cf-treehalve/variants/fixed/partial_warp_max/k_max.ir.cubin": "e97a82364af4c29aae31d8a1edc642fbf4ff2121bbab52f6770a649d39ad973f",
+          "/home/ada/Projects/emmy-hackathon-2026/experiments/011-rtx4060-cf-treehalve/variants/fixed/partial_warp_max/meta.json": "16584418ca69a3d6f55c79fe74be1ab5d2312fa70107ff315860ebb786cf01a6"
+        },
+        {
+          "/home/ada/Projects/emmy-hackathon-2026/experiments/011-rtx4060-cf-treehalve/variants/fixed/vector_copy_aligned/expected.npz": "e76ab1dee6b891a704efb75263b3c70ceab933ea2de047d69c03fbaf47317db4",
+          "/home/ada/Projects/emmy-hackathon-2026/experiments/011-rtx4060-cf-treehalve/variants/fixed/vector_copy_aligned/inputs.npz": "a324a51c25af47b5db4ca37fb852386ab00c917bf1b4483396154feb69344bbe",
+          "/home/ada/Projects/emmy-hackathon-2026/experiments/011-rtx4060-cf-treehalve/variants/fixed/vector_copy_aligned/k_vec.ir.cubin": "85aae9a6f348acea58f05b344a4020379d386690c22af9879e1ae09250d381b2",
+          "/home/ada/Projects/emmy-hackathon-2026/experiments/011-rtx4060-cf-treehalve/variants/fixed/vector_copy_aligned/meta.json": "88d3d04b4545c57ed57a64599eb46df05365f466f8c4c896ef048aa956a9e71e"
+        },
+        {
+          "/home/ada/Projects/emmy-hackathon-2026/experiments/011-rtx4060-cf-treehalve/variants/fixed/vector_copy_scalar/expected.npz": "e929fb38581337cda40ca3cd1f81fd4c857fff01f8337db01222d2cbf8f8d20d",
+          "/home/ada/Projects/emmy-hackathon-2026/experiments/011-rtx4060-cf-treehalve/variants/fixed/vector_copy_scalar/inputs.npz": "a324a51c25af47b5db4ca37fb852386ab00c917bf1b4483396154feb69344bbe",
+          "/home/ada/Projects/emmy-hackathon-2026/experiments/011-rtx4060-cf-treehalve/variants/fixed/vector_copy_scalar/k_vec.ir.cubin": "33af1ee12239876b8f933f06d8a2478ec909752c3dd6b534bcf44e929ed825c4",
+          "/home/ada/Projects/emmy-hackathon-2026/experiments/011-rtx4060-cf-treehalve/variants/fixed/vector_copy_scalar/meta.json": "2f579b825a5ea5646cb4cdf071199dab1b31e4932412c48471225112b9906262"
+        }
+      ],
+      "launch_count": 40,
+      "mode": "correctness",
+      "note": "Concurrent results are screening only; fresh isolated confirmation is mandatory.",
+      "ok": true,
+      "phase_seconds": {
+        "case_loading": 0.002819903995259665,
+        "cuda_initialization": 1.1880038073286414e-06,
+        "execution_and_checks": 0.011037404001399409,
+        "total": 0.013860870996722952
+      },
+      "promotion_eligible": false,
+      "qualification_note": "Raw diagnostics; benchmark validity requires evaluator-issued source/suite all-15 gates.",
+      "repetitions": 5,
+      "width": 1
+    }
+  ],
+  "compiler_sha256": "f87f999a63d51c31f6e9cb3a9c5c55f55ac37c4bc9c1ed621e9a718321d477f2",
+  "gpu": {
+    "clock_rate_khz": 1890000,
+    "compute_major": 8,
+    "compute_minor": 9,
+    "context_identity": "181887:94315972857312",
+    "driver_version": 13040,
+    "memory_clock_khz": 8001000,
+    "multiprocessors": 24,
+    "name": "NVIDIA GeForce RTX 4060 Laptop GPU",
+    "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry.",
+    "uuid": "GPU-01c8f1da-9f9f-fa3e-bbe2-0771199ab74a",
+    "worker_pid": 181887
+  },
+  "schema": "emmy-variant-suite-v1"
+}

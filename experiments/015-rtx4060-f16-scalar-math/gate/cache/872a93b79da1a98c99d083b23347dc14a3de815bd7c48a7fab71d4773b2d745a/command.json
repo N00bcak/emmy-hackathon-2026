@@ -1,0 +1,1 @@
+["/opt/cuda/bin/ptxas", "-arch=sm_89", "-v", "experiments/015-rtx4060-f16-scalar-math/gate/cache/872a93b79da1a98c99d083b23347dc14a3de815bd7c48a7fab71d4773b2d745a/source.ptx", "-o", "experiments/015-rtx4060-f16-scalar-math/gate/cache/872a93b79da1a98c99d083b23347dc14a3de815bd7c48a7fab71d4773b2d745a/module.cubin"]

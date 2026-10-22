@@ -1,0 +1,16 @@
+p00_scalar_add PASS
+p01_vector_add PASS
+p02_scale_shift PASS
+p03_relu_mul PASS
+r01_array_sum PASS
+r02_big_sum PASS
+r03_mean PASS
+r04_row_sum PASS
+m01_matmul_512 PASS
+m02_matmul_rect FAIL
+f01_rmsnorm PASS
+f02_row_softmax PASS
+f03_l2norm PASS
+a01_attention PASS
+a02_attention_128 PASS
+reordered_scale_shift_abi PASS

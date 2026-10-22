@@ -1,0 +1,232 @@
+{
+  "ok": true,
+  "batches": [
+    {
+      "batch_id": 0,
+      "membership": [
+        {
+          "id": "gen-6db2dad4",
+          "variant": "sanitizer"
+        }
+      ],
+      "quarantined": false,
+      "results": [
+        {
+          "id": "gen-6db2dad4",
+          "variant": "sanitizer",
+          "ok": true,
+          "checks": [
+            {
+              "repetition": 0,
+              "ok": true,
+              "buffers": {
+                "out_865248": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "x_741338": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "y_261515": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                }
+              },
+              "outputs": {
+                "out_865248": {
+                  "ok": true,
+                  "elements": 35,
+                  "mismatched": 0,
+                  "max_abs_error": 5.960464477539063e-08,
+                  "rtol": 0.001,
+                  "atol": 0.001
+                }
+              }
+            },
+            {
+              "repetition": 1,
+              "ok": true,
+              "buffers": {
+                "out_865248": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "x_741338": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "y_261515": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                }
+              },
+              "outputs": {
+                "out_865248": {
+                  "ok": true,
+                  "elements": 35,
+                  "mismatched": 0,
+                  "max_abs_error": 5.960464477539063e-08,
+                  "rtol": 0.001,
+                  "atol": 0.001
+                }
+              }
+            },
+            {
+              "repetition": 2,
+              "ok": true,
+              "buffers": {
+                "out_865248": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "x_741338": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "y_261515": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                }
+              },
+              "outputs": {
+                "out_865248": {
+                  "ok": true,
+                  "elements": 35,
+                  "mismatched": 0,
+                  "max_abs_error": 5.960464477539063e-08,
+                  "rtol": 0.001,
+                  "atol": 0.001
+                }
+              }
+            },
+            {
+              "repetition": 3,
+              "ok": true,
+              "buffers": {
+                "out_865248": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "x_741338": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "y_261515": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                }
+              },
+              "outputs": {
+                "out_865248": {
+                  "ok": true,
+                  "elements": 35,
+                  "mismatched": 0,
+                  "max_abs_error": 5.960464477539063e-08,
+                  "rtol": 0.001,
+                  "atol": 0.001
+                }
+              }
+            },
+            {
+              "repetition": 4,
+              "ok": true,
+              "buffers": {
+                "out_865248": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "x_741338": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "y_261515": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                }
+              },
+              "outputs": {
+                "out_865248": {
+                  "ok": true,
+                  "elements": 35,
+                  "mismatched": 0,
+                  "max_abs_error": 5.960464477539063e-08,
+                  "rtol": 0.001,
+                  "atol": 0.001
+                }
+              }
+            }
+          ],
+          "resources": [
+            {
+              "entry": "k_out_865248",
+              "dynamic_shared_bytes": 0,
+              "block_threads": 256,
+              "max_threads_per_block": 1024,
+              "static_shared_bytes": 0,
+              "local_bytes": 0,
+              "registers": 24,
+              "max_active_blocks_per_sm": 6,
+              "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+            }
+          ],
+          "quarantined": false,
+          "trusted": true
+        }
+      ],
+      "wall_seconds": 0.0014805910032009706,
+      "requires_all_batchmates_isolated": false,
+      "isolated": true
+    }
+  ],
+  "launch_count": 5,
+  "width": 1,
+  "repetitions": 5,
+  "promotion_eligible": false,
+  "note": "Concurrent results are screening only; fresh isolated confirmation is mandatory.",
+  "mode": "correctness",
+  "device": {
+    "name": "NVIDIA GeForce RTX 4060 Laptop GPU",
+    "worker_pid": 206673,
+    "context_identity": "206673:94665831641616",
+    "driver_version": 13040,
+    "clock_rate_khz": 1890000,
+    "multiprocessors": 24,
+    "memory_clock_khz": 8001000,
+    "compute_major": 8,
+    "compute_minor": 9,
+    "uuid": "GPU-01c8f1da-9f9f-fa3e-bbe2-0771199ab74a",
+    "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry."
+  },
+  "benchmark_qualified": false,
+  "qualification_note": "Raw diagnostics; benchmark validity requires evaluator-issued source/suite all-15 gates.",
+  "phase_seconds": {
+    "case_loading": 0.004599687999871094,
+    "cuda_initialization": 0.30143745499663055,
+    "execution_and_checks": 0.007559683006547857,
+    "total": 0.31359801399958087
+  },
+  "identities": [
+    {
+      "/home/ada/Projects/emmy-hackathon-2026/experiments/015-rtx4060-f16-scalar-math/sanitizer/prepared/gen/meta.json": "31b75b78db63f0ef326c483f0a3d87ff2c44d17f6badf2c6a1c9a09603bc4f09",
+      "/home/ada/Projects/emmy-hackathon-2026/experiments/015-rtx4060-f16-scalar-math/sanitizer/prepared/gen/expected.npz": "77a8b46af8273633f3c42f008e1bc6a8dc123063eed71fc28b87cbe193b1d7c9",
+      "/home/ada/Projects/emmy-hackathon-2026/experiments/015-rtx4060-f16-scalar-math/sanitizer/prepared/gen/inputs.npz": "40202ac787b764a736a0b2d25119fcf1c2ca662757f8f344fbaac8abd70ab5b3",
+      "/home/ada/Projects/emmy-hackathon-2026/experiments/015-rtx4060-f16-scalar-math/sanitizer/prepared/gen/k_out_865248.ir.cubin": "867691be172c1b0ea3ea68d1dc78dab3014e3d536616ce840bb13fe8b7c452b4"
+    }
+  ]
+}

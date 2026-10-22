@@ -1,0 +1,45 @@
+{
+  "inputs": [
+    "x"
+  ],
+  "nodes": {
+    "out": {
+      "inputs": [],
+      "op": "KernelOp",
+      "op_fields": {
+        "body": [
+          "Tile(axes=(Axis(name='i', extent=Dim(8), window=None),), body=(Load(names=('v',), input='x', index=(Var(name='i'),), dtype=DataType(name='f32', np=dtype('float32'), nbytes=4)), Assign(name='wide', op=ElementwiseImpl('copy'), args=('v',), dtype=DataType(name='f64', np=dtype('float64'), nbytes=8)), Write(output='out', index=(Var(name='i'),), values=('wide',), value_dtype=DataType(name='f64', np=dtype('float64'), nbytes=8), atomic=False, swizzle='NONE')), block_threads=8, aux_threads=0, raster_axes=None, raster_group=None, raster_orient='m')"
+        ],
+        "name": "k_convert",
+        "serial": [],
+        "zero_delegated": []
+      },
+      "outputs": [
+        {
+          "dtype": "f64",
+          "name": "out",
+          "shape": [
+            8
+          ]
+        }
+      ]
+    },
+    "x": {
+      "inputs": [],
+      "op": "InputOp",
+      "op_fields": {},
+      "outputs": [
+        {
+          "dtype": "f32",
+          "name": "x",
+          "shape": [
+            8
+          ]
+        }
+      ]
+    }
+  },
+  "outputs": [
+    "out"
+  ]
+}

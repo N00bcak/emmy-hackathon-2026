@@ -1,0 +1,19 @@
+{
+  "mode": "timing",
+  "out": "/home/ada/Projects/emmy-hackathon-2026/experiments/015-rtx4060-f16-scalar-math/timing/aa-m01_matmul_512.json",
+  "case": {
+    "id": "m01_matmul_512",
+    "variant": "published",
+    "case_dir": "/home/ada/Projects/emmy-hackathon-2026/experiments/015-rtx4060-f16-scalar-math/timing/prepared/prepared/m01_matmul_512",
+    "cubins": [
+      "/home/ada/Projects/emmy-hackathon-2026/experiments/015-rtx4060-f16-scalar-math/timing/prepared/prepared/m01_matmul_512/candidate-k_matmul_2967be.cubin"
+    ],
+    "baseline_cubins": [
+      "/home/ada/Projects/emmy-hackathon-2026/experiments/015-rtx4060-f16-scalar-math/timing/prepared/prepared/m01_matmul_512/candidate-k_matmul_2967be.cubin"
+    ]
+  },
+  "pairs": 16,
+  "warmup": 5,
+  "seed": 66001,
+  "burst_id": "015-aa-m01_matmul_512"
+}

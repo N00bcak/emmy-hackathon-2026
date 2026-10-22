@@ -1,0 +1,140 @@
+...............................127.0.0.1 - - [22/Oct/2026 19:53:43] "POST /compile HTTP/1.1" 200 -
+127.0.0.1 - - [22/Oct/2026 19:53:43] "POST /compile HTTP/1.1" 200 -
+127.0.0.1 - - [22/Oct/2026 19:53:43] "POST /compile HTTP/1.1" 200 -
+127.0.0.1 - - [22/Oct/2026 19:53:43] "POST /compile HTTP/1.1" 200 -
+127.0.0.1 - - [22/Oct/2026 19:53:43] "POST /compile HTTP/1.1" 422 -
+/usr/lib/python3.14/tempfile.py:484: ResourceWarning: Implicitly cleaning up <HTTPError 422: 'Unprocessable Content'>
+  _warnings.warn(self.warn_message, ResourceWarning)
+..127.0.0.1 - - [22/Oct/2026 19:53:44] "GET /health HTTP/1.1" 200 -
+127.0.0.1 - - [22/Oct/2026 19:53:44] "POST /run HTTP/1.1" 200 -
+127.0.0.1 - - [22/Oct/2026 19:53:44] "POST /run HTTP/1.1" 200 -
+127.0.0.1 - - [22/Oct/2026 19:53:44] "POST /run HTTP/1.1" 422 -
+..............................................................................................................EEEEE.E..E.EE..
+======================================================================
+ERROR: test_compiler_gets_only_readonly_semantic_inputs (test_research_prepare.PreparationTests.test_compiler_gets_only_readonly_semantic_inputs)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ada/Projects/emmy-hackathon-2026/tests/test_research_prepare.py", line 62, in test_compiler_gets_only_readonly_semantic_inputs
+    result = self.compile()
+  File "/home/ada/Projects/emmy-hackathon-2026/tests/test_research_prepare.py", line 43, in compile
+    return preparation.compile_ir(self.source, self.case, self.ir_name, self.root / "compiled", **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ada/Projects/emmy-hackathon-2026/tools/research_prepare.py", line 101, in compile_ir
+    raise RuntimeError('compile boundary requires Linux effective UID 0 with libseccomp; no insecure fallback')
+RuntimeError: compile boundary requires Linux effective UID 0 with libseccomp; no insecure fallback
+
+======================================================================
+ERROR: test_descendants_cannot_escape_process_group (test_research_prepare.PreparationTests.test_descendants_cannot_escape_process_group)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ada/Projects/emmy-hackathon-2026/tests/test_research_prepare.py", line 144, in test_descendants_cannot_escape_process_group
+    self.assertEqual(self.compile()["exit_code"], 0)
+                     ~~~~~~~~~~~~^^
+  File "/home/ada/Projects/emmy-hackathon-2026/tests/test_research_prepare.py", line 43, in compile
+    return preparation.compile_ir(self.source, self.case, self.ir_name, self.root / "compiled", **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ada/Projects/emmy-hackathon-2026/tools/research_prepare.py", line 101, in compile_ir
+    raise RuntimeError('compile boundary requires Linux effective UID 0 with libseccomp; no insecure fallback')
+RuntimeError: compile boundary requires Linux effective UID 0 with libseccomp; no insecure fallback
+
+======================================================================
+ERROR: test_evaluator_references_and_network_are_denied (test_research_prepare.PreparationTests.test_evaluator_references_and_network_are_denied)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ada/Projects/emmy-hackathon-2026/tests/test_research_prepare.py", line 78, in test_evaluator_references_and_network_are_denied
+    self.assertEqual(self.compile()["exit_code"], 0)
+                     ~~~~~~~~~~~~^^
+  File "/home/ada/Projects/emmy-hackathon-2026/tests/test_research_prepare.py", line 43, in compile
+    return preparation.compile_ir(self.source, self.case, self.ir_name, self.root / "compiled", **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ada/Projects/emmy-hackathon-2026/tools/research_prepare.py", line 101, in compile_ir
+    raise RuntimeError('compile boundary requires Linux effective UID 0 with libseccomp; no insecure fallback')
+RuntimeError: compile boundary requires Linux effective UID 0 with libseccomp; no insecure fallback
+
+======================================================================
+ERROR: test_gpu_ioctl_is_denied (test_research_prepare.PreparationTests.test_gpu_ioctl_is_denied)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ada/Projects/emmy-hackathon-2026/tests/test_research_prepare.py", line 95, in test_gpu_ioctl_is_denied
+    self.assertEqual(self.compile()["exit_code"], 0)
+                     ~~~~~~~~~~~~^^
+  File "/home/ada/Projects/emmy-hackathon-2026/tests/test_research_prepare.py", line 43, in compile
+    return preparation.compile_ir(self.source, self.case, self.ir_name, self.root / "compiled", **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ada/Projects/emmy-hackathon-2026/tools/research_prepare.py", line 101, in compile_ir
+    raise RuntimeError('compile boundary requires Linux effective UID 0 with libseccomp; no insecure fallback')
+RuntimeError: compile boundary requires Linux effective UID 0 with libseccomp; no insecure fallback
+
+======================================================================
+ERROR: test_invalid_ptx_output_is_rejected (test_research_prepare.PreparationTests.test_invalid_ptx_output_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ada/Projects/emmy-hackathon-2026/tests/test_research_prepare.py", line 149, in test_invalid_ptx_output_is_rejected
+    self.compile()
+    ~~~~~~~~~~~~^^
+  File "/home/ada/Projects/emmy-hackathon-2026/tests/test_research_prepare.py", line 43, in compile
+    return preparation.compile_ir(self.source, self.case, self.ir_name, self.root / "compiled", **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ada/Projects/emmy-hackathon-2026/tools/research_prepare.py", line 101, in compile_ir
+    raise RuntimeError('compile boundary requires Linux effective UID 0 with libseccomp; no insecure fallback')
+RuntimeError: compile boundary requires Linux effective UID 0 with libseccomp; no insecure fallback
+
+======================================================================
+ERROR: test_real_baseline_can_deserialize_and_compile_inside_boundary (test_research_prepare.PreparationTests.test_real_baseline_can_deserialize_and_compile_inside_boundary)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ada/Projects/emmy-hackathon-2026/tests/test_research_prepare.py", line 82, in test_real_baseline_can_deserialize_and_compile_inside_boundary
+    result = self.compile()
+  File "/home/ada/Projects/emmy-hackathon-2026/tests/test_research_prepare.py", line 43, in compile
+    return preparation.compile_ir(self.source, self.case, self.ir_name, self.root / "compiled", **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ada/Projects/emmy-hackathon-2026/tools/research_prepare.py", line 101, in compile_ir
+    raise RuntimeError('compile boundary requires Linux effective UID 0 with libseccomp; no insecure fallback')
+RuntimeError: compile boundary requires Linux effective UID 0 with libseccomp; no insecure fallback
+
+======================================================================
+ERROR: test_source_symlinks_are_rejected_before_dereference (test_research_prepare.PreparationTests.test_source_symlinks_are_rejected_before_dereference)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ada/Projects/emmy-hackathon-2026/tests/test_research_prepare.py", line 103, in test_source_symlinks_are_rejected_before_dereference
+    self.compile()
+    ~~~~~~~~~~~~^^
+  File "/home/ada/Projects/emmy-hackathon-2026/tests/test_research_prepare.py", line 43, in compile
+    return preparation.compile_ir(self.source, self.case, self.ir_name, self.root / "compiled", **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ada/Projects/emmy-hackathon-2026/tools/research_prepare.py", line 101, in compile_ir
+    raise RuntimeError('compile boundary requires Linux effective UID 0 with libseccomp; no insecure fallback')
+RuntimeError: compile boundary requires Linux effective UID 0 with libseccomp; no insecure fallback
+
+======================================================================
+ERROR: test_successful_compiler_cannot_leave_running_descendants (test_research_prepare.PreparationTests.test_successful_compiler_cannot_leave_running_descendants)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ada/Projects/emmy-hackathon-2026/tests/test_research_prepare.py", line 124, in test_successful_compiler_cannot_leave_running_descendants
+    self.assertEqual(self.compile()["exit_code"], 0)
+                     ~~~~~~~~~~~~^^
+  File "/home/ada/Projects/emmy-hackathon-2026/tests/test_research_prepare.py", line 43, in compile
+    return preparation.compile_ir(self.source, self.case, self.ir_name, self.root / "compiled", **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ada/Projects/emmy-hackathon-2026/tools/research_prepare.py", line 101, in compile_ir
+    raise RuntimeError('compile boundary requires Linux effective UID 0 with libseccomp; no insecure fallback')
+RuntimeError: compile boundary requires Linux effective UID 0 with libseccomp; no insecure fallback
+
+======================================================================
+ERROR: test_timeout_kills_owned_descendants (test_research_prepare.PreparationTests.test_timeout_kills_owned_descendants)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ada/Projects/emmy-hackathon-2026/tests/test_research_prepare.py", line 113, in test_timeout_kills_owned_descendants
+    self.compile(timeout=0.5)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/ada/Projects/emmy-hackathon-2026/tests/test_research_prepare.py", line 43, in compile
+    return preparation.compile_ir(self.source, self.case, self.ir_name, self.root / "compiled", **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ada/Projects/emmy-hackathon-2026/tools/research_prepare.py", line 101, in compile_ir
+    raise RuntimeError('compile boundary requires Linux effective UID 0 with libseccomp; no insecure fallback')
+RuntimeError: compile boundary requires Linux effective UID 0 with libseccomp; no insecure fallback
+
+----------------------------------------------------------------------
+Ran 158 tests in 11.892s
+
+FAILED (errors=9)

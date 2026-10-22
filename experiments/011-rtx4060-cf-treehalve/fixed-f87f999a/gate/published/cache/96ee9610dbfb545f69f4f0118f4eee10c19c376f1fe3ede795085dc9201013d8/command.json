@@ -1,0 +1,1 @@
+["/opt/cuda/bin/ptxas", "-arch=sm_89", "-v", "experiments/011-rtx4060-cf-treehalve/fixed-f87f999a/gate/published/cache/96ee9610dbfb545f69f4f0118f4eee10c19c376f1fe3ede795085dc9201013d8/source.ptx", "-o", "experiments/011-rtx4060-cf-treehalve/fixed-f87f999a/gate/published/cache/96ee9610dbfb545f69f4f0118f4eee10c19c376f1fe3ede795085dc9201013d8/module.cubin"]

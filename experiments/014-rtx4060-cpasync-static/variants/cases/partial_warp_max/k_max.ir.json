@@ -1,0 +1,45 @@
+{
+  "inputs": [
+    "x"
+  ],
+  "nodes": {
+    "out": {
+      "inputs": [],
+      "op": "KernelOp",
+      "op_fields": {
+        "body": [
+          "Tile(axes=(Axis(name='i', extent=Dim(6), window=None),), body=(Load(names=('v',), input='x', index=(Var(name='i'),), dtype=DataType(name='f32', np=dtype('float32'), nbytes=4)), WarpShuffle(state=('v',), state_b=('other',), combine_states=(Assign(name='v', op=ElementwiseImpl('maximum'), args=('v', 'other'), dtype=DataType(name='f32', np=dtype('float32'), nbytes=4)),), length=8, dtype=DataType(name='f32', np=dtype('float32'), nbytes=4)), Cond(cond=BinaryExpr(op='==', left=Var(name='lane'), right=Literal(value=0, dtype='int')), body=(Write(output='out', index=(Literal(value=0, dtype='int'),), values=('v',), value_dtype=DataType(name='f32', np=dtype('float32'), nbytes=4), atomic=False, swizzle='NONE'),), else_body=())), block_threads=6, aux_threads=0, raster_axes=None, raster_group=None, raster_orient='m')"
+        ],
+        "name": "k_max",
+        "serial": [],
+        "zero_delegated": []
+      },
+      "outputs": [
+        {
+          "dtype": "f32",
+          "name": "out",
+          "shape": [
+            1
+          ]
+        }
+      ]
+    },
+    "x": {
+      "inputs": [],
+      "op": "InputOp",
+      "op_fields": {},
+      "outputs": [
+        {
+          "dtype": "f32",
+          "name": "x",
+          "shape": [
+            6
+          ]
+        }
+      ]
+    }
+  },
+  "outputs": [
+    "out"
+  ]
+}

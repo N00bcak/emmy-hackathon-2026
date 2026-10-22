@@ -1,0 +1,692 @@
+{
+  "ok": true,
+  "pairs": [
+    {
+      "pair_index": 0,
+      "burst_id": "final-m01_matmul_512",
+      "order": [
+        "candidate",
+        "baseline"
+      ],
+      "samples_us": {
+        "candidate": 2143.2321071624756,
+        "baseline": 4221.951961517334
+      },
+      "kernel_samples_us": {
+        "candidate": [
+          2143.2321071624756
+        ],
+        "baseline": [
+          4221.951961517334
+        ]
+      },
+      "complete": true,
+      "candidate_over_baseline": 0.5076400979210137
+    },
+    {
+      "pair_index": 1,
+      "burst_id": "final-m01_matmul_512",
+      "order": [
+        "baseline",
+        "candidate"
+      ],
+      "samples_us": {
+        "baseline": 4219.903945922852,
+        "candidate": 2142.2080993652344
+      },
+      "kernel_samples_us": {
+        "baseline": [
+          4219.903945922852
+        ],
+        "candidate": [
+          2142.2080993652344
+        ]
+      },
+      "complete": true,
+      "candidate_over_baseline": 0.5076438058347214
+    },
+    {
+      "pair_index": 2,
+      "burst_id": "final-m01_matmul_512",
+      "order": [
+        "candidate",
+        "baseline"
+      ],
+      "samples_us": {
+        "candidate": 2142.2080993652344,
+        "baseline": 4211.711883544922
+      },
+      "kernel_samples_us": {
+        "candidate": [
+          2142.2080993652344
+        ],
+        "baseline": [
+          4211.711883544922
+        ]
+      },
+      "complete": true,
+      "candidate_over_baseline": 0.5086312071190816
+    },
+    {
+      "pair_index": 3,
+      "burst_id": "final-m01_matmul_512",
+      "order": [
+        "candidate",
+        "baseline"
+      ],
+      "samples_us": {
+        "candidate": 2143.2321071624756,
+        "baseline": 4223.999977111816
+      },
+      "kernel_samples_us": {
+        "candidate": [
+          2143.2321071624756
+        ],
+        "baseline": [
+          4223.999977111816
+        ]
+      },
+      "complete": true,
+      "candidate_over_baseline": 0.5073939675132106
+    },
+    {
+      "pair_index": 4,
+      "burst_id": "final-m01_matmul_512",
+      "order": [
+        "baseline",
+        "candidate"
+      ],
+      "samples_us": {
+        "baseline": 4214.784145355225,
+        "candidate": 2143.2321071624756
+      },
+      "kernel_samples_us": {
+        "baseline": [
+          4214.784145355225
+        ],
+        "candidate": [
+          2143.2321071624756
+        ]
+      },
+      "complete": true,
+      "candidate_over_baseline": 0.5085034092491687
+    },
+    {
+      "pair_index": 5,
+      "burst_id": "final-m01_matmul_512",
+      "order": [
+        "baseline",
+        "candidate"
+      ],
+      "samples_us": {
+        "baseline": 4217.855930328369,
+        "candidate": 2144.256114959717
+      },
+      "kernel_samples_us": {
+        "baseline": [
+          4217.855930328369
+        ],
+        "candidate": [
+          2144.256114959717
+        ]
+      },
+      "complete": true,
+      "candidate_over_baseline": 0.508375855026604
+    },
+    {
+      "pair_index": 6,
+      "burst_id": "final-m01_matmul_512",
+      "order": [
+        "candidate",
+        "baseline"
+      ],
+      "samples_us": {
+        "candidate": 2143.2321071624756,
+        "baseline": 4218.880176544189
+      },
+      "kernel_samples_us": {
+        "candidate": [
+          2143.2321071624756
+        ],
+        "baseline": [
+          4218.880176544189
+        ]
+      },
+      "complete": true,
+      "candidate_over_baseline": 0.5080097128802697
+    },
+    {
+      "pair_index": 7,
+      "burst_id": "final-m01_matmul_512",
+      "order": [
+        "baseline",
+        "candidate"
+      ],
+      "samples_us": {
+        "baseline": 4216.832160949707,
+        "candidate": 2143.2321071624756
+      },
+      "kernel_samples_us": {
+        "baseline": [
+          4216.832160949707
+        ],
+        "candidate": [
+          2143.2321071624756
+        ]
+      },
+      "complete": true,
+      "candidate_over_baseline": 0.5082564411763975
+    },
+    {
+      "pair_index": 8,
+      "burst_id": "final-m01_matmul_512",
+      "order": [
+        "baseline",
+        "candidate"
+      ],
+      "samples_us": {
+        "baseline": 4217.855930328369,
+        "candidate": 2143.2321071624756
+      },
+      "kernel_samples_us": {
+        "baseline": [
+          4217.855930328369
+        ],
+        "candidate": [
+          2143.2321071624756
+        ]
+      },
+      "complete": true,
+      "candidate_over_baseline": 0.5081330758008181
+    },
+    {
+      "pair_index": 9,
+      "burst_id": "final-m01_matmul_512",
+      "order": [
+        "baseline",
+        "candidate"
+      ],
+      "samples_us": {
+        "baseline": 4221.951961517334,
+        "candidate": 2142.2080993652344
+      },
+      "kernel_samples_us": {
+        "baseline": [
+          4221.951961517334
+        ],
+        "candidate": [
+          2142.2080993652344
+        ]
+      },
+      "complete": true,
+      "candidate_over_baseline": 0.5073975542335026
+    },
+    {
+      "pair_index": 10,
+      "burst_id": "final-m01_matmul_512",
+      "order": [
+        "candidate",
+        "baseline"
+      ],
+      "samples_us": {
+        "candidate": 2141.184091567993,
+        "baseline": 4227.071762084961
+      },
+      "kernel_samples_us": {
+        "candidate": [
+          2141.184091567993
+        ],
+        "baseline": [
+          4227.071762084961
+        ]
+      },
+      "complete": true,
+      "candidate_over_baseline": 0.5065407478466548
+    },
+    {
+      "pair_index": 11,
+      "burst_id": "final-m01_matmul_512",
+      "order": [
+        "candidate",
+        "baseline"
+      ],
+      "samples_us": {
+        "candidate": 2142.2080993652344,
+        "baseline": 4219.903945922852
+      },
+      "kernel_samples_us": {
+        "candidate": [
+          2142.2080993652344
+        ],
+        "baseline": [
+          4219.903945922852
+        ]
+      },
+      "complete": true,
+      "candidate_over_baseline": 0.5076438058347214
+    },
+    {
+      "pair_index": 12,
+      "burst_id": "final-m01_matmul_512",
+      "order": [
+        "baseline",
+        "candidate"
+      ],
+      "samples_us": {
+        "baseline": 4213.759899139404,
+        "candidate": 2142.2080993652344
+      },
+      "kernel_samples_us": {
+        "baseline": [
+          4213.759899139404
+        ],
+        "candidate": [
+          2142.2080993652344
+        ]
+      },
+      "complete": true,
+      "candidate_over_baseline": 0.5083839968676781
+    },
+    {
+      "pair_index": 13,
+      "burst_id": "final-m01_matmul_512",
+      "order": [
+        "candidate",
+        "baseline"
+      ],
+      "samples_us": {
+        "candidate": 2143.2321071624756,
+        "baseline": 4221.951961517334
+      },
+      "kernel_samples_us": {
+        "candidate": [
+          2143.2321071624756
+        ],
+        "baseline": [
+          4221.951961517334
+        ]
+      },
+      "complete": true,
+      "candidate_over_baseline": 0.5076400979210137
+    },
+    {
+      "pair_index": 14,
+      "burst_id": "final-m01_matmul_512",
+      "order": [
+        "baseline",
+        "candidate"
+      ],
+      "samples_us": {
+        "baseline": 4220.928192138672,
+        "candidate": 2143.2321071624756
+      },
+      "kernel_samples_us": {
+        "baseline": [
+          4220.928192138672
+        ],
+        "candidate": [
+          2143.2321071624756
+        ]
+      },
+      "complete": true,
+      "candidate_over_baseline": 0.5077632240117633
+    },
+    {
+      "pair_index": 15,
+      "burst_id": "final-m01_matmul_512",
+      "order": [
+        "candidate",
+        "baseline"
+      ],
+      "samples_us": {
+        "candidate": 2143.2321071624756,
+        "baseline": 7888.8959884643555
+      },
+      "kernel_samples_us": {
+        "candidate": [
+          2143.2321071624756
+        ],
+        "baseline": [
+          7888.8959884643555
+        ]
+      },
+      "complete": true,
+      "candidate_over_baseline": 0.2716770648638853
+    }
+  ],
+  "checks": [
+    {
+      "phase": "warmup",
+      "repetition": 0,
+      "arm": "baseline",
+      "ok": true,
+      "buffers": {
+        "x1": {
+          "prefix_ok": true,
+          "suffix_ok": true,
+          "input_ok": true
+        },
+        "x0": {
+          "prefix_ok": true,
+          "suffix_ok": true,
+          "input_ok": true
+        },
+        "matmul": {
+          "prefix_ok": true,
+          "suffix_ok": true,
+          "input_ok": true
+        }
+      },
+      "outputs": {
+        "matmul": {
+          "ok": true,
+          "elements": 262144,
+          "mismatched": 0,
+          "max_abs_error": 8.392333984375e-05,
+          "rtol": 0.001,
+          "atol": 0.001
+        }
+      }
+    },
+    {
+      "phase": "warmup",
+      "repetition": 0,
+      "arm": "candidate",
+      "ok": true,
+      "buffers": {
+        "x1": {
+          "prefix_ok": true,
+          "suffix_ok": true,
+          "input_ok": true
+        },
+        "x0": {
+          "prefix_ok": true,
+          "suffix_ok": true,
+          "input_ok": true
+        },
+        "matmul": {
+          "prefix_ok": true,
+          "suffix_ok": true,
+          "input_ok": true
+        }
+      },
+      "outputs": {
+        "matmul": {
+          "ok": true,
+          "elements": 262144,
+          "mismatched": 0,
+          "max_abs_error": 8.392333984375e-05,
+          "rtol": 0.001,
+          "atol": 0.001
+        }
+      }
+    },
+    {
+      "phase": "warmup",
+      "repetition": 1,
+      "arm": "baseline",
+      "ok": true,
+      "buffers": {
+        "x1": {
+          "prefix_ok": true,
+          "suffix_ok": true,
+          "input_ok": true
+        },
+        "x0": {
+          "prefix_ok": true,
+          "suffix_ok": true,
+          "input_ok": true
+        },
+        "matmul": {
+          "prefix_ok": true,
+          "suffix_ok": true,
+          "input_ok": true
+        }
+      },
+      "outputs": {
+        "matmul": {
+          "ok": true,
+          "elements": 262144,
+          "mismatched": 0,
+          "max_abs_error": 8.392333984375e-05,
+          "rtol": 0.001,
+          "atol": 0.001
+        }
+      }
+    },
+    {
+      "phase": "warmup",
+      "repetition": 1,
+      "arm": "candidate",
+      "ok": true,
+      "buffers": {
+        "x1": {
+          "prefix_ok": true,
+          "suffix_ok": true,
+          "input_ok": true
+        },
+        "x0": {
+          "prefix_ok": true,
+          "suffix_ok": true,
+          "input_ok": true
+        },
+        "matmul": {
+          "prefix_ok": true,
+          "suffix_ok": true,
+          "input_ok": true
+        }
+      },
+      "outputs": {
+        "matmul": {
+          "ok": true,
+          "elements": 262144,
+          "mismatched": 0,
+          "max_abs_error": 8.392333984375e-05,
+          "rtol": 0.001,
+          "atol": 0.001
+        }
+      }
+    },
+    {
+      "phase": "warmup",
+      "repetition": 2,
+      "arm": "baseline",
+      "ok": true,
+      "buffers": {
+        "x1": {
+          "prefix_ok": true,
+          "suffix_ok": true,
+          "input_ok": true
+        },
+        "x0": {
+          "prefix_ok": true,
+          "suffix_ok": true,
+          "input_ok": true
+        },
+        "matmul": {
+          "prefix_ok": true,
+          "suffix_ok": true,
+          "input_ok": true
+        }
+      },
+      "outputs": {
+        "matmul": {
+          "ok": true,
+          "elements": 262144,
+          "mismatched": 0,
+          "max_abs_error": 8.392333984375e-05,
+          "rtol": 0.001,
+          "atol": 0.001
+        }
+      }
+    },
+    {
+      "phase": "warmup",
+      "repetition": 2,
+      "arm": "candidate",
+      "ok": true,
+      "buffers": {
+        "x1": {
+          "prefix_ok": true,
+          "suffix_ok": true,
+          "input_ok": true
+        },
+        "x0": {
+          "prefix_ok": true,
+          "suffix_ok": true,
+          "input_ok": true
+        },
+        "matmul": {
+          "prefix_ok": true,
+          "suffix_ok": true,
+          "input_ok": true
+        }
+      },
+      "outputs": {
+        "matmul": {
+          "ok": true,
+          "elements": 262144,
+          "mismatched": 0,
+          "max_abs_error": 8.392333984375e-05,
+          "rtol": 0.001,
+          "atol": 0.001
+        }
+      }
+    },
+    {
+      "phase": "after-paired-block",
+      "arm": "candidate",
+      "ok": true,
+      "buffers": {
+        "x1": {
+          "prefix_ok": true,
+          "suffix_ok": true,
+          "input_ok": true
+        },
+        "x0": {
+          "prefix_ok": true,
+          "suffix_ok": true,
+          "input_ok": true
+        },
+        "matmul": {
+          "prefix_ok": true,
+          "suffix_ok": true,
+          "input_ok": true
+        }
+      },
+      "outputs": {
+        "matmul": {
+          "ok": true,
+          "elements": 262144,
+          "mismatched": 0,
+          "max_abs_error": 8.392333984375e-05,
+          "rtol": 0.001,
+          "atol": 0.001
+        }
+      }
+    },
+    {
+      "phase": "after-paired-block",
+      "arm": "baseline",
+      "ok": true,
+      "buffers": {
+        "x1": {
+          "prefix_ok": true,
+          "suffix_ok": true,
+          "input_ok": true
+        },
+        "x0": {
+          "prefix_ok": true,
+          "suffix_ok": true,
+          "input_ok": true
+        },
+        "matmul": {
+          "prefix_ok": true,
+          "suffix_ok": true,
+          "input_ok": true
+        }
+      },
+      "outputs": {
+        "matmul": {
+          "ok": true,
+          "elements": 262144,
+          "mismatched": 0,
+          "max_abs_error": 8.392333984375e-05,
+          "rtol": 0.001,
+          "atol": 0.001
+        }
+      }
+    }
+  ],
+  "burst_id": "final-m01_matmul_512",
+  "pair_offset": 0,
+  "completed_pairs": 16,
+  "launch_count": 38,
+  "physical_timed_launches": 32,
+  "timing_protocol": "cuda-graph-paired-v2",
+  "resources": {
+    "candidate": [
+      {
+        "entry": "k_matmul_2967be",
+        "dynamic_shared_bytes": 73728,
+        "block_threads": 512,
+        "max_threads_per_block": 1024,
+        "static_shared_bytes": 0,
+        "local_bytes": 0,
+        "registers": 40,
+        "max_active_blocks_per_sm": 1,
+        "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+      }
+    ],
+    "baseline": [
+      {
+        "entry": "k_matmul_2967be",
+        "dynamic_shared_bytes": 73728,
+        "block_threads": 512,
+        "max_threads_per_block": 1024,
+        "static_shared_bytes": 0,
+        "local_bytes": 0,
+        "registers": 40,
+        "max_active_blocks_per_sm": 1,
+        "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+      }
+    ]
+  },
+  "timing_method": "Explicit captured CUDA event nodes around each kernel; paired block replayed once; resets/copies excluded.",
+  "validation_scope": "Every warmup and after the complete paired block; use independent repeated correctness checks before timing.",
+  "cache_mode": "warm: same allocations reused; no streaming-throughput claim",
+  "mode": "timing",
+  "device": {
+    "name": "NVIDIA GeForce RTX 4060 Laptop GPU",
+    "worker_pid": 141438,
+    "context_identity": "141438:94586530092880",
+    "driver_version": 13040,
+    "clock_rate_khz": 1890000,
+    "multiprocessors": 24,
+    "memory_clock_khz": 8001000,
+    "compute_major": 8,
+    "compute_minor": 9,
+    "uuid": "GPU-01c8f1da-9f9f-fa3e-bbe2-0771199ab74a",
+    "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry."
+  },
+  "benchmark_qualified": false,
+  "qualification_note": "Raw diagnostics; benchmark validity requires evaluator-issued source/suite all-15 gates.",
+  "phase_seconds": {
+    "case_loading": 0.027899651999177877,
+    "cuda_initialization": 0.802539459997206,
+    "execution_and_checks": 0.23688701799983392,
+    "total": 1.0673332539954572
+  },
+  "identities": [
+    {
+      "/home/ada/Projects/emmy-hackathon-2026/experiments/008-rtx4060-final/prepared/m01_matmul_512/meta.json": "30b4a69fdc3d4eeee1bc654df42c3c43c368ef9ff41d886238b8b7104d15e881",
+      "/home/ada/Projects/emmy-hackathon-2026/experiments/008-rtx4060-final/prepared/m01_matmul_512/expected.npz": "6396bececa75b2adee8c83bb0c090f9a68e7297d7de492f5a2f0cd3e67f24c36",
+      "/home/ada/Projects/emmy-hackathon-2026/experiments/008-rtx4060-final/prepared/m01_matmul_512/candidate-k_matmul_2967be.cubin": "6e9cc07b56aa78daba711159d5617b706176ce67cbb08b764d1abe6a82e9f639"
+    },
+    {
+      "/home/ada/Projects/emmy-hackathon-2026/experiments/008-rtx4060-final/prepared/m01_matmul_512/meta.json": "30b4a69fdc3d4eeee1bc654df42c3c43c368ef9ff41d886238b8b7104d15e881",
+      "/home/ada/Projects/emmy-hackathon-2026/experiments/008-rtx4060-final/prepared/m01_matmul_512/expected.npz": "6396bececa75b2adee8c83bb0c090f9a68e7297d7de492f5a2f0cd3e67f24c36",
+      "/home/ada/Projects/emmy-hackathon-2026/experiments/008-rtx4060-final/prepared/m01_matmul_512/baseline-k_matmul_2967be.cubin": "1e9a55ed7ee040407c856a38dd883d5538af892d07453b3116a35143222090c3"
+    }
+  ]
+}

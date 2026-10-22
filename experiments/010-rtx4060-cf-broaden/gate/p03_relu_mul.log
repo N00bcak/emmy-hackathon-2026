@@ -1,0 +1,2 @@
+[k_mul_pointwise] 28 registers
+[k_mul_pointwise] PASS  mul: max abs err 0.000e+00  (19.13600042462349 us)

@@ -1,0 +1,124 @@
+.version 8.0
+.target sm_89
+.address_size 64
+
+.extern .shared .align 16 .b8 __emmy_smem[];
+.visible .entry k_vec(
+    .param .u64 param_0,
+    .param .u64 param_1
+)
+{
+    .reg .b32 %r<42>;
+    .reg .b64 %rd<32>;
+    .reg .f32 %f<8>;
+    .reg .f64 %fd<1>;
+    .reg .pred %p<2>;
+    ld.param.u64 %rd1, [param_0];
+    cvta.to.global.u64 %rd1, %rd1;
+    ld.param.u64 %rd2, [param_1];
+    cvta.to.global.u64 %rd2, %rd2;
+    mov.u32 %r1, %tid.x;
+    mov.u32 %r2, %tid.y;
+    mov.u32 %r3, %tid.z;
+    mov.u32 %r4, %ctaid.x;
+    mov.u32 %r5, %ctaid.y;
+    mov.u32 %r6, %ctaid.z;
+    mad.lo.u32 %r7, %r1, 1, %r2;
+    mad.lo.u32 %r8, %r7, 1, %r3;
+    mad.lo.u32 %r9, %r4, 1, %r5;
+    mad.lo.u32 %r10, %r9, 1, %r6;
+    mov.u32 %r1, %r8;
+    mov.u32 %r4, %r10;
+    mov.u32 %r11, 32;
+    mad.lo.u32 %r12, %r10, %r11, %r8;
+    mov.u64 %rd3, __emmy_smem;
+    and.b32 %r13, %r8, 31;
+    shr.u32 %r14, %r8, 5;
+    setp.ge.u32 %p1, %r12, 32;
+    shr.u32 %r15, %r12, 0;
+    mul.lo.s32 %r16, %r15, 4;
+    add.s32 %r17, %r16, 1;
+    mad.lo.s32 %r18, %r17, 1, 0;
+    mul.wide.s32 %rd4, %r18, 4;
+    add.u64 %rd5, %rd1, %rd4;
+    mad.lo.s32 %r19, %r16, 1, 0;
+    mul.wide.s32 %rd6, %r19, 4;
+    mov.u64 %rd7, __emmy_smem;
+    add.u64 %rd7, %rd7, 0;
+    add.u64 %rd7, %rd7, %rd6;
+    sub.u64 %rd8, %rd7, %rd3;
+    cvt.u32.u64 %r20, %rd8;
+    cp.async.ca.shared.global [%r20], [%rd5], 4;
+    mad.lo.s32 %r21, %r17, 1, 0;
+    add.s32 %r22, %r21, 1;
+    mul.wide.s32 %rd9, %r22, 4;
+    add.u64 %rd10, %rd1, %rd9;
+    mad.lo.s32 %r23, %r16, 1, 0;
+    add.s32 %r24, %r23, 1;
+    mul.wide.s32 %rd11, %r24, 4;
+    mov.u64 %rd12, __emmy_smem;
+    add.u64 %rd12, %rd12, 0;
+    add.u64 %rd12, %rd12, %rd11;
+    sub.u64 %rd13, %rd12, %rd3;
+    cvt.u32.u64 %r25, %rd13;
+    cp.async.ca.shared.global [%r25], [%rd10], 4;
+    mad.lo.s32 %r26, %r17, 1, 0;
+    add.s32 %r27, %r26, 2;
+    mul.wide.s32 %rd14, %r27, 4;
+    add.u64 %rd15, %rd1, %rd14;
+    mad.lo.s32 %r28, %r16, 1, 0;
+    add.s32 %r29, %r28, 2;
+    mul.wide.s32 %rd16, %r29, 4;
+    mov.u64 %rd17, __emmy_smem;
+    add.u64 %rd17, %rd17, 0;
+    add.u64 %rd17, %rd17, %rd16;
+    sub.u64 %rd18, %rd17, %rd3;
+    cvt.u32.u64 %r30, %rd18;
+    cp.async.ca.shared.global [%r30], [%rd15], 4;
+    mad.lo.s32 %r31, %r17, 1, 0;
+    add.s32 %r32, %r31, 3;
+    mul.wide.s32 %rd19, %r32, 4;
+    add.u64 %rd20, %rd1, %rd19;
+    mad.lo.s32 %r33, %r16, 1, 0;
+    add.s32 %r34, %r33, 3;
+    mul.wide.s32 %rd21, %r34, 4;
+    mov.u64 %rd22, __emmy_smem;
+    add.u64 %rd22, %rd22, 0;
+    add.u64 %rd22, %rd22, %rd21;
+    sub.u64 %rd23, %rd22, %rd3;
+    cvt.u32.u64 %r35, %rd23;
+    cp.async.ca.shared.global [%r35], [%rd20], 4;
+    cp.async.commit_group;
+    cp.async.wait_group 0;
+    bar.sync 0;
+    ld.shared.f32 %f1, [%rd7];
+    mad.lo.s32 %r36, %r17, 1, 0;
+    mul.wide.s32 %rd24, %r36, 4;
+    mov.u64 %rd25, __emmy_smem;
+    add.u64 %rd25, %rd25, 0;
+    add.u64 %rd25, %rd25, %rd24;
+    ld.shared.f32 %f2, [%rd25];
+    add.s32 %r37, %r16, 2;
+    mad.lo.s32 %r38, %r37, 1, 0;
+    mul.wide.s32 %rd26, %r38, 4;
+    mov.u64 %rd27, __emmy_smem;
+    add.u64 %rd27, %rd27, 0;
+    add.u64 %rd27, %rd27, %rd26;
+    ld.shared.f32 %f3, [%rd27];
+    add.s32 %r39, %r16, 3;
+    mad.lo.s32 %r40, %r39, 1, 0;
+    mul.wide.s32 %rd28, %r40, 4;
+    mov.u64 %rd29, __emmy_smem;
+    add.u64 %rd29, %rd29, 0;
+    add.u64 %rd29, %rd29, %rd28;
+    ld.shared.f32 %f4, [%rd29];
+    add.f32 %f5, %f1, %f2;
+    add.f32 %f6, %f3, %f4;
+    add.f32 %f7, %f5, %f6;
+    mad.lo.s32 %r41, %r15, 1, 0;
+    mul.wide.s32 %rd30, %r41, 4;
+    add.u64 %rd31, %rd2, %rd30;
+    st.global.f32 [%rd31], %f7;
+kernel_done:
+    ret;
+}

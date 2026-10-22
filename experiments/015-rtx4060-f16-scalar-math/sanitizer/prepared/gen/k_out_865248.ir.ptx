@@ -1,0 +1,81 @@
+.version 8.0
+.target sm_89
+.address_size 64
+
+.visible .entry k_out_865248(
+    .param .u64 param_0,
+    .param .u64 param_1,
+    .param .u64 param_2
+)
+{
+    .reg .b32 %r<27>;
+    .reg .b16 %rh<1>;
+    .reg .b64 %rd<10>;
+    .reg .f32 %f<6>;
+    .reg .f64 %fd<1>;
+    .reg .pred %p<4>;
+    ld.param.u64 %rd1, [param_0];
+    cvta.to.global.u64 %rd1, %rd1;
+    ld.param.u64 %rd2, [param_1];
+    cvta.to.global.u64 %rd2, %rd2;
+    ld.param.u64 %rd3, [param_2];
+    cvta.to.global.u64 %rd3, %rd3;
+    mov.u32 %r1, %tid.x;
+    mov.u32 %r2, %tid.y;
+    mov.u32 %r3, %tid.z;
+    mov.u32 %r4, %ctaid.x;
+    mov.u32 %r5, %ctaid.y;
+    mov.u32 %r6, %ctaid.z;
+    mad.lo.u32 %r7, %r1, 1, %r2;
+    mad.lo.u32 %r8, %r7, 1, %r3;
+    mad.lo.u32 %r9, %r4, 1, %r5;
+    mad.lo.u32 %r10, %r9, 1, %r6;
+    mov.u32 %r1, %r8;
+    mov.u32 %r4, %r10;
+    mov.u32 %r11, 256;
+    mad.lo.u32 %r12, %r10, %r11, %r8;
+    and.b32 %r13, %r8, 31;
+    shr.u32 %r14, %r8, 5;
+    setp.ge.u32 %p1, %r12, 70;
+    @%p1 bra kernel_done;
+    div.u32 %r15, %r12, 10;
+    shr.u32 %r16, %r12, 1;
+    rem.u32 %r16, %r16, 5;
+    shr.u32 %r17, %r12, 0;
+    and.b32 %r17, %r17, 1;
+    mov.f32 %f1, 0f00000000;
+    mov.s32 %r18, 0;
+loop_1:
+    setp.ge.s32 %p2, %r18, 5;
+    @%p2 bra loop_done_2;
+    mul.lo.s32 %r19, %r18, 2;
+    add.s32 %r20, %r19, %r17;
+    setp.lt.s32 %p3, %r20, 9;
+    @!%p3 bra else_3;
+    mad.lo.s32 %r21, %r15, 9, 0;
+    mad.lo.s32 %r22, %r20, 1, %r21;
+    mul.wide.s32 %rd4, %r22, 4;
+    add.u64 %rd5, %rd2, %rd4;
+    ld.global.f32 %f2, [%rd5];
+    mad.lo.s32 %r23, %r20, 5, 0;
+    mad.lo.s32 %r24, %r16, 1, %r23;
+    mul.wide.s32 %rd6, %r24, 4;
+    add.u64 %rd7, %rd3, %rd6;
+    ld.global.f32 %f3, [%rd7];
+    mul.f32 %f4, %f2, %f3;
+    add.f32 %f5, %f1, %f4;
+    mov.f32 %f1, %f5;
+    bra endif_4;
+else_3:
+endif_4:
+    add.s32 %r18, %r18, 1;
+    bra loop_1;
+loop_done_2:
+    mad.lo.s32 %r25, %r15, 5, 0;
+    mad.lo.s32 %r26, %r16, 1, %r25;
+    mul.wide.s32 %rd8, %r26, 4;
+    add.u64 %rd9, %rd1, %rd8;
+    red.global.add.f32 [%rd9], %f1;
+kernel_done:
+    ret;
+}

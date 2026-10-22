@@ -1,0 +1,304 @@
+{
+  "compiler": "/home/ada/Projects/emmy-hackathon-2026/compile.py",
+  "compiler_sha256": "13221c6b59ed03c7adbf5534904b4c8619e17bbb6c909643a072a9c92b5721de",
+  "python": "3.14.8 (main, Oct 13 2026, 10:43:33) [GCC 16.2.1 20260810]",
+  "cases": [
+    {
+      "problem": "a01_attention",
+      "meta_sha256": "c280c572744016ecf6ca2971312ad2ce8a10b28c0f3e38561c1a096c2ea7352f",
+      "command": [
+        "/home/ada/Projects/emmy-hackathon-2026/.venv/bin/python",
+        "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/submit.py",
+        "a01_attention",
+        "--compiler",
+        "/home/ada/Projects/emmy-hackathon-2026/compile.py",
+        "--server",
+        "http://127.0.0.1:48707"
+      ],
+      "status": "pass",
+      "exit_code": 0,
+      "wall_seconds": 0.765350714995293
+    },
+    {
+      "problem": "a02_attention_128",
+      "meta_sha256": "adcc08994786076e7cb9835ab3bab19b0dc9c0d00a999adea124380f8300de18",
+      "command": [
+        "/home/ada/Projects/emmy-hackathon-2026/.venv/bin/python",
+        "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/submit.py",
+        "a02_attention_128",
+        "--compiler",
+        "/home/ada/Projects/emmy-hackathon-2026/compile.py",
+        "--server",
+        "http://127.0.0.1:48707"
+      ],
+      "status": "pass",
+      "exit_code": 0,
+      "wall_seconds": 0.6657168229939998
+    },
+    {
+      "problem": "f01_rmsnorm",
+      "meta_sha256": "f45014c6b0963ec9727fc0f1c9bb585319c4ac94292260bc8f7c10557c1b8e1d",
+      "command": [
+        "/home/ada/Projects/emmy-hackathon-2026/.venv/bin/python",
+        "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/submit.py",
+        "f01_rmsnorm",
+        "--compiler",
+        "/home/ada/Projects/emmy-hackathon-2026/compile.py",
+        "--server",
+        "http://127.0.0.1:48707"
+      ],
+      "status": "pass",
+      "exit_code": 0,
+      "wall_seconds": 0.7662115219936823
+    },
+    {
+      "problem": "f02_row_softmax",
+      "meta_sha256": "ddbe97ea42c7b077d30d140b751f8062caf47b5620cb423a02c1dd848cd61900",
+      "command": [
+        "/home/ada/Projects/emmy-hackathon-2026/.venv/bin/python",
+        "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/submit.py",
+        "f02_row_softmax",
+        "--compiler",
+        "/home/ada/Projects/emmy-hackathon-2026/compile.py",
+        "--server",
+        "http://127.0.0.1:48707"
+      ],
+      "status": "pass",
+      "exit_code": 0,
+      "wall_seconds": 0.6646755440015113
+    },
+    {
+      "problem": "f03_l2norm",
+      "meta_sha256": "cbf67c2d198f4fea1bb140083ec65c4bf14202090daaa4aac77f1514ecc60b95",
+      "command": [
+        "/home/ada/Projects/emmy-hackathon-2026/.venv/bin/python",
+        "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/submit.py",
+        "f03_l2norm",
+        "--compiler",
+        "/home/ada/Projects/emmy-hackathon-2026/compile.py",
+        "--server",
+        "http://127.0.0.1:48707"
+      ],
+      "status": "pass",
+      "exit_code": 0,
+      "wall_seconds": 0.665416431002086
+    },
+    {
+      "problem": "m01_matmul_512",
+      "meta_sha256": "3324370a2d29614c6c7ff7cf549563f9afb22bab0ed31ed62d8ffd27c59dcd57",
+      "command": [
+        "/home/ada/Projects/emmy-hackathon-2026/.venv/bin/python",
+        "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/submit.py",
+        "m01_matmul_512",
+        "--compiler",
+        "/home/ada/Projects/emmy-hackathon-2026/compile.py",
+        "--server",
+        "http://127.0.0.1:48707"
+      ],
+      "status": "pass",
+      "exit_code": 0,
+      "wall_seconds": 0.9662949929988827
+    },
+    {
+      "problem": "m02_matmul_rect",
+      "meta_sha256": "a82fd8d7f5933749868035254537b962d3d0140c8bf3e22f7f8a54a289a9c365",
+      "command": [
+        "/home/ada/Projects/emmy-hackathon-2026/.venv/bin/python",
+        "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/submit.py",
+        "m02_matmul_rect",
+        "--compiler",
+        "/home/ada/Projects/emmy-hackathon-2026/compile.py",
+        "--server",
+        "http://127.0.0.1:48707"
+      ],
+      "status": "pass",
+      "exit_code": 0,
+      "wall_seconds": 0.664142437002738
+    },
+    {
+      "problem": "p00_scalar_add",
+      "meta_sha256": "67f4c80a5c78c9fa571f4088633acc56cae0a758d2a65e7c89c07a96e665709c",
+      "command": [
+        "/home/ada/Projects/emmy-hackathon-2026/.venv/bin/python",
+        "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/submit.py",
+        "p00_scalar_add",
+        "--compiler",
+        "/home/ada/Projects/emmy-hackathon-2026/compile.py",
+        "--server",
+        "http://127.0.0.1:48707"
+      ],
+      "status": "pass",
+      "exit_code": 0,
+      "wall_seconds": 0.6652442689955933
+    },
+    {
+      "problem": "p01_vector_add",
+      "meta_sha256": "4607a6a14553ec256b2073ff8fef18a850e315033f4fdace21f26fdcc2a867c6",
+      "command": [
+        "/home/ada/Projects/emmy-hackathon-2026/.venv/bin/python",
+        "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/submit.py",
+        "p01_vector_add",
+        "--compiler",
+        "/home/ada/Projects/emmy-hackathon-2026/compile.py",
+        "--server",
+        "http://127.0.0.1:48707"
+      ],
+      "status": "pass",
+      "exit_code": 0,
+      "wall_seconds": 0.7149691989980056
+    },
+    {
+      "problem": "p02_scale_shift",
+      "meta_sha256": "7c1c3ea69e4d61128d72fbaf3a82a76125a5273c3ced6197ac2f150d03d121e1",
+      "command": [
+        "/home/ada/Projects/emmy-hackathon-2026/.venv/bin/python",
+        "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/submit.py",
+        "p02_scale_shift",
+        "--compiler",
+        "/home/ada/Projects/emmy-hackathon-2026/compile.py",
+        "--server",
+        "http://127.0.0.1:48707"
+      ],
+      "status": "pass",
+      "exit_code": 0,
+      "wall_seconds": 0.665529225996579
+    },
+    {
+      "problem": "p03_relu_mul",
+      "meta_sha256": "a2dbbe3a3cec7c45fcdde2c08f0d3276647c2a4b56ede3345be16404d1ded8c9",
+      "command": [
+        "/home/ada/Projects/emmy-hackathon-2026/.venv/bin/python",
+        "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/submit.py",
+        "p03_relu_mul",
+        "--compiler",
+        "/home/ada/Projects/emmy-hackathon-2026/compile.py",
+        "--server",
+        "http://127.0.0.1:48707"
+      ],
+      "status": "pass",
+      "exit_code": 0,
+      "wall_seconds": 0.715759953003726
+    },
+    {
+      "problem": "r01_array_sum",
+      "meta_sha256": "46cf07073f4e612e811decbc2ca900ea210811194a1e336053a6f179ecb4b00e",
+      "command": [
+        "/home/ada/Projects/emmy-hackathon-2026/.venv/bin/python",
+        "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/submit.py",
+        "r01_array_sum",
+        "--compiler",
+        "/home/ada/Projects/emmy-hackathon-2026/compile.py",
+        "--server",
+        "http://127.0.0.1:48707"
+      ],
+      "status": "pass",
+      "exit_code": 0,
+      "wall_seconds": 0.6661157620037557
+    },
+    {
+      "problem": "r02_big_sum",
+      "meta_sha256": "db364be00e35402a3d6f10fcd55562115c7604dea94f8126a02179a80476d19e",
+      "command": [
+        "/home/ada/Projects/emmy-hackathon-2026/.venv/bin/python",
+        "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/submit.py",
+        "r02_big_sum",
+        "--compiler",
+        "/home/ada/Projects/emmy-hackathon-2026/compile.py",
+        "--server",
+        "http://127.0.0.1:48707"
+      ],
+      "status": "pass",
+      "exit_code": 0,
+      "wall_seconds": 0.6653796240061638
+    },
+    {
+      "problem": "r03_mean",
+      "meta_sha256": "d7ab661c388ad447f5661a3b36cba448cf5142402756f1e1c35d110db06c84fe",
+      "command": [
+        "/home/ada/Projects/emmy-hackathon-2026/.venv/bin/python",
+        "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/submit.py",
+        "r03_mean",
+        "--compiler",
+        "/home/ada/Projects/emmy-hackathon-2026/compile.py",
+        "--server",
+        "http://127.0.0.1:48707"
+      ],
+      "status": "pass",
+      "exit_code": 0,
+      "wall_seconds": 0.7154666850037756
+    },
+    {
+      "problem": "r04_row_sum",
+      "meta_sha256": "803cb710590156ad319eb44b2d2aa6c1ee9b0e3a666ebc09de259e50d83a3ba1",
+      "command": [
+        "/home/ada/Projects/emmy-hackathon-2026/.venv/bin/python",
+        "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/submit.py",
+        "r04_row_sum",
+        "--compiler",
+        "/home/ada/Projects/emmy-hackathon-2026/compile.py",
+        "--server",
+        "http://127.0.0.1:48707"
+      ],
+      "status": "pass",
+      "exit_code": 0,
+      "wall_seconds": 0.6651314740011003
+    }
+  ],
+  "timing_is_smoke_only": true,
+  "source_hashes": {
+    "requirements.txt": "0511f272c13e886704a7fa8f9234aed69b53af755958a47a57e5575d84bf090e",
+    "compile.py": "13221c6b59ed03c7adbf5534904b4c8619e17bbb6c909643a072a9c92b5721de",
+    "tests/test_local_runner.py": "55b0272c7b0ae6e5062d7959cc95d3e56d010bc6a827a25f3d41535bf228959b",
+    "tests/test_compiler.py": "a417eda1df0b4045d6c15d8389235a7593b69ee449bae4000b6f0683f2f20747",
+    "tests/test_published.py": "ade6fb110e6a9ce0c66868f81556a367f7337fdc6b2f2d90403c7beeddef7b2c",
+    "tests/test_research_calibrate.py": "c8b51bfa1407137e56d9cc8d5c82b2a800deaf5e7f9e5989faee5507a9a09d80",
+    "tests/test_research_cases.py": "741a8edb7cf2ff77c0d412061c162cfdbab8c546d87161ec1c58300aa6eee618",
+    "tests/test_research_control.py": "596d539f0d90d7024741419edf4b2a19c4fd63c3c7f8b23d13a4f6fec32218f7",
+    "tests/test_research_gpu.py": "b49787be2c821e17b1f5e4c8bf9c883908baaca5fc7a3d4906a599033b302e61",
+    "tests/test_research_pipeline.py": "c685ffd79b942462b914f9b17841ef6d0c68a253c328c9ac846f67c121368130",
+    "tests/test_research_prepare.py": "98dcef64cef0563965cfacd4778432dc51eaa17e4f623d5625fb94bf746b9df4",
+    "tests/test_research_verify.py": "d411431ef9ce4660437ccc9a028e80ccd7afde361f652ed024df81acbda8f8be",
+    "tools/check_contract.py": "fd2e8dc35c80366775b28ce167809836f8c2bcc93139842727645bfe2b9d7f22",
+    "tools/probe_endpoint.py": "db5b4561830826ebf6de63ec7c97cd02cc3df206dab6b12ea30f0859f4e9770d",
+    "tools/check_local.py": "bdc287f5fab27e115cc85f84aee8113fa8c029700c6e183c258c29b8966c87aa",
+    "tools/evaluate.py": "271ed24d10db00dd4e3df96e3c40fc33f533b4bc2df24178def9beac05f419c6",
+    "tools/local_runner.py": "8160aa3a757581372b562b3d8bf3a30a861750eb2dce178bf657af12646cda6c",
+    "tools/published.py": "22b71e6c76f8d71516506d21fbbeda8342165a99530793f1df382130518d8192",
+    "tools/research.py": "43e074ce3837510982b20aab4023e406aa5c2539c46f202ebc1ad684bc4033bd",
+    "tools/research_calibrate.py": "af9e19b8ed6bba34ae1ff6afc3deac517ca48d2ba776a51d66bf84edae347bae",
+    "tools/research_cases.py": "a6d8ad7de55d1984c346ee2e0a44f41513b0fb3b38551ed72ea246c48b4b69ef",
+    "tools/research_gpu.py": "de559ea9f9e0baa64735662128d7dab4eb84abf2c3b2c6cf4840cd19ccee9e57",
+    "tools/research_pipeline.py": "118200de4b762f2cd2954b8518c4ab97dd8447732343346aa8f5e1453717c3bb",
+    "tools/research_prepare.py": "5c53f3259b3750d6a0fe7a9c15295b240448dd5aa49732ea47d68b0836c58170",
+    "tools/research_store.py": "fc2b7f02a454a61f6c7a3a64dd6844ea730ab1c7cdb675e1151f0b4fd50a4416",
+    "tools/research_verify.py": "fc06c5a4d34f96aaa9682db79aca8cb76ac243582938d7e904f3968f4217da95",
+    "tools/variant_suite.py": "5f3d31762cfbb4f0b47bc9ca333a3030d2651982a9467e9c89c9c17bd2fc3d2f"
+  },
+  "source_revision_label": null,
+  "published_correctness": {
+    "required": [
+      "p00_scalar_add",
+      "p01_vector_add",
+      "p02_scale_shift",
+      "p03_relu_mul",
+      "r01_array_sum",
+      "r02_big_sum",
+      "r03_mean",
+      "r04_row_sum",
+      "m01_matmul_512",
+      "m02_matmul_rect",
+      "f01_rmsnorm",
+      "f02_row_softmax",
+      "f03_l2norm",
+      "a01_attention",
+      "a02_attention_128"
+    ],
+    "missing": [],
+    "failed": [],
+    "source_unchanged": true,
+    "all15_passed": true,
+    "scope": "Published correctness only; hidden-set correctness is unverified"
+  },
+  "valid_for_benchmarking": false,
+  "qualification_note": "Standalone correctness smoke only; research benchmarks require exact frozen-source/suite Store gates."
+}

@@ -1,0 +1,53 @@
+{
+  "atol": 1e-06,
+  "graph_inputs": [
+    "x"
+  ],
+  "graph_outputs": [
+    "out"
+  ],
+  "id": "casts_index",
+  "kernels": [
+    {
+      "arg_order": [
+        "x",
+        "out"
+      ],
+      "args": [
+        {
+          "dtype": "f32",
+          "name": "x",
+          "shape": [
+            2,
+            4
+          ]
+        },
+        {
+          "dtype": "f32",
+          "name": "out",
+          "output": true,
+          "shape": [
+            2,
+            4
+          ]
+        }
+      ],
+      "block": [
+        8,
+        1,
+        1
+      ],
+      "entry": "k_cast_index",
+      "final": true,
+      "grid": [
+        1,
+        1,
+        1
+      ],
+      "node": "out",
+      "smem_bytes": 0,
+      "zero_outputs": []
+    }
+  ],
+  "rtol": 1e-05
+}

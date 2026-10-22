@@ -1,0 +1,45 @@
+{
+  "inputs": [
+    "x"
+  ],
+  "nodes": {
+    "out": {
+      "inputs": [],
+      "op": "KernelOp",
+      "op_fields": {
+        "body": [
+          "Tile(axes=(Axis(name='tid', extent=Dim(32), window=None),), body=(Smem(name='scratch', extents=(128,), dtype='float', align=16), CpAsyncCopy(smem='scratch', smem_index=(BinaryExpr(op='*', left=Var(name='tid'), right=Literal(value=4, dtype='int')),), src='x', src_index=(BinaryExpr(op='+', left=BinaryExpr(op='*', left=Var(name='tid'), right=Literal(value=4, dtype='int')), right=Literal(value=0, dtype='int')),), nbytes=16, swizzle='NONE', lane_index=None, lane_rows=0), CpAsyncCommit(), CpAsyncWait(group=0), Sync(barrier_id=0, count=None, warp=False), Load(names=('a',), input='scratch', index=(BinaryExpr(op='*', left=Var(name='tid'), right=Literal(value=4, dtype='int')),), dtype=DataType(name='f32', np=dtype('float32'), nbytes=4)), Load(names=('b',), input='scratch', index=(BinaryExpr(op='+', left=BinaryExpr(op='*', left=Var(name='tid'), right=Literal(value=4, dtype='int')), right=Literal(value=1, dtype='int')),), dtype=DataType(name='f32', np=dtype('float32'), nbytes=4)), Load(names=('c',), input='scratch', index=(BinaryExpr(op='+', left=BinaryExpr(op='*', left=Var(name='tid'), right=Literal(value=4, dtype='int')), right=Literal(value=2, dtype='int')),), dtype=DataType(name='f32', np=dtype('float32'), nbytes=4)), Load(names=('d',), input='scratch', index=(BinaryExpr(op='+', left=BinaryExpr(op='*', left=Var(name='tid'), right=Literal(value=4, dtype='int')), right=Literal(value=3, dtype='int')),), dtype=DataType(name='f32', np=dtype('float32'), nbytes=4)), Assign(name='ab', op=ElementwiseImpl('add'), args=('a', 'b'), dtype=DataType(name='f32', np=dtype('float32'), nbytes=4)), Assign(name='cd', op=ElementwiseImpl('add'), args=('c', 'd'), dtype=DataType(name='f32', np=dtype('float32'), nbytes=4)), Assign(name='sum', op=ElementwiseImpl('add'), args=('ab', 'cd'), dtype=DataType(name='f32', np=dtype('float32'), nbytes=4)), Write(output='out', index=(Var(name='tid'),), values=('sum',), value_dtype=DataType(name='f32', np=dtype('float32'), nbytes=4), atomic=False, swizzle='NONE')), block_threads=32, aux_threads=0, raster_axes=None, raster_group=None, raster_orient='m')"
+        ],
+        "name": "k_vec",
+        "serial": [],
+        "zero_delegated": []
+      },
+      "outputs": [
+        {
+          "dtype": "f32",
+          "name": "out",
+          "shape": [
+            32
+          ]
+        }
+      ]
+    },
+    "x": {
+      "inputs": [],
+      "op": "InputOp",
+      "op_fields": {},
+      "outputs": [
+        {
+          "dtype": "f32",
+          "name": "x",
+          "shape": [
+            129
+          ]
+        }
+      ]
+    }
+  },
+  "outputs": [
+    "out"
+  ]
+}

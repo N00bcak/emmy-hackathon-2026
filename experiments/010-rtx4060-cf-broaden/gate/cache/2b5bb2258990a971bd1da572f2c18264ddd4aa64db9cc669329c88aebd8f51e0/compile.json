@@ -1,0 +1,1 @@
+{"ok": true, "cubin_id": "2b5bb2258990a971bd1da572f2c18264ddd4aa64db9cc669329c88aebd8f51e0", "bytes": 5280, "entry_points": ["k_sum_1_reduce"], "registers": {"k_sum_1_reduce": 16}}

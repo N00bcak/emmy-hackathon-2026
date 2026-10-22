@@ -1,0 +1,19 @@
+{
+  "mode": "timing",
+  "case": {
+    "id": "m02_matmul_rect",
+    "variant": "hoist-v2",
+    "case_dir": "/home/ada/Projects/emmy-hackathon-2026/experiments/006-optimizer-hoist/prepared/m02_matmul_rect",
+    "cubins": [
+      "/home/ada/Projects/emmy-hackathon-2026/experiments/006-optimizer-hoist/prepared/m02_matmul_rect/baseline-k_matmul.cubin"
+    ],
+    "baseline_cubins": [
+      "/home/ada/Projects/emmy-hackathon-2026/experiments/006-optimizer-hoist/prepared/m02_matmul_rect/baseline-k_matmul.cubin"
+    ]
+  },
+  "pairs": 16,
+  "warmup": 3,
+  "seed": 779,
+  "burst_id": "aa-baseline-m02_matmul_rect",
+  "out": "/home/ada/Projects/emmy-hackathon-2026/experiments/006-optimizer-hoist/timing-aa-m02_matmul_rect.json"
+}

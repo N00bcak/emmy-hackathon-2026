@@ -1,0 +1,320 @@
+{
+  "cases": [
+    {
+      "artifacts": [
+        {
+          "cubin": "k_scalar.ir.cubin",
+          "cubin_sha256": "cd9609a6e307cb31472e9b9cdfa378f66918ecda9d6b9b0e08eadf5dd89383ee",
+          "ir": "k_scalar.ir.json",
+          "ptx": "k_scalar.ir.ptx",
+          "ptx_sha256": "ec4150be88e9f25af21bd939a485f4bbfed38797d6d57b041be434f8e1dc42af"
+        }
+      ],
+      "description": "scalar-by-value ABI, non-unit tail, and extra-CTA masking",
+      "files": {
+        "expected.npz": "8d3109988aff047f0962d623a32a38b8cb553847bcbd8b21f12e7cb475a3498e",
+        "inputs.npz": "697993879541112d5a2ba477c2bc46f8c78c01c91397bb16079483f6ec16db42",
+        "k_scalar.ir.json": "ea6f5f7ae96451255a9d2296ff7b651bdab37dd2786fc5a61712703beffec162",
+        "meta.json": "5a0509bcb3eba9952ee56dbc4c454ece8fc3683e602755f28a2bf04f7cd336d2"
+      },
+      "ir": "k_scalar.ir.json",
+      "name": "scalar_abi",
+      "source_sha256": "426362eaa4b2a3abbbe75022ba00967f71771a1c9584658bb789a22e06c25ae3"
+    },
+    {
+      "artifacts": [
+        {
+          "cubin": "k_int_copy.ir.cubin",
+          "cubin_sha256": "585010bb3ee8ad966ace7ce3afa6aecd17aa119c6e1d62379950a9df9585c158",
+          "ir": "k_int_copy.ir.json",
+          "ptx": "k_int_copy.ir.ptx",
+          "ptx_sha256": "d96ffd2a8fd0d8a5c0a95ee256aeda0e69b4d838d009ec5e0fb5078e75a909d8"
+        }
+      ],
+      "description": "integer copy and signed 2-D address flattening",
+      "files": {
+        "expected.npz": "62d8312d8a05640708ea01feb6401cd02b6f4b1256c33ecb80af59670b5f6514",
+        "inputs.npz": "36a1907abdd2bcc09e208712db171706566ade8b84e071a5c67ea24977b48e1c",
+        "k_int_copy.ir.json": "6b82bba084890c030de23befc339b94458f71b90cdfd11ba14901be863ab5a86",
+        "meta.json": "92578fdb70177df5c895966f7e8453535b8315c8ac6f755b44c7bd1cac4b440e"
+      },
+      "ir": "k_int_copy.ir.json",
+      "name": "integer_address",
+      "source_sha256": "426362eaa4b2a3abbbe75022ba00967f71771a1c9584658bb789a22e06c25ae3"
+    },
+    {
+      "artifacts": [
+        {
+          "cubin": "k_f64.ir.cubin",
+          "cubin_sha256": "c4adc69678bb6afe3a5e048527899504dcd0c9a15a0b283e1f58f227c0d81c1b",
+          "ir": "k_f64.ir.json",
+          "ptx": "k_f64.ir.ptx",
+          "ptx_sha256": "f1e6f3a6110ac08551fa5f9bb648ed0f71356a4efa2d96af0a7c68867ec374bb"
+        }
+      ],
+      "description": "f64 scalar literal, loads, arithmetic, and stores",
+      "files": {
+        "expected.npz": "c29d1b5f37fd02e1973a0c432c87222f07ceb8dac8d79e19283910ed04cbbad3",
+        "inputs.npz": "f47c2f0ce19496428bc2d382225f321e0e7fc6ae00e418a3e2ded2b31abb4e13",
+        "k_f64.ir.json": "e79ba0ce2d900541f5ed158b7315fb0933c455eb4060b60957cba1cc8a20dddc",
+        "meta.json": "eb4c5798a3449aeeab63bf2a6e2b51446fe7c81804e42f3aebc25e0c8d723ca5"
+      },
+      "ir": "k_f64.ir.json",
+      "name": "f64_values",
+      "source_sha256": "426362eaa4b2a3abbbe75022ba00967f71771a1c9584658bb789a22e06c25ae3"
+    },
+    {
+      "artifacts": [
+        {
+          "cubin": "k_flat.ir.cubin",
+          "cubin_sha256": "14c0a9117eaa64f747a995379f7ab959d7b6cbb41b79720cab121ac34ff79d4d",
+          "ir": "k_flat.ir.json",
+          "ptx": "k_flat.ir.ptx",
+          "ptx_sha256": "1251d4351aecb17c86943bec4d8222f5c791f0da2046142b80094211899c9390"
+        }
+      ],
+      "description": "non-unit 2-D Tile flattening and partial CTA",
+      "files": {
+        "expected.npz": "04745bcd9808082ab56a68b9489be13179ea60d429e813fc79f17c593d4834a4",
+        "inputs.npz": "ca84f59da675ad3b7d253cebc2a6c8e2ae9767996b4342229e6a1cd76ffae631",
+        "k_flat.ir.json": "48abe56b6942719c5087daa3e07dca100ac6a2a51b1f00b4372fdd487286e532",
+        "meta.json": "9a03264706611c0a18e3fe6e056d1cbdae2e4f9cbc05bd2f1fa0ba69dd9c0224"
+      },
+      "ir": "k_flat.ir.json",
+      "name": "flatten_2d",
+      "source_sha256": "426362eaa4b2a3abbbe75022ba00967f71771a1c9584658bb789a22e06c25ae3"
+    },
+    {
+      "artifacts": [
+        {
+          "cubin": "k_max.ir.cubin",
+          "cubin_sha256": "ca6fac06cb696986a618accdc45e05fdbee539945aab9b6309d415a3e36ac9f1",
+          "ir": "k_max.ir.json",
+          "ptx": "k_max.ir.ptx",
+          "ptx_sha256": "79da0907b715cabedff510edda7aaad739507e70d1488c24951faec1f1844800"
+        }
+      ],
+      "description": "non-sum reduction with partial-CTA and extra-CTA masking",
+      "files": {
+        "expected.npz": "e78e660b6a56e5cf4494196178c9ed7df8a7a5332623b57ece69cc5fdad9c662",
+        "inputs.npz": "fb6f65ba1001f1dbd2784c4f5dffe9f67d70a95aef7c23fbcf5601c36acefffb",
+        "k_max.ir.json": "2eb43083809b50aaac86fc951a2c33f714efa646b88b1f51591b8a495037f6f8",
+        "meta.json": "44a985c7338a2f0cab42cdad030ea232d26b2aab252e18f3023b43a86c164a53"
+      },
+      "ir": "k_max.ir.json",
+      "name": "reduction_partial",
+      "source_sha256": "426362eaa4b2a3abbbe75022ba00967f71771a1c9584658bb789a22e06c25ae3"
+    },
+    {
+      "artifacts": [
+        {
+          "cubin": "k_transcendental.ir.cubin",
+          "cubin_sha256": "17ac0c27149b3685bba857ae7aeb676a6fdad84860414ece5d5864c33801ef3d",
+          "ir": "k_transcendental.ir.json",
+          "ptx": "k_transcendental.ir.ptx",
+          "ptx_sha256": "5ac0888345bb29d15992f670d3c57009a9a641c2942640aa3502ceb701ea6c0c"
+        }
+      ],
+      "description": "natural log and tanh",
+      "files": {
+        "expected.npz": "246ba1ad5fb6a02d08794a08f98438268b1ef1b465af3ec1a7b8b9668b7a1476",
+        "inputs.npz": "9cc3e84bb6e3bdbbd86fdbc6e9a97663c4c2fb02572ade8587b6f6cb66cfa8d1",
+        "k_transcendental.ir.json": "500be59a81ea402bd73fbaf584e0b6d13cb951be9ce7b9e2b600a59e117ac22a",
+        "meta.json": "a9ab9db4ce5a31b6b2051a2c6cae16b157e9449480281b1a2eae0b64e5d691f5"
+      },
+      "ir": "k_transcendental.ir.json",
+      "name": "transcendental",
+      "source_sha256": "426362eaa4b2a3abbbe75022ba00967f71771a1c9584658bb789a22e06c25ae3"
+    },
+    {
+      "artifacts": [
+        {
+          "cubin": "k_cast_index.ir.cubin",
+          "cubin_sha256": "6c29a44c7a5b92b13d8d6dfbf2fa7db0c03da0e2bb2f08ca906ed3721be95851",
+          "ir": "k_cast_index.ir.json",
+          "ptx": "k_cast_index.ir.ptx",
+          "ptx_sha256": "12d57c0784044ce8cfc762484d7bb6eac2526321675b816e3da6b5eb6eb7fe5d"
+        }
+      ],
+      "description": "floor division, predicate selection, and typed writes",
+      "files": {
+        "expected.npz": "7f334f9115c18025c1091f9dcf52cca17adee90d91f7e3d0fb8569fd6e9705cf",
+        "inputs.npz": "cdab45a17f2827cf95f57289bab8d69f25cd8b86156776a9ff31614fddf14d05",
+        "k_cast_index.ir.json": "1ef2327f93eaf65d93debd09c2e4fd906fb6b69042833795e7a5984515557f77",
+        "meta.json": "35446817057cb4dcad1a8b20c2e97b60d14384b7f785f5c5aab6f6b6ccefe378"
+      },
+      "ir": "k_cast_index.ir.json",
+      "name": "casts_index",
+      "source_sha256": "426362eaa4b2a3abbbe75022ba00967f71771a1c9584658bb789a22e06c25ae3"
+    },
+    {
+      "artifacts": [
+        {
+          "cubin": "k_convert.ir.cubin",
+          "cubin_sha256": "0f41fe44396ac140203eee4888099755ad3b971486c208cbf8f29e9bbd8d36ee",
+          "ir": "k_convert.ir.json",
+          "ptx": "k_convert.ir.ptx",
+          "ptx_sha256": "8dfe8d6a7a9f38744384d6c0da087beec5e069b85f9f8e76613663359c627f1c"
+        }
+      ],
+      "description": "f32 to f64 conversion at the SSA and write boundaries",
+      "files": {
+        "expected.npz": "02e0e6c12da3bfb0bb132e27f39680139ae086e2af6e6fdfa8c57e03bc64cee9",
+        "inputs.npz": "121ed14142b0fb3b8fffefe6b4ca8f7c2158173c5d96fb338353cb75aa8fcd8e",
+        "k_convert.ir.json": "2b6e148dd5dc0637742e33aeac73280284d4a7c1ff2316673270e80e49c27ddc",
+        "meta.json": "f3343e7ab98f9aaf9fb002f337e5f1b73a9295cac5f330d9b4da3743956d2a5e"
+      },
+      "ir": "k_convert.ir.json",
+      "name": "write_conversion",
+      "source_sha256": "426362eaa4b2a3abbbe75022ba00967f71771a1c9584658bb789a22e06c25ae3"
+    },
+    {
+      "artifacts": [
+        {
+          "cubin": "k_select.ir.cubin",
+          "cubin_sha256": "49c53055c66c4bc426d68d07b5f83e56c192f8ae8145fe2622ec6021aaf6dec6",
+          "ir": "k_select.ir.json",
+          "ptx": "k_select.ir.ptx",
+          "ptx_sha256": "2308f1d350d3fcd27235ee5a28843f7f7056a2d512f396fc8807b12ec8cc988a"
+        }
+      ],
+      "description": "Select catch-all and TernaryExpr predicate",
+      "files": {
+        "expected.npz": "0c631e245288ff5178eb573ca25ede89bad0bfd53776a4b25d0409c2f73ecf1e",
+        "inputs.npz": "d1b894ad90597a9a0bed932a9ea124edb97e6996e83c847ffa2c7d8d80b391d7",
+        "k_select.ir.json": "804ac4368bc8f1ab7b5450aa88038db041d0abebe35561446f693836cc7cd0bc",
+        "meta.json": "f20d8f418836d78b35e9402d69f12d5c0627ed32832d6fd94d36a078fd14bcf9"
+      },
+      "ir": "k_select.ir.json",
+      "name": "select_ternary",
+      "source_sha256": "426362eaa4b2a3abbbe75022ba00967f71771a1c9584658bb789a22e06c25ae3"
+    },
+    {
+      "artifacts": [
+        {
+          "cubin": "k_int_div.ir.cubin",
+          "cubin_sha256": "cf684bae4b524ac213dd244b716c5d2107f192bb69d0b05bca9843d6520872f4",
+          "ir": "k_int_div.ir.json",
+          "ptx": "k_int_div.ir.ptx",
+          "ptx_sha256": "732ff94e777462bec2fab9f1fa9a6d15c9bd912be7e70f80ad9a1f4f24d957df"
+        }
+      ],
+      "description": "signed floor division and floor remainder",
+      "files": {
+        "expected.npz": "3293aa3511d1832bfdc9bf44657d1818cb7f2109248ec694b2b8d5870214c952",
+        "inputs.npz": "4d71923485ac61cceb6bee687e7d17427cae3af79a510ffb959db9b23624fa9e",
+        "k_int_div.ir.json": "16779599633e56f19c6e5b13ddea3928e14130e4261c0767e3199e4c5b550848",
+        "meta.json": "7af9ef1df05def0ac9d0b6996abb3d8ec9025893f1f95326483852615bf2b0b8"
+      },
+      "ir": "k_int_div.ir.json",
+      "name": "integer_division",
+      "source_sha256": "426362eaa4b2a3abbbe75022ba00967f71771a1c9584658bb789a22e06c25ae3"
+    },
+    {
+      "artifacts": [
+        {
+          "cubin": "k_bitcast.ir.cubin",
+          "cubin_sha256": "7411d78959a77a25f74d066ce1b70f22c9c7b585846eeedaa45c09e0ca628a11",
+          "ir": "k_bitcast.ir.json",
+          "ptx": "k_bitcast.ir.ptx",
+          "ptx_sha256": "2b6556e34aeae5fc49d64258444d198e702186e6591f936a38dc6bb7f9db2f67"
+        }
+      ],
+      "description": "same-width bitcast round trip",
+      "files": {
+        "expected.npz": "82ed027247f6adb8456b8050a4de28878326798c6d65c33c8a22c840f8633849",
+        "inputs.npz": "18ce6cc705a4194440cf7b177cddc48e4baf6b482228a11daf7c927a04b6744f",
+        "k_bitcast.ir.json": "b500dca08e21fc2c0eed3d276eadb3ae1ec2c56e21c94713a6daacf549185eac",
+        "meta.json": "3aaa81ea75deba53bca8c03145451e57faf6abc46d37801e2b2ab40bd9f03c08"
+      },
+      "ir": "k_bitcast.ir.json",
+      "name": "bitcast_roundtrip",
+      "source_sha256": "426362eaa4b2a3abbbe75022ba00967f71771a1c9584658bb789a22e06c25ae3"
+    },
+    {
+      "artifacts": [
+        {
+          "cubin": "k_sum.ir.cubin",
+          "cubin_sha256": "bf42d51c518368117cfcc48e1dd39643181bfa1f7323566b921466a8a8044e7a",
+          "ir": "k_sum.ir.json",
+          "ptx": "k_sum.ir.ptx",
+          "ptx_sha256": "cc838eddce7f4386aafa18274c3891166bb560151db11796994c194257aeb48f"
+        }
+      ],
+      "description": "partial-warp shuffle with absent peers",
+      "files": {
+        "expected.npz": "c58e02405b9eeffcdffa10a3da0f383525f01f8ef46accf5823dfc4aacbd056c",
+        "inputs.npz": "8effeaa77da478ccc252d28311d7b8bce29517f4158ed515c2b53d654323fad2",
+        "k_sum.ir.json": "8b3603f29c278bfadc764934320643e5ad5f7692f339b1f4c36ec2fbe9efe6e4",
+        "meta.json": "073be9c85f10b5629df32e3bf859443785166dda2b625661a5b2eec38d71a4d8"
+      },
+      "ir": "k_sum.ir.json",
+      "name": "partial_warp_sum",
+      "source_sha256": "426362eaa4b2a3abbbe75022ba00967f71771a1c9584658bb789a22e06c25ae3"
+    },
+    {
+      "artifacts": [
+        {
+          "cubin": "k_max.ir.cubin",
+          "cubin_sha256": "e97a82364af4c29aae31d8a1edc642fbf4ff2121bbab52f6770a649d39ad973f",
+          "ir": "k_max.ir.json",
+          "ptx": "k_max.ir.ptx",
+          "ptx_sha256": "65e30a9d9520d2905501e5212ad8dda925eef223ac2b97daed4f03a72cd33fa5"
+        }
+      ],
+      "description": "partial-warp shuffle with absent peers",
+      "files": {
+        "expected.npz": "9d3283f6c657c377e185336ad18558ec10cb835270269d36c9ab928b8866bde4",
+        "inputs.npz": "8effeaa77da478ccc252d28311d7b8bce29517f4158ed515c2b53d654323fad2",
+        "k_max.ir.json": "7e7fefbe5ee2452912c4c1b390a1ac75114629b2678f4052adcc9925f95f1096",
+        "meta.json": "16584418ca69a3d6f55c79fe74be1ab5d2312fa70107ff315860ebb786cf01a6"
+      },
+      "ir": "k_max.ir.json",
+      "name": "partial_warp_max",
+      "source_sha256": "426362eaa4b2a3abbbe75022ba00967f71771a1c9584658bb789a22e06c25ae3"
+    },
+    {
+      "artifacts": [
+        {
+          "cubin": "k_vec.ir.cubin",
+          "cubin_sha256": "85aae9a6f348acea58f05b344a4020379d386690c22af9879e1ae09250d381b2",
+          "ir": "k_vec.ir.json",
+          "ptx": "k_vec.ir.ptx",
+          "ptx_sha256": "5ba371fabcac4d00f994f3dc9d17ea417c9b49314834e99f1e4766805189a2ec"
+        }
+      ],
+      "description": "aligned 16-byte vector copy",
+      "files": {
+        "expected.npz": "e76ab1dee6b891a704efb75263b3c70ceab933ea2de047d69c03fbaf47317db4",
+        "inputs.npz": "a324a51c25af47b5db4ca37fb852386ab00c917bf1b4483396154feb69344bbe",
+        "k_vec.ir.json": "378e0072f86463612e9ced23e0e818a6ebca13d864bbbfc6a2f28af48707de9e",
+        "meta.json": "88d3d04b4545c57ed57a64599eb46df05365f466f8c4c896ef048aa956a9e71e"
+      },
+      "ir": "k_vec.ir.json",
+      "name": "vector_copy_aligned",
+      "source_sha256": "426362eaa4b2a3abbbe75022ba00967f71771a1c9584658bb789a22e06c25ae3"
+    },
+    {
+      "artifacts": [
+        {
+          "cubin": "k_vec.ir.cubin",
+          "cubin_sha256": "33af1ee12239876b8f933f06d8a2478ec909752c3dd6b534bcf44e929ed825c4",
+          "ir": "k_vec.ir.json",
+          "ptx": "k_vec.ir.ptx",
+          "ptx_sha256": "c92ffc46c6109cd25bef600133843b49d5938e34840d8980c58cad7588681b9a"
+        }
+      ],
+      "description": "unaligned scalar-copy fallback",
+      "files": {
+        "expected.npz": "e929fb38581337cda40ca3cd1f81fd4c857fff01f8337db01222d2cbf8f8d20d",
+        "inputs.npz": "a324a51c25af47b5db4ca37fb852386ab00c917bf1b4483396154feb69344bbe",
+        "k_vec.ir.json": "4db0bb64a7598e67532228c9afeffbaed75a4bd0ea729c61fc4b71db0aa83490",
+        "meta.json": "2f579b825a5ea5646cb4cdf071199dab1b31e4932412c48471225112b9906262"
+      },
+      "ir": "k_vec.ir.json",
+      "name": "vector_copy_scalar",
+      "source_sha256": "426362eaa4b2a3abbbe75022ba00967f71771a1c9584658bb789a22e06c25ae3"
+    }
+  ],
+  "schema": "emmy-variant-suite-v1"
+}

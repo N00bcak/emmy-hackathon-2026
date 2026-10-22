@@ -1,0 +1,19 @@
+{
+  "mode": "timing",
+  "out": "experiments/011-rtx4060-cf-treehalve/fixed-f87f999a/timing/aa-a01_attention.json",
+  "case": {
+    "id": "a01_attention",
+    "variant": "published",
+    "case_dir": "/home/ada/Projects/emmy-hackathon-2026/experiments/011-rtx4060-cf-treehalve/fixed-f87f999a/timing/prepared-f87f999a/prepared/a01_attention",
+    "cubins": [
+      "/home/ada/Projects/emmy-hackathon-2026/experiments/011-rtx4060-cf-treehalve/fixed-f87f999a/timing/prepared-f87f999a/prepared/a01_attention/candidate-k_matmul_softmax_reduce_b55365.cubin"
+    ],
+    "baseline_cubins": [
+      "/home/ada/Projects/emmy-hackathon-2026/experiments/011-rtx4060-cf-treehalve/fixed-f87f999a/timing/prepared-f87f999a/prepared/a01_attention/candidate-k_matmul_softmax_reduce_b55365.cubin"
+    ]
+  },
+  "pairs": 16,
+  "warmup": 5,
+  "seed": 55001,
+  "burst_id": "011-aa-a01_attention"
+}

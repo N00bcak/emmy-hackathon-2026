@@ -1,0 +1,61 @@
+{
+  "atol": 1e-06,
+  "graph_inputs": [
+    "x"
+  ],
+  "graph_outputs": [
+    "out"
+  ],
+  "id": "flatten_2d",
+  "kernels": [
+    {
+      "arg_order": [
+        "x",
+        "out",
+        "two"
+      ],
+      "args": [
+        {
+          "dtype": "f32",
+          "name": "x",
+          "shape": [
+            4,
+            3
+          ]
+        },
+        {
+          "dtype": "f32",
+          "name": "out",
+          "output": true,
+          "shape": [
+            4,
+            3
+          ]
+        },
+        {
+          "dtype": "f32",
+          "name": "two",
+          "scalar": true,
+          "shape": [],
+          "value": 2.0
+        }
+      ],
+      "block": [
+        32,
+        1,
+        1
+      ],
+      "entry": "k_flat",
+      "final": true,
+      "grid": [
+        1,
+        1,
+        1
+      ],
+      "node": "out",
+      "smem_bytes": 0,
+      "zero_outputs": []
+    }
+  ],
+  "rtol": 1e-05
+}

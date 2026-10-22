@@ -1,0 +1,1 @@
+["/opt/cuda/bin/ptxas", "-arch=sm_89", "-v", "/home/ada/Projects/emmy-hackathon-2026/experiments/004-rtx4060-perf/cache/66c30f659a5ef47ae5c3e6aaef4fdc99a14a161d31ac12b7fc33cc4f7aa5449b/source.ptx", "-o", "/home/ada/Projects/emmy-hackathon-2026/experiments/004-rtx4060-perf/cache/66c30f659a5ef47ae5c3e6aaef4fdc99a14a161d31ac12b7fc33cc4f7aa5449b/module.cubin"]

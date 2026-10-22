@@ -1,0 +1,1 @@
+{"ok": true, "cubin_id": "444b9ecf805584d47dd9944e5ae431a8067acbf245bc6e93cab2d9636fe5cf3a", "bytes": 6624, "entry_points": ["k_matmul"], "registers": {"k_matmul": 40}}

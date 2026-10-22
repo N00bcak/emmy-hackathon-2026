@@ -1,0 +1,16 @@
+{
+  "mode": "correctness",
+  "width": 1,
+  "repetitions": 5,
+  "out": "/home/ada/Projects/emmy-hackathon-2026/experiments/015-rtx4060-f16-scalar-math/sanitizer/results/m02-result.json",
+  "cases": [
+    {
+      "id": "m02-6db2dad4",
+      "variant": "sanitizer",
+      "case_dir": "/home/ada/Projects/emmy-hackathon-2026/experiments/015-rtx4060-f16-scalar-math/sanitizer/prepared/m02",
+      "cubins": [
+        "/home/ada/Projects/emmy-hackathon-2026/experiments/015-rtx4060-f16-scalar-math/sanitizer/prepared/m02/k_matmul.ir.cubin"
+      ]
+    }
+  ]
+}

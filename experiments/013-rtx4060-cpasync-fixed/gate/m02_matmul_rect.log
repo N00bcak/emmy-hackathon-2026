@@ -1,0 +1,3 @@
+[k_matmul] 40 registers
+[k_matmul] FAIL  matmul: max abs err 8.773e+01 (tolerance rtol=0.001 atol=0.001)
+    the parameters must be in meta.json's arg_order: x1, x0, matmul

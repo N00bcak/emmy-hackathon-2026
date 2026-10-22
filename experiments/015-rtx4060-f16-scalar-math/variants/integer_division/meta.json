@@ -1,0 +1,51 @@
+{
+  "atol": 0.0,
+  "graph_inputs": [
+    "x"
+  ],
+  "graph_outputs": [
+    "out"
+  ],
+  "id": "integer_division",
+  "kernels": [
+    {
+      "arg_order": [
+        "x",
+        "out"
+      ],
+      "args": [
+        {
+          "dtype": "i32",
+          "name": "x",
+          "shape": [
+            8
+          ]
+        },
+        {
+          "dtype": "i32",
+          "name": "out",
+          "output": true,
+          "shape": [
+            8
+          ]
+        }
+      ],
+      "block": [
+        8,
+        1,
+        1
+      ],
+      "entry": "k_int_div",
+      "final": true,
+      "grid": [
+        1,
+        1,
+        1
+      ],
+      "node": "out",
+      "smem_bytes": 0,
+      "zero_outputs": []
+    }
+  ],
+  "rtol": 0.0
+}

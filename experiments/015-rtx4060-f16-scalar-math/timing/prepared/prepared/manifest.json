@@ -1,0 +1,120 @@
+{
+  "candidate_source": "/home/ada/Projects/emmy-hackathon-2026/compile.py",
+  "candidate_sha256": "6db2dad4944d87ae46194fd4deaf9331327cda21b21adaa434a1db41f515e6ba",
+  "baseline_source": "/home/ada/Projects/emmy-hackathon-2026/experiments/015-rtx4060-f16-scalar-math/timing/baseline-compile.py",
+  "baseline_sha256": "8ebd86a7822c503c14767f46cc93b18590a87fc31195dae7ba9be5e0c82abf78",
+  "arch": "sm_89",
+  "protocol": "cuda-graph-paired-v2",
+  "cases": {
+    "m01_matmul_512": {
+      "case_dir": "/home/ada/Projects/emmy-hackathon-2026/experiments/015-rtx4060-f16-scalar-math/timing/prepared/prepared/m01_matmul_512",
+      "kernels": [
+        {
+          "entry": "k_matmul_2967be",
+          "ir": "/home/ada/Projects/emmy-hackathon-2026/experiments/015-rtx4060-f16-scalar-math/timing/prepared/prepared/m01_matmul_512/k_matmul_2967be.ir.json",
+          "ir_sha256": "ed9ab32776ce0de8b0d1f0367da54c586bf993c964efc01482666247a976dc02",
+          "candidate": {
+            "ptx": "/home/ada/Projects/emmy-hackathon-2026/experiments/015-rtx4060-f16-scalar-math/timing/prepared/prepared/m01_matmul_512/candidate-k_matmul_2967be.ptx",
+            "ptx_sha256": "fbd5960ab42388803ba004a2a8788a6f5ec61046605672be8f8927cb45f7b3eb",
+            "cubin": "/home/ada/Projects/emmy-hackathon-2026/experiments/015-rtx4060-f16-scalar-math/timing/prepared/prepared/m01_matmul_512/candidate-k_matmul_2967be.cubin",
+            "cubin_sha256": "33b4b311af532bf31dadf3f359ed44d1f09d8c67495696500ed300b17d777a2c"
+          },
+          "baseline": {
+            "ptx": "/home/ada/Projects/emmy-hackathon-2026/experiments/015-rtx4060-f16-scalar-math/timing/prepared/prepared/m01_matmul_512/baseline-k_matmul_2967be.ptx",
+            "ptx_sha256": "8fc9e64ab6db8072dcbeee539e4cbdd81cadce65b4d9c5968b2c24acf4bbbd3f",
+            "cubin": "/home/ada/Projects/emmy-hackathon-2026/experiments/015-rtx4060-f16-scalar-math/timing/prepared/prepared/m01_matmul_512/baseline-k_matmul_2967be.cubin",
+            "cubin_sha256": "1e9a55ed7ee040407c856a38dd883d5538af892d07453b3116a35143222090c3"
+          }
+        }
+      ]
+    },
+    "m02_matmul_rect": {
+      "case_dir": "/home/ada/Projects/emmy-hackathon-2026/experiments/015-rtx4060-f16-scalar-math/timing/prepared/prepared/m02_matmul_rect",
+      "kernels": [
+        {
+          "entry": "k_matmul",
+          "ir": "/home/ada/Projects/emmy-hackathon-2026/experiments/015-rtx4060-f16-scalar-math/timing/prepared/prepared/m02_matmul_rect/k_matmul.ir.json",
+          "ir_sha256": "c47bb47c529e7362c9272784ac21a31f2a5d79546cc11b19beff891278d22206",
+          "candidate": {
+            "ptx": "/home/ada/Projects/emmy-hackathon-2026/experiments/015-rtx4060-f16-scalar-math/timing/prepared/prepared/m02_matmul_rect/candidate-k_matmul.ptx",
+            "ptx_sha256": "3fabbf1e81c3f4ca83574876721d851910b8337a6cbd98d7f38bda9d2e7f5071",
+            "cubin": "/home/ada/Projects/emmy-hackathon-2026/experiments/015-rtx4060-f16-scalar-math/timing/prepared/prepared/m02_matmul_rect/candidate-k_matmul.cubin",
+            "cubin_sha256": "71b39b407c9b96a8a5356cb9c38b48a4743c57e3c248e7b7da1ef3cb4c776872"
+          },
+          "baseline": {
+            "ptx": "/home/ada/Projects/emmy-hackathon-2026/experiments/015-rtx4060-f16-scalar-math/timing/prepared/prepared/m02_matmul_rect/baseline-k_matmul.ptx",
+            "ptx_sha256": "c95f12c674831ffb601419b79821852044ab8df9cd5919cdc7081c0c1df07bae",
+            "cubin": "/home/ada/Projects/emmy-hackathon-2026/experiments/015-rtx4060-f16-scalar-math/timing/prepared/prepared/m02_matmul_rect/baseline-k_matmul.cubin",
+            "cubin_sha256": "fec3e3a95843d2731ed3fd1194bb3b6bd9c415fa0ea93379aef4e3caf8bdbc38"
+          }
+        }
+      ]
+    },
+    "f02_row_softmax": {
+      "case_dir": "/home/ada/Projects/emmy-hackathon-2026/experiments/015-rtx4060-f16-scalar-math/timing/prepared/prepared/f02_row_softmax",
+      "kernels": [
+        {
+          "entry": "k_softmax_05263d",
+          "ir": "/home/ada/Projects/emmy-hackathon-2026/experiments/015-rtx4060-f16-scalar-math/timing/prepared/prepared/f02_row_softmax/k_softmax_05263d.ir.json",
+          "ir_sha256": "d48b030e9d9a765aa631287f72935bc59f20926f3ccb09dc7f7932106770af03",
+          "candidate": {
+            "ptx": "/home/ada/Projects/emmy-hackathon-2026/experiments/015-rtx4060-f16-scalar-math/timing/prepared/prepared/f02_row_softmax/candidate-k_softmax_05263d.ptx",
+            "ptx_sha256": "0923e49549fcd9e2f00541ca3569bd0f41e8084f2369a8b43df98a46cf60e527",
+            "cubin": "/home/ada/Projects/emmy-hackathon-2026/experiments/015-rtx4060-f16-scalar-math/timing/prepared/prepared/f02_row_softmax/candidate-k_softmax_05263d.cubin",
+            "cubin_sha256": "648ae6f6b23af94abbbcae9409104c26ee14f3eb7f0b4e74bceffcb77984520f"
+          },
+          "baseline": {
+            "ptx": "/home/ada/Projects/emmy-hackathon-2026/experiments/015-rtx4060-f16-scalar-math/timing/prepared/prepared/f02_row_softmax/baseline-k_softmax_05263d.ptx",
+            "ptx_sha256": "77870314573212a51d324d2164e4c7cde9fac9689a03f1a617f800cfbcb95314",
+            "cubin": "/home/ada/Projects/emmy-hackathon-2026/experiments/015-rtx4060-f16-scalar-math/timing/prepared/prepared/f02_row_softmax/baseline-k_softmax_05263d.cubin",
+            "cubin_sha256": "e00246155f6c490d5e507f5fbb57ac17958b57909ed352ac3f372b12ee854922"
+          }
+        }
+      ]
+    },
+    "a01_attention": {
+      "case_dir": "/home/ada/Projects/emmy-hackathon-2026/experiments/015-rtx4060-f16-scalar-math/timing/prepared/prepared/a01_attention",
+      "kernels": [
+        {
+          "entry": "k_matmul_softmax_reduce_b55365",
+          "ir": "/home/ada/Projects/emmy-hackathon-2026/experiments/015-rtx4060-f16-scalar-math/timing/prepared/prepared/a01_attention/k_matmul_softmax_reduce_b55365.ir.json",
+          "ir_sha256": "0a6925795c1b8e108befbdc3300c722ea5a7fb19d2337597eca860e9c36eff9a",
+          "candidate": {
+            "ptx": "/home/ada/Projects/emmy-hackathon-2026/experiments/015-rtx4060-f16-scalar-math/timing/prepared/prepared/a01_attention/candidate-k_matmul_softmax_reduce_b55365.ptx",
+            "ptx_sha256": "5e4fbadbda45c407618aa6d9c3c5eb083bd5b8c21528d3480b28b78060a32696",
+            "cubin": "/home/ada/Projects/emmy-hackathon-2026/experiments/015-rtx4060-f16-scalar-math/timing/prepared/prepared/a01_attention/candidate-k_matmul_softmax_reduce_b55365.cubin",
+            "cubin_sha256": "e2541f55b05bc158be2aa32b9d6d39e05a6f256d1207dc8ec43bdf4a9c73c0bb"
+          },
+          "baseline": {
+            "ptx": "/home/ada/Projects/emmy-hackathon-2026/experiments/015-rtx4060-f16-scalar-math/timing/prepared/prepared/a01_attention/baseline-k_matmul_softmax_reduce_b55365.ptx",
+            "ptx_sha256": "2ffc32c6ea7a120bb3c3e58dbb9063ebe5428befdc503208303934c4773fe7b5",
+            "cubin": "/home/ada/Projects/emmy-hackathon-2026/experiments/015-rtx4060-f16-scalar-math/timing/prepared/prepared/a01_attention/baseline-k_matmul_softmax_reduce_b55365.cubin",
+            "cubin_sha256": "e2541f55b05bc158be2aa32b9d6d39e05a6f256d1207dc8ec43bdf4a9c73c0bb"
+          }
+        }
+      ]
+    },
+    "a02_attention_128": {
+      "case_dir": "/home/ada/Projects/emmy-hackathon-2026/experiments/015-rtx4060-f16-scalar-math/timing/prepared/prepared/a02_attention_128",
+      "kernels": [
+        {
+          "entry": "k_matmul_softmax_reduce_6f0029",
+          "ir": "/home/ada/Projects/emmy-hackathon-2026/experiments/015-rtx4060-f16-scalar-math/timing/prepared/prepared/a02_attention_128/k_matmul_softmax_reduce_6f0029.ir.json",
+          "ir_sha256": "a51792c9e4d920a493054fb2a6986d87766cc1b3717078f8e631a45d1b0bf1dd",
+          "candidate": {
+            "ptx": "/home/ada/Projects/emmy-hackathon-2026/experiments/015-rtx4060-f16-scalar-math/timing/prepared/prepared/a02_attention_128/candidate-k_matmul_softmax_reduce_6f0029.ptx",
+            "ptx_sha256": "9570daac941a6cb092542c4ebf4d16d983b5a891df557c186758678bfa5ccf30",
+            "cubin": "/home/ada/Projects/emmy-hackathon-2026/experiments/015-rtx4060-f16-scalar-math/timing/prepared/prepared/a02_attention_128/candidate-k_matmul_softmax_reduce_6f0029.cubin",
+            "cubin_sha256": "8ace7bf8b89b882a811d6c22963cb7dd99bb05c7d3e98a28c496d513e40545c0"
+          },
+          "baseline": {
+            "ptx": "/home/ada/Projects/emmy-hackathon-2026/experiments/015-rtx4060-f16-scalar-math/timing/prepared/prepared/a02_attention_128/baseline-k_matmul_softmax_reduce_6f0029.ptx",
+            "ptx_sha256": "62b6177cc568eabce1a0cbf9285f15fcb64c8fbb039727dd39d6be82aa4f2ac0",
+            "cubin": "/home/ada/Projects/emmy-hackathon-2026/experiments/015-rtx4060-f16-scalar-math/timing/prepared/prepared/a02_attention_128/baseline-k_matmul_softmax_reduce_6f0029.cubin",
+            "cubin_sha256": "8ace7bf8b89b882a811d6c22963cb7dd99bb05c7d3e98a28c496d513e40545c0"
+          }
+        }
+      ]
+    }
+  }
+}

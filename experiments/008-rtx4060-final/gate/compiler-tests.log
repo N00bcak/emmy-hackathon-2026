@@ -1,0 +1,22 @@
+test_all_published_lower_and_assemble_for_both_targets (tests.test_compiler.CompilerTests.test_all_published_lower_and_assemble_for_both_targets) ... ok
+test_integer_copy_is_a_typed_register_move (tests.test_compiler.CompilerTests.test_integer_copy_is_a_typed_register_move) ... ok
+test_log_lowering_is_natural_log (tests.test_compiler.CompilerTests.test_log_lowering_is_natural_log) ... ok
+test_nested_collective_partial_cta_masks_memory (tests.test_compiler.CompilerTests.test_nested_collective_partial_cta_masks_memory) ... ok
+test_nonfixture_pointwise_tail_and_reordered_abi (tests.test_compiler.CompilerTests.test_nonfixture_pointwise_tail_and_reordered_abi) ... ok
+test_nonfixture_reduction_tail (tests.test_compiler.CompilerTests.test_nonfixture_reduction_tail) ... ok
+test_nonunit_block_and_grid_dimensions_flatten (tests.test_compiler.CompilerTests.test_nonunit_block_and_grid_dimensions_flatten) ... ok
+test_partial_collective_tile_keeps_all_threads_in_barrier (tests.test_compiler.CompilerTests.test_partial_collective_tile_keeps_all_threads_in_barrier) ... ok
+test_partial_cta_non_sum_reduction_masks_fold (tests.test_compiler.CompilerTests.test_partial_cta_non_sum_reduction_masks_fold) ... ok
+test_reduce_aliases_canonicalize (tests.test_compiler.CompilerTests.test_reduce_aliases_canonicalize) ... ok
+test_reject_invalid_abi (tests.test_compiler.CompilerTests.test_reject_invalid_abi) ... ok
+test_reject_tree_indexed_by_lane (tests.test_compiler.CompilerTests.test_reject_tree_indexed_by_lane) ... ok
+test_scalar_by_value_argument_binds_as_ssa (tests.test_compiler.CompilerTests.test_scalar_by_value_argument_binds_as_ssa) ... ok
+test_unaligned_copy_index_stays_scalar (tests.test_compiler.CompilerTests.test_unaligned_copy_index_stays_scalar) ... ok
+test_unsupported_errors_do_not_emit_partial_ptx (tests.test_compiler.CompilerTests.test_unsupported_errors_do_not_emit_partial_ptx) ... ok
+test_vector_copy_has_runtime_fallback_and_scalar_negative (tests.test_compiler.CompilerTests.test_vector_copy_has_runtime_fallback_and_scalar_negative) ... ok
+test_write_uses_output_width_and_converts_value_dtype (tests.test_compiler.CompilerTests.test_write_uses_output_width_and_converts_value_dtype) ... ok
+
+----------------------------------------------------------------------
+Ran 17 tests in 3.897s
+
+OK

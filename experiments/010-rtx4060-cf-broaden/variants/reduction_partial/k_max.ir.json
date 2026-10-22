@@ -1,0 +1,43 @@
+{
+  "inputs": [
+    "x"
+  ],
+  "nodes": {
+    "out": {
+      "inputs": [],
+      "op": "KernelOp",
+      "op_fields": {
+        "body": [
+          "Tile(axes=(Axis(name='co', extent=Dim(24), window=None),), body=(StridedLoop(axis=Axis(name='k', extent=Dim(127), window=None), start=Var(name='co'), step=Literal(value=24, dtype='int'), body=(Load(names=('v',), input='x', index=(Var(name='k'),), dtype=DataType(name='f32', np=dtype('float32'), nbytes=4)), Accum(name='best', value='v', op=ElementwiseImpl('maximum'), dtype=DataType(name='f32', np=dtype('float32'), nbytes=4), axes=('k',), base=None)), unroll=False, end=None, seed=True), WarpShuffle(state=('best',), state_b=('other',), combine_states=(Assign(name='best', op=ElementwiseImpl('maximum'), args=('best', 'other'), dtype=DataType(name='f32', np=dtype('float32'), nbytes=4)),), length=32, dtype=DataType(name='f32', np=dtype('float32'), nbytes=4)), Smem(name='best_smem', extents=(1,), dtype='float', align=4), Cond(cond=BinaryExpr(op='==', left=Var(name='lane'), right=Literal(value=0, dtype='int')), body=(Write(output='best_smem', index=(Var(name='warp'),), values=('best',), value_dtype=DataType(name='f32', np=dtype('float32'), nbytes=4), atomic=False, swizzle='NONE'),), else_body=()), Sync(barrier_id=0, count=None, warp=False), TreeHalve(bufs=('best_smem',), state=('best',), state_b=('other',), combine_states=(Assign(name='best', op=ElementwiseImpl('maximum'), args=('best', 'other'), dtype=DataType(name='f32', np=dtype('float32'), nbytes=4)),), length=1, tid_var='warp', dtype=DataType(name='f32', np=dtype('float32'), nbytes=4), barrier_id=0, barrier_count=None, inner=None), Cond(cond=BinaryExpr(op='==', left=Var(name='co'), right=Literal(value=0, dtype='int')), body=(Write(output='out', index=(), values=('best',), value_dtype=DataType(name='f32', np=dtype('float32'), nbytes=4), atomic=False, swizzle='NONE'),), else_body=())), block_threads=32, aux_threads=0, raster_axes=None, raster_group=None, raster_orient='m')"
+        ],
+        "name": "k_max",
+        "serial": [],
+        "zero_delegated": []
+      },
+      "outputs": [
+        {
+          "dtype": "f32",
+          "name": "out",
+          "shape": []
+        }
+      ]
+    },
+    "x": {
+      "inputs": [],
+      "op": "InputOp",
+      "op_fields": {},
+      "outputs": [
+        {
+          "dtype": "f32",
+          "name": "x",
+          "shape": [
+            127
+          ]
+        }
+      ]
+    }
+  },
+  "outputs": [
+    "out"
+  ]
+}

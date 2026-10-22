@@ -1,0 +1,29 @@
+source 3302a99059f58118075181291bab034b7da38e983147db1cad1a5f68c16d7226
+manifest 3302a99059f58118075181291bab034b7da38e983147db1cad1a5f68c16d7226
+{
+  "all_ok": true,
+  "compiler_sha256": "3302a99059f58118075181291bab034b7da38e983147db1cad1a5f68c16d7226",
+  "gpu": {
+    "name": "NVIDIA GeForce RTX 4060 Laptop GPU",
+    "worker_pid": 174135,
+    "context_identity": "174135:94583221128880",
+    "driver_version": 13040,
+    "clock_rate_khz": 1890000,
+    "multiprocessors": 24,
+    "memory_clock_khz": 8001000,
+    "compute_major": 8,
+    "compute_minor": 9,
+    "uuid": "GPU-01c8f1da-9f9f-fa3e-bbe2-0771199ab74a",
+    "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry."
+  },
+  "batches": [
+    {
+      "ok": true,
+      "n": 0
+    },
+    {
+      "ok": true,
+      "n": 0
+    }
+  ]
+}

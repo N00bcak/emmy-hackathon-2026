@@ -1,0 +1,1 @@
+["/opt/cuda/bin/ptxas", "-arch=sm_89", "-v", "/tmp/emmy-gate-1792666798/cache/13fc03f168f34e3ea870323e85a3752a794a2ad97b42a6df5f4998758cadc2a8/source.ptx", "-o", "/tmp/emmy-gate-1792666798/cache/13fc03f168f34e3ea870323e85a3752a794a2ad97b42a6df5f4998758cadc2a8/module.cubin"]

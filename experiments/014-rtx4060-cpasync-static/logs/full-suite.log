@@ -1,0 +1,297 @@
+test_all_published_lower_and_assemble_for_both_targets (test_compiler.CompilerTests.test_all_published_lower_and_assemble_for_both_targets) ... ok
+test_bitcast_preserves_bits_across_dtype (test_compiler.CompilerTests.test_bitcast_preserves_bits_across_dtype) ... ok
+test_cond_definitions_participate_in_hoist_analysis (test_compiler.CompilerTests.test_cond_definitions_participate_in_hoist_analysis) ... ok
+test_cond_false_arm_uses_outer_binding (test_compiler.CompilerTests.test_cond_false_arm_uses_outer_binding) ... ok
+test_cond_ssa_bindings_do_not_leak_to_join (test_compiler.CompilerTests.test_cond_ssa_bindings_do_not_leak_to_join) ... ok
+test_int64_floor_division_uses_64bit_scratch_registers (test_compiler.CompilerTests.test_int64_floor_division_uses_64bit_scratch_registers) ... ok
+test_integer_arithmetic_and_bitwise_are_typed (test_compiler.CompilerTests.test_integer_arithmetic_and_bitwise_are_typed) ... ok
+test_integer_copy_is_a_typed_register_move (test_compiler.CompilerTests.test_integer_copy_is_a_typed_register_move) ... ok
+test_let_rebinding_invalidates_cached_address (test_compiler.CompilerTests.test_let_rebinding_invalidates_cached_address) ... ok
+test_log_lowering_is_natural_log (test_compiler.CompilerTests.test_log_lowering_is_natural_log) ... ok
+test_m01_inner_loop_hoists_invariant_index_division (test_compiler.CompilerTests.test_m01_inner_loop_hoists_invariant_index_division)
+m01's loop-invariant index quotient and remainder are not duplicated. ... ok
+test_nested_collective_partial_cta_masks_memory (test_compiler.CompilerTests.test_nested_collective_partial_cta_masks_memory) ... ok
+test_nonfixture_pointwise_tail_and_reordered_abi (test_compiler.CompilerTests.test_nonfixture_pointwise_tail_and_reordered_abi) ... ok
+test_nonfixture_reduction_tail (test_compiler.CompilerTests.test_nonfixture_reduction_tail) ... ok
+test_nonunit_block_and_grid_dimensions_flatten (test_compiler.CompilerTests.test_nonunit_block_and_grid_dimensions_flatten) ... ok
+test_numeric_mask_comparison_and_where (test_compiler.CompilerTests.test_numeric_mask_comparison_and_where) ... ok
+test_partial_collective_tile_keeps_all_threads_in_barrier (test_compiler.CompilerTests.test_partial_collective_tile_keeps_all_threads_in_barrier) ... ok
+test_partial_cta_non_sum_reduction_masks_fold (test_compiler.CompilerTests.test_partial_cta_non_sum_reduction_masks_fold) ... ok
+test_reduce_aliases_canonicalize (test_compiler.CompilerTests.test_reduce_aliases_canonicalize) ... ok
+test_reject_invalid_abi (test_compiler.CompilerTests.test_reject_invalid_abi) ... ok
+test_reject_tree_indexed_by_lane (test_compiler.CompilerTests.test_reject_tree_indexed_by_lane) ... ok
+test_residue_rejects_non_multiple_product (test_compiler.CompilerTests.test_residue_rejects_non_multiple_product) ... ok
+test_scalar_by_value_argument_binds_as_ssa (test_compiler.CompilerTests.test_scalar_by_value_argument_binds_as_ssa) ... ok
+test_select_tail_identity_and_warp_barrier (test_compiler.CompilerTests.test_select_tail_identity_and_warp_barrier) ... ok
+test_unaligned_copy_index_stays_scalar (test_compiler.CompilerTests.test_unaligned_copy_index_stays_scalar) ... ok
+test_unsigned_negation_and_absolute_use_valid_ptx (test_compiler.CompilerTests.test_unsigned_negation_and_absolute_use_valid_ptx) ... ok
+test_unsupported_errors_do_not_emit_partial_ptx (test_compiler.CompilerTests.test_unsupported_errors_do_not_emit_partial_ptx) ... ok
+test_vector_copy_has_runtime_fallback_and_scalar_negative (test_compiler.CompilerTests.test_vector_copy_has_runtime_fallback_and_scalar_negative) ... ok
+test_write_uses_output_width_and_converts_value_dtype (test_compiler.CompilerTests.test_write_uses_output_width_and_converts_value_dtype) ... ok
+test_compile_cache_and_failures (test_local_runner.Service.test_compile_cache_and_failures) ... 127.0.0.1 - - [22/Oct/2026 19:33:10] "POST /compile HTTP/1.1" 200 -
+127.0.0.1 - - [22/Oct/2026 19:33:10] "POST /compile HTTP/1.1" 200 -
+127.0.0.1 - - [22/Oct/2026 19:33:10] "POST /compile HTTP/1.1" 200 -
+127.0.0.1 - - [22/Oct/2026 19:33:10] "POST /compile HTTP/1.1" 200 -
+127.0.0.1 - - [22/Oct/2026 19:33:10] "POST /compile HTTP/1.1" 422 -
+/usr/lib/python3.14/tempfile.py:484: ResourceWarning: Implicitly cleaning up <HTTPError 422: 'Unprocessable Content'>
+  _warnings.warn(self.warn_message, ResourceWarning)
+ok
+test_isolated_worker_timeout_and_busy (test_local_runner.Service.test_isolated_worker_timeout_and_busy) ... ok
+test_request_lookup_and_health (test_local_runner.Service.test_request_lookup_and_health) ... 127.0.0.1 - - [22/Oct/2026 19:33:11] "GET /health HTTP/1.1" 200 -
+127.0.0.1 - - [22/Oct/2026 19:33:11] "POST /run HTTP/1.1" 200 -
+127.0.0.1 - - [22/Oct/2026 19:33:11] "POST /run HTTP/1.1" 200 -
+127.0.0.1 - - [22/Oct/2026 19:33:11] "POST /run HTTP/1.1" 422 -
+ok
+test_defaults_and_dimensions (test_local_runner.Validation.test_defaults_and_dimensions) ... ok
+test_existing_metadata (test_local_runner.Validation.test_existing_metadata) ... ok
+test_limits_and_abi (test_local_runner.Validation.test_limits_and_abi) ... ok
+test_seed_and_data (test_local_runner.Validation.test_seed_and_data) ... ok
+test_sum_matches_observed_f32_reduction (test_local_runner.Validation.test_sum_matches_observed_f32_reduction) ... ok
+test_worker_rejects_orphan_before_cuda (test_local_runner.Validation.test_worker_rejects_orphan_before_cuda) ... ok
+test_all_fifteen_distinct_passes_required (test_published.PublishedGateTests.test_all_fifteen_distinct_passes_required) ... ok
+test_failure_and_duplicate_cannot_be_hidden_by_pass (test_published.PublishedGateTests.test_failure_and_duplicate_cannot_be_hidden_by_pass) ... ok
+test_local_client_exit_status_accepted_but_missing_not_defaulted (test_published.PublishedGateTests.test_local_client_exit_status_accepted_but_missing_not_defaulted) ... ok
+test_busy_429_service_and_transport_errors_stop_without_retry (test_research_calibrate.Calibration.test_busy_429_service_and_transport_errors_stop_without_retry) ... ok
+test_cli_requires_explicit_execute_flag_for_network (test_research_calibrate.Calibration.test_cli_requires_explicit_execute_flag_for_network) ... ok
+test_default_17_requests_full_outputs_exact_inputs_and_spacing (test_research_calibrate.Calibration.test_default_17_requests_full_outputs_exact_inputs_and_spacing) ... ok
+test_global_exclusive_lock_and_hard_cap (test_research_calibrate.Calibration.test_global_exclusive_lock_and_hard_cap) ... ok
+test_history_trigger_accumulates_across_runs_and_mechanisms (test_research_calibrate.Calibration.test_history_trigger_accumulates_across_runs_and_mechanisms) ... ok
+test_missing_baseline_all15_gate_never_contacts_endpoint (test_research_calibrate.Calibration.test_missing_baseline_all15_gate_never_contacts_endpoint) ... ok
+test_pipeline_reduces_cases_to_preserve_headroom (test_research_calibrate.Calibration.test_pipeline_reduces_cases_to_preserve_headroom) ... ok
+test_reference_failure_stops_and_retains_response (test_research_calibrate.Calibration.test_reference_failure_stops_and_retains_response) ... ok
+test_spacing_persists_across_failed_run_boundaries (test_research_calibrate.Calibration.test_spacing_persists_across_failed_run_boundaries) ... ok
+test_swapped_arms_and_edited_local_medians_never_contact_endpoint (test_research_calibrate.Calibration.test_swapped_arms_and_edited_local_medians_never_contact_endpoint) ... ok
+test_unverified_baseline_and_swapped_ptx_never_contact_endpoint (test_research_calibrate.Calibration.test_unverified_baseline_and_swapped_ptx_never_contact_endpoint) ... ok
+test_wrong_gpu_stops_after_health (test_research_calibrate.Calibration.test_wrong_gpu_stops_after_health) ... ok
+test_all_families_typed_roundtrip_and_case_validation (test_research_cases.ResearchCaseTests.test_all_families_typed_roundtrip_and_case_validation) ... ok
+test_cooperative_online_softmax_preserves_schedule_and_semantics (test_research_cases.ResearchCaseTests.test_cooperative_online_softmax_preserves_schedule_and_semantics) ... ok
+test_generated_serial_ir_matches_independent_interpretation (test_research_cases.ResearchCaseTests.test_generated_serial_ir_matches_independent_interpretation) ... ok
+test_hand_calculated_generated_references_and_numerical_policies (test_research_cases.ResearchCaseTests.test_hand_calculated_generated_references_and_numerical_policies) ... ok
+test_import_preserves_published_contract_and_expected (test_research_cases.ResearchCaseTests.test_import_preserves_published_contract_and_expected) ... ok
+test_original_five_gap_references_match_direct_equations (test_research_cases.ResearchCaseTests.test_original_five_gap_references_match_direct_equations) ... ok
+test_pointwise_operation_width_tail_and_domain_semantics (test_research_cases.ResearchCaseTests.test_pointwise_operation_width_tail_and_domain_semantics) ... ok
+test_reproducible_semantics_inputs_and_references (test_research_cases.ResearchCaseTests.test_reproducible_semantics_inputs_and_references) ... ok
+test_softmax_domain_properties_and_shift_invariance (test_research_cases.ResearchCaseTests.test_softmax_domain_properties_and_shift_invariance) ... ok
+test_tampering_is_not_a_new_valid_case (test_research_cases.ResearchCaseTests.test_tampering_is_not_a_new_valid_case) ... ok
+test_all15_gate_rejects_missing_failed_or_foreign_source_suite (test_research_control.ResearchStore.test_all15_gate_rejects_missing_failed_or_foreign_source_suite) ... ok
+test_all_five_gaps_keep_coverage_responsibilities_until_closed (test_research_control.ResearchStore.test_all_five_gaps_keep_coverage_responsibilities_until_closed) ... ok
+test_atomic_coverage_requires_sanitizer (test_research_control.ResearchStore.test_atomic_coverage_requires_sanitizer) ... ok
+test_capacity_backpressure_and_source_identity_in_receipts (test_research_control.ResearchStore.test_capacity_backpressure_and_source_identity_in_receipts) ... ok
+test_claims_require_explicit_bounded_run (test_research_control.ResearchStore.test_claims_require_explicit_bounded_run) ... ok
+test_cli_does_not_offer_receipt_issuance (test_research_control.ResearchStore.test_cli_does_not_offer_receipt_issuance) ... ok
+test_concurrent_shared_writes_are_serialized (test_research_control.ResearchStore.test_concurrent_shared_writes_are_serialized) ... ok
+test_coverage_cannot_close_on_unintegrated_candidate (test_research_control.ResearchStore.test_coverage_cannot_close_on_unintegrated_candidate) ... ok
+test_discovery_requires_fresh_opt_in_and_can_stop_without_killing_jobs (test_research_control.ResearchStore.test_discovery_requires_fresh_opt_in_and_can_stop_without_killing_jobs) ... ok
+test_duplicate_check_precedes_candidate_work (test_research_control.ResearchStore.test_duplicate_check_precedes_candidate_work) ... ok
+test_export_requires_shortlist_and_does_not_overwrite_owner_compiler (test_research_control.ResearchStore.test_export_requires_shortlist_and_does_not_overwrite_owner_compiler) ... ok
+test_freeze_then_confirmation_resumes_without_redrawing (test_research_control.ResearchStore.test_freeze_then_confirmation_resumes_without_redrawing) ... ok
+test_gpu_ownership_batch_outcomes_and_recovery (test_research_control.ResearchStore.test_gpu_ownership_batch_outcomes_and_recovery) ... ok
+test_later_failure_revokes_even_an_explicit_older_gate (test_research_control.ResearchStore.test_later_failure_revokes_even_an_explicit_older_gate) ... ok
+test_missing_all15_receipt_cannot_be_waived_as_performance_debt (test_research_control.ResearchStore.test_missing_all15_receipt_cannot_be_waived_as_performance_debt) ... ok
+test_promotion_cannot_omit_previously_closed_coverage (test_research_control.ResearchStore.test_promotion_cannot_omit_previously_closed_coverage) ... ok
+test_promotion_requires_evaluator_evidence_and_isolated_confirmation (test_research_control.ResearchStore.test_promotion_requires_evaluator_evidence_and_isolated_confirmation) ... ok
+test_recorded_contradictions_require_response_before_work (test_research_control.ResearchStore.test_recorded_contradictions_require_response_before_work) ... ok
+test_reject_missing_files_and_object_file_root_symlink (test_research_control.ResearchStore.test_reject_missing_files_and_object_file_root_symlink) ... ok
+test_runtime_paths_require_configuration_and_allow_overrides (test_research_control.ResearchStore.test_runtime_paths_require_configuration_and_allow_overrides) ... ok
+test_sample_state_preserves_bursts_and_excludes_incomplete_blocks (test_research_control.ResearchStore.test_sample_state_preserves_bursts_and_excludes_incomplete_blocks) ... ok
+test_source_replay_preserves_actual_bytes_and_excludes_private (test_research_control.ResearchStore.test_source_replay_preserves_actual_bytes_and_excludes_private) ... ok
+test_source_symlink_and_object_tampering_rejected (test_research_control.ResearchStore.test_source_symlink_and_object_tampering_rejected) ... ok
+test_stale_baseline_cannot_promote (test_research_control.ResearchStore.test_stale_baseline_cannot_promote) ... ok
+test_tampered_retained_evidence_prevents_export (test_research_control.ResearchStore.test_tampered_retained_evidence_prevents_export) ... ok
+test_two_preparation_slots_and_inactive_static_gate (test_research_control.ResearchStore.test_two_preparation_slots_and_inactive_static_gate) ... ok
+test_variant_budget_does_not_prevent_admitted_candidate_finishing (test_research_control.ResearchStore.test_variant_budget_does_not_prevent_admitted_candidate_finishing) ... ok
+test_whole_checkout_or_reference_assets_cannot_enter_compiler_snapshot (test_research_control.ResearchStore.test_whole_checkout_or_reference_assets_cannot_enter_compiler_snapshot) ... ok
+test_workspace_is_plain_separate_and_never_overwritten (test_research_control.ResearchStore.test_workspace_is_plain_separate_and_never_overwritten) ... ok
+test_correctness_gets_a_turn_after_timing_limit_even_with_many_survivors (test_research_control.Scheduling.test_correctness_gets_a_turn_after_timing_limit_even_with_many_survivors) ... ok
+test_preparation_round_robin_avoids_monopolization (test_research_control.Scheduling.test_preparation_round_robin_avoids_monopolization) ... ok
+test_soft_time_cap_yields_at_next_block_boundary (test_research_control.Scheduling.test_soft_time_cap_yields_at_next_block_boundary) ... ok
+test_timing_is_not_starved_by_continuously_refilled_correctness (test_research_control.Scheduling.test_timing_is_not_starved_by_continuously_refilled_correctness) ... ok
+test_guard_failure_quarantines_good_batchmate (test_research_gpu.CaseFixture.test_guard_failure_quarantines_good_batchmate) ... ok
+test_load_exact_inputs_tolerances_and_identity (test_research_gpu.CaseFixture.test_load_exact_inputs_tolerances_and_identity) ... ok
+test_missing_intermediate_producer_rejected (test_research_gpu.CaseFixture.test_missing_intermediate_producer_rejected) ... ok
+test_missing_reference_and_invalid_abi_rejected_before_cuda (test_research_gpu.CaseFixture.test_missing_reference_and_invalid_abi_rejected_before_cuda) ... ok
+test_mutated_input_detected (test_research_gpu.CaseFixture.test_mutated_input_detected) ... ok
+test_pipeline_shares_intermediate_and_checks_every_buffer (test_research_gpu.CaseFixture.test_pipeline_shares_intermediate_and_checks_every_buffer) ... ok
+test_preflight_invalid_job_never_loads_cuda (test_research_gpu.CaseFixture.test_preflight_invalid_job_never_loads_cuda) ... ok
+test_published_singleton_reference_shape_is_normalized (test_research_gpu.CaseFixture.test_published_singleton_reference_shape_is_normalized) ... ok
+test_repeated_launch_resets_positional_abi_and_input_checks (test_research_gpu.CaseFixture.test_repeated_launch_resets_positional_abi_and_input_checks) ... ok
+test_serve_cuda_error_retires_without_processing_next_job (test_research_gpu.CaseFixture.test_serve_cuda_error_retires_without_processing_next_job) ... ok
+test_serve_reuses_context_and_acknowledges_atomic_results (test_research_gpu.CaseFixture.test_serve_reuses_context_and_acknowledges_atomic_results) ... ok
+test_timing_error_keeps_pair_incomplete (test_research_gpu.CaseFixture.test_timing_error_keeps_pair_incomplete) ... ok
+test_timing_pairs_separate_arms_partial_checkpoint_and_offsets (test_research_gpu.CaseFixture.test_timing_pairs_separate_arms_partial_checkpoint_and_offsets) ... ok
+test_full_output_no_nan_equality_or_tolerant_integer_check (test_research_gpu.PureHelpers.test_full_output_no_nan_equality_or_tolerant_integer_check) ... ok
+test_prefix_suffix_and_input_corruption_are_distinguished (test_research_gpu.PureHelpers.test_prefix_suffix_and_input_corruption_are_distinguished) ... ok
+test_quarantine_and_atomic_json (test_research_gpu.PureHelpers.test_quarantine_and_atomic_json) ... ok
+test_reproducible_pair_order_resume (test_research_gpu.PureHelpers.test_reproducible_pair_order_resume) ... ok
+test_all15_debug_confirmation_establishes_gate_without_timing (test_research_pipeline.Pipeline.test_all15_debug_confirmation_establishes_gate_without_timing) ... ok
+test_atomic_screening_runs_sanitizer_before_timing_eligibility (test_research_pipeline.Pipeline.test_atomic_screening_runs_sanitizer_before_timing_eligibility) ... ok
+test_attestation_requires_matching_host_gpu_and_telemetry (test_research_pipeline.Pipeline.test_attestation_requires_matching_host_gpu_and_telemetry) ... ok
+test_budget_near_deadline_never_starts_sample (test_research_pipeline.Pipeline.test_budget_near_deadline_never_starts_sample) ... ok
+test_cached_attestation_rechecks_revoked_gate (test_research_pipeline.Pipeline.test_cached_attestation_rechecks_revoked_gate) ... ok
+test_calibration_binding_comes_from_matching_prepared_arms (test_research_pipeline.Pipeline.test_calibration_binding_comes_from_matching_prepared_arms) ... ok
+test_case_labels_reservations_and_identity (test_research_pipeline.Pipeline.test_case_labels_reservations_and_identity) ... ok
+test_confirmation_debug_subset_cannot_time_or_advance (test_research_pipeline.Pipeline.test_confirmation_debug_subset_cannot_time_or_advance) ... ok
+test_confirmation_full_required_case_set_is_enforced (test_research_pipeline.Pipeline.test_confirmation_full_required_case_set_is_enforced) ... ok
+test_confirmation_pending_until_attested_and_baseline_not_recompiled (test_research_pipeline.Pipeline.test_confirmation_pending_until_attested_and_baseline_not_recompiled) ... ok
+test_confirmation_requires_cpu_preparation_and_does_not_compile_on_gpu (test_research_pipeline.Pipeline.test_confirmation_requires_cpu_preparation_and_does_not_compile_on_gpu) ... ok
+test_confirmation_resumes_complete_case_artifacts_without_redrawing (test_research_pipeline.Pipeline.test_confirmation_resumes_complete_case_artifacts_without_redrawing) ... ok
+test_correctness_disagreement_rechecks_all_batchmates (test_research_pipeline.Pipeline.test_correctness_disagreement_rechecks_all_batchmates) ... ok
+test_coverage_generated_rows_map_all_attention_items (test_research_pipeline.Pipeline.test_coverage_generated_rows_map_all_attention_items) ... ok
+test_default_suite_contains_all15_even_without_claimed_families (test_research_pipeline.Pipeline.test_default_suite_contains_all15_even_without_claimed_families) ... ok
+test_failed_timing_cannot_be_promoted_even_if_correctness_passed (test_research_pipeline.Pipeline.test_failed_timing_cannot_be_promoted_even_if_correctness_passed) ... ok
+test_failed_timing_does_not_reissue_all15_gate (test_research_pipeline.Pipeline.test_failed_timing_does_not_reissue_all15_gate) ... ok
+test_gpu_ack_retirement_and_stale_result_are_not_trusted (test_research_pipeline.Pipeline.test_gpu_ack_retirement_and_stale_result_are_not_trusted) ... ok
+test_incomplete_blocks_excluded_from_summary (test_research_pipeline.Pipeline.test_incomplete_blocks_excluded_from_summary) ... ok
+test_native_runtime_attestation_requires_environment_provenance (test_research_pipeline.Pipeline.test_native_runtime_attestation_requires_environment_provenance) ... ok
+test_noise_scoped_to_run_device_case_set_and_service (test_research_pipeline.Pipeline.test_noise_scoped_to_run_device_case_set_and_service) ... ok
+test_one_case_timing_without_all15_gate_fails_before_cuda_worker (test_research_pipeline.Pipeline.test_one_case_timing_without_all15_gate_fails_before_cuda_worker) ... ok
+test_prepared_cubin_and_case_tampering_rejected (test_research_pipeline.Pipeline.test_prepared_cubin_and_case_tampering_rejected) ... ok
+test_recovery_replays_revocation_when_crash_left_old_gate_valid (test_research_pipeline.Pipeline.test_recovery_replays_revocation_when_crash_left_old_gate_valid) ... ok
+test_required_sanitizer_failure_blocks_promotion (test_research_pipeline.Pipeline.test_required_sanitizer_failure_blocks_promotion) ... ok
+test_resumed_failed_timing_cannot_restore_revoked_gate (test_research_pipeline.Pipeline.test_resumed_failed_timing_cannot_restore_revoked_gate) ... ok
+test_softmax_suite_contains_cooperative_and_serial_shapes (test_research_pipeline.Pipeline.test_softmax_suite_contains_cooperative_and_serial_shapes) ... ok
+test_activation_cannot_be_satisfied_by_unrelated_case (test_research_prepare.PreparationTests.test_activation_cannot_be_satisfied_by_unrelated_case) ... ok
+test_compiler_gets_only_readonly_semantic_inputs (test_research_prepare.PreparationTests.test_compiler_gets_only_readonly_semantic_inputs) ... ERROR
+test_descendants_cannot_escape_process_group (test_research_prepare.PreparationTests.test_descendants_cannot_escape_process_group) ... ERROR
+test_evaluator_references_and_network_are_denied (test_research_prepare.PreparationTests.test_evaluator_references_and_network_are_denied) ... ERROR
+test_gpu_ioctl_is_denied (test_research_prepare.PreparationTests.test_gpu_ioctl_is_denied) ... ERROR
+test_invalid_ptx_output_is_rejected (test_research_prepare.PreparationTests.test_invalid_ptx_output_is_rejected) ... ERROR
+test_real_assembly_cache_targets_and_corruption (test_research_prepare.PreparationTests.test_real_assembly_cache_targets_and_corruption) ... ok
+test_real_baseline_can_deserialize_and_compile_inside_boundary (test_research_prepare.PreparationTests.test_real_baseline_can_deserialize_and_compile_inside_boundary) ... ERROR
+test_resource_bounds_are_advisory_except_architectural_impossibility (test_research_prepare.PreparationTests.test_resource_bounds_are_advisory_except_architectural_impossibility) ... ok
+test_sass_normalization_preserves_semantic_immediates (test_research_prepare.PreparationTests.test_sass_normalization_preserves_semantic_immediates) ... ok
+test_source_symlinks_are_rejected_before_dereference (test_research_prepare.PreparationTests.test_source_symlinks_are_rejected_before_dereference) ... ERROR
+test_static_gate_checks_activation_and_case_identity (test_research_prepare.PreparationTests.test_static_gate_checks_activation_and_case_identity) ... ok
+test_successful_compiler_cannot_leave_running_descendants (test_research_prepare.PreparationTests.test_successful_compiler_cannot_leave_running_descendants) ... ERROR
+test_timeout_kills_owned_descendants (test_research_prepare.PreparationTests.test_timeout_kills_owned_descendants) ... ERROR
+test_full_suite_is_dispatched_in_legal_batches_before_any_timing (test_research_verify.Qualification.test_full_suite_is_dispatched_in_legal_batches_before_any_timing) ... ok
+test_preparation_requires_explicit_compiler_and_uses_selected_root_for_cache (test_research_verify.Qualification.test_preparation_requires_explicit_compiler_and_uses_selected_root_for_cache) ... ok
+
+======================================================================
+ERROR: test_compiler_gets_only_readonly_semantic_inputs (test_research_prepare.PreparationTests.test_compiler_gets_only_readonly_semantic_inputs)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ada/Projects/emmy-hackathon-2026/tests/test_research_prepare.py", line 62, in test_compiler_gets_only_readonly_semantic_inputs
+    result = self.compile()
+  File "/home/ada/Projects/emmy-hackathon-2026/tests/test_research_prepare.py", line 43, in compile
+    return preparation.compile_ir(self.source, self.case, self.ir_name, self.root / "compiled", **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ada/Projects/emmy-hackathon-2026/tools/research_prepare.py", line 101, in compile_ir
+    raise RuntimeError('compile boundary requires Linux effective UID 0 with libseccomp; no insecure fallback')
+RuntimeError: compile boundary requires Linux effective UID 0 with libseccomp; no insecure fallback
+
+======================================================================
+ERROR: test_descendants_cannot_escape_process_group (test_research_prepare.PreparationTests.test_descendants_cannot_escape_process_group)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ada/Projects/emmy-hackathon-2026/tests/test_research_prepare.py", line 144, in test_descendants_cannot_escape_process_group
+    self.assertEqual(self.compile()["exit_code"], 0)
+                     ~~~~~~~~~~~~^^
+  File "/home/ada/Projects/emmy-hackathon-2026/tests/test_research_prepare.py", line 43, in compile
+    return preparation.compile_ir(self.source, self.case, self.ir_name, self.root / "compiled", **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ada/Projects/emmy-hackathon-2026/tools/research_prepare.py", line 101, in compile_ir
+    raise RuntimeError('compile boundary requires Linux effective UID 0 with libseccomp; no insecure fallback')
+RuntimeError: compile boundary requires Linux effective UID 0 with libseccomp; no insecure fallback
+
+======================================================================
+ERROR: test_evaluator_references_and_network_are_denied (test_research_prepare.PreparationTests.test_evaluator_references_and_network_are_denied)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ada/Projects/emmy-hackathon-2026/tests/test_research_prepare.py", line 78, in test_evaluator_references_and_network_are_denied
+    self.assertEqual(self.compile()["exit_code"], 0)
+                     ~~~~~~~~~~~~^^
+  File "/home/ada/Projects/emmy-hackathon-2026/tests/test_research_prepare.py", line 43, in compile
+    return preparation.compile_ir(self.source, self.case, self.ir_name, self.root / "compiled", **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ada/Projects/emmy-hackathon-2026/tools/research_prepare.py", line 101, in compile_ir
+    raise RuntimeError('compile boundary requires Linux effective UID 0 with libseccomp; no insecure fallback')
+RuntimeError: compile boundary requires Linux effective UID 0 with libseccomp; no insecure fallback
+
+======================================================================
+ERROR: test_gpu_ioctl_is_denied (test_research_prepare.PreparationTests.test_gpu_ioctl_is_denied)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ada/Projects/emmy-hackathon-2026/tests/test_research_prepare.py", line 95, in test_gpu_ioctl_is_denied
+    self.assertEqual(self.compile()["exit_code"], 0)
+                     ~~~~~~~~~~~~^^
+  File "/home/ada/Projects/emmy-hackathon-2026/tests/test_research_prepare.py", line 43, in compile
+    return preparation.compile_ir(self.source, self.case, self.ir_name, self.root / "compiled", **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ada/Projects/emmy-hackathon-2026/tools/research_prepare.py", line 101, in compile_ir
+    raise RuntimeError('compile boundary requires Linux effective UID 0 with libseccomp; no insecure fallback')
+RuntimeError: compile boundary requires Linux effective UID 0 with libseccomp; no insecure fallback
+
+======================================================================
+ERROR: test_invalid_ptx_output_is_rejected (test_research_prepare.PreparationTests.test_invalid_ptx_output_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ada/Projects/emmy-hackathon-2026/tests/test_research_prepare.py", line 149, in test_invalid_ptx_output_is_rejected
+    self.compile()
+    ~~~~~~~~~~~~^^
+  File "/home/ada/Projects/emmy-hackathon-2026/tests/test_research_prepare.py", line 43, in compile
+    return preparation.compile_ir(self.source, self.case, self.ir_name, self.root / "compiled", **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ada/Projects/emmy-hackathon-2026/tools/research_prepare.py", line 101, in compile_ir
+    raise RuntimeError('compile boundary requires Linux effective UID 0 with libseccomp; no insecure fallback')
+RuntimeError: compile boundary requires Linux effective UID 0 with libseccomp; no insecure fallback
+
+======================================================================
+ERROR: test_real_baseline_can_deserialize_and_compile_inside_boundary (test_research_prepare.PreparationTests.test_real_baseline_can_deserialize_and_compile_inside_boundary)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ada/Projects/emmy-hackathon-2026/tests/test_research_prepare.py", line 82, in test_real_baseline_can_deserialize_and_compile_inside_boundary
+    result = self.compile()
+  File "/home/ada/Projects/emmy-hackathon-2026/tests/test_research_prepare.py", line 43, in compile
+    return preparation.compile_ir(self.source, self.case, self.ir_name, self.root / "compiled", **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ada/Projects/emmy-hackathon-2026/tools/research_prepare.py", line 101, in compile_ir
+    raise RuntimeError('compile boundary requires Linux effective UID 0 with libseccomp; no insecure fallback')
+RuntimeError: compile boundary requires Linux effective UID 0 with libseccomp; no insecure fallback
+
+======================================================================
+ERROR: test_source_symlinks_are_rejected_before_dereference (test_research_prepare.PreparationTests.test_source_symlinks_are_rejected_before_dereference)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ada/Projects/emmy-hackathon-2026/tests/test_research_prepare.py", line 103, in test_source_symlinks_are_rejected_before_dereference
+    self.compile()
+    ~~~~~~~~~~~~^^
+  File "/home/ada/Projects/emmy-hackathon-2026/tests/test_research_prepare.py", line 43, in compile
+    return preparation.compile_ir(self.source, self.case, self.ir_name, self.root / "compiled", **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ada/Projects/emmy-hackathon-2026/tools/research_prepare.py", line 101, in compile_ir
+    raise RuntimeError('compile boundary requires Linux effective UID 0 with libseccomp; no insecure fallback')
+RuntimeError: compile boundary requires Linux effective UID 0 with libseccomp; no insecure fallback
+
+======================================================================
+ERROR: test_successful_compiler_cannot_leave_running_descendants (test_research_prepare.PreparationTests.test_successful_compiler_cannot_leave_running_descendants)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ada/Projects/emmy-hackathon-2026/tests/test_research_prepare.py", line 124, in test_successful_compiler_cannot_leave_running_descendants
+    self.assertEqual(self.compile()["exit_code"], 0)
+                     ~~~~~~~~~~~~^^
+  File "/home/ada/Projects/emmy-hackathon-2026/tests/test_research_prepare.py", line 43, in compile
+    return preparation.compile_ir(self.source, self.case, self.ir_name, self.root / "compiled", **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ada/Projects/emmy-hackathon-2026/tools/research_prepare.py", line 101, in compile_ir
+    raise RuntimeError('compile boundary requires Linux effective UID 0 with libseccomp; no insecure fallback')
+RuntimeError: compile boundary requires Linux effective UID 0 with libseccomp; no insecure fallback
+
+======================================================================
+ERROR: test_timeout_kills_owned_descendants (test_research_prepare.PreparationTests.test_timeout_kills_owned_descendants)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ada/Projects/emmy-hackathon-2026/tests/test_research_prepare.py", line 113, in test_timeout_kills_owned_descendants
+    self.compile(timeout=0.5)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/ada/Projects/emmy-hackathon-2026/tests/test_research_prepare.py", line 43, in compile
+    return preparation.compile_ir(self.source, self.case, self.ir_name, self.root / "compiled", **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ada/Projects/emmy-hackathon-2026/tools/research_prepare.py", line 101, in compile_ir
+    raise RuntimeError('compile boundary requires Linux effective UID 0 with libseccomp; no insecure fallback')
+RuntimeError: compile boundary requires Linux effective UID 0 with libseccomp; no insecure fallback
+
+----------------------------------------------------------------------
+Ran 156 tests in 12.152s
+
+FAILED (errors=9)

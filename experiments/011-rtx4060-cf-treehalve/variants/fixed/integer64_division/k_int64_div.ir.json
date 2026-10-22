@@ -1,0 +1,45 @@
+{
+  "inputs": [
+    "x"
+  ],
+  "nodes": {
+    "out": {
+      "inputs": [],
+      "op": "KernelOp",
+      "op_fields": {
+        "body": [
+          "Tile(axes=(Axis(name='i', extent=Dim(8), window=None),), body=(Load(names=('v',), input='x', index=(Var(name='i'),), dtype=DataType(name='i64', np=dtype('int64'), nbytes=8)), Let(name='three', value=Literal(value=-3, dtype='int'), dtype=DataType(name='i64', np=dtype('int64'), nbytes=8)), Assign(name='q', op=ElementwiseImpl('floor_divide'), args=('v', 'three'), dtype=DataType(name='i64', np=dtype('int64'), nbytes=8)), Assign(name='r', op=ElementwiseImpl('remainder'), args=('v', 'three'), dtype=DataType(name='i64', np=dtype('int64'), nbytes=8)), Assign(name='sum', op=ElementwiseImpl('add'), args=('q', 'r'), dtype=DataType(name='i64', np=dtype('int64'), nbytes=8)), Write(output='out', index=(Var(name='i'),), values=('sum',), value_dtype=DataType(name='i64', np=dtype('int64'), nbytes=8), atomic=False, swizzle='NONE')), block_threads=8, aux_threads=0, raster_axes=None, raster_group=None, raster_orient='m')"
+        ],
+        "name": "k_int64_div",
+        "serial": [],
+        "zero_delegated": []
+      },
+      "outputs": [
+        {
+          "dtype": "i64",
+          "name": "out",
+          "shape": [
+            8
+          ]
+        }
+      ]
+    },
+    "x": {
+      "inputs": [],
+      "op": "InputOp",
+      "op_fields": {},
+      "outputs": [
+        {
+          "dtype": "i64",
+          "name": "x",
+          "shape": [
+            8
+          ]
+        }
+      ]
+    }
+  },
+  "outputs": [
+    "out"
+  ]
+}

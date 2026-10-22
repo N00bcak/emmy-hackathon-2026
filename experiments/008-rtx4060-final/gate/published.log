@@ -1,0 +1,15 @@
+a01_attention: pass
+a02_attention_128: pass
+f01_rmsnorm: pass
+f02_row_softmax: pass
+f03_l2norm: pass
+m01_matmul_512: pass
+m02_matmul_rect: pass
+p00_scalar_add: pass
+p01_vector_add: pass
+p02_scale_shift: pass
+p03_relu_mul: pass
+r01_array_sum: pass
+r02_big_sum: pass
+r03_mean: pass
+r04_row_sum: pass

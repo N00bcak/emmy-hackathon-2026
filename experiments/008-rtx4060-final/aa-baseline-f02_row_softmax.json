@@ -1,0 +1,652 @@
+{
+  "ok": true,
+  "pairs": [
+    {
+      "pair_index": 0,
+      "burst_id": "aa-baseline-f02_row_softmax",
+      "order": [
+        "candidate",
+        "baseline"
+      ],
+      "samples_us": {
+        "candidate": 19.45599913597107,
+        "baseline": 13.311999849975109
+      },
+      "kernel_samples_us": {
+        "candidate": [
+          19.45599913597107
+        ],
+        "baseline": [
+          13.311999849975109
+        ]
+      },
+      "complete": true,
+      "candidate_over_baseline": 1.4615384131038318
+    },
+    {
+      "pair_index": 1,
+      "burst_id": "aa-baseline-f02_row_softmax",
+      "order": [
+        "baseline",
+        "candidate"
+      ],
+      "samples_us": {
+        "baseline": 12.28800043463707,
+        "candidate": 11.264000087976456
+      },
+      "kernel_samples_us": {
+        "baseline": [
+          12.28800043463707
+        ],
+        "candidate": [
+          11.264000087976456
+        ]
+      },
+      "complete": true,
+      "candidate_over_baseline": 0.9166666414029259
+    },
+    {
+      "pair_index": 2,
+      "burst_id": "aa-baseline-f02_row_softmax",
+      "order": [
+        "candidate",
+        "baseline"
+      ],
+      "samples_us": {
+        "candidate": 11.264000087976456,
+        "baseline": 11.264000087976456
+      },
+      "kernel_samples_us": {
+        "candidate": [
+          11.264000087976456
+        ],
+        "baseline": [
+          11.264000087976456
+        ]
+      },
+      "complete": true,
+      "candidate_over_baseline": 1.0
+    },
+    {
+      "pair_index": 3,
+      "burst_id": "aa-baseline-f02_row_softmax",
+      "order": [
+        "candidate",
+        "baseline"
+      ],
+      "samples_us": {
+        "candidate": 11.264000087976456,
+        "baseline": 11.264000087976456
+      },
+      "kernel_samples_us": {
+        "candidate": [
+          11.264000087976456
+        ],
+        "baseline": [
+          11.264000087976456
+        ]
+      },
+      "complete": true,
+      "candidate_over_baseline": 1.0
+    },
+    {
+      "pair_index": 4,
+      "burst_id": "aa-baseline-f02_row_softmax",
+      "order": [
+        "baseline",
+        "candidate"
+      ],
+      "samples_us": {
+        "baseline": 10.239999741315842,
+        "candidate": 10.239999741315842
+      },
+      "kernel_samples_us": {
+        "baseline": [
+          10.239999741315842
+        ],
+        "candidate": [
+          10.239999741315842
+        ]
+      },
+      "complete": true,
+      "candidate_over_baseline": 1.0
+    },
+    {
+      "pair_index": 5,
+      "burst_id": "aa-baseline-f02_row_softmax",
+      "order": [
+        "baseline",
+        "candidate"
+      ],
+      "samples_us": {
+        "baseline": 10.239999741315842,
+        "candidate": 10.239999741315842
+      },
+      "kernel_samples_us": {
+        "baseline": [
+          10.239999741315842
+        ],
+        "candidate": [
+          10.239999741315842
+        ]
+      },
+      "complete": true,
+      "candidate_over_baseline": 1.0
+    },
+    {
+      "pair_index": 6,
+      "burst_id": "aa-baseline-f02_row_softmax",
+      "order": [
+        "candidate",
+        "baseline"
+      ],
+      "samples_us": {
+        "candidate": 11.264000087976456,
+        "baseline": 11.264000087976456
+      },
+      "kernel_samples_us": {
+        "candidate": [
+          11.264000087976456
+        ],
+        "baseline": [
+          11.264000087976456
+        ]
+      },
+      "complete": true,
+      "candidate_over_baseline": 1.0
+    },
+    {
+      "pair_index": 7,
+      "burst_id": "aa-baseline-f02_row_softmax",
+      "order": [
+        "baseline",
+        "candidate"
+      ],
+      "samples_us": {
+        "baseline": 11.264000087976456,
+        "candidate": 10.239999741315842
+      },
+      "kernel_samples_us": {
+        "baseline": [
+          11.264000087976456
+        ],
+        "candidate": [
+          10.239999741315842
+        ]
+      },
+      "complete": true,
+      "candidate_over_baseline": 0.9090908790249688
+    },
+    {
+      "pair_index": 8,
+      "burst_id": "aa-baseline-f02_row_softmax",
+      "order": [
+        "baseline",
+        "candidate"
+      ],
+      "samples_us": {
+        "baseline": 12.28800043463707,
+        "candidate": 50.36799982190132
+      },
+      "kernel_samples_us": {
+        "baseline": [
+          12.28800043463707
+        ],
+        "candidate": [
+          50.36799982190132
+        ]
+      },
+      "complete": true,
+      "candidate_over_baseline": 4.098958173855969
+    },
+    {
+      "pair_index": 9,
+      "burst_id": "aa-baseline-f02_row_softmax",
+      "order": [
+        "baseline",
+        "candidate"
+      ],
+      "samples_us": {
+        "baseline": 11.264000087976456,
+        "candidate": 12.28800043463707
+      },
+      "kernel_samples_us": {
+        "baseline": [
+          11.264000087976456
+        ],
+        "candidate": [
+          12.28800043463707
+        ]
+      },
+      "complete": true,
+      "candidate_over_baseline": 1.0909091209750312
+    },
+    {
+      "pair_index": 10,
+      "burst_id": "aa-baseline-f02_row_softmax",
+      "order": [
+        "candidate",
+        "baseline"
+      ],
+      "samples_us": {
+        "candidate": 12.28800043463707,
+        "baseline": 11.264000087976456
+      },
+      "kernel_samples_us": {
+        "candidate": [
+          12.28800043463707
+        ],
+        "baseline": [
+          11.264000087976456
+        ]
+      },
+      "complete": true,
+      "candidate_over_baseline": 1.0909091209750312
+    },
+    {
+      "pair_index": 11,
+      "burst_id": "aa-baseline-f02_row_softmax",
+      "order": [
+        "candidate",
+        "baseline"
+      ],
+      "samples_us": {
+        "candidate": 10.239999741315842,
+        "baseline": 9.216000325977802
+      },
+      "kernel_samples_us": {
+        "candidate": [
+          10.239999741315842
+        ],
+        "baseline": [
+          9.216000325977802
+        ]
+      },
+      "complete": true,
+      "candidate_over_baseline": 1.1111110437411356
+    },
+    {
+      "pair_index": 12,
+      "burst_id": "aa-baseline-f02_row_softmax",
+      "order": [
+        "baseline",
+        "candidate"
+      ],
+      "samples_us": {
+        "baseline": 10.239999741315842,
+        "candidate": 11.264000087976456
+      },
+      "kernel_samples_us": {
+        "baseline": [
+          10.239999741315842
+        ],
+        "candidate": [
+          11.264000087976456
+        ]
+      },
+      "complete": true,
+      "candidate_over_baseline": 1.100000036379789
+    },
+    {
+      "pair_index": 13,
+      "burst_id": "aa-baseline-f02_row_softmax",
+      "order": [
+        "candidate",
+        "baseline"
+      ],
+      "samples_us": {
+        "candidate": 9.216000325977802,
+        "baseline": 11.264000087976456
+      },
+      "kernel_samples_us": {
+        "candidate": [
+          9.216000325977802
+        ],
+        "baseline": [
+          11.264000087976456
+        ]
+      },
+      "complete": true,
+      "candidate_over_baseline": 0.8181818407312734
+    },
+    {
+      "pair_index": 14,
+      "burst_id": "aa-baseline-f02_row_softmax",
+      "order": [
+        "baseline",
+        "candidate"
+      ],
+      "samples_us": {
+        "baseline": 10.239999741315842,
+        "candidate": 11.264000087976456
+      },
+      "kernel_samples_us": {
+        "baseline": [
+          10.239999741315842
+        ],
+        "candidate": [
+          11.264000087976456
+        ]
+      },
+      "complete": true,
+      "candidate_over_baseline": 1.100000036379789
+    },
+    {
+      "pair_index": 15,
+      "burst_id": "aa-baseline-f02_row_softmax",
+      "order": [
+        "candidate",
+        "baseline"
+      ],
+      "samples_us": {
+        "candidate": 11.264000087976456,
+        "baseline": 10.239999741315842
+      },
+      "kernel_samples_us": {
+        "candidate": [
+          11.264000087976456
+        ],
+        "baseline": [
+          10.239999741315842
+        ]
+      },
+      "complete": true,
+      "candidate_over_baseline": 1.100000036379789
+    }
+  ],
+  "checks": [
+    {
+      "phase": "warmup",
+      "repetition": 0,
+      "arm": "baseline",
+      "ok": true,
+      "buffers": {
+        "x": {
+          "prefix_ok": true,
+          "suffix_ok": true,
+          "input_ok": true
+        },
+        "softmax": {
+          "prefix_ok": true,
+          "suffix_ok": true,
+          "input_ok": true
+        }
+      },
+      "outputs": {
+        "softmax": {
+          "ok": true,
+          "elements": 16384,
+          "mismatched": 0,
+          "max_abs_error": 7.450580596923828e-09,
+          "rtol": 0.001,
+          "atol": 1e-05
+        }
+      }
+    },
+    {
+      "phase": "warmup",
+      "repetition": 0,
+      "arm": "candidate",
+      "ok": true,
+      "buffers": {
+        "x": {
+          "prefix_ok": true,
+          "suffix_ok": true,
+          "input_ok": true
+        },
+        "softmax": {
+          "prefix_ok": true,
+          "suffix_ok": true,
+          "input_ok": true
+        }
+      },
+      "outputs": {
+        "softmax": {
+          "ok": true,
+          "elements": 16384,
+          "mismatched": 0,
+          "max_abs_error": 7.450580596923828e-09,
+          "rtol": 0.001,
+          "atol": 1e-05
+        }
+      }
+    },
+    {
+      "phase": "warmup",
+      "repetition": 1,
+      "arm": "baseline",
+      "ok": true,
+      "buffers": {
+        "x": {
+          "prefix_ok": true,
+          "suffix_ok": true,
+          "input_ok": true
+        },
+        "softmax": {
+          "prefix_ok": true,
+          "suffix_ok": true,
+          "input_ok": true
+        }
+      },
+      "outputs": {
+        "softmax": {
+          "ok": true,
+          "elements": 16384,
+          "mismatched": 0,
+          "max_abs_error": 7.450580596923828e-09,
+          "rtol": 0.001,
+          "atol": 1e-05
+        }
+      }
+    },
+    {
+      "phase": "warmup",
+      "repetition": 1,
+      "arm": "candidate",
+      "ok": true,
+      "buffers": {
+        "x": {
+          "prefix_ok": true,
+          "suffix_ok": true,
+          "input_ok": true
+        },
+        "softmax": {
+          "prefix_ok": true,
+          "suffix_ok": true,
+          "input_ok": true
+        }
+      },
+      "outputs": {
+        "softmax": {
+          "ok": true,
+          "elements": 16384,
+          "mismatched": 0,
+          "max_abs_error": 7.450580596923828e-09,
+          "rtol": 0.001,
+          "atol": 1e-05
+        }
+      }
+    },
+    {
+      "phase": "warmup",
+      "repetition": 2,
+      "arm": "baseline",
+      "ok": true,
+      "buffers": {
+        "x": {
+          "prefix_ok": true,
+          "suffix_ok": true,
+          "input_ok": true
+        },
+        "softmax": {
+          "prefix_ok": true,
+          "suffix_ok": true,
+          "input_ok": true
+        }
+      },
+      "outputs": {
+        "softmax": {
+          "ok": true,
+          "elements": 16384,
+          "mismatched": 0,
+          "max_abs_error": 7.450580596923828e-09,
+          "rtol": 0.001,
+          "atol": 1e-05
+        }
+      }
+    },
+    {
+      "phase": "warmup",
+      "repetition": 2,
+      "arm": "candidate",
+      "ok": true,
+      "buffers": {
+        "x": {
+          "prefix_ok": true,
+          "suffix_ok": true,
+          "input_ok": true
+        },
+        "softmax": {
+          "prefix_ok": true,
+          "suffix_ok": true,
+          "input_ok": true
+        }
+      },
+      "outputs": {
+        "softmax": {
+          "ok": true,
+          "elements": 16384,
+          "mismatched": 0,
+          "max_abs_error": 7.450580596923828e-09,
+          "rtol": 0.001,
+          "atol": 1e-05
+        }
+      }
+    },
+    {
+      "phase": "after-paired-block",
+      "arm": "candidate",
+      "ok": true,
+      "buffers": {
+        "x": {
+          "prefix_ok": true,
+          "suffix_ok": true,
+          "input_ok": true
+        },
+        "softmax": {
+          "prefix_ok": true,
+          "suffix_ok": true,
+          "input_ok": true
+        }
+      },
+      "outputs": {
+        "softmax": {
+          "ok": true,
+          "elements": 16384,
+          "mismatched": 0,
+          "max_abs_error": 7.450580596923828e-09,
+          "rtol": 0.001,
+          "atol": 1e-05
+        }
+      }
+    },
+    {
+      "phase": "after-paired-block",
+      "arm": "baseline",
+      "ok": true,
+      "buffers": {
+        "x": {
+          "prefix_ok": true,
+          "suffix_ok": true,
+          "input_ok": true
+        },
+        "softmax": {
+          "prefix_ok": true,
+          "suffix_ok": true,
+          "input_ok": true
+        }
+      },
+      "outputs": {
+        "softmax": {
+          "ok": true,
+          "elements": 16384,
+          "mismatched": 0,
+          "max_abs_error": 7.450580596923828e-09,
+          "rtol": 0.001,
+          "atol": 1e-05
+        }
+      }
+    }
+  ],
+  "burst_id": "aa-baseline-f02_row_softmax",
+  "pair_offset": 0,
+  "completed_pairs": 16,
+  "launch_count": 38,
+  "physical_timed_launches": 32,
+  "timing_protocol": "cuda-graph-paired-v2",
+  "resources": {
+    "candidate": [
+      {
+        "entry": "k_softmax_05263d",
+        "dynamic_shared_bytes": 0,
+        "block_threads": 128,
+        "max_threads_per_block": 1024,
+        "static_shared_bytes": 32,
+        "local_bytes": 0,
+        "registers": 22,
+        "max_active_blocks_per_sm": 12,
+        "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+      }
+    ],
+    "baseline": [
+      {
+        "entry": "k_softmax_05263d",
+        "dynamic_shared_bytes": 0,
+        "block_threads": 128,
+        "max_threads_per_block": 1024,
+        "static_shared_bytes": 32,
+        "local_bytes": 0,
+        "registers": 22,
+        "max_active_blocks_per_sm": 12,
+        "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+      }
+    ]
+  },
+  "timing_method": "Explicit captured CUDA event nodes around each kernel; paired block replayed once; resets/copies excluded.",
+  "validation_scope": "Every warmup and after the complete paired block; use independent repeated correctness checks before timing.",
+  "cache_mode": "warm: same allocations reused; no streaming-throughput claim",
+  "mode": "timing",
+  "device": {
+    "name": "NVIDIA GeForce RTX 4060 Laptop GPU",
+    "worker_pid": 141247,
+    "context_identity": "141247:94657705774112",
+    "driver_version": 13040,
+    "clock_rate_khz": 1890000,
+    "multiprocessors": 24,
+    "memory_clock_khz": 8001000,
+    "compute_major": 8,
+    "compute_minor": 9,
+    "uuid": "GPU-01c8f1da-9f9f-fa3e-bbe2-0771199ab74a",
+    "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry."
+  },
+  "benchmark_qualified": false,
+  "qualification_note": "Raw diagnostics; benchmark validity requires evaluator-issued source/suite all-15 gates.",
+  "phase_seconds": {
+    "case_loading": 0.005805995999253355,
+    "cuda_initialization": 1.2222334609978134,
+    "execution_and_checks": 0.0411430240055779,
+    "total": 1.2691907920016092
+  },
+  "identities": [
+    {
+      "/home/ada/Projects/emmy-hackathon-2026/experiments/008-rtx4060-final/prepared/f02_row_softmax/meta.json": "f299ee066ef686f4b52aa8bc47aa84d315f0df2b381af82f1afc7818a538527c",
+      "/home/ada/Projects/emmy-hackathon-2026/experiments/008-rtx4060-final/prepared/f02_row_softmax/expected.npz": "7e38d188cdc0bbb7afda1e6007318b0174bcdf82eb3855775967e49d4b8ee8ce",
+      "/home/ada/Projects/emmy-hackathon-2026/experiments/008-rtx4060-final/prepared/f02_row_softmax/baseline-k_softmax_05263d.cubin": "e00246155f6c490d5e507f5fbb57ac17958b57909ed352ac3f372b12ee854922"
+    },
+    {
+      "/home/ada/Projects/emmy-hackathon-2026/experiments/008-rtx4060-final/prepared/f02_row_softmax/meta.json": "f299ee066ef686f4b52aa8bc47aa84d315f0df2b381af82f1afc7818a538527c",
+      "/home/ada/Projects/emmy-hackathon-2026/experiments/008-rtx4060-final/prepared/f02_row_softmax/expected.npz": "7e38d188cdc0bbb7afda1e6007318b0174bcdf82eb3855775967e49d4b8ee8ce",
+      "/home/ada/Projects/emmy-hackathon-2026/experiments/008-rtx4060-final/prepared/f02_row_softmax/baseline-k_softmax_05263d.cubin": "e00246155f6c490d5e507f5fbb57ac17958b57909ed352ac3f372b12ee854922"
+    }
+  ]
+}

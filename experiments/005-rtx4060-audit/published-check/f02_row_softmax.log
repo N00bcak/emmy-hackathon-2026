@@ -1,0 +1,2 @@
+[k_softmax_05263d] 22 registers
+[k_softmax_05263d] PASS  softmax: max abs err 7.451e-09  (15.359999611973763 us)

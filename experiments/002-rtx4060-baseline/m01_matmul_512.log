@@ -1,0 +1,3 @@
+[k_matmul_2967be] your compiler failed (exit code 1):
+compile.py: Unsupported: Auxiliary/raster tile scheduling unsupported
+

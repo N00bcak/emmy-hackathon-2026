@@ -1,0 +1,231 @@
+{
+  "ok": true,
+  "batches": [
+    {
+      "batch_id": 0,
+      "membership": [
+        {
+          "id": "m02-3302a990",
+          "variant": "sanitizer"
+        }
+      ],
+      "quarantined": false,
+      "results": [
+        {
+          "id": "m02-3302a990",
+          "variant": "sanitizer",
+          "ok": true,
+          "checks": [
+            {
+              "repetition": 0,
+              "ok": true,
+              "buffers": {
+                "x1": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "x0": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "matmul": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                }
+              },
+              "outputs": {
+                "matmul": {
+                  "ok": true,
+                  "elements": 8192,
+                  "mismatched": 0,
+                  "max_abs_error": 1.1444091796875e-05,
+                  "rtol": 0.001,
+                  "atol": 0.001
+                }
+              }
+            },
+            {
+              "repetition": 1,
+              "ok": true,
+              "buffers": {
+                "x1": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "x0": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "matmul": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                }
+              },
+              "outputs": {
+                "matmul": {
+                  "ok": true,
+                  "elements": 8192,
+                  "mismatched": 0,
+                  "max_abs_error": 1.52587890625e-05,
+                  "rtol": 0.001,
+                  "atol": 0.001
+                }
+              }
+            },
+            {
+              "repetition": 2,
+              "ok": true,
+              "buffers": {
+                "x1": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "x0": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "matmul": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                }
+              },
+              "outputs": {
+                "matmul": {
+                  "ok": true,
+                  "elements": 8192,
+                  "mismatched": 0,
+                  "max_abs_error": 1.1444091796875e-05,
+                  "rtol": 0.001,
+                  "atol": 0.001
+                }
+              }
+            },
+            {
+              "repetition": 3,
+              "ok": true,
+              "buffers": {
+                "x1": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "x0": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "matmul": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                }
+              },
+              "outputs": {
+                "matmul": {
+                  "ok": true,
+                  "elements": 8192,
+                  "mismatched": 0,
+                  "max_abs_error": 1.52587890625e-05,
+                  "rtol": 0.001,
+                  "atol": 0.001
+                }
+              }
+            },
+            {
+              "repetition": 4,
+              "ok": true,
+              "buffers": {
+                "x1": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "x0": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "matmul": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                }
+              },
+              "outputs": {
+                "matmul": {
+                  "ok": true,
+                  "elements": 8192,
+                  "mismatched": 0,
+                  "max_abs_error": 1.1444091796875e-05,
+                  "rtol": 0.001,
+                  "atol": 0.001
+                }
+              }
+            }
+          ],
+          "resources": [
+            {
+              "entry": "k_matmul",
+              "dynamic_shared_bytes": 0,
+              "block_threads": 256,
+              "max_threads_per_block": 1024,
+              "static_shared_bytes": 1536,
+              "local_bytes": 0,
+              "registers": 38,
+              "max_active_blocks_per_sm": 6,
+              "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+            }
+          ],
+          "quarantined": false,
+          "trusted": true
+        }
+      ],
+      "wall_seconds": 0.004566468000120949,
+      "requires_all_batchmates_isolated": false,
+      "isolated": true
+    }
+  ],
+  "launch_count": 5,
+  "width": 1,
+  "repetitions": 5,
+  "promotion_eligible": false,
+  "note": "Concurrent results are screening only; fresh isolated confirmation is mandatory.",
+  "mode": "correctness",
+  "device": {
+    "name": "NVIDIA GeForce RTX 4060 Laptop GPU",
+    "worker_pid": 176011,
+    "context_identity": "176011:94703110453824",
+    "driver_version": 13040,
+    "clock_rate_khz": 1890000,
+    "multiprocessors": 24,
+    "memory_clock_khz": 8001000,
+    "compute_major": 8,
+    "compute_minor": 9,
+    "uuid": "GPU-01c8f1da-9f9f-fa3e-bbe2-0771199ab74a",
+    "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry."
+  },
+  "benchmark_qualified": false,
+  "qualification_note": "Raw diagnostics; benchmark validity requires evaluator-issued source/suite all-15 gates.",
+  "phase_seconds": {
+    "case_loading": 0.015486332995351404,
+    "cuda_initialization": 0.31521924499975285,
+    "execution_and_checks": 0.007059858005959541,
+    "total": 0.33776662399759516
+  },
+  "identities": [
+    {
+      "/home/ada/Projects/emmy-hackathon-2026/experiments/011-rtx4060-cf-treehalve/sanitizer/prepared/m02/meta.json": "a82fd8d7f5933749868035254537b962d3d0140c8bf3e22f7f8a54a289a9c365",
+      "/home/ada/Projects/emmy-hackathon-2026/experiments/011-rtx4060-cf-treehalve/sanitizer/prepared/m02/expected.npz": "b0a5f6719c01fdc55054d983e7d75f880577e4741c63ae39c9fa704507e58134",
+      "/home/ada/Projects/emmy-hackathon-2026/experiments/011-rtx4060-cf-treehalve/sanitizer/prepared/m02/k_matmul.ir.cubin": "6635359f972280a471f2fac6fa848ecd12796f90d0085bb2ed8e08db51d33970"
+    }
+  ]
+}

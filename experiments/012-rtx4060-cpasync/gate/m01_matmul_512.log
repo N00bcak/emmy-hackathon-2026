@@ -1,0 +1,2 @@
+[k_matmul_2967be] 39 registers
+[k_matmul_2967be] launch failed: cuEventSynchronize: CUDA 700: an illegal memory access was encountered
