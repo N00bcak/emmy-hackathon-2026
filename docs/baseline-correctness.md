@@ -1,68 +1,115 @@
 # Correctness-first baseline
 
 The compiler with SHA-256
-`d35da050e41fd3a172e5611b69a48ccabecb2f1d359aa9a4204e5e2685c9bcbf`
-passes all 15 published problems on the local RTX 4090 at their original metadata
-tolerances. [Per-case results](baseline-correctness.json) record the complete
-output counts and maximum observed absolute errors.
-
-Each case used a fresh isolated CUDA worker with guarded buffers, input-integrity
-checks, and complete output comparisons. Fourteen cases ran three repetitions;
-atomic matmul ran ten, with its prescribed output reset before every launch.
-Atomic matmul additionally passed ten repetitions under Compute Sanitizer
-memcheck: exit zero, zero reported errors. Both sm_89 and sm_120 assembly and
-disassembly passed for all 15. GPU execution was sm_89 only. A separate sweep using the unchanged upstream
-submission client also passed all 15 plus a reordered scale/shift ABI check.
+`6db2dad4944d87ae46194fd4deaf9331327cda21b21adaa434a1db41f515e6ba`
+passes all 15 published problems on the local RTX 4060 Laptop GPU (sm_89) at
+their original metadata tolerances. [Per-case results](baseline-correctness.json)
+record the observed errors from that complete gate, and
+[the gate report](../experiments/015-rtx4060-f16-scalar-math/gate/results.json)
+binds the pass to the frozen source hash. This is published-case correctness,
+not a claim about the hidden set.
 
 ## What changed
 
-The emitter walks typed IR rather than recognizing fixture names. It now handles
-multidimensional Tile coordinates, explicit carried state, non-seeding inner
-loops, and reduction updates whose `base` names replace the usual accumulator
-operand. Stable registers preserve carried values across repeated loop bodies.
-Online softmax and attention lower the IR's coupled maximum, denominator, and
-weighted-value updates; `exp` uses scaled PTX `ex2.approx`.
+The emitter walks typed Kernel IR rather than recognizing fixture names. It
+supports scalar-by-value ABI parameters, non-unit 2-D/3-D launch flattening,
+carried state, partial-CTA collective reductions, non-sum reduction identities,
+natural `log`, explicit dtype conversion at SSA and store boundaries, and
+`f16` storage with promoted arithmetic. Index expressions preserve Emmy's
+floor-division/floor-remainder semantics, including negative operands. Shared
+memory respects each declaration's natural dtype alignment as well as its
+requested alignment.
 
-Shared copies use a conservative synchronous load/store implementation while
-retaining the IR's block barriers. Commit/wait markers need no asynchronous
-operation under that lowering. Shared memory comes from typed extents and
-alignment. When metadata provides the dynamic allocation, one external pool
-avoids allocating the same storage twice. This permits the 73,728-byte matmul
-scratch allocation. No renderer, nvcc, or existing compiler lowers the IR.
+Address and integer-expression CSE is versioned and invalidated at joins,
+backedges, and mutable-state updates. Loop-invariant scalar index expressions
+used more than once are computed in the loop preheader. A regression test guards
+the m01 staging quotient/remainder; an attempted extension that hoisted whole
+address chains was rejected because it regressed attention. Shared transport
+has a vectorized f32 path only when the slab is 16-byte aligned and the index
+residue is proven; it performs a runtime address check and falls back to scalar
+copies otherwise. All publish-facing arithmetic and copies retain a generic
+typed fallback.
 
-Descriptive windows are accepted; unsupported bounded windows and unproven raster
-layouts fail explicitly. Shuffle participation uses the active mask. Scalarized
-vector accesses, synchronous transport, and simple code emission favor a readable
-correct baseline rather than high throughput. Multi-kernel graphs select entries
-using their filename and metadata, preserving the host's prescribed stage order.
+The `015` increment also adds typed `f16` loads/stores and shared-memory
+carriers, `f16` to/from `f32`, `f64`, and integer conversion, and the scalar
+math ops `sin`, `cos`, `tan`, `pow`, `sign`, `erf`, `gelu`, and `gelu_tanh`.
+The correctness gate and generated variants cover those paths at the hash above.
 
-## Evidence and limits
+## Verification
 
-The full source, exact inputs/references, IR/meta, both-target PTX/cubin/SASS,
-commands, tool versions, admission telemetry, and per-launch checks are retained
-in the original private artifact store. Paths in the JSON summary are relative
-to that artifact root; they do not prescribe a storage backend for other users.
-Earlier failed compiler versions and diagnostics remain there too.
+- The complete 15-case gate ran with the unchanged upstream `submit.py` client
+  against the admitted local runner (`sm_89`, RTX 4060). All 15 cases exited
+  zero with `all15_passed: true`, `missing: []`, and `failed: []`. A separate
+  reordered-ABI probe also passed.
+- The compiler's 31 local tests pass, including two-target assembly, partial-CTA
+  masking, scalar ABI, integer copy, natural log, reduction aliases, vector-copy
+  emission/runtime fallback, an unaligned-index case, `f16` storage/promotion,
+  the scalar-math lowering, and the m01 invariant-index CSE regression. The
+  tests below assert emitted instructions, not bit-exact numerical equivalence
+  for every approximation or NaN/signed-zero edge case.
+- The full repository suite ran 158 tests: 149 passed and nine preparation tests
+  errored in this non-root environment because the restricted compile boundary
+  requires effective UID 0 and libseccomp. Those errors occur before any
+  compiler invocation.
+- [Typed variants](../experiments/015-rtx4060-f16-scalar-math/variants2/gpu-results.json)
+  ran 18 generated cases in isolated batches with five repetitions each; all
+  checks and guard buffers passed.
+- Paired CUDA-event measurements against the frozen pre-CSE compiler
+  (`8ebd86a...`) used 16 pairs per case at unchanged launch metadata. The `015`
+  medians were: `m01_matmul_512` 517.120 vs 1056.896 us (ratio 0.4893),
+  `m02_matmul_rect` 10.240 vs 10.384 us (0.9831), `a01_attention` 236.544 vs
+  235.520 us (1.0043), `a02_attention_128` 112.704 vs 112.640 us (1.0000), and
+  `f02_row_softmax` 4.096 us for both (1.0000). Only `m01` is a clear
+  improvement; `m02` moved from 0.9453 in `014` to 0.9831 here for the same
+  cubin pair, so it is not claimed as a stable win. The remaining cases are
+  neutral within measurement resolution. These are indicative local paired
+  diagnostics, not an evaluator-issued performance qualification. Matching
+  16-pair A/A controls give `1.0000` for `m01`, `m02`, and `f02`; the attention
+  controls measure `1.0041` and `1.0045`, matching their candidate ratios. The
+  controls and exact per-pair artifacts are in
+  [the `015` experiment directory](../experiments/015-rtx4060-f16-scalar-math/).
+- The rejected full-address-hoist prototype regressed `a01_attention` to
+  `1.474x` the baseline; it was not promoted and is retained separately under
+  `experiments/006-optimizer-hoist/`.
+- Compute Sanitizer memcheck passed `m02_matmul_rect` and an independently
+  generated typed atomic-matmul case (`7x5x9`) for the `015` hash, with five
+  isolated repetitions each, zero reported sanitizer errors, and all output and
+  guard checks passing. Both cubins are byte-identical to the earlier `014`
+  sanitizer artifacts, so this is a fresh receipt for the same machine code.
 
-Published correctness is the minimum gate for future evaluation. It does not
-prove hidden-set correctness, general support for every legal schedule, absence
-of every race, or RTX 5090 performance. No speedup or discovery campaign was part
-of this baseline repair. Research promotion additionally requires frozen-version,
-fresh generated cases and source-bound evidence through the research tools.
+The `015` manifests and `sha256.txt` retain cubin hashes, but compiled cubins
+are intentionally ignored artifacts and are not committed. They are
+reproducible from the recorded source, exact PTX/cubin/`ptxas` toolchain, and
+commands; a fresh checkout does not contain the binary bytes.
 
-The final infrastructure qualification passed all-15 correctness and atomic
-memcheck before timing, then completed 64 replayed baseline controls, width
-comparisons, guard/quarantine controls and paired timing controls. Width two was
-selected. An earlier oversized batch request is retained as an incomplete harness
-run; its batching was repaired and regression-tested. These controls establish
-infrastructure behavior, not 64 novel compilers or a speedup.
+## Remaining correctness work
 
-The final frozen research suite also passed fresh isolated confirmation on
-**15 published + 32 generated cases** (four per generated family), with host
-telemetry checked afterward. All five backlog entries are closed for this declared
-suite. Generated attention is a three-kernel composition alongside the supplied
-fused anchors; arbitrary hidden fused schedules remain unverified. The baseline
-advanced for correctness with explicit performance debt. All 132 CPU tests passed.
+`TASK.md` marks `*` forms as absent from both open and hidden problems. The
+following are explicit coverage gaps, not verified failures. Only the first two
+groups are within the challenge-contract work queue; starred forms are deferred
+unless a concrete contract-relevant failure requires them.
 
-Setup runs are closed and discovery remains off. The JSON summary links the exact
-source, suite, correctness gate, confirmation receipt and qualification receipt.
+- Contract-relevant gaps: `bitwise_not` and boolean mask forms lack a durable
+  variant; `maximum`/`minimum` NaN and signed-zero semantics need an independent
+  typed reference before changing the current `max`/`min` lowering; and the
+  scalar `erf`/`gelu`/`gelu_tanh` approximations are validated only on the
+  generated variant domain.
+- Capability limits: non-warp `TreeHalve`, general named-barrier forms, shuffle
+  widths above 32 bits, and non-add/integer atomics are unverified or rejected.
+  `TASK.md` does not require every constructible form, so these need a concrete
+  contract-relevant failure before they enter the work queue.
+- Starred constructs, explicitly outside the challenge contract: `bf16`,
+  `CpAsyncCopy` swizzles `B32`/`B64`/`B128`, `raster_group` application,
+  shared atomics, `ZeroPrologue`, TMA, tensor-core fragments, and `wgmma`.
+
+## Limits
+
+This evidence does not establish hidden-set correctness, general support for
+all legal schedules, RTX 5090 behavior, or a comparative speedup on another
+machine. The CSE and `015` results are local RTX 4060 diagnostics rather than an
+evaluator-issued performance qualification. The local runner is an admitted
+research tool, not a hostile kernel sandbox. Tensor-core lowering is deferred;
+the generic typed scalar path remains available. Optimizations stay in the
+typed-IR analysis/emission layer so they do not block a later tensor-core
+recognizer and emitter. The design boundary is documented in
+[tensor-core-plan.md](tensor-core-plan.md).

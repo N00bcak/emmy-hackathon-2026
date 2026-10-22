@@ -1,14 +1,29 @@
 # Emmy compiler workspace
 
 A direct **Kernel IR → PTX** compiler and a local CUDA research system. The
-correctness baseline covers all 15 published problems; verification details and
-limits are recorded in [the baseline report](docs/baseline-correctness.md).
-Hidden-set correctness and RTX 5090 performance remain unverified.
+correctness baseline covers all 15 published problems at the frozen source hash
+`6db2dad4...`; verification details, local timing evidence, and limits are
+recorded in [the baseline report](docs/baseline-correctness.md). Hidden-set
+correctness and RTX 5090 performance remain unverified.
 
 The lowering is ours, using Emmy's typed loader and sibling metadata for ABI and
 launch contracts. It emits PTX targeting sm_89; it does not delegate lowering to
 Emmy's renderer, nvcc, or another compiler. The baseline prioritizes correctness.
-No comparative speedup is claimed.
+On the local sm_89 RTX 4060, a frozen paired comparison shows a clear
+`m01_matmul_512` improvement (median `0.4893x`); `m02_matmul_rect` is small and
+noisy (`0.9831x`, not claimed as stable), and the remaining measured cases are
+neutral within timer resolution. No RTX 5090 or evaluator-issued speed claim is made.
+
+The matmul-first tensor-core design—dataflow recognition, warp-atom lowering,
+three-term TF32 precision evidence, split-K/atomics, and the attention
+follow-on—is recorded in [docs/tensor-core-plan.md](docs/tensor-core-plan.md).
+It is a plan, not an implemented feature.
+
+Optimization proceeds concurrently with scope broadening, but only as
+generality-preserving typed-IR analysis and emission. Every source change still
+requires all 15 published cases to pass before timing, and tensor-core lowering
+will be a separate recognizer/emitter increment rather than a rewrite of the
+generic path.
 
 ```sh
 uv venv --python 3.13

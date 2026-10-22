@@ -1,7 +1,9 @@
 {
-  "source_sha256": "d35da050e41fd3a172e5611b69a48ccabecb2f1d359aa9a4204e5e2685c9bcbf",
-  "source_artifact": "correctness15/source-v4/compile.py",
+  "source_sha256": "6db2dad4944d87ae46194fd4deaf9331327cda21b21adaa434a1db41f515e6ba",
+  "gate_evidence": "experiments/015-rtx4060-f16-scalar-math/gate/results.json",
   "all15_full_output_pass": true,
+  "execution_device": "NVIDIA GeForce RTX 4060 Laptop GPU",
+  "compute_capability": "8.9",
   "dual_target_assembly": {
     "sm_89": 15,
     "sm_120": 15,
@@ -11,136 +13,218 @@
     {
       "problem": "a01_attention",
       "status": "pass",
-      "checked_values_per_launch": 4096,
-      "max_abs_error": 6.556510925292969e-07,
-      "repetitions": 3
+      "max_abs_error": 6.557e-07,
+      "output": "matmul_1"
     },
     {
       "problem": "a02_attention_128",
       "status": "pass",
-      "checked_values_per_launch": 4096,
-      "max_abs_error": 4.470348358154297e-07,
-      "repetitions": 3
+      "max_abs_error": 4.47e-07,
+      "output": "matmul_1"
     },
     {
       "problem": "f01_rmsnorm",
       "status": "pass",
-      "checked_values_per_launch": 65536,
-      "max_abs_error": 1.9073486328125e-06,
-      "repetitions": 3
+      "max_abs_error": 1.907e-06,
+      "output": "mul_1"
     },
     {
       "problem": "f02_row_softmax",
       "status": "pass",
-      "checked_values_per_launch": 16384,
-      "max_abs_error": 7.450580596923828e-09,
-      "repetitions": 3
+      "max_abs_error": 7.451e-09,
+      "output": "softmax"
     },
     {
       "problem": "f03_l2norm",
       "status": "pass",
-      "checked_values_per_launch": 32768,
-      "max_abs_error": 1.4901161193847656e-08,
-      "repetitions": 3
+      "max_abs_error": 1.49e-08,
+      "output": "div"
     },
     {
       "problem": "m01_matmul_512",
       "status": "pass",
-      "checked_values_per_launch": 262144,
-      "max_abs_error": 8.392333984375e-05,
-      "repetitions": 3
+      "max_abs_error": 8.392e-05,
+      "output": "matmul"
     },
     {
       "problem": "m02_matmul_rect",
       "status": "pass",
-      "checked_values_per_launch": 8192,
-      "max_abs_error": 1.52587890625e-05,
-      "repetitions": 10
+      "max_abs_error": 1.144e-05,
+      "output": "matmul"
     },
     {
       "problem": "p00_scalar_add",
       "status": "pass",
-      "checked_values_per_launch": 128,
-      "max_abs_error": 0,
-      "repetitions": 3
+      "max_abs_error": 0.0,
+      "output": "add"
     },
     {
       "problem": "p01_vector_add",
       "status": "pass",
-      "checked_values_per_launch": 1024,
-      "max_abs_error": 0,
-      "repetitions": 3
+      "max_abs_error": 0.0,
+      "output": "add"
     },
     {
       "problem": "p02_scale_shift",
       "status": "pass",
-      "checked_values_per_launch": 4096,
-      "max_abs_error": 0,
-      "repetitions": 3
+      "max_abs_error": 0.0,
+      "output": "add"
     },
     {
       "problem": "p03_relu_mul",
       "status": "pass",
-      "checked_values_per_launch": 2048,
-      "max_abs_error": 0,
-      "repetitions": 3
+      "max_abs_error": 0.0,
+      "output": "mul"
     },
     {
       "problem": "r01_array_sum",
       "status": "pass",
-      "checked_values_per_launch": 1,
-      "max_abs_error": 3.814697265625e-06,
-      "repetitions": 3
+      "max_abs_error": 3.815e-06,
+      "output": "sum_1"
     },
     {
       "problem": "r02_big_sum",
       "status": "pass",
-      "checked_values_per_launch": 1,
-      "max_abs_error": 1.52587890625e-05,
-      "repetitions": 3
+      "max_abs_error": 1.526e-05,
+      "output": "sum_1"
     },
     {
       "problem": "r03_mean",
       "status": "pass",
-      "checked_values_per_launch": 1,
-      "max_abs_error": 9.313225746154785e-10,
-      "repetitions": 3
+      "max_abs_error": 9.313e-10,
+      "output": "mean"
     },
     {
       "problem": "r04_row_sum",
       "status": "pass",
-      "checked_values_per_launch": 64,
-      "max_abs_error": 5.7220458984375e-06,
-      "repetitions": 3
+      "max_abs_error": 5.722e-06,
+      "output": "sum_1"
     }
   ],
   "m02_memcheck": {
     "exit_code": 0,
-    "repetitions": 10,
-    "errors": 0
+    "repetitions": 5,
+    "errors": 0,
+    "tool": "compute-sanitizer memcheck",
+    "historical": false,
+    "evidence": "experiments/015-rtx4060-f16-scalar-math/sanitizer/results/m02-result.json"
   },
-  "artifact_root": "correctness15/validation-v4",
-  "shortlist_status": "GPU-evaluated correctness candidate; owner retains publication decision",
-  "performance": "No speed/discovery campaign or performance claim; copies are conservatively synchronous.",
-  "independent_confirmation": {
-    "published_cases": 15,
-    "fresh_generated_cases": 32,
-    "evaluation_ok": true,
-    "timing_enabled": false,
-    "evaluation_version": "coverage-all15-v3",
-    "source_id": "24bbddb5b5f627910ce3757855a124f94c4f2be78a3d2ca755c93b236e57c446",
-    "suite_id": "38ac421af22b2cee2106537327511b9d034dcabc84022f33483c672b1ebbdf17",
-    "published_gate_id": "c7c9b430aace18dccce302426b534e90814339bc3b2e7ce72a0e14f333bf641a",
-    "evidence_id": "128f5eb7c4a1f39ddd8dd8ac706137e0c28d6d496c138297068d8188e6804521",
-    "scope": "Supplied fused/cooperative anchors plus fresh serial and cooperative softmax schedules; generated attention uses three stages. Hidden fused schedule generalization remains unverified."
+  "generated_atomic_memcheck": {
+    "shape": [
+      7,
+      5,
+      9
+    ],
+    "repetitions": 5,
+    "errors": 0,
+    "historical": false,
+    "evidence": "experiments/015-rtx4060-f16-scalar-math/sanitizer/results/gen-result.json"
   },
-  "infrastructure": {
-    "cpu_tests_passed": 132,
-    "replayed_baseline_controls": 64,
-    "correctness_width": 2,
-    "qualification_evidence_id": "be6535460e9d3e27865454b230d4f9d497c46662cdafe9d6b57c1f1f678d50b1",
-    "discovery_active": false,
-    "hosted_requests_during_implementation": 0,
-    "speedup_claim": false
+  "local_tests": {
+    "compiler_passed": 31,
+    "suite_ran": 158,
+    "suite_passed": 149,
+    "boundary_errors": 9,
+    "boundary_note": "Expected non-root errors: restricted compile boundary requires effective UID 0 and libseccomp."
+  },
+  "performance": {
+    "claim": "Indicative paired local diagnostics only; no 5090 parity or evaluator-issued speed qualifier",
+    "candidate": "6db2dad4944d87ae46194fd4deaf9331327cda21b21adaa434a1db41f515e6ba",
+    "baseline": "8ebd86a7822c503c14767f46cc93b18590a87fc31195dae7ba9be5e0c82abf78",
+    "method": "CUDA event nodes around each kernel, 16 pairs per case, fixed seed and unchanged launch metadata; per-kernel intervals exclude resets/copies",
+    "evidence_directory": "experiments/015-rtx4060-f16-scalar-math",
+    "aa_controls": {
+      "m01_matmul_512": "experiments/015-rtx4060-f16-scalar-math/timing/aa-m01_matmul_512.json",
+      "m02_matmul_rect": "experiments/015-rtx4060-f16-scalar-math/timing/aa-m02_matmul_rect.json",
+      "a01_attention": "experiments/015-rtx4060-f16-scalar-math/timing/aa-a01_attention.json",
+      "a02_attention_128": "experiments/015-rtx4060-f16-scalar-math/timing/aa-a02_attention_128.json",
+      "f02_row_softmax": "experiments/015-rtx4060-f16-scalar-math/timing/aa-f02_row_softmax.json"
+    },
+    "case_median_us": {
+      "m01_matmul_512": {
+        "baseline": 1056.896,
+        "candidate": 517.12,
+        "ratio": 0.4893,
+        "interpretation": "clear improvement",
+        "aa_median": 1.0,
+        "pairs": 16,
+        "aa_pairs": 16
+      },
+      "m02_matmul_rect": {
+        "baseline": 10.384,
+        "candidate": 10.24,
+        "ratio": 0.9831,
+        "interpretation": "small, noisy; not a stable win",
+        "aa_median": 1.0,
+        "pairs": 16,
+        "aa_pairs": 16
+      },
+      "a01_attention": {
+        "baseline": 235.52,
+        "candidate": 236.544,
+        "ratio": 1.0043,
+        "interpretation": "neutral",
+        "aa_median": 1.004081663684217,
+        "pairs": 16,
+        "aa_pairs": 16
+      },
+      "a02_attention_128": {
+        "baseline": 112.64,
+        "candidate": 112.704,
+        "ratio": 1.0,
+        "interpretation": "neutral",
+        "aa_median": 1.0045350462212626,
+        "pairs": 16,
+        "aa_pairs": 16
+      },
+      "f02_row_softmax": {
+        "baseline": 4.096,
+        "candidate": 4.096,
+        "ratio": 1.0,
+        "interpretation": "neutral; timer quantization",
+        "aa_median": 1.0,
+        "pairs": 16,
+        "aa_pairs": 16
+      }
+    },
+    "rejected_prototype": {
+      "name": "full cross-loop address-chain hoisting",
+      "directory": "experiments/006-optimizer-hoist",
+      "a01_candidate_over_baseline": 1.474,
+      "status": "rejected; not in final source"
+    },
+    "evidence_files": {
+      "m01_matmul_512": {
+        "paired": "experiments/015-rtx4060-f16-scalar-math/timing/pair-m01_matmul_512.json",
+        "aa": "experiments/015-rtx4060-f16-scalar-math/timing/aa-m01_matmul_512.json"
+      },
+      "m02_matmul_rect": {
+        "paired": "experiments/015-rtx4060-f16-scalar-math/timing/pair-m02_matmul_rect.json",
+        "aa": "experiments/015-rtx4060-f16-scalar-math/timing/aa-m02_matmul_rect.json"
+      },
+      "a01_attention": {
+        "paired": "experiments/015-rtx4060-f16-scalar-math/timing/pair-a01_attention.json",
+        "aa": "experiments/015-rtx4060-f16-scalar-math/timing/aa-a01_attention.json"
+      },
+      "a02_attention_128": {
+        "paired": "experiments/015-rtx4060-f16-scalar-math/timing/pair-a02_attention_128.json",
+        "aa": "experiments/015-rtx4060-f16-scalar-math/timing/aa-a02_attention_128.json"
+      },
+      "f02_row_softmax": {
+        "paired": "experiments/015-rtx4060-f16-scalar-math/timing/pair-f02_row_softmax.json",
+        "aa": "experiments/015-rtx4060-f16-scalar-math/timing/aa-f02_row_softmax.json"
+      }
+    }
+  },
+  "qualification_note": "Published correctness and local diagnostics bound to hash 6db2dad4; hidden-set correctness, RTX 5090 behavior, and evaluator-issued performance qualification remain unverified.",
+  "compiler_tests": {
+    "passed": 31,
+    "source": "experiments/015-rtx4060-f16-scalar-math/logs/full-suite.log"
+  },
+  "typed_variants": {
+    "cases": 18,
+    "repetitions": 5,
+    "all_ok": true,
+    "evidence": "experiments/015-rtx4060-f16-scalar-math/variants2/gpu-results.json"
   }
 }
