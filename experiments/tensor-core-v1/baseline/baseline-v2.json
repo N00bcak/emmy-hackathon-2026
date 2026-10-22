@@ -1,0 +1,189 @@
+{
+  "compiler_sha256": "6db2dad4944d87ae46194fd4deaf9331327cda21b21adaa434a1db41f515e6ba",
+  "rows": [
+    {
+      "case": "n01-same-buffer",
+      "group": "corpus-v2",
+      "ir": "experiments/tensor-core-v1/corpus-v2/n01-same-buffer/case.ir.json",
+      "ir_sha256": "e6b77ae6f3446bd045575bca27bebd1425eec0556da1f77ec3845425db3b1ddf",
+      "ptx_sha256": "2de7362cc6fa1ff3d5c84fdcdf671f44a11ef4acd8335b308148534755767fcc",
+      "ptx_bytes": 3973
+    },
+    {
+      "case": "n02-nonaffine-gather",
+      "group": "corpus-v2",
+      "ir": "experiments/tensor-core-v1/corpus-v2/n02-nonaffine-gather/case.ir.json",
+      "ir_sha256": "253e7ff0a6ca7ac82881e700e2a61569438835462e1aa140e2448d390575215b",
+      "ptx_sha256": "b94b5df3f7527d66e6e211506c8364b3363c1172b3d47fe41d87004bf5e56af4",
+      "ptx_bytes": 4609
+    },
+    {
+      "case": "n03-unrelated-reduction",
+      "group": "corpus-v2",
+      "ir": "experiments/tensor-core-v1/corpus-v2/n03-unrelated-reduction/case.ir.json",
+      "ir_sha256": "804778855878f13a5c8b23779e9cd4e193fbc256ebc492c845eb5512e3576fec",
+      "ptx_sha256": "02c6a6f1ce22ea418272f689f2e33e9bcd318adb7fa8f4d1a7c96218d141ed1c",
+      "ptx_bytes": 2789
+    },
+    {
+      "case": "n04-unsupported-epilogue",
+      "group": "corpus-v2",
+      "ir": "experiments/tensor-core-v1/corpus-v2/n04-unsupported-epilogue/case.ir.json",
+      "ir_sha256": "979586e4530c96c139d051298a626c5727e4916f34a82ce08fc41aa18b3c871c",
+      "ptx_sha256": "8e9dd1839e23642da961cc6fc7c3d955d5f0bd084dcd54dd6e112bf742c34c58",
+      "ptx_bytes": 3996
+    },
+    {
+      "case": "n05-partial-collective",
+      "group": "corpus-v2",
+      "ir": "experiments/tensor-core-v1/corpus-v2/n05-partial-collective/case.ir.json",
+      "ir_sha256": "338c3a14f43a53ed61061a4b0af9d22a4181d26df344e94b57846c6a0a4af784",
+      "ptx_sha256": "cee44da235455e11bf5861644a6bbd1e4e0d018193a7d928414be9d05d882a4c",
+      "ptx_bytes": 5779
+    },
+    {
+      "case": "n06-split-without-atomics",
+      "group": "corpus-v2",
+      "ir": "experiments/tensor-core-v1/corpus-v2/n06-split-without-atomics/case.ir.json",
+      "ir_sha256": "f3bf198579067afdfe1b034f2142c46f8244e8f215f0aac8f2b3adc0245aba89",
+      "ptx_sha256": "ca6792a58bedf3ce313ef83bc95e1806e539492ddc573395a77f5c5e68622ce4",
+      "ptx_bytes": 4080
+    },
+    {
+      "case": "n07-split-atomic",
+      "group": "corpus-v2",
+      "ir": "experiments/tensor-core-v1/corpus-v2/n07-split-atomic/case.ir.json",
+      "ir_sha256": "cec4677d0d651bb6200aed7a8d2d384b8d2c30275c2d4c3b49e843277e21d81c",
+      "ptx_sha256": "8b3469309f13e557b237aff7994dab9da6e6f001e25a75f77b1c86c471d9b1b4",
+      "ptx_bytes": 4100
+    },
+    {
+      "case": "n08-launch-mismatch",
+      "group": "corpus-v2",
+      "ir": "experiments/tensor-core-v1/corpus-v2/n08-launch-mismatch/case.ir.json",
+      "ir_sha256": "34d6ae032dda3086eb0ec5e28137d17b5cd239c42b2c2104aadd2b6d9a27b75c",
+      "ptx_sha256": "091ebbe7cf5b6e6e20640d5dde6a0accf6d3ab911236c10b4df2e3d8046506d6",
+      "ptx_bytes": 3964
+    },
+    {
+      "case": "n09-tail-partial",
+      "group": "corpus-v2",
+      "ir": "experiments/tensor-core-v1/corpus-v2/n09-tail-partial/case.ir.json",
+      "ir_sha256": "313268cee89463ea56cf3ef4b018c59dad02b077b1367b4afeea8e60d3e181c7",
+      "ptx_sha256": "45799a00104309d5ff72d68928ff9cc7b0ef08d41e368ca2abbddd46559f1d96",
+      "ptx_bytes": 3383
+    },
+    {
+      "case": "p01-direct-16x8",
+      "group": "corpus-v2",
+      "ir": "experiments/tensor-core-v1/corpus-v2/p01-direct-16x8/case.ir.json",
+      "ir_sha256": "35038498fd2bb109c5c2c9535593b413d3d89ea38cb68c3f3ee0b566c60593ca",
+      "ptx_sha256": "461d54731e0c02bfcded8bcc1b4d67e5d1ff652f758a615508ed49d856fc43fd",
+      "ptx_bytes": 3964
+    },
+    {
+      "case": "p02-direct-32x16",
+      "group": "corpus-v2",
+      "ir": "experiments/tensor-core-v1/corpus-v2/p02-direct-32x16/case.ir.json",
+      "ir_sha256": "ce2ce24dbe5676d147fb46701000bda595a1aa629c61fd8574a9446847e31b53",
+      "ptx_sha256": "17114c5fdcad952d68c35468b945bc5bffc1f8ed3770c14a0a28ed88813e3d98",
+      "ptx_bytes": 3974
+    },
+    {
+      "case": "p03-direct-64x32",
+      "group": "corpus-v2",
+      "ir": "experiments/tensor-core-v1/corpus-v2/p03-direct-64x32/case.ir.json",
+      "ir_sha256": "3cebd8d34ad7a2c04bfd07334b292647062256091fd6b28e9305614da7dee283",
+      "ptx_sha256": "798fb49f52ffcd9d4dfce1afa4c00703f219fbaeb63d4276ad28d700d5fe1d48",
+      "ptx_bytes": 3974
+    },
+    {
+      "case": "p04-staged-32x16",
+      "group": "corpus-v2",
+      "ir": "experiments/tensor-core-v1/corpus-v2/p04-staged-32x16/case.ir.json",
+      "ir_sha256": "2df1d30c05dddb44af64a28c8404ea24d07276ce3945b09213cf7bdec43c0229",
+      "ptx_sha256": "cc33e7b7a860ad2d54cb0a0e59bcaab41a631966e06916a73ac0481d46e4ce67",
+      "ptx_bytes": 5812
+    },
+    {
+      "case": "p05-staged-64x32",
+      "group": "corpus-v2",
+      "ir": "experiments/tensor-core-v1/corpus-v2/p05-staged-64x32/case.ir.json",
+      "ir_sha256": "e689804b63adf2d110e700a80ff2a8cbe4b5096e82c4936334df476124638168",
+      "ptx_sha256": "5b25fbcd50b1f6bdce251f2fa83d082ca474e07276950d5f231ed36345f6a6fb",
+      "ptx_bytes": 5812
+    },
+    {
+      "case": "p06-staged-32x64",
+      "group": "corpus-v2",
+      "ir": "experiments/tensor-core-v1/corpus-v2/p06-staged-32x64/case.ir.json",
+      "ir_sha256": "73b07d0bdae15ee6492494b8a1a29c49edca1f67d52a0e1d46fc57dc38c9a834",
+      "ptx_sha256": "7c22526b2d0a2f8364b58108aac018d68cb5a1e917784c84e637685a687c7cc8",
+      "ptx_bytes": 5812
+    },
+    {
+      "case": "p07-b-transpose-32x16",
+      "group": "corpus-v2",
+      "ir": "experiments/tensor-core-v1/corpus-v2/p07-b-transpose-32x16/case.ir.json",
+      "ir_sha256": "57d048a21e462e63ce8c5e9984fcebdb94b2624b62a286b81f6ec8d359c5763f",
+      "ptx_sha256": "24b71c591da14e033d80dfdd58fd846a5570bbe64114f1db4ddba7d5e5d3a753",
+      "ptx_bytes": 3974
+    },
+    {
+      "case": "p08-a-transpose-16x16",
+      "group": "corpus-v2",
+      "ir": "experiments/tensor-core-v1/corpus-v2/p08-a-transpose-16x16/case.ir.json",
+      "ir_sha256": "3ebfed89d6abbac511998cdaf9386b291a91ccee5a70f1007260d12086504ed1",
+      "ptx_sha256": "7babeffc0d241521af57bc9b05c5239a3a471f58ccb2bda7a84ca2fb9794442b",
+      "ptx_bytes": 3972
+    },
+    {
+      "case": "p09-direct-32x8",
+      "group": "corpus-v2",
+      "ir": "experiments/tensor-core-v1/corpus-v2/p09-direct-32x8/case.ir.json",
+      "ir_sha256": "97edcdb0e969f01f692b64aea0d0e27200309158ca228833802b012a9418c008",
+      "ptx_sha256": "9883844cbc938e00ae3abd305ba65994b682b5f889b4e41c7bb7c15c243d1563",
+      "ptx_bytes": 3964
+    },
+    {
+      "case": "p10-staged-16x32",
+      "group": "corpus-v2",
+      "ir": "experiments/tensor-core-v1/corpus-v2/p10-staged-16x32/case.ir.json",
+      "ir_sha256": "0bc65abb717b5632a35bc2da5ad6e834a6720e348d268f7c5f0a148ba5997cef",
+      "ptx_sha256": "8c358207b33540c3b286d4d7c9d5f7822c59b4946488209e11e3c7270a338959",
+      "ptx_bytes": 5801
+    },
+    {
+      "case": "p11-direct-16x32",
+      "group": "corpus-v2",
+      "ir": "experiments/tensor-core-v1/corpus-v2/p11-direct-16x32/case.ir.json",
+      "ir_sha256": "09968cf311e22a08be4fb17425712b1fa57a646c37d6581962101af198aef8bf",
+      "ptx_sha256": "f3670543a87a4459cea17921b97f4a6901eb877fa116876ac5525394d19eb881",
+      "ptx_bytes": 3971
+    },
+    {
+      "case": "p12-staged-b-transpose",
+      "group": "corpus-v2",
+      "ir": "experiments/tensor-core-v1/corpus-v2/p12-staged-b-transpose/case.ir.json",
+      "ir_sha256": "06cd8b2efb1482a1824bca5dcc43a93585ddaa1b1214a6dec6bb14fd16151def",
+      "ptx_sha256": "07b8fe05ceb9de67c0189a00e949e3cec7f56ba4633e36732ec6baac0b4343c6",
+      "ptx_bytes": 5812
+    },
+    {
+      "case": "p13-direct-48x24",
+      "group": "corpus-v2",
+      "ir": "experiments/tensor-core-v1/corpus-v2/p13-direct-48x24/case.ir.json",
+      "ir_sha256": "ecdbaf0b00eb892e3b1538bbed2cea6a4a312f9805bf6f1d9968b27daeaf617a",
+      "ptx_sha256": "68934a553df8224432358e283f0841b1772e9de087cacd35026e237e615675fd",
+      "ptx_bytes": 3975
+    },
+    {
+      "case": "p14-staged-48x24",
+      "group": "corpus-v2",
+      "ir": "experiments/tensor-core-v1/corpus-v2/p14-staged-48x24/case.ir.json",
+      "ir_sha256": "43cfae025340eeb502c47855e53314950bfa95a2b7084d60596291565567134e",
+      "ptx_sha256": "caaf3c00985353bebdfec19f378c88e824beb81e71ff746cbf21ded927cd0b1c",
+      "ptx_bytes": 6789
+    }
+  ]
+}

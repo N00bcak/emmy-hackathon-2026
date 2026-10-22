@@ -1,0 +1,293 @@
+{
+  "compiler_sha256": "6db2dad4944d87ae46194fd4deaf9331327cda21b21adaa434a1db41f515e6ba",
+  "rows": [
+    {
+      "case": "a01_attention",
+      "group": "published",
+      "ir": "emmy-hackathon-2026/problems/a01_attention/k_matmul_softmax_reduce_b55365.ir.json",
+      "ir_sha256": "0a6925795c1b8e108befbdc3300c722ea5a7fb19d2337597eca860e9c36eff9a",
+      "ptx_sha256": "5e4fbadbda45c407618aa6d9c3c5eb083bd5b8c21528d3480b28b78060a32696",
+      "ptx_bytes": 14019
+    },
+    {
+      "case": "a02_attention_128",
+      "group": "published",
+      "ir": "emmy-hackathon-2026/problems/a02_attention_128/k_matmul_softmax_reduce_6f0029.ir.json",
+      "ir_sha256": "a51792c9e4d920a493054fb2a6986d87766cc1b3717078f8e631a45d1b0bf1dd",
+      "ptx_sha256": "9570daac941a6cb092542c4ebf4d16d983b5a891df557c186758678bfa5ccf30",
+      "ptx_bytes": 3770
+    },
+    {
+      "case": "f01_rmsnorm",
+      "group": "published",
+      "ir": "emmy-hackathon-2026/problems/f01_rmsnorm/k_mean_cbd1de.ir.json",
+      "ir_sha256": "a8e6819e3144b942d8983b52b6865fa692868105b20de30f6ba4df424a07862a",
+      "ptx_sha256": "2ead5e7dbf99dbc9c59e022eb88906851c68c7d9f0f298d8a6816ece7bc992a9",
+      "ptx_bytes": 5793
+    },
+    {
+      "case": "f02_row_softmax",
+      "group": "published",
+      "ir": "emmy-hackathon-2026/problems/f02_row_softmax/k_softmax_05263d.ir.json",
+      "ir_sha256": "d48b030e9d9a765aa631287f72935bc59f20926f3ccb09dc7f7932106770af03",
+      "ptx_sha256": "0923e49549fcd9e2f00541ca3569bd0f41e8084f2369a8b43df98a46cf60e527",
+      "ptx_bytes": 9528
+    },
+    {
+      "case": "f03_l2norm",
+      "group": "published",
+      "ir": "emmy-hackathon-2026/problems/f03_l2norm/k_div_reduce.ir.json",
+      "ir_sha256": "34abdb33fe950100029930242777d0b22a12e523117de21bc9d78b43310c567d",
+      "ptx_sha256": "d2ea088bb29b534edbdd5e727cd369a1ef753d7caa092031919896e80a1be347",
+      "ptx_bytes": 4993
+    },
+    {
+      "case": "m01_matmul_512",
+      "group": "published",
+      "ir": "emmy-hackathon-2026/problems/m01_matmul_512/k_matmul_2967be.ir.json",
+      "ir_sha256": "ed9ab32776ce0de8b0d1f0367da54c586bf993c964efc01482666247a976dc02",
+      "ptx_sha256": "fbd5960ab42388803ba004a2a8788a6f5ec61046605672be8f8927cb45f7b3eb",
+      "ptx_bytes": 38433
+    },
+    {
+      "case": "m02_matmul_rect",
+      "group": "published",
+      "ir": "emmy-hackathon-2026/problems/m02_matmul_rect/k_matmul.ir.json",
+      "ir_sha256": "c47bb47c529e7362c9272784ac21a31f2a5d79546cc11b19beff891278d22206",
+      "ptx_sha256": "3fabbf1e81c3f4ca83574876721d851910b8337a6cbd98d7f38bda9d2e7f5071",
+      "ptx_bytes": 10347
+    },
+    {
+      "case": "p00_scalar_add",
+      "group": "published",
+      "ir": "emmy-hackathon-2026/problems/p00_scalar_add/k_add_pointwise.ir.json",
+      "ir_sha256": "d93c0b232c48f7161c88f0276ea8a69481b06608a24b6e8ed2d5025bd17f4e32",
+      "ptx_sha256": "e7ac79c593a23077245e4247bf890dac7edd40ce96a93d814932d919f669457a",
+      "ptx_bytes": 2071
+    },
+    {
+      "case": "p01_vector_add",
+      "group": "published",
+      "ir": "emmy-hackathon-2026/problems/p01_vector_add/k_add_pointwise.ir.json",
+      "ir_sha256": "90088bc4c7346b9a5916205fdb96926f52cc0f5e3c5c08527d7b0796b0c47fc5",
+      "ptx_sha256": "508930f6d148b693328a84371271282f8a0f38e013f6ffdc83b68c5be2b62ccc",
+      "ptx_bytes": 2072
+    },
+    {
+      "case": "p02_scale_shift",
+      "group": "published",
+      "ir": "emmy-hackathon-2026/problems/p02_scale_shift/k_add_pointwise.ir.json",
+      "ir_sha256": "2bae0a54cbcd037d6c13e70b5c4f5728f2f94af163a53ebe35b88ab8f68ec021",
+      "ptx_sha256": "bf3d49a50b066a4d9a2ac97cd811807837bfc624f7728b95b7bf6e30d906aaf0",
+      "ptx_bytes": 3798
+    },
+    {
+      "case": "p03_relu_mul",
+      "group": "published",
+      "ir": "emmy-hackathon-2026/problems/p03_relu_mul/k_mul_pointwise.ir.json",
+      "ir_sha256": "b2429e790dac9fd0db9fafadaa3624cafaeff85c834851a9034a730a1620a892",
+      "ptx_sha256": "7ff38bfd27d03c32078539450b09e0ea29118fd16131bcf90530e1d5f9fb0fba",
+      "ptx_bytes": 3453
+    },
+    {
+      "case": "r01_array_sum",
+      "group": "published",
+      "ir": "emmy-hackathon-2026/problems/r01_array_sum/k_sum_1_reduce.ir.json",
+      "ir_sha256": "a5ad6af023562e1632e929afb8cd6387603c2edcd4d4b1590b1a3b2ee962675f",
+      "ptx_sha256": "c7438c781f4552f066b9d261e18c7627c810647ea43dc918e64a3f5bb2591450",
+      "ptx_bytes": 4480
+    },
+    {
+      "case": "r02_big_sum",
+      "group": "published",
+      "ir": "emmy-hackathon-2026/problems/r02_big_sum/k_sum_1_reduce.ir.json",
+      "ir_sha256": "777e3f2dd170849133e19d303cdb3d273c135c9a9896786ee40fbc6a2ff4ec7c",
+      "ptx_sha256": "5b63db7de4a6ffcc7ac9064be89a8cf5deb19b109240f495468c178d1f602cbb",
+      "ptx_bytes": 4481
+    },
+    {
+      "case": "r03_mean",
+      "group": "published",
+      "ir": "emmy-hackathon-2026/problems/r03_mean/k_mean_ffcca3.ir.json",
+      "ir_sha256": "7eeca2c7869ab2ddf880a0ac7fb689d3ab814d7523eab472ec80ad2458100b86",
+      "ptx_sha256": "b23f5f4a19b4f940eae4e3fc68254a57aed4eaefdb5d16bd30b002850f717dea",
+      "ptx_bytes": 4737
+    },
+    {
+      "case": "r04_row_sum",
+      "group": "published",
+      "ir": "emmy-hackathon-2026/problems/r04_row_sum/k_sum_1_reduce.ir.json",
+      "ir_sha256": "4c7befc76b72c6c69be4675d69ccd14e336b9139fe22aaec1b94230858c8ab03",
+      "ptx_sha256": "c6f7179c6c40a04f7408162a2aec0c8fdd71d44f8884c065be1a2f411fadacf7",
+      "ptx_bytes": 4610
+    },
+    {
+      "case": "n01-same-buffer",
+      "group": "corpus",
+      "ir": "experiments/tensor-core-v1/corpus-final/n01-same-buffer/case.ir.json",
+      "ir_sha256": "e6b77ae6f3446bd045575bca27bebd1425eec0556da1f77ec3845425db3b1ddf",
+      "ptx_sha256": "2de7362cc6fa1ff3d5c84fdcdf671f44a11ef4acd8335b308148534755767fcc",
+      "ptx_bytes": 3973
+    },
+    {
+      "case": "n02-nonaffine-gather",
+      "group": "corpus",
+      "ir": "experiments/tensor-core-v1/corpus-final/n02-nonaffine-gather/case.ir.json",
+      "ir_sha256": "253e7ff0a6ca7ac82881e700e2a61569438835462e1aa140e2448d390575215b",
+      "ptx_sha256": "b94b5df3f7527d66e6e211506c8364b3363c1172b3d47fe41d87004bf5e56af4",
+      "ptx_bytes": 4609
+    },
+    {
+      "case": "n03-unrelated-reduction",
+      "group": "corpus",
+      "ir": "experiments/tensor-core-v1/corpus-final/n03-unrelated-reduction/case.ir.json",
+      "ir_sha256": "804778855878f13a5c8b23779e9cd4e193fbc256ebc492c845eb5512e3576fec",
+      "ptx_sha256": "02c6a6f1ce22ea418272f689f2e33e9bcd318adb7fa8f4d1a7c96218d141ed1c",
+      "ptx_bytes": 2789
+    },
+    {
+      "case": "n04-unsupported-epilogue",
+      "group": "corpus",
+      "ir": "experiments/tensor-core-v1/corpus-final/n04-unsupported-epilogue/case.ir.json",
+      "ir_sha256": "979586e4530c96c139d051298a626c5727e4916f34a82ce08fc41aa18b3c871c",
+      "ptx_sha256": "8e9dd1839e23642da961cc6fc7c3d955d5f0bd084dcd54dd6e112bf742c34c58",
+      "ptx_bytes": 3996
+    },
+    {
+      "case": "n05-partial-collective",
+      "group": "corpus",
+      "ir": "experiments/tensor-core-v1/corpus-final/n05-partial-collective/case.ir.json",
+      "ir_sha256": "77ee00399769e5d92d719f168c7ca3ad1eb32751e565eabda44bb5aec0a6309c",
+      "ptx_sha256": "9b4c5c05b8116f4dba82e2139a1a17fff91515d1c353fddb2c83e3225b62e8de",
+      "ptx_bytes": 5721
+    },
+    {
+      "case": "n06-split-without-atomics",
+      "group": "corpus",
+      "ir": "experiments/tensor-core-v1/corpus-final/n06-split-without-atomics/case.ir.json",
+      "ir_sha256": "f3bf198579067afdfe1b034f2142c46f8244e8f215f0aac8f2b3adc0245aba89",
+      "ptx_sha256": "ca6792a58bedf3ce313ef83bc95e1806e539492ddc573395a77f5c5e68622ce4",
+      "ptx_bytes": 4080
+    },
+    {
+      "case": "n07-split-atomic",
+      "group": "corpus",
+      "ir": "experiments/tensor-core-v1/corpus-final/n07-split-atomic/case.ir.json",
+      "ir_sha256": "cec4677d0d651bb6200aed7a8d2d384b8d2c30275c2d4c3b49e843277e21d81c",
+      "ptx_sha256": "8b3469309f13e557b237aff7994dab9da6e6f001e25a75f77b1c86c471d9b1b4",
+      "ptx_bytes": 4100
+    },
+    {
+      "case": "n08-launch-mismatch",
+      "group": "corpus",
+      "ir": "experiments/tensor-core-v1/corpus-final/n08-launch-mismatch/case.ir.json",
+      "ir_sha256": "34d6ae032dda3086eb0ec5e28137d17b5cd239c42b2c2104aadd2b6d9a27b75c",
+      "ptx_sha256": "091ebbe7cf5b6e6e20640d5dde6a0accf6d3ab911236c10b4df2e3d8046506d6",
+      "ptx_bytes": 3964
+    },
+    {
+      "case": "n09-tail-partial",
+      "group": "corpus",
+      "ir": "experiments/tensor-core-v1/corpus-final/n09-tail-partial/case.ir.json",
+      "ir_sha256": "313268cee89463ea56cf3ef4b018c59dad02b077b1367b4afeea8e60d3e181c7",
+      "ptx_sha256": "45799a00104309d5ff72d68928ff9cc7b0ef08d41e368ca2abbddd46559f1d96",
+      "ptx_bytes": 3383
+    },
+    {
+      "case": "p01-direct-16x8",
+      "group": "corpus",
+      "ir": "experiments/tensor-core-v1/corpus-final/p01-direct-16x8/case.ir.json",
+      "ir_sha256": "35038498fd2bb109c5c2c9535593b413d3d89ea38cb68c3f3ee0b566c60593ca",
+      "ptx_sha256": "461d54731e0c02bfcded8bcc1b4d67e5d1ff652f758a615508ed49d856fc43fd",
+      "ptx_bytes": 3964
+    },
+    {
+      "case": "p02-direct-32x16",
+      "group": "corpus",
+      "ir": "experiments/tensor-core-v1/corpus-final/p02-direct-32x16/case.ir.json",
+      "ir_sha256": "ce2ce24dbe5676d147fb46701000bda595a1aa629c61fd8574a9446847e31b53",
+      "ptx_sha256": "17114c5fdcad952d68c35468b945bc5bffc1f8ed3770c14a0a28ed88813e3d98",
+      "ptx_bytes": 3974
+    },
+    {
+      "case": "p03-direct-64x32",
+      "group": "corpus",
+      "ir": "experiments/tensor-core-v1/corpus-final/p03-direct-64x32/case.ir.json",
+      "ir_sha256": "3cebd8d34ad7a2c04bfd07334b292647062256091fd6b28e9305614da7dee283",
+      "ptx_sha256": "798fb49f52ffcd9d4dfce1afa4c00703f219fbaeb63d4276ad28d700d5fe1d48",
+      "ptx_bytes": 3974
+    },
+    {
+      "case": "p04-staged-32x16",
+      "group": "corpus",
+      "ir": "experiments/tensor-core-v1/corpus-final/p04-staged-32x16/case.ir.json",
+      "ir_sha256": "f9978a9b93ded4621ce55ade14ec308d6abb702026f8cbedc5b71d030f9c12a9",
+      "ptx_sha256": "90ac66568d99bd82eb08c62afd4d9df94332f577146148ebb85602f5cac76be8",
+      "ptx_bytes": 5754
+    },
+    {
+      "case": "p05-staged-64x32",
+      "group": "corpus",
+      "ir": "experiments/tensor-core-v1/corpus-final/p05-staged-64x32/case.ir.json",
+      "ir_sha256": "cc3e09b0aa4217dd9e69cc8cec208c6a69de89d77e692b6009ccb14a1077be7f",
+      "ptx_sha256": "605889a4c60ef7e5ee4cbbc2ad06a2054898d490c2a0e81658092736fd7ccfa1",
+      "ptx_bytes": 5754
+    },
+    {
+      "case": "p06-staged-32x64",
+      "group": "corpus",
+      "ir": "experiments/tensor-core-v1/corpus-final/p06-staged-32x64/case.ir.json",
+      "ir_sha256": "da61c77f46e6716eb643e2757aa67c7b7005f91c1441bcafd3a22db1bc489206",
+      "ptx_sha256": "ea34f247442531ddb80f32290d1c202f6c1a7d1442c87aefee17bbff4c7e5af8",
+      "ptx_bytes": 5754
+    },
+    {
+      "case": "p07-b-transpose-32x16",
+      "group": "corpus",
+      "ir": "experiments/tensor-core-v1/corpus-final/p07-b-transpose-32x16/case.ir.json",
+      "ir_sha256": "57d048a21e462e63ce8c5e9984fcebdb94b2624b62a286b81f6ec8d359c5763f",
+      "ptx_sha256": "24b71c591da14e033d80dfdd58fd846a5570bbe64114f1db4ddba7d5e5d3a753",
+      "ptx_bytes": 3974
+    },
+    {
+      "case": "p08-a-transpose-16x16",
+      "group": "corpus",
+      "ir": "experiments/tensor-core-v1/corpus-final/p08-a-transpose-16x16/case.ir.json",
+      "ir_sha256": "3ebfed89d6abbac511998cdaf9386b291a91ccee5a70f1007260d12086504ed1",
+      "ptx_sha256": "7babeffc0d241521af57bc9b05c5239a3a471f58ccb2bda7a84ca2fb9794442b",
+      "ptx_bytes": 3972
+    },
+    {
+      "case": "p09-direct-32x8",
+      "group": "corpus",
+      "ir": "experiments/tensor-core-v1/corpus-final/p09-direct-32x8/case.ir.json",
+      "ir_sha256": "97edcdb0e969f01f692b64aea0d0e27200309158ca228833802b012a9418c008",
+      "ptx_sha256": "9883844cbc938e00ae3abd305ba65994b682b5f889b4e41c7bb7c15c243d1563",
+      "ptx_bytes": 3964
+    },
+    {
+      "case": "p10-staged-16x32",
+      "group": "corpus",
+      "ir": "experiments/tensor-core-v1/corpus-final/p10-staged-16x32/case.ir.json",
+      "ir_sha256": "abdaa9e7105d6cf768cf4f7cd451b1fe11cc9d2c43ea602a164390d1d66fcc9a",
+      "ptx_sha256": "66e27ed6b6c9a6d9b259d7587000edd4ea2246f7c3e5c4db2b60b6863871e2af",
+      "ptx_bytes": 5743
+    },
+    {
+      "case": "p11-direct-16x32",
+      "group": "corpus",
+      "ir": "experiments/tensor-core-v1/corpus-final/p11-direct-16x32/case.ir.json",
+      "ir_sha256": "09968cf311e22a08be4fb17425712b1fa57a646c37d6581962101af198aef8bf",
+      "ptx_sha256": "f3670543a87a4459cea17921b97f4a6901eb877fa116876ac5525394d19eb881",
+      "ptx_bytes": 3971
+    },
+    {
+      "case": "p12-staged-b-transpose",
+      "group": "corpus",
+      "ir": "experiments/tensor-core-v1/corpus-final/p12-staged-b-transpose/case.ir.json",
+      "ir_sha256": "c3f5827b8912118d0954e42b30e6829f5fef5d1b623f56daa9109a70cb04cf00",
+      "ptx_sha256": "eac5e283c2354e463a6a3cbd1f3aa09b75c4154f0356fdf4d9246d4760edebd7",
+      "ptx_bytes": 5754
+    }
+  ]
+}
