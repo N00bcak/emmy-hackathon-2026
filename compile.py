@@ -1715,7 +1715,8 @@ class Emitter:
             reg = self.reg('f')
             self.emit(f'selp.f32 {reg}, {value}, {selected}, {condition};')
             selected = reg
-        self.values[statement.name] = (selected, 'f32')
+        self.values[statement.name] = self.snapshot_operand(selected, 'f32', 'f32')
+        self.mutable.pop(statement.name, None)
         self.rebind(statement.name)
 
     def preinitialize_trees(self, statements):
