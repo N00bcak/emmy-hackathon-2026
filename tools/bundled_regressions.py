@@ -8,7 +8,7 @@ from tools.regression_suite import sha, verify_case
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def resolve(suite):
+def resolve(suite=None):
     base = ROOT / 'tests/gpu-cases'
     manifest = json.loads((base / 'manifest.json').read_bytes())
     for relative, digest in manifest['files'].items():
@@ -38,10 +38,21 @@ def resolve(suite):
     if sha(policy_bytes) != manifest['default_policy_sha256']:
         raise ValueError('default policy changed')
     policy = json.loads(policy_bytes)
-    if [r['id'] for r in policy['cases']] != manifest['suites']['default93']:
+    default_suite = manifest.get('default_suite', 'default93')
+    if [r['id'] for r in policy['cases']] != manifest['suites'][default_suite]:
         raise ValueError('default selection changed')
     for row in policy['cases']:
         verify_case(paths[row['id']], row)
+    if legacy := manifest.get('legacy_default_policy'):
+        legacy_bytes = (ROOT / legacy['path']).read_bytes()
+        if sha(legacy_bytes) != legacy['sha256']:
+            raise ValueError('historical policy changed')
+        legacy_policy = json.loads(legacy_bytes)
+        if [r['id'] for r in legacy_policy['cases']] != manifest['suites']['default93']:
+            raise ValueError('historical selection changed')
+        for row in legacy_policy['cases']:
+            verify_case(paths[row['id']], row)
+    suite = suite or default_suite
     selected = manifest['suites'][suite]
     if len(set(selected)) != len(selected) or any(i not in paths for i in selected):
         raise ValueError('invalid suite selection')
@@ -50,7 +61,7 @@ def resolve(suite):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--suite', choices=('default93', 'campaign100'), default='default93')
+    parser.add_argument('--suite', choices=('core65', 'default93', 'campaign100'))
     parser.add_argument('--out', type=Path)
     args = parser.parse_args()
     catalog, manifest = resolve(args.suite)
@@ -59,7 +70,8 @@ def main():
             json.dump(catalog, output, indent=2)
             output.write('\n')
     print(f"Verified {manifest['case_count']} cases; selected {len(catalog['cases'])} "
-          f"({args.suite}); {manifest['published_cases']} published contracts.")
+          f"({args.suite or manifest.get('default_suite', 'default93')}); "
+          f"{manifest['published_cases']} published contracts.")
 
 
 if __name__ == '__main__':

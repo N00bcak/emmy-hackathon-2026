@@ -32,8 +32,10 @@ repository again does not reactivate discovery.
 
 ## Mandatory all-15 correctness
 
-Routine GPU checks use the [compact regression suite](gpu-regression.md): all
-15 published contracts plus distinct generated behavior witnesses. The complete
+Routine GPU checks use the [audited 65-case regression suite](gpu-regression.md):
+all 15 published contracts plus 50 core witnesses. The versioned scope ledger
+records targeted mechanism/dtype checks and non-gating stress diagnostics.
+Use final-output metadata tolerances, not universal intermediate FP exactness. The complete
 archive remains available for targeted expansion; do not replay every earlier
 random draw by default. New protocols use one fresh draw per selected family,
 with a separate post-freeze confirmation draw. Existing frozen suites stay fixed.

@@ -1,0 +1,817 @@
+{
+  "version": "gpu-regression-scope-v6",
+  "previous_policy": {
+    "filename": "gpu-regression-compact-v5.json",
+    "sha256": "7725d2f98cde89aa451686c050b458c35ded18c551a32764a61629b5261d3393"
+  },
+  "inventory_case_count": 100,
+  "assembly_targets": [
+    "sm_89",
+    "sm_120"
+  ],
+  "numerical_contract": "Final outputs meet justified rtol/atol. No blanket intermediate exactness, serial FP order, no-FMA rule or no-FTZ rule. Exact integer/address/transport behavior remains mandatory.",
+  "marked_operator_policy": "Supported extensions are targeted unless they exercise an independently retained core invariant; starred operators are not mandatory solely by being present.",
+  "audit": "docs/test-relevance-audit/REPORT.md",
+  "cases": [
+    {
+      "id": "c10866af73f820553331b01c52e042e5d724c275a6f5fedd9348170ba75d382c",
+      "record_sha256": "69cc990f203967dc1e07cc47e74c5b68286071323302978231f693ca17525fda",
+      "role": "mandatory",
+      "disposition": "retain",
+      "reason": "Official independent-reference contract at its exact metadata tolerances; no alternate fixture or generated case replaces this required anchor.",
+      "run_when": "every compiler candidate before timing"
+    },
+    {
+      "id": "69db4e7f597c41b0684fb30c3204e197cf56c8647d9a63dc0adb77f2a8a0d867",
+      "record_sha256": "ad022a979f7fac227b161d76c884ac86e281b5b70a4f02fa75e6db409248a2e1",
+      "role": "mandatory",
+      "disposition": "retain",
+      "reason": "Official independent-reference contract at its exact metadata tolerances; no alternate fixture or generated case replaces this required anchor.",
+      "run_when": "every compiler candidate before timing"
+    },
+    {
+      "id": "6ab09ab4acc384ee252370a564a13965ece1ad21a3e64d6615f0de1a39b8c665",
+      "record_sha256": "91643c7fb9324b8eec21ed8852d08f6ce9c1a909f959b28094dae4ed30d76e3d",
+      "role": "mandatory",
+      "disposition": "retain",
+      "reason": "Official independent-reference contract at its exact metadata tolerances; no alternate fixture or generated case replaces this required anchor.",
+      "run_when": "every compiler candidate before timing"
+    },
+    {
+      "id": "89d56c168a0b04373ef8d50096c48534c70019b8d2f87371b79aee2289922b44",
+      "record_sha256": "049f98f03fa6b5b0c82db9b27a4e3c9c1841a85f6dac78e883f40b978c76c1de",
+      "role": "mandatory",
+      "disposition": "retain",
+      "reason": "Official independent-reference contract at its exact metadata tolerances; no alternate fixture or generated case replaces this required anchor.",
+      "run_when": "every compiler candidate before timing"
+    },
+    {
+      "id": "1e82d7e58a53e8795ea9d05e3759dfe201e42308efd08dd2a51e79c769dc2fbc",
+      "record_sha256": "6ce1e6b09507a2ea4e765299324ee1b5a317e78ed7d61f3e19e4a551b8e5e231",
+      "role": "mandatory",
+      "disposition": "retain",
+      "reason": "Official independent-reference contract at its exact metadata tolerances; no alternate fixture or generated case replaces this required anchor.",
+      "run_when": "every compiler candidate before timing"
+    },
+    {
+      "id": "cd9a29496fccd9e421c1cfbe14347cb45003f38681e3b4b2e703f5dbbfdd6c5d",
+      "record_sha256": "50e49946742716ef185734511f536150042ed9c191487d8b48f6e1701f352412",
+      "role": "mandatory",
+      "disposition": "retain",
+      "reason": "Official independent-reference contract at its exact metadata tolerances; no alternate fixture or generated case replaces this required anchor.",
+      "run_when": "every compiler candidate before timing"
+    },
+    {
+      "id": "aeb1568894b7afb50ea0b1b6c6fe94b57419452643ec87c5c6561f9ebfc58bbe",
+      "record_sha256": "30691e128dca5b8add6d4d4702d9787459e794139c20394111c6035dfe8437fb",
+      "role": "mandatory",
+      "disposition": "retain",
+      "reason": "Official independent-reference contract at its exact metadata tolerances; no alternate fixture or generated case replaces this required anchor.",
+      "run_when": "every compiler candidate before timing"
+    },
+    {
+      "id": "4035b0c010105ed7be8aa1a889fe2754d498fc4a27c1719bf547ddad66e48403",
+      "record_sha256": "78c6a2213670fb1c81009ab9a778708b4db46a5a6e086e0309bc249306b64e31",
+      "role": "mandatory",
+      "disposition": "retain",
+      "reason": "Official independent-reference contract at its exact metadata tolerances; no alternate fixture or generated case replaces this required anchor.",
+      "run_when": "every compiler candidate before timing"
+    },
+    {
+      "id": "5e973341ada3e33f701293be5a3e6195badb7290a5471f4c6cefa86634d1b168",
+      "record_sha256": "23af35aed28597136dc4b543d220f48ad4add898c851502ac4950bb10b966bd2",
+      "role": "mandatory",
+      "disposition": "retain",
+      "reason": "Official independent-reference contract at its exact metadata tolerances; no alternate fixture or generated case replaces this required anchor.",
+      "run_when": "every compiler candidate before timing"
+    },
+    {
+      "id": "3145aa57f753f64551cd4b83c3d430e6e2375a9feb4819accbfd5e55c39da560",
+      "record_sha256": "df5c0cb7b89127ca3837d6ff71da783ff5de269f504a9767795e110df2990a5d",
+      "role": "mandatory",
+      "disposition": "retain",
+      "reason": "Official independent-reference contract at its exact metadata tolerances; no alternate fixture or generated case replaces this required anchor.",
+      "run_when": "every compiler candidate before timing"
+    },
+    {
+      "id": "aeeffce3a36b8cf1b27173b8c1644fc517a24d992173e06bb1664784b009b6ba",
+      "record_sha256": "e8cbd226fde1e424003bf7f85d39b8bcaa959994d6749a899cae2c69fb28c925",
+      "role": "mandatory",
+      "disposition": "retain",
+      "reason": "Official independent-reference contract at its exact metadata tolerances; no alternate fixture or generated case replaces this required anchor.",
+      "run_when": "every compiler candidate before timing"
+    },
+    {
+      "id": "2ffefe7fee88d864b3ac97cd70fe9711643f3551fba367299df52f329649154d",
+      "record_sha256": "bf7817cc5372bcd3d8b8efb7b7ece048d9e52d633e290cefd828066e67790c43",
+      "role": "mandatory",
+      "disposition": "retain",
+      "reason": "Official independent-reference contract at its exact metadata tolerances; no alternate fixture or generated case replaces this required anchor.",
+      "run_when": "every compiler candidate before timing"
+    },
+    {
+      "id": "a56bdb784a46a763c2b633ebb5d16ee1ffd4287cb0984168b4f80909c323ce22",
+      "record_sha256": "e8c57ea9df86f24ffa2654eb95b1b96f2aa7884447a75a3c30efe8ac5e368b36",
+      "role": "mandatory",
+      "disposition": "retain",
+      "reason": "Official independent-reference contract at its exact metadata tolerances; no alternate fixture or generated case replaces this required anchor.",
+      "run_when": "every compiler candidate before timing"
+    },
+    {
+      "id": "6dfbe2bc925e2b31ceb8eb84bb5016cca8af143ca55cf93078d09decc26a0fd3",
+      "record_sha256": "019a315f2267177dd3d83f1b232ac0c5c3fb7dafa71142d1118e3827e2f1cf79",
+      "role": "mandatory",
+      "disposition": "retain",
+      "reason": "Official independent-reference contract at its exact metadata tolerances; no alternate fixture or generated case replaces this required anchor.",
+      "run_when": "every compiler candidate before timing"
+    },
+    {
+      "id": "5c2ba872d36e6526a79b9799c059e237f65a34019cd94f1c85da4f0b9f930d3f",
+      "record_sha256": "bd45c67beb2990bfb9228955d330b5cd9efe8765286346ed4bc29ae7f3baa3fb",
+      "role": "mandatory",
+      "disposition": "retain",
+      "reason": "Official independent-reference contract at its exact metadata tolerances; no alternate fixture or generated case replaces this required anchor.",
+      "run_when": "every compiler candidate before timing"
+    },
+    {
+      "id": "07247b475413b2486a6138901e9a05e886b2993ef6d21c963b2cc7bce52c3e0d",
+      "record_sha256": "d5c6bc81bc7198d63cdda50f735bb1e64f4e7327134bfd4ba043c8484d676f40",
+      "role": "targeted",
+      "disposition": "targeted",
+      "reason": "Combines XYZ flattening, scalar arguments and tail indexing; useful interaction check, not a reason to require FuncCall/Cast support for every optimization.",
+      "run_when": "launch flattening, scalar ABI, expression lowering"
+    },
+    {
+      "id": "c5940d93d7e94754b865cde5571eb2e6e91067518afb569e4f871284d5d3985f",
+      "record_sha256": "e44c53d99765f0413f60d4b5978678e6dc9619a1996e9c59537c2934367b14f6",
+      "role": "targeted",
+      "disposition": "targeted",
+      "reason": "Direct hardware Builtin expressions exercise a distinct evaluator branch excluded by the challenge's starred-op promise; retain when that branch changes.",
+      "run_when": "Builtin lowering, XYZ launch mapping"
+    },
+    {
+      "id": "6cbcd2d465379c7f0d61cf88e1074f31e8296caefc4a85394212978d907873d5",
+      "record_sha256": "f52b3cd8083837136c8286c3a9a50a4de1229d220e0805200cc8aee35e560a5d",
+      "role": "targeted",
+      "disposition": "targeted",
+      "reason": "Checks half storage and arithmetic with a 0.002 error budget; complements F32 anchors without imposing exact floating-point arithmetic.",
+      "run_when": "F16 load/store, conversions, arithmetic"
+    },
+    {
+      "id": "61098ba0cc34ea091b2a821816dec4f8743aa37dc010ee6b20a8c46722a48c4f",
+      "record_sha256": "11ee7b137ebe305117fb89f72c4aae5f583b5037cc1e414cb9ec928462d20ade",
+      "role": "targeted",
+      "disposition": "targeted",
+      "reason": "The actual data are small dyadic values and one add; exactness is appropriate here, but an F64-only witness need not gate an F32 exponential change.",
+      "run_when": "F64 lowering and memory widths"
+    },
+    {
+      "id": "3403dbd465d8a05049feb992ea67d9ecf4de0fb1ef106c2bd71146e312b437fb",
+      "record_sha256": "0ed62734cf33e1ff8b2f78e3ec1949476843856dc01843ca9f643fe884f6ad02",
+      "role": "targeted",
+      "disposition": "targeted",
+      "reason": "Bitcast roundtrip must not become numerical integer conversion. Preserve this primitive test; it is not a requirement for bit-exact exp or reductions.",
+      "run_when": "bitcast and typed register/value lowering"
+    },
+    {
+      "id": "61376e724851b5c2da0888a4dd999d755ce44ae5e591390537922d6fe3d4220f",
+      "record_sha256": "e088c175da270aa0bb981a8fbf8fecbf49bd1cfccbbe88f246c6dcac339b4e3a",
+      "role": "targeted",
+      "disposition": "targeted",
+      "reason": "Integer inputs reach I32 limits and low-bit results expose accidental conversion through F32; distinct from floating-point approximation. FuncCall/Cast are optional challenge extensions.",
+      "run_when": "I32 FuncCall/Cast and expression typing"
+    },
+    {
+      "id": "fae06ecf5a68131f772531ea344d7a9c6e1f07075d191720cf5c330930af9f96",
+      "record_sha256": "d6bed280247a7584e5b513b287d593d83ad6f6ade5c679c3483b00d214718c86",
+      "role": "core",
+      "disposition": "retain",
+      "reason": "Grouped integer/predicate values written to F32 require conversion rather than storing carrier bits; ordinary mixed writes are not covered by plain F32 add anchors.",
+      "run_when": "Write, grouped stores, predicate/value conversions"
+    },
+    {
+      "id": "dc8cc0e8d88e7d60dcdf702bacc8d91e2e1761c18e9040ffd9b34c90477315c5",
+      "record_sha256": "22bc3b0233e82061f9a67f8f286bff8cb38ac0baa8d4a161e4aacf09962396dd",
+      "role": "core",
+      "disposition": "retain",
+      "reason": "An integer-valued floating literal must round as its declared F32 type; catches a wrong predicate/value independently of transcendental accuracy.",
+      "run_when": "Literal, Let, expression typing"
+    },
+    {
+      "id": "31e66c227e064fdcdfdbd607624fae8c845d5a1c7f07668e40759e9961c1435f",
+      "record_sha256": "19f1ab982ac011a21e1eea51d202aa259c4f2bb261b32da2da6ae1e7a7788e8a",
+      "role": "diagnostic",
+      "disposition": "diagnostic",
+      "reason": "The FuncCall log input includes a subnormal and max-F32. This is extreme-domain coverage for an optional expression form, not a global fast-math veto.",
+      "run_when": "log domain extension and subnormal policy"
+    },
+    {
+      "id": "b3b9d4ccd080adb9d5a05ae938aec6089818bc50230ec5093d25c135097c90a1",
+      "record_sha256": "ed2fd7f23d709be12c9107f4ee72286347367221334d67c58d972c1cb36690d9",
+      "role": "core",
+      "disposition": "retain",
+      "reason": "Negative intermediate division/remainder affects addresses, where approximation is invalid; differs from nonnegative constant stride indexing in anchors.",
+      "run_when": "index arithmetic, division/remainder, address lowering"
+    },
+    {
+      "id": "b24c76efd4ba9fd8763e69cfd1e0926f876281a2a06fd64c8dc9e882b9a33aed",
+      "record_sha256": "91a28a3dbc70fba5faf227eea61850f4c8bc5ee8a65e3da94cae78fee44f84ef",
+      "role": "core",
+      "disposition": "retain",
+      "reason": "Width-four loads have offsets 1 and 2 plus an odd row count; tests legal scalar fallback instead of assuming aligned vectors.",
+      "run_when": "vector global memory, alignment and tail masks"
+    },
+    {
+      "id": "f188ef762959e2f777587b9dbfb60421c6765cfd5412b37516c4b7113e7ff42a",
+      "record_sha256": "edb4ec85dabb901f6c474318099d4d736bf3485f81388734fcb1dcff2b0965a9",
+      "role": "targeted",
+      "disposition": "targeted",
+      "reason": "Different Cast children must not alias in expression CSE; exact integer results are appropriate. This is a distinct expression dispatch branch.",
+      "run_when": "CastExpr, structural keys, expression CSE"
+    },
+    {
+      "id": "0e80b09925f0f9637cdef513d58020e8dbd3fe023ee87c0372fbc01393d37f7e",
+      "record_sha256": "32b83af143afd61c357274da0ba14b72f00ff27e458e5afd2396002063c1130a",
+      "role": "targeted",
+      "disposition": "targeted",
+      "reason": "Different FuncCall children must not alias in CSE. Keep for expression-cache changes, not as a demand that all challenge kernels use this optional form.",
+      "run_when": "FuncCallExpr, structural keys, expression CSE"
+    },
+    {
+      "id": "bd8a59fd719b12c89bb2bef8b221fb1c007d5ade73a552c1d35f9a055886d363",
+      "record_sha256": "3be016faa07ae8ed5f602deaf6a3f268886aab652677fa44bd4d63a694e248d5",
+      "role": "targeted",
+      "disposition": "targeted",
+      "reason": "Different flattened buffer/index expressions must retain their children in the cache key; tests a distinct optional AST form.",
+      "run_when": "FlatIndex, structural keys, address CSE"
+    },
+    {
+      "id": "3e9203274f6927cb955cf2e8d0af2e7e870ace628d9a26e6b356409a4e032631",
+      "record_sha256": "db271d310c563435426b6c85008b6f6eae7ae61f772f4fa3259239476b30e1f0",
+      "role": "targeted",
+      "disposition": "targeted",
+      "reason": "Hardware Builtin operands must distinguish their values in CSE; different branch from Cast/FuncCall/FlatIndex, so not a proven duplicate.",
+      "run_when": "Builtin, structural keys, expression CSE"
+    },
+    {
+      "id": "068fb6cb67fb91185ea4063ac15b15ae1ea8b0ebeb9a05d6fef2e777f31f2348",
+      "record_sha256": "bc0d3d846311cd7547de56a11082ead47887788730631da06cefe5bdcfdc3933",
+      "role": "core",
+      "disposition": "retain",
+      "reason": "Small integer-valued F32 transport observes the outer binding after a nested Tile. Exact data movement is not an arithmetic precision restriction.",
+      "run_when": "Tile scopes, binding restoration, address cache"
+    },
+    {
+      "id": "1f9428cef0a7750c55fec497401857955bd037aed43ab72a1abf26627ef390af",
+      "record_sha256": "a36d0d631113b5811c2a09fa15b2a9d4cfb158a59434c9984d9482494d2d923d",
+      "role": "core",
+      "disposition": "retain",
+      "reason": "An inner loop axis shadows a Tile axis; subsequent addressing must restore the proper owner. A different lexical entry/exit from nested-Tile-only case30.",
+      "run_when": "Loop scopes, index bindings, address cache"
+    },
+    {
+      "id": "807f6dfcde812fedd65efdbd0428a3f07108c21131ef242269c5fa5df0fec1c2",
+      "record_sha256": "a1fca0017c744015054cd1525cce8df30426b3ed61b2edb375da3d7c6f2847ff",
+      "role": "core",
+      "disposition": "retain",
+      "reason": "Nested Tiles have unequal extents; each needs its own guard and continuation. Case30's restoration alone cannot establish correct masking.",
+      "run_when": "Tile guards, nested scopes, continuation"
+    },
+    {
+      "id": "fff293a2235c2158ffc525f848ce136c020fdfa506b79c147ccadd0a39931751",
+      "record_sha256": "7849d859ee9e7a4b0e5c332b118d3ab72bf0ceb20b404fc115c5016fd25da89d",
+      "role": "core",
+      "disposition": "retain",
+      "reason": "Inactive lanes must contribute one to a product. Actual inputs are exactly representable unit values, so tolerance does not prohibit valid reassociation.",
+      "run_when": "partial reductions, product identities, inactive lanes"
+    },
+    {
+      "id": "061d7084b7298d83ba14950823669b4734ed6cc3f9f51bd5ee830f10e18ee56a",
+      "record_sha256": "6e3f4b58851caef8cdf0c6ead0653df252230c70b22d9f874cddcde2813b987c",
+      "role": "core",
+      "disposition": "retain",
+      "reason": "Inactive lanes must not contribute zero to a minimum over positive values; distinct operation from product/max.",
+      "run_when": "minimum reductions and inactive-lane padding"
+    },
+    {
+      "id": "da018f96fc2e54583814b7dc39cce909d332add031820662839c2706fccdc91d",
+      "record_sha256": "484bb38a6bc018d2e67f75130335a85625537bfe4415248875393435677fb78a",
+      "role": "core",
+      "disposition": "retain",
+      "reason": "Inactive lanes must not contribute zero to a maximum over negative values; distinct sign/identity from minimum.",
+      "run_when": "maximum reductions and inactive-lane padding"
+    },
+    {
+      "id": "b5cc80a79e59c19edb2f07d14c0afe088a9c440310666187b50e20cd69c4397c",
+      "record_sha256": "e7b2494f5c3bb1786d9794ae866d14426c423ea0be07304f15e4549db8c27a03",
+      "role": "targeted",
+      "disposition": "targeted",
+      "reason": "Input magnitudes around 1e30 distinguish an explicit infinite Init from a finite default identity. A real seed-selection issue, but an extreme-domain targeted check, not ordinary sum precision policy.",
+      "run_when": "Init seeds, minimum identities, large-domain specialization"
+    },
+    {
+      "id": "943cbd88c1f4ca66ae34098886c73543341807db35df0d3289820b2be0ab4a74",
+      "record_sha256": "cd07d73b828ff8354adf806bd5fc9f61c7ffb097b0f464c2fc0bb6c1ea489924",
+      "role": "targeted",
+      "disposition": "targeted",
+      "reason": "The maximum counterpart tests a separate identity/sign path; comparisons select existing values, so exactness here does not constrain approximate exp or FMA.",
+      "run_when": "Init seeds, maximum identities, large-domain specialization"
+    },
+    {
+      "id": "2623ef7bdace949bb90f19ab8499a43d44db719441a3583870dbdf14d0c08172",
+      "record_sha256": "68df9f24ef649baa936205872a99622a4eefb362b2475536ca08b0480e815a61",
+      "role": "core",
+      "disposition": "retain",
+      "reason": "A skipped loop must preserve the entry value of a tree-reduction carrier; tree/shared behavior differs from warp-only case39.",
+      "run_when": "TreeHalve, carried values, zero-trip control flow"
+    },
+    {
+      "id": "48189071240806b192fd70230a1d4af9b7fce13e389c91f4c88a93a35c9388a9",
+      "record_sha256": "afb1dc25993c267d477a33131263e335d2600b1622497b409e47437266256ff1",
+      "role": "core",
+      "disposition": "retain",
+      "reason": "A skipped loop must preserve a warp-reduction carrier. Exact small integers make this a state-lifetime check rather than summation-order stress.",
+      "run_when": "WarpShuffle, carried values, zero-trip control flow"
+    },
+    {
+      "id": "5224818b2d26d5b73af6c783a756518a271351ca1a5529cbc0686f7e181387fa",
+      "record_sha256": "b0d73be20bbcc4621dfde65e63ace8be93ca2e0a597542f6f6da91d6b78f5a4b",
+      "role": "core",
+      "disposition": "retain",
+      "reason": "An inner Init must not replace an outer accumulator's binding. Small exact constants distinguish a scope error from rounding.",
+      "run_when": "Init and nested lexical scopes"
+    },
+    {
+      "id": "669f6890c8882493e5571cfcd0f2a0172bc9b729375ab98513331ac0d089e3a4",
+      "record_sha256": "3c7650ba6fd5bba72781b311168fdd59b1b360b0364c69f34e83d8b221fc7d34",
+      "role": "targeted",
+      "disposition": "targeted",
+      "reason": "A compound step depends on post-body state. Keep when dynamic loop headers change; static scheduled reductions do not establish this behavior.",
+      "run_when": "dynamic StridedLoop headers and mutable scalar state"
+    },
+    {
+      "id": "83fb961f7fc2aee057d579cd6309ef1cce9d1c66a0521d78c4c6978d50b289e5",
+      "record_sha256": "907c3fc1d84789bebc7906cc68cd777539508ec769bcdd65291da11ae6ee28c1",
+      "role": "targeted",
+      "disposition": "targeted",
+      "reason": "Body-local shadowing must not replace the loop header's step binding. Different header-lifetime failure from case41's re-evaluation.",
+      "run_when": "dynamic StridedLoop headers and lexical shadowing"
+    },
+    {
+      "id": "8e6693eaac063e733279668d2476edb7ac5fad6f11b9a493541574512c7552b7",
+      "record_sha256": "ab91f341fc614b66688b90ab8a8eeed04f309f457c9e06c5dcf9dd140b97aa4c",
+      "role": "targeted",
+      "disposition": "targeted",
+      "reason": "The bound is captured before a subgroup carrier changes; an observable trip count is exact, not an approximate floating reduction.",
+      "run_when": "StridedLoop bounds, subgroup carried values"
+    },
+    {
+      "id": "cc0b21f91dca260efa45b680481e1ba9f39dcee329f149f6db678c8c8b9f97be",
+      "record_sha256": "0e641a62c74ce1ccd3f229b72b478fe56ac37993ecc8fbbe6e00e790bbbbd1e6",
+      "role": "core",
+      "disposition": "retain",
+      "reason": "Dynamic shared addresses, masked 16-byte copies, zero fill and commit/wait ordering are a useful transport interaction not exercised by aligned full-tile copies alone.",
+      "run_when": "CpAsyncCopy, dynamic shared memory, copy masks, waits"
+    },
+    {
+      "id": "72f1deeac451a01002043dead776384004b887cdcec9089a0bdfcc02923c022d",
+      "record_sha256": "6c7d07575bb172e83c223521a223a96a1f5b1c5b7a6d52be002c2bb815b0e2be",
+      "role": "core",
+      "disposition": "retain",
+      "reason": "A 63-of-65 active K range with conditional updates and inherited seeds tests tile/tail legality at matmul tolerances, not serial bit identity.",
+      "run_when": "shared-vector contraction, seed handling, K tails"
+    },
+    {
+      "id": "9e1f76b1c9291d28133d85a85ae619cdd4d7ca52d54f649c3e7e9d925e54e0e8",
+      "record_sha256": "730a967e0555dc7395f2cacdf84e4dd48f7cae916046ae3f7fdac39a6b2429f2",
+      "role": "targeted",
+      "disposition": "targeted",
+      "reason": "All dimensions are one, so the mathematical answer is just V: this cannot validate score or normalization accuracy. It still tests degenerate tile masks/launches, so use only for that boundary.",
+      "run_when": "attention size-one and tiny-tile fallback"
+    },
+    {
+      "id": "0a50249d1218b576c10e21a7020336fa287d4d5d6bd7a39511aa2219aa070556",
+      "record_sha256": "3d47d0163e46eda0bf38b23ddc5bcbc67b0b1a1384bd8a7af478495832d1b412",
+      "role": "core",
+      "disposition": "retain",
+      "reason": "Width257 crosses more than one cooperative column slice; bounded logits and published-like tolerances distinguish normalization/tail bugs without exact arithmetic.",
+      "run_when": "online softmax, cooperative chunks, tails"
+    },
+    {
+      "id": "e4ac354528a2ab697578716e36b5ac607df309f75252462e861b435ad2f5d7c5",
+      "record_sha256": "ed9d1114c57014534dea96b982b3615ea254cec7dcd0b2e641882d1233213ccb",
+      "role": "core",
+      "disposition": "retain",
+      "reason": "A logical axis named _gid and block80 expose physical/logical ID confusion plus a partial physical warp; different subgroup geometry from ordinary CTA128 anchors.",
+      "run_when": "hardware IDs, subgroup mapping, partial warps"
+    },
+    {
+      "id": "57e82125a796bb9080bee679a08f137d78367aa66643aca4080c92adc9932dfe",
+      "record_sha256": "83de59ceda09a9e9dea7e79f8647256ac29a9c4a0440db71460e874df49bda19",
+      "role": "targeted",
+      "disposition": "targeted",
+      "reason": "High-bit I64 inputs and nontrivial counts expose sign extension and count-width bugs. Integers require exact results; unrelated F32 math changes should not invoke this test.",
+      "run_when": "I64 right shift and integer carrier widths"
+    },
+    {
+      "id": "fa41b5e778718c3209536b85787001a3fce87f9cbc7f4b8288e18ffa0777fcc6",
+      "record_sha256": "57e1c418e7a1bc465abdb7f8fc3eb04cafa1540b5f35a7a4b7ff87e2617292e1",
+      "role": "core",
+      "disposition": "retain",
+      "reason": "A scalar Load declaration must not overwrite an outer value used by later indexing; exact integer transport isolates the lifetime defect.",
+      "run_when": "Load scopes, binding restoration, cached addresses"
+    },
+    {
+      "id": "8a7db526571189e3b67c95f11a3294d910c6e10a53d58c33f0c9a97031e3a9b8",
+      "record_sha256": "9f2ac98da3263af3a80dbceedd7979875a0e0cdf835a7b984c870b08030d3c71",
+      "role": "core",
+      "disposition": "retain",
+      "reason": "A grouped Load's addresses/RHS values must be captured before any destination name is rebound; scalar-shadow alone does not test simultaneity.",
+      "run_when": "grouped loads and simultaneous publication"
+    },
+    {
+      "id": "ee167cb896bcfad085da910c9c0eb88a93bf186403b908a2524fca7e8a4c5378",
+      "record_sha256": "59dcda695a4ad6e596c9503eee98b3097cb8b8e7576cd029395c60fe84f9bf57",
+      "role": "core",
+      "disposition": "retain",
+      "reason": "An inner declaration and an inherited accumulator update have different owners. Small exact arithmetic makes scope, not rounding, the acceptance condition.",
+      "run_when": "Tile/Init scopes, inherited mutable state"
+    },
+    {
+      "id": "2c15db2e5679909cef087ecdd13de5ce6fb7cf56ae54b090f7a966d6dcb6a30e",
+      "record_sha256": "29c5c360d5585cd590bb03729cd5d61e2bb048dce678b8f909f3f4b64d8c1f6b",
+      "role": "targeted",
+      "disposition": "targeted",
+      "reason": "A BinaryExpr containing an unsupported/opaque child must not collapse to a shared cache key; structural CSE test with exact small outputs.",
+      "run_when": "recursive expression keys, CastExpr children"
+    },
+    {
+      "id": "7d586595132adb5191192231cef884f5daa56077f115b310c20d34f5b65b7c95",
+      "record_sha256": "4dffe8cce0db9625e2fe9fd91d427ebf824c81230ddef187b2ca17f8fbd5630b",
+      "role": "targeted",
+      "disposition": "targeted",
+      "reason": "A TernaryExpr needs all branch/condition children represented or caching declined. Distinct recursive AST case from binary, not a duplicate draw.",
+      "run_when": "recursive expression keys, TernaryExpr, CastExpr children"
+    },
+    {
+      "id": "a3637b82238835d8027901de0aee04a9d7df15e69ac12d965e1c9f490c209ef5",
+      "record_sha256": "ffa12df6ef3352ab611b4fb8bb44a6e2c7cfcf8f5536d5fc368a0a8ae910425f",
+      "role": "targeted",
+      "disposition": "targeted",
+      "reason": "Select-local names and one-branch results must not leak/alias mutable carriers. Select is explicitly starred/out of challenge scope; preserve as supported-extension coverage.",
+      "run_when": "Select lowering and mutable snapshots"
+    },
+    {
+      "id": "fb08b0884f3532cd8a601414cd6f2434f05b99602b99dfee396c8b73fc9643f4",
+      "record_sha256": "e048dcf5d61b96217f9ff4033e48f07a4f03e02dc0f0f5b9929d8c9a6c52a7a5",
+      "role": "core",
+      "disposition": "retain",
+      "reason": "A partially active CTA must execute finite uniform nested loops consistently around collectives; memory masking alone does not preserve barrier participation.",
+      "run_when": "collectives, uniform Loop/StridedLoop, partial CTAs"
+    },
+    {
+      "id": "d7be87bc0caabbc560a024cd044944f15da13f4085819fc40ebcba4940f64200",
+      "record_sha256": "7de5ac9cd02f74190ea9a73339446fc15af1fdc57434a9882027cbebd812fd3a",
+      "role": "core",
+      "disposition": "retain",
+      "reason": "Child dot folds reuse ancestor score names, while KEY-owned totals must escape. Small bounded integer operands keep reassociation/FMA free of rounding obstructions.",
+      "run_when": "ordered KEY batching, nested dot scopes, width16"
+    },
+    {
+      "id": "09d6470c83d329ff46f9a20e9fee4ac3aebe60c50227116328113f9a20a888f0",
+      "record_sha256": "bbc26ef14ead9ae8c630d76691560b55af31957fe4ebaa6192ddb85764e8a57e",
+      "role": "core",
+      "disposition": "retain",
+      "reason": "The generated one-row small reduction uses a different schedule from published rmsnorm. Published-like tolerances and ordinary inputs earn generic-path coverage.",
+      "run_when": "rmsnorm, generic reductions, small-row schedule"
+    },
+    {
+      "id": "e8f4437dd934a945ab53494a64920d8c0145bacfe1a4df3dd4fcba6a08c4790d",
+      "record_sha256": "b4ca8f9d95341e23414e58c0bfbd7510fe8316f12bc65f3c9116ce308fffff06",
+      "role": "core",
+      "disposition": "retain",
+      "reason": "Rows of length3 force short-row/tail behavior absent from published length512 normalization; ordinary inputs use the same style of output tolerance.",
+      "run_when": "l2norm, reduction tails and fallback schedule"
+    },
+    {
+      "id": "b0bb43becf74a1f513ddbfb8df76804664d52c90fbbc9104b45c889a6cdbabc5",
+      "record_sha256": "011a3c8d5769e1830b86fd8933649c70e442fc6683fc44ccf65c984526f9e07d",
+      "role": "core",
+      "disposition": "retain",
+      "reason": "A thin dimension and K31 test a different atomic contraction geometry, resets and tail handling from the rectangular published fixture.",
+      "run_when": "atomic writes, reset protocol, contraction tails"
+    },
+    {
+      "id": "d7aa0ab891e7af29fab0846614d52d73add946c3a47a8872624bbec069c6bff3",
+      "record_sha256": "8414b7b5b31f348cd70b3d721bb67c094685c80f3a189089051288b9eca7d7ae",
+      "role": "core",
+      "disposition": "retain",
+      "reason": "A serial width31 row exercises generic max/sum/normalization rather than only the cooperative online recognizer. Tolerance matches published softmax.",
+      "run_when": "serial softmax and generic reductions"
+    },
+    {
+      "id": "9170e7b0641d3224fb2e365ef4bc9d87f45db4ffffe191b1544c0548f485001f",
+      "record_sha256": "abe842972c7f688b601e8dd72d1c596d76784e2bf97c2051d153d709277a032b",
+      "role": "core",
+      "disposition": "retain",
+      "reason": "Three kernels require intermediate buffers, ordered launches and distinct positional ABIs. A single fused attention kernel cannot replace this coverage.",
+      "run_when": "pipeline ABI, intermediate ownership, ordered execution"
+    },
+    {
+      "id": "0ae55875282f68e45972d28c44d9c31c0b3499e2227776855effb0b9b6595d4f",
+      "record_sha256": "78b59ba8e36271bb4f0ecd339b3c0d4b063b79371d95d9a00dd61b998dfbb37b",
+      "role": "targeted",
+      "disposition": "targeted",
+      "reason": "Signed left-shift has its own typed dispatch even if native shl.b64 is shared with unsigned. Keep for integer lowering, not every FP optimization.",
+      "run_when": "I64 left shift and bit-carrier typing"
+    },
+    {
+      "id": "cd76e69248753128806ede69cd08da03329d51a9db2948a7b0cf07cb01217721",
+      "record_sha256": "18a8d5fa7450d439263049882f36c972361f8adb9609de073a6b05bcb9e5b89b",
+      "role": "targeted",
+      "disposition": "targeted",
+      "reason": "Logical right shift must not become arithmetic right shift. Same width as case49 but different sign semantics, so exactness and separate coverage are justified.",
+      "run_when": "U64 right shift and sign semantics"
+    },
+    {
+      "id": "c37693f91a7210ccc513e699de5a289e2f2f909f83a7059ed6e386a2a263a25d",
+      "record_sha256": "1fbf1d278b5be9cdf8b910f2f04a28a4950e2bb3aeb3c1f2233f7858eaf98316",
+      "role": "core",
+      "disposition": "retain",
+      "reason": "Lead2/slots3 with extent7 observes wraparound and dead final lookahead. Small integer-valued sums impose no realistic FP-order penalty.",
+      "run_when": "async ring scheduling, waits, tail lookahead"
+    },
+    {
+      "id": "7bb9d9c27732924a02ca9869601a7af55fd6276ae6894ed00c3dbc7be5d84228",
+      "record_sha256": "6dfc1fd1fcbd5982432ace270e222c5d5b66c0911d58c73bbe42bd5737c2022a",
+      "role": "core",
+      "disposition": "retain",
+      "reason": "Extent2 equals prefill lead2: the steady-state path disappears while initial stages remain live. Different boundary from extent1 and extent7.",
+      "run_when": "async prefill boundary, extent equals lead"
+    },
+    {
+      "id": "21171f5ca6c366ded10c9865a3160437b8985dd0a89d83770c473c30f8b3e195",
+      "record_sha256": "03d96710baf5880ab2bba935ec5b6ecdd1e4ae7c625e1d49f65f9c9eb052c81f",
+      "role": "core",
+      "disposition": "retain",
+      "reason": "Step2 with nondivisible bound tests logical iteration count versus raw axis extent in ring rotation and wait accounting.",
+      "run_when": "async ring, nonunit strides, nondivisible bounds"
+    },
+    {
+      "id": "a083ac93290653c119bae4512c057058495a50fa9d0528dc7ce6e3caff5c6065",
+      "record_sha256": "022d4fd5508706fdc2bf2b5af76a95f45df681d09a3b6db659aa2c82849e8c52",
+      "role": "core",
+      "disposition": "retain",
+      "reason": "Padding is deliberately read later, so a compiler cannot delete a lookahead copy solely because its arithmetic iteration is dead; an effect/visibility check.",
+      "run_when": "async dead-code elimination and shared-memory visibility"
+    },
+    {
+      "id": "b8c0079b7d4413a1880f4f91f7c435e2281f9b5c92861c7980388a4bd2882555",
+      "record_sha256": "5b490e5b2e615435863e1c0562c3e4502d04f8523c72fdb3576725af2b4063f0",
+      "role": "core",
+      "disposition": "retain",
+      "reason": "Extent1 is shorter than lead2 and must suppress invalid initial prefill, unlike extent2 where both prefill stages are valid.",
+      "run_when": "async prefill guards, extent below lead"
+    },
+    {
+      "id": "bfc4b7ce74bafe017db5d345724a8ab527509641a581e2a9906b74a5a3a73c0f",
+      "record_sha256": "85932c8877515bd2c47dcac95f20afd5cc0c9e4eba858fbe1e262c7c65489051",
+      "role": "diagnostic",
+      "disposition": "diagnostic",
+      "reason": "Zero-tolerance dot data include magnitudes2^30 with cancellation and a final result near5. This freezes serial rounding and can veto acceptable FMA/reassociation. Retain only as stress; bounded seed/layout variants71/72 cover useful structural paths.",
+      "run_when": "strict-order dot diagnostics; new bounded seeded variant needed if this alignment boundary is changed"
+    },
+    {
+      "id": "0192aa8028246287221f7448e6c9dfec47cc2cfdfa3ec825d1c7ee28cec28c6a",
+      "record_sha256": "b02b050911ec65f6fbc939d7ea71954c2bbb6bef0810b6269b760098d1c78f2c",
+      "role": "core",
+      "disposition": "retain",
+      "reason": "Extent9, inherited seeds -5/7 and small integer operands yield results up to36. Exactness is harmless for these actual values and catches seed/tail errors without forcing general serial rounding.",
+      "run_when": "shared-dot vectorization, inherited seeds, odd tails"
+    },
+    {
+      "id": "6ac8c7773141710aafc9375e2ac493eada0dd20901b152f729d6255f79336317",
+      "record_sha256": "d4b9613fb878d5ee8c356283737788828ba92dfab5e81494d75707e0c5f924f4",
+      "role": "core",
+      "disposition": "retain",
+      "reason": "Row stride258 differs in alignment from128 and small operands remain exact. This earns a separate runtime/scalar-fallback check from71.",
+      "run_when": "shared-dot alignment, vector fallback, seed handling"
+    },
+    {
+      "id": "55256bcbea1510499cff61c4f643eb7de10964fca4a7d43dc9cb8eca5a323236",
+      "record_sha256": "2f8f1a2f1881d8b854d0ff57ae2e9f068dd74c55bbffe17841f4c49092cd4c71",
+      "role": "diagnostic",
+      "disposition": "diagnostic",
+      "reason": "Extent17 combines another unroll boundary with2^30 cancellation and zero tolerance. Preserve as stress, not a universal ban on reassociation; bounded structural replacement should keep the extent17 boundary.",
+      "run_when": "strict-order dot diagnostics; extent17 seeded vector tail"
+    },
+    {
+      "id": "6f6357065acf5b24d4be3132257111f2e40e8cc0cba48570e067276205551d25",
+      "record_sha256": "5e012979fc09188abd865ad5bf5dda4de7daf17e259a788a5e00b01f72d36383",
+      "role": "targeted",
+      "disposition": "targeted",
+      "reason": "Large but finite F32 operands expose rounding before versus after an explicit F16 result. Real dtype-conversion semantics; restrict invocation to half/mixed-type lowering changes.",
+      "run_when": "mixed F32/F16 operations and explicit result rounding"
+    },
+    {
+      "id": "8996904203776bc61d7da020bfba25d6b8df989336f7641ac753c3f80556a25e",
+      "record_sha256": "4c2c8f0e2432521a11efd1af2d1cfc3e727ddfb76a9ef95925c18a28ae9fe4e3",
+      "role": "core",
+      "disposition": "retain",
+      "reason": "Bounded input, D16 and a complete key segment exercise cooperative score reuse at normal tolerances beyond published shapes.",
+      "run_when": "attention cooperative hoisting and full-segment mapping"
+    },
+    {
+      "id": "bdd094ff243fd119a72e2e675ee682294887bced491b5131041c7f8ac744fdc3",
+      "record_sha256": "dc2a72fdc5c0c3e38b396ab1ca0a4aa5f3f8fcdf1e976acac05f9f0eb29003fc",
+      "role": "core",
+      "disposition": "retain",
+      "reason": "The19-by19 key/query shape with D7 exercises fallback and masked partial segments, unlike75's complete segment.",
+      "run_when": "attention partial segments, fallback legality"
+    },
+    {
+      "id": "44c6e344374056121b8a007268039a7d7823bf44aed0149ed4d96ddf9164d0c2",
+      "record_sha256": "d65dee2224cade0fa124e514354f51dd3a98dc0573d85395968bde5aa06da45b",
+      "role": "diagnostic",
+      "disposition": "diagnostic",
+      "reason": "Inputs reach1e10 and encode a sequential-rounding-sensitive score. A real worst-conditioning probe, but this should not veto fast paths that satisfy realistic output budgets.",
+      "run_when": "attention extreme conditioning and reassociation diagnostics"
+    },
+    {
+      "id": "dd375967ea3896ace9e00ecb875af9b42a8cc2e0f22ca8525b29b556bbe04389",
+      "record_sha256": "31f5ac89288ad65ca87e712d25bff5af756d5977cd57160db88ba4ab20d9cafc",
+      "role": "diagnostic",
+      "disposition": "diagnostic",
+      "reason": "Same extreme conditioning class as77 with a full/tail geometry variation. Retain that geometry requirement separately; do not make1e10 cancellation an unconditional optimization gate.",
+      "run_when": "attention extreme conditioning, full/tail geometry"
+    },
+    {
+      "id": "c974ec730c3e361d5a62608aa954478a6cea10d6f9183d7f03bd9f45a6a125c8",
+      "record_sha256": "8b77dedd3f7c999fe0fbd9638012945aeb13ea3ba69ddeae906be4ad02930fb1",
+      "role": "core",
+      "disposition": "retain",
+      "reason": "Two bounded queries must retain separate maxima/denominators. Reusing a normalization across distinct queries changes the function, not just rounding.",
+      "run_when": "attention normalization partitioning and CSE"
+    },
+    {
+      "id": "aa23bbd00f94abe9dbc6694c46de82eb9301c84a543e450bb885fbd04814cfc9",
+      "record_sha256": "d19c2bd2a3bec773824958f86b82d9a79fad352112e7b28da83b1537821a12cc",
+      "role": "core",
+      "disposition": "retain",
+      "reason": "Despite the cancellation label, actual q/kt magnitudes are below0.21. Non-unit seeded coefficients and width32 test recognition legality with an ordinary-domain error budget.",
+      "run_when": "online reduction coefficients, seeds, full segment32"
+    },
+    {
+      "id": "de25e54114aafebfaba9eafe00ae8d6e99c0c9899d8da73bdf1bf36b358a40db",
+      "record_sha256": "bb300adb08c62e4716ff244b3b3506bda9db46b0c0ad7d7b537391ed85d73031",
+      "role": "core",
+      "disposition": "retain",
+      "reason": "Keys65 cross a width32 boundary with non-unit coefficients. The original full32 witness80 cannot establish last-segment masking.",
+      "run_when": "online coefficients, segment32 tails"
+    },
+    {
+      "id": "ef3488d3d03c4f7f3620186ff7372cca28aa9e0571f7b99093be9ef08570f98c",
+      "record_sha256": "0b5e7523e9b57853475073063e01edcfc0568c36a26e56486fbbaca473dfaebd",
+      "role": "core",
+      "disposition": "retain",
+      "reason": "Partial D7 geometry plus non-unit coefficients combines a fallback path with coefficient-sensitive semantics; standard-coefficient fallback76 is not its replacement.",
+      "run_when": "coefficient-sensitive attention fallback"
+    },
+    {
+      "id": "274cb67281df56837bc7b9c4acf1ab1f3c08fcdfc957790eb7e64d6140c8e2f4",
+      "record_sha256": "2bb082fef029fb0855bc49f2ca393010e0a14eba2b2557d72f41787573dfe317",
+      "role": "core",
+      "disposition": "retain",
+      "reason": "Two actually equivalent normalization graphs should remain equivalent when values are reused; distinct-query case79 tests the opposite condition and does not replace this.",
+      "run_when": "attention value numbering and normalized-state equivalence"
+    },
+    {
+      "id": "4c6c88581fe20f1735d190ca1889f979dc7f5341908067e2e8355062d25e8d74",
+      "record_sha256": "9fa478f27d276feeeadec54a8abce5016440620c69ad14b3b38c643b0204e981",
+      "role": "core",
+      "disposition": "retain",
+      "reason": "Same lifetime bug as57, but subgroup width8 selects a distinct lane grouping from width16. Small exact integer data do not constrain FP approximation.",
+      "run_when": "KEY batching, subgroup-width generality, nested score scopes"
+    },
+    {
+      "id": "b412a7cb07b9335138462db316ccd81aa36c6f8dfbfa84ca9bdd2edd95793212",
+      "record_sha256": "02405def30a6f2dd3b67723c2a9ef20dcef6c5eb5571a4ae6efb4112be99a9c8",
+      "role": "core",
+      "disposition": "retain",
+      "reason": "Multi-trip ordinary and strided loops distinguish local seeded declarations, exported current-loop folds and inherited updates. All actual expected values are small exact integers.",
+      "run_when": "fold scope ownership, nested loops, seedFalse updates"
+    },
+    {
+      "id": "5200ccc23b3176e293f0796e7a473f07aa6cdc78e120c4c8597d634fe018bbd4",
+      "record_sha256": "ed57f8ff8faba1811137566af58bed3fe4186d1a349373f0f73161cff6b7f8b8",
+      "role": "core",
+      "disposition": "retain",
+      "reason": "Width127 tests a masked single slice. The multi-slice257 case47 exercises different last-slice conditions and is not a dominance proof.",
+      "run_when": "online softmax, one-slice tails"
+    },
+    {
+      "id": "cb0368cb52f2f0f055040645a451637f4b7972d40f5736d761c02b858258f8ca",
+      "record_sha256": "e43f024837986c22ed51c71a4a164308f19470bfde575f16a29511036ff29a2e",
+      "role": "core",
+      "disposition": "retain",
+      "reason": "Direct Loop and nested StridedLoop56 use different statement dispatch and barrier entry; preserve both code paths with small exact integer sums.",
+      "run_when": "partial CTAs, uniform Loop, barrier participation"
+    },
+    {
+      "id": "1575656197e94c0eaf8603489abcab2416259e541c06c80ebcb11d75d2f81b4e",
+      "record_sha256": "0de45d10bcff8dee93567fc031d1b9459bf2b8b3eebe56c61bff1e5f6caff983",
+      "role": "core",
+      "disposition": "retain",
+      "reason": "Lead3/slots4 adds an initial publication/wait stage relative to lead2/slots3. This is an additional scheduling boundary, not just another seed.",
+      "run_when": "async prefill stages and four-slot ring rotation"
+    },
+    {
+      "id": "7f86048eb7814d46ed97a1952e39716a6d5c03755faa1f977d954565686342dd",
+      "record_sha256": "cfcffec36889e1bb43ec49f1d5f26e5dc943b17ba24412c6de6b40fe42aa9026",
+      "role": "targeted",
+      "disposition": "targeted",
+      "reason": "Shares native opcode with signed left shift but has a different declared type/dispatch. Retain targeted rather than claiming either variant proves both.",
+      "run_when": "U64 left shift and type dispatch"
+    },
+    {
+      "id": "06a6f12448fbb8fa89a986b27daaf213436aecfc3a82bba559eb3ba17e6b8e70",
+      "record_sha256": "6d49c9a8f266fda11dc1305300e81a775b150e7efb0e46920b5c2124d7320c86",
+      "role": "core",
+      "disposition": "retain",
+      "reason": "Width-one scalar adds over4099 values test the final element and partial Tile without the expression machinery in15 or grouped-vector path in91.",
+      "run_when": "scalar global loads/stores and odd tails"
+    },
+    {
+      "id": "fe256034fe7c7c62265efd48a8f68916a616af576075f2b372d88752fcde592c",
+      "record_sha256": "a8daaadeb86479ecc0ca0a6f85f8f4f3cf93b5bde7c95fffa40e59c5da089bfb",
+      "role": "core",
+      "disposition": "retain",
+      "reason": "Grouped width2 add with2049 values has one leftover element; published aligned width2 and width4 row-oriented case25 do not exercise this boundary.",
+      "run_when": "width2 vector loads/stores, odd tail fallback"
+    },
+    {
+      "id": "cc1c8cef5b4d98b091c309d15df9d9e8d44699998053cd6685bd78d9d5ee815f",
+      "record_sha256": "a4e9e1a11dd8d310b96d4792d7327455c4375d9abb774bbfdc77a2aab5d446be",
+      "role": "replace",
+      "disposition": "replace",
+      "reason": "Every expected output is zero and sparse impulses do not establish nonzero product accumulation. Keep the frozen historical case, but do not count it as numerical matmul coverage or use it to certify a fast contraction path.",
+      "run_when": "standalone serial matmul needs a nonzero independent-reference version"
+    },
+    {
+      "id": "120bf007fb2d0af543caa8755dcdd83c7603bc6adcb8641fbf9362fff305448c",
+      "record_sha256": "235831e73129676ef485996022b00264fa06c7aee0f1e4dc22e13c7b894d9679",
+      "role": "targeted",
+      "disposition": "targeted",
+      "reason": "Adds one block to the generated softmax launch. Useful bounds/collective hygiene, but not a new mathematical softmax precision requirement or demonstrated challenge-generated launch.",
+      "run_when": "Tile launch guards, whole-CTA collective participation"
+    },
+    {
+      "id": "50933049c21c35c80b8a84e353ad10dc52190cdeec1dac111dc4aa581185ba5a",
+      "record_sha256": "1aa765a16fdf9ee99d34418b79b154e46b40d21c2ad5ea44d869816e4d02345c",
+      "role": "targeted",
+      "disposition": "targeted",
+      "reason": "Transport-only half-offset/partial copy exposes illegal2-byte PTX emission for an IR4-byte copy. Exact transport is justified; unrelated F32 math need not run this extension test.",
+      "run_when": "half CpAsyncCopy, raw transport, alignment"
+    },
+    {
+      "id": "e5a00bcecf77832d362d8926481a665537efc1b93f0bd5cd9d98df9731b4b55b",
+      "record_sha256": "c16fd560dc23dfa62faf0d5eb9bd97a05eab6c184772c6d6cf74e5ae9801a703",
+      "role": "targeted",
+      "disposition": "targeted",
+      "reason": "Body redefines its induction name before a shared load; the legacy vector planner must decline/rebind rather than assume it is unchanged. Tests optimizer legality, not FP accuracy.",
+      "run_when": "shared-vector planning and loop-axis definition analysis"
+    },
+    {
+      "id": "125c08ddf52d01a698050d20beee9b68d8529f763aa2144f36d26d44c579a4cc",
+      "record_sha256": "4f3eabd518f03c098428885252329b14f675833ae1ba883bde191b0eb7fb0f6b",
+      "role": "core",
+      "disposition": "retain",
+      "reason": "Collective scratch/right-hand names must restore outer values. Data and expected sums are small exact integers, so the256 wrong outputs are state corruption, not acceptable approximation.",
+      "run_when": "WarpShuffle/TreeHalve lexical frames and carried bindings"
+    },
+    {
+      "id": "d0e2d09f8771d8600dcf4e250dfba1cbfd986969522d7bbea746d857966f3720",
+      "record_sha256": "ecfa0cdf5e62faaa1eba023ae4db6aae59ce52510053eccb4e18a5d33c2cdb7b",
+      "role": "targeted",
+      "disposition": "targeted",
+      "reason": "A16-byte transport between F64 and F32 storage must use byte offsets rather than scalar conversion/element stepping. Real raw-copy extension behavior, not an F32 exp constraint.",
+      "run_when": "mixed-storage CpAsyncCopy and pointer arithmetic"
+    },
+    {
+      "id": "d51e9f76fb9d8a7f9d379dc1bc0f3e08f29b8926d6472f41892b7f5cec63da4f",
+      "record_sha256": "09305b8365c067fac62e515b9b753d0b118a887068284585f4057b8e37443b7b",
+      "role": "core",
+      "disposition": "retain",
+      "reason": "Pure renaming of a logical axis to tid must preserve ordinary attention at its unchanged tolerance. It directly catches4095 wrong outputs in a currently optimized path, with no adversarial numeric data.",
+      "run_when": "cooperative work assignment and hardware-ID ownership"
+    },
+    {
+      "id": "991d11340dcd1bfffd619a05729b8e19afb2b8866be99d6d0d7ef17d80598a18",
+      "record_sha256": "e1b74fae29d00a34c3611571198e51a59b80ff8c3fcd8c8a6abd50b50662ccbf",
+      "role": "diagnostic",
+      "disposition": "diagnostic",
+      "reason": "Max-finite times zero exposes a genuine nonfinite decomposition result. Use as range/fallback stress, not a reason to disable TF32 globally on ordinary workloads. It is also the only MMA-activating case in this100: ordinary-domain MMA numerical coverage is missing and must not be inferred from the other99 passes.",
+      "run_when": "TF32 range guards, component decomposition, fallback selection"
+    }
+  ]
+}

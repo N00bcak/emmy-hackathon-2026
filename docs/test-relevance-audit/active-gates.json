@@ -1,0 +1,234 @@
+{
+  "version": "active-tolerance-aware-gates-v6",
+  "active": true,
+  "numerical_contract": "Final outputs meet justified rtol/atol. No blanket intermediate exactness, serial FP order, no-FMA rule or no-FTZ rule. Exact integer/address/transport behavior remains mandatory.",
+  "mandatory15": [
+    "c10866af73f820553331b01c52e042e5d724c275a6f5fedd9348170ba75d382c",
+    "69db4e7f597c41b0684fb30c3204e197cf56c8647d9a63dc0adb77f2a8a0d867",
+    "6ab09ab4acc384ee252370a564a13965ece1ad21a3e64d6615f0de1a39b8c665",
+    "89d56c168a0b04373ef8d50096c48534c70019b8d2f87371b79aee2289922b44",
+    "1e82d7e58a53e8795ea9d05e3759dfe201e42308efd08dd2a51e79c769dc2fbc",
+    "cd9a29496fccd9e421c1cfbe14347cb45003f38681e3b4b2e703f5dbbfdd6c5d",
+    "aeb1568894b7afb50ea0b1b6c6fe94b57419452643ec87c5c6561f9ebfc58bbe",
+    "4035b0c010105ed7be8aa1a889fe2754d498fc4a27c1719bf547ddad66e48403",
+    "5e973341ada3e33f701293be5a3e6195badb7290a5471f4c6cefa86634d1b168",
+    "3145aa57f753f64551cd4b83c3d430e6e2375a9feb4819accbfd5e55c39da560",
+    "aeeffce3a36b8cf1b27173b8c1644fc517a24d992173e06bb1664784b009b6ba",
+    "2ffefe7fee88d864b3ac97cd70fe9711643f3551fba367299df52f329649154d",
+    "a56bdb784a46a763c2b633ebb5d16ee1ffd4287cb0984168b4f80909c323ce22",
+    "6dfbe2bc925e2b31ceb8eb84bb5016cca8af143ca55cf93078d09decc26a0fd3",
+    "5c2ba872d36e6526a79b9799c059e237f65a34019cd94f1c85da4f0b9f930d3f"
+  ],
+  "targeted": [
+    {
+      "id": "07247b475413b2486a6138901e9a05e886b2993ef6d21c963b2cc7bce52c3e0d",
+      "run_when": "launch flattening, scalar ABI, expression lowering"
+    },
+    {
+      "id": "c5940d93d7e94754b865cde5571eb2e6e91067518afb569e4f871284d5d3985f",
+      "run_when": "Builtin lowering, XYZ launch mapping"
+    },
+    {
+      "id": "6cbcd2d465379c7f0d61cf88e1074f31e8296caefc4a85394212978d907873d5",
+      "run_when": "F16 load/store, conversions, arithmetic"
+    },
+    {
+      "id": "61098ba0cc34ea091b2a821816dec4f8743aa37dc010ee6b20a8c46722a48c4f",
+      "run_when": "F64 lowering and memory widths"
+    },
+    {
+      "id": "3403dbd465d8a05049feb992ea67d9ecf4de0fb1ef106c2bd71146e312b437fb",
+      "run_when": "bitcast and typed register/value lowering"
+    },
+    {
+      "id": "61376e724851b5c2da0888a4dd999d755ce44ae5e591390537922d6fe3d4220f",
+      "run_when": "I32 FuncCall/Cast and expression typing"
+    },
+    {
+      "id": "f188ef762959e2f777587b9dbfb60421c6765cfd5412b37516c4b7113e7ff42a",
+      "run_when": "CastExpr, structural keys, expression CSE"
+    },
+    {
+      "id": "0e80b09925f0f9637cdef513d58020e8dbd3fe023ee87c0372fbc01393d37f7e",
+      "run_when": "FuncCallExpr, structural keys, expression CSE"
+    },
+    {
+      "id": "bd8a59fd719b12c89bb2bef8b221fb1c007d5ade73a552c1d35f9a055886d363",
+      "run_when": "FlatIndex, structural keys, address CSE"
+    },
+    {
+      "id": "3e9203274f6927cb955cf2e8d0af2e7e870ace628d9a26e6b356409a4e032631",
+      "run_when": "Builtin, structural keys, expression CSE"
+    },
+    {
+      "id": "b5cc80a79e59c19edb2f07d14c0afe088a9c440310666187b50e20cd69c4397c",
+      "run_when": "Init seeds, minimum identities, large-domain specialization"
+    },
+    {
+      "id": "943cbd88c1f4ca66ae34098886c73543341807db35df0d3289820b2be0ab4a74",
+      "run_when": "Init seeds, maximum identities, large-domain specialization"
+    },
+    {
+      "id": "669f6890c8882493e5571cfcd0f2a0172bc9b729375ab98513331ac0d089e3a4",
+      "run_when": "dynamic StridedLoop headers and mutable scalar state"
+    },
+    {
+      "id": "83fb961f7fc2aee057d579cd6309ef1cce9d1c66a0521d78c4c6978d50b289e5",
+      "run_when": "dynamic StridedLoop headers and lexical shadowing"
+    },
+    {
+      "id": "8e6693eaac063e733279668d2476edb7ac5fad6f11b9a493541574512c7552b7",
+      "run_when": "StridedLoop bounds, subgroup carried values"
+    },
+    {
+      "id": "9e1f76b1c9291d28133d85a85ae619cdd4d7ca52d54f649c3e7e9d925e54e0e8",
+      "run_when": "attention size-one and tiny-tile fallback"
+    },
+    {
+      "id": "57e82125a796bb9080bee679a08f137d78367aa66643aca4080c92adc9932dfe",
+      "run_when": "I64 right shift and integer carrier widths"
+    },
+    {
+      "id": "2c15db2e5679909cef087ecdd13de5ce6fb7cf56ae54b090f7a966d6dcb6a30e",
+      "run_when": "recursive expression keys, CastExpr children"
+    },
+    {
+      "id": "7d586595132adb5191192231cef884f5daa56077f115b310c20d34f5b65b7c95",
+      "run_when": "recursive expression keys, TernaryExpr, CastExpr children"
+    },
+    {
+      "id": "a3637b82238835d8027901de0aee04a9d7df15e69ac12d965e1c9f490c209ef5",
+      "run_when": "Select lowering and mutable snapshots"
+    },
+    {
+      "id": "0ae55875282f68e45972d28c44d9c31c0b3499e2227776855effb0b9b6595d4f",
+      "run_when": "I64 left shift and bit-carrier typing"
+    },
+    {
+      "id": "cd76e69248753128806ede69cd08da03329d51a9db2948a7b0cf07cb01217721",
+      "run_when": "U64 right shift and sign semantics"
+    },
+    {
+      "id": "6f6357065acf5b24d4be3132257111f2e40e8cc0cba48570e067276205551d25",
+      "run_when": "mixed F32/F16 operations and explicit result rounding"
+    },
+    {
+      "id": "7f86048eb7814d46ed97a1952e39716a6d5c03755faa1f977d954565686342dd",
+      "run_when": "U64 left shift and type dispatch"
+    },
+    {
+      "id": "120bf007fb2d0af543caa8755dcdd83c7603bc6adcb8641fbf9362fff305448c",
+      "run_when": "Tile launch guards, whole-CTA collective participation"
+    },
+    {
+      "id": "50933049c21c35c80b8a84e353ad10dc52190cdeec1dac111dc4aa581185ba5a",
+      "run_when": "half CpAsyncCopy, raw transport, alignment"
+    },
+    {
+      "id": "e5a00bcecf77832d362d8926481a665537efc1b93f0bd5cd9d98df9731b4b55b",
+      "run_when": "shared-vector planning and loop-axis definition analysis"
+    },
+    {
+      "id": "d0e2d09f8771d8600dcf4e250dfba1cbfd986969522d7bbea746d857966f3720",
+      "run_when": "mixed-storage CpAsyncCopy and pointer arithmetic"
+    },
+    {
+      "id": "0b105d1d621300b67d669153b464eea8cb13521ff8321f0f70b36c3c46842ad8",
+      "run_when": "generic exp, numerical range/fallback, or downstream rescaling changes; not every recognized normalized-softmax fast path"
+    },
+    {
+      "id": "070527b9d199101d6d0a24116c8cdc62a9e179d57bfc5fb89842666c6d13cf20",
+      "run_when": "generic exp, numerical range/fallback, or downstream rescaling changes; not every recognized normalized-softmax fast path"
+    }
+  ],
+  "diagnostic_only": [
+    "31e66c227e064fdcdfdbd607624fae8c845d5a1c7f07668e40759e9961c1435f",
+    "bfc4b7ce74bafe017db5d345724a8ab527509641a581e2a9906b74a5a3a73c0f",
+    "55256bcbea1510499cff61c4f643eb7de10964fca4a7d43dc9cb8eca5a323236",
+    "44c6e344374056121b8a007268039a7d7823bf44aed0149ed4d96ddf9164d0c2",
+    "dd375967ea3896ace9e00ecb875af9b42a8cc2e0f22ca8525b29b556bbe04389",
+    "991d11340dcd1bfffd619a05729b8e19afb2b8866be99d6d0d7ef17d80598a18",
+    "5ac01e040156b424b17a99e962e9b0bc098682db271cb5e10181003c87d1cf58"
+  ],
+  "oracle_replacement": [
+    "cc1c8cef5b4d98b091c309d15df9d9e8d44699998053cd6685bd78d9d5ee815f"
+  ],
+  "coverage_gaps": [
+    "Ordinary-domain MMA-active numerical witness: existing99 non-MMA passes cannot validate the TF32 path.",
+    "Bounded per-thread output membership witness for redistributed vector reductions, with mathematical reference and reasonable output tolerance instead of zero-tolerance cancellation.",
+    "Nonzero standalone serial contraction reference to replace the weak all-zero result case.",
+    "Bounded seeded/shared-dot extents8 and17 and bounded full/tail attention geometry if removing their extreme cancellation diagnostics from the routine profile. Existing ordinary seeded extents9/12 do not prove every boundary."
+  ],
+  "activation": "Repository routine default on n00bcak; source-bound runtime qualification is separate.",
+  "core_case_ids": [
+    "c10866af73f820553331b01c52e042e5d724c275a6f5fedd9348170ba75d382c",
+    "69db4e7f597c41b0684fb30c3204e197cf56c8647d9a63dc0adb77f2a8a0d867",
+    "6ab09ab4acc384ee252370a564a13965ece1ad21a3e64d6615f0de1a39b8c665",
+    "89d56c168a0b04373ef8d50096c48534c70019b8d2f87371b79aee2289922b44",
+    "1e82d7e58a53e8795ea9d05e3759dfe201e42308efd08dd2a51e79c769dc2fbc",
+    "cd9a29496fccd9e421c1cfbe14347cb45003f38681e3b4b2e703f5dbbfdd6c5d",
+    "aeb1568894b7afb50ea0b1b6c6fe94b57419452643ec87c5c6561f9ebfc58bbe",
+    "4035b0c010105ed7be8aa1a889fe2754d498fc4a27c1719bf547ddad66e48403",
+    "5e973341ada3e33f701293be5a3e6195badb7290a5471f4c6cefa86634d1b168",
+    "3145aa57f753f64551cd4b83c3d430e6e2375a9feb4819accbfd5e55c39da560",
+    "aeeffce3a36b8cf1b27173b8c1644fc517a24d992173e06bb1664784b009b6ba",
+    "2ffefe7fee88d864b3ac97cd70fe9711643f3551fba367299df52f329649154d",
+    "a56bdb784a46a763c2b633ebb5d16ee1ffd4287cb0984168b4f80909c323ce22",
+    "6dfbe2bc925e2b31ceb8eb84bb5016cca8af143ca55cf93078d09decc26a0fd3",
+    "5c2ba872d36e6526a79b9799c059e237f65a34019cd94f1c85da4f0b9f930d3f",
+    "fae06ecf5a68131f772531ea344d7a9c6e1f07075d191720cf5c330930af9f96",
+    "dc8cc0e8d88e7d60dcdf702bacc8d91e2e1761c18e9040ffd9b34c90477315c5",
+    "b3b9d4ccd080adb9d5a05ae938aec6089818bc50230ec5093d25c135097c90a1",
+    "b24c76efd4ba9fd8763e69cfd1e0926f876281a2a06fd64c8dc9e882b9a33aed",
+    "068fb6cb67fb91185ea4063ac15b15ae1ea8b0ebeb9a05d6fef2e777f31f2348",
+    "1f9428cef0a7750c55fec497401857955bd037aed43ab72a1abf26627ef390af",
+    "807f6dfcde812fedd65efdbd0428a3f07108c21131ef242269c5fa5df0fec1c2",
+    "fff293a2235c2158ffc525f848ce136c020fdfa506b79c147ccadd0a39931751",
+    "061d7084b7298d83ba14950823669b4734ed6cc3f9f51bd5ee830f10e18ee56a",
+    "da018f96fc2e54583814b7dc39cce909d332add031820662839c2706fccdc91d",
+    "2623ef7bdace949bb90f19ab8499a43d44db719441a3583870dbdf14d0c08172",
+    "48189071240806b192fd70230a1d4af9b7fce13e389c91f4c88a93a35c9388a9",
+    "5224818b2d26d5b73af6c783a756518a271351ca1a5529cbc0686f7e181387fa",
+    "cc0b21f91dca260efa45b680481e1ba9f39dcee329f149f6db678c8c8b9f97be",
+    "72f1deeac451a01002043dead776384004b887cdcec9089a0bdfcc02923c022d",
+    "0a50249d1218b576c10e21a7020336fa287d4d5d6bd7a39511aa2219aa070556",
+    "e4ac354528a2ab697578716e36b5ac607df309f75252462e861b435ad2f5d7c5",
+    "fa41b5e778718c3209536b85787001a3fce87f9cbc7f4b8288e18ffa0777fcc6",
+    "8a7db526571189e3b67c95f11a3294d910c6e10a53d58c33f0c9a97031e3a9b8",
+    "ee167cb896bcfad085da910c9c0eb88a93bf186403b908a2524fca7e8a4c5378",
+    "fb08b0884f3532cd8a601414cd6f2434f05b99602b99dfee396c8b73fc9643f4",
+    "d7be87bc0caabbc560a024cd044944f15da13f4085819fc40ebcba4940f64200",
+    "09d6470c83d329ff46f9a20e9fee4ac3aebe60c50227116328113f9a20a888f0",
+    "e8f4437dd934a945ab53494a64920d8c0145bacfe1a4df3dd4fcba6a08c4790d",
+    "b0bb43becf74a1f513ddbfb8df76804664d52c90fbbc9104b45c889a6cdbabc5",
+    "d7aa0ab891e7af29fab0846614d52d73add946c3a47a8872624bbec069c6bff3",
+    "9170e7b0641d3224fb2e365ef4bc9d87f45db4ffffe191b1544c0548f485001f",
+    "c37693f91a7210ccc513e699de5a289e2f2f909f83a7059ed6e386a2a263a25d",
+    "7bb9d9c27732924a02ca9869601a7af55fd6276ae6894ed00c3dbc7be5d84228",
+    "21171f5ca6c366ded10c9865a3160437b8985dd0a89d83770c473c30f8b3e195",
+    "a083ac93290653c119bae4512c057058495a50fa9d0528dc7ce6e3caff5c6065",
+    "b8c0079b7d4413a1880f4f91f7c435e2281f9b5c92861c7980388a4bd2882555",
+    "0192aa8028246287221f7448e6c9dfec47cc2cfdfa3ec825d1c7ee28cec28c6a",
+    "6ac8c7773141710aafc9375e2ac493eada0dd20901b152f729d6255f79336317",
+    "8996904203776bc61d7da020bfba25d6b8df989336f7641ac753c3f80556a25e",
+    "bdd094ff243fd119a72e2e675ee682294887bced491b5131041c7f8ac744fdc3",
+    "c974ec730c3e361d5a62608aa954478a6cea10d6f9183d7f03bd9f45a6a125c8",
+    "aa23bbd00f94abe9dbc6694c46de82eb9301c84a543e450bb885fbd04814cfc9",
+    "de25e54114aafebfaba9eafe00ae8d6e99c0c9899d8da73bdf1bf36b358a40db",
+    "ef3488d3d03c4f7f3620186ff7372cca28aa9e0571f7b99093be9ef08570f98c",
+    "274cb67281df56837bc7b9c4acf1ab1f3c08fcdfc957790eb7e64d6140c8e2f4",
+    "4c6c88581fe20f1735d190ca1889f979dc7f5341908067e2e8355062d25e8d74",
+    "b412a7cb07b9335138462db316ccd81aa36c6f8dfbfa84ca9bdd2edd95793212",
+    "5200ccc23b3176e293f0796e7a473f07aa6cdc78e120c4c8597d634fe018bbd4",
+    "cb0368cb52f2f0f055040645a451637f4b7972d40f5736d761c02b858258f8ca",
+    "1575656197e94c0eaf8603489abcab2416259e541c06c80ebcb11d75d2f81b4e",
+    "06a6f12448fbb8fa89a986b27daaf213436aecfc3a82bba559eb3ba17e6b8e70",
+    "fe256034fe7c7c62265efd48a8f68916a616af576075f2b372d88752fcde592c",
+    "125c08ddf52d01a698050d20beee9b68d8529f763aa2144f36d26d44c579a4cc",
+    "d51e9f76fb9d8a7f9d379dc1bc0f3e08f29b8926d6472f41892b7f5cec63da4f"
+  ],
+  "historical_compatibility": "Legacy93policy preserved byte-exact in tests/gpu-regression-compact-v5.json; all100case payloads and tolerances unchanged.",
+  "policy": "tests/gpu-regression.json",
+  "policy_sha256": "1822bb1dd5bc30bb1bd824b424d36004402cda92216a921f8a27ef5dc0c21f54",
+  "qualification": "New scope identity; selection is not new GPU evidence and old gates must not be relabeled."
+}

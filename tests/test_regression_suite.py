@@ -1,6 +1,7 @@
 """Selection integrity tests; these do not claim GPU execution evidence."""
 import copy
 import json
+import shutil
 from pathlib import Path
 import tempfile
 import unittest
@@ -10,8 +11,9 @@ from tools.published import PUBLISHED_PROBLEMS
 
 
 class RegressionSelection(unittest.TestCase):
-    def test_checked_in_scope_retains_gate_and_marked_cases(self):
-        policy = suite.read(suite.DEFAULT_POLICY)
+    def test_legacy_v5_scope_and_receipts_remain_unchanged(self):
+        policy_path = suite.DEFAULT_POLICY.parent / 'gpu-regression-compact-v5.json'
+        policy = suite.read(policy_path)
         scope_path = suite.DEFAULT_POLICY.parent / policy['scope_manifest']['filename']
         self.assertEqual(suite.sha(scope_path.read_bytes()), policy['scope_manifest']['sha256'])
         scope = suite.read(scope_path)
@@ -26,13 +28,84 @@ class RegressionSelection(unittest.TestCase):
         self.assertEqual(sum(r['group'] == 'required_gate' for r in policy['cases']), 15)
         self.assertEqual(policy['assembly_targets'], ['sm_89', 'sm_120'])
         receipts = suite.read(suite.DEFAULT_POLICY.parents[1] / 'docs/evidence/powenn-test-scope-v5.json')
-        self.assertEqual(receipts['policy_sha256'], suite.sha(suite.DEFAULT_POLICY.read_bytes()))
+        self.assertEqual(receipts['policy_sha256'], suite.sha(policy_path.read_bytes()))
         expected = {r['id']: r['record_sha256'] for r in policy['cases']}
         for arm in ('ours', 'theirs'):
             results = [r for r in receipts['results'] if r['arm'] == arm]
             self.assertEqual({r['case_id']: r['case_record_sha256'] for r in results}, expected)
             for row in results:
                 self.assertEqual({r['arch'] for r in row['assembly']}, {'sm_89', 'sm_120'})
+
+    def test_audited_default_selects_exact_65_with_unchanged_records(self):
+        from tools.bundled_regressions import resolve
+        catalog, manifest = resolve('campaign100')
+        self.catalog.write_text(json.dumps(catalog))
+        result = suite.select([self.catalog])
+        self.assertEqual(result['case_ids'], manifest['suites']['core65'])
+        self.assertEqual(len(result['cases']), 65)
+        self.assertEqual(result['published_cases'], 15)
+        self.assertEqual(result['generated_cases'], 50)
+        self.assertEqual(result['archive_only_cases'], 35)
+        self.assertEqual(result['assembly_targets'], ['sm_89', 'sm_120'])
+        default, _ = resolve()
+        self.assertEqual([r['id'] for r in default['cases']], result['case_ids'])
+        legacy = suite.DEFAULT_POLICY.parent / 'gpu-regression-compact-v5.json'
+        self.assertEqual(suite.select([self.catalog], legacy)['case_ids'], manifest['suites']['default93'])
+        self.assertEqual(len(suite.select([self.catalog], full=True)['cases']), 100)
+
+    def test_audited_scope_rejects_role_record_and_inventory_tampering(self):
+        from tools.bundled_regressions import resolve
+        catalog, _ = resolve('campaign100')
+        self.catalog.write_text(json.dumps(catalog))
+        policy = suite.read(suite.DEFAULT_POLICY)
+        source_scope = suite.DEFAULT_POLICY.parent / policy['scope_manifest']['filename']
+        original = suite.read(source_scope)
+        legacy_name = original['previous_policy']['filename']
+        (self.root / legacy_name).write_bytes((source_scope.parent / legacy_name).read_bytes())
+        scope_path = self.root / 'scope.json'
+        def check(scope):
+            scope_path.write_text(json.dumps(scope))
+            policy['scope_manifest'] = {'filename': scope_path.name, 'sha256': suite.sha(scope_path.read_bytes())}
+            self.policy.write_text(json.dumps(policy))
+            return suite.select([self.catalog], self.policy)
+        self.assertEqual(len(check(original)['cases']), 65)
+        for mutate in (
+            lambda scope: scope['cases'].pop(),
+            lambda scope: scope['cases'][0].update(disposition='targeted'),
+            lambda scope: scope['cases'][0].update(record_sha256='0' * 64),
+            lambda scope: scope['cases'][0].update(reason=''),
+        ):
+            scope = copy.deepcopy(original)
+            mutate(scope)
+            with self.assertRaisesRegex(ValueError, 'audited scope'):
+                check(scope)
+        scope = copy.deepcopy(original)
+        scope['cases'][0]['role'] = 'core'
+        with self.assertRaisesRegex(ValueError, 'mandatory roles'):
+            check(scope)
+
+    def test_targeted_expansion_is_explicit_and_keeps_record_binding(self):
+        from tools.bundled_regressions import resolve
+        catalog, _ = resolve('campaign100')
+        policy = suite.read(suite.DEFAULT_POLICY)
+        scope = suite.read(suite.DEFAULT_POLICY.parent / policy['scope_manifest']['filename'])
+        extra = next(r['id'] for r in scope['cases'] if r['disposition'] == 'targeted')
+        self.catalog.write_text(json.dumps(catalog))
+        selection = suite.select([self.catalog], include_case_ids=[extra, extra])
+        self.assertEqual(len(selection['cases']), 66)
+        self.assertEqual(selection['case_ids'].count(extra), 1)
+        with self.assertRaisesRegex(ValueError, 'unknown additional case'):
+            suite.select([self.catalog], include_case_ids=['not-a-case'])
+        row = next(r for r in catalog['cases'] if r['id'] == extra)
+        copied = self.root / 'targeted-copy'
+        shutil.copytree(row['path'], copied)
+        row['path'] = str(copied)
+        record = suite.read(copied / 'case.json')
+        record['requires_sanitizer'] = not record.get('requires_sanitizer', False)
+        (copied / 'case.json').write_text(json.dumps(record))
+        self.catalog.write_text(json.dumps(catalog))
+        with self.assertRaisesRegex(ValueError, 'record changed'):
+            suite.select([self.catalog], include_case_ids=[extra])
 
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()
