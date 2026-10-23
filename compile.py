@@ -1019,10 +1019,13 @@ class Emitter:
         if kind == 'Literal':
             return 'literal', repr(x.value), getattr(x, 'dtype', None)
         if kind == 'BinaryExpr':
-            return 'binary', x.op, self.expr_key_at(x.left, versions), self.expr_key_at(x.right, versions)
+            left = self.expr_key_at(x.left, versions)
+            right = self.expr_key_at(x.right, versions)
+            return None if left is None or right is None else ('binary', x.op, left, right)
         if kind == 'TernaryExpr':
-            return ('ternary', self.expr_key_at(x.cond, versions),
-                    self.expr_key_at(x.if_true, versions), self.expr_key_at(x.if_false, versions))
+            parts = (self.expr_key_at(x.cond, versions),
+                     self.expr_key_at(x.if_true, versions), self.expr_key_at(x.if_false, versions))
+            return None if any(part is None for part in parts) else ('ternary', *parts)
         return None
 
     def expr(self, x):
