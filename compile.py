@@ -418,6 +418,9 @@ def emit_integer_binary(emitter, op, result, a, b):
         'right_shift': f'shr.{kind}{width}',
     }
     if op in direct:
+        if width == 64 and op in ('left_shift', 'right_shift'):
+            # PTX shift counts are always32-bit, including64-bit values.
+            b = convert_register(emitter, b, result, 'u32')
         emitter.emit(f'{direct[op]} {out}, {a}, {b};')
         return out
     if op not in ('divide', 'floor_divide', 'remainder', 'mod'):
@@ -2399,6 +2402,7 @@ class Emitter:
                     # numerical conversion is only established for scalar Load.
                     raise Unsupported('Vector Load stamp must match buffer storage dtype')
                 phys = dtype_info(source_dtype)[1]
+                loaded_bindings = []
                 for i, name in enumerate(s.names):
                     addr, space = self.address(s.input, s.index, i)
                     raw = self.reg(reg_suffix(source_dtype))
@@ -2409,7 +2413,12 @@ class Emitter:
                         self.emit(f'ld.{space}.{phys} {raw}, [{addr}];')
                     register, result_dtype = self.convert_operand(raw, source_dtype, dtype,
                                                                  copy_same_type=False)
+                    loaded_bindings.append((name, register, result_dtype))
+                # Grouped loads evaluate every address before publishing any
+                # destination binding, including names that shadow an index.
+                for name, register, result_dtype in loaded_bindings:
                     self.values[name] = (register, result_dtype)
+                    self.rebind(name)
             elif kind == 'Write':
                 if s.swizzle not in ('NONE', None):
                     raise Unsupported('Swizzled writes unsupported')
