@@ -1961,6 +1961,207 @@ class Emitter:
             return register, dtype
         return convert_register(self, operand, source_dtype, dtype), dtype
 
+
+    def find_key_batches(self, statements):
+        """Batch independent readonly scores, keeping every F32 operation ordered."""
+        if self.geometry_3d or len(statements) != 1 or type(statements[0]).__name__ != 'Tile':
+            return {}
+        tile = statements[0]
+        names = [a.name for a in tile.axes]
+        extents = [static(a.extent) for a in tile.axes]
+        if not names or len(set(names)) != len(names):
+            return {}
+        width = extents[-1]
+        if (width < 2 or width > 32 or width & (width - 1)
+                or tile.aux_threads or tile.block_threads != self.block_threads
+                or self.block_threads % 32
+                or math.prod(extents) != self.block_threads * self.grid_blocks):
+            return {}
+        if tile.raster_group and tile.raster_axes:
+            pair = tile.raster_axes
+            if (len(pair) != 2 or any(a not in names[:-1] for a in pair)
+                    or names.index(pair[1]) != names.index(pair[0]) + 1):
+                return {}
+        def flat(body):
+            for statement in body:
+                yield statement
+                for nested in statement_bodies(statement):
+                    yield from flat(nested)
+        whole = list(flat(tile.body))
+        allowed = {'Load', 'Assign', 'Let', 'Init', 'Loop', 'Accum', 'Write'}
+        if any(type(statement).__name__ not in allowed for statement in whole):
+            return {}
+        written = {statement.output for statement in whole
+                   if type(statement).__name__ == 'Write'}
+        def used(body):
+            result = set()
+            for statement in flat(body):
+                result.update(statement.deps())
+                result.update(getattr(statement, 'carried_names', lambda: ())())
+                for expression in statement.exprs():
+                    result.update(expression.free_vars())
+            return result
+        def index_ok(expression, dot_axis, key_axis, uniform):
+            kind = type(expression).__name__
+            if kind == 'Literal':
+                return (isinstance(expression.value, (bool, int))
+                        and expression.dtype in ('int', 'bool', 'i32')
+                        and I32_MIN <= int(expression.value) <= I32_MAX)
+            if kind == 'Var':
+                return expression.name in uniform | {dot_axis, key_axis}
+            return (kind == 'BinaryExpr'
+                    and expression.op in ('+', '-', '*', '/', '//', '%', '&', '|', '<<', '>>')
+                    and index_ok(expression.left, dot_axis, key_axis, uniform)
+                    and index_ok(expression.right, dot_axis, key_axis, uniform))
+        plans = {}
+        def scan(body, uniform, external):
+            uniform = set(uniform)
+            body = list(body)
+            for position, loop in enumerate(body):
+                if type(loop).__name__ != 'Loop':
+                    uniform -= defined_names((loop,))
+                    continue
+                key = loop.axis.name
+                extent = static(loop.axis.extent)
+                definitions = defined_names(loop.body)
+                stable = uniform - definitions
+                outside = external | used(body[:position]) | used(body[position + 1:])
+                parts, dots = list(loop.body), []
+                for part in parts:
+                    if type(part).__name__ != 'Loop':
+                        break
+                    dots.append(part)
+                tail = parts[len(dots):]
+                valid = (0 < extent <= I32_MAX - (width - 1)
+                         and key not in definitions and dots and tail
+                         and all(type(part).__name__ in ('Load', 'Assign', 'Let', 'Accum')
+                                 for part in tail))
+                all_names, score_names, temps, address_names, dot_axes = set(), set(), set(), set(), set()
+                for dot in dots:
+                    axis = dot.axis.name
+                    dot_axes.add(axis)
+                    if (not dot.seed or not 0 < static(dot.axis.extent) <= I32_MAX
+                            or axis in defined_names(dot.body) or axis == key
+                            or [type(part).__name__ for part in dot.body]
+                               != ['Load', 'Load', 'Assign', 'Accum']):
+                        valid = False
+                        break
+                    left, right, product, accumulator = dot.body
+                    local_temps = (*left.names, *right.names, product.name)
+                    local_names = (*local_temps, accumulator.name)
+                    load_ok = all(
+                        len(load.names) == 1 and load.input not in written
+                        and load.input in self.buffers and load.input not in self.scalar_parameters
+                        and load.input not in self.shared
+                        and dtype_name(self.buffers[load.input][1]) == 'f32'
+                        and (load.dtype is None or dtype_name(load.dtype) == 'f32')
+                        and all(index_ok(index, axis, key, stable) for index in load.index)
+                        for load in (left, right))
+                    if (not load_ok or len(set(local_names)) != 4
+                            or set(local_names) & (all_names | stable | {axis, key})
+                            or product.op.name != 'multiply'
+                            or sorted(product.args) != sorted((left.names[0], right.names[0]))
+                            or (product.dtype is not None and dtype_name(product.dtype) != 'f32')
+                            or accumulator.value != product.name or accumulator.op.name != 'add'
+                            or accumulator.base is not None or tuple(accumulator.axes) != (axis,)
+                            or (accumulator.dtype is not None and dtype_name(accumulator.dtype) != 'f32')):
+                        valid = False
+                        break
+                    all_names.update(local_names)
+                    score_names.add(accumulator.name)
+                    temps.update(local_temps)
+                    address_names.update(set().union(*(set(index.free_vars())
+                        for load in (left, right) for index in load.index)) - {axis, key})
+                tail_defs = defined_names(tail)
+                if (valid and not temps & (outside | used(tail))
+                        and not score_names & tail_defs
+                        and not tail_defs & (stable | dot_axes | {key})
+                        and not all_names & dot_axes
+                        and all(type(part).__name__ != 'Load' or
+                                part.input not in written for part in tail)):
+                    plans[id(loop)] = (width, tuple(dots), tuple(tail),
+                                       frozenset(address_names), frozenset(temps))
+                if key not in definitions and 0 < extent <= I32_MAX:
+                    scan(loop.body, stable | {key}, outside)
+                old_axis_uniform = key in uniform
+                uniform -= definitions
+                if old_axis_uniform:
+                    uniform.add(key)
+        scan(tile.body, set(names[:-1]), set())
+        return plans
+
+    def ordered_key_batch(self, loop):
+        plan = self.key_batches.get(id(loop))
+        if plan is None or self.inactive:
+            return False
+        width, dots, tail, uniform, temps = plan
+        if (any(name not in self.values or self.values[name][1] != 'i32'
+                for name in uniform)
+                or any(name in self.mutable for name in temps)):
+            return False
+        extent = static(loop.axis.extent)
+        base, lane, segment = self.reg('r'), self.reg('r'), self.reg('r')
+        self.emit(f'mov.s32 {base}, 0;')
+        self.emit(f'and.b32 {lane}, {self.hardware_lane}, {width - 1};')
+        self.emit(f'and.b32 {segment}, {self.hardware_lane}, {32 - width};')
+        private = [self.reg('f') for _ in dots]
+        begin, done = self.label('key_batch'), self.label('key_batch_done')
+        self.mark(begin)
+        stop = self.reg('p')
+        self.emit(f'setp.ge.s32 {stop}, {base}, {extent};')
+        self.emit(f'@{stop} bra {done};')
+        for saved in private:
+            self.emit(f'mov.f32 {saved}, 0f00000000;')
+        key = self.reg('r')
+        self.emit(f'add.s32 {key}, {base}, {lane};')
+        self.values[loop.axis.name] = (key, 'i32')
+        self.set_integer_range(key, checked_i32_interval(0, extent + width - 2))
+        self.rebind(loop.axis.name)
+        absent, joined = self.reg('p'), self.label('key_scores_ready')
+        self.emit(f'setp.ge.s32 {absent}, {key}, {extent};')
+        self.emit(f'@{absent} bra {joined};')
+        # These are the original serial-D loops. Snapshot explicitly: replay
+        # must not overwrite the per-lane private scores needed by later slots.
+        for dot, saved in zip(dots, private, strict=True):
+            self.statements((dot,))
+            value, dtype = self.values[dot.body[-1].name]
+            if dtype != 'f32':
+                raise Unsupported('Key batching requires an F32 score')
+            self.emit(f'mov.f32 {saved}, {value};')
+        self.mark(joined)
+        # Every physical lane reconverges before any full-mask indexed shuffle.
+        slot = self.reg('r')
+        self.emit(f'mov.s32 {slot}, 0;')
+        replay, replay_done = self.label('key_replay'), self.label('key_replay_done')
+        self.mark(replay)
+        self.emit(f'setp.ge.s32 {stop}, {slot}, {width};')
+        self.emit(f'@{stop} bra {replay_done};')
+        replay_key = self.reg('r')
+        self.emit(f'add.s32 {replay_key}, {base}, {slot};')
+        self.emit(f'setp.ge.s32 {stop}, {replay_key}, {extent};')
+        self.emit(f'@{stop} bra {replay_done};')
+        self.values[loop.axis.name] = (replay_key, 'i32')
+        self.set_integer_range(replay_key, checked_i32_interval(0, extent - 1))
+        self.rebind(loop.axis.name)
+        source = self.reg('r')
+        self.emit(f'add.s32 {source}, {segment}, {slot};')
+        for dot, saved in zip(dots, private, strict=True):
+            name = dot.body[-1].name
+            public = self.reg('f')
+            self.emit(f'shfl.sync.idx.b32 {public}, {saved}, {source}, 31, 0xffffffff;')
+            self.values[name] = (public, 'f32')
+            self.mutable[name] = public
+            self.rebind(name)
+        self.statements(tail)
+        self.emit(f'add.s32 {slot}, {slot}, 1;')
+        self.emit(f'bra {replay};')
+        self.mark(replay_done)
+        self.emit(f'add.s32 {base}, {base}, {width};')
+        self.rebind(loop.axis.name)
+        self.emit(f'bra {begin};')
+        self.mark(done)
+        return True
+
     def shared_compute_body(self, loop):
         """Prove a flat, active, shared-F32 compute loop without emitting code."""
         if self.inactive or loop.axis.name in defined_names(loop.body):
@@ -2520,6 +2721,8 @@ class Emitter:
                         self.init_accums(s.body)
                     loop_init_frame = self.init_scope_frame(s.body)
                     extent = static(s.axis.extent)
+                    if kind == 'Loop' and self.ordered_key_batch(s):
+                        continue
                     if kind == 'Loop' and 8 <= extent <= I32_MAX and self.shared_compute_body(s):
                         factor = 8
                         vector_plan = self.shared_vector_plan(s)
@@ -2910,6 +3113,7 @@ class Emitter:
                 raise Unsupported(f'Unsupported statement {kind}')
 
     def render(self):
+        self.key_batches = self.find_key_batches(self.node.op.body)
         self.statements(self.node.op.body)
         by_name = {arg['name']: arg for arg in self.meta['args']}
         params = []
