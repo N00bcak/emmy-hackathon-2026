@@ -9,6 +9,10 @@ by being read. For ordinary bug repair, follow AGENTS.md and run relevant tests;
 resume discovery only when the user asks.
 
 
+For cross-device lowering, validation, submissions or performance claims, read
+[compute-capability and submission guidance](../../../docs/compute-capability.md).
+Keep RTX 4090/SM8.9 and RTX 5090/SM12.0 execution evidence separate.
+
 Read root AGENTS.md and [the research guide](../../../docs/research-loop.md).
 Inspect actual frozen source, generated code and measurements. Distinguish:
 what changed in lowering; whether the mechanism activated; measured behavior;

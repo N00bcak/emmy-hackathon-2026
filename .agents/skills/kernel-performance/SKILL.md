@@ -7,6 +7,10 @@ Produce per-case evidence explaining where execution time goes, which limits com
 from the prescribed schedule, and which compiler changes could plausibly help.
 Do not label a latency good or bad merely because it is a few microseconds.
 
+For cross-device lowering, validation, submissions or performance claims, read
+[compute-capability and submission guidance](../../../docs/compute-capability.md).
+Keep RTX 4090/SM8.9 and RTX 5090/SM12.0 execution evidence separate.
+
 ## Establish the measurement
 
 Read repository AGENTS.md, the pinned challenge contract, and
