@@ -807,7 +807,6 @@ class Emitter:
         self.shared_bytes = 0
         self.has_cp_async = False
         self.cp_async_base = '__emmy_smem'
-        self._dynamic_shared_base = None
         def shared_layout(statements):
             for statement in statements:
                 if type(statement).__name__ == 'Smem':
@@ -932,10 +931,6 @@ class Emitter:
         self.hardware_gid = gid
         product = i32_binary_interval('*', self.integer_range(bid), self.integer_range(ntid))
         self.set_integer_range(gid, i32_binary_interval('+', product, self.integer_range(tid)))
-        if self.has_cp_async and self.dynamic_shared:
-            base = self.reg('rd')
-            self.emit(f'mov.u64 {base}, {self.cp_async_base};')
-            self._dynamic_shared_base = base
         for name, instruction, rhs in [('lane', 'and.b32', 31), ('warp', 'shr.u32', 5)]:
             reg = self.reg('r')
             self.emit(f'{instruction} {reg}, {tid}, {rhs};')
@@ -1349,29 +1344,23 @@ class Emitter:
         produce an unsupported generic-to-shared conversion. PTX's shared
         window is a 32-bit offset from that base.
         """
-        # PTX's shared window is a 32-bit offset from the shared base. Derive
-        # that offset by subtracting the slab base from the generic address;
-        # a 64-bit cvta.to.shared is not a valid operand form here.
+        # ``address`` builds a generic address. cp.async takes a full 32-bit
+        # shared-window address, so retain the slab's window position as well as
+        # the destination's offset within it. ptxas materializes a nonzero
+        # window position for dynamic shared memory on sm_120; on sm_89 it folds
+        # to zero.
         if base_name is None:
             raise Unsupported('cp.async requires a shared base name')
         shared32 = self.reg('r')
-        if self.dynamic_shared:
-            base = self._dynamic_shared_base
-            offset = self.reg('rd')
-            self.emit(f'sub.u64 {offset}, {destination}, {base};')
-            self.emit(f'cvt.u32.u64 {shared32}, {offset};')
-        else:
-            # A static slab symbol is already a shared-window address. Add the
-            # destination's offset within that slab to it; using only the
-            # offset would drop the slab's position for the second buffer.
-            base = self.reg('rd')
-            self.emit(f'mov.u64 {base}, {ident(base_name)};')
-            offset = self.reg('rd')
-            self.emit(f'sub.u64 {offset}, {destination}, {base};')
-            slab32 = self.reg('r')
-            self.emit(f'mov.u32 {slab32}, {ident(base_name)};')
-            self.emit(f'cvt.u32.u64 {shared32}, {offset};')
-            self.emit(f'add.u32 {shared32}, {slab32}, {shared32};')
+        slab = self.cp_async_base if self.dynamic_shared else ident(base_name)
+        base = self.reg('rd')
+        self.emit(f'mov.u64 {base}, {slab};')
+        offset = self.reg('rd')
+        self.emit(f'sub.u64 {offset}, {destination}, {base};')
+        slab32 = self.reg('r')
+        self.emit(f'mov.u32 {slab32}, {slab};')
+        self.emit(f'cvt.u32.u64 {shared32}, {offset};')
+        self.emit(f'add.u32 {shared32}, {slab32}, {shared32};')
         qualifier = 'cg' if nbytes == 16 else 'ca'
         pred = f'@{active} ' if active is not None else ''
         self.emit(f'{pred}cp.async.{qualifier}.shared.global '

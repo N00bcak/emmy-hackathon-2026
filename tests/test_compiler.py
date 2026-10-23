@@ -310,6 +310,33 @@ class CompilerTests(unittest.TestCase):
         # assumption; it branches to the scalar path on either address.
         self.assertIn('and.b64',out)
         self.assertIn('setp.eq.u64',out)
+        # Evaluate emitted address arithmetic independently of register names.
+        # The shared-state destination must be base+offset, including when the
+        # assembler assigns a nonzero dynamic slab position (SM120 regression).
+        import re
+        for dynamic in (False, True):
+            for base, offset in ((0, 48), (1024, 48), (6144, 256)):
+                with self.subTest(dynamic=dynamic, base=base, offset=offset):
+                    emitter=mod.Emitter.__new__(mod.Emitter)
+                    emitter.counts={'r':0, 'rd':0}; emitter.lines=[]
+                    emitter.dynamic_shared=dynamic
+                    emitter.cp_async_base='dynamic_slab'
+                    emitter._dynamic_shared_base='%old_base'
+                    slab='dynamic_slab' if dynamic else 'static_slab'
+                    registers={slab:base, '%destination':base+offset, '%old_base':base}
+                    emitter.emit_cp_async('%source','%destination',16,base_name='static_slab')
+                    for instruction in emitter.lines[:-1]:
+                        op, operands=instruction.strip().rstrip(';').split(None,1)
+                        dst,*args=[x.strip() for x in operands.split(',')]
+                        values=[registers[x] for x in args]
+                        if op.startswith(('mov.','cvt.')): value=values[0]
+                        elif op.startswith('sub.'): value=values[0]-values[1]
+                        elif op.startswith('add.'): value=sum(values)
+                        else: self.fail('Unhandled address instruction: '+op)
+                        bits=int(re.search(r'(32|64)$',op).group(1))
+                        registers[dst]=value % (1 << bits)
+                    destination=re.search(r'\[([^]]+)\]',emitter.lines[-1]).group(1)
+                    self.assertEqual(base+offset,registers[destination])
 
     def test_unaligned_copy_index_stays_scalar(self):
         path=fixture('m02_matmul_rect',self.out/'vector-copy-unaligned')

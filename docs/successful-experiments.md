@@ -81,3 +81,11 @@ The prior local history is retained at
 `refs/archive/emmy-before-organization-20261023-b900be8`.
 Durable organization metadata is under
 `campaigns/campaign-20261023-12h-v2/commit-organization-v1/`.
+
+## Subsequent shared-window repair
+
+The generic dynamic shared-window address fix from available `origin/main` commit `2647806`
+was ported into the retained compiler and independently validated: 122/122 SM8.9
+cases, 26 sanitizer checks,32 CPU tests and 15/15 official SM12.0 published cases.
+See [the source-bound repair record](shared-window-fix.md). This is a correctness
+repair with no new performance claim; all prior experiment records stay intact.

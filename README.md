@@ -1,10 +1,11 @@
 # Emmy compiler workspace
 
 A direct **Kernel IR → PTX** compiler and a local CUDA research system. The
-retained compiler is `f47c21b0...`: all 15 published problems pass on the configured
-RTX 4090, but the official RTX 5090 evaluation passes **14/15**, with
-`m01_matmul_512` unresolved. See [the current handoff](docs/HANDOFF.md) for exact
-identities, independently confirmed timings, regressions, and resume instructions.
+retained compiler is `51bd61bd...`: all 15 published problems pass on both the
+configured RTX 4090 (SM8.9) and official RTX 5090 (SM12.0). The compact 122-case
+suite and all 26 required sanitizer checks pass on the RTX 4090. See the
+[shared-window repair evidence](docs/shared-window-fix.md) and
+[current handoff](docs/HANDOFF.md) for identities, scope and resume instructions.
 The [RTX 4060 baseline report](docs/baseline-correctness.md) is historical.
 
 The lowering is ours, using Emmy's typed loader and sibling metadata for ABI and

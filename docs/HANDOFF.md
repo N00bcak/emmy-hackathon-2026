@@ -1,3 +1,29 @@
+# Current compiler handoff — 2026-10-23 shared-window repair
+
+Retained compiler SHA `51bd61bded75a2e132c94f963974f29c93783135283b8c1d028c30e848da4f00`
+now passes **15/15 official RTX 5090/SM12.0 published cases**, including m01.
+RTX 4090/SM8.9: 122/122 compact cases, 26 sanitizers; 32 CPU compiler tests pass.
+The current source, gate and evidence identities are in
+[the repair record](shared-window-fix.md). No paired speedup or generated-case
+SM12.0 claim. No generated cases or test types were added.
+
+The authoritative remote handoff, relative to the privately configured research
+root, is `/campaigns/campaign-20261023-12h-v2/m01-shared-window-repair-v1/HANDOFF.md`;
+`FINAL.json` beside it binds retained source, evaluation and official results.
+Canonical `/regression-suites/current.json` and `/retained/current.json` now name
+the repaired compiler and unchanged 122-case policy. No live owned GPU/preparation
+jobs; bounded repair run closed; discovery off. The 16-request official singleton
+batch `/calibration/official-20261023-shared-window-v1/` is consumed; do not retry.
+Stay on `n00bcak`, with no GitHub publication or remote Git.
+
+The kernel skills share [architecture and submission guidance](compute-capability.md).
+
+---
+
+The historical campaign handoff follows. Its f47 source and 14/15 official result
+are superseded by the verified repair above; its historical performance records
+remain scoped to the original source, device and experiment.
+
 # Compiler handoff — 2026-10-23
 
 Purpose: resume from a synchronized retained compiler and compact regression suite.
