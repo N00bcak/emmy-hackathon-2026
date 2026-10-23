@@ -1133,6 +1133,12 @@ class Emitter:
                 return r, 'pred'
             comparisons = {'==':'eq', '!=':'ne', '<':'lt', '<=':'le', '>':'gt', '>=':'ge'}
             if x.op in comparisons:
+                if at == bt == 'pred' and x.op in ('<', '<=', '>', '>='):
+                    # Ordered BOOL comparisons use numeric zero/one operands;
+                    # PTX setp has no predicate source-operand form.
+                    a = convert_register(self, a, 'pred', 'i32')
+                    b = convert_register(self, b, 'pred', 'i32')
+                    at = bt = 'i32'
                 if at != bt:
                     target = infer_assign_dtype('add', [at, bt]) if at in INT_DTYPES and bt in INT_DTYPES else ('f64' if 'f64' in (at, bt) else 'f32')
                     a = convert_register(self, a, at, target)
@@ -1375,7 +1381,7 @@ class Emitter:
         typed = [self.binding(a) for a in args]
         operation = reduce_canon(getattr(op, 'name', op))
         argument_types = [t for _, t in typed]
-        result = dtype_name(dtype) if dtype is not None else infer_assign_dtype(operation, argument_types)
+        result = ('pred' if getattr(dtype, 'name', dtype) == 'bool' else dtype_name(dtype)) if dtype is not None else infer_assign_dtype(operation, argument_types)
         native_integer = (INTEGER_ELEMENTWISE - {'divide'}) | set(COMPARISONS) | {'copy', 'negative', 'abs', 'maximum', 'minimum', 'where'}
         native_half = {'add','subtract','multiply','divide','maximum','minimum','negative','abs','sqrt','reciprocal','copy','relu','where'} | set(COMPARISONS)
         native_double = {'add','subtract','multiply','divide','maximum','minimum','negative','abs','sqrt','reciprocal','copy','relu','where','square','floor','ceil','round','trunc'} | set(COMPARISONS)
@@ -1386,7 +1392,21 @@ class Emitter:
                      or (result == 'f16' and operation in native_half)
                      or (result == 'f64' and operation in native_double))
         native_computation = True
-        if operation == 'bitcast':
+        if result == 'pred':
+            # Public BOOL scalar results promote their BOOL inputs to F32,
+            # evaluate the ordinary op, then convert back to truth once.
+            # Numeric-to-BOOL folds have a different upstream conversion law.
+            if not typed or any(t != 'pred' for t in argument_types):
+                raise Unsupported('BOOL assignments require all-BOOL operands')
+            if operation == 'bitcast':
+                raise Unsupported('Predicate bitcasts unsupported')
+            if operation == 'copy' and len(typed) == 1:
+                register, result = self.snapshot_operand(*typed[0], 'pred')
+            else:
+                register, actual = self.emit_operation(op, typed, 'f32')
+                register, result = self.snapshot_operand(register, actual, 'pred')
+            native_computation = False
+        elif operation == 'bitcast':
             if dtype is None:
                 raise Unsupported('Bitcast requires explicit destination dtype')
             register, result = self.emit_operation(op, typed, result)
@@ -1408,7 +1428,8 @@ class Emitter:
             stable = self.mutable[name]
             if self.values[name][1] != result:
                 raise Unsupported('Mutable assignment changes carrier dtype')
-            self.emit(f'mov.{select_type(result)} {stable}, {register};')
+            move_type = 'pred' if result == 'pred' else select_type(result)
+            self.emit(f'mov.{move_type} {stable}, {register};')
             register = stable
         self.values[name] = (register, result)
         if result == 'i32':
@@ -2868,11 +2889,15 @@ class Emitter:
                 self.select(s)
             elif kind == 'Init':
                 self.address_cache.clear()
-                dtype = dtype_name(s.dtype)
-                if dtype not in FLOAT_DTYPES:
-                    raise Unsupported(f'Only floating carried state supported: {dtype}')
-                r = self.reg(reg_suffix(dtype))
-                self.emit(f'mov.{select_type(dtype)} {r}, {literal(s.identity, dtype)};')
+                dtype = ssa_dtype_name(s.dtype)
+                if dtype == 'pred':
+                    # The declaration casts its literal to BOOL; no BOOL storage.
+                    r, dtype = self.snapshot_operand('1' if s.identity else '0', 'i32', 'pred')
+                else:
+                    if dtype not in FLOAT_DTYPES:
+                        raise Unsupported(f'Only floating carried state supported: {dtype}')
+                    r = self.reg(reg_suffix(dtype))
+                    self.emit(f'mov.{select_type(dtype)} {r}, {literal(s.identity, dtype)};')
                 self.values[s.name] = (r, dtype)
                 self.mutable[s.name] = r
                 self.rebind(s.name)
@@ -2880,6 +2905,11 @@ class Emitter:
                 self.address_cache.clear()
                 old = self.value(s.name)
                 left = s.base if s.base is not None else s.name
+                if getattr(s.dtype, 'name', s.dtype) == 'bool':
+                    if reduce_canon(s.op.name) not in ('add', 'multiply', 'maximum', 'minimum'):
+                        raise Unsupported('Unsupported BOOL reduction operation')
+                    if any(self.binding(name)[1] != 'pred' for name in (s.name, left, s.value)):
+                        raise Unsupported('BOOL reductions require all-BOOL carriers and operands')
                 if self.inactive:
                     # A masked lane keeps its seeded identity state. Predicating
                     # the whole fold is op-agnostic: it is correct for maximum /
@@ -2893,7 +2923,11 @@ class Emitter:
                 else:
                     self.assign(s.name, s.op, (left, s.value), s.dtype)
                 if self.value(s.name) != old:
-                    self.emit(f'mov.{self.values[s.name][1]} {old}, {self.value(s.name)};')
+                    # A seedFalse BOOL carrier may originate from a pure Let.
+                    # Keep padding lanes' prior state when no mutable slot exists.
+                    pred = (f'@{self.inactive[-1]} '
+                            if self.values[s.name][1] == 'pred' and self.inactive else '')
+                    self.emit(f'{pred}mov.{self.values[s.name][1]} {old}, {self.value(s.name)};')
                 self.values[s.name] = (old, self.values[s.name][1])
                 self.mutable[s.name] = old
                 self.rebind(s.name)
