@@ -73,6 +73,31 @@ class RegressionSelection(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, '15 published'):
             suite.select([self.catalog], self.policy)
 
+    def test_coverage_manifest_rejects_tampering_and_unrepresented_cases(self):
+        policy = suite.read(self.policy)
+        selected = [r['id'] for r in policy['cases']]
+        audit = {'selected_ids': selected, 'campaign_cases': len(self.records),
+                 'surface_tokens': ['node:Load'], 'retained_surface_tokens': ['node:Load'],
+                 'compound_checks': [], 'cases': [
+                     {'case_id': r['id'], 'selected': r['id'] in selected,
+                      'same_sample_normalized_ir_topology': True,
+                      'witness_ids': [r['id'] if r['id'] in selected else selected[-1]]}
+                     for r in self.records]}
+        path = self.root / 'coverage.json'
+        def save():
+            path.write_text(json.dumps(audit))
+            policy['coverage_manifest'] = {'filename': path.name, 'sha256': suite.sha(path.read_bytes())}
+            self.policy.write_text(json.dumps(policy))
+        save()
+        self.assertEqual(len(suite.select([self.catalog], self.policy)['cases']), 16)
+        path.write_text('{}')
+        with self.assertRaisesRegex(ValueError, 'coverage manifest changed'):
+            suite.select([self.catalog], self.policy)
+        audit['cases'][-1]['witness_ids'] = [self.records[-1]['id']]
+        save()
+        with self.assertRaisesRegex(ValueError, 'unrepresented archived case'):
+            suite.select([self.catalog], self.policy)
+
     def test_synchronized_defaults_share_one_compiler_and_reject_stale_source(self):
         from tools.research_store import Store
         source = self.root / 'source'

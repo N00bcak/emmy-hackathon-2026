@@ -1,9 +1,9 @@
 # Compact GPU regression suite
 
-The routine suite is **73 cases / 73 kernels**: the unchanged 15 published
-contracts and 58 generated behavior witnesses. This replaces cumulative archive
-replays as the default, including the recent campaign’s 263 generated cases. Exact cases, references, tolerances, launch
-geometry, guards, isolated repetitions, and required sanitizer flags are retained.
+The routine suite is **122 cases**: the unchanged 15 published
+contracts and 107 generated behavior witnesses. This replaces cumulative archive
+replays as the default, including the recent campaign’s 263 generated cases.
+Exact cases, references, tolerances, launch geometry, guards, isolated repetitions, and required sanitizer flags are retained.
 The compiler contains no case-selection logic.
 
 [The policy](../tests/gpu-regression.json) records every retained case's content
@@ -13,6 +13,12 @@ conversions, bitcasts, NaN truth and natural log; expression cache keys; lexical
 Tile/Init scope; partial reduction identities and explicit seeds; tree/warp
 carrier lifetime; live loop steps and captured ends; signed addresses; unaligned
 vectors; async/shared transport; fused attention and cooperative softmax tails.
+The [remote coverage audit](gpu-regression-audit.md) supersedes the earlier
+73-case selection, which omitted distinct remote behaviors. Its checked-in
+[case-to-witness manifest](../tests/gpu-regression-coverage.json) maps all 278
+campaign cases and is hash-bound to the policy. Selection rejects missing,
+changed or unrepresented audit entries.
+
 The `_gid`/partial-warp witness and both previously failing loop-header cases
 remain explicit regression anchors. The current policy also retains representative
 witnesses for 64-bit shifts, Load lifetime, nested Tile Init, opaque expression
@@ -45,14 +51,19 @@ Use the synchronized defaults; stale source or policy identities fail closed:
 python -m tools.regression_suite --root "$RESEARCH_ROOT" --out "$NEW_CASE_LIST"
 ```
 
+On the configured remote runtime, the manifest’s `selector` field names the
+saved selector beside the audited suite. Run that file with the configured
+evaluator imports; do not edit a frozen evaluator snapshot to install it.
+
 An explicit catalog can also be selected with `--catalog "$CASE_CATALOG"`.
 To install a revised source-bound default after a closed run, supply `--root`,
 `--install`, `--catalog`, `--policy` and a new `--out`. Installation refuses active
 owned GPU work, preparation or discovery. It updates pointers, not frozen objects,
 and does not create a correctness gate.
 
-The current 73 witnesses were checked against the retained compiler's existing
-278-case RTX 4090 correctness receipt, including input identities, isolation,
+The current 122 witnesses, including restored async-ring, exact-tree, serial
+accumulation, mixed-F16 and attention-normalization controls, were checked against
+the retained compiler's existing 278-case RTX 4090 correctness receipt, including input identities, isolation,
 guards and required sanitizer evidence. Consolidation performed no new GPU run.
 The official RTX 5090 `m01_matmul_512` failure remains unresolved; this selection
 must not be represented as an all-15 pass on that device.

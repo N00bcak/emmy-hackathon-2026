@@ -17,18 +17,23 @@ are relative to that configured research root unless explicitly repository paths
   immutable compiler it names. `retained/versions.json` inventories 18 distinct
   compiler hashes: one active and 17 historical. Frozen objects remain intact.
 - Repository `tests/gpu-regression.json` is byte-identical to
-  `regression-suites/compact-v3/policy.json`, SHA-256
-  `e5d42f967a12ab2563423c4838ee57ab5f85cf23f95fb0b8316f9e5e26aecd6c`.
-- Routine selection: **73 cases, 15 published + 58 generated**. The campaign's
-  previous 263 generated cases are historical, with 205 excluded from routine
+  `regression-suites/compact-v4/policy.json`, SHA-256
+  `8b02e13947b0ac2a55f13233176cf992d96b7b6a8b4a9daf925c733df7752f60`.
+- Routine selection: **122 cases, 15 published + 107 generated**. The campaign's
+  previous 263 generated cases are historical, with 156 excluded from routine
   replay. Shape/seed permutations and overlapping schedules do not accumulate.
   The combined older archive contains 1,114 distinct case identities; it is not
   the routine suite. No input/reference/tolerance or generator was rewritten.
 - The old default named an obsolete compiler while campaign helpers replayed
   the cumulative 278-case list. Source-checked shared defaults now prevent this
   split. Maintenance evidence: `campaigns/campaign-20261023-12h-v2/` under
-  `test-consolidation-v3/`; selection and existing receipt verification are under
-  `regression-suites/compact-v3/`.
+  `test-consolidation-v3/` (superseded selection); corrected IR/coverage audit and
+  existing receipt verification are under `regression-suites/compact-v4/`.
+- The 73-case selection was too aggressive: it dropped distinct remote behaviors.
+  [The correction](gpu-regression-audit.md) restores them and hash-binds a
+  case-to-witness map for all 278 campaign cases. For the 156 excluded cases,
+  154 have matching sample-normalized AST topology and two are ordered statement
+  subsequences in broader retained programs. This is not numeric equivalence.
 
 ```sh
 python -m tools.regression_suite --root "$RESEARCH_ROOT" --out "$NEW_CASE_LIST"
@@ -55,7 +60,7 @@ No fixture names, values or shapes select a solution.
 
 The retained source passed **15 published + 263 generated = 278 cases** on RTX
 4090, with isolated guarded confirmation and required sanitizer evidence. The
-compact 73-case set was verified as a subset of that exact source-bound receipt;
+compact 122-case set was verified as a subset of that exact source-bound receipt;
 consolidation ran no new GPU tests. Relevant immutable identities:
 
 | Record | Identity |
@@ -84,7 +89,7 @@ cause. All sm_120 performance remains unqualified under the all-15 rule.
 The single official calibration batch used 16 HTTP attempts. Its numerical stop
 and continuation of nine unstarted cases are preserved; do not silently retry.
 Exact requests/results: `calibration/official-20261023-retained-v1/`. Local copies
-are ignored under `experiments/2026-10-23-campaign-current/official-endpoint/`.
+are uncommitted under `experiments/2026-10-23-campaign-current/official-endpoint/`.
 
 A held `4ff…` compiler (source `212e…`) passed 278 cases but its incremental
 33/47-case comparisons were inconclusive, so it was not retained or copied over
@@ -101,13 +106,14 @@ Small launch grids and excluded SFU operations can therefore show low MFU.
 - 32 compiler tests passed on the configured Linux CPU runtime, including PTX
   assembly of every published problem for sm_89 and sm_120. CPU job evidence:
   `campaigns/campaign-20261023-12h-v2/commit-validation-v1/`.
-- 33 selector and research-pipeline CPU tests passed locally. This is separate
+- 34 selector and research-pipeline CPU tests passed locally. This is separate
   from GPU correctness; no new GPU execution or endpoint request was performed
   during consolidation.
-- Experiment logs, CSVs, snapshots and caches are ignored. Previously tracked
-  experiment archives were removed from the index only; files remain on disk.
-  Intentional test fixtures remain tracked. This is a requested local snapshot,
-  not a claim that the official all-15 gate passes.
+- An external amendment (`ac5017b`) restored the historical experiment archives
+  to the index and reverted the broad experiment ignore rule. This coverage
+  correction preserves that amendment and leaves generated audit output
+  uncommitted. Private runtime configuration remains ignored. This snapshot
+  does not claim that the official all-15 gate passes.
 
 The campaign is closed, discovery is off, and no owned GPU/preparation job remained
 at synchronization. Inspect actual recorded jobs before any restart. Detailed

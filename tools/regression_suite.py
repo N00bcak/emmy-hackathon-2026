@@ -68,6 +68,27 @@ def select(catalogs, policy=DEFAULT_POLICY, *, full=False, expand_versions=()):
     ids = [r['id'] for r in required]
     if len(set(ids)) != len(ids):
         raise ValueError('duplicate policy case')
+    if audit_ref := contract.get('coverage_manifest'):
+        name = audit_ref['filename']
+        if Path(name).name != name:
+            raise ValueError('coverage manifest must be beside its policy')
+        audit_bytes = (Path(policy).parent / name).read_bytes()
+        if sha(audit_bytes) != audit_ref['sha256']:
+            raise ValueError('coverage manifest changed')
+        audit = json.loads(audit_bytes)
+        selected = set(ids)
+        rows = audit['cases']
+        if set(audit['selected_ids']) != selected or len({r['case_id'] for r in rows}) != audit['campaign_cases'] or len(rows) != audit['campaign_cases']:
+            raise ValueError('coverage manifest does not match selected cases or campaign inventory')
+        compounds = {r['case_id']: r['checks'] for r in audit['compound_checks']}
+        for row in rows:
+            witnesses = set(row['witness_ids'])
+            if not witnesses or not witnesses <= selected or row['selected'] != (row['case_id'] in selected):
+                raise ValueError('unrepresented archived case in coverage manifest')
+            if not row['selected'] and not row['same_sample_normalized_ir_topology'] and not any(c['ordered_subsequence'] and c['witness_id'] in witnesses for c in compounds.get(row['case_id'], [])):
+                raise ValueError('archived case lacks a structural witness')
+        if set(audit['surface_tokens']) != set(audit['retained_surface_tokens']):
+            raise ValueError('coverage manifest loses IR surface features')
     index = {}
     for catalog in catalogs:
         for path in catalog_paths(catalog):
@@ -147,6 +168,10 @@ def install(root, selection, case_list, catalogs, policy):
                  'published_cases': selection['published_cases'],
                  'evaluator_root': prior.get('evaluator_root'), 'selection_only': True,
                  'use': 'Routine suite only; archive expansion is explicit. Existing evidence must match source/evaluator/case identities.'}
+        if prior.get('source_id') == source_id:
+            for key in ('official_validation', 'verified_source_evidence'):
+                if key in prior:
+                    value[key] = prior[key]
         retained = root / 'retained'
         retained.mkdir(exist_ok=True)
         for name, target in [('current.json', pointer), ('compile.py', compiler)]:

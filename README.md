@@ -83,7 +83,7 @@ and evaluator identities. A source change requires a new gate. Partial sweeps
 are useful for correctness debugging and cannot qualify performance evidence.
 Fresh independent confirmation is additionally required for promotion.
 
-Routine GPU checks use the [compact 73-case regression suite](docs/gpu-regression.md),
+Routine GPU checks use the [compact 122-case regression suite](docs/gpu-regression.md),
 including all 15 published contracts. The full archive is retained for targeted
 expansion; previous random confirmation draws do not accumulate into every run.
 

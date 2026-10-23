@@ -5,7 +5,7 @@ the saved exact request, PTX, input/reference arrays and launch contract. The
 retained compiler passes all 15 published cases on RTX 4090 and 14/15 at the
 official endpoint. Do not qualify RTX 5090 performance until its all-15 gate passes.
 
-Use the synchronized 73-case routine suite (15 published and 58 generated), plus
+Use the synchronized 122-case routine suite (15 published and 107 generated), plus
 targeted archived expansion and independently generated cases for the changed
 mechanism. Repeated seeds and shapes do not accumulate into the default suite.
 Keep general typed-IR lowering and unchanged ABI, tolerances and sanitizer rules.
