@@ -333,10 +333,13 @@ def validate_case(directory):
         graph=Graph.from_dict(json.loads((directory/path).read_bytes()))
         if not isinstance(graph.nodes[k['node']].op,KernelOp): raise ValueError('not a kernel')
         if graph.nodes[k['node']].op.name!=k['entry']: raise ValueError('wrong entry')
-        if k['arg_order']!=[a['name'] for a in k['args']] or len(set(k['arg_order']))!=len(k['args']): raise ValueError('invalid ABI')
+        names=[a['name'] for a in k['args']]
+        if len(set(names))!=len(names) or len(k['arg_order'])!=len(names) or set(k['arg_order'])!=set(names): raise ValueError('invalid ABI')
         if math.prod(k['block'])>1024 or math.prod(k['grid'])<1: raise ValueError('invalid launch')
         for arg in k['args']:
-            if not arg.get('output') and arg['name'] not in known: raise ValueError('missing input')
+            if arg.get('scalar'):
+                if arg['shape'] or 'value' not in arg or not math.isfinite(arg['value']): raise ValueError('invalid scalar')
+            elif not arg.get('output') and arg['name'] not in known: raise ValueError('missing input')
             if arg['name'] in inputs and list(inputs[arg['name']].shape)!=arg['shape']: raise ValueError('shape mismatch')
             if arg.get('output'): known.add(arg['name'])
     if set(meta['graph_outputs'])!=set(outputs): raise ValueError('wrong expected outputs')

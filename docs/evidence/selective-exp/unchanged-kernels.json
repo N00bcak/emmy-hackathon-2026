@@ -1,0 +1,167 @@
+[
+  {
+    "problem": "a01_attention",
+    "same_cubin_by_target": {
+      "sm_89": [
+        false
+      ],
+      "sm_120": [
+        false
+      ]
+    }
+  },
+  {
+    "problem": "a02_attention_128",
+    "same_cubin_by_target": {
+      "sm_89": [
+        false
+      ],
+      "sm_120": [
+        false
+      ]
+    }
+  },
+  {
+    "problem": "f01_rmsnorm",
+    "same_cubin_by_target": {
+      "sm_89": [
+        true
+      ],
+      "sm_120": [
+        true
+      ]
+    }
+  },
+  {
+    "problem": "f02_row_softmax",
+    "same_cubin_by_target": {
+      "sm_89": [
+        false
+      ],
+      "sm_120": [
+        false
+      ]
+    }
+  },
+  {
+    "problem": "f03_l2norm",
+    "same_cubin_by_target": {
+      "sm_89": [
+        true
+      ],
+      "sm_120": [
+        true
+      ]
+    }
+  },
+  {
+    "problem": "m01_matmul_512",
+    "same_cubin_by_target": {
+      "sm_89": [
+        true
+      ],
+      "sm_120": [
+        true
+      ]
+    }
+  },
+  {
+    "problem": "m02_matmul_rect",
+    "same_cubin_by_target": {
+      "sm_89": [
+        true
+      ],
+      "sm_120": [
+        true
+      ]
+    }
+  },
+  {
+    "problem": "p00_scalar_add",
+    "same_cubin_by_target": {
+      "sm_89": [
+        true
+      ],
+      "sm_120": [
+        true
+      ]
+    }
+  },
+  {
+    "problem": "p01_vector_add",
+    "same_cubin_by_target": {
+      "sm_89": [
+        true
+      ],
+      "sm_120": [
+        true
+      ]
+    }
+  },
+  {
+    "problem": "p02_scale_shift",
+    "same_cubin_by_target": {
+      "sm_89": [
+        true
+      ],
+      "sm_120": [
+        true
+      ]
+    }
+  },
+  {
+    "problem": "p03_relu_mul",
+    "same_cubin_by_target": {
+      "sm_89": [
+        true
+      ],
+      "sm_120": [
+        true
+      ]
+    }
+  },
+  {
+    "problem": "r01_array_sum",
+    "same_cubin_by_target": {
+      "sm_89": [
+        true
+      ],
+      "sm_120": [
+        true
+      ]
+    }
+  },
+  {
+    "problem": "r02_big_sum",
+    "same_cubin_by_target": {
+      "sm_89": [
+        true
+      ],
+      "sm_120": [
+        true
+      ]
+    }
+  },
+  {
+    "problem": "r03_mean",
+    "same_cubin_by_target": {
+      "sm_89": [
+        true
+      ],
+      "sm_120": [
+        true
+      ]
+    }
+  },
+  {
+    "problem": "r04_row_sum",
+    "same_cubin_by_target": {
+      "sm_89": [
+        true
+      ],
+      "sm_120": [
+        true
+      ]
+    }
+  }
+]

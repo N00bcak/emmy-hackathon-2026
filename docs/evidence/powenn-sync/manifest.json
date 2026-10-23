@@ -1,0 +1,42 @@
+{
+  "version": "powenn-sync-20261023-v1",
+  "base_branch": "n00bcak",
+  "base_commit": "0bab81f1e7bf0cf5ba5294f6db092a471342ad0b",
+  "incoming_branch": "powenn",
+  "incoming_commit": "a3e5ab57e498975205e6a436a2628b5c5b73e49b",
+  "challenge_submodule": "ec8cde1943f88efea3827a95bda6085553d2d407",
+  "merged_source": {
+    "source_id": "ea0c87d1a7816d4fa03398badbd59429b99446763ab9361939e6c2e60b2ad48b",
+    "gate_id": "86945b19eb830d921c22c45358ffaadf03f969867ffea97df38576126e61277e",
+    "sources": {
+      "compile.py": "7d5d4d2d0984aaa61c713c5cba2550628f08cb2331c194e781188332333cd2d0",
+      "tf32_emitter.py": "fc460b050b8c9ad97104869df5390571940ce57299b2115be7e12bb2a28b505d",
+      "tensor_core.py": "ca5af9c9f41826f9e2000de7a8537745c0393007d8eaaaf9fd212b3bfd3364a6"
+    }
+  },
+  "evaluation_suite_id": "362d7f9351d1038e492fc4023b6606fa13bc69ddabec5bb34be86bde87e44c96",
+  "local_execution_arch": "sm_89",
+  "local_device": "NVIDIA GeForce RTX 4090",
+  "assembly_targets": [
+    "sm_89",
+    "sm_120"
+  ],
+  "powenn_adaptation": "Only PTX header changed to sm_89/PTX8.0 for local execution; original sm_120 branch kept unchanged.",
+  "target_5090_status": "User reports incoming branch passes all trials; no new hosted grading performed for merged source.",
+  "measurement": "Exclusive paired CUDA graphs, 32 pairs in each of two blocks plus independent 32-pair confirmation, case-specific A/A; warm buffers, reset/copies outside kernel event intervals.",
+  "durable_evidence_key": "sync-powenn-20261023",
+  "scope_note": "Routine suite includes nonessential extensions; failed extension cases are not counted as published or proven hidden-set regressions.",
+  "raw_source_and_jobs": "Retained in configured durable artifact store; private runtime configuration resolves its location.",
+  "files": {
+    "cpu-tests.log": "451babac3405f543229cb9894d1cdf07f9f051f73c135ab734247eb94c69a15c",
+    "performance.csv": "2710b1e968141be6c4f5ae70ddee91990ed55951db5e7ca81fa061df4a73d444",
+    "correctness.json": "0efc1f11d82af0b757c1c754a5f2cd9dc5fc1991db58520fa585d68a7746f71b",
+    "gates.json": "9993e74de61d6bb2430cddabfbc3a5d45eb7eba6e9e39e9a5f1f2b44d6a005fe",
+    "scope-audit.json": "1b818d20a9fa5cfc7e83c48817d62fa52a2ea0070708f32af87c390f84332c54",
+    "counterexamples.json": "1cb36fcdbb45fbe5d10de466d1f1acbf345739914f79a91249984c8e11f4211f",
+    "tensor-core-results.json": "9033824175e55e9b4ce425edfa58bd3d592c3105f9cc1e56f43c4b8f958291a7",
+    "paired-samples.csv": "68a68b796c8ab35c1b0841f70f97ca03462486a027d8bb6cf7b9793b2f6fa95a",
+    "timing-blocks.json": "df73481cf7b201d20246b0d14d991008736d913e07fc1e92df1c69174dc870cb",
+    "performance.json": "f47c29c4751275dc97b7c2b38527054f12202745f4facc1ed0627c0e3ae91110"
+  }
+}

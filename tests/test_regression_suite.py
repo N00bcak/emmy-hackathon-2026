@@ -10,6 +10,30 @@ from tools.published import PUBLISHED_PROBLEMS
 
 
 class RegressionSelection(unittest.TestCase):
+    def test_checked_in_scope_retains_gate_and_marked_cases(self):
+        policy = suite.read(suite.DEFAULT_POLICY)
+        scope_path = suite.DEFAULT_POLICY.parent / policy['scope_manifest']['filename']
+        self.assertEqual(suite.sha(scope_path.read_bytes()), policy['scope_manifest']['sha256'])
+        scope = suite.read(scope_path)
+        previous_path = scope_path.parent / scope['previous_policy']['filename']
+        self.assertEqual(suite.sha(previous_path.read_bytes()), scope['previous_policy']['sha256'])
+        previous = suite.read(previous_path)
+        rows = scope['cases']
+        self.assertEqual({r['id'] for r in rows}, {r['id'] for r in previous['cases']})
+        self.assertEqual(len(rows), len({r['id'] for r in rows}))
+        self.assertEqual({r['id'] for r in rows if r['disposition'] == 'retain'}, {r['id'] for r in policy['cases']})
+        self.assertTrue(all(r['disposition'] == 'retain' for r in rows if r['marked_operators']))
+        self.assertEqual(sum(r['group'] == 'required_gate' for r in policy['cases']), 15)
+        self.assertEqual(policy['assembly_targets'], ['sm_89', 'sm_120'])
+        receipts = suite.read(suite.DEFAULT_POLICY.parents[1] / 'docs/evidence/powenn-test-scope-v5.json')
+        self.assertEqual(receipts['policy_sha256'], suite.sha(suite.DEFAULT_POLICY.read_bytes()))
+        expected = {r['id']: r['record_sha256'] for r in policy['cases']}
+        for arm in ('ours', 'theirs'):
+            results = [r for r in receipts['results'] if r['arm'] == arm]
+            self.assertEqual({r['case_id']: r['case_record_sha256'] for r in results}, expected)
+            for row in results:
+                self.assertEqual({r['arch'] for r in row['assembly']}, {'sm_89', 'sm_120'})
+
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()
         self.addCleanup(self.tmp.cleanup)
@@ -45,6 +69,35 @@ class RegressionSelection(unittest.TestCase):
         self.assertEqual(len(suite.select([self.catalog], self.policy, full=True)['cases']), 17)
         expanded = suite.select([self.catalog], self.policy, expand_versions=['unit-case-v1'])
         self.assertEqual(len(expanded['cases']), 17)
+
+    def test_scope_dispositions_and_marked_coverage_fail_closed(self):
+        original = self.policy.read_bytes()
+        prior = self.root / 'previous.json'
+        prior.write_bytes(original)
+        policy = json.loads(original)
+        policy['cases'] = policy['cases'][:-1]
+        scope = {'previous_policy': {'filename': prior.name, 'sha256': suite.sha(original)},
+                 'assembly_targets': ['sm_89', 'sm_120'],
+                 'cases': [{'id': row['id'], 'disposition': 'retain' if i < 15 else 'archive',
+                            'reason': 'unit scope', 'marked_operators': []}
+                           for i, row in enumerate(json.loads(original)['cases'])]}
+        scope_path = self.root / 'scope.json'
+        def write_scope():
+            scope_path.write_text(json.dumps(scope))
+            policy['scope_manifest'] = {'filename': scope_path.name, 'sha256': suite.sha(scope_path.read_bytes())}
+            policy['assembly_targets'] = scope['assembly_targets']
+            self.policy.write_text(json.dumps(policy))
+        write_scope()
+        self.assertEqual(len(suite.select([self.catalog], self.policy)['cases']), 15)
+        scope['cases'][-1]['marked_operators'] = ['Select']
+        write_scope()
+        with self.assertRaisesRegex(ValueError, 'marked-operator'):
+            suite.select([self.catalog], self.policy)
+        scope['cases'][-1]['marked_operators'] = []
+        scope['cases'].pop()
+        write_scope()
+        with self.assertRaisesRegex(ValueError, 'dispositions'):
+            suite.select([self.catalog], self.policy)
 
     def test_missing_witness_and_unknown_expansion_fail(self):
         self.catalog.write_text(json.dumps(self.paths[:-2]))

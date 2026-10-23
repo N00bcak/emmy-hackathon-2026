@@ -1,0 +1,56 @@
+[
+  {
+    "job": "20261023T121131Z-research-gpu-y2N736",
+    "sha256": "0b1bb5117665aa6a12db0a317fb864f1ae7785220e6ff124d5e5eb13428986bb",
+    "attestation": {
+      "observed_no_contention": true,
+      "exit_code": 0,
+      "gpu_uuid": "GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+      "gpu_model": "NVIDIA GeForce RTX 4090",
+      "host_job_dir": "<artifact-root>/measurements/20261023T121131Z-research-gpu-y2N736",
+      "monitor": {
+        "observed": true,
+        "samples": 19,
+        "foreign": [],
+        "errors": []
+      },
+      "limitation": "Admission and periodic observations are not a reservation or proof of no transient overlap."
+    }
+  },
+  {
+    "job": "20261023T121233Z-research-gpu-dYNaeq",
+    "sha256": "940441372b4c2102f996562c4c4a56cb53648314a3795bea8c1a57756260c64e",
+    "attestation": {
+      "observed_no_contention": true,
+      "exit_code": 0,
+      "gpu_uuid": "GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+      "gpu_model": "NVIDIA GeForce RTX 4090",
+      "host_job_dir": "<artifact-root>/measurements/20261023T121233Z-research-gpu-dYNaeq",
+      "monitor": {
+        "observed": true,
+        "samples": 13,
+        "foreign": [],
+        "errors": []
+      },
+      "limitation": "Admission and periodic observations are not a reservation or proof of no transient overlap."
+    }
+  },
+  {
+    "job": "20261023T121316Z-research-gpu-3kVesQ",
+    "sha256": "82c5522584a0616818270ab3cb62257232891fbe5d3ff1baa8962fd0919b921c",
+    "attestation": {
+      "observed_no_contention": true,
+      "exit_code": 0,
+      "gpu_uuid": "GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+      "gpu_model": "NVIDIA GeForce RTX 4090",
+      "host_job_dir": "<artifact-root>/measurements/20261023T121316Z-research-gpu-3kVesQ",
+      "monitor": {
+        "observed": true,
+        "samples": 7,
+        "foreign": [],
+        "errors": []
+      },
+      "limitation": "Admission and periodic observations are not a reservation or proof of no transient overlap."
+    }
+  }
+]

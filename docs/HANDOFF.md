@@ -1,3 +1,43 @@
+# Current compiler handoff — selective exponential
+
+Workspace compiler SHA `12202ea108f615fffd9ab00b5dce985edb3cbe11ffad55042d3d9625b6a49354`.
+The [selective exponential record](selective-exponential.md) binds the new source,
+fresh 93/93 default correctness, 20 sanitizer checks, both previously existing
+underflow witnesses, both-target assembly and 51 CPU checks. Attention timing
+improves over the previous guarded source; f02 has no resolved change and the
+other 12 published cubins are identical. No new test cases were created. No
+commit, publication or RTX 5090 execution was performed. The remote retained
+baseline pointer remains unchanged; accepted source/gates and raw evidence are
+under `sync-powenn-20261023/cold-exp-v1` in the configured research store.
+
+The prior handoffs below describe historical source versions.
+
+---
+
+# Current compiler handoff — powenn merge
+
+Workspace compiler SHA `7d5d4d2d0984aaa61c713c5cba2550628f08cb2331c194e781188332333cd2d0`.
+The evaluated three-file candidate is now in the working branch. See
+[the merge record](powenn-merge.md) for source/helper identities, incorporation
+receipts, 93/93 selected correctness, both-target assembly and paired timings.
+No new cases were made in the continuation. No commit or publication was made.
+The merged source has no fresh RTX 5090 execution receipt. The remotely retained
+baseline remains `51bd61bd…`; `--root` defaults name that baseline with the v5
+93-case policy. The evaluated merged source/gates are stored separately under
+`sync-powenn-20261023`. No discovery campaign was started.
+
+The remaining attention slowdown is now attributed to the guarded exponential;
+see the [controlled diagnosis](attention-slowdown-cause.md). The compiler remains
+unchanged. Three diagnostic sources passed the existing all-15 gate; mirrored
+interventions and independent paired confirmation reproduce/remove the gap.
+No new test cases were generated. Exact variants and raw evidence are under
+`sync-powenn-20261023/attention-cause-v1` in the configured durable store.
+
+The previous handoffs below are historical and their source-specific results
+must not be attributed to the merged source.
+
+---
+
 # Current compiler handoff — 2026-10-23 shared-window repair
 
 Retained compiler SHA `51bd61bded75a2e132c94f963974f29c93783135283b8c1d028c30e848da4f00`

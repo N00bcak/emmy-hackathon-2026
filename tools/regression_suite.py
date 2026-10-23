@@ -68,6 +68,30 @@ def select(catalogs, policy=DEFAULT_POLICY, *, full=False, expand_versions=()):
     ids = [r['id'] for r in required]
     if len(set(ids)) != len(ids):
         raise ValueError('duplicate policy case')
+    if scope_ref := contract.get('scope_manifest'):
+        name = scope_ref['filename']
+        if Path(name).name != name:
+            raise ValueError('scope manifest must be beside its policy')
+        scope_bytes = (Path(policy).parent / name).read_bytes()
+        if sha(scope_bytes) != scope_ref['sha256']:
+            raise ValueError('scope manifest changed')
+        scope = json.loads(scope_bytes)
+        previous = scope['previous_policy']
+        if Path(previous['filename']).name != previous['filename']:
+            raise ValueError('previous policy must be beside its policy')
+        previous_bytes = (Path(policy).parent / previous['filename']).read_bytes()
+        if sha(previous_bytes) != previous['sha256']:
+            raise ValueError('previous policy changed')
+        rows = scope['cases']
+        if (len({r['id'] for r in rows}) != len(rows)
+                or {r['id'] for r in rows} != {r['id'] for r in json.loads(previous_bytes)['cases']}
+                or any(r['disposition'] not in ('retain', 'archive') or not r['reason'] for r in rows)
+                or {r['id'] for r in rows if r['disposition'] == 'retain'} != set(ids)):
+            raise ValueError('scope dispositions do not match policies')
+        if any(r['marked_operators'] and r['disposition'] != 'retain' for r in rows):
+            raise ValueError('scope loses marked-operator coverage')
+        if contract['assembly_targets'] != ['sm_89', 'sm_120'] or scope['assembly_targets'] != contract['assembly_targets']:
+            raise ValueError('both assembly targets are required')
     if audit_ref := contract.get('coverage_manifest'):
         name = audit_ref['filename']
         if Path(name).name != name:
@@ -118,6 +142,7 @@ def select(catalogs, policy=DEFAULT_POLICY, *, full=False, expand_versions=()):
         raise ValueError('selection must contain exactly the 15 published contracts')
     policy_bytes = Path(policy).read_bytes()
     return {'version': contract['version'], 'policy_sha256': sha(policy_bytes),
+            'assembly_targets': contract.get('assembly_targets', ['sm_89', 'sm_120']),
             'selection': 'full' if full else 'compact', 'expanded_versions': sorted(expansions),
             'catalog_unique_cases': len(index), 'cases': paths, 'case_ids': chosen,
             'archive_only_cases': len(index) - len(chosen),

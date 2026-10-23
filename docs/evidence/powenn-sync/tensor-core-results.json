@@ -1,0 +1,521 @@
+{
+  "arch": "sm_89",
+  "compiler_sha256": "7d5d4d2d0984aaa61c713c5cba2550628f08cb2331c194e781188332333cd2d0",
+  "cases": [
+    {
+      "case": "m01_matmul_512",
+      "classification": "Plan",
+      "reason": "validated one-atom TF32 matmul plan",
+      "ir_sha256": "ed9ab32776ce0de8b0d1f0367da54c586bf993c964efc01482666247a976dc02",
+      "ptx_sha256": "8a60396afd69d1ae8e39e2c2e056b7b4a1b9190ce7c9ec3be9f919dfd3dbb3da",
+      "mma_count": 0,
+      "compile": {
+        "ok": true,
+        "cubin_id": "d2a2aaa030cac2641667ab7722e7f99bb00ccfc80b71ef8281b3e3b2d4480b26",
+        "bytes": 12128,
+        "entry_points": [
+          "k_matmul_2967be"
+        ],
+        "registers": {
+          "k_matmul_2967be": 40
+        }
+      },
+      "run_ok": true,
+      "max_abs_error": 8.392333984375e-05,
+      "failing_elements": 0,
+      "all_cells": true,
+      "pass": true,
+      "cpu_simulation_max_abs_error": 9.918212890625e-05,
+      "cpu_simulation_max_rel_error": 9.006186696033301e-07,
+      "one_pass_tf32_max_rel_error": 0.0002947620988072899,
+      "three_term_beats_one_pass": true,
+      "cpu_simulation_bound": 4e-06,
+      "cpu_simulation_pass": true
+    },
+    {
+      "case": "n01-same-buffer",
+      "classification": "NoMatch",
+      "reason": "both operands load the same buffer",
+      "ir_sha256": "e6b77ae6f3446bd045575bca27bebd1425eec0556da1f77ec3845425db3b1ddf"
+    },
+    {
+      "case": "n02-nonaffine-gather",
+      "classification": "NoMatch",
+      "reason": "operand coordinate is a non-affine gather",
+      "ir_sha256": "253e7ff0a6ca7ac82881e700e2a61569438835462e1aa140e2448d390575215b"
+    },
+    {
+      "case": "n03-unrelated-reduction",
+      "classification": "NoMatch",
+      "reason": "fold value is not one multiply assignment",
+      "ir_sha256": "804778855878f13a5c8b23779e9cd4e193fbc256ebc492c845eb5512e3576fec"
+    },
+    {
+      "case": "n04-unsupported-epilogue",
+      "classification": "NoMatch",
+      "reason": "one accumulator aliases distinct output cells",
+      "ir_sha256": "979586e4530c96c139d051298a626c5727e4916f34a82ce08fc41aa18b3c871c"
+    },
+    {
+      "case": "n05-partial-collective",
+      "classification": "UnsupportedMatch",
+      "reason": "staged plan lacks a post-compute CTA barrier",
+      "ir_sha256": "338c3a14f43a53ed61061a4b0af9d22a4181d26df344e94b57846c6a0a4af784"
+    },
+    {
+      "case": "n06-split-without-atomics",
+      "classification": "UnsupportedMatch",
+      "reason": "duplicate non-atomic output coverage (split-K without atomics)",
+      "ir_sha256": "f3bf198579067afdfe1b034f2142c46f8244e8f215f0aac8f2b3adc0245aba89"
+    },
+    {
+      "case": "n07-split-atomic",
+      "classification": "UnsupportedMatch",
+      "reason": "CTA grid does not exactly factor the output tile grid",
+      "ir_sha256": "cec4677d0d651bb6200aed7a8d2d384b8d2c30275c2d4c3b49e843277e21d81c"
+    },
+    {
+      "case": "n08-launch-mismatch",
+      "classification": "UnsupportedMatch",
+      "reason": "launch factorization has 1 atoms for 2 warps",
+      "ir_sha256": "34d6ae032dda3086eb0ec5e28137d17b5cd239c42b2c2104aadd2b6d9a27b75c"
+    },
+    {
+      "case": "n09-tail-partial",
+      "classification": "UnsupportedMatch",
+      "reason": "CTA tile is not an exact atom multiple",
+      "ir_sha256": "313268cee89463ea56cf3ef4b018c59dad02b077b1367b4afeea8e60d3e181c7"
+    },
+    {
+      "case": "p01-direct-16x8",
+      "classification": "Plan",
+      "reason": "validated one-atom TF32 matmul plan",
+      "ir_sha256": "35038498fd2bb109c5c2c9535593b413d3d89ea38cb68c3f3ee0b566c60593ca",
+      "ptx_sha256": "43c2bb6003424b79c80109d9d8625d914fa0eba12c81af2192cd78fcd30799ae",
+      "mma_count": 3,
+      "compile": {
+        "ok": true,
+        "cubin_id": "02e2552d7b48f199ef5a92ed1493d1fe908be3c51b26fc7bd8c5d1b748ec81af",
+        "bytes": 4648,
+        "entry_points": [
+          "kernel"
+        ],
+        "registers": {
+          "kernel": 26
+        }
+      },
+      "run_ok": true,
+      "max_abs_error": 4.76837158203125e-07,
+      "failing_elements": 0,
+      "all_cells": true,
+      "pass": true,
+      "cpu_simulation_max_abs_error": 4.76837158203125e-07,
+      "cpu_simulation_max_rel_error": 7.783908124352913e-08,
+      "one_pass_tf32_max_rel_error": 0.00025359972669141795,
+      "three_term_beats_one_pass": true,
+      "cpu_simulation_bound": 4e-06,
+      "cpu_simulation_pass": true
+    },
+    {
+      "case": "p02-direct-32x16",
+      "classification": "Plan",
+      "reason": "validated one-atom TF32 matmul plan",
+      "ir_sha256": "ce2ce24dbe5676d147fb46701000bda595a1aa629c61fd8574a9446847e31b53",
+      "ptx_sha256": "7326b5aa4ecfb9e4146c63c34314164cfb5179a4d9df70c7c84f8ea5a78eb2df",
+      "mma_count": 3,
+      "compile": {
+        "ok": true,
+        "cubin_id": "7fb19616c76e3ae224f94314fb027749df9f48e9340fcda20b840c2c30f958a0",
+        "bytes": 5928,
+        "entry_points": [
+          "kernel"
+        ],
+        "registers": {
+          "kernel": 37
+        }
+      },
+      "run_ok": true,
+      "max_abs_error": 1.430511474609375e-06,
+      "failing_elements": 0,
+      "all_cells": true,
+      "pass": true,
+      "cpu_simulation_max_abs_error": 9.5367431640625e-07,
+      "cpu_simulation_max_rel_error": 1.1443188630780141e-07,
+      "one_pass_tf32_max_rel_error": 0.00029866722326336165,
+      "three_term_beats_one_pass": true,
+      "cpu_simulation_bound": 4e-06,
+      "cpu_simulation_pass": true
+    },
+    {
+      "case": "p03-direct-64x32",
+      "classification": "Plan",
+      "reason": "validated one-atom TF32 matmul plan",
+      "ir_sha256": "3cebd8d34ad7a2c04bfd07334b292647062256091fd6b28e9305614da7dee283",
+      "ptx_sha256": "2b27c56a219a8a6698bf32e8821baf34dbc38279cd1ddee33c16000964c67322",
+      "mma_count": 3,
+      "compile": {
+        "ok": true,
+        "cubin_id": "9961e2acb745350d6ae5615155b5fc92b34aa8da788e5ad81c79839ea0f87679",
+        "bytes": 5928,
+        "entry_points": [
+          "kernel"
+        ],
+        "registers": {
+          "kernel": 37
+        }
+      },
+      "run_ok": true,
+      "max_abs_error": 1.9073486328125e-06,
+      "failing_elements": 0,
+      "all_cells": true,
+      "pass": true,
+      "cpu_simulation_max_abs_error": 1.9073486328125e-06,
+      "cpu_simulation_max_rel_error": 1.7709039942473953e-07,
+      "one_pass_tf32_max_rel_error": 0.00029837518673075806,
+      "three_term_beats_one_pass": true,
+      "cpu_simulation_bound": 4e-06,
+      "cpu_simulation_pass": true
+    },
+    {
+      "case": "p04-staged-32x16",
+      "classification": "Plan",
+      "reason": "validated one-atom TF32 matmul plan",
+      "ir_sha256": "2df1d30c05dddb44af64a28c8404ea24d07276ce3945b09213cf7bdec43c0229",
+      "ptx_sha256": "770758cc3fec1dd5a9c0d44b3ee639e17ddb324353106f7dc2c3217480f85ada",
+      "mma_count": 0,
+      "compile": {
+        "ok": true,
+        "cubin_id": "724218f73f86513530fa1d4c0e71999262e1371931ccef47447dd66dcef0722a",
+        "bytes": 7904,
+        "entry_points": [
+          "kernel"
+        ],
+        "registers": {
+          "kernel": 60
+        }
+      },
+      "run_ok": true,
+      "max_abs_error": 9.5367431640625e-07,
+      "failing_elements": 0,
+      "all_cells": true,
+      "pass": true,
+      "cpu_simulation_max_abs_error": 1.430511474609375e-06,
+      "cpu_simulation_max_rel_error": 1.3607710745791453e-07,
+      "one_pass_tf32_max_rel_error": 0.0002645622462955729,
+      "three_term_beats_one_pass": true,
+      "cpu_simulation_bound": 4e-06,
+      "cpu_simulation_pass": true
+    },
+    {
+      "case": "p05-staged-64x32",
+      "classification": "Plan",
+      "reason": "validated one-atom TF32 matmul plan",
+      "ir_sha256": "e689804b63adf2d110e700a80ff2a8cbe4b5096e82c4936334df476124638168",
+      "ptx_sha256": "24c6d57b9118a29d422753bb92cc0c3d0869ed1f787aeb791d035413a7c5d4d3",
+      "mma_count": 0,
+      "compile": {
+        "ok": true,
+        "cubin_id": "d671d226a481106a7f49c601a2a08d7938b5d2c4ed2fabe51d79d0cd7ead7e9a",
+        "bytes": 7904,
+        "entry_points": [
+          "kernel"
+        ],
+        "registers": {
+          "kernel": 60
+        }
+      },
+      "run_ok": true,
+      "max_abs_error": 9.5367431640625e-07,
+      "failing_elements": 0,
+      "all_cells": true,
+      "pass": true,
+      "cpu_simulation_max_abs_error": 1.9073486328125e-06,
+      "cpu_simulation_max_rel_error": 1.6011506509037654e-07,
+      "one_pass_tf32_max_rel_error": 0.0002897882534304453,
+      "three_term_beats_one_pass": true,
+      "cpu_simulation_bound": 4e-06,
+      "cpu_simulation_pass": true
+    },
+    {
+      "case": "p06-staged-32x64",
+      "classification": "Plan",
+      "reason": "validated one-atom TF32 matmul plan",
+      "ir_sha256": "73b07d0bdae15ee6492494b8a1a29c49edca1f67d52a0e1d46fc57dc38c9a834",
+      "ptx_sha256": "e22869fd56b7c5a74b57deebe2832b29a594879df9294ede358e102d96d0a7cf",
+      "mma_count": 0,
+      "compile": {
+        "ok": true,
+        "cubin_id": "e9fa503ca13ffa9c188e7981c3bea158a967cecfb13da8151ef227c4ea0c3305",
+        "bytes": 7904,
+        "entry_points": [
+          "kernel"
+        ],
+        "registers": {
+          "kernel": 60
+        }
+      },
+      "run_ok": true,
+      "max_abs_error": 1.430511474609375e-06,
+      "failing_elements": 0,
+      "all_cells": true,
+      "pass": true,
+      "cpu_simulation_max_abs_error": 1.9073486328125e-06,
+      "cpu_simulation_max_rel_error": 1.6455807435457854e-07,
+      "one_pass_tf32_max_rel_error": 0.00028949879230829234,
+      "three_term_beats_one_pass": true,
+      "cpu_simulation_bound": 4e-06,
+      "cpu_simulation_pass": true
+    },
+    {
+      "case": "p07-b-transpose-32x16",
+      "classification": "Plan",
+      "reason": "validated one-atom TF32 matmul plan",
+      "ir_sha256": "57d048a21e462e63ce8c5e9984fcebdb94b2624b62a286b81f6ec8d359c5763f",
+      "ptx_sha256": "5698d904f93b0e430937a9f1b3af4343d038ae37c559c990afb79a860049545b",
+      "mma_count": 3,
+      "compile": {
+        "ok": true,
+        "cubin_id": "6fabb70f6c9647c0645ca7212d0074dc0bf01abe6d95829f28749fd09b3482b0",
+        "bytes": 5928,
+        "entry_points": [
+          "kernel"
+        ],
+        "registers": {
+          "kernel": 37
+        }
+      },
+      "run_ok": true,
+      "max_abs_error": 2.86102294921875e-06,
+      "failing_elements": 0,
+      "all_cells": true,
+      "pass": true,
+      "cpu_simulation_max_abs_error": 1.9073486328125e-06,
+      "cpu_simulation_max_rel_error": 1.9391446006554696e-07,
+      "one_pass_tf32_max_rel_error": 0.00032926675319129876,
+      "three_term_beats_one_pass": true,
+      "cpu_simulation_bound": 4e-06,
+      "cpu_simulation_pass": true
+    },
+    {
+      "case": "p08-a-transpose-16x16",
+      "classification": "Plan",
+      "reason": "validated one-atom TF32 matmul plan",
+      "ir_sha256": "3ebfed89d6abbac511998cdaf9386b291a91ccee5a70f1007260d12086504ed1",
+      "ptx_sha256": "a6e07d46930681a24ed96998fb5d35f931100ea3d148b2bc57ca22890d10ffc1",
+      "mma_count": 3,
+      "compile": {
+        "ok": true,
+        "cubin_id": "ab2b67d2e63f8e666ca059c3d38b0805f2c73f869478adb64aa900c8e6b16081",
+        "bytes": 4904,
+        "entry_points": [
+          "kernel"
+        ],
+        "registers": {
+          "kernel": 30
+        }
+      },
+      "run_ok": true,
+      "max_abs_error": 9.5367431640625e-07,
+      "failing_elements": 0,
+      "all_cells": true,
+      "pass": true,
+      "cpu_simulation_max_abs_error": 4.76837158203125e-07,
+      "cpu_simulation_max_rel_error": 7.100112437380558e-08,
+      "one_pass_tf32_max_rel_error": 0.00022163888487338086,
+      "three_term_beats_one_pass": true,
+      "cpu_simulation_bound": 4e-06,
+      "cpu_simulation_pass": true
+    },
+    {
+      "case": "p09-direct-32x8",
+      "classification": "Plan",
+      "reason": "validated one-atom TF32 matmul plan",
+      "ir_sha256": "97edcdb0e969f01f692b64aea0d0e27200309158ca228833802b012a9418c008",
+      "ptx_sha256": "43c2bb6003424b79c80109d9d8625d914fa0eba12c81af2192cd78fcd30799ae",
+      "mma_count": 3,
+      "compile": {
+        "ok": true,
+        "cubin_id": "02e2552d7b48f199ef5a92ed1493d1fe908be3c51b26fc7bd8c5d1b748ec81af",
+        "bytes": 4648,
+        "entry_points": [
+          "kernel"
+        ],
+        "registers": {
+          "kernel": 26
+        }
+      },
+      "run_ok": true,
+      "max_abs_error": 4.76837158203125e-07,
+      "failing_elements": 0,
+      "all_cells": true,
+      "pass": true,
+      "cpu_simulation_max_abs_error": 4.76837158203125e-07,
+      "cpu_simulation_max_rel_error": 7.230680471385413e-08,
+      "one_pass_tf32_max_rel_error": 0.000416649885462406,
+      "three_term_beats_one_pass": true,
+      "cpu_simulation_bound": 4e-06,
+      "cpu_simulation_pass": true
+    },
+    {
+      "case": "p10-staged-16x32",
+      "classification": "Plan",
+      "reason": "validated one-atom TF32 matmul plan",
+      "ir_sha256": "0bc65abb717b5632a35bc2da5ad6e834a6720e348d268f7c5f0a148ba5997cef",
+      "ptx_sha256": "31ef485abd02d5f24adb20e4f1c5b6e2c930dde475d17b8316337b8e0760d618",
+      "mma_count": 0,
+      "compile": {
+        "ok": true,
+        "cubin_id": "b437904881aa6458a3785c2eb55a134a38ff83568e2ebdec8f10cb12b8493a08",
+        "bytes": 6240,
+        "entry_points": [
+          "kernel"
+        ],
+        "registers": {
+          "kernel": 44
+        }
+      },
+      "run_ok": true,
+      "max_abs_error": 9.5367431640625e-07,
+      "failing_elements": 0,
+      "all_cells": true,
+      "pass": true,
+      "cpu_simulation_max_abs_error": 9.5367431640625e-07,
+      "cpu_simulation_max_rel_error": 1.6840939515597322e-07,
+      "one_pass_tf32_max_rel_error": 0.00035746472959934897,
+      "three_term_beats_one_pass": true,
+      "cpu_simulation_bound": 4e-06,
+      "cpu_simulation_pass": true
+    },
+    {
+      "case": "p11-direct-16x32",
+      "classification": "Plan",
+      "reason": "validated one-atom TF32 matmul plan",
+      "ir_sha256": "09968cf311e22a08be4fb17425712b1fa57a646c37d6581962101af198aef8bf",
+      "ptx_sha256": "3a880ebd4ee6a7c606bf1ac7fbcbce96c6abdc83336b5a22a06b1923c8e2eadf",
+      "mma_count": 3,
+      "compile": {
+        "ok": true,
+        "cubin_id": "cef20e988eecddbee4befeb6bc12f7e09224bc52a96664f5ba5e6f5a3d5db32d",
+        "bytes": 4904,
+        "entry_points": [
+          "kernel"
+        ],
+        "registers": {
+          "kernel": 30
+        }
+      },
+      "run_ok": true,
+      "max_abs_error": 9.5367431640625e-07,
+      "failing_elements": 0,
+      "all_cells": true,
+      "pass": true,
+      "cpu_simulation_max_abs_error": 4.76837158203125e-07,
+      "cpu_simulation_max_rel_error": 8.217459620019737e-08,
+      "one_pass_tf32_max_rel_error": 0.0003494063830432392,
+      "three_term_beats_one_pass": true,
+      "cpu_simulation_bound": 4e-06,
+      "cpu_simulation_pass": true
+    },
+    {
+      "case": "p12-staged-b-transpose",
+      "classification": "Plan",
+      "reason": "validated one-atom TF32 matmul plan",
+      "ir_sha256": "06cd8b2efb1482a1824bca5dcc43a93585ddaa1b1214a6dec6bb14fd16151def",
+      "ptx_sha256": "2a129aa613423d8e69962b6275379b38f31d9dd7a8293d8594fa92422ed1a2b6",
+      "mma_count": 0,
+      "compile": {
+        "ok": true,
+        "cubin_id": "30d16f3af7a337f3ba29e1f4634beffd8fa69a8420281e09ab580d93ce7075a1",
+        "bytes": 7904,
+        "entry_points": [
+          "kernel"
+        ],
+        "registers": {
+          "kernel": 60
+        }
+      },
+      "run_ok": true,
+      "max_abs_error": 9.5367431640625e-07,
+      "failing_elements": 0,
+      "all_cells": true,
+      "pass": true,
+      "cpu_simulation_max_abs_error": 1.430511474609375e-06,
+      "cpu_simulation_max_rel_error": 1.5599223907412158e-07,
+      "one_pass_tf32_max_rel_error": 0.0003501635786616344,
+      "three_term_beats_one_pass": true,
+      "cpu_simulation_bound": 4e-06,
+      "cpu_simulation_pass": true
+    },
+    {
+      "case": "p13-direct-48x24",
+      "classification": "Plan",
+      "reason": "validated one-atom TF32 matmul plan",
+      "ir_sha256": "ecdbaf0b00eb892e3b1538bbed2cea6a4a312f9805bf6f1d9968b27daeaf617a",
+      "ptx_sha256": "223c3ff141c3fcb251a203e47dce572bc7e1d0e2c7a53434ec13486447e8ffd0",
+      "mma_count": 3,
+      "compile": {
+        "ok": true,
+        "cubin_id": "0f6aa8d88f3f88994287babfa91d4f3139139fe3300c6cd345c271ffa0572707",
+        "bytes": 6952,
+        "entry_points": [
+          "kernel"
+        ],
+        "registers": {
+          "kernel": 44
+        }
+      },
+      "run_ok": true,
+      "max_abs_error": 2.86102294921875e-06,
+      "failing_elements": 0,
+      "all_cells": true,
+      "pass": true,
+      "cpu_simulation_max_abs_error": 1.9073486328125e-06,
+      "cpu_simulation_max_rel_error": 1.6238442694373347e-07,
+      "one_pass_tf32_max_rel_error": 0.0003250378030945925,
+      "three_term_beats_one_pass": true,
+      "cpu_simulation_bound": 4e-06,
+      "cpu_simulation_pass": true
+    },
+    {
+      "case": "p14-staged-48x24",
+      "classification": "Plan",
+      "reason": "validated one-atom TF32 matmul plan",
+      "ir_sha256": "43cfae025340eeb502c47855e53314950bfa95a2b7084d60596291565567134e",
+      "ptx_sha256": "08b5330c946244cc71aa3396aceaa424b34ee9c5698cd1ab3b4eb8f800b394e0",
+      "mma_count": 0,
+      "compile": {
+        "ok": true,
+        "cubin_id": "e5f9ae2832856f5e4c462144111323199db6f26d9af6d59610f4bbc0c4cd1a56",
+        "bytes": 10720,
+        "entry_points": [
+          "kernel"
+        ],
+        "registers": {
+          "kernel": 62
+        }
+      },
+      "run_ok": true,
+      "max_abs_error": 1.9073486328125e-06,
+      "failing_elements": 0,
+      "all_cells": true,
+      "pass": true,
+      "cpu_simulation_max_abs_error": 1.9073486328125e-06,
+      "cpu_simulation_max_rel_error": 1.5500720550994812e-07,
+      "one_pass_tf32_max_rel_error": 0.0003605467600161393,
+      "three_term_beats_one_pass": true,
+      "cpu_simulation_bound": 4e-06,
+      "cpu_simulation_pass": true
+    }
+  ],
+  "benchmark": false,
+  "health": {
+    "ok": true,
+    "can_compile": true,
+    "can_run": true,
+    "ptxas": "/usr/local/cuda/bin/ptxas",
+    "default_arch": "sm_89",
+    "gpu": "admitted CUDA device 0; verified on first run",
+    "implementation": "local research runner; not exact hosted-backend parity"
+  },
+  "all_plan_passed": true
+}

@@ -1,27 +1,26 @@
 # Emmy compiler workspace
 
 A direct **Kernel IR → PTX** compiler and a local CUDA research system. The
-retained compiler is `51bd61bd...`: all 15 published problems pass on both the
-configured RTX 4090 (SM8.9) and official RTX 5090 (SM12.0). The compact 122-case
-suite and all 26 required sanitizer checks pass on the RTX 4090. See the
-[shared-window repair evidence](docs/shared-window-fix.md) and
-[current handoff](docs/HANDOFF.md) for identities, scope and resume instructions.
-The [RTX 4060 baseline report](docs/baseline-correctness.md) is historical.
+workspace compiler is `12202ea1…`, combining powenn's optimizations with our
+ABI, scope and operator coverage. It passes all 93 selected correctness cases
+on RTX 4090; PTX assembles for sm_89 and sm_120. See the
+[powenn merge record](docs/powenn-merge.md) for mechanisms, tolerance receipts,
+paired performance and the remaining gap against powenn on attention.
+The [selective exponential lowering](docs/selective-exponential.md) preserves
+subnormal results while avoiding duplicate exponential work.
+The current source has not been executed on the official RTX 5090.
+The [shared-window repair](docs/shared-window-fix.md) and
+[RTX 4060 report](docs/baseline-correctness.md) describe earlier source versions.
 
 The lowering is ours, using Emmy's typed loader and sibling metadata for ABI and
 launch contracts. It emits direct PTX; it does not delegate lowering to Emmy's
 renderer, nvcc, or another compiler. Correctness takes priority over performance.
 
-The matmul-first tensor-core design—dataflow recognition, warp-atom lowering,
-three-term TF32 precision evidence, split-K/atomics, and the attention
-follow-on—is recorded in [docs/tensor-core-plan.md](docs/tensor-core-plan.md).
-It is a plan, not an implemented feature.
-
-Optimization proceeds concurrently with scope broadening, but only as
-generality-preserving typed-IR analysis and emission. Every source change still
-requires all 15 published cases to pass before timing, and tensor-core lowering
-will be a separate recognizer/emitter increment rather than a rewrite of the
-generic path.
+The compiler includes typed dense-contraction recognition and a direct
+three-term TF32 emitter, with a general SIMT fallback. Aligned vector-load
+SIMT loops remain preferred when available. The
+[original tensor-core plan](docs/tensor-core-plan.md) supplies design history;
+the merge record describes actual implementation and validation.
 
 ```sh
 uv venv --python 3.13
@@ -84,7 +83,7 @@ and evaluator identities. A source change requires a new gate. Partial sweeps
 are useful for correctness debugging and cannot qualify performance evidence.
 Fresh independent confirmation is additionally required for promotion.
 
-Routine GPU checks use the [compact 122-case regression suite](docs/gpu-regression.md),
+Routine GPU checks use the [compact 93-case regression suite](docs/gpu-regression.md),
 including all 15 published contracts. The full archive is retained for targeted
 expansion; previous random confirmation draws do not accumulate into every run.
 

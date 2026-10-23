@@ -1,0 +1,57 @@
+{
+  "purpose": "Diagnose existing attention slowdown; no new test cases or compiler promotion",
+  "maximum_variants": 3,
+  "budget_minutes": 30,
+  "hypotheses": {
+    "guard": "Removing guard recovers speed; inserting it into powenn reproduces loss.",
+    "ftz_mode": "Plain unguarded ex2 distinguishes modifier from guard overhead.",
+    "other_codegen": "Residual gap after matching exponential lowering implicates other code generation."
+  },
+  "source_hashes": {
+    "merged_ftz": {
+      "tensor_core.py": "ca5af9c9f41826f9e2000de7a8537745c0393007d8eaaaf9fd212b3bfd3364a6",
+      "compile.py": "eff98e6ab5898af6d80cfc3d95bd53d8debe660ffc92961df25078b852a5c8d9",
+      "tf32_emitter.py": "fc460b050b8c9ad97104869df5390571940ce57299b2115be7e12bb2a28b505d"
+    },
+    "merged_plain": {
+      "tf32_emitter.py": "fc460b050b8c9ad97104869df5390571940ce57299b2115be7e12bb2a28b505d",
+      "tensor_core.py": "ca5af9c9f41826f9e2000de7a8537745c0393007d8eaaaf9fd212b3bfd3364a6",
+      "compile.py": "a199445fac6574a7e14fccd1e9ec25ab68b31930af50c37d492b7720a7871f47"
+    },
+    "powenn_guard": {
+      "tensor_core.py": "ca5af9c9f41826f9e2000de7a8537745c0393007d8eaaaf9fd212b3bfd3364a6",
+      "compile.py": "d8f5689b8d09bc1109dc683d442b0c355b30559ecda0acd9eea738321cfc54be",
+      "tf32_emitter.py": "19820f4dfb995955ce342c84269b6cf7ed92208dc2a94054858738e89cbf0b28"
+    }
+  },
+  "base_gates": {
+    "suite_id": "362d7f9351d1038e492fc4023b6606fa13bc69ddabec5bb34be86bde87e44c96",
+    "arms": {
+      "ours": {
+        "source_id": "13b17fd9634637c9d863403a6920ef89e84d4ac5845fd737f6e766c7d255f0db",
+        "gate_id": "e70e3269f19bea0e44f2da30973d9d1a99b1c8bf2ca7010cccfaecdd082b5155",
+        "sources": {
+          "compile.py": "51bd61bded75a2e132c94f963974f29c93783135283b8c1d028c30e848da4f00"
+        }
+      },
+      "theirs": {
+        "source_id": "619e133138546e8e6de4c65c8e99410a1f9e6920754a3d8ac1b0efbcb9276c52",
+        "gate_id": "6e0cb0e08b9369b818716b07a735d56cde38c375a751c30d5ea9d8e201b63cb6",
+        "sources": {
+          "compile.py": "4439640e2152b005908752ebc7fba5ef47b0e7930409ce106d37fd43497f8688",
+          "tf32_emitter.py": "19820f4dfb995955ce342c84269b6cf7ed92208dc2a94054858738e89cbf0b28",
+          "tensor_core.py": "ca5af9c9f41826f9e2000de7a8537745c0393007d8eaaaf9fd212b3bfd3364a6"
+        }
+      },
+      "final": {
+        "source_id": "ea0c87d1a7816d4fa03398badbd59429b99446763ab9361939e6c2e60b2ad48b",
+        "gate_id": "86945b19eb830d921c22c45358ffaadf03f969867ffea97df38576126e61277e",
+        "sources": {
+          "compile.py": "7d5d4d2d0984aaa61c713c5cba2550628f08cb2331c194e781188332333cd2d0",
+          "tf32_emitter.py": "fc460b050b8c9ad97104869df5390571940ce57299b2115be7e12bb2a28b505d",
+          "tensor_core.py": "ca5af9c9f41826f9e2000de7a8537745c0393007d8eaaaf9fd212b3bfd3364a6"
+        }
+      }
+    }
+  }
+}

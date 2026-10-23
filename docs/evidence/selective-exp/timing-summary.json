@@ -1,0 +1,106 @@
+[
+  {
+    "problem": "a01_attention",
+    "baseline": "merged",
+    "candidate": "merged",
+    "baseline_us": 11.264000087976456,
+    "candidate_us": 11.264000087976456,
+    "ratio": 1.0,
+    "block_ratios": [
+      1.0,
+      1.0
+    ],
+    "pairs": 64
+  },
+  {
+    "problem": "a01_attention",
+    "baseline": "theirs",
+    "candidate": "theirs",
+    "baseline_us": 9.216000325977802,
+    "candidate_us": 9.216000325977802,
+    "ratio": 1.0,
+    "block_ratios": [
+      1.0,
+      1.0
+    ],
+    "pairs": 64
+  },
+  {
+    "problem": "a01_attention",
+    "baseline": "merged",
+    "candidate": "renorm",
+    "baseline_us": 11.264000087976456,
+    "candidate_us": 10.239999741315842,
+    "ratio": 0.9090908790249688,
+    "block_ratios": [
+      0.9090908790249688,
+      0.9090908790249688
+    ],
+    "pairs": 64
+  },
+  {
+    "problem": "a01_attention",
+    "baseline": "theirs",
+    "candidate": "renorm",
+    "baseline_us": 9.216000325977802,
+    "candidate_us": 10.239999741315842,
+    "ratio": 1.1111110437411356,
+    "block_ratios": [
+      1.1111110437411356,
+      1.1111110437411356
+    ],
+    "pairs": 64
+  },
+  {
+    "problem": "a02_attention_128",
+    "baseline": "merged",
+    "candidate": "merged",
+    "baseline_us": 9.216000325977802,
+    "candidate_us": 9.216000325977802,
+    "ratio": 0.9000000545696835,
+    "block_ratios": [
+      0.9500000272848417,
+      0.9000000545696835
+    ],
+    "pairs": 64
+  },
+  {
+    "problem": "a02_attention_128",
+    "baseline": "theirs",
+    "candidate": "theirs",
+    "baseline_us": 6.144000217318535,
+    "candidate_us": 6.144000217318535,
+    "ratio": 1.0,
+    "block_ratios": [
+      1.0,
+      1.0
+    ],
+    "pairs": 64
+  },
+  {
+    "problem": "a02_attention_128",
+    "baseline": "merged",
+    "candidate": "renorm",
+    "baseline_us": 9.216000325977802,
+    "candidate_us": 7.168000098317862,
+    "ratio": 0.7000000272848418,
+    "block_ratios": [
+      0.7000000272848418,
+      0.6850694459813229
+    ],
+    "pairs": 64
+  },
+  {
+    "problem": "a02_attention_128",
+    "baseline": "theirs",
+    "candidate": "renorm",
+    "baseline_us": 6.144000217318535,
+    "candidate_us": 7.168000098317862,
+    "ratio": 1.0208333017536573,
+    "block_ratios": [
+      1.0,
+      1.0867570763390977
+    ],
+    "pairs": 64
+  }
+]

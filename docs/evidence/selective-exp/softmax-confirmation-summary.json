@@ -1,0 +1,50 @@
+[
+  {
+    "problem": "f02_row_softmax",
+    "baseline": "merged",
+    "candidate": "merged",
+    "baseline_us": 5.119999870657921,
+    "candidate_us": 5.119999870657921,
+    "ratio": 0.9876919071772488,
+    "block_ratios": [
+      0.9876919071772488
+    ],
+    "pairs": 32
+  },
+  {
+    "problem": "f02_row_softmax",
+    "baseline": "theirs",
+    "candidate": "theirs",
+    "baseline_us": 3.0720001086592674,
+    "candidate_us": 3.0720001086592674,
+    "ratio": 1.0,
+    "block_ratios": [
+      1.0
+    ],
+    "pairs": 32
+  },
+  {
+    "problem": "f02_row_softmax",
+    "baseline": "merged",
+    "candidate": "renorm",
+    "baseline_us": 4.095999989658594,
+    "candidate_us": 4.095999989658594,
+    "ratio": 1.0,
+    "block_ratios": [
+      1.0
+    ],
+    "pairs": 32
+  },
+  {
+    "problem": "f02_row_softmax",
+    "baseline": "theirs",
+    "candidate": "renorm",
+    "baseline_us": 4.095999989658594,
+    "candidate_us": 4.095999989658594,
+    "ratio": 1.0,
+    "block_ratios": [
+      1.0
+    ],
+    "pairs": 32
+  }
+]

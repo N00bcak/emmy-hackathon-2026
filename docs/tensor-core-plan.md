@@ -1,8 +1,8 @@
 # Tensor-core lowering plan: matmul first, then attention
 
-Status: design and implementation plan, not yet implemented. This document is
-the checkpoint for returning to the work after the correctness baseline is
-tightened.
+Status: historical design plan. Typed recognition and a three-term TF32 emitter
+are now incorporated; see the [powenn merge record](powenn-merge.md) for actual
+implementation, SIMT preference and validation limits.
 
 Date: 2026-10-22
 
