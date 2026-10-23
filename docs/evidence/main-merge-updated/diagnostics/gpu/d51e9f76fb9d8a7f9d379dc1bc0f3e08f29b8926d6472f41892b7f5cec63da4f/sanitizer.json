@@ -1,0 +1,118 @@
+{
+  "ok": false,
+  "batches": [
+    {
+      "batch_id": 0,
+      "membership": [
+        {
+          "id": "d51e9f76fb9d8a7f9d379dc1bc0f3e08f29b8926d6472f41892b7f5cec63da4f",
+          "variant": "main100-diagnostic"
+        }
+      ],
+      "quarantined": true,
+      "results": [
+        {
+          "id": "d51e9f76fb9d8a7f9d379dc1bc0f3e08f29b8926d6472f41892b7f5cec63da4f",
+          "variant": "main100-diagnostic",
+          "ok": false,
+          "checks": [
+            {
+              "repetition": 0,
+              "ok": false,
+              "buffers": {
+                "div_c1": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "q": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "kt": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "v": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "matmul_1": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                }
+              },
+              "outputs": {
+                "matmul_1": {
+                  "ok": false,
+                  "elements": 4096,
+                  "mismatched": 4095,
+                  "max_abs_error": 0.8317424654960632,
+                  "rtol": 0.001,
+                  "atol": 0.0001
+                }
+              }
+            }
+          ],
+          "resources": [
+            {
+              "entry": "k_matmul_softmax_reduce_b55365",
+              "dynamic_shared_bytes": 0,
+              "block_threads": 128,
+              "max_threads_per_block": 128,
+              "static_shared_bytes": 41216,
+              "local_bytes": 0,
+              "registers": 177,
+              "max_active_blocks_per_sm": 2,
+              "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+            }
+          ],
+          "quarantined": true,
+          "trusted": false
+        }
+      ],
+      "wall_seconds": 0.0011234963312745094,
+      "requires_all_batchmates_isolated": true,
+      "isolated": true
+    }
+  ],
+  "launch_count": 1,
+  "width": 1,
+  "repetitions": 3,
+  "promotion_eligible": false,
+  "note": "Concurrent results are screening only; fresh isolated confirmation is mandatory.",
+  "mode": "correctness",
+  "device": {
+    "name": "NVIDIA GeForce RTX 4090",
+    "worker_pid": 1178498,
+    "context_identity": "1178498:445288880",
+    "driver_version": 13040,
+    "clock_rate_khz": 2520000,
+    "multiprocessors": 128,
+    "memory_clock_khz": 10501000,
+    "compute_major": 8,
+    "compute_minor": 9,
+    "uuid": "GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+    "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry."
+  },
+  "benchmark_qualified": false,
+  "qualification_note": "Raw diagnostics; benchmark validity requires evaluator-issued source/suite all-15 gates.",
+  "phase_seconds": {
+    "case_loading": 0.00611898023635149,
+    "cuda_initialization": 0.32863423274829984,
+    "execution_and_checks": 0.012379392050206661,
+    "total": 0.34713299525901675
+  },
+  "identities": [
+    {
+      "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v3/bugs-types/cooperative-logical-tid-shadow-v1/root-axis-alpha-rename-tid/meta.json": "c280c572744016ecf6ca2971312ad2ce8a10b28c0f3e38561c1a096c2ea7352f",
+      "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v3/bugs-types/cooperative-logical-tid-shadow-v1/root-axis-alpha-rename-tid/expected.npz": "ccc0ad1a70f679781c8aff8064ae73368e04bc35018a537dc15ef8610262ed51",
+      "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v3/bugs-types/cooperative-logical-tid-shadow-v1/root-axis-alpha-rename-tid/inputs.npz": "f08a92ed6e149310d309dc302d7eb1ec2f1169cdca5de47d3685f93cd896ec59",
+      "/root/nfs/emmy/research/assembly-cache/0e09bcd36cc0b1cc47f3415faca3beca41625a27cd9204a3d570ae6f623314e4/module.cubin": "aebf12416e4180f6ffbee8aebe97d2064a69cd750e9d4991a207249f6315ef5f"
+    }
+  ]
+}

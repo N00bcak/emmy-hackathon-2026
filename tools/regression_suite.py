@@ -62,10 +62,11 @@ def verify_case(path, expected=None):
     return record
 
 
-def select(catalogs, policy=DEFAULT_POLICY, *, full=False, expand_versions=()):
+def select(catalogs, policy=DEFAULT_POLICY, *, full=False, expand_versions=(), include_case_ids=()):
     contract = read(policy)
     required = contract['cases']
     ids = [r['id'] for r in required]
+    scoped_records = {}
     if len(set(ids)) != len(ids):
         raise ValueError('duplicate policy case')
     if scope_ref := contract.get('scope_manifest'):
@@ -83,12 +84,27 @@ def select(catalogs, policy=DEFAULT_POLICY, *, full=False, expand_versions=()):
         if sha(previous_bytes) != previous['sha256']:
             raise ValueError('previous policy changed')
         rows = scope['cases']
-        if (len({r['id'] for r in rows}) != len(rows)
+        if scope.get('version') == 'gpu-regression-scope-v6':
+            previous = {r['id']: r for r in json.loads(previous_bytes)['cases']}
+            inventory = {r['id']: r for r in rows}
+            if (len(inventory) != len(rows) or len(rows) != scope['inventory_case_count']
+                    or not previous.keys() <= inventory.keys()
+                    or any(inventory[cid]['record_sha256'] != row['record_sha256']
+                           for cid, row in previous.items())
+                    or any(r['role'] not in ('mandatory', 'core', 'targeted', 'diagnostic', 'replace')
+                           or r['disposition'] != ('retain' if r['role'] in ('mandatory', 'core') else r['role'])
+                           or not r['reason'] or not r['run_when'] for r in rows)
+                    or {r['id'] for r in rows if r['disposition'] == 'retain'} != set(ids)
+                    or any(inventory[r['id']]['record_sha256'] != r['record_sha256'] for r in required)):
+                raise ValueError('audited scope dispositions or record identities do not match policy')
+            scoped_records = inventory
+        elif (len({r['id'] for r in rows}) != len(rows)
                 or {r['id'] for r in rows} != {r['id'] for r in json.loads(previous_bytes)['cases']}
                 or any(r['disposition'] not in ('retain', 'archive') or not r['reason'] for r in rows)
                 or {r['id'] for r in rows if r['disposition'] == 'retain'} != set(ids)):
             raise ValueError('scope dispositions do not match policies')
-        if any(r['marked_operators'] and r['disposition'] != 'retain' for r in rows):
+        if (scope.get('version') != 'gpu-regression-scope-v6'
+                and any(r['marked_operators'] and r['disposition'] != 'retain' for r in rows)):
             raise ValueError('scope loses marked-operator coverage')
         if contract['assembly_targets'] != ['sm_89', 'sm_120'] or scope['assembly_targets'] != contract['assembly_targets']:
             raise ValueError('both assembly targets are required')
@@ -122,15 +138,19 @@ def select(catalogs, policy=DEFAULT_POLICY, *, full=False, expand_versions=()):
     missing = set(ids) - index.keys()
     if missing:
         raise ValueError('required regression cases missing: ' + ', '.join(sorted(missing)))
+    extras = set(include_case_ids)
+    if extras - index.keys():
+        raise ValueError('unknown additional case: ' + ', '.join(sorted(extras - index.keys())))
     chosen = list(ids)
     expansions = set(expand_versions)
     known_versions = {r.get('spec', {}).get('version', r.get('version')) for _, r in index.values()}
     if expansions - known_versions:
         raise ValueError('unknown expansion version: ' + ', '.join(sorted(expansions - known_versions)))
     for case_id, (_, r) in sorted(index.items()):
-        if case_id not in chosen and (full or r.get('spec', {}).get('version', r.get('version')) in expansions):
+        if case_id not in chosen and (full or case_id in extras
+                or r.get('spec', {}).get('version', r.get('version')) in expansions):
             chosen.append(case_id)
-    policies = {r['id']: r for r in required}
+    policies = {**scoped_records, **{r['id']: r for r in required}}
     paths, records = [], []
     for case_id in chosen:
         path, _ = index[case_id]
@@ -140,10 +160,14 @@ def select(catalogs, policy=DEFAULT_POLICY, *, full=False, expand_versions=()):
                  if r.get('spec', {}).get('family') == 'published']
     if sorted(published) != sorted(PUBLISHED_PROBLEMS):
         raise ValueError('selection must contain exactly the 15 published contracts')
+    if scoped_records and {cid for cid, row in scoped_records.items() if row['role'] == 'mandatory'} != {
+            r['id'] for r in records if r.get('spec', {}).get('family') == 'published'}:
+        raise ValueError('audited mandatory roles must match the 15 published contracts')
     policy_bytes = Path(policy).read_bytes()
     return {'version': contract['version'], 'policy_sha256': sha(policy_bytes),
             'assembly_targets': contract.get('assembly_targets', ['sm_89', 'sm_120']),
             'selection': 'full' if full else 'compact', 'expanded_versions': sorted(expansions),
+            'included_case_ids': sorted(extras),
             'catalog_unique_cases': len(index), 'cases': paths, 'case_ids': chosen,
             'archive_only_cases': len(index) - len(chosen),
             'published_cases': len(published), 'generated_cases': len(chosen) - len(published),
@@ -231,6 +255,7 @@ def main():
     parser.add_argument('--out', type=Path, required=True)
     parser.add_argument('--full', action='store_true', help='Replay the archive explicitly')
     parser.add_argument('--expand-version', action='append', default=[], help='Add a changed mechanism’s archived variants')
+    parser.add_argument('--include-case', action='append', default=[], help='Add an exact case ID for a changed mechanism')
     args = parser.parse_args()
     if args.install and not args.root:
         parser.error('--install requires --root')
@@ -239,7 +264,8 @@ def main():
     if not catalogs:
         parser.error('supply --catalog, or --root with synchronized defaults')
     policy = Path(defaults['policy']) if defaults and args.policy == DEFAULT_POLICY else args.policy
-    result = select(catalogs, policy, full=args.full, expand_versions=args.expand_version)
+    result = select(catalogs, policy, full=args.full, expand_versions=args.expand_version,
+                    include_case_ids=args.include_case)
     # Reservations are immutable: interruption must not silently redraw/reselect.
     args.out.parent.mkdir(parents=True, exist_ok=True)
     with args.out.open('x') as out:

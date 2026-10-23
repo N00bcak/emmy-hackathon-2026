@@ -1,0 +1,155 @@
+{
+  "ok": true,
+  "batches": [
+    {
+      "batch_id": 0,
+      "membership": [
+        {
+          "id": "d7aa0ab891e7af29fab0846614d52d73add946c3a47a8872624bbec069c6bff3",
+          "variant": "main100-diagnostic"
+        }
+      ],
+      "quarantined": false,
+      "results": [
+        {
+          "id": "d7aa0ab891e7af29fab0846614d52d73add946c3a47a8872624bbec069c6bff3",
+          "variant": "main100-diagnostic",
+          "ok": true,
+          "checks": [
+            {
+              "repetition": 0,
+              "ok": true,
+              "buffers": {
+                "x_266884": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "out_938738": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                }
+              },
+              "outputs": {
+                "out_938738": {
+                  "ok": true,
+                  "elements": 992,
+                  "mismatched": 0,
+                  "max_abs_error": 2.9802322387695312e-08,
+                  "rtol": 0.001,
+                  "atol": 1e-05
+                }
+              }
+            },
+            {
+              "repetition": 1,
+              "ok": true,
+              "buffers": {
+                "x_266884": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "out_938738": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                }
+              },
+              "outputs": {
+                "out_938738": {
+                  "ok": true,
+                  "elements": 992,
+                  "mismatched": 0,
+                  "max_abs_error": 2.9802322387695312e-08,
+                  "rtol": 0.001,
+                  "atol": 1e-05
+                }
+              }
+            },
+            {
+              "repetition": 2,
+              "ok": true,
+              "buffers": {
+                "x_266884": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "out_938738": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                }
+              },
+              "outputs": {
+                "out_938738": {
+                  "ok": true,
+                  "elements": 992,
+                  "mismatched": 0,
+                  "max_abs_error": 2.9802322387695312e-08,
+                  "rtol": 0.001,
+                  "atol": 1e-05
+                }
+              }
+            }
+          ],
+          "resources": [
+            {
+              "entry": "k_out_938738",
+              "dynamic_shared_bytes": 0,
+              "block_threads": 64,
+              "max_threads_per_block": 1024,
+              "static_shared_bytes": 0,
+              "local_bytes": 0,
+              "registers": 40,
+              "max_active_blocks_per_sm": 24,
+              "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+            }
+          ],
+          "quarantined": false,
+          "trusted": true
+        }
+      ],
+      "wall_seconds": 0.00047326507046818733,
+      "requires_all_batchmates_isolated": false,
+      "isolated": true
+    }
+  ],
+  "launch_count": 3,
+  "width": 1,
+  "repetitions": 3,
+  "promotion_eligible": false,
+  "note": "Concurrent results are screening only; fresh isolated confirmation is mandatory.",
+  "mode": "correctness",
+  "device": {
+    "name": "NVIDIA GeForce RTX 4090",
+    "worker_pid": 1172506,
+    "context_identity": "1172506:85999504",
+    "driver_version": 13040,
+    "clock_rate_khz": 2520000,
+    "multiprocessors": 128,
+    "memory_clock_khz": 10501000,
+    "compute_major": 8,
+    "compute_minor": 9,
+    "uuid": "GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+    "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry."
+  },
+  "benchmark_qualified": false,
+  "qualification_note": "Raw diagnostics; benchmark validity requires evaluator-issued source/suite all-15 gates.",
+  "phase_seconds": {
+    "case_loading": 0.00637920992448926,
+    "cuda_initialization": 7.497146725654602e-07,
+    "execution_and_checks": 0.00873571215197444,
+    "total": 0.01511624176055193
+  },
+  "identities": [
+    {
+      "/root/nfs/emmy/research/suites/cases-61fd828c21bf594154c940d29038b9a25e4a4b4f30db1f9dc4c4ee6fd5668c08/softmax-2/meta.json": "dbe5d0cefc7e105ac00f6ebc99b8149c4c702e2a7a94e965915769f80b631f7e",
+      "/root/nfs/emmy/research/suites/cases-61fd828c21bf594154c940d29038b9a25e4a4b4f30db1f9dc4c4ee6fd5668c08/softmax-2/expected.npz": "695c6671d91a144a63be897396cf7b1194c522796aa39a3dffa0afab2d5e3359",
+      "/root/nfs/emmy/research/suites/cases-61fd828c21bf594154c940d29038b9a25e4a4b4f30db1f9dc4c4ee6fd5668c08/softmax-2/inputs.npz": "e5289a58976c9ba742247113cf101cadf70756bf2b195e1e6ef89a0982a36b8d",
+      "/root/nfs/emmy/research/assembly-cache/e0c1f00141496edab24db3527624f3d73280a330b46efc29194a5a04d9507d84/module.cubin": "4d61e7246af9b68b9064c771f56c68c1dd30ba17d06f754efdf0551e79f16614"
+    }
+  ]
+}

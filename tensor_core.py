@@ -25,6 +25,17 @@ UNSUPPORTED = 'UnsupportedMatch'
 NO_MATCH = 'NoMatch'
 
 
+def implicit_f32_mma_numerically_legal():
+    """Whether implicit F32 contractions may use the TF32x3 backend.
+
+    The current typed contraction is an ordered F32 program. Geometry and
+    coverage proofs do not certify TF32 conversion, omitted low-low products,
+    or regrouped accumulation for unrestricted inputs. No numerical certificate
+    or explicit reduced-precision operation is implemented by this backend.
+    """
+    return False
+
+
 class ProofError(ValueError):
     """A candidate has the right shape but a proof obligation failed."""
 
@@ -1531,6 +1542,9 @@ def classify(graph, node, meta):
         if any(metadata_args.get(name, {}).get('dtype') != 'f32'
                for name in (a_buffer, b_buffer, output)):
             return Classification(UNSUPPORTED, 'TF32 plan requires f32 operands and output')
+        if not implicit_f32_mma_numerically_legal():
+            return Classification(UNSUPPORTED,
+                                  'implicit F32 contraction lacks a TF32 numerical certificate')
         m, n = output_shape
         if a_transpose:
             k, a_m = a_shape

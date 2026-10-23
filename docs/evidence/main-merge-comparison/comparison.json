@@ -1,0 +1,242 @@
+{
+  "baseline_gate_id": "f1030216f5b34c5be4da15f70a07a92d5b8d25da436100afb08e161ac30bf7c4",
+  "candidate_gate_id": "c3e06a3ce663418671aa4e2214d9d0f820d8bf7723ef274199ab053b9370d799",
+  "current_source_id": "e021a2d9d9547c09c7540f5f66ab571010bad2ea84fcea1484f5c9ddb874794e",
+  "device": {
+    "clock_rate_khz": 2520000,
+    "compute_major": 8,
+    "compute_minor": 9,
+    "context_identity": "1171285:93167504",
+    "driver_version": 13040,
+    "memory_clock_khz": 10501000,
+    "multiprocessors": 128,
+    "name": "NVIDIA GeForce RTX 4090",
+    "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry.",
+    "uuid": "GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+    "worker_pid": 1171285
+  },
+  "evidence_id": "8547fe557e452db6e3927ad7077c067fee7748db2a4c7ecdebfea38778a8f37e",
+  "host": "/root/nfs/emmy/measurements/20261023T195747Z-research-gpu-CWNmoq",
+  "main_commit": "2647806c65f13d45268a361d29005b2d34203aec",
+  "main_source_id": "799c8e191ac7ab029f0b8201f97a8be351619b403d7f97a14be95af8cfc73b43",
+  "merge_source_identical": true,
+  "merged_source_id": "e021a2d9d9547c09c7540f5f66ab571010bad2ea84fcea1484f5c9ddb874794e",
+  "qualified": true,
+  "rows": [
+    {
+      "aa_margin": 0.30000010913936714,
+      "ab_block_ratios": [
+        19.45000016370905,
+        19.399999781721267
+      ],
+      "ab_pairs": 64,
+      "cached_main_us": 199.68000054359436,
+      "case_id": "c10866af73f820553331b01c52e042e5d724c275a6f5fedd9348170ba75d382c",
+      "current_and_merged_us": 10.239999741315842,
+      "main_over_merged": 19.424999972715156,
+      "problem": "a01_attention",
+      "verdict": "merged-faster"
+    },
+    {
+      "aa_margin": 0.4285713728880801,
+      "ab_block_ratios": [
+        13.683810031030117,
+        13.57142882200364
+      ],
+      "ab_pairs": 64,
+      "cached_main_us": 98.30400347709656,
+      "case_id": "69db4e7f597c41b0684fb30c3204e197cf56c8647d9a63dc0adb77f2a8a0d867",
+      "current_and_merged_us": 7.168000098317862,
+      "main_over_merged": 13.627619426516878,
+      "problem": "a02_attention_128",
+      "verdict": "merged-faster"
+    },
+    {
+      "aa_margin": 0.7412790447105329,
+      "ab_block_ratios": [
+        1.0,
+        1.0
+      ],
+      "ab_pairs": 64,
+      "cached_main_us": 5.119999870657921,
+      "case_id": "6ab09ab4acc384ee252370a564a13965ece1ad21a3e64d6615f0de1a39b8c665",
+      "current_and_merged_us": 5.119999870657921,
+      "main_over_merged": 1.0,
+      "problem": "f01_rmsnorm",
+      "verdict": "inconclusive"
+    },
+    {
+      "aa_margin": 0.9999998484175552,
+      "ab_block_ratios": [
+        1.0,
+        1.0
+      ],
+      "ab_pairs": 64,
+      "cached_main_us": 4.095999989658594,
+      "case_id": "89d56c168a0b04373ef8d50096c48534c70019b8d2f87371b79aee2289922b44",
+      "current_and_merged_us": 4.095999989658594,
+      "main_over_merged": 1.0,
+      "problem": "f02_row_softmax",
+      "verdict": "inconclusive"
+    },
+    {
+      "aa_margin": 0.8401515612848148,
+      "ab_block_ratios": [
+        1.0,
+        1.0
+      ],
+      "ab_pairs": 64,
+      "cached_main_us": 5.119999870657921,
+      "case_id": "1e82d7e58a53e8795ea9d05e3759dfe201e42308efd08dd2a51e79c769dc2fbc",
+      "current_and_merged_us": 5.119999870657921,
+      "main_over_merged": 1.0,
+      "problem": "f03_l2norm",
+      "verdict": "inconclusive"
+    },
+    {
+      "aa_margin": 0.16666641402925841,
+      "ab_block_ratios": [
+        3.5263159910237656,
+        3.5263159910237656
+      ],
+      "ab_pairs": 64,
+      "cached_main_us": 68.60800087451935,
+      "case_id": "cd9a29496fccd9e421c1cfbe14347cb45003f38681e3b4b2e703f5dbbfdd6c5d",
+      "current_and_merged_us": 19.45599913597107,
+      "main_over_merged": 3.5263159910237656,
+      "problem": "m01_matmul_512",
+      "verdict": "merged-faster"
+    },
+    {
+      "aa_margin": 0.7499999147348717,
+      "ab_block_ratios": [
+        0.8000000181898945,
+        1.0
+      ],
+      "ab_pairs": 64,
+      "cached_main_us": 5.119999870657921,
+      "case_id": "aeb1568894b7afb50ea0b1b6c6fe94b57419452643ec87c5c6561f9ebfc58bbe",
+      "current_and_merged_us": 5.119999870657921,
+      "main_over_merged": 0.9000000090949473,
+      "problem": "m02_matmul_rect",
+      "verdict": "inconclusive"
+    },
+    {
+      "aa_margin": 0.7499999147348717,
+      "ab_block_ratios": [
+        1.0206330202687153,
+        0.9692234968905209
+      ],
+      "ab_pairs": 64,
+      "cached_main_us": 4.9600000493228436,
+      "case_id": "4035b0c010105ed7be8aa1a889fe2754d498fc4a27c1719bf547ddad66e48403",
+      "current_and_merged_us": 4.9600000493228436,
+      "main_over_merged": 0.9949282585796181,
+      "problem": "p00_scalar_add",
+      "verdict": "inconclusive"
+    },
+    {
+      "aa_margin": 0.7499999147348717,
+      "ab_block_ratios": [
+        1.0,
+        0.9961240576788317
+      ],
+      "ab_pairs": 64,
+      "cached_main_us": 4.095999989658594,
+      "case_id": "5e973341ada3e33f701293be5a3e6195badb7290a5471f4c6cefa86634d1b168",
+      "current_and_merged_us": 4.095999989658594,
+      "main_over_merged": 0.9980620288394159,
+      "problem": "p01_vector_add",
+      "verdict": "inconclusive"
+    },
+    {
+      "aa_margin": 0.9999998484175552,
+      "ab_block_ratios": [
+        1.0,
+        1.0027027233241168
+      ],
+      "ab_pairs": 64,
+      "cached_main_us": 5.183999892324209,
+      "case_id": "3145aa57f753f64551cd4b83c3d430e6e2375a9feb4819accbfd5e55c39da560",
+      "current_and_merged_us": 5.119999870657921,
+      "main_over_merged": 1.0013513616620584,
+      "problem": "p02_scale_shift",
+      "verdict": "inconclusive"
+    },
+    {
+      "aa_margin": 0.9999998484175552,
+      "ab_block_ratios": [
+        1.0,
+        1.0
+      ],
+      "ab_pairs": 64,
+      "cached_main_us": 3.0720001086592674,
+      "case_id": "aeeffce3a36b8cf1b27173b8c1644fc517a24d992173e06bb1664784b009b6ba",
+      "current_and_merged_us": 3.0720001086592674,
+      "main_over_merged": 1.0,
+      "problem": "p03_relu_mul",
+      "verdict": "inconclusive"
+    },
+    {
+      "aa_margin": 0.9755101334294429,
+      "ab_block_ratios": [
+        1.0,
+        1.0
+      ],
+      "ab_pairs": 64,
+      "cached_main_us": 4.095999989658594,
+      "case_id": "2ffefe7fee88d864b3ac97cd70fe9711643f3551fba367299df52f329649154d",
+      "current_and_merged_us": 4.095999989658594,
+      "main_over_merged": 1.0,
+      "problem": "r01_array_sum",
+      "verdict": "inconclusive"
+    },
+    {
+      "aa_margin": 0.42857137288808045,
+      "ab_block_ratios": [
+        2.708019891740265,
+        2.714285556516227
+      ],
+      "ab_pairs": 64,
+      "cached_main_us": 20.479999482631683,
+      "case_id": "a56bdb784a46a763c2b633ebb5d16ee1ffd4287cb0984168b4f80909c323ce22",
+      "current_and_merged_us": 7.391999941319227,
+      "main_over_merged": 2.711152724128246,
+      "problem": "r02_big_sum",
+      "verdict": "merged-faster"
+    },
+    {
+      "aa_margin": 0.5085367580941011,
+      "ab_block_ratios": [
+        2.0,
+        2.0
+      ],
+      "ab_pairs": 64,
+      "cached_main_us": 12.28800043463707,
+      "case_id": "6dfbe2bc925e2b31ceb8eb84bb5016cca8af143ca55cf93078d09decc26a0fd3",
+      "current_and_merged_us": 6.144000217318535,
+      "main_over_merged": 2.0,
+      "problem": "r03_mean",
+      "verdict": "merged-faster"
+    },
+    {
+      "aa_margin": 0.7499999147348717,
+      "ab_block_ratios": [
+        1.0,
+        1.0
+      ],
+      "ab_pairs": 64,
+      "cached_main_us": 4.223999800160527,
+      "case_id": "5c2ba872d36e6526a79b9799c059e237f65a34019cd94f1c85da4f0b9f930d3f",
+      "current_and_merged_us": 4.224000032991171,
+      "main_over_merged": 1.0,
+      "problem": "r04_row_sum",
+      "verdict": "inconclusive"
+    }
+  ],
+  "scope": "15 published, warm-cache CUDA-event kernel latency, two32pairAA and two32pairAB blocks percase; comparison only, no newpromotion; sm120 assembly is not5090execution",
+  "suite_id": "4de3c90aa9ba2ca81afc0a786c2d340b2c8c76b0c439eaa796acb864dea73f5a",
+  "tests_commit": "a915e56",
+  "version": "main-merge-comparison-v1",
+  "noise_estimator": "max(.01,3*linear_quantile(abs(all64AA paired ratios-1),.9))"
+}

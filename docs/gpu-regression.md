@@ -1,85 +1,60 @@
 # GPU regression suite
 
-The default is **93 cases**: the unchanged 15 published contracts and 78
-additional witnesses for hidden-set behavior and existing marked operators.
-The previous 122-case policy remains selectable as
-[compact-v4](../tests/gpu-regression-compact-v4.json). No fixture, reference,
-tolerance, launch metadata, guard or sanitizer requirement was changed.
+The routine gate is **65 cases**: all **15 published contracts** and **50 audited
+core witnesses**. [The policy](../tests/gpu-regression.json) binds the original
+case-record hashes. [The scope ledger](../tests/gpu-regression-scope-v6.json)
+accounts for every case in the 100-case bundle and records its role and trigger.
 
-The [default policy](../tests/gpu-regression.json) binds complete case-record
-hashes. The [scope decisions](../tests/gpu-regression-scope.json) account for all
-122 previous witnesses, including each powenn comparison result. Selection checks
-the disposition ledger and its archived policy hashes. The old
-[coverage audit](gpu-regression-audit.md) describes the historical v4 scope; v5
-does not claim its archived scenarios are equivalent to retained cases.
+Floating-point acceptance is final-output error within the case's unchanged
+rtol/atol. Selective FTZ, approximate math, FMA and reassociation are permitted
+when they meet that budget. Correct ABI, output membership, indices, masks,
+collective participation, state lifetime and integer/transport behavior remain
+required. A stress fixture does not establish a universal precision requirement.
 
-The retained set includes generated programs with independent references,
-reordered ABI, partial tiles and warps, reduction seeds and carrier lifetimes,
-atomic contractions, async ring lifetimes, softmax tails and distinct attention
-normalization graphs. All 21 existing witnesses containing marked operators
-remain, including Select, Builtin, FuncCallExpr, CastExpr and FlatIndex. This is
-existing marked-operator coverage, not complete support for every marked API.
+The other 35 bundled cases remain available: **28 targeted** mechanism/dtype
+checks, **6 stress diagnostics**, and **1 weak numerical oracle** awaiting an
+independently validated replacement. Their inputs, references and tolerances
+are unchanged. The [test audit](test-relevance-audit/REPORT.md) explains each case
+and the remaining coverage gaps; it does not declare targeted tests redundant.
 
-29 witnesses move to targeted archive checks: extra scalar-width and BOOL-carrier
-matrices, internal NaN and amplified extreme-domain probes, exotic affine folds,
-strict F32 tree/serial accumulation order, a combined ABI stress case, and six
-additional attention subgroup-width permutations. These scope decisions preserve
-the original cases; they neither relax their tolerances nor establish that their
-failures are harmless for every application. Integer and representation checks
-still require exactness where their original metadata does.
+## Select and verify
 
-## Evidence and assembly
-
-The saved powenn comparison passed all 15 published problems on sm_89 with only
-PTX target/version headers adapted for that device. Across the former broad suite
-it passed 59/122; that number is not a challenge score. The ledger retains failures
-when they exercise relevant behavior or the explicitly requested marked operators.
-The user reports all trials pass on the 5090. sm_89 results must not be relabeled
-as sm_120 execution evidence.
-
-The [source-bound receipts](evidence/powenn-test-scope-v5.json) record each case's
-metadata tolerances, saved numerical checks/errors and receipt hashes, plus fresh
-PTX/cubin hashes for both assembly targets. Our current compiler assembles all
-93 cases (95 kernels) on both targets. Powenn assembles 66 cases on both and passes
-50 saved sm_89 numerical checks; 21 cases reject during compilation, six during
-assembly and 16 fail numerical checks. The 15 published cases pass for both arms.
-Our exported per-case numerical receipts cover those 15; assembly of the other
-78 cases is not a fresh GPU correctness receipt.
-
-Compiler assembly tests now assemble their generated PTX for **both sm_89 and
-sm_120** with a compatible PTX version and target header. This checks instruction
-legality, not GPU results. Runtime correctness uses the case's own frozen rtol/atol
-and independent references. Source, evaluator, case and device identities must
-accompany receipts; assembly success alone cannot satisfy a numerical gate.
-
-The condensation itself claims no compiler performance improvement. The subsequent
-[powenn merger](powenn-merge.md) records the incorporated source and its results.
-
-## Selection and confirmation
-
-Resolve runtime paths from private configuration. Select from the existing archive:
+All 100 payloads are included in [tests/gpu-cases](../tests/gpu-cases/README.md).
+From the repository root, use fresh output filenames:
 
 ```sh
-python -m tools.regression_suite --catalog "$CASE_CATALOG" --out "$NEW_CASE_LIST"
+python -m tools.bundled_regressions
+python -m tools.bundled_regressions --suite campaign100 --out /tmp/emmy-catalog.json
+python -m tools.regression_suite --catalog /tmp/emmy-catalog.json --out /tmp/emmy-core65.json
 ```
 
-Use `--policy tests/gpu-regression-compact-v4.json` for the former scope,
-`--expand-version VERSION` for affected archived mechanisms, or `--full` for an
-explicitly requested archive replay. Selection verifies payload and entire record
-hashes, deduplicates aliases, and requires exactly the 15 published contracts.
-It never rewrites or deletes archived cases. Output creation is exclusive.
+The first command verifies every payload and resolves the default core65
+selection. The selector produces exactly 65 cases, including all 15 published
+problems, and retains both assembly targets, sm_89 and sm_120.
 
-`--root "$RESEARCH_ROOT"` uses the runtime's installed source-bound defaults.
-Those defaults must be explicitly updated after a closed run using `--install`,
-`--root`, `--catalog`, `--policy` and a fresh `--out`; changing this checkout alone
-does not change an installed runtime. Installation refuses active owned work.
-It updates pointers and does not grant a correctness or performance gate.
-The configured runtime was updated to v5 after validating all 93 records against
-the unchanged 1,114-case archive; 20 selected cases retain sanitizer requirements.
+For a changed mechanism, inspect its scope-ledger `run_when` entries and add the
+relevant case IDs explicitly with `--include-case CASE_ID` (repeatable).
+`--expand-version VERSION` remains available for versioned families. `--full`
+replays the supplied catalog explicitly; it is not the routine default.
+Expanded cases in this scope retain their full record-hash checks, including
+sanitizer and isolation flags.
 
-Fresh hidden-set draws complement fixed witnesses. Use the families affected by
-a change, with independent confirmation after source freeze. Both baseline and
-candidate must pass all 15 published problems at exact metadata tolerances before
-performance evaluation. A source change invalidates that gate. New evaluator or
-oracle versions require reevaluating both arms. Retain isolated execution,
-buffer guards and required sanitizer checks; timing remains exclusive and paired.
+## Historical policies
+
+The superseded 93-case policy is preserved byte-for-byte as
+[compact-v5](../tests/gpu-regression-compact-v5.json); compact-v4 and its scope
+history remain unchanged. To reproduce v5, pass
+`--policy tests/gpu-regression-compact-v5.json` to the selector with the full
+catalog. `python -m tools.bundled_regressions --suite default93` verifies and
+resolves the historical selection. See the [v5 record](gpu-regression-v5.md)
+for historical receipts; they do not qualify this new policy automatically.
+
+## Qualification
+
+Selection is not a new GPU execution receipt. Source-bound all-15 passes for
+both comparison arms remain mandatory before timing. A research runtime must
+freeze this v6 selection under a new suite identity and qualify both arms before
+using it; existing v5/100-case receipts must not be relabeled as v6 evidence.
+Preserve admission, full-output checks, guards, atomic resets, required
+sanitizers and independent confirmation. Assembly for sm_120 establishes
+instruction legality, not RTX 5090 execution correctness.

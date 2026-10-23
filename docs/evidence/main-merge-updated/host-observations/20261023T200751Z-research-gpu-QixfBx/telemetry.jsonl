@@ -1,0 +1,2 @@
+{"time": 1792786074.2389176, "gpu": [["GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab", " NVIDIA GeForce RTX 4090", " 0", " 1", " 210", " 405", " 43"]], "processes": [], "our_host_pids": [166861, 2646527, 2646535], "foreign": []}
+{"time": 1792786075.6427133, "gpu": [["GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab", " NVIDIA GeForce RTX 4090", " 6", " 1", " 2520", " 10501", " 45"]], "processes": [], "our_host_pids": [166861], "foreign": []}

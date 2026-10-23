@@ -1,0 +1,200 @@
+{
+  "ok": true,
+  "batches": [
+    {
+      "batch_id": 0,
+      "membership": [
+        {
+          "id": "ef3488d3d03c4f7f3620186ff7372cca28aa9e0571f7b99093be9ef08570f98c",
+          "variant": "main100-diagnostic"
+        }
+      ],
+      "quarantined": false,
+      "results": [
+        {
+          "id": "ef3488d3d03c4f7f3620186ff7372cca28aa9e0571f7b99093be9ef08570f98c",
+          "variant": "main100-diagnostic",
+          "ok": true,
+          "checks": [
+            {
+              "repetition": 0,
+              "ok": true,
+              "buffers": {
+                "v_800601": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "q_284282": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "kt_457709": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "out_271355": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "scale_520653": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                }
+              },
+              "outputs": {
+                "out_271355": {
+                  "ok": true,
+                  "elements": 21,
+                  "mismatched": 0,
+                  "max_abs_error": 3.725290298461914e-08,
+                  "rtol": 0.001,
+                  "atol": 0.0001
+                }
+              }
+            },
+            {
+              "repetition": 1,
+              "ok": true,
+              "buffers": {
+                "v_800601": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "q_284282": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "kt_457709": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "out_271355": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "scale_520653": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                }
+              },
+              "outputs": {
+                "out_271355": {
+                  "ok": true,
+                  "elements": 21,
+                  "mismatched": 0,
+                  "max_abs_error": 3.725290298461914e-08,
+                  "rtol": 0.001,
+                  "atol": 0.0001
+                }
+              }
+            },
+            {
+              "repetition": 2,
+              "ok": true,
+              "buffers": {
+                "v_800601": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "q_284282": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "kt_457709": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "out_271355": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "scale_520653": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                }
+              },
+              "outputs": {
+                "out_271355": {
+                  "ok": true,
+                  "elements": 21,
+                  "mismatched": 0,
+                  "max_abs_error": 3.725290298461914e-08,
+                  "rtol": 0.001,
+                  "atol": 0.0001
+                }
+              }
+            }
+          ],
+          "resources": [
+            {
+              "entry": "k_out_271355",
+              "dynamic_shared_bytes": 0,
+              "block_threads": 64,
+              "max_threads_per_block": 1024,
+              "static_shared_bytes": 0,
+              "local_bytes": 0,
+              "registers": 40,
+              "max_active_blocks_per_sm": 24,
+              "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+            }
+          ],
+          "quarantined": false,
+          "trusted": true
+        }
+      ],
+      "wall_seconds": 0.0005386453121900558,
+      "requires_all_batchmates_isolated": false,
+      "isolated": true
+    }
+  ],
+  "launch_count": 3,
+  "width": 1,
+  "repetitions": 3,
+  "promotion_eligible": false,
+  "note": "Concurrent results are screening only; fresh isolated confirmation is mandatory.",
+  "mode": "correctness",
+  "device": {
+    "name": "NVIDIA GeForce RTX 4090",
+    "worker_pid": 1172904,
+    "context_identity": "1172904:215302032",
+    "driver_version": 13040,
+    "clock_rate_khz": 2520000,
+    "multiprocessors": 128,
+    "memory_clock_khz": 10501000,
+    "compute_major": 8,
+    "compute_minor": 9,
+    "uuid": "GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+    "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry."
+  },
+  "benchmark_qualified": false,
+  "qualification_note": "Raw diagnostics; benchmark validity requires evaluator-issued source/suite all-15 gates.",
+  "phase_seconds": {
+    "case_loading": 0.006942844018340111,
+    "cuda_initialization": 7.902272045612335e-07,
+    "execution_and_checks": 0.009404268115758896,
+    "total": 0.01634837221354246
+  },
+  "identities": [
+    {
+      "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/key-prefix-exp-phase-tree-pair-screen-v2-seeded/partial-fallback/meta.json": "5a486b8c60d589c9a7a05e640fdac9bde8a4d77fa154e3e80e6435dfead9c05d",
+      "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/key-prefix-exp-phase-tree-pair-screen-v2-seeded/partial-fallback/expected.npz": "54118e8c1fa60e0e494413b9f5e97e3d853b0d6a3a53d2406fa39c8d3e0844c6",
+      "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/key-prefix-exp-phase-tree-pair-screen-v2-seeded/partial-fallback/inputs.npz": "4f95325861f16020df2967c15c1cc0dfef0acedafe8d86168d9438af893dc141",
+      "/root/nfs/emmy/research/assembly-cache/5a41d5af18e4976330cdac535ad44446a5aaf00055a594400428c201c4c1dd2a/module.cubin": "fce5213c499c4f8d418008d2b4a3bcbe68a15782c5af89c447f63923dec08f25"
+    }
+  ]
+}

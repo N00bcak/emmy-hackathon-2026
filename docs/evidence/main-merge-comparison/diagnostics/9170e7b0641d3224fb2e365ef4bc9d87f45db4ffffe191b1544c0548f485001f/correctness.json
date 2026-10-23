@@ -1,0 +1,254 @@
+{
+  "ok": true,
+  "batches": [
+    {
+      "batch_id": 0,
+      "membership": [
+        {
+          "id": "9170e7b0641d3224fb2e365ef4bc9d87f45db4ffffe191b1544c0548f485001f",
+          "variant": "main100-diagnostic"
+        }
+      ],
+      "quarantined": false,
+      "results": [
+        {
+          "id": "9170e7b0641d3224fb2e365ef4bc9d87f45db4ffffe191b1544c0548f485001f",
+          "variant": "main100-diagnostic",
+          "ok": true,
+          "checks": [
+            {
+              "repetition": 0,
+              "ok": true,
+              "buffers": {
+                "x_992187": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "scale_236779": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "scores_238734": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "y_390031": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "probs_104771": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "out_444258": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "v_192026": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                }
+              },
+              "outputs": {
+                "out_444258": {
+                  "ok": true,
+                  "elements": 21,
+                  "mismatched": 0,
+                  "max_abs_error": 2.2351741790771484e-08,
+                  "rtol": 0.001,
+                  "atol": 0.0001
+                }
+              }
+            },
+            {
+              "repetition": 1,
+              "ok": true,
+              "buffers": {
+                "x_992187": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "scale_236779": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "scores_238734": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "y_390031": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "probs_104771": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "out_444258": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "v_192026": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                }
+              },
+              "outputs": {
+                "out_444258": {
+                  "ok": true,
+                  "elements": 21,
+                  "mismatched": 0,
+                  "max_abs_error": 2.2351741790771484e-08,
+                  "rtol": 0.001,
+                  "atol": 0.0001
+                }
+              }
+            },
+            {
+              "repetition": 2,
+              "ok": true,
+              "buffers": {
+                "x_992187": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "scale_236779": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "scores_238734": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "y_390031": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "probs_104771": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "out_444258": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "v_192026": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                }
+              },
+              "outputs": {
+                "out_444258": {
+                  "ok": true,
+                  "elements": 21,
+                  "mismatched": 0,
+                  "max_abs_error": 2.2351741790771484e-08,
+                  "rtol": 0.001,
+                  "atol": 0.0001
+                }
+              }
+            }
+          ],
+          "resources": [
+            {
+              "entry": "k_scores_238734",
+              "dynamic_shared_bytes": 0,
+              "block_threads": 128,
+              "max_threads_per_block": 1024,
+              "static_shared_bytes": 0,
+              "local_bytes": 0,
+              "registers": 44,
+              "max_active_blocks_per_sm": 10,
+              "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+            },
+            {
+              "entry": "k_probs_104771",
+              "dynamic_shared_bytes": 0,
+              "block_threads": 128,
+              "max_threads_per_block": 1024,
+              "static_shared_bytes": 0,
+              "local_bytes": 0,
+              "registers": 40,
+              "max_active_blocks_per_sm": 12,
+              "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+            },
+            {
+              "entry": "k_out_444258",
+              "dynamic_shared_bytes": 0,
+              "block_threads": 128,
+              "max_threads_per_block": 1024,
+              "static_shared_bytes": 0,
+              "local_bytes": 0,
+              "registers": 48,
+              "max_active_blocks_per_sm": 10,
+              "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+            }
+          ],
+          "quarantined": false,
+          "trusted": true
+        }
+      ],
+      "wall_seconds": 0.0006228256970643997,
+      "requires_all_batchmates_isolated": false,
+      "isolated": true
+    }
+  ],
+  "launch_count": 9,
+  "width": 1,
+  "repetitions": 3,
+  "promotion_eligible": false,
+  "note": "Concurrent results are screening only; fresh isolated confirmation is mandatory.",
+  "mode": "correctness",
+  "device": {
+    "name": "NVIDIA GeForce RTX 4090",
+    "worker_pid": 1172511,
+    "context_identity": "1172511:688750480",
+    "driver_version": 13040,
+    "clock_rate_khz": 2520000,
+    "multiprocessors": 128,
+    "memory_clock_khz": 10501000,
+    "compute_major": 8,
+    "compute_minor": 9,
+    "uuid": "GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+    "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry."
+  },
+  "benchmark_qualified": false,
+  "qualification_note": "Raw diagnostics; benchmark validity requires evaluator-issued source/suite all-15 gates.",
+  "phase_seconds": {
+    "case_loading": 0.007442138623446226,
+    "cuda_initialization": 8.703209459781647e-07,
+    "execution_and_checks": 0.010076373815536499,
+    "total": 0.017519762739539146
+  },
+  "identities": [
+    {
+      "/root/nfs/emmy/research/suites/cases-61fd828c21bf594154c940d29038b9a25e4a4b4f30db1f9dc4c4ee6fd5668c08/attention-0/meta.json": "4b18dd5fa9738223614e2cb98a99fefb91bb4bcb86616c102fa831b6e18fd524",
+      "/root/nfs/emmy/research/suites/cases-61fd828c21bf594154c940d29038b9a25e4a4b4f30db1f9dc4c4ee6fd5668c08/attention-0/expected.npz": "6549b1d3406c870fbd6471eb5846a6ad040d9c41abb17dade5fc0247cd8bb6ae",
+      "/root/nfs/emmy/research/suites/cases-61fd828c21bf594154c940d29038b9a25e4a4b4f30db1f9dc4c4ee6fd5668c08/attention-0/inputs.npz": "2efe6d85cc0f6906ecf8c3f874bea19e1d73142bbb530986176f64365856aef1",
+      "/root/nfs/emmy/research/assembly-cache/f34291a2b6a31c692018cc009766f975b0037d0c869e60ff46ced7043501008b/module.cubin": "4d81e8c0fa16d445e5a8af66ab960a3cd58eb59af5ad0e264cb709ec43abf1d8",
+      "/root/nfs/emmy/research/assembly-cache/441b9d7a35c796a7ae2d218de4eea5d052e1c2b52d467fee54551100ac1f1a63/module.cubin": "16d77784d0c9233dcc3366a9c32dec9c852b5c31a9069303906df4704cb9dd28",
+      "/root/nfs/emmy/research/assembly-cache/811ab490b96fa5cba80379fef5cabec87ee1acbb4a4e96e26c26aa069d220de3/module.cubin": "9da8f2996930515100355d60bafdaa462596f2f7b38a4c1b7bfee105334908bc"
+    }
+  ]
+}

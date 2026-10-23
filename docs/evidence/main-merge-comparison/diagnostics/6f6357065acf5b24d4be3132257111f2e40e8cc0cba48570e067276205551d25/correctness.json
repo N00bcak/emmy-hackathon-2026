@@ -1,0 +1,118 @@
+{
+  "ok": false,
+  "batches": [
+    {
+      "batch_id": 0,
+      "membership": [
+        {
+          "id": "6f6357065acf5b24d4be3132257111f2e40e8cc0cba48570e067276205551d25",
+          "variant": "main100-diagnostic"
+        }
+      ],
+      "quarantined": true,
+      "results": [
+        {
+          "id": "6f6357065acf5b24d4be3132257111f2e40e8cc0cba48570e067276205551d25",
+          "variant": "main100-diagnostic",
+          "ok": false,
+          "checks": [
+            {
+              "repetition": 0,
+              "ok": false,
+              "buffers": {
+                "b_357053": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "c_357053": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "d_357053": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "out_357053": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "a_357053": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                }
+              },
+              "outputs": {
+                "out_357053": {
+                  "ok": false,
+                  "elements": 1358,
+                  "mismatched": 487,
+                  "max_abs_error": 1.0,
+                  "rtol": 1e-05,
+                  "atol": 1e-07
+                }
+              }
+            }
+          ],
+          "resources": [
+            {
+              "entry": "entry_357053",
+              "dynamic_shared_bytes": 0,
+              "block_threads": 32,
+              "max_threads_per_block": 1024,
+              "static_shared_bytes": 0,
+              "local_bytes": 0,
+              "registers": 32,
+              "max_active_blocks_per_sm": 24,
+              "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+            }
+          ],
+          "quarantined": true,
+          "trusted": false
+        }
+      ],
+      "wall_seconds": 0.0002750731073319912,
+      "requires_all_batchmates_isolated": true,
+      "isolated": true
+    }
+  ],
+  "launch_count": 1,
+  "width": 1,
+  "repetitions": 3,
+  "promotion_eligible": false,
+  "note": "Concurrent results are screening only; fresh isolated confirmation is mandatory.",
+  "mode": "correctness",
+  "device": {
+    "name": "NVIDIA GeForce RTX 4090",
+    "worker_pid": 1172864,
+    "context_identity": "1172864:1015840656",
+    "driver_version": 13040,
+    "clock_rate_khz": 2520000,
+    "multiprocessors": 128,
+    "memory_clock_khz": 10501000,
+    "compute_major": 8,
+    "compute_minor": 9,
+    "uuid": "GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+    "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry."
+  },
+  "benchmark_qualified": false,
+  "qualification_note": "Raw diagnostics; benchmark validity requires evaluator-issued source/suite all-15 gates.",
+  "phase_seconds": {
+    "case_loading": 0.006757332943379879,
+    "cuda_initialization": 7.702037692070007e-07,
+    "execution_and_checks": 0.00862448988482356,
+    "total": 0.015382873360067606
+  },
+  "identities": [
+    {
+      "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/mixed-f16-oracle-validation-773941/mixed-f16-result-native-controls/meta.json": "6ff0b89bb1480411a091ddfa2727afd99b729d79e18fe4e3de4c2f906e534d89",
+      "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/mixed-f16-oracle-validation-773941/mixed-f16-result-native-controls/expected.npz": "5a48ce5f17bf9b6119316970e33c39a6c45d1927c3d47199af203dd4c243f626",
+      "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/mixed-f16-oracle-validation-773941/mixed-f16-result-native-controls/inputs.npz": "bba7668e1d36c1530ac92db2e5527a10b131598b326bb44d6d9dcef454fa13a4",
+      "/root/nfs/emmy/research/assembly-cache/223fdf8159c35db3015ab6056a0463976bf266bdaf981bf716a085ada2dba50d/module.cubin": "4ff709c212f3c492ee2cdadde28734a050b89cb880ccc9b591b151ba72e0118b"
+    }
+  ]
+}

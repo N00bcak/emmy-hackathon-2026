@@ -1,0 +1,1 @@
+{"atol":0.0,"graph_inputs":["x"],"graph_outputs":["out"],"id":"lexical-merge-scope-v1","kernels":[{"arg_order":["out","x"],"args":[{"dtype":"f32","name":"out","output":true,"shape":[64,7]},{"dtype":"f32","name":"x","shape":[64]}],"block":[64,1,1],"entry":"k_merge_scope","final":true,"grid":[1,1,1],"node":"out","smem_bytes":8,"zero_outputs":[]}],"rtol":0.0}

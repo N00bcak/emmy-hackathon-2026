@@ -1,0 +1,185 @@
+{
+  "ok": true,
+  "batches": [
+    {
+      "batch_id": 0,
+      "membership": [
+        {
+          "id": "0e80b09925f0f9637cdef513d58020e8dbd3fe023ee87c0372fbc01393d37f7e",
+          "variant": "main100-diagnostic"
+        }
+      ],
+      "quarantined": false,
+      "results": [
+        {
+          "id": "0e80b09925f0f9637cdef513d58020e8dbd3fe023ee87c0372fbc01393d37f7e",
+          "variant": "main100-diagnostic",
+          "ok": true,
+          "checks": [
+            {
+              "repetition": 0,
+              "ok": true,
+              "buffers": {
+                "out": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "z": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "x": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "y": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                }
+              },
+              "outputs": {
+                "out": {
+                  "ok": true,
+                  "elements": 32,
+                  "mismatched": 0,
+                  "max_abs_error": 0.0,
+                  "rtol": 0,
+                  "atol": 0
+                }
+              }
+            },
+            {
+              "repetition": 1,
+              "ok": true,
+              "buffers": {
+                "out": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "z": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "x": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "y": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                }
+              },
+              "outputs": {
+                "out": {
+                  "ok": true,
+                  "elements": 32,
+                  "mismatched": 0,
+                  "max_abs_error": 0.0,
+                  "rtol": 0,
+                  "atol": 0
+                }
+              }
+            },
+            {
+              "repetition": 2,
+              "ok": true,
+              "buffers": {
+                "out": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "z": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "x": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "y": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                }
+              },
+              "outputs": {
+                "out": {
+                  "ok": true,
+                  "elements": 32,
+                  "mismatched": 0,
+                  "max_abs_error": 0.0,
+                  "rtol": 0,
+                  "atol": 0
+                }
+              }
+            }
+          ],
+          "resources": [
+            {
+              "entry": "k",
+              "dynamic_shared_bytes": 0,
+              "block_threads": 8,
+              "max_threads_per_block": 8,
+              "static_shared_bytes": 0,
+              "local_bytes": 0,
+              "registers": 12,
+              "max_active_blocks_per_sm": 24,
+              "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+            }
+          ],
+          "quarantined": false,
+          "trusted": true
+        }
+      ],
+      "wall_seconds": 0.00030399300158023834,
+      "requires_all_batchmates_isolated": false,
+      "isolated": true
+    }
+  ],
+  "launch_count": 3,
+  "width": 1,
+  "repetitions": 3,
+  "promotion_eligible": false,
+  "note": "Concurrent results are screening only; fresh isolated confirmation is mandatory.",
+  "mode": "correctness",
+  "device": {
+    "name": "NVIDIA GeForce RTX 4090",
+    "worker_pid": 1176279,
+    "context_identity": "1176279:76500880",
+    "driver_version": 13040,
+    "clock_rate_khz": 2520000,
+    "multiprocessors": 128,
+    "memory_clock_khz": 10501000,
+    "compute_major": 8,
+    "compute_minor": 9,
+    "uuid": "GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+    "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry."
+  },
+  "benchmark_qualified": false,
+  "qualification_note": "Raw diagnostics; benchmark validity requires evaluator-issued source/suite all-15 gates.",
+  "phase_seconds": {
+    "case_loading": 0.0034490018151700497,
+    "cuda_initialization": 8.698552846908569e-07,
+    "execution_and_checks": 0.0074439384043216705,
+    "total": 0.0108940196223557
+  },
+  "identities": [
+    {
+      "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/integration-main-83a3944/replay-plan-v4-canonical/cases/case-15/meta.json": "a9c0e72a27fbbd4e5a91d38a7d4ee83bfa42b59233ba257a6fdeffa2483bcb66",
+      "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/integration-main-83a3944/replay-plan-v4-canonical/cases/case-15/expected.npz": "481ccc2757beb1e855bd66a4605b191bf181b57865d4d3337aeacdba2ee31a8d",
+      "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/integration-main-83a3944/replay-plan-v4-canonical/cases/case-15/inputs.npz": "483c8e7207c897f5b9916c9273691d70cb5d4fcbe37f39f65ecb0dd9768d9d2b",
+      "/root/nfs/emmy/research/assembly-cache/9eff8f98948ce561adab4e1b7386fdb653b843622fc58b4feca5386b8c86886a/module.cubin": "3d278569d6034941fc1d3139d03922dbce805988f331b40aeec14d09f0100be4"
+    }
+  ]
+}

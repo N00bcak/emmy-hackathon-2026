@@ -1,0 +1,11 @@
+{
+  "tests_commit": "a915e56",
+  "main_cached_commit": "2647806c65f13d45268a361d29005b2d34203aec",
+  "main_compile_sha256": "6436b729336c7e5e1cbeab6e104745adb8d1b0f68a36906e496c1d08b51abed9",
+  "current_compile_sha256": "233768bcc4f105e49d2084357516b20a33052c71f0e88c8d889a5685e7fcf5be",
+  "merged_compile_sha256": "233768bcc4f105e49d2084357516b20a33052c71f0e88c8d889a5685e7fcf5be",
+  "semantic_merge": "emit_cp_async AST identical; current source already incorporates main fix; no compiler bytes changed",
+  "network_operations": 0,
+  "branch": "main",
+  "working_files_preserved": true
+}

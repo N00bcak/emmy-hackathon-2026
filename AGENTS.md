@@ -20,6 +20,14 @@ contracts. Do not assume inputs followed by outputs is the ABI.
 
 ## Local research loop
 
+The routine gate is the audited 65-case policy in `tests/gpu-regression.json`: all
+15 published contracts plus 50 core witnesses. Targeted mechanism/dtype checks
+and stress diagnostics are recorded in `tests/gpu-regression-scope-v6.json`.
+Floating-point fast paths are judged by unchanged final-output tolerances; do
+not impose universal intermediate exactness or serial summation order. Preserve
+exact indices, ABI, integer/transport semantics and each output's membership.
+Historical 93-case receipts remain historical and cannot qualify the new suite.
+
 Keep shared research policy separate from machine configuration. Research roots,
 storage backends, SSH details, GPU selection, mounts, container settings and
 launch commands belong in ignored private runtime configuration. Resolve the

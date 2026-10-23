@@ -299,6 +299,9 @@ def production_ptx(plan, meta, *, node=None, graph=None):
     the same three-term TF32 contraction and never invokes a renderer or another
     compiler.
     """
+    import tensor_core
+    if not tensor_core.implicit_f32_mma_numerically_legal():
+        raise ValueError('implicit F32 contraction lacks a TF32 numerical certificate')
     plan.validate()
     args = {arg['name']: arg for arg in meta['args']}
     if plan.a_buffer not in args or plan.b_buffer not in args or plan.output not in args:

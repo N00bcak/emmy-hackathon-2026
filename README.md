@@ -1,11 +1,11 @@
 # Emmy compiler workspace
 
 A direct **Kernel IR → PTX** compiler and a local CUDA research system. The
-workspace compiler is `12202ea1…`, combining powenn's optimizations with our
-ABI, scope and operator coverage. It passes all 93 selected correctness cases
-on RTX 4090; PTX assembles for sm_89 and sm_120. See the
-[powenn merge record](docs/powenn-merge.md) for mechanisms, tolerance receipts,
-paired performance and the remaining gap against powenn on attention.
+routine correctness gate is **65 cases**: all 15 published contracts plus 50
+audited core witnesses, at unchanged metadata tolerances. See the
+[test policy](docs/gpu-regression.md) for targeted checks and qualification. The
+[powenn merge record](docs/powenn-merge.md) documents historical mechanisms,
+tolerance receipts and paired performance.
 The [selective exponential lowering](docs/selective-exponential.md) preserves
 subnormal results while avoiding duplicate exponential work.
 The current source has not been executed on the official RTX 5090.
@@ -83,7 +83,7 @@ and evaluator identities. A source change requires a new gate. Partial sweeps
 are useful for correctness debugging and cannot qualify performance evidence.
 Fresh independent confirmation is additionally required for promotion.
 
-Routine GPU checks use the [compact 93-case regression suite](docs/gpu-regression.md),
+Routine GPU checks use the [audited 65-case regression suite](docs/gpu-regression.md),
 including all 15 published contracts. The full archive is retained for targeted
 expansion; previous random confirmation draws do not accumulate into every run.
 

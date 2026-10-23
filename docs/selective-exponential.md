@@ -94,6 +94,7 @@ reservation or proof that no transient overlap occurred.
 
 The accepted source was copied back byte-for-byte after GPU validation and
 independent timing confirmation. The owner branch remains uncommitted. RTX 5090
-execution is unverified; sm_120 assembly is not an execution receipt. The remote
-retained baseline pointer is unchanged; accepted source, gates, exact cases and
-artifacts are under durable key `sync-powenn-20261023/cold-exp-v1`.
+execution is unverified; sm_120 assembly is not an execution receipt. The remote retained baseline and START.md were subsequently synchronized through
+a fresh reserved confirmation; see [the current handoff](HANDOFF.md). Original
+accepted source, gates, exact cases and artifacts remain under durable key
+`sync-powenn-20261023/cold-exp-v1`.

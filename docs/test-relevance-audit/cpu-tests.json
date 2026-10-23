@@ -1,0 +1,2447 @@
+{
+  "methods": 169,
+  "scope": "All methods inventoried and ownership classified; 32 compiler methods assessed at assertion level. Infrastructure methods are not independently re-proven or rerun by this audit.",
+  "tests": [
+    {
+      "file": "tests/test_compiler.py",
+      "line": 98,
+      "test": "test_nonfixture_pointwise_tail_and_reordered_abi",
+      "role": "compiler-backend-check",
+      "run_when": "affected compiler mechanism; all-published assembly check remains mandatory",
+      "assessment": "Tail/ABI coverage is useful; a particular setp.ge spelling is not the output invariant.",
+      "assertions": [
+        "self.assertIn('setp.ge.u32',out)",
+        "self.assertIn(', 7;',out)",
+        "self.assertEqual(mod.compile_path(p),out)"
+      ],
+      "source_sha256": "4a00ec7a3e36ae478b245086a2f27b604ac6677511697e17b4b3e14d00520b64"
+    },
+    {
+      "file": "tests/test_compiler.py",
+      "line": 105,
+      "test": "test_nonfixture_reduction_tail",
+      "role": "compiler-backend-check",
+      "run_when": "affected compiler mechanism; all-published assembly check remains mandatory",
+      "assessment": "Tail handling is useful; shfl.sync.bfly/bar.sync spellings are specific to one reduction implementation.",
+      "assertions": [
+        "self.assertIn(', 257;',out)",
+        "self.assertIn('shfl.sync.bfly.b32',out)",
+        "self.assertIn('bar.sync 0',out)"
+      ],
+      "source_sha256": "4a00ec7a3e36ae478b245086a2f27b604ac6677511697e17b4b3e14d00520b64"
+    },
+    {
+      "file": "tests/test_compiler.py",
+      "line": 112,
+      "test": "test_partial_collective_tile_keeps_all_threads_in_barrier",
+      "role": "compiler-backend-check",
+      "run_when": "affected compiler mechanism; all-published assembly check remains mandatory",
+      "assessment": "Participation and masked memory are essential. Specific predicates/branches are mechanism checks; an equivalent collective-free or uniformly guarded lowering may differ.",
+      "assertions": [
+        "self.assertIn('setp.ge.u32',out)",
+        "self.assertIn('setp.lt.u32',out)",
+        "self.assertRegex(out, r'@%p\\d+ ld\\.global\\.f32')",
+        "self.assertIn('bar.sync 0',out)",
+        "self.assertNotIn('bra kernel_done',out)"
+      ],
+      "source_sha256": "4a00ec7a3e36ae478b245086a2f27b604ac6677511697e17b4b3e14d00520b64"
+    },
+    {
+      "file": "tests/test_compiler.py",
+      "line": 123,
+      "test": "test_nested_collective_partial_cta_masks_memory",
+      "role": "compiler-backend-check",
+      "run_when": "affected compiler mechanism; all-published assembly check remains mandatory",
+      "assessment": "Nested participation coverage is useful; predicate polarity/spelling alone is not a semantic oracle.",
+      "assertions": [
+        "self.assertIn('@!%p',out)",
+        "self.assertIn('bar.sync 0',out)"
+      ],
+      "source_sha256": "4a00ec7a3e36ae478b245086a2f27b604ac6677511697e17b4b3e14d00520b64"
+    },
+    {
+      "file": "tests/test_compiler.py",
+      "line": 139,
+      "test": "test_reject_tree_indexed_by_lane",
+      "role": "compiler-backend-check",
+      "run_when": "affected compiler mechanism; all-published assembly check remains mandatory",
+      "assessment": "Current unsupported-mapping rejection check, not a permanent compiler requirement to reject that mapping. A correct general implementation may accept it; retain as a capability-specific negative test.",
+      "assertions": [
+        "self.assertRaisesRegex(mod.Unsupported,'warp-indexed TreeHalve')"
+      ],
+      "source_sha256": "4a00ec7a3e36ae478b245086a2f27b604ac6677511697e17b4b3e14d00520b64"
+    },
+    {
+      "file": "tests/test_compiler.py",
+      "line": 150,
+      "test": "test_reject_invalid_abi",
+      "role": "compiler-backend-check",
+      "run_when": "affected compiler mechanism; all-published assembly check remains mandatory",
+      "assessment": "Duplicate positional arguments are a real invalid-contract error. Keep as ABI validation.",
+      "assertions": [
+        "self.assertRaisesRegex(mod.Unsupported,'Duplicate')"
+      ],
+      "source_sha256": "4a00ec7a3e36ae478b245086a2f27b604ac6677511697e17b4b3e14d00520b64"
+    },
+    {
+      "file": "tests/test_compiler.py",
+      "line": 158,
+      "test": "test_scalar_by_value_argument_binds_as_ssa",
+      "role": "compiler-backend-check",
+      "run_when": "affected compiler mechanism; all-published assembly check remains mandatory",
+      "assessment": "Scalar-vs-pointer ABI is relevant; exact param/register arithmetic spellings should only check the selected ABI implementation.",
+      "assertions": [
+        "self.assertIn('.param .f32 param_0',out)",
+        "self.assertIn('ld.param.f32',out)",
+        "self.assertIn('add.f32',out)"
+      ],
+      "source_sha256": "4a00ec7a3e36ae478b245086a2f27b604ac6677511697e17b4b3e14d00520b64"
+    },
+    {
+      "file": "tests/test_compiler.py",
+      "line": 185,
+      "test": "test_nonunit_block_and_grid_dimensions_flatten",
+      "role": "compiler-backend-check",
+      "run_when": "affected compiler mechanism; all-published assembly check remains mandatory",
+      "assessment": "XYZ ID calculation is relevant; mandatory mad.lo.u32 unnecessarily fixes one implementation.",
+      "assertions": [
+        "self.assertIn('mad.lo.u32',out)",
+        "self.assertIn('%tid.y',out)",
+        "self.assertIn('%ctaid.y',out)"
+      ],
+      "source_sha256": "4a00ec7a3e36ae478b245086a2f27b604ac6677511697e17b4b3e14d00520b64"
+    },
+    {
+      "file": "tests/test_compiler.py",
+      "line": 196,
+      "test": "test_partial_cta_non_sum_reduction_masks_fold",
+      "role": "compiler-backend-check",
+      "run_when": "affected compiler mechanism; all-published assembly check remains mandatory",
+      "assessment": "Inactive max identities are relevant. Requiring predicated max/mov is stronger than allowing any semantically neutral padding.",
+      "assertions": [
+        "self.assertRegex(out,r'max(?:\\.NaN)?\\.f32')",
+        "self.assertRegex(out, r'@%p\\d+ max(?:\\.NaN)?\\.f32')",
+        "self.assertRegex(out, r'@%p\\d+ mov\\.f32')"
+      ],
+      "source_sha256": "4a00ec7a3e36ae478b245086a2f27b604ac6677511697e17b4b3e14d00520b64"
+    },
+    {
+      "file": "tests/test_compiler.py",
+      "line": 219,
+      "test": "test_log_lowering_is_natural_log",
+      "role": "compiler-backend-check",
+      "run_when": "affected compiler mechanism; all-published assembly check remains mandatory",
+      "assessment": "Natural-log semantics matter, but lg2 plus ln2 is an implementation choice; another approximate implementation within tolerance is valid.",
+      "assertions": [
+        "self.assertIn('lg2.approx.f32',out)",
+        "self.assertIn('0f3f317218',out)"
+      ],
+      "source_sha256": "4a00ec7a3e36ae478b245086a2f27b604ac6677511697e17b4b3e14d00520b64"
+    },
+    {
+      "file": "tests/test_compiler.py",
+      "line": 234,
+      "test": "test_reduce_aliases_canonicalize",
+      "role": "compiler-backend-check",
+      "run_when": "affected compiler mechanism; all-published assembly check remains mandatory",
+      "assessment": "Aliases should denote the same operation. Testing a fixed add opcode is a local emitter unit test rather than proof that all equivalent reductions must use it.",
+      "assertions": [
+        "self.assertIn('add.f32',out)"
+      ],
+      "source_sha256": "4a00ec7a3e36ae478b245086a2f27b604ac6677511697e17b4b3e14d00520b64"
+    },
+    {
+      "file": "tests/test_compiler.py",
+      "line": 253,
+      "test": "test_integer_copy_is_a_typed_register_move",
+      "role": "compiler-backend-check",
+      "run_when": "affected compiler mechanism; all-published assembly check remains mandatory",
+      "assessment": "Type/transport bug is real, but requiring mov.s32 rejects valid register aliasing/copy elimination. Compare output/bit transport and assembly legality instead of requiring a copy instruction.",
+      "assertions": [
+        "self.assertIn('ld.global.s32',out)",
+        "self.assertIn('mov.s32',out)",
+        "self.assertIn('st.global.s32',out)"
+      ],
+      "source_sha256": "4a00ec7a3e36ae478b245086a2f27b604ac6677511697e17b4b3e14d00520b64"
+    },
+    {
+      "file": "tests/test_compiler.py",
+      "line": 284,
+      "test": "test_write_uses_output_width_and_converts_value_dtype",
+      "role": "compiler-backend-check",
+      "run_when": "affected compiler mechanism; all-published assembly check remains mandatory",
+      "assessment": "Destination width and numeric conversion are real requirements. Mandatory conversion opcodes should not forbid equivalent conversion/constant propagation.",
+      "assertions": [
+        "self.assertIn('cvt.f64.f32',out)",
+        "self.assertIn('st.global.f64',out)",
+        "self.assertNotIn('st.global.f32',out)"
+      ],
+      "source_sha256": "4a00ec7a3e36ae478b245086a2f27b604ac6677511697e17b4b3e14d00520b64"
+    },
+    {
+      "file": "tests/test_compiler.py",
+      "line": 309,
+      "test": "test_vector_copy_has_runtime_fallback_and_scalar_negative",
+      "role": "compiler-backend-check",
+      "run_when": "affected compiler mechanism; all-published assembly check remains mandatory",
+      "assessment": "The nonzero shared-window base semantic check earns its keep. Specific cp.async.cg, scalar label, predicate and arithmetic spellings are mechanism-specific; alternatives preserving alignment and address semantics are valid.",
+      "assertions": [
+        "self.assertIn('cp.async.cg.shared.global',out)",
+        "self.assertIn('cp.async.commit_group',out)",
+        "self.assertIn('cp.async.wait_group 0',out)",
+        "self.assertIn('copy_scalar_',out)",
+        "self.assertIn('and.b64',out)",
+        "self.assertIn('setp.eq.u64',out)",
+        "self.assertEqual(base+offset,registers[destination])"
+      ],
+      "source_sha256": "4a00ec7a3e36ae478b245086a2f27b604ac6677511697e17b4b3e14d00520b64"
+    },
+    {
+      "file": "tests/test_compiler.py",
+      "line": 348,
+      "test": "test_unaligned_copy_index_stays_scalar",
+      "role": "compiler-backend-check",
+      "run_when": "affected compiler mechanism; all-published assembly check remains mandatory",
+      "assessment": "Unsafe aligned cp.async on an unaligned address must be prevented. Entirely forbidding the vector spelling is stronger: a guarded aligned branch, alternate safe vectorization or scalar path is acceptable.",
+      "assertions": [
+        "self.assertTrue(found)",
+        "self.assertNotIn('cp.async.cg.shared.global',out)"
+      ],
+      "source_sha256": "4a00ec7a3e36ae478b245086a2f27b604ac6677511697e17b4b3e14d00520b64"
+    },
+    {
+      "file": "tests/test_compiler.py",
+      "line": 383,
+      "test": "test_m01_inner_loop_hoists_invariant_index_division",
+      "role": "compiler-backend-check",
+      "run_when": "affected compiler mechanism; all-published assembly check remains mandatory",
+      "assessment": "Performance-shape snapshot: assumes backedges, division/remainder forms and loop structure. Useful only for the hoisting mechanism; valid unrolling/retiling/strength reduction may violate it. Do not use as a universal correctness blocker.",
+      "assertions": [
+        "self.assertEqual(1,sum(count>1 for count in division_counts.values()))",
+        "self.assertGreaterEqual(len(backedges),2)",
+        "self.assertLessEqual(len(divisions),1)",
+        "self.assertLessEqual(len(remainders),1)",
+        "self.assertTrue(any(len(re.findall(rf'{re.escape(reg)}(?!\\w)',body))>=1\n                            for reg in derived))",
+        "self.assertLessEqual(sum(bool(re.search(r'\\bdiv\\.[su]32\\b',line))\n                                 for line in lines[start+1:end]),single_use)",
+        "self.assertLessEqual(sum(bool(re.search(r'\\brem\\.[su]32\\b',line))\n                                 for line in lines[start+1:end]),single_use)",
+        "self.assertEqual(1,len(remainders))",
+        "self.assertNotRegex(body,rf'{re.escape(register)}(?!\\w)')",
+        "self.assertEqual(divisions[0][1:],remainders[0][1:])",
+        "self.assertIsNotNone(product)",
+        "self.assertIsNotNone(remainder)"
+      ],
+      "source_sha256": "4a00ec7a3e36ae478b245086a2f27b604ac6677511697e17b4b3e14d00520b64"
+    },
+    {
+      "file": "tests/test_compiler.py",
+      "line": 490,
+      "test": "test_cond_definitions_participate_in_hoist_analysis",
+      "role": "compiler-backend-check",
+      "run_when": "affected compiler mechanism; all-published assembly check remains mandatory",
+      "assessment": "Definition analysis must see nested Cond/Loop bindings before hoisting or caching. This small analysis-helper contract prevents stale values and does not fix an FP instruction sequence; retain when scope/hoist analysis changes.",
+      "assertions": [
+        "self.assertIn('off',mod.defined_names((branch,)))",
+        "self.assertGreater(cond_body.get('off',0),0)",
+        "self.assertGreater(loop_body.get('off',0),0)"
+      ],
+      "source_sha256": "4a00ec7a3e36ae478b245086a2f27b604ac6677511697e17b4b3e14d00520b64"
+    },
+    {
+      "file": "tests/test_compiler.py",
+      "line": 505,
+      "test": "test_cond_ssa_bindings_do_not_leak_to_join",
+      "role": "compiler-backend-check",
+      "run_when": "affected compiler mechanism; all-published assembly check remains mandatory",
+      "assessment": "Lexical join correctness earns a test; mandatory endif labels and mad.lo.s32 address form are brittle implementation assertions.",
+      "assertions": [
+        "self.assertRegex(after,r'mad\\.lo\\.s32\\s+%r\\d+\\s*,\\s*%r\\d+\\s*,\\s*1\\s*,\\s*0;')",
+        "self.assertNotRegex(after,r'mad\\.lo\\.s32\\s+%r\\d+\\s*,\\s*[01]\\s*,\\s*1\\s*,\\s*0;')"
+      ],
+      "source_sha256": "4a00ec7a3e36ae478b245086a2f27b604ac6677511697e17b4b3e14d00520b64"
+    },
+    {
+      "file": "tests/test_compiler.py",
+      "line": 529,
+      "test": "test_cond_false_arm_uses_outer_binding",
+      "role": "compiler-backend-check",
+      "run_when": "affected compiler mechanism; all-published assembly check remains mandatory",
+      "assessment": "Correct outer address in the false arm is essential; exact else labels, branch polarity and mad.lo.s32 forms should not obstruct equivalent predication/control flow.",
+      "assertions": [
+        "self.assertNotRegex(else_body, r'mad\\.lo\\.s32\\s+%r\\d+\\s*,\\s*1\\s*,\\s*1\\s*,\\s*0;')",
+        "self.assertRegex(else_body, r'mad\\.lo\\.s32\\s+%r\\d+\\s*,\\s*%r\\d+\\s*,\\s*1\\s*,\\s*0;')",
+        "self.assertRegex(out,r'@!%p\\d+ bra else_')"
+      ],
+      "source_sha256": "4a00ec7a3e36ae478b245086a2f27b604ac6677511697e17b4b3e14d00520b64"
+    },
+    {
+      "file": "tests/test_compiler.py",
+      "line": 552,
+      "test": "test_let_rebinding_invalidates_cached_address",
+      "role": "compiler-backend-check",
+      "run_when": "affected compiler mechanism; all-published assembly check remains mandatory",
+      "assessment": "Address invalidation is real, but expecting two loads, add.s32, mad.lo.s32 and mov.b32 can reject valid dead-load elimination or alternate address arithmetic. Replace the shape check with observable rebinding/transport checks.",
+      "assertions": [
+        "self.assertIsNotNone(add)",
+        "self.assertEqual(2,len(loads))",
+        "self.assertNotEqual(loads[0],loads[1])",
+        "self.assertTrue(any(re.search(rf'mad\\.lo\\.s32\\s+%r\\d+\\s*,\\s*{re.escape(index)}\\s*,\\s*1\\s*,\\s*0;',out)\n                            for index in indices))"
+      ],
+      "source_sha256": "4a00ec7a3e36ae478b245086a2f27b604ac6677511697e17b4b3e14d00520b64"
+    },
+    {
+      "file": "tests/test_compiler.py",
+      "line": 578,
+      "test": "test_residue_rejects_non_multiple_product",
+      "role": "compiler-backend-check",
+      "run_when": "affected compiler mechanism; all-published assembly check remains mandatory",
+      "assessment": "A small proof-helper test with explicit sound/unsound modular cases. Keep for residue/range-proof changes; it does not impose FP precision.",
+      "assertions": [
+        "self.assertIsNone(mod.residue(unsound,8))",
+        "self.assertEqual(0,mod.residue(sound,8))"
+      ],
+      "source_sha256": "4a00ec7a3e36ae478b245086a2f27b604ac6677511697e17b4b3e14d00520b64"
+    },
+    {
+      "file": "tests/test_compiler.py",
+      "line": 585,
+      "test": "test_unsupported_errors_do_not_emit_partial_ptx",
+      "role": "compiler-backend-check",
+      "run_when": "affected compiler mechanism; all-published assembly check remains mandatory",
+      "assessment": "Submission stdout must be clean on a rejected input. Keep as CLI contract/integrity.",
+      "assertions": [
+        "self.assertNotEqual(r.returncode,0)",
+        "self.assertEqual(r.stdout,'')",
+        "self.assertIn('Unsupported',r.stderr)"
+      ],
+      "source_sha256": "4a00ec7a3e36ae478b245086a2f27b604ac6677511697e17b4b3e14d00520b64"
+    },
+    {
+      "file": "tests/test_compiler.py",
+      "line": 595,
+      "test": "test_numeric_mask_comparison_and_where",
+      "role": "compiler-backend-check",
+      "run_when": "affected compiler mechanism; all-published assembly check remains mandatory",
+      "assessment": "Predicate-vs-numeric mask handling is relevant; branch/selp instruction choice is not the requirement.",
+      "assertions": [
+        "self.assertIn('setp.gt.f32',out)",
+        "self.assertIn('selp.f32',out)"
+      ],
+      "source_sha256": "4a00ec7a3e36ae478b245086a2f27b604ac6677511697e17b4b3e14d00520b64"
+    },
+    {
+      "file": "tests/test_compiler.py",
+      "line": 610,
+      "test": "test_integer_arithmetic_and_bitwise_are_typed",
+      "role": "compiler-backend-check",
+      "run_when": "affected compiler mechanism; all-published assembly check remains mandatory",
+      "assessment": "Exact integer operations and widths are valid requirements; the exact native lowering sequence is a targeted backend assertion.",
+      "assertions": [
+        "self.assertIn('div.s32',out)",
+        "self.assertIn('and.b32',out)",
+        "self.assertNotIn('cvt.f32',out)"
+      ],
+      "source_sha256": "4a00ec7a3e36ae478b245086a2f27b604ac6677511697e17b4b3e14d00520b64"
+    },
+    {
+      "file": "tests/test_compiler.py",
+      "line": 641,
+      "test": "test_int64_floor_division_uses_64bit_scratch_registers",
+      "role": "compiler-backend-check",
+      "run_when": "affected compiler mechanism; all-published assembly check remains mandatory",
+      "assessment": "64-bit floor/remainder semantics are real. Mandatory div/rem/selp instructions may reject a correct strength-reduced implementation.",
+      "assertions": [
+        "self.assertIn('div.s64',out)",
+        "self.assertIn('rem.s64',out)",
+        "self.assertIn('add.s64',out)",
+        "self.assertIn('selp.s64',out)",
+        "self.assertNotRegex(out, r'add\\.s64 %r\\d+')"
+      ],
+      "source_sha256": "4a00ec7a3e36ae478b245086a2f27b604ac6677511697e17b4b3e14d00520b64"
+    },
+    {
+      "file": "tests/test_compiler.py",
+      "line": 674,
+      "test": "test_bitcast_preserves_bits_across_dtype",
+      "role": "compiler-backend-check",
+      "run_when": "affected compiler mechanism; all-published assembly check remains mandatory",
+      "assessment": "No numeric conversion is the invariant. Requiring mov.b32 rejects a valid zero-instruction bitcast/register alias.",
+      "assertions": [
+        "self.assertIn('mov.b32',out)",
+        "self.assertNotIn('cvt.s32.f32',out)"
+      ],
+      "source_sha256": "4a00ec7a3e36ae478b245086a2f27b604ac6677511697e17b4b3e14d00520b64"
+    },
+    {
+      "file": "tests/test_compiler.py",
+      "line": 701,
+      "test": "test_select_tail_identity_and_warp_barrier",
+      "role": "compiler-backend-check",
+      "run_when": "affected compiler mechanism; all-published assembly check remains mandatory",
+      "assessment": "Select is a supported optional extension; predicate/selp/bar.warp spelling should be scoped to this backend mechanism.",
+      "assertions": [
+        "self.assertIn('setp.lt.s32',out)",
+        "self.assertIn('selp.f32',out)",
+        "self.assertIn('bar.warp.sync',out)"
+      ],
+      "source_sha256": "4a00ec7a3e36ae478b245086a2f27b604ac6677511697e17b4b3e14d00520b64"
+    },
+    {
+      "file": "tests/test_compiler.py",
+      "line": 719,
+      "test": "test_unsigned_negation_and_absolute_use_valid_ptx",
+      "role": "compiler-backend-check",
+      "run_when": "affected compiler mechanism; all-published assembly check remains mandatory",
+      "assessment": "No illegal unsigned PTX is a valid assembly requirement; requiring mov.u32 for unsigned abs rejects legal alias elimination.",
+      "assertions": [
+        "self.assertIn('sub.u32',out)",
+        "self.assertIn('mov.u32',out)",
+        "self.assertNotIn('neg.u32',out)",
+        "self.assertNotIn('abs.u32',out)"
+      ],
+      "source_sha256": "4a00ec7a3e36ae478b245086a2f27b604ac6677511697e17b4b3e14d00520b64"
+    },
+    {
+      "file": "tests/test_compiler.py",
+      "line": 748,
+      "test": "test_all_published_lower_and_assemble_for_both_targets",
+      "role": "compiler-backend-check",
+      "run_when": "affected compiler mechanism; all-published assembly check remains mandatory",
+      "assessment": "Mandatory assembly/entry-name coverage for actual published IR; assembly is not GPU numerical proof.",
+      "assertions": [
+        "self.assertIn('.entry '+kernel['entry']+'(',text)",
+        "self.assertEqual(result.returncode,0,result.stderr)"
+      ],
+      "source_sha256": "4a00ec7a3e36ae478b245086a2f27b604ac6677511697e17b4b3e14d00520b64"
+    },
+    {
+      "file": "tests/test_compiler.py",
+      "line": 764,
+      "test": "test_f16_storage_uses_b16_carrier_and_promoted_arithmetic",
+      "role": "compiler-backend-check",
+      "run_when": "affected compiler mechanism; all-published assembly check remains mandatory",
+      "assessment": "Storage width/result semantics are valid, but fixed mul.rn.f16, cvt.f32.f16 and shared declaration spelling are implementation choices. An equivalent promoted implementation or alternate shared allocation can be legal.",
+      "assertions": [
+        "self.assertIn('.reg .b16',out)",
+        "self.assertIn('ld.global.b16',out)",
+        "self.assertIn('mul.rn.f16',out)",
+        "self.assertIn('cvt.f32.f16',out)",
+        "self.assertIn('setp.ge.f32',out)",
+        "self.assertIn('st.global.b16',out)",
+        "self.assertIn('.extern .shared .align 16 .b8 __emmy_smem[]',out)",
+        "self.assertIn('st.shared.b16',out)",
+        "self.assertIn('ld.shared.b16',out)"
+      ],
+      "source_sha256": "4a00ec7a3e36ae478b245086a2f27b604ac6677511697e17b4b3e14d00520b64"
+    },
+    {
+      "file": "tests/test_compiler.py",
+      "line": 804,
+      "test": "test_scalar_math_ops_lower_without_external_calls",
+      "role": "compiler-backend-check",
+      "run_when": "affected compiler mechanism; all-published assembly check remains mandatory",
+      "assessment": "Several computed math results are dead: only sign is written. DCE may legally remove sin/cos/erf/gelu/tanh and violate these opcode assertions. Export every tested result or test each operation separately before treating absence as failure.",
+      "assertions": [
+        "self.assertRegex(out, r'ex2\\.approx(?:\\.ftz)?\\.f32')",
+        "self.assertNotIn('.func',out)",
+        "self.assertIn(instruction,out)"
+      ],
+      "source_sha256": "4a00ec7a3e36ae478b245086a2f27b604ac6677511697e17b4b3e14d00520b64"
+    },
+    {
+      "file": "tests/test_compiler.py",
+      "line": 832,
+      "test": "test_pow_support_or_clean_rejection",
+      "role": "compiler-backend-check",
+      "run_when": "affected compiler mechanism; all-published assembly check remains mandatory",
+      "assessment": "A capability/clean-rejection check; accepting a correct pow implementation is already permitted. It does not prescribe exact arithmetic.",
+      "assertions": [
+        "self.assertNotEqual(result.returncode,0)",
+        "self.assertEqual(result.stdout,'')",
+        "self.assertIn('Unsupported',result.stderr)"
+      ],
+      "source_sha256": "4a00ec7a3e36ae478b245086a2f27b604ac6677511697e17b4b3e14d00520b64"
+    },
+    {
+      "file": "tests/test_local_runner.py",
+      "line": 31,
+      "test": "test_existing_metadata",
+      "role": "runner-integrity",
+      "run_when": "runner ABI, input construction, limits, isolation and reset changes",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertEqual(count, 15)"
+      ],
+      "source_sha256": "55b0272c7b0ae6e5062d7959cc95d3e56d010bc6a827a25f3d41535bf228959b"
+    },
+    {
+      "file": "tests/test_local_runner.py",
+      "line": 46,
+      "test": "test_defaults_and_dimensions",
+      "role": "runner-integrity",
+      "run_when": "runner ABI, input construction, limits, isolation and reset changes",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertEqual(normalized[\"grid\"], [1, 1, 1])",
+        "self.assertEqual(normalized[\"block\"], [128, 1, 1])",
+        "self.assertEqual((normalized[\"warmup\"], normalized[\"iters\"]), (5, 20))",
+        "self.assertEqual(normalized[\"args\"][0][\"dtype\"], \"f32\")",
+        "self.assertNotIn(\"dtype\", request[\"args\"][0])",
+        "self.assertRaises(runner.Invalid)",
+        "self.assertRaises(runner.Invalid)"
+      ],
+      "source_sha256": "55b0272c7b0ae6e5062d7959cc95d3e56d010bc6a827a25f3d41535bf228959b"
+    },
+    {
+      "file": "tests/test_local_runner.py",
+      "line": 59,
+      "test": "test_seed_and_data",
+      "role": "runner-integrity",
+      "run_when": "runner ABI, input construction, limits, isolation and reset changes",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "np.testing.assert_array_equal(runner.array_for(arg), np.random.default_rng(0).standard_normal([8]).astype(np.float32))",
+        "np.testing.assert_array_equal(runner.array_for(arg), [[1, 2], [3, 4]])",
+        "self.assertTrue(np.all(runner.array_for(valid_request()[\"args\"][1]) == 0))"
+      ],
+      "source_sha256": "55b0272c7b0ae6e5062d7959cc95d3e56d010bc6a827a25f3d41535bf228959b"
+    },
+    {
+      "file": "tests/test_local_runner.py",
+      "line": 66,
+      "test": "test_sum_matches_observed_f32_reduction",
+      "role": "runner-integrity",
+      "run_when": "runner ABI, input construction, limits, isolation and reset changes",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertEqual(result[\"sum\"], float(array.sum()))",
+        "self.assertNotEqual(result[\"sum\"], float(array.astype(np.float64).sum()))",
+        "self.assertEqual(len(result[\"values\"]), 3)",
+        "self.assertTrue(result[\"truncated\"])"
+      ],
+      "source_sha256": "55b0272c7b0ae6e5062d7959cc95d3e56d010bc6a827a25f3d41535bf228959b"
+    },
+    {
+      "file": "tests/test_local_runner.py",
+      "line": 74,
+      "test": "test_worker_rejects_orphan_before_cuda",
+      "role": "runner-integrity",
+      "run_when": "runner ABI, input construction, limits, isolation and reset changes",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertEqual(completed.returncode, 0, completed.stderr)",
+        "self.assertIn(\"parent exited\", json.loads(result.read_text())[\"stderr\"])"
+      ],
+      "source_sha256": "55b0272c7b0ae6e5062d7959cc95d3e56d010bc6a827a25f3d41535bf228959b"
+    },
+    {
+      "file": "tests/test_local_runner.py",
+      "line": 82,
+      "test": "test_limits_and_abi",
+      "role": "runner-integrity",
+      "run_when": "runner ABI, input construction, limits, isolation and reset changes",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertIsNone(runner.run_request({}))",
+        "self.assertRaises(runner.Invalid)",
+        "self.assertRaises(runner.Invalid)",
+        "self.assertRaises(runner.Invalid)"
+      ],
+      "source_sha256": "55b0272c7b0ae6e5062d7959cc95d3e56d010bc6a827a25f3d41535bf228959b"
+    },
+    {
+      "file": "tests/test_local_runner.py",
+      "line": 134,
+      "test": "test_compile_cache_and_failures",
+      "role": "runner-integrity",
+      "run_when": "runner ABI, input construction, limits, isolation and reset changes",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertEqual(status, 200)",
+        "self.assertEqual(first[\"entry_points\"], [\"kernel\"])",
+        "self.assertEqual(first[\"registers\"], {\"kernel\": 4})",
+        "self.assertNotEqual(self.post(\"/compile\", {\"ptx\": ptx, \"flags\": [\"-O0\"]})[1][\"cubin_id\"], first[\"cubin_id\"])",
+        "self.assertEqual((status, result[\"stage\"], result[\"stderr\"]), (200, \"ptxas\", \"test assembly rejection\\n\"))",
+        "self.assertEqual(self.post(\"/compile\", {\"ptx\": ptx, \"flags\": [\"-evil\"]})[0], 422)",
+        "self.assertEqual(self.post(\"/compile\", {\"ptx\": ptx})[1], first)"
+      ],
+      "source_sha256": "55b0272c7b0ae6e5062d7959cc95d3e56d010bc6a827a25f3d41535bf228959b"
+    },
+    {
+      "file": "tests/test_local_runner.py",
+      "line": 147,
+      "test": "test_request_lookup_and_health",
+      "role": "runner-integrity",
+      "run_when": "runner ABI, input construction, limits, isolation and reset changes",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertEqual(self.post(\"/run\", {})[1][\"stage\"], \"request\")",
+        "self.assertEqual(self.post(\"/run\", valid_request())[1][\"stage\"], \"lookup\")",
+        "self.assertEqual(self.post(\"/run\", {**valid_request(), \"iters\": 201})[0], 422)",
+        "self.assertEqual(json.load(response)[\"default_arch\"], \"sm_89\")"
+      ],
+      "source_sha256": "55b0272c7b0ae6e5062d7959cc95d3e56d010bc6a827a25f3d41535bf228959b"
+    },
+    {
+      "file": "tests/test_local_runner.py",
+      "line": 154,
+      "test": "test_isolated_worker_timeout_and_busy",
+      "role": "runner-integrity",
+      "run_when": "runner ABI, input construction, limits, isolation and reset changes",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertEqual(result[\"stage\"], \"run\")",
+        "self.assertIn(\"20 seconds\", result[\"stderr\"])",
+        "self.assertTrue(self.runner.run_lock.acquire(blocking=False))",
+        "self.assertEqual(self.runner.run(valid_request())[\"stage\"], \"busy\")"
+      ],
+      "source_sha256": "55b0272c7b0ae6e5062d7959cc95d3e56d010bc6a827a25f3d41535bf228959b"
+    },
+    {
+      "file": "tests/test_published.py",
+      "line": 10,
+      "test": "test_all_fifteen_distinct_passes_required",
+      "role": "published-gate-integrity",
+      "run_when": "published receipt aggregation and source gates",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertEqual(len(PUBLISHED_PROBLEMS), 15)",
+        "self.assertTrue(published_status(self.records())['all15_passed'])",
+        "self.assertFalse(published_status(self.records()[:-1])['all15_passed'])",
+        "self.assertFalse(published_status(self.records(), source_unchanged=False)['all15_passed'])"
+      ],
+      "source_sha256": "ade6fb110e6a9ce0c66868f81556a367f7337fdc6b2f2d90403c7beeddef7b2c"
+    },
+    {
+      "file": "tests/test_published.py",
+      "line": 16,
+      "test": "test_failure_and_duplicate_cannot_be_hidden_by_pass",
+      "role": "published-gate-integrity",
+      "run_when": "published receipt aggregation and source gates",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertFalse(published_status(rows)['all15_passed'])",
+        "self.assertFalse(published_status(rows)['all15_passed'])"
+      ],
+      "source_sha256": "ade6fb110e6a9ce0c66868f81556a367f7337fdc6b2f2d90403c7beeddef7b2c"
+    },
+    {
+      "file": "tests/test_published.py",
+      "line": 23,
+      "test": "test_local_client_exit_status_accepted_but_missing_not_defaulted",
+      "role": "published-gate-integrity",
+      "run_when": "published receipt aggregation and source gates",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertTrue(published_status(rows)['all15_passed'])",
+        "self.assertFalse(published_status(rows)['all15_passed'])"
+      ],
+      "source_sha256": "ade6fb110e6a9ce0c66868f81556a367f7337fdc6b2f2d90403c7beeddef7b2c"
+    },
+    {
+      "file": "tests/test_regression_suite.py",
+      "line": 13,
+      "test": "test_checked_in_scope_retains_gate_and_marked_cases",
+      "role": "suite-policy-integrity",
+      "run_when": "selector and versioned scope policy changes",
+      "assessment": "Version-specific policy lock, including mandatory retention of starred-operator witnesses. Preserve the old policy version, but a new challenge/core profile must not inherit this rule accidentally. Validate the new declared scope rather than weakening tamper checks.",
+      "assertions": [
+        "self.assertEqual(suite.sha(scope_path.read_bytes()), policy['scope_manifest']['sha256'])",
+        "self.assertEqual(suite.sha(previous_path.read_bytes()), scope['previous_policy']['sha256'])",
+        "self.assertEqual({r['id'] for r in rows}, {r['id'] for r in previous['cases']})",
+        "self.assertEqual(len(rows), len({r['id'] for r in rows}))",
+        "self.assertEqual({r['id'] for r in rows if r['disposition'] == 'retain'}, {r['id'] for r in policy['cases']})",
+        "self.assertTrue(all(r['disposition'] == 'retain' for r in rows if r['marked_operators']))",
+        "self.assertEqual(sum(r['group'] == 'required_gate' for r in policy['cases']), 15)",
+        "self.assertEqual(policy['assembly_targets'], ['sm_89', 'sm_120'])",
+        "self.assertEqual(receipts['policy_sha256'], suite.sha(suite.DEFAULT_POLICY.read_bytes()))",
+        "self.assertEqual({r['case_id']: r['case_record_sha256'] for r in results}, expected)",
+        "self.assertEqual({r['arch'] for r in row['assembly']}, {'sm_89', 'sm_120'})"
+      ],
+      "source_sha256": "fc5a40322e70e8ed8d665451beb557e7e177f174ad63e8dbf5f49ee95289b820"
+    },
+    {
+      "file": "tests/test_regression_suite.py",
+      "line": 64,
+      "test": "test_default_deduplicates_aliases_and_keeps_all_anchors",
+      "role": "suite-policy-integrity",
+      "run_when": "selector and versioned scope policy changes",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertEqual(len(result['cases']), 16)",
+        "self.assertEqual(result['published_cases'], 15)",
+        "self.assertEqual(result['requires_sanitizer'], 1)",
+        "self.assertEqual(len(suite.select([self.catalog], self.policy, full=True)['cases']), 17)",
+        "self.assertEqual(len(expanded['cases']), 17)"
+      ],
+      "source_sha256": "fc5a40322e70e8ed8d665451beb557e7e177f174ad63e8dbf5f49ee95289b820"
+    },
+    {
+      "file": "tests/test_regression_suite.py",
+      "line": 73,
+      "test": "test_scope_dispositions_and_marked_coverage_fail_closed",
+      "role": "suite-policy-integrity",
+      "run_when": "selector and versioned scope policy changes",
+      "assessment": "Version-specific policy lock, including mandatory retention of starred-operator witnesses. Preserve the old policy version, but a new challenge/core profile must not inherit this rule accidentally. Validate the new declared scope rather than weakening tamper checks.",
+      "assertions": [
+        "self.assertEqual(len(suite.select([self.catalog], self.policy)['cases']), 15)",
+        "self.assertRaisesRegex(ValueError, 'marked-operator')",
+        "self.assertRaisesRegex(ValueError, 'dispositions')"
+      ],
+      "source_sha256": "fc5a40322e70e8ed8d665451beb557e7e177f174ad63e8dbf5f49ee95289b820"
+    },
+    {
+      "file": "tests/test_regression_suite.py",
+      "line": 102,
+      "test": "test_missing_witness_and_unknown_expansion_fail",
+      "role": "suite-policy-integrity",
+      "run_when": "selector and versioned scope policy changes",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertRaisesRegex(ValueError, 'missing')",
+        "self.assertRaisesRegex(ValueError, 'unknown expansion')"
+      ],
+      "source_sha256": "fc5a40322e70e8ed8d665451beb557e7e177f174ad63e8dbf5f49ee95289b820"
+    },
+    {
+      "file": "tests/test_regression_suite.py",
+      "line": 110,
+      "test": "test_payload_and_sanitizer_flag_tampering_fail",
+      "role": "suite-policy-integrity",
+      "run_when": "selector and versioned scope policy changes",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertRaisesRegex(ValueError, 'artifact changed')",
+        "self.assertRaisesRegex(ValueError, 'record changed')"
+      ],
+      "source_sha256": "fc5a40322e70e8ed8d665451beb557e7e177f174ad63e8dbf5f49ee95289b820"
+    },
+    {
+      "file": "tests/test_regression_suite.py",
+      "line": 122,
+      "test": "test_omitted_published_case_cannot_be_hidden_by_policy",
+      "role": "suite-policy-integrity",
+      "run_when": "selector and versioned scope policy changes",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertRaisesRegex(ValueError, '15 published')"
+      ],
+      "source_sha256": "fc5a40322e70e8ed8d665451beb557e7e177f174ad63e8dbf5f49ee95289b820"
+    },
+    {
+      "file": "tests/test_regression_suite.py",
+      "line": 129,
+      "test": "test_coverage_manifest_rejects_tampering_and_unrepresented_cases",
+      "role": "suite-policy-integrity",
+      "run_when": "selector and versioned scope policy changes",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertEqual(len(suite.select([self.catalog], self.policy)['cases']), 16)",
+        "self.assertRaisesRegex(ValueError, 'coverage manifest changed')",
+        "self.assertRaisesRegex(ValueError, 'unrepresented archived case')"
+      ],
+      "source_sha256": "fc5a40322e70e8ed8d665451beb557e7e177f174ad63e8dbf5f49ee95289b820"
+    },
+    {
+      "file": "tests/test_regression_suite.py",
+      "line": 154,
+      "test": "test_synchronized_defaults_share_one_compiler_and_reject_stale_source",
+      "role": "suite-policy-integrity",
+      "run_when": "selector and versioned scope policy changes",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertEqual(value['source_id'], store._state()['baseline_id'])",
+        "self.assertEqual(value['generated_cases'], 1)",
+        "self.assertEqual(selection['archive_only_cases'], 1)",
+        "self.assertEqual((retained / 'compile.py').resolve(), Path(value['compiler']))",
+        "self.assertEqual((retained / 'current.json').resolve(), (store.root / 'regression-suites/current.json').resolve())",
+        "self.assertEqual(len(suite.read(retained / 'versions.json')['compilers']), 1)",
+        "self.assertRaisesRegex(ValueError, 'stale retained compiler')"
+      ],
+      "source_sha256": "fc5a40322e70e8ed8d665451beb557e7e177f174ad63e8dbf5f49ee95289b820"
+    },
+    {
+      "file": "tests/test_research_calibrate.py",
+      "line": 169,
+      "test": "test_default_17_requests_full_outputs_exact_inputs_and_spacing",
+      "role": "calibration-protocol",
+      "run_when": "official-helper request budget, endpoint contract and source/arm bindings",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertEqual(result[\"status\"], \"completed\", result)",
+        "self.assertEqual(result[\"requests_attempted\"], 17)",
+        "self.assertEqual(len(result[\"comparisons\"]), 2)",
+        "self.assertTrue(all(row[\"direction_agreement\"] for row in result[\"comparisons\"]))",
+        "self.assertTrue(all(right[0] - left[0] >= 2 for left, right in zip(transport.calls, transport.calls[1:])))",
+        "self.assertEqual(len(calibration.history(self.root)), 1)",
+        "self.assertEqual(len(transport.calls), 17)",
+        "self.assertRaisesRegex(calibration.CalibrationError, \"singleton\")",
+        "self.assertEqual([arg[\"name\"] for arg in body[\"args\"]], [\"y\", \"scale\", \"bias\", \"x\"])",
+        "self.assertEqual(body[\"args\"][-1][\"data\"], [1, 2, 3, 4])",
+        "self.assertEqual(body[\"zero_outputs\"], [\"y\"])",
+        "self.assertEqual(body[\"max_return\"], 4)",
+        "self.assertEqual((body[\"warmup\"], body[\"iters\"]), (5, 20))"
+      ],
+      "source_sha256": "c8b51bfa1407137e56d9cc8d5c82b2a800deaf5e7f9e5989faee5507a9a09d80"
+    },
+    {
+      "file": "tests/test_research_calibrate.py",
+      "line": 189,
+      "test": "test_busy_429_service_and_transport_errors_stop_without_retry",
+      "role": "calibration-protocol",
+      "run_when": "official-helper request budget, endpoint contract and source/arm bindings",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertEqual(result[\"status\"], \"stopped\")",
+        "self.assertEqual(result[\"requests_attempted\"], 2)",
+        "self.assertEqual(len(transport.calls), 2)",
+        "self.assertEqual(len(attempts), 2)"
+      ],
+      "source_sha256": "c8b51bfa1407137e56d9cc8d5c82b2a800deaf5e7f9e5989faee5507a9a09d80"
+    },
+    {
+      "file": "tests/test_research_calibrate.py",
+      "line": 203,
+      "test": "test_spacing_persists_across_failed_run_boundaries",
+      "role": "calibration-protocol",
+      "run_when": "official-helper request budget, endpoint contract and source/arm bindings",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertGreaterEqual(second.calls[0][0] - first_time, 2.0)",
+        "self.assertEqual(len(calibration.history(self.root)), 2)"
+      ],
+      "source_sha256": "c8b51bfa1407137e56d9cc8d5c82b2a800deaf5e7f9e5989faee5507a9a09d80"
+    },
+    {
+      "file": "tests/test_research_calibrate.py",
+      "line": 214,
+      "test": "test_cli_requires_explicit_execute_flag_for_network",
+      "role": "calibration-protocol",
+      "run_when": "official-helper request budget, endpoint contract and source/arm bindings",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertFalse((self.root / \"calibration/dry-run\").exists())",
+        "self.assertEqual(calibration.main(), 0)",
+        "transport.assert_not_called()"
+      ],
+      "source_sha256": "c8b51bfa1407137e56d9cc8d5c82b2a800deaf5e7f9e5989faee5507a9a09d80"
+    },
+    {
+      "file": "tests/test_research_calibrate.py",
+      "line": 227,
+      "test": "test_wrong_gpu_stops_after_health",
+      "role": "calibration-protocol",
+      "run_when": "official-helper request budget, endpoint contract and source/arm bindings",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertEqual(result[\"requests_attempted\"], 1)",
+        "self.assertEqual(result[\"status\"], \"stopped\")"
+      ],
+      "source_sha256": "c8b51bfa1407137e56d9cc8d5c82b2a800deaf5e7f9e5989faee5507a9a09d80"
+    },
+    {
+      "file": "tests/test_research_calibrate.py",
+      "line": 234,
+      "test": "test_reference_failure_stops_and_retains_response",
+      "role": "calibration-protocol",
+      "run_when": "official-helper request budget, endpoint contract and source/arm bindings",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertEqual(result[\"status\"], \"stopped\")",
+        "self.assertEqual(result[\"requests_attempted\"], 4)",
+        "self.assertIn(\"outputs\", attempt[\"response\"])"
+      ],
+      "source_sha256": "c8b51bfa1407137e56d9cc8d5c82b2a800deaf5e7f9e5989faee5507a9a09d80"
+    },
+    {
+      "file": "tests/test_research_calibrate.py",
+      "line": 243,
+      "test": "test_unverified_baseline_and_swapped_ptx_never_contact_endpoint",
+      "role": "calibration-protocol",
+      "run_when": "official-helper request budget, endpoint contract and source/arm bindings",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertFalse(transport.calls)",
+        "self.assertFalse(transport.calls)",
+        "self.assertRaisesRegex(calibration.CalibrationError, \"both arms\")",
+        "self.assertRaisesRegex(calibration.CalibrationError, \"not retained\")"
+      ],
+      "source_sha256": "c8b51bfa1407137e56d9cc8d5c82b2a800deaf5e7f9e5989faee5507a9a09d80"
+    },
+    {
+      "file": "tests/test_research_calibrate.py",
+      "line": 255,
+      "test": "test_swapped_arms_and_edited_local_medians_never_contact_endpoint",
+      "role": "calibration-protocol",
+      "run_when": "official-helper request budget, endpoint contract and source/arm bindings",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertFalse(transport.calls)",
+        "self.assertRaisesRegex(calibration.CalibrationError, 'paired measurement')",
+        "self.assertRaisesRegex(calibration.CalibrationError, 'local medians')"
+      ],
+      "source_sha256": "c8b51bfa1407137e56d9cc8d5c82b2a800deaf5e7f9e5989faee5507a9a09d80"
+    },
+    {
+      "file": "tests/test_research_calibrate.py",
+      "line": 267,
+      "test": "test_missing_baseline_all15_gate_never_contacts_endpoint",
+      "role": "calibration-protocol",
+      "run_when": "official-helper request budget, endpoint contract and source/arm bindings",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertFalse(transport.calls)",
+        "self.assertRaisesRegex(calibration.CalibrationError, \"all15\")"
+      ],
+      "source_sha256": "c8b51bfa1407137e56d9cc8d5c82b2a800deaf5e7f9e5989faee5507a9a09d80"
+    },
+    {
+      "file": "tests/test_research_calibrate.py",
+      "line": 277,
+      "test": "test_pipeline_reduces_cases_to_preserve_headroom",
+      "role": "calibration-protocol",
+      "run_when": "official-helper request budget, endpoint contract and source/arm bindings",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertEqual(result[\"status\"], \"completed\", result)",
+        "self.assertEqual(result[\"requests_attempted\"], 17)",
+        "self.assertEqual(result[\"local_provenance\"][\"omitted_cases\"], 1)",
+        "self.assertEqual(len(result[\"comparisons\"]), 1)"
+      ],
+      "source_sha256": "c8b51bfa1407137e56d9cc8d5c82b2a800deaf5e7f9e5989faee5507a9a09d80"
+    },
+    {
+      "file": "tests/test_research_calibrate.py",
+      "line": 287,
+      "test": "test_global_exclusive_lock_and_hard_cap",
+      "role": "calibration-protocol",
+      "run_when": "official-helper request budget, endpoint contract and source/arm bindings",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertFalse(transport.calls)",
+        "self.assertFalse(transport.calls)",
+        "self.assertRaisesRegex(calibration.CalibrationError, \"hard cap\")",
+        "self.assertRaisesRegex(calibration.CalibrationError, \"exclusive\")"
+      ],
+      "source_sha256": "c8b51bfa1407137e56d9cc8d5c82b2a800deaf5e7f9e5989faee5507a9a09d80"
+    },
+    {
+      "file": "tests/test_research_calibrate.py",
+      "line": 303,
+      "test": "test_history_trigger_accumulates_across_runs_and_mechanisms",
+      "role": "calibration-protocol",
+      "run_when": "official-helper request budget, endpoint contract and source/arm bindings",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertEqual(result[\"status\"], \"completed\")",
+        "self.assertFalse(calibration.calibration_due(self.root, \"vector mechanism\")[\"due\"])",
+        "self.assertTrue(calibration.calibration_due(self.root, \"different mechanism\", architecture_sensitive=True)[\"due\"])",
+        "self.assertTrue(calibration.calibration_due(self.root, \"vector mechanism\")[\"due\"])",
+        "self.assertEqual(len(list((self.root / \"knowledge/mechanisms\").glob(\"calibration-*.jsonl\"))), 1)"
+      ],
+      "source_sha256": "c8b51bfa1407137e56d9cc8d5c82b2a800deaf5e7f9e5989faee5507a9a09d80"
+    },
+    {
+      "file": "tests/test_research_cases.py",
+      "line": 247,
+      "test": "test_original_five_gap_references_match_direct_equations",
+      "role": "oracle-generator-integrity",
+      "run_when": "generator/reference or numerical-policy version changes",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertEqual((meta[\"rtol\"], meta[\"atol\"]), tolerance)",
+        "np.testing.assert_allclose(expected, direct, rtol=tolerance[0], atol=tolerance[1])"
+      ],
+      "source_sha256": "1ccac318b3cbd476ab475a8367b38ac40e676d4e4330de0b38d287ed5f10fe41"
+    },
+    {
+      "file": "tests/test_research_cases.py",
+      "line": 268,
+      "test": "test_all_families_typed_roundtrip_and_case_validation",
+      "role": "oracle-generator-integrity",
+      "run_when": "generator/reference or numerical-policy version changes",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertTrue(self.cases.validate_case(directory)[\"valid\"])",
+        "self.assertEqual(graph.to_dict(), second.to_dict())",
+        "self.assertEqual(launch[\"arg_order\"], [arg[\"name\"] for arg in launch[\"args\"]])",
+        "self.assertEqual(len(launch[\"arg_order\"]), len(set(launch[\"arg_order\"])))",
+        "self.assertEqual(launch[\"grid\"], [(cells + threads - 1) // threads, 1, 1])",
+        "self.assertEqual(cells % threads, 0, \"collective cannot sit behind a partial CTA guard\")"
+      ],
+      "source_sha256": "1ccac318b3cbd476ab475a8367b38ac40e676d4e4330de0b38d287ed5f10fe41"
+    },
+    {
+      "file": "tests/test_research_cases.py",
+      "line": 296,
+      "test": "test_generated_serial_ir_matches_independent_interpretation",
+      "role": "oracle-generator-integrity",
+      "run_when": "generator/reference or numerical-policy version changes",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "np.testing.assert_allclose(actual[name], expected[name], rtol=meta[\"rtol\"], atol=meta[\"atol\"])"
+      ],
+      "source_sha256": "1ccac318b3cbd476ab475a8367b38ac40e676d4e4330de0b38d287ed5f10fe41"
+    },
+    {
+      "file": "tests/test_research_cases.py",
+      "line": 306,
+      "test": "test_hand_calculated_generated_references_and_numerical_policies",
+      "role": "oracle-generator-integrity",
+      "run_when": "generator/reference or numerical-policy version changes",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "np.testing.assert_allclose(answer, expected, rtol=1e-7, atol=1e-7)",
+        "self.assertEqual(answer.dtype, np.dtype(\"float32\"))",
+        "self.assertEqual((meta[\"rtol\"], meta[\"atol\"]), expected_policy)",
+        "self.assertTrue(record[\"version\"])",
+        "self.assertTrue(record[\"tolerance_justification\"])",
+        "self.assertTrue(record[\"requires_sanitizer\"])",
+        "self.assertTrue(record[\"requires_isolated_first\"])",
+        "self.assertTrue(meta[\"kernels\"][0][\"zero_outputs\"])"
+      ],
+      "source_sha256": "1ccac318b3cbd476ab475a8367b38ac40e676d4e4330de0b38d287ed5f10fe41"
+    },
+    {
+      "file": "tests/test_research_cases.py",
+      "line": 340,
+      "test": "test_pointwise_operation_width_tail_and_domain_semantics",
+      "role": "oracle-generator-integrity",
+      "run_when": "generator/reference or numerical-policy version changes",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "np.testing.assert_allclose(actual[name], expected[name], rtol=1e-6, atol=1e-6)"
+      ],
+      "source_sha256": "1ccac318b3cbd476ab475a8367b38ac40e676d4e4330de0b38d287ed5f10fe41"
+    },
+    {
+      "file": "tests/test_research_cases.py",
+      "line": 350,
+      "test": "test_softmax_domain_properties_and_shift_invariance",
+      "role": "oracle-generator-integrity",
+      "run_when": "generator/reference or numerical-policy version changes",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertTrue(np.isfinite(original).all())",
+        "self.assertTrue((original > 0).all())",
+        "np.testing.assert_allclose(original.sum(axis=1), np.ones(3), rtol=1e-6, atol=1e-6)",
+        "np.testing.assert_allclose(original, shifted, rtol=1e-6, atol=1e-7)"
+      ],
+      "source_sha256": "1ccac318b3cbd476ab475a8367b38ac40e676d4e4330de0b38d287ed5f10fe41"
+    },
+    {
+      "file": "tests/test_research_cases.py",
+      "line": 366,
+      "test": "test_cooperative_online_softmax_preserves_schedule_and_semantics",
+      "role": "oracle-generator-integrity",
+      "run_when": "generator/reference or numerical-policy version changes",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertTrue(self.cases.validate_case(directory)[\"valid\"])",
+        "self.assertEqual(record[\"spec\"][\"schedule\"], \"cooperative-online-softmax\")",
+        "self.assertEqual((meta[\"rtol\"], meta[\"atol\"]), (0.001, 0.00001))",
+        "self.assertEqual(meta[\"kernels\"][0][\"block\"], [128, 1, 1])",
+        "self.assertEqual(meta[\"kernels\"][0][\"grid\"], [3, 1, 1])",
+        "self.assertTrue(all(arg[\"shape\"] == [3, cols] for arg in meta[\"kernels\"][0][\"args\"]))",
+        "self.assertEqual(graph.to_dict(), Graph.from_dict(graph.to_dict()).to_dict())",
+        "self.assertEqual(tile.block_threads, 128)",
+        "self.assertEqual(tuple(a.extent.as_static() for a in tile.axes), (3, 128))",
+        "self.assertEqual(len(tile.body), len(original_tile.body))",
+        "self.assertTrue(max_ops)",
+        "self.assertTrue(all(math.isfinite(op.identity) and op.identity < -1e10 for op in max_ops))",
+        "np.testing.assert_allclose(actual, expected, rtol=meta[\"rtol\"], atol=meta[\"atol\"])",
+        "np.testing.assert_allclose(actual.sum(axis=-1), np.ones(3), rtol=1e-6, atol=1e-6)",
+        "self.assertEqual(cloned.axis.extent.as_static(), cols)",
+        "self.assertEqual(cloned.axis.name, source.axis.name)",
+        "self.assertEqual(cloned.start, source.start)",
+        "self.assertEqual(cloned.step, source.step)",
+        "self.assertEqual(cloned.body, source.body)",
+        "self.assertIsNone(cloned.end)",
+        "self.assertEqual(cloned, source)"
+      ],
+      "source_sha256": "1ccac318b3cbd476ab475a8367b38ac40e676d4e4330de0b38d287ed5f10fe41"
+    },
+    {
+      "file": "tests/test_research_cases.py",
+      "line": 406,
+      "test": "test_reproducible_semantics_inputs_and_references",
+      "role": "oracle-generator-integrity",
+      "run_when": "generator/reference or numerical-policy version changes",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertEqual(json.loads((first / filename).read_text()), json.loads((second / filename).read_text()))",
+        "self.assertEqual(a.files, b.files)",
+        "np.testing.assert_array_equal(a[name], b[name])"
+      ],
+      "source_sha256": "1ccac318b3cbd476ab475a8367b38ac40e676d4e4330de0b38d287ed5f10fe41"
+    },
+    {
+      "file": "tests/test_research_cases.py",
+      "line": 417,
+      "test": "test_import_preserves_published_contract_and_expected",
+      "role": "oracle-generator-integrity",
+      "run_when": "generator/reference or numerical-policy version changes",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertEqual(json.loads((source / \"meta.json\").read_text()), json.loads((directory / \"meta.json\").read_text()))",
+        "self.assertTrue(self.cases.validate_case(directory)[\"valid\"])",
+        "np.testing.assert_array_equal(a[name], b[name])"
+      ],
+      "source_sha256": "1ccac318b3cbd476ab475a8367b38ac40e676d4e4330de0b38d287ed5f10fe41"
+    },
+    {
+      "file": "tests/test_research_cases.py",
+      "line": 427,
+      "test": "test_tampering_is_not_a_new_valid_case",
+      "role": "oracle-generator-integrity",
+      "run_when": "generator/reference or numerical-policy version changes",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertRaisesRegex(ValueError, \"changed\")"
+      ],
+      "source_sha256": "1ccac318b3cbd476ab475a8367b38ac40e676d4e4330de0b38d287ed5f10fe41"
+    },
+    {
+      "file": "tests/test_research_cases.py",
+      "line": 436,
+      "test": "test_argument_declarations_may_differ_from_positional_order",
+      "role": "oracle-generator-integrity",
+      "run_when": "generator/reference or numerical-policy version changes",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertTrue(self.cases.validate_case(directory)['valid'])"
+      ],
+      "source_sha256": "1ccac318b3cbd476ab475a8367b38ac40e676d4e4330de0b38d287ed5f10fe41"
+    },
+    {
+      "file": "tests/test_research_control.py",
+      "line": 42,
+      "test": "test_runtime_paths_require_configuration_and_allow_overrides",
+      "role": "research-store-integrity",
+      "run_when": "source/evidence identities, ownership, budgets and promotion controls",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertEqual(configured.work_root, configured.root / \"workspaces\")",
+        "self.assertFalse(configured.root.exists())",
+        "self.assertEqual(Store().root, self.base / \"env-records\")",
+        "self.assertEqual(Store().work_root, self.base / \"env-work\")",
+        "self.assertEqual(explicit.root, self.base / \"explicit-records\")",
+        "self.assertEqual(explicit.work_root, self.base / \"explicit-work\")",
+        "self.assertRaisesRegex(Invalid, \"EMMY_RESEARCH_ROOT\")"
+      ],
+      "source_sha256": "596d539f0d90d7024741419edf4b2a19c4fd63c3c7f8b23d13a4f6fec32218f7"
+    },
+    {
+      "file": "tests/test_research_control.py",
+      "line": 86,
+      "test": "test_source_replay_preserves_actual_bytes_and_excludes_private",
+      "role": "research-store-integrity",
+      "run_when": "source/evidence identities, ownership, budgets and promotion controls",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertEqual(set(manifest[\"files\"]), {\"compile.py\"})",
+        "self.assertEqual((destination / \"compile.py\").read_bytes(), (self.source / \"compile.py\").read_bytes())",
+        "self.assertEqual(source_id, self.store.snapshot_tree(self.source))",
+        "self.assertRaises(Invalid)"
+      ],
+      "source_sha256": "596d539f0d90d7024741419edf4b2a19c4fd63c3c7f8b23d13a4f6fec32218f7"
+    },
+    {
+      "file": "tests/test_research_control.py",
+      "line": 101,
+      "test": "test_source_symlink_and_object_tampering_rejected",
+      "role": "research-store-integrity",
+      "run_when": "source/evidence identities, ownership, budgets and promotion controls",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertRaises(Invalid)",
+        "self.assertRaises(Invalid)"
+      ],
+      "source_sha256": "596d539f0d90d7024741419edf4b2a19c4fd63c3c7f8b23d13a4f6fec32218f7"
+    },
+    {
+      "file": "tests/test_research_control.py",
+      "line": 113,
+      "test": "test_whole_checkout_or_reference_assets_cannot_enter_compiler_snapshot",
+      "role": "research-store-integrity",
+      "run_when": "source/evidence identities, ownership, budgets and promotion controls",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertRaisesRegex(Invalid,'minimal compiler-source')",
+        "self.assertRaisesRegex(Invalid,'minimal compiler-source')"
+      ],
+      "source_sha256": "596d539f0d90d7024741419edf4b2a19c4fd63c3c7f8b23d13a4f6fec32218f7"
+    },
+    {
+      "file": "tests/test_research_control.py",
+      "line": 124,
+      "test": "test_reject_missing_files_and_object_file_root_symlink",
+      "role": "research-store-integrity",
+      "run_when": "source/evidence identities, ownership, budgets and promotion controls",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertRaises(Invalid)"
+      ],
+      "source_sha256": "596d539f0d90d7024741419edf4b2a19c4fd63c3c7f8b23d13a4f6fec32218f7"
+    },
+    {
+      "file": "tests/test_research_control.py",
+      "line": 135,
+      "test": "test_duplicate_check_precedes_candidate_work",
+      "role": "research-store-integrity",
+      "run_when": "source/evidence identities, ownership, budgets and promotion controls",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertFalse((self.store.root / \"experiments/two\").exists())",
+        "self.assertEqual(result[\"duplicate_experiments\"], [\"one\"])",
+        "self.assertTrue(result[\"related_records\"])",
+        "self.assertRaisesRegex(Invalid, \"duplicate\")",
+        "self.assertRaises(Invalid)"
+      ],
+      "source_sha256": "596d539f0d90d7024741419edf4b2a19c4fd63c3c7f8b23d13a4f6fec32218f7"
+    },
+    {
+      "file": "tests/test_research_control.py",
+      "line": 148,
+      "test": "test_concurrent_shared_writes_are_serialized",
+      "role": "research-store-integrity",
+      "run_when": "source/evidence identities, ownership, budgets and promotion controls",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertEqual(set(self.store.status()[\"experiments\"]), set(results))"
+      ],
+      "source_sha256": "596d539f0d90d7024741419edf4b2a19c4fd63c3c7f8b23d13a4f6fec32218f7"
+    },
+    {
+      "file": "tests/test_research_control.py",
+      "line": 156,
+      "test": "test_recorded_contradictions_require_response_before_work",
+      "role": "research-store-integrity",
+      "run_when": "source/evidence identities, ownership, budgets and promotion controls",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertEqual(result[\"contradicted_mechanisms\"], [\"no-vectors\"])",
+        "self.assertRaisesRegex(Invalid, \"contradiction\")"
+      ],
+      "source_sha256": "596d539f0d90d7024741419edf4b2a19c4fd63c3c7f8b23d13a4f6fec32218f7"
+    },
+    {
+      "file": "tests/test_research_control.py",
+      "line": 168,
+      "test": "test_freeze_then_confirmation_resumes_without_redrawing",
+      "role": "research-store-integrity",
+      "run_when": "source/evidence identities, ownership, budgets and promotion controls",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertEqual(first[\"source_id\"], frozen[\"source_id\"])",
+        "self.assertEqual(first, Store(self.store.root).reserve_confirmation(\"one\", suite))",
+        "self.assertRaises(Invalid)",
+        "self.assertRaises(Invalid)",
+        "self.assertRaises(Invalid)"
+      ],
+      "source_sha256": "596d539f0d90d7024741419edf4b2a19c4fd63c3c7f8b23d13a4f6fec32218f7"
+    },
+    {
+      "file": "tests/test_research_control.py",
+      "line": 182,
+      "test": "test_workspace_is_plain_separate_and_never_overwritten",
+      "role": "research-store-integrity",
+      "run_when": "source/evidence identities, ownership, budgets and promotion controls",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertEqual(path.parent, self.store.work_root)",
+        "self.assertFalse((path / \".git\").exists())",
+        "self.assertNotEqual(source, self.store.status()[\"baseline_id\"])",
+        "self.assertRaises(Invalid)"
+      ],
+      "source_sha256": "596d539f0d90d7024741419edf4b2a19c4fd63c3c7f8b23d13a4f6fec32218f7"
+    },
+    {
+      "file": "tests/test_research_control.py",
+      "line": 193,
+      "test": "test_promotion_requires_evaluator_evidence_and_isolated_confirmation",
+      "role": "research-store-integrity",
+      "run_when": "source/evidence identities, ownership, budgets and promotion controls",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertRaises(Invalid)",
+        "self.assertRaisesRegex(Invalid, \"isolated\")",
+        "self.assertRaisesRegex(Invalid, \"fresh\")"
+      ],
+      "source_sha256": "596d539f0d90d7024741419edf4b2a19c4fd63c3c7f8b23d13a4f6fec32218f7"
+    },
+    {
+      "file": "tests/test_research_control.py",
+      "line": 207,
+      "test": "test_stale_baseline_cannot_promote",
+      "role": "research-store-integrity",
+      "run_when": "source/evidence identities, ownership, budgets and promotion controls",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertEqual(self.store.status()[\"baseline_id\"], new_id)",
+        "self.assertRaisesRegex(Invalid, \"stale\")"
+      ],
+      "source_sha256": "596d539f0d90d7024741419edf4b2a19c4fd63c3c7f8b23d13a4f6fec32218f7"
+    },
+    {
+      "file": "tests/test_research_control.py",
+      "line": 221,
+      "test": "test_all_five_gaps_keep_coverage_responsibilities_until_closed",
+      "role": "research-store-integrity",
+      "run_when": "source/evidence identities, ownership, budgets and promotion controls",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertEqual(self.store.status()[\"coverage_slots\"], 2)",
+        "self.assertEqual(self.store.status()[\"coverage_slots\"], 2)",
+        "self.assertEqual(self.store.status()[\"coverage_slots\"], 0 if i == 4 else 2)"
+      ],
+      "source_sha256": "596d539f0d90d7024741419edf4b2a19c4fd63c3c7f8b23d13a4f6fec32218f7"
+    },
+    {
+      "file": "tests/test_research_control.py",
+      "line": 232,
+      "test": "test_atomic_coverage_requires_sanitizer",
+      "role": "research-store-integrity",
+      "run_when": "source/evidence identities, ownership, budgets and promotion controls",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertRaisesRegex(Invalid, \"Sanitizer\")"
+      ],
+      "source_sha256": "596d539f0d90d7024741419edf4b2a19c4fd63c3c7f8b23d13a4f6fec32218f7"
+    },
+    {
+      "file": "tests/test_research_control.py",
+      "line": 241,
+      "test": "test_coverage_cannot_close_on_unintegrated_candidate",
+      "role": "research-store-integrity",
+      "run_when": "source/evidence identities, ownership, budgets and promotion controls",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertRaisesRegex(Invalid,'integrated working baseline')"
+      ],
+      "source_sha256": "596d539f0d90d7024741419edf4b2a19c4fd63c3c7f8b23d13a4f6fec32218f7"
+    },
+    {
+      "file": "tests/test_research_control.py",
+      "line": 249,
+      "test": "test_promotion_cannot_omit_previously_closed_coverage",
+      "role": "research-store-integrity",
+      "run_when": "source/evidence identities, ownership, budgets and promotion controls",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertRaisesRegex(Invalid,'previously closed coverage')"
+      ],
+      "source_sha256": "596d539f0d90d7024741419edf4b2a19c4fd63c3c7f8b23d13a4f6fec32218f7"
+    },
+    {
+      "file": "tests/test_research_control.py",
+      "line": 260,
+      "test": "test_export_requires_shortlist_and_does_not_overwrite_owner_compiler",
+      "role": "research-store-integrity",
+      "run_when": "source/evidence identities, ownership, budgets and promotion controls",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertTrue((destination / \"source/compile.py\").exists())",
+        "self.assertTrue((destination / \"evidence\" / evidence / \"files/outputs.json\").exists())",
+        "self.assertFalse((inbox.parent / \"compile.py\").exists())",
+        "self.assertRaises(Invalid)",
+        "self.assertRaises(Invalid)",
+        "self.assertRaises(Invalid)"
+      ],
+      "source_sha256": "596d539f0d90d7024741419edf4b2a19c4fd63c3c7f8b23d13a4f6fec32218f7"
+    },
+    {
+      "file": "tests/test_research_control.py",
+      "line": 276,
+      "test": "test_two_preparation_slots_and_inactive_static_gate",
+      "role": "research-store-integrity",
+      "run_when": "source/evidence identities, ownership, budgets and promotion controls",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertIsNone(self.store.claim_preparation(\"cpu-3\"))",
+        "self.assertIsNone(self.store.claim_gpu(\"gpu\"))",
+        "self.assertIsNotNone(self.store.claim_preparation(\"cpu-1\"))",
+        "self.assertRaises(Invalid)"
+      ],
+      "source_sha256": "596d539f0d90d7024741419edf4b2a19c4fd63c3c7f8b23d13a4f6fec32218f7"
+    },
+    {
+      "file": "tests/test_research_control.py",
+      "line": 291,
+      "test": "test_gpu_ownership_batch_outcomes_and_recovery",
+      "role": "research-store-integrity",
+      "run_when": "source/evidence identities, ownership, budgets and promotion controls",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertEqual(resumed[\"control\"][\"active_gpu\"][\"external_job_ids\"], [\"container-process-123\"])",
+        "self.assertEqual(timed[\"mode\"], \"timing\")",
+        "self.assertRaises(Invalid)",
+        "self.assertRaises(Invalid)"
+      ],
+      "source_sha256": "596d539f0d90d7024741419edf4b2a19c4fd63c3c7f8b23d13a4f6fec32218f7"
+    },
+    {
+      "file": "tests/test_research_control.py",
+      "line": 309,
+      "test": "test_sample_state_preserves_bursts_and_excludes_incomplete_blocks",
+      "role": "research-store-integrity",
+      "run_when": "source/evidence identities, ownership, budgets and promotion controls",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertEqual([b[\"burst_id\"] for b in samples], [\"burst-a\", \"burst-b\", \"burst-c\"])",
+        "self.assertEqual(sum(len(b[\"baseline_us\"]) for b in samples if b[\"complete\"]), 200)",
+        "self.assertRaises(Invalid)"
+      ],
+      "source_sha256": "596d539f0d90d7024741419edf4b2a19c4fd63c3c7f8b23d13a4f6fec32218f7"
+    },
+    {
+      "file": "tests/test_research_control.py",
+      "line": 322,
+      "test": "test_variant_budget_does_not_prevent_admitted_candidate_finishing",
+      "role": "research-store-integrity",
+      "run_when": "source/evidence identities, ownership, budgets and promotion controls",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertEqual(len(admitted), 10)",
+        "self.assertIsNone(self.store.claim_gpu(\"gpu\"))",
+        "self.assertEqual(resumed[\"mode\"], \"timing\")",
+        "self.assertEqual(resumed[\"queue_ids\"], [admitted[0]])",
+        "self.assertEqual(job[\"mode\"], \"correctness\")"
+      ],
+      "source_sha256": "596d539f0d90d7024741419edf4b2a19c4fd63c3c7f8b23d13a4f6fec32218f7"
+    },
+    {
+      "file": "tests/test_research_control.py",
+      "line": 350,
+      "test": "test_capacity_backpressure_and_source_identity_in_receipts",
+      "role": "research-store-integrity",
+      "run_when": "source/evidence identities, ownership, budgets and promotion controls",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertRaisesRegex(Invalid, \"capacity\")",
+        "self.assertRaisesRegex(Invalid, \"source\")"
+      ],
+      "source_sha256": "596d539f0d90d7024741419edf4b2a19c4fd63c3c7f8b23d13a4f6fec32218f7"
+    },
+    {
+      "file": "tests/test_research_control.py",
+      "line": 363,
+      "test": "test_tampered_retained_evidence_prevents_export",
+      "role": "research-store-integrity",
+      "run_when": "source/evidence identities, ownership, budgets and promotion controls",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertRaises(Invalid)"
+      ],
+      "source_sha256": "596d539f0d90d7024741419edf4b2a19c4fd63c3c7f8b23d13a4f6fec32218f7"
+    },
+    {
+      "file": "tests/test_research_control.py",
+      "line": 373,
+      "test": "test_cli_does_not_offer_receipt_issuance",
+      "role": "research-store-integrity",
+      "run_when": "source/evidence identities, ownership, budgets and promotion controls",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertEqual(result.returncode, 0, result.stderr)",
+        "self.assertEqual(len(json.loads(result.stdout)[\"coverage\"]), 5)",
+        "self.assertNotIn(\"issue-evidence\", help_result.stdout)"
+      ],
+      "source_sha256": "596d539f0d90d7024741419edf4b2a19c4fd63c3c7f8b23d13a4f6fec32218f7"
+    },
+    {
+      "file": "tests/test_research_control.py",
+      "line": 382,
+      "test": "test_claims_require_explicit_bounded_run",
+      "role": "research-store-integrity",
+      "run_when": "source/evidence identities, ownership, budgets and promotion controls",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertEqual(other.root.stat().st_mode & 0o777, 0o700)",
+        "self.assertRaisesRegex(Invalid, \"bounded run\")",
+        "self.assertRaisesRegex(Invalid, \"bounded run\")"
+      ],
+      "source_sha256": "596d539f0d90d7024741419edf4b2a19c4fd63c3c7f8b23d13a4f6fec32218f7"
+    },
+    {
+      "file": "tests/test_research_control.py",
+      "line": 391,
+      "test": "test_all15_gate_rejects_missing_failed_or_foreign_source_suite",
+      "role": "research-store-integrity",
+      "run_when": "source/evidence identities, ownership, budgets and promotion controls",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertRaisesRegex(Invalid,'all15')",
+        "self.assertRaisesRegex(Invalid,'all15')",
+        "self.assertRaisesRegex(Invalid,'different source or evaluation suite')",
+        "self.assertRaisesRegex(Invalid,'gate missing')"
+      ],
+      "source_sha256": "596d539f0d90d7024741419edf4b2a19c4fd63c3c7f8b23d13a4f6fec32218f7"
+    },
+    {
+      "file": "tests/test_research_control.py",
+      "line": 408,
+      "test": "test_missing_all15_receipt_cannot_be_waived_as_performance_debt",
+      "role": "research-store-integrity",
+      "run_when": "source/evidence identities, ownership, budgets and promotion controls",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertRaisesRegex(Invalid,'performance debt cannot bypass')"
+      ],
+      "source_sha256": "596d539f0d90d7024741419edf4b2a19c4fd63c3c7f8b23d13a4f6fec32218f7"
+    },
+    {
+      "file": "tests/test_research_control.py",
+      "line": 415,
+      "test": "test_later_failure_revokes_even_an_explicit_older_gate",
+      "role": "research-store-integrity",
+      "run_when": "source/evidence identities, ownership, budgets and promotion controls",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertIsNone(self.store.published_gate(report['source_id'],report['suite_id'],required=False))",
+        "self.assertRaisesRegex(Invalid,'invalidated')"
+      ],
+      "source_sha256": "596d539f0d90d7024741419edf4b2a19c4fd63c3c7f8b23d13a4f6fec32218f7"
+    },
+    {
+      "file": "tests/test_research_control.py",
+      "line": 424,
+      "test": "test_discovery_requires_fresh_opt_in_and_can_stop_without_killing_jobs",
+      "role": "research-store-integrity",
+      "run_when": "source/evidence identities, ownership, budgets and promotion controls",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertFalse(self.store.status()['discovery_enabled'])",
+        "self.assertFalse(self.store.status()['discovery_enabled'])",
+        "self.assertFalse(stopped['discovery_enabled'])",
+        "self.assertTrue(self.store.status()['runs']['second']['closed'])",
+        "self.assertRaisesRegex(Invalid,'opt-in')",
+        "self.assertRaisesRegex(Invalid,'fresh explicit opt-in')"
+      ],
+      "source_sha256": "596d539f0d90d7024741419edf4b2a19c4fd63c3c7f8b23d13a4f6fec32218f7"
+    },
+    {
+      "file": "tests/test_research_control.py",
+      "line": 444,
+      "test": "test_timing_is_not_starved_by_continuously_refilled_correctness",
+      "role": "research-store-integrity",
+      "run_when": "source/evidence identities, ownership, budgets and promotion controls",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertEqual(policy.choose(self.items(20), self.items(1, 0, \"t\"), 20)[\"mode\"], \"correctness\")",
+        "self.assertEqual(selected[\"mode\"], \"timing\")"
+      ],
+      "source_sha256": "596d539f0d90d7024741419edf4b2a19c4fd63c3c7f8b23d13a4f6fec32218f7"
+    },
+    {
+      "file": "tests/test_research_control.py",
+      "line": 450,
+      "test": "test_correctness_gets_a_turn_after_timing_limit_even_with_many_survivors",
+      "role": "research-store-integrity",
+      "run_when": "source/evidence identities, ownership, budgets and promotion controls",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertEqual(policy.choose(self.items(20), self.items(20, 0, \"t\"), 10)[\"mode\"], \"timing\")",
+        "self.assertEqual(turn[\"mode\"], \"correctness\")",
+        "self.assertLessEqual(len(turn[\"items\"]), 8)",
+        "self.assertEqual(policy.choose(self.items(20), self.items(20, 0, \"t\"), 12)[\"mode\"], \"timing\")"
+      ],
+      "source_sha256": "596d539f0d90d7024741419edf4b2a19c4fd63c3c7f8b23d13a4f6fec32218f7"
+    },
+    {
+      "file": "tests/test_research_control.py",
+      "line": 458,
+      "test": "test_soft_time_cap_yields_at_next_block_boundary",
+      "role": "research-store-integrity",
+      "run_when": "source/evidence identities, ownership, budgets and promotion controls",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertEqual(policy.choose(self.items(8), self.items(1, 0, \"t\"), 31)[\"mode\"], \"timing\")",
+        "self.assertEqual(resumed.choose(self.items(8), self.items(1, 0, \"t\"), 92)[\"mode\"], \"correctness\")"
+      ],
+      "source_sha256": "596d539f0d90d7024741419edf4b2a19c4fd63c3c7f8b23d13a4f6fec32218f7"
+    },
+    {
+      "file": "tests/test_research_control.py",
+      "line": 464,
+      "test": "test_preparation_round_robin_avoids_monopolization",
+      "role": "research-store-integrity",
+      "run_when": "source/evidence identities, ownership, budgets and promotion controls",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertEqual([s[\"hypothesis\"] for s in selected], [\"a\", \"b\", \"a\", \"b\", \"a\", \"b\"])"
+      ],
+      "source_sha256": "596d539f0d90d7024741419edf4b2a19c4fd63c3c7f8b23d13a4f6fec32218f7"
+    },
+    {
+      "file": "tests/test_research_gpu.py",
+      "line": 118,
+      "test": "test_load_exact_inputs_tolerances_and_identity",
+      "role": "GPU-evaluator-integrity",
+      "run_when": "guarding, output comparison, resets, worker and paired timing changes",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertEqual(data[\"immutable\"], {\"x\"})",
+        "np.testing.assert_array_equal(data[\"arrays\"][\"x\"], [1, -2, 3, 0])",
+        "self.assertEqual(data[\"meta\"][\"atol\"], 1e-6)",
+        "self.assertEqual(len(data[\"identities\"]), 4)"
+      ],
+      "source_sha256": "b49787be2c821e17b1f5e4c8bf9c883908baaca5fc7a3d4906a599033b302e61"
+    },
+    {
+      "file": "tests/test_research_gpu.py",
+      "line": 126,
+      "test": "test_published_singleton_reference_shape_is_normalized",
+      "role": "GPU-evaluator-integrity",
+      "run_when": "guarding, output comparison, resets, worker and paired timing changes",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertEqual(data[\"expected\"][\"y\"].shape, (1,))"
+      ],
+      "source_sha256": "b49787be2c821e17b1f5e4c8bf9c883908baaca5fc7a3d4906a599033b302e61"
+    },
+    {
+      "file": "tests/test_research_gpu.py",
+      "line": 138,
+      "test": "test_missing_reference_and_invalid_abi_rejected_before_cuda",
+      "role": "GPU-evaluator-integrity",
+      "run_when": "guarding, output comparison, resets, worker and paired timing changes",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertRaisesRegex(ValueError, \"not a produced\")",
+        "self.assertRaisesRegex(ValueError, \"arg_order\")"
+      ],
+      "source_sha256": "b49787be2c821e17b1f5e4c8bf9c883908baaca5fc7a3d4906a599033b302e61"
+    },
+    {
+      "file": "tests/test_research_gpu.py",
+      "line": 150,
+      "test": "test_repeated_launch_resets_positional_abi_and_input_checks",
+      "role": "GPU-evaluator-integrity",
+      "run_when": "guarding, output comparison, resets, worker and paired timing changes",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertTrue(result[\"ok\"])",
+        "self.assertEqual(len(driver.resets), 3)",
+        "self.assertEqual(result[\"launch_count\"], 3)",
+        "self.assertEqual(driver.allocations, {})",
+        "self.assertFalse(result[\"promotion_eligible\"])"
+      ],
+      "source_sha256": "b49787be2c821e17b1f5e4c8bf9c883908baaca5fc7a3d4906a599033b302e61"
+    },
+    {
+      "file": "tests/test_research_gpu.py",
+      "line": 160,
+      "test": "test_guard_failure_quarantines_good_batchmate",
+      "role": "GPU-evaluator-integrity",
+      "run_when": "guarding, output comparison, resets, worker and paired timing changes",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertFalse(result[\"ok\"])",
+        "self.assertEqual(len(batch[\"membership\"]), 2)",
+        "self.assertTrue(batch[\"requires_all_batchmates_isolated\"])",
+        "self.assertFalse(bad[\"checks\"][0][\"buffers\"][\"y\"][\"suffix_ok\"])",
+        "self.assertTrue(good[\"ok\"])",
+        "self.assertFalse(good[\"trusted\"])",
+        "self.assertEqual(len(driver.launches), 2)",
+        "self.assertEqual(len({launch[1] for launch in driver.launches}), 2)"
+      ],
+      "source_sha256": "b49787be2c821e17b1f5e4c8bf9c883908baaca5fc7a3d4906a599033b302e61"
+    },
+    {
+      "file": "tests/test_research_gpu.py",
+      "line": 175,
+      "test": "test_mutated_input_detected",
+      "role": "GPU-evaluator-integrity",
+      "run_when": "guarding, output comparison, resets, worker and paired timing changes",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertFalse(check[\"buffers\"][\"x\"][\"input_ok\"])",
+        "self.assertFalse(result[\"ok\"])"
+      ],
+      "source_sha256": "b49787be2c821e17b1f5e4c8bf9c883908baaca5fc7a3d4906a599033b302e61"
+    },
+    {
+      "file": "tests/test_research_gpu.py",
+      "line": 182,
+      "test": "test_pipeline_shares_intermediate_and_checks_every_buffer",
+      "role": "GPU-evaluator-integrity",
+      "run_when": "guarding, output comparison, resets, worker and paired timing changes",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertTrue(result[\"ok\"])",
+        "self.assertEqual(driver.launches[0][2][0], driver.launches[1][2][1])",
+        "self.assertEqual(set(result[\"batches\"][0][\"results\"][0][\"checks\"][0][\"buffers\"]), {\"x\", \"y\", \"z\"})"
+      ],
+      "source_sha256": "b49787be2c821e17b1f5e4c8bf9c883908baaca5fc7a3d4906a599033b302e61"
+    },
+    {
+      "file": "tests/test_research_gpu.py",
+      "line": 201,
+      "test": "test_timing_pairs_separate_arms_partial_checkpoint_and_offsets",
+      "role": "GPU-evaluator-integrity",
+      "run_when": "guarding, output comparison, resets, worker and paired timing changes",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertTrue(result[\"ok\"])",
+        "self.assertEqual(result[\"completed_pairs\"], 8)",
+        "self.assertEqual(len(driver.resets), 20)",
+        "self.assertEqual([row[\"order\"] for row in result[\"pairs\"]], gpu.paired_orders(17, 8, 8))",
+        "self.assertEqual({row[\"burst_id\"] for row in result[\"pairs\"]}, {\"burst-2\"})",
+        "self.assertEqual([row[\"pair_index\"] for row in result[\"pairs\"]], list(range(8, 16)))",
+        "self.assertEqual(result[\"launch_count\"], 20)",
+        "self.assertTrue(checkpoint[\"incomplete\"])",
+        "self.assertEqual(len(checkpoint[\"pairs\"]), 8)",
+        "self.assertEqual(driver.allocations, {})",
+        "self.assertNotEqual(driver.launches[0][2][0], driver.launches[1][2][0])"
+      ],
+      "source_sha256": "b49787be2c821e17b1f5e4c8bf9c883908baaca5fc7a3d4906a599033b302e61"
+    },
+    {
+      "file": "tests/test_research_gpu.py",
+      "line": 221,
+      "test": "test_preflight_invalid_job_never_loads_cuda",
+      "role": "GPU-evaluator-integrity",
+      "run_when": "guarding, output comparison, resets, worker and paired timing changes",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "driver.assert_not_called()",
+        "self.assertRaisesRegex(ValueError, \"width\")",
+        "self.assertRaisesRegex(ValueError, \"pairs\")"
+      ],
+      "source_sha256": "b49787be2c821e17b1f5e4c8bf9c883908baaca5fc7a3d4906a599033b302e61"
+    },
+    {
+      "file": "tests/test_research_gpu.py",
+      "line": 230,
+      "test": "test_missing_intermediate_producer_rejected",
+      "role": "GPU-evaluator-integrity",
+      "run_when": "guarding, output comparison, resets, worker and paired timing changes",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertRaisesRegex(ValueError, \"no earlier producer\")"
+      ],
+      "source_sha256": "b49787be2c821e17b1f5e4c8bf9c883908baaca5fc7a3d4906a599033b302e61"
+    },
+    {
+      "file": "tests/test_research_gpu.py",
+      "line": 239,
+      "test": "test_serve_reuses_context_and_acknowledges_atomic_results",
+      "role": "GPU-evaluator-integrity",
+      "run_when": "guarding, output comparison, resets, worker and paired timing changes",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertEqual(len(acks), 2)",
+        "self.assertTrue(all(ack[\"ok\"] and ack[\"status\"] == 0 for ack in acks))",
+        "self.assertEqual(driver.allocations, {})",
+        "self.assertEqual(gpu.serve(), 0)",
+        "constructor.assert_called_once()",
+        "close.assert_called_once()",
+        "self.assertTrue(json.loads(Path(job[\"out\"]).read_text())[\"ok\"])"
+      ],
+      "source_sha256": "b49787be2c821e17b1f5e4c8bf9c883908baaca5fc7a3d4906a599033b302e61"
+    },
+    {
+      "file": "tests/test_research_gpu.py",
+      "line": 259,
+      "test": "test_serve_cuda_error_retires_without_processing_next_job",
+      "role": "GPU-evaluator-integrity",
+      "run_when": "guarding, output comparison, resets, worker and paired timing changes",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertTrue(json.loads(output.getvalue())[\"retire_worker\"])",
+        "self.assertFalse(Path(jobs[1][\"out\"]).exists())",
+        "self.assertEqual(gpu.serve(), 2)",
+        "run.assert_called_once()",
+        "close.assert_not_called()"
+      ],
+      "source_sha256": "b49787be2c821e17b1f5e4c8bf9c883908baaca5fc7a3d4906a599033b302e61"
+    },
+    {
+      "file": "tests/test_research_gpu.py",
+      "line": 274,
+      "test": "test_timing_error_keeps_pair_incomplete",
+      "role": "GPU-evaluator-integrity",
+      "run_when": "guarding, output comparison, resets, worker and paired timing changes",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertFalse(result[\"ok\"])",
+        "self.assertEqual(result[\"completed_pairs\"], 0)",
+        "self.assertFalse(result[\"pairs\"][0][\"complete\"])",
+        "self.assertNotIn(\"candidate_over_baseline\", result[\"pairs\"][0])"
+      ],
+      "source_sha256": "b49787be2c821e17b1f5e4c8bf9c883908baaca5fc7a3d4906a599033b302e61"
+    },
+    {
+      "file": "tests/test_research_gpu.py",
+      "line": 288,
+      "test": "test_prefix_suffix_and_input_corruption_are_distinguished",
+      "role": "GPU-evaluator-integrity",
+      "run_when": "guarding, output comparison, resets, worker and paired timing changes",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertEqual(len(image), 516)",
+        "self.assertNotEqual(image[:256], image[-256:])",
+        "self.assertNotEqual(image, gpu.guard_image(b\"abcd\", seed=23))",
+        "self.assertEqual([name for name, good in checks.items() if not good], [key])",
+        "self.assertRaises(ValueError)"
+      ],
+      "source_sha256": "b49787be2c821e17b1f5e4c8bf9c883908baaca5fc7a3d4906a599033b302e61"
+    },
+    {
+      "file": "tests/test_research_gpu.py",
+      "line": 301,
+      "test": "test_full_output_no_nan_equality_or_tolerant_integer_check",
+      "role": "GPU-evaluator-integrity",
+      "run_when": "guarding, output comparison, resets, worker and paired timing changes",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertEqual(result[\"mismatched\"], 1)",
+        "self.assertEqual(result[\"max_abs_error\"], 1)",
+        "self.assertFalse(gpu.compare_output(np.array([np.nan]), np.array([np.nan]), 1., 1.)[\"ok\"])",
+        "self.assertFalse(gpu.compare_output(np.array([100], dtype=np.int64), np.array([101]), 1., 1.)[\"ok\"])"
+      ],
+      "source_sha256": "b49787be2c821e17b1f5e4c8bf9c883908baaca5fc7a3d4906a599033b302e61"
+    },
+    {
+      "file": "tests/test_research_gpu.py",
+      "line": 308,
+      "test": "test_reproducible_pair_order_resume",
+      "role": "GPU-evaluator-integrity",
+      "run_when": "guarding, output comparison, resets, worker and paired timing changes",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertEqual(full[16:], gpu.paired_orders(333, 16, 16))",
+        "self.assertTrue(all(set(order) == {\"baseline\", \"candidate\"} for order in full))",
+        "self.assertEqual(len({tuple(order) for order in full}), 2)"
+      ],
+      "source_sha256": "b49787be2c821e17b1f5e4c8bf9c883908baaca5fc7a3d4906a599033b302e61"
+    },
+    {
+      "file": "tests/test_research_gpu.py",
+      "line": 314,
+      "test": "test_quarantine_and_atomic_json",
+      "role": "GPU-evaluator-integrity",
+      "run_when": "guarding, output comparison, resets, worker and paired timing changes",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertTrue(gpu.quarantine_batch(rows))",
+        "self.assertTrue(all(row[\"quarantined\"] and not row[\"trusted\"] for row in rows))",
+        "self.assertEqual(json.loads(path.read_text()), {\"ok\": True})",
+        "self.assertEqual(list(Path(temporary).iterdir()), [path])"
+      ],
+      "source_sha256": "b49787be2c821e17b1f5e4c8bf9c883908baaca5fc7a3d4906a599033b302e61"
+    },
+    {
+      "file": "tests/test_research_pipeline.py",
+      "line": 149,
+      "test": "test_case_labels_reservations_and_identity",
+      "role": "evaluation-protocol-integrity",
+      "run_when": "qualification, gate, confirmation, attestation and paired-block changes",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertEqual(cases,pipeline.make_cases(self.store,suite,10,'fixed',count=1,published=False))",
+        "self.assertEqual(expected,(Path(cases[0])/'expected.npz').read_bytes())",
+        "self.assertRaises(Invalid)",
+        "self.assertRaises(Invalid)",
+        "self.assertRaisesRegex(Invalid,'identity')",
+        "self.assertRaises(Invalid)"
+      ],
+      "source_sha256": "658a650c612dbc023e1b507470613b1877a4a9c38017a0e2c0de586e420081b9"
+    },
+    {
+      "file": "tests/test_research_pipeline.py",
+      "line": 162,
+      "test": "test_softmax_suite_contains_cooperative_and_serial_shapes",
+      "role": "evaluation-protocol-integrity",
+      "run_when": "qualification, gate, confirmation, attestation and paired-block changes",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertEqual([s['shape'] for s in specs[:2]],[[3,127],[5,257]])",
+        "self.assertEqual([s['schedule'] for s in specs[:2]],['cooperative-online-softmax']*2)",
+        "self.assertTrue(all(s['schedule']=='serial-per-cell' for s in specs[2:]))"
+      ],
+      "source_sha256": "658a650c612dbc023e1b507470613b1877a4a9c38017a0e2c0de586e420081b9"
+    },
+    {
+      "file": "tests/test_research_pipeline.py",
+      "line": 170,
+      "test": "test_compact_protocol_uses_one_fresh_draw_without_changing_legacy_suites",
+      "role": "evaluation-protocol-integrity",
+      "run_when": "qualification, gate, confirmation, attestation and paired-block changes",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertEqual(contract['exploration_cases_per_family'],1)",
+        "self.assertEqual(contract['confirmation_cases_per_family'],1)",
+        "self.assertEqual(len(cases),1)",
+        "self.assertEqual(len(pipeline.make_cases(self.store,legacy,42,'legacy-policy',published=False)),4)"
+      ],
+      "source_sha256": "658a650c612dbc023e1b507470613b1877a4a9c38017a0e2c0de586e420081b9"
+    },
+    {
+      "file": "tests/test_research_pipeline.py",
+      "line": 180,
+      "test": "test_prepared_cubin_and_case_tampering_rejected",
+      "role": "evaluation-protocol-integrity",
+      "run_when": "qualification, gate, confirmation, attestation and paired-block changes",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertRaisesRegex(Invalid,'assembly')"
+      ],
+      "source_sha256": "658a650c612dbc023e1b507470613b1877a4a9c38017a0e2c0de586e420081b9"
+    },
+    {
+      "file": "tests/test_research_pipeline.py",
+      "line": 187,
+      "test": "test_gpu_ack_retirement_and_stale_result_are_not_trusted",
+      "role": "evaluation-protocol-integrity",
+      "run_when": "qualification, gate, confirmation, attestation and paired-block changes",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertFalse(output.exists())",
+        "close.assert_called_once_with(kill=True)",
+        "self.assertRaisesRegex(RuntimeError,'controlled fault')"
+      ],
+      "source_sha256": "658a650c612dbc023e1b507470613b1877a4a9c38017a0e2c0de586e420081b9"
+    },
+    {
+      "file": "tests/test_research_pipeline.py",
+      "line": 200,
+      "test": "test_budget_near_deadline_never_starts_sample",
+      "role": "evaluation-protocol-integrity",
+      "run_when": "qualification, gate, confirmation, attestation and paired-block changes",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "worker.run.assert_not_called()",
+        "self.assertRaises(pipeline.BudgetExhausted)"
+      ],
+      "source_sha256": "658a650c612dbc023e1b507470613b1877a4a9c38017a0e2c0de586e420081b9"
+    },
+    {
+      "file": "tests/test_research_pipeline.py",
+      "line": 206,
+      "test": "test_incomplete_blocks_excluded_from_summary",
+      "role": "evaluation-protocol-integrity",
+      "run_when": "qualification, gate, confirmation, attestation and paired-block changes",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertEqual(summary['pairs'],2)",
+        "self.assertAlmostEqual(summary['median_block_ratio'],.9)"
+      ],
+      "source_sha256": "658a650c612dbc023e1b507470613b1877a4a9c38017a0e2c0de586e420081b9"
+    },
+    {
+      "file": "tests/test_research_pipeline.py",
+      "line": 212,
+      "test": "test_confirmation_requires_cpu_preparation_and_does_not_compile_on_gpu",
+      "role": "evaluation-protocol-integrity",
+      "run_when": "qualification, gate, confirmation, attestation and paired-block changes",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertRaisesRegex(Invalid,'prepare-confirmation')"
+      ],
+      "source_sha256": "658a650c612dbc023e1b507470613b1877a4a9c38017a0e2c0de586e420081b9"
+    },
+    {
+      "file": "tests/test_research_pipeline.py",
+      "line": 217,
+      "test": "test_confirmation_pending_until_attested_and_baseline_not_recompiled",
+      "role": "evaluation-protocol-integrity",
+      "run_when": "qualification, gate, confirmation, attestation and paired-block changes",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertTrue(result['report']['evaluation_ok'])",
+        "self.assertEqual(result['report']['required_case_ids'],[pipeline._case_identity(cases[0])])",
+        "self.assertIsNone(self.store.status()['active_gpu'])",
+        "self.assertNotEqual(attested['evidence_id'],result['evidence_id'])",
+        "self.assertEqual(len(FakeWorker.instances),1)",
+        "self.assertRaisesRegex(Invalid,'attestation')"
+      ],
+      "source_sha256": "658a650c612dbc023e1b507470613b1877a4a9c38017a0e2c0de586e420081b9"
+    },
+    {
+      "file": "tests/test_research_pipeline.py",
+      "line": 233,
+      "test": "test_native_runtime_attestation_requires_environment_provenance",
+      "role": "evaluation-protocol-integrity",
+      "run_when": "qualification, gate, confirmation, attestation and paired-block changes",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertEqual(receipt['report']['admission_status'],'observed_no_contention')",
+        "self.assertRaisesRegex(Invalid,'environment provenance')"
+      ],
+      "source_sha256": "658a650c612dbc023e1b507470613b1877a4a9c38017a0e2c0de586e420081b9"
+    },
+    {
+      "file": "tests/test_research_pipeline.py",
+      "line": 245,
+      "test": "test_failed_timing_cannot_be_promoted_even_if_correctness_passed",
+      "role": "evaluation-protocol-integrity",
+      "run_when": "qualification, gate, confirmation, attestation and paired-block changes",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertEqual(result['report']['cases'][0]['status'],'pass')",
+        "self.assertFalse(result['report']['evaluation_ok'])",
+        "self.assertRaisesRegex(Invalid,'all15|failure')"
+      ],
+      "source_sha256": "658a650c612dbc023e1b507470613b1877a4a9c38017a0e2c0de586e420081b9"
+    },
+    {
+      "file": "tests/test_research_pipeline.py",
+      "line": 255,
+      "test": "test_required_sanitizer_failure_blocks_promotion",
+      "role": "evaluation-protocol-integrity",
+      "run_when": "qualification, gate, confirmation, attestation and paired-block changes",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertTrue(result['report']['sanitizer_required'])",
+        "self.assertFalse(result['report']['sanitizer_passed'])",
+        "self.assertRaises(Invalid)"
+      ],
+      "source_sha256": "658a650c612dbc023e1b507470613b1877a4a9c38017a0e2c0de586e420081b9"
+    },
+    {
+      "file": "tests/test_research_pipeline.py",
+      "line": 265,
+      "test": "test_attestation_requires_matching_host_gpu_and_telemetry",
+      "role": "evaluation-protocol-integrity",
+      "run_when": "qualification, gate, confirmation, attestation and paired-block changes",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertRaisesRegex(Invalid,'observations')",
+        "self.assertRaisesRegex(Invalid,'GPU identity')"
+      ],
+      "source_sha256": "658a650c612dbc023e1b507470613b1877a4a9c38017a0e2c0de586e420081b9"
+    },
+    {
+      "file": "tests/test_research_pipeline.py",
+      "line": 277,
+      "test": "test_confirmation_full_required_case_set_is_enforced",
+      "role": "evaluation-protocol-integrity",
+      "run_when": "qualification, gate, confirmation, attestation and paired-block changes",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertRaisesRegex(Invalid,'required cases')"
+      ],
+      "source_sha256": "658a650c612dbc023e1b507470613b1877a4a9c38017a0e2c0de586e420081b9"
+    },
+    {
+      "file": "tests/test_research_pipeline.py",
+      "line": 286,
+      "test": "test_coverage_generated_rows_map_all_attention_items",
+      "role": "evaluation-protocol-integrity",
+      "run_when": "qualification, gate, confirmation, attestation and paired-block changes",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertEqual(row['scope'],'generated')",
+        "self.assertEqual(row['coverage_items'],['a01_attention','a02_attention_128'])"
+      ],
+      "source_sha256": "658a650c612dbc023e1b507470613b1877a4a9c38017a0e2c0de586e420081b9"
+    },
+    {
+      "file": "tests/test_research_pipeline.py",
+      "line": 293,
+      "test": "test_correctness_disagreement_rechecks_all_batchmates",
+      "role": "evaluation-protocol-integrity",
+      "run_when": "qualification, gate, confirmation, attestation and paired-block changes",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertEqual(set(outcomes.values()),{'quarantined'})",
+        "self.assertEqual(worker.run.call_count,3)",
+        "self.assertEqual([len(c.args[0]['cases']) for c in worker.run.call_args_list],[2,1,1])"
+      ],
+      "source_sha256": "658a650c612dbc023e1b507470613b1877a4a9c38017a0e2c0de586e420081b9"
+    },
+    {
+      "file": "tests/test_research_pipeline.py",
+      "line": 304,
+      "test": "test_atomic_screening_runs_sanitizer_before_timing_eligibility",
+      "role": "evaluation-protocol-integrity",
+      "run_when": "qualification, gate, confirmation, attestation and paired-block changes",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "sanitize.assert_called_once()",
+        "self.assertEqual(outcomes[queue['id']],'failed')",
+        "self.assertEqual(len(worker.jobs),1)"
+      ],
+      "source_sha256": "658a650c612dbc023e1b507470613b1877a4a9c38017a0e2c0de586e420081b9"
+    },
+    {
+      "file": "tests/test_research_pipeline.py",
+      "line": 314,
+      "test": "test_noise_scoped_to_run_device_case_set_and_service",
+      "role": "evaluation-protocol-integrity",
+      "run_when": "qualification, gate, confirmation, attestation and paired-block changes",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertEqual(set(result['outcomes'].values()),{'complete'})",
+        "self.assertEqual(len(noise),1)",
+        "self.assertEqual(saved['run_id'],'unit')",
+        "self.assertEqual(saved['device'],DEVICE)",
+        "self.assertEqual(saved['job_id'],result['job']['job_id'])",
+        "self.assertTrue(saved['case_set_id'])",
+        "self.assertEqual(len([j for j in jobs if j.get('pairs')==16]),1)",
+        "self.assertEqual(len([j for j in jobs if j.get('pairs')==8]),4)"
+      ],
+      "source_sha256": "658a650c612dbc023e1b507470613b1877a4a9c38017a0e2c0de586e420081b9"
+    },
+    {
+      "file": "tests/test_research_pipeline.py",
+      "line": 334,
+      "test": "test_confirmation_resumes_complete_case_artifacts_without_redrawing",
+      "role": "evaluation-protocol-integrity",
+      "run_when": "qualification, gate, confirmation, attestation and paired-block changes",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertTrue(partial['incomplete'])",
+        "self.assertEqual(len(partial['completed_case_ids']),1)",
+        "self.assertTrue(result['report']['evaluation_ok'])",
+        "self.assertEqual(len(FakeWorker.instances),2)",
+        "self.assertEqual(len(result['report']['host_job_dirs']),2)"
+      ],
+      "source_sha256": "658a650c612dbc023e1b507470613b1877a4a9c38017a0e2c0de586e420081b9"
+    },
+    {
+      "file": "tests/test_research_pipeline.py",
+      "line": 364,
+      "test": "test_default_suite_contains_all15_even_without_claimed_families",
+      "role": "evaluation-protocol-integrity",
+      "run_when": "qualification, gate, confirmation, attestation and paired-block changes",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertEqual(set(problems),set(PUBLISHED_PROBLEMS))",
+        "self.assertEqual(len(problems),15)"
+      ],
+      "source_sha256": "658a650c612dbc023e1b507470613b1877a4a9c38017a0e2c0de586e420081b9"
+    },
+    {
+      "file": "tests/test_research_pipeline.py",
+      "line": 370,
+      "test": "test_one_case_timing_without_all15_gate_fails_before_cuda_worker",
+      "role": "evaluation-protocol-integrity",
+      "run_when": "qualification, gate, confirmation, attestation and paired-block changes",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "constructor.assert_not_called()",
+        "self.assertRaisesRegex(Invalid,'all15')"
+      ],
+      "source_sha256": "658a650c612dbc023e1b507470613b1877a4a9c38017a0e2c0de586e420081b9"
+    },
+    {
+      "file": "tests/test_research_pipeline.py",
+      "line": 379,
+      "test": "test_confirmation_debug_subset_cannot_time_or_advance",
+      "role": "evaluation-protocol-integrity",
+      "run_when": "qualification, gate, confirmation, attestation and paired-block changes",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertTrue(all(job['mode']=='correctness' for worker in FakeWorker.instances for job in worker.jobs))",
+        "self.assertFalse(result['report']['valid_gpu_evaluation'])",
+        "self.assertFalse(result['report']['benchmark_qualified'])",
+        "self.assertRaisesRegex(Invalid,'all15')"
+      ],
+      "source_sha256": "658a650c612dbc023e1b507470613b1877a4a9c38017a0e2c0de586e420081b9"
+    },
+    {
+      "file": "tests/test_research_pipeline.py",
+      "line": 389,
+      "test": "test_all15_debug_confirmation_establishes_gate_without_timing",
+      "role": "evaluation-protocol-integrity",
+      "run_when": "qualification, gate, confirmation, attestation and paired-block changes",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertEqual(len(result['report']['cases']),15)",
+        "self.assertTrue(result['report']['valid_gpu_evaluation'])",
+        "self.assertFalse(result['report']['benchmark_qualified'])",
+        "self.assertFalse(result['report']['timing'])",
+        "self.assertTrue(self.store.require_published_gate(self.store._manifest('candidate')['source_id'],suite))"
+      ],
+      "source_sha256": "658a650c612dbc023e1b507470613b1877a4a9c38017a0e2c0de586e420081b9"
+    },
+    {
+      "file": "tests/test_research_pipeline.py",
+      "line": 414,
+      "test": "test_failed_timing_does_not_reissue_all15_gate",
+      "role": "evaluation-protocol-integrity",
+      "run_when": "qualification, gate, confirmation, attestation and paired-block changes",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertTrue(all(c['status']=='pass' for c in result['report']['cases']))",
+        "self.assertFalse(result['report']['evaluation_ok'])",
+        "self.assertIsNone(result['report']['published_gate_id'])",
+        "self.assertEqual(result['report']['calibration_cases'],{})",
+        "self.assertRaisesRegex(Invalid,'invalidated')"
+      ],
+      "source_sha256": "658a650c612dbc023e1b507470613b1877a4a9c38017a0e2c0de586e420081b9"
+    },
+    {
+      "file": "tests/test_research_pipeline.py",
+      "line": 460,
+      "test": "test_resumed_failed_timing_cannot_restore_revoked_gate",
+      "role": "evaluation-protocol-integrity",
+      "run_when": "qualification, gate, confirmation, attestation and paired-block changes",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [],
+      "source_sha256": "658a650c612dbc023e1b507470613b1877a4a9c38017a0e2c0de586e420081b9"
+    },
+    {
+      "file": "tests/test_research_pipeline.py",
+      "line": 463,
+      "test": "test_recovery_replays_revocation_when_crash_left_old_gate_valid",
+      "role": "evaluation-protocol-integrity",
+      "run_when": "qualification, gate, confirmation, attestation and paired-block changes",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [],
+      "source_sha256": "658a650c612dbc023e1b507470613b1877a4a9c38017a0e2c0de586e420081b9"
+    },
+    {
+      "file": "tests/test_research_pipeline.py",
+      "line": 466,
+      "test": "test_cached_attestation_rechecks_revoked_gate",
+      "role": "evaluation-protocol-integrity",
+      "run_when": "qualification, gate, confirmation, attestation and paired-block changes",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertTrue(attested['report']['benchmark_qualified'])",
+        "constructor.assert_not_called()",
+        "self.assertRaisesRegex(Invalid,'invalidated')",
+        "self.assertRaisesRegex(Invalid,'invalidated')"
+      ],
+      "source_sha256": "658a650c612dbc023e1b507470613b1877a4a9c38017a0e2c0de586e420081b9"
+    },
+    {
+      "file": "tests/test_research_pipeline.py",
+      "line": 481,
+      "test": "test_calibration_binding_comes_from_matching_prepared_arms",
+      "role": "evaluation-protocol-integrity",
+      "run_when": "qualification, gate, confirmation, attestation and paired-block changes",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertEqual(binding['case_files_sha256'],{name:digest((Path(cases[0])/name).read_bytes())\n            for name in ('meta.json','inputs.npz','expected.npz')})",
+        "self.assertEqual(binding['candidate_ptx_sha256'],[k['compile']['ptx_sha256']\n            for k in prepared['prepared']['cases'][0]['kernels']])",
+        "self.assertEqual(binding['baseline_ptx_sha256'],[k['compile']['ptx_sha256']\n            for k in prepared['baseline']['cases'][0]['kernels']])"
+      ],
+      "source_sha256": "658a650c612dbc023e1b507470613b1877a4a9c38017a0e2c0de586e420081b9"
+    },
+    {
+      "file": "tests/test_research_prepare.py",
+      "line": 45,
+      "test": "test_compiler_gets_only_readonly_semantic_inputs",
+      "role": "preparation-integrity",
+      "run_when": "compiler isolation, assembly cache, activation and resource accounting",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertEqual(result[\"exit_code\"], 0)",
+        "self.assertEqual((self.root / \"compiled/stdout.ptx\").read_text().strip(), PTX.strip())"
+      ],
+      "source_sha256": "98dcef64cef0563965cfacd4778432dc51eaa17e4f623d5625fb94bf746b9df4"
+    },
+    {
+      "file": "tests/test_research_prepare.py",
+      "line": 66,
+      "test": "test_evaluator_references_and_network_are_denied",
+      "role": "preparation-integrity",
+      "run_when": "compiler isolation, assembly cache, activation and resource accounting",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertEqual(self.compile()[\"exit_code\"], 0)"
+      ],
+      "source_sha256": "98dcef64cef0563965cfacd4778432dc51eaa17e4f623d5625fb94bf746b9df4"
+    },
+    {
+      "file": "tests/test_research_prepare.py",
+      "line": 80,
+      "test": "test_real_baseline_can_deserialize_and_compile_inside_boundary",
+      "role": "preparation-integrity",
+      "run_when": "compiler isolation, assembly cache, activation and resource accounting",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertEqual(result[\"exit_code\"], 0)",
+        "self.assertIn(\".visible .entry\", (self.root / \"compiled/stdout.ptx\").read_text())"
+      ],
+      "source_sha256": "98dcef64cef0563965cfacd4778432dc51eaa17e4f623d5625fb94bf746b9df4"
+    },
+    {
+      "file": "tests/test_research_prepare.py",
+      "line": 86,
+      "test": "test_gpu_ioctl_is_denied",
+      "role": "preparation-integrity",
+      "run_when": "compiler isolation, assembly cache, activation and resource accounting",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertEqual(self.compile()[\"exit_code\"], 0)"
+      ],
+      "source_sha256": "98dcef64cef0563965cfacd4778432dc51eaa17e4f623d5625fb94bf746b9df4"
+    },
+    {
+      "file": "tests/test_research_prepare.py",
+      "line": 97,
+      "test": "test_source_symlinks_are_rejected_before_dereference",
+      "role": "preparation-integrity",
+      "run_when": "compiler isolation, assembly cache, activation and resource accounting",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertRaisesRegex(ValueError, \"symlink\")"
+      ],
+      "source_sha256": "98dcef64cef0563965cfacd4778432dc51eaa17e4f623d5625fb94bf746b9df4"
+    },
+    {
+      "file": "tests/test_research_prepare.py",
+      "line": 105,
+      "test": "test_timeout_kills_owned_descendants",
+      "role": "preparation-integrity",
+      "run_when": "compiler isolation, assembly cache, activation and resource accounting",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertFalse(running(pid), \"timed-out compiler left a running descendant\")",
+        "self.assertRaisesRegex(ValueError, \"124\")"
+      ],
+      "source_sha256": "98dcef64cef0563965cfacd4778432dc51eaa17e4f623d5625fb94bf746b9df4"
+    },
+    {
+      "file": "tests/test_research_prepare.py",
+      "line": 118,
+      "test": "test_successful_compiler_cannot_leave_running_descendants",
+      "role": "preparation-integrity",
+      "run_when": "compiler isolation, assembly cache, activation and resource accounting",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertEqual(self.compile()[\"exit_code\"], 0)",
+        "self.assertFalse(running(pid), \"successful compiler left a running descendant\")"
+      ],
+      "source_sha256": "98dcef64cef0563965cfacd4778432dc51eaa17e4f623d5625fb94bf746b9df4"
+    },
+    {
+      "file": "tests/test_research_prepare.py",
+      "line": 136,
+      "test": "test_descendants_cannot_escape_process_group",
+      "role": "preparation-integrity",
+      "run_when": "compiler isolation, assembly cache, activation and resource accounting",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertEqual(self.compile()[\"exit_code\"], 0)"
+      ],
+      "source_sha256": "98dcef64cef0563965cfacd4778432dc51eaa17e4f623d5625fb94bf746b9df4"
+    },
+    {
+      "file": "tests/test_research_prepare.py",
+      "line": 146,
+      "test": "test_invalid_ptx_output_is_rejected",
+      "role": "preparation-integrity",
+      "run_when": "compiler isolation, assembly cache, activation and resource accounting",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertRaisesRegex(ValueError, \"invalid PTX\")"
+      ],
+      "source_sha256": "98dcef64cef0563965cfacd4778432dc51eaa17e4f623d5625fb94bf746b9df4"
+    },
+    {
+      "file": "tests/test_research_prepare.py",
+      "line": 151,
+      "test": "test_sass_normalization_preserves_semantic_immediates",
+      "role": "preparation-integrity",
+      "run_when": "compiler isolation, assembly cache, activation and resource accounting",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertEqual(preparation.normalize_sass(first), preparation.normalize_sass(same))",
+        "self.assertNotEqual(preparation.normalize_sass(first), preparation.normalize_sass(changed))"
+      ],
+      "source_sha256": "98dcef64cef0563965cfacd4778432dc51eaa17e4f623d5625fb94bf746b9df4"
+    },
+    {
+      "file": "tests/test_research_prepare.py",
+      "line": 158,
+      "test": "test_real_assembly_cache_targets_and_corruption",
+      "role": "preparation-integrity",
+      "run_when": "compiler isolation, assembly cache, activation and resource accounting",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertFalse(first[\"cache_hit\"])",
+        "self.assertTrue(repeated[\"cache_hit\"])",
+        "self.assertNotEqual(first[\"key\"], other[\"key\"])",
+        "self.assertTrue((Path(other[\"folder\"]) / \"nvdisasm.txt\").exists())",
+        "self.assertRaisesRegex(ValueError, \"metadata corrupt\")",
+        "self.assertRaisesRegex(ValueError, \"corrupt\")"
+      ],
+      "source_sha256": "98dcef64cef0563965cfacd4778432dc51eaa17e4f623d5625fb94bf746b9df4"
+    },
+    {
+      "file": "tests/test_research_prepare.py",
+      "line": 179,
+      "test": "test_static_gate_checks_activation_and_case_identity",
+      "role": "preparation-integrity",
+      "run_when": "compiler isolation, assembly cache, activation and resource accounting",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertEqual(inactive[\"gate\"], \"inactive\")",
+        "self.assertTrue(matched[\"runtime_identical_to_baseline\"])",
+        "self.assertFalse(mismatched[\"runtime_identical_to_baseline\"])",
+        "self.assertFalse(changed[\"runtime_identical_to_baseline\"])",
+        "self.assertRaisesRegex(ValueError, \"scope\")"
+      ],
+      "source_sha256": "98dcef64cef0563965cfacd4778432dc51eaa17e4f623d5625fb94bf746b9df4"
+    },
+    {
+      "file": "tests/test_research_prepare.py",
+      "line": 207,
+      "test": "test_activation_cannot_be_satisfied_by_unrelated_case",
+      "role": "preparation-integrity",
+      "run_when": "compiler isolation, assembly cache, activation and resource accounting",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertEqual(all_cases[\"gate\"], \"inactive\")",
+        "self.assertEqual(scoped[\"gate\"], \"pass\")"
+      ],
+      "source_sha256": "98dcef64cef0563965cfacd4778432dc51eaa17e4f623d5625fb94bf746b9df4"
+    },
+    {
+      "file": "tests/test_research_prepare.py",
+      "line": 226,
+      "test": "test_resource_bounds_are_advisory_except_architectural_impossibility",
+      "role": "preparation-integrity",
+      "run_when": "compiler isolation, assembly cache, activation and resource accounting",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertFalse(bound['architecturally_impossible'])",
+        "self.assertEqual(bound['blocks_per_sm_upper_bound'],4)",
+        "self.assertLess(bound['warp_occupancy_upper_bound'],1)",
+        "self.assertIn('Optimistic',bound['limitation'])",
+        "self.assertTrue(impossible['architecturally_impossible'])"
+      ],
+      "source_sha256": "98dcef64cef0563965cfacd4778432dc51eaa17e4f623d5625fb94bf746b9df4"
+    },
+    {
+      "file": "tests/test_research_verify.py",
+      "line": 18,
+      "test": "test_preparation_requires_explicit_compiler_and_uses_selected_root_for_cache",
+      "role": "verification-dispatch-integrity",
+      "run_when": "verification source preparation or all15 dispatch changes",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertEqual(stopped.exception.code,2)",
+        "self.assertFalse(root.exists())",
+        "self.assertEqual(prepare.call_args.args[0:2],(root,source))",
+        "self.assertEqual(prepare.call_args.args[3],root/'assembly-cache')",
+        "self.assertEqual(verify.main(),0)",
+        "self.assertRaises(SystemExit)"
+      ],
+      "source_sha256": "d411431ef9ce4660437ccc9a028e80ccd7afde361f652ed024df81acbda8f8be"
+    },
+    {
+      "file": "tests/test_research_verify.py",
+      "line": 34,
+      "test": "test_full_suite_is_dispatched_in_legal_batches_before_any_timing",
+      "role": "verification-dispatch-integrity",
+      "run_when": "verification source preparation or all15 dispatch changes",
+      "assessment": "Keep this infrastructure/oracle contract check when its owning tool changes. It is not a requirement for the compiler to preserve a floating-point instruction sequence.",
+      "assertions": [
+        "self.assertEqual([len(j['cases']) for j in jobs],[8,8,1])",
+        "self.assertEqual([c['id'] for j in jobs for c in j['cases']],[s['id'] for s in specs])",
+        "self.assertTrue(json.loads((root/'gpu/jobs/m02-sanitizer.result.json').read_text())['ok'])",
+        "self_test.assertLessEqual(len(job['cases']),8)",
+        "self_test.assertEqual(job['mode'],'correctness')",
+        "self.assertRaises(StopAfterGate)"
+      ],
+      "source_sha256": "d411431ef9ce4660437ccc9a028e80ccd7afde361f652ed024df81acbda8f8be"
+    }
+  ]
+}

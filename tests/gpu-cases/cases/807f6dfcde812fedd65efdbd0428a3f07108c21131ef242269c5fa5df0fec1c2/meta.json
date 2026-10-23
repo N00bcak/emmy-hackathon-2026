@@ -1,0 +1,1 @@
+{"atol":0,"graph_inputs":["x"],"graph_outputs":["out"],"kernels":[{"arg_order":["out","x"],"args":[{"dtype":"f32","name":"out","output":true,"shape":[14]},{"dtype":"f32","name":"x","shape":[106]}],"block":[32,1,1],"entry":"k","grid":[1,1,1],"node":"out","smem_bytes":0,"zero_outputs":["out"]}],"rtol":0}

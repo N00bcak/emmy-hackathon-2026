@@ -1,1059 +1,470 @@
 {
-  "version": "gpu-regression-compact-v5",
+  "version": "gpu-regression-tolerance-v6",
   "archive_cases": 1114,
-  "scope": "Required 15 published contracts, hidden-set behavior witnesses and existing marked-operator coverage. Archived stress tests remain explicitly selectable; no equivalence claim.",
+  "scope": "65-case routine gate: all15 published contracts and50 audited core witnesses. Targeted extensions, stress diagnostics and weak-oracle cases are retained outside the routine gate.",
   "assembly_targets": [
     "sm_89",
     "sm_120"
   ],
   "scope_manifest": {
-    "filename": "gpu-regression-scope.json",
-    "sha256": "092c9364ddb93e6808e513fdcb45d275e891467d0e5b16d4d2f3fc728f27c5c6"
+    "filename": "gpu-regression-scope-v6.json",
+    "sha256": "7154bb5f184c8a50da2d3f8c6f008b60b4fea0fc93c0c08e64ccba1ba391f50c"
   },
   "cases": [
     {
-      "family": "published",
       "id": "c10866af73f820553331b01c52e042e5d724c275a6f5fedd9348170ba75d382c",
-      "reason": "Mandatory published contract: a01_attention",
       "record_sha256": "69cc990f203967dc1e07cc47e74c5b68286071323302978231f693ca17525fda",
-      "selector": {
-        "family": "published",
-        "problem": "a01_attention"
-      },
-      "group": "required_gate"
+      "family": "published",
+      "group": "required_gate",
+      "reason": "Official independent-reference contract at its exact metadata tolerances; no alternate fixture or generated case replaces this required anchor."
     },
     {
-      "family": "published",
       "id": "69db4e7f597c41b0684fb30c3204e197cf56c8647d9a63dc0adb77f2a8a0d867",
-      "reason": "Mandatory published contract: a02_attention_128",
       "record_sha256": "ad022a979f7fac227b161d76c884ac86e281b5b70a4f02fa75e6db409248a2e1",
-      "selector": {
-        "family": "published",
-        "problem": "a02_attention_128"
-      },
-      "group": "required_gate"
+      "family": "published",
+      "group": "required_gate",
+      "reason": "Official independent-reference contract at its exact metadata tolerances; no alternate fixture or generated case replaces this required anchor."
     },
     {
-      "family": "published",
       "id": "6ab09ab4acc384ee252370a564a13965ece1ad21a3e64d6615f0de1a39b8c665",
-      "reason": "Mandatory published contract: f01_rmsnorm",
       "record_sha256": "91643c7fb9324b8eec21ed8852d08f6ce9c1a909f959b28094dae4ed30d76e3d",
-      "selector": {
-        "family": "published",
-        "problem": "f01_rmsnorm"
-      },
-      "group": "required_gate"
+      "family": "published",
+      "group": "required_gate",
+      "reason": "Official independent-reference contract at its exact metadata tolerances; no alternate fixture or generated case replaces this required anchor."
     },
     {
-      "family": "published",
       "id": "89d56c168a0b04373ef8d50096c48534c70019b8d2f87371b79aee2289922b44",
-      "reason": "Mandatory published contract: f02_row_softmax",
       "record_sha256": "049f98f03fa6b5b0c82db9b27a4e3c9c1841a85f6dac78e883f40b978c76c1de",
-      "selector": {
-        "family": "published",
-        "problem": "f02_row_softmax"
-      },
-      "group": "required_gate"
+      "family": "published",
+      "group": "required_gate",
+      "reason": "Official independent-reference contract at its exact metadata tolerances; no alternate fixture or generated case replaces this required anchor."
     },
     {
-      "family": "published",
       "id": "1e82d7e58a53e8795ea9d05e3759dfe201e42308efd08dd2a51e79c769dc2fbc",
-      "reason": "Mandatory published contract: f03_l2norm",
       "record_sha256": "6ce1e6b09507a2ea4e765299324ee1b5a317e78ed7d61f3e19e4a551b8e5e231",
-      "selector": {
-        "family": "published",
-        "problem": "f03_l2norm"
-      },
-      "group": "required_gate"
+      "family": "published",
+      "group": "required_gate",
+      "reason": "Official independent-reference contract at its exact metadata tolerances; no alternate fixture or generated case replaces this required anchor."
     },
     {
-      "family": "published",
       "id": "cd9a29496fccd9e421c1cfbe14347cb45003f38681e3b4b2e703f5dbbfdd6c5d",
-      "reason": "Mandatory published contract: m01_matmul_512",
       "record_sha256": "50e49946742716ef185734511f536150042ed9c191487d8b48f6e1701f352412",
-      "selector": {
-        "family": "published",
-        "problem": "m01_matmul_512"
-      },
-      "group": "required_gate"
+      "family": "published",
+      "group": "required_gate",
+      "reason": "Official independent-reference contract at its exact metadata tolerances; no alternate fixture or generated case replaces this required anchor."
     },
     {
-      "family": "published",
       "id": "aeb1568894b7afb50ea0b1b6c6fe94b57419452643ec87c5c6561f9ebfc58bbe",
-      "reason": "Mandatory published contract: m02_matmul_rect",
       "record_sha256": "30691e128dca5b8add6d4d4702d9787459e794139c20394111c6035dfe8437fb",
-      "selector": {
-        "family": "published",
-        "problem": "m02_matmul_rect"
-      },
-      "group": "required_gate"
+      "family": "published",
+      "group": "required_gate",
+      "reason": "Official independent-reference contract at its exact metadata tolerances; no alternate fixture or generated case replaces this required anchor."
     },
     {
-      "family": "published",
       "id": "4035b0c010105ed7be8aa1a889fe2754d498fc4a27c1719bf547ddad66e48403",
-      "reason": "Mandatory published contract: p00_scalar_add",
       "record_sha256": "78c6a2213670fb1c81009ab9a778708b4db46a5a6e086e0309bc249306b64e31",
-      "selector": {
-        "family": "published",
-        "problem": "p00_scalar_add"
-      },
-      "group": "required_gate"
+      "family": "published",
+      "group": "required_gate",
+      "reason": "Official independent-reference contract at its exact metadata tolerances; no alternate fixture or generated case replaces this required anchor."
     },
     {
-      "family": "published",
       "id": "5e973341ada3e33f701293be5a3e6195badb7290a5471f4c6cefa86634d1b168",
-      "reason": "Mandatory published contract: p01_vector_add",
       "record_sha256": "23af35aed28597136dc4b543d220f48ad4add898c851502ac4950bb10b966bd2",
-      "selector": {
-        "family": "published",
-        "problem": "p01_vector_add"
-      },
-      "group": "required_gate"
+      "family": "published",
+      "group": "required_gate",
+      "reason": "Official independent-reference contract at its exact metadata tolerances; no alternate fixture or generated case replaces this required anchor."
     },
     {
-      "family": "published",
       "id": "3145aa57f753f64551cd4b83c3d430e6e2375a9feb4819accbfd5e55c39da560",
-      "reason": "Mandatory published contract: p02_scale_shift",
       "record_sha256": "df5c0cb7b89127ca3837d6ff71da783ff5de269f504a9767795e110df2990a5d",
-      "selector": {
-        "family": "published",
-        "problem": "p02_scale_shift"
-      },
-      "group": "required_gate"
+      "family": "published",
+      "group": "required_gate",
+      "reason": "Official independent-reference contract at its exact metadata tolerances; no alternate fixture or generated case replaces this required anchor."
     },
     {
-      "family": "published",
       "id": "aeeffce3a36b8cf1b27173b8c1644fc517a24d992173e06bb1664784b009b6ba",
-      "reason": "Mandatory published contract: p03_relu_mul",
       "record_sha256": "e8cbd226fde1e424003bf7f85d39b8bcaa959994d6749a899cae2c69fb28c925",
-      "selector": {
-        "family": "published",
-        "problem": "p03_relu_mul"
-      },
-      "group": "required_gate"
+      "family": "published",
+      "group": "required_gate",
+      "reason": "Official independent-reference contract at its exact metadata tolerances; no alternate fixture or generated case replaces this required anchor."
     },
     {
-      "family": "published",
       "id": "2ffefe7fee88d864b3ac97cd70fe9711643f3551fba367299df52f329649154d",
-      "reason": "Mandatory published contract: r01_array_sum",
       "record_sha256": "bf7817cc5372bcd3d8b8efb7b7ece048d9e52d633e290cefd828066e67790c43",
-      "selector": {
-        "family": "published",
-        "problem": "r01_array_sum"
-      },
-      "group": "required_gate"
+      "family": "published",
+      "group": "required_gate",
+      "reason": "Official independent-reference contract at its exact metadata tolerances; no alternate fixture or generated case replaces this required anchor."
     },
     {
-      "family": "published",
       "id": "a56bdb784a46a763c2b633ebb5d16ee1ffd4287cb0984168b4f80909c323ce22",
-      "reason": "Mandatory published contract: r02_big_sum",
       "record_sha256": "e8c57ea9df86f24ffa2654eb95b1b96f2aa7884447a75a3c30efe8ac5e368b36",
-      "selector": {
-        "family": "published",
-        "problem": "r02_big_sum"
-      },
-      "group": "required_gate"
+      "family": "published",
+      "group": "required_gate",
+      "reason": "Official independent-reference contract at its exact metadata tolerances; no alternate fixture or generated case replaces this required anchor."
     },
     {
-      "family": "published",
       "id": "6dfbe2bc925e2b31ceb8eb84bb5016cca8af143ca55cf93078d09decc26a0fd3",
-      "reason": "Mandatory published contract: r03_mean",
       "record_sha256": "019a315f2267177dd3d83f1b232ac0c5c3fb7dafa71142d1118e3827e2f1cf79",
-      "selector": {
-        "family": "published",
-        "problem": "r03_mean"
-      },
-      "group": "required_gate"
-    },
-    {
       "family": "published",
+      "group": "required_gate",
+      "reason": "Official independent-reference contract at its exact metadata tolerances; no alternate fixture or generated case replaces this required anchor."
+    },
+    {
       "id": "5c2ba872d36e6526a79b9799c059e237f65a34019cd94f1c85da4f0b9f930d3f",
-      "reason": "Mandatory published contract: r04_row_sum",
       "record_sha256": "bd45c67beb2990bfb9228955d330b5cd9efe8765286346ed4bc29ae7f3baa3fb",
-      "selector": {
-        "family": "published",
-        "problem": "r04_row_sum"
-      },
-      "group": "required_gate"
+      "family": "published",
+      "group": "required_gate",
+      "reason": "Official independent-reference contract at its exact metadata tolerances; no alternate fixture or generated case replaces this required anchor."
     },
     {
-      "family": "pointwise",
-      "id": "07247b475413b2486a6138901e9a05e886b2993ef6d21c963b2cc7bce52c3e0d",
-      "reason": "Full XYZ block/grid geometry combined with tail, scalar F32 ABI and math",
-      "record_sha256": "d5c6bc81bc7198d63cdda50f735bb1e64f4e7327134bfd4ba043c8484d676f40",
-      "selector": {
-        "scalar_dtype": "f32",
-        "version": "scalar-geometry-math-interactions-v1"
-      },
-      "group": "marked_operators"
-    },
-    {
-      "family": "pointwise",
-      "id": "c5940d93d7e94754b865cde5571eb2e6e91067518afb569e4f871284d5d3985f",
-      "reason": "Hardware Builtin values across full XYZ block/grid geometry",
-      "record_sha256": "e44c53d99765f0413f60d4b5978678e6dc9619a1996e9c59537c2934367b14f6",
-      "selector": {
-        "mode": "builtin",
-        "physical_block": [
-          16,
-          2,
-          2
-        ],
-        "version": "geometry-cartesian-v1"
-      },
-      "group": "marked_operators"
-    },
-    {
-      "family": "main-typed",
-      "id": "6cbcd2d465379c7f0d61cf88e1074f31e8296caefc4a85394212978d907873d5",
-      "reason": "Half global/shared transport and promoted arithmetic",
-      "record_sha256": "f52b3cd8083837136c8286c3a9a50a4de1229d220e0805200cc8aee35e560a5d",
-      "selector": {
-        "case": "f16_roundtrip",
-        "family": "main-typed"
-      },
-      "group": "hidden_set_coverage"
-    },
-    {
-      "family": "main-typed",
-      "id": "61098ba0cc34ea091b2a821816dec4f8743aa37dc010ee6b20a8c46722a48c4f",
-      "reason": "Native F64 arithmetic and storage",
-      "record_sha256": "11ee7b137ebe305117fb89f72c4aae5f583b5037cc1e414cb9ec928462d20ade",
-      "selector": {
-        "case": "f64_values",
-        "family": "main-typed"
-      },
-      "group": "hidden_set_coverage"
-    },
-    {
-      "family": "main-typed",
-      "id": "3403dbd465d8a05049feb992ea67d9ecf4de0fb1ef106c2bd71146e312b437fb",
-      "reason": "Bit-preserving reinterpretation through memory",
-      "record_sha256": "0ed62734cf33e1ff8b2f78e3ec1949476843856dc01843ca9f643fe884f6ad02",
-      "selector": {
-        "case": "bitcast_roundtrip",
-        "family": "main-typed"
-      },
-      "group": "hidden_set_coverage"
-    },
-    {
-      "family": "pointwise",
-      "id": "61376e724851b5c2da0888a4dd999d755ce44ae5e591390537922d6fe3d4220f",
-      "reason": "Native I32 FuncCall arithmetic preserves low bits above F32 exact range",
-      "record_sha256": "e088c175da270aa0bb981a8fbf8fecbf49bd1cfccbbe88f246c6dcac339b4e3a",
-      "selector": {
-        "mode": "global",
-        "op": "add",
-        "version": "funcall-native-i32-v1"
-      },
-      "group": "marked_operators"
-    },
-    {
-      "family": "pointwise",
       "id": "fae06ecf5a68131f772531ea344d7a9c6e1f07075d191720cf5c330930af9f96",
-      "reason": "Grouped mixed integer/predicate writes convert to F32 destinations",
       "record_sha256": "d6bed280247a7584e5b513b287d593d83ad6f6ade5c679c3483b00d214718c86",
-      "selector": {
-        "mode": "group_mixed4",
-        "version": "typed-values-f32-destination-v1"
-      },
-      "group": "hidden_set_coverage"
+      "family": "pointwise",
+      "group": "core",
+      "reason": "Grouped integer/predicate values written to F32 require conversion rather than storing carrier bits; ordinary mixed writes are not covered by plain F32 add anchors."
     },
     {
-      "family": "pointwise",
       "id": "dc8cc0e8d88e7d60dcdf702bacc8d91e2e1761c18e9040ffd9b34c90477315c5",
-      "reason": "F32 literal rounding with integer-valued float payload",
       "record_sha256": "22bc3b0233e82061f9a67f8f286bff8cb38ac0baa8d4a161e4aacf09962396dd",
-      "selector": {
-        "mode": "float_literal_rounding",
-        "version": "scalar-predicate-literal-v1"
-      },
-      "group": "hidden_set_coverage"
+      "family": "pointwise",
+      "group": "core",
+      "reason": "An integer-valued floating literal must round as its declared F32 type; catches a wrong predicate/value independently of transcendental accuracy."
     },
     {
-      "family": "pointwise",
-      "id": "31e66c227e064fdcdfdbd607624fae8c845d5a1c7f07668e40759e9961c1435f",
-      "reason": "Natural logarithm in FuncCall expression",
-      "record_sha256": "19f1ab982ac011a21e1eea51d202aa259c4f2bb261b32da2da6ae1e7a7788e8a",
-      "selector": {
-        "mode": "log_call",
-        "version": "math-cast-flatindex-v1"
-      },
-      "group": "marked_operators"
-    },
-    {
-      "family": "pointwise",
       "id": "b3b9d4ccd080adb9d5a05ae938aec6089818bc50230ec5093d25c135097c90a1",
-      "reason": "Dynamic signed intermediate floor division/remainder addresses",
       "record_sha256": "ed2fd7f23d709be12c9107f4ee72286347367221334d67c58d972c1cb36690d9",
-      "selector": {
-        "parameters": {
-          "divisor": -1,
-          "dynamic": true,
-          "multiplier": 1,
-          "n": 31,
-          "op": "//",
-          "seed": 7674677781671106564,
-          "shift": 11
-        },
-        "version": "signed-index-fresh-v2"
-      },
-      "group": "hidden_set_coverage"
+      "family": "pointwise",
+      "group": "core",
+      "reason": "Negative intermediate division/remainder affects addresses, where approximation is invalid; differs from nonnegative constant stride indexing in anchors."
     },
     {
-      "family": "pointwise",
       "id": "b24c76efd4ba9fd8763e69cfd1e0926f876281a2a06fd64c8dc9e882b9a33aed",
-      "reason": "Unaligned vector-width-four transport and tail fallback",
       "record_sha256": "91a28a3dbc70fba5faf227eea61850f4c8bc5ee8a65e3da94cae78fee44f84ef",
-      "selector": {
-        "shape": [
-          65,
-          4
-        ],
-        "version": "vector-offset-v1",
-        "width": 4,
-        "x_offset": 1,
-        "y_offset": 2
-      },
-      "group": "hidden_set_coverage"
+      "family": "pointwise",
+      "group": "core",
+      "reason": "Width-four loads have offsets 1 and 2 plus an odd row count; tests legal scalar fallback instead of assuming aligned vectors."
     },
     {
-      "family": "merge-expression-cse",
-      "id": "f188ef762959e2f777587b9dbfb60421c6765cfd5412b37516c4b7113e7ff42a",
-      "reason": "Expression cache distinguishes cast children",
-      "record_sha256": "edb4ec85dabb901f6c474318099d4d736bf3485f81388734fcb1dcff2b0965a9",
-      "selector": {
-        "family": "merge-expression-cse",
-        "kind": "cast"
-      },
-      "group": "marked_operators"
-    },
-    {
-      "family": "merge-expression-cse",
-      "id": "0e80b09925f0f9637cdef513d58020e8dbd3fe023ee87c0372fbc01393d37f7e",
-      "reason": "Expression cache distinguishes funcall children",
-      "record_sha256": "32b83af143afd61c357274da0ba14b72f00ff27e458e5afd2396002063c1130a",
-      "selector": {
-        "family": "merge-expression-cse",
-        "kind": "funcall"
-      },
-      "group": "marked_operators"
-    },
-    {
-      "family": "merge-expression-cse",
-      "id": "bd8a59fd719b12c89bb2bef8b221fb1c007d5ade73a552c1d35f9a055886d363",
-      "reason": "Expression cache distinguishes flatindex children",
-      "record_sha256": "3be016faa07ae8ed5f602deaf6a3f268886aab652677fa44bd4d63a694e248d5",
-      "selector": {
-        "family": "merge-expression-cse",
-        "kind": "flatindex"
-      },
-      "group": "marked_operators"
-    },
-    {
-      "family": "merge-expression-cse",
-      "id": "3e9203274f6927cb955cf2e8d0af2e7e870ace628d9a26e6b356409a4e032631",
-      "reason": "Expression cache distinguishes builtin children",
-      "record_sha256": "db271d310c563435426b6c85008b6f6eae7ae61f772f4fa3259239476b30e1f0",
-      "selector": {
-        "family": "merge-expression-cse",
-        "kind": "builtin"
-      },
-      "group": "marked_operators"
-    },
-    {
-      "family": "merge-tile-scope-cse",
       "id": "068fb6cb67fb91185ea4063ac15b15ae1ea8b0ebeb9a05d6fef2e777f31f2348",
-      "reason": "Tile lexical scope: nested-restore",
       "record_sha256": "bc0d3d846311cd7547de56a11082ead47887788730631da06cefe5bdcfdc3933",
-      "selector": {
-        "family": "merge-tile-scope-cse",
-        "mode": "nested-restore"
-      },
-      "group": "hidden_set_coverage"
+      "family": "merge-tile-scope-cse",
+      "group": "core",
+      "reason": "Small integer-valued F32 transport observes the outer binding after a nested Tile. Exact data movement is not an arithmetic precision restriction."
     },
     {
-      "family": "merge-tile-scope-cse",
       "id": "1f9428cef0a7750c55fec497401857955bd037aed43ab72a1abf26627ef390af",
-      "reason": "Tile lexical scope: loop-axis-shadow",
       "record_sha256": "a36d0d631113b5811c2a09fa15b2a9d4cfb158a59434c9984d9482494d2d923d",
-      "selector": {
-        "family": "merge-tile-scope-cse",
-        "mode": "loop-axis-shadow"
-      },
-      "group": "hidden_set_coverage"
-    },
-    {
       "family": "merge-tile-scope-cse",
+      "group": "core",
+      "reason": "An inner loop axis shadows a Tile axis; subsequent addressing must restore the proper owner. A different lexical entry/exit from nested-Tile-only case30."
+    },
+    {
       "id": "807f6dfcde812fedd65efdbd0428a3f07108c21131ef242269c5fa5df0fec1c2",
-      "reason": "Tile lexical scope: nested-unequal-guard",
       "record_sha256": "a1fca0017c744015054cd1525cce8df30426b3ed61b2edb375da3d7c6f2847ff",
-      "selector": {
-        "family": "merge-tile-scope-cse",
-        "mode": "nested-unequal-guard"
-      },
-      "group": "hidden_set_coverage"
+      "family": "merge-tile-scope-cse",
+      "group": "core",
+      "reason": "Nested Tiles have unequal extents; each needs its own guard and continuation. Case30's restoration alone cannot establish correct masking."
     },
     {
-      "family": "reduction",
       "id": "fff293a2235c2158ffc525f848ce136c020fdfa506b79c147ccadd0a39931751",
-      "reason": "Inactive reduction lanes use multiply identity",
       "record_sha256": "7849d859ee9e7a4b0e5c332b118d3ab72bf0ceb20b404fc115c5016fd25da89d",
-      "selector": {
-        "explicit_seed": false,
-        "operation": "multiply",
-        "shape": [
-          127
-        ],
-        "version": "partial-reductions-primary-identities-v1"
-      },
-      "group": "hidden_set_coverage"
+      "family": "reduction",
+      "group": "core",
+      "reason": "Inactive lanes must contribute one to a product. Actual inputs are exactly representable unit values, so tolerance does not prohibit valid reassociation."
     },
     {
-      "family": "reduction",
       "id": "061d7084b7298d83ba14950823669b4734ed6cc3f9f51bd5ee830f10e18ee56a",
-      "reason": "Inactive reduction lanes use minimum identity",
       "record_sha256": "6e3f4b58851caef8cdf0c6ead0653df252230c70b22d9f874cddcde2813b987c",
-      "selector": {
-        "explicit_seed": false,
-        "operation": "minimum",
-        "shape": [
-          127
-        ],
-        "version": "partial-reductions-primary-identities-v1"
-      },
-      "group": "hidden_set_coverage"
+      "family": "reduction",
+      "group": "core",
+      "reason": "Inactive lanes must not contribute zero to a minimum over positive values; distinct operation from product/max."
     },
     {
-      "family": "reduction",
       "id": "da018f96fc2e54583814b7dc39cce909d332add031820662839c2706fccdc91d",
-      "reason": "Inactive reduction lanes use maximum identity",
       "record_sha256": "484bb38a6bc018d2e67f75130335a85625537bfe4415248875393435677fb78a",
-      "selector": {
-        "explicit_seed": false,
-        "operation": "maximum",
-        "shape": [
-          127
-        ],
-        "version": "partial-reductions-primary-identities-v1"
-      },
-      "group": "hidden_set_coverage"
-    },
-    {
-      "family": "merge-explicit-seed-extreme",
-      "id": "b5cc80a79e59c19edb2f07d14c0afe088a9c440310666187b50e20cd69c4397c",
-      "reason": "Explicit infinite minimum seed differs from finite default identity",
-      "record_sha256": "e7b2494f5c3bb1786d9794ae866d14426c423ea0be07304f15e4549db8c27a03",
-      "selector": {
-        "active": 3,
-        "family": "merge-explicit-seed-extreme",
-        "operation": "minimum"
-      },
-      "group": "hidden_set_coverage"
-    },
-    {
-      "family": "merge-explicit-seed-extreme",
-      "id": "943cbd88c1f4ca66ae34098886c73543341807db35df0d3289820b2be0ab4a74",
-      "reason": "Explicit infinite maximum seed differs from finite default identity",
-      "record_sha256": "cd07d73b828ff8354adf806bd5fc9f61c7ffb097b0f464c2fc0bb6c1ea489924",
-      "selector": {
-        "active": 3,
-        "family": "merge-explicit-seed-extreme",
-        "operation": "maximum"
-      },
-      "group": "hidden_set_coverage"
-    },
-    {
       "family": "reduction",
+      "group": "core",
+      "reason": "Inactive lanes must not contribute zero to a maximum over negative values; distinct sign/identity from minimum."
+    },
+    {
       "id": "2623ef7bdace949bb90f19ab8499a43d44db719441a3583870dbdf14d0c08172",
-      "reason": "Zero-trip loop preserves tree collective entry carrier",
       "record_sha256": "68df9f24ef649baa936205872a99622a4eefb362b2475536ca08b0480e815a61",
-      "selector": {
-        "kind": "tree",
-        "mode": "loop0",
-        "version": "collective-inplace-control-v1"
-      },
-      "group": "hidden_set_coverage"
+      "family": "reduction",
+      "group": "core",
+      "reason": "A skipped loop must preserve the entry value of a tree-reduction carrier; tree/shared behavior differs from warp-only case39."
     },
     {
-      "family": "reduction",
       "id": "48189071240806b192fd70230a1d4af9b7fce13e389c91f4c88a93a35c9388a9",
-      "reason": "Zero-trip loop preserves warp collective entry carrier",
       "record_sha256": "afb1dc25993c267d477a33131263e335d2600b1622497b409e47437266256ff1",
-      "selector": {
-        "kind": "warp",
-        "mode": "loop0",
-        "version": "collective-inplace-control-v1"
-      },
-      "group": "hidden_set_coverage"
+      "family": "reduction",
+      "group": "core",
+      "reason": "A skipped loop must preserve a warp-reduction carrier. Exact small integers make this a state-lifetime check rather than summation-order stress."
     },
     {
-      "family": "pointwise",
       "id": "5224818b2d26d5b73af6c783a756518a271351ca1a5529cbc0686f7e181387fa",
-      "reason": "Nested Init shadow restores enclosing carrier",
       "record_sha256": "b0d73be20bbcc4621dfde65e63ace8be93ca2e0a597542f6f6da91d6b78f5a4b",
-      "selector": {
-        "mode": "nested",
-        "version": "raw-kernel-init-shadow-v1"
-      },
-      "group": "hidden_set_coverage"
-    },
-    {
-      "family": "strided-live-step",
-      "id": "669f6890c8882493e5571cfcd0f2a0172bc9b729375ab98513331ac0d089e3a4",
-      "reason": "StridedLoop compound step re-evaluates live state after body",
-      "record_sha256": "3c7650ba6fd5bba72781b311168fdd59b1b360b0364c69f34e83d8b221fc7d34",
-      "selector": {
-        "family": "strided-live-step",
-        "initial": 1,
-        "mode": "compound"
-      },
-      "group": "marked_operators"
-    },
-    {
-      "family": "strided-live-step",
-      "id": "83fb961f7fc2aee057d579cd6309ef1cce9d1c66a0521d78c4c6978d50b289e5",
-      "reason": "StridedLoop header binding survives body Init shadow",
-      "record_sha256": "907c3fc1d84789bebc7906cc68cd777539508ec769bcdd65291da11ae6ee28c1",
-      "selector": {
-        "family": "strided-live-step",
-        "initial": 2,
-        "mode": "shadow-control"
-      },
-      "group": "marked_operators"
-    },
-    {
-      "family": "strided-end-snapshot",
-      "id": "8e6693eaac063e733279668d2476edb7ac5fad6f11b9a493541574512c7552b7",
-      "reason": "StridedLoop end snapshots live I32 subgroup carrier before iteration",
-      "record_sha256": "ab91f341fc614b66688b90ab8a8eeed04f309f457c9e06c5dcf9dd140b97aa4c",
-      "selector": {
-        "family": "strided-end-snapshot",
-        "mode": "live-end",
-        "n": 4,
-        "subgroup_width": 2
-      },
-      "group": "hidden_set_coverage"
-    },
-    {
       "family": "pointwise",
+      "group": "core",
+      "reason": "An inner Init must not replace an outer accumulator's binding. Small exact constants distinguish a scope error from rounding."
+    },
+    {
       "id": "cc0b21f91dca260efa45b680481e1ba9f39dcee329f149f6db678c8c8b9f97be",
-      "reason": "Dynamic masked 16-byte async copy, commit/wait and zero fill",
       "record_sha256": "0e641a62c74ce1ccd3f229b72b478fe56ac37993ecc8fbbe6e00e790bbbbd1e6",
-      "selector": {
-        "dynamic": true,
-        "nbytes": 16,
-        "version": "async-transport-diagnostic-v2"
-      },
-      "group": "hidden_set_coverage"
+      "family": "pointwise",
+      "group": "core",
+      "reason": "Dynamic shared addresses, masked 16-byte copies, zero fill and commit/wait ordering are a useful transport interaction not exercised by aligned full-tile copies alone."
     },
     {
-      "family": "matmul",
       "id": "72f1deeac451a01002043dead776384004b887cdcec9089a0bdfcc02923c022d",
-      "reason": "Shared contraction with conditional updates, vector alignment and tail",
       "record_sha256": "6c7d07575bb172e83c223521a223a96a1f5b1c5b7a6d52be002c2bb815b0e2be",
-      "selector": {
-        "shape": [
-          64,
-          32,
-          65
-        ],
-        "version": "shared-explicit-init-aligned-v2"
-      },
-      "group": "hidden_set_coverage"
+      "family": "matmul",
+      "group": "core",
+      "reason": "A 63-of-65 active K range with conditional updates and inherited seeds tests tile/tail legality at matmul tolerances, not serial bit identity."
     },
     {
-      "family": "attention",
-      "id": "9e1f76b1c9291d28133d85a85ae619cdd4d7ca52d54f649c3e7e9d925e54e0e8",
-      "reason": "Fused online attention chunked key tail",
-      "record_sha256": "730a967e0555dc7395f2cacdf84e4dd48f7cae916046ae3f7fdac39a6b2429f2",
-      "selector": {
-        "family": "attention",
-        "schedule": "fused-online-chunked-key-tail"
-      },
-      "group": "hidden_set_coverage"
-    },
-    {
-      "family": "softmax",
       "id": "0a50249d1218b576c10e21a7020336fa287d4d5d6bd7a39511aa2219aa070556",
-      "reason": "Cooperative online softmax loop spans more than one CTA-width column slice",
       "record_sha256": "3d47d0163e46eda0bf38b23ddc5bcbc67b0b1a1384bd8a7af478495832d1b412",
-      "selector": {
-        "family": "softmax",
-        "schedule": "cooperative-online-softmax",
-        "shape": [
-          5,
-          257
-        ]
-      },
-      "group": "hidden_set_coverage"
+      "family": "softmax",
+      "group": "core",
+      "reason": "Width257 crosses more than one cooperative column slice; bounded logits and published-like tolerances distinguish normalization/tail bugs without exact arithmetic."
     },
     {
-      "family": "reduction",
       "id": "e4ac354528a2ab697578716e36b5ac607df309f75252462e861b435ad2f5d7c5",
-      "reason": "Private launch ID survives a Tile axis named _gid; aligned subgroup and partial physical warp",
       "record_sha256": "ed9d1114c57014534dea96b982b3615ea254cec7dcd0b2e641882d1233213ccb",
-      "selector": {
-        "axisname": "_gid",
-        "block": 80,
-        "shape": [
-          3,
-          4
-        ],
-        "version": "post-freeze-subgroup-diagnostic-v1"
-      },
-      "group": "hidden_set_coverage"
+      "family": "reduction",
+      "group": "core",
+      "reason": "A logical axis named _gid and block80 expose physical/logical ID confusion plus a partial physical warp; different subgroup geometry from ordinary CTA128 anchors."
     },
     {
-      "family": "pointwise",
-      "id": "57e82125a796bb9080bee679a08f137d78367aa66643aca4080c92adc9932dfe",
-      "reason": "64-bit shift count width and signed high-bit behavior; other signedness/direction permutations are targeted expansion",
-      "record_sha256": "83de59ceda09a9e9dea7e79f8647256ac29a9c4a0440db71460e874df49bda19",
-      "selector": {
-        "version": "native64-shift-oracle-v1"
-      },
-      "group": "hidden_set_coverage"
-    },
-    {
-      "family": "pointwise",
       "id": "fa41b5e778718c3209536b85787001a3fce87f9cbc7f4b8288e18ffa0777fcc6",
-      "reason": "Load declaration lifetime: scalar-shadow",
       "record_sha256": "57e1c418e7a1bc465abdb7f8fc3eb04cafa1540b5f35a7a4b7ff87e2617292e1",
-      "selector": {
-        "mode": "scalar-shadow",
-        "version": "lexical-load-oracle-v1"
-      },
-      "group": "hidden_set_coverage"
+      "family": "pointwise",
+      "group": "core",
+      "reason": "A scalar Load declaration must not overwrite an outer value used by later indexing; exact integer transport isolates the lifetime defect."
     },
     {
-      "family": "pointwise",
       "id": "8a7db526571189e3b67c95f11a3294d910c6e10a53d58c33f0c9a97031e3a9b8",
-      "reason": "Load declaration lifetime: grouped-simultaneous",
       "record_sha256": "9f2ac98da3263af3a80dbceedd7979875a0e0cdf835a7b984c870b08030d3c71",
-      "selector": {
-        "mode": "grouped-simultaneous",
-        "version": "lexical-load-oracle-v1"
-      },
-      "group": "hidden_set_coverage"
+      "family": "pointwise",
+      "group": "core",
+      "reason": "A grouped Load's addresses/RHS values must be captured before any destination name is rebound; scalar-shadow alone does not test simultaneity."
     },
     {
-      "family": "pointwise",
       "id": "ee167cb896bcfad085da910c9c0eb88a93bf186403b908a2524fca7e8a4c5378",
-      "reason": "Nested Tile Init and inherited carried update use different lexical owners",
       "record_sha256": "59dcda695a4ad6e596c9503eee98b3097cb8b8e7576cd029395c60fe84f9bf57",
-      "selector": {
-        "version": "nested-tile-init-oracle-v1"
-      },
-      "group": "hidden_set_coverage"
-    },
-    {
       "family": "pointwise",
-      "id": "2c15db2e5679909cef087ecdd13de5ce6fb7cf56ae54b090f7a966d6dcb6a30e",
-      "reason": "Recursive binary cache keys decline opaque children",
-      "record_sha256": "29c5c360d5585cd590bb03729cd5d61e2bb048dce678b8f909f3f4b64d8c1f6b",
-      "selector": {
-        "type": "binary-opaque-child-cache-key",
-        "version": "opaque-child-address-oracle-v1"
-      },
-      "group": "marked_operators"
+      "group": "core",
+      "reason": "An inner declaration and an inherited accumulator update have different owners. Small exact arithmetic makes scope, not rounding, the acceptance condition."
     },
     {
-      "family": "pointwise",
-      "id": "7d586595132adb5191192231cef884f5daa56077f115b310c20d34f5b65b7c95",
-      "reason": "Recursive ternary cache keys decline opaque children",
-      "record_sha256": "4dffe8cce0db9625e2fe9fd91d427ebf824c81230ddef187b2ca17f8fbd5630b",
-      "selector": {
-        "type": "ternary-opaque-child-cache-key",
-        "version": "opaque-child-address-oracle-v1"
-      },
-      "group": "marked_operators"
-    },
-    {
-      "family": "pointwise",
-      "id": "a3637b82238835d8027901de0aee04a9d7df15e69ac12d965e1c9f490c209ef5",
-      "reason": "Combined Select lexical shadow and single-branch snapshot",
-      "record_sha256": "ffa12df6ef3352ab611b4fb8bb44a6e2c7cfcf8f5536d5fc368a0a8ae910425f",
-      "selector": {
-        "types": [
-          "Select-local-carrier-shadow",
-          "Select-single-branch-snapshot"
-        ]
-      },
-      "group": "marked_operators"
-    },
-    {
-      "family": "reduction",
       "id": "fb08b0884f3532cd8a601414cd6f2434f05b99602b99dfee396c8b73fc9643f4",
-      "reason": "Partial CTA nested uniform loop/StridedLoop collective participation",
       "record_sha256": "e048dcf5d61b96217f9ff4033e48f07a4f03e02dc0f0f5b9929d8c9a6c52a7a5",
-      "selector": {
-        "schedule": "nested-strided-loop",
-        "types": [
-          "partial-cta-finite-uniform-loop-barrier"
-        ]
-      },
-      "group": "marked_operators"
+      "family": "reduction",
+      "group": "core",
+      "reason": "A partially active CTA must execute finite uniform nested loops consistently around collectives; memory masking alone does not preserve barrier participation."
     },
     {
-      "family": "attention",
       "id": "d7be87bc0caabbc560a024cd044944f15da13f4085819fc40ebcba4940f64200",
-      "reason": "Optimized KEY child dot-fold declarations restore ancestor scores",
       "record_sha256": "7de5ac9cd02f74190ea9a73339446fc15af1fdc57434a9882027cbebd812fd3a",
-      "selector": {
-        "semantic_contract": "Two seeded child dot folds shadow ancestor scoreInit only inside KEYbody; KEY-own total folds export finalized sums, ancestor scores restored after KEYloop. Mathematical output combines two independent queries perrow, replicatedoverfullCTAcol lanes.",
-        "version": "nested-key-owned-score-scope-v1"
-      },
-      "group": "hidden_set_coverage"
+      "family": "attention",
+      "group": "core",
+      "reason": "Child dot folds reuse ancestor score names, while KEY-owned totals must escape. Small bounded integer operands keep reassociation/FMA free of rounding obstructions."
     },
     {
-      "family": "rmsnorm",
       "id": "09d6470c83d329ff46f9a20e9fee4ac3aebe60c50227116328113f9a20a888f0",
-      "reason": "Independent generated rmsnorm; preserve distinct generated lowering schedule",
       "record_sha256": "bbc26ef14ead9ae8c630d76691560b55af31957fe4ebaa6192ddb85764e8a57e",
-      "selector": {
-        "version": "emmy-research-cases-scalar-flatindex-v3"
-      },
-      "group": "hidden_set_coverage"
+      "family": "rmsnorm",
+      "group": "core",
+      "reason": "The generated one-row small reduction uses a different schedule from published rmsnorm. Published-like tolerances and ordinary inputs earn generic-path coverage."
     },
     {
-      "family": "l2norm",
       "id": "e8f4437dd934a945ab53494a64920d8c0145bacfe1a4df3dd4fcba6a08c4790d",
-      "reason": "Independent generated l2norm; preserve distinct generated lowering schedule",
       "record_sha256": "b4ca8f9d95341e23414e58c0bfbd7510fe8316f12bc65f3c9116ce308fffff06",
-      "selector": {
-        "version": "emmy-research-cases-scalar-flatindex-v3"
-      },
-      "group": "hidden_set_coverage"
+      "family": "l2norm",
+      "group": "core",
+      "reason": "Rows of length3 force short-row/tail behavior absent from published length512 normalization; ordinary inputs use the same style of output tolerance."
     },
     {
-      "family": "atomic_matmul",
       "id": "b0bb43becf74a1f513ddbfb8df76804664d52c90fbbc9104b45c889a6cdbabc5",
-      "reason": "Independent generated atomic_matmul; preserve distinct generated lowering schedule",
       "record_sha256": "011a3c8d5769e1830b86fd8933649c70e442fc6683fc44ccf65c984526f9e07d",
-      "selector": {
-        "version": "emmy-research-cases-scalar-flatindex-v3"
-      },
-      "group": "hidden_set_coverage"
+      "family": "atomic_matmul",
+      "group": "core",
+      "reason": "A thin dimension and K31 test a different atomic contraction geometry, resets and tail handling from the rectangular published fixture."
     },
     {
-      "family": "softmax",
       "id": "d7aa0ab891e7af29fab0846614d52d73add946c3a47a8872624bbec069c6bff3",
-      "reason": "Independent generated softmax; preserve distinct generated lowering schedule",
       "record_sha256": "8414b7b5b31f348cd70b3d721bb67c094685c80f3a189089051288b9eca7d7ae",
-      "selector": {
-        "version": "emmy-research-cases-scalar-flatindex-v3"
-      },
-      "group": "hidden_set_coverage"
-    },
-    {
-      "family": "attention",
-      "id": "9170e7b0641d3224fb2e365ef4bc9d87f45db4ffffe191b1544c0548f485001f",
-      "reason": "Independent generated attention; ordered three-kernel intermediate/ABI execution",
-      "record_sha256": "abe842972c7f688b601e8dd72d1c596d76784e2bf97c2051d153d709277a032b",
-      "selector": {
-        "version": "emmy-research-cases-scalar-flatindex-v3"
-      },
-      "group": "hidden_set_coverage"
-    },
-    {
-      "family": "pointwise",
-      "id": "0ae55875282f68e45972d28c44d9c31c0b3499e2227776855effb0b9b6595d4f",
-      "reason": "64-bit bitwise left-shift and u32 shift-count lowering; signed/unsigned left shift share shl.b64",
-      "record_sha256": "78b59ba8e36271bb4f0ecd339b3c0d4b063b79371d95d9a00dd61b998dfbb37b",
-      "selector": {
-        "version": "native64-shift-oracle-v1"
-      },
-      "group": "hidden_set_coverage"
-    },
-    {
-      "family": "pointwise",
-      "id": "cd76e69248753128806ede69cd08da03329d51a9db2948a7b0cf07cb01217721",
-      "reason": "Unsigned 64-bit logical right shift must not become signed shr.s64",
-      "record_sha256": "18a8d5fa7450d439263049882f36c972361f8adb9609de073a6b05bcb9e5b89b",
-      "selector": {
-        "version": "native64-shift-oracle-v1"
-      },
-      "group": "hidden_set_coverage"
-    },
-    {
-      "family": "reduction",
-      "id": "c37693f91a7210ccc513e699de5a289e2f2f909f83a7059ed6e386a2a263a25d",
-      "reason": "Async ring lifetime: canonical-tail",
-      "record_sha256": "1fbf1d278b5be9cdf8b910f2f04a28a4950e2bb3aeb3c1f2233f7858eaf98316",
-      "selector": {
-        "version": "async-ring-independent-sum-oracle-v1"
-      },
-      "group": "marked_operators"
-    },
-    {
-      "family": "reduction",
-      "id": "7bb9d9c27732924a02ca9869601a7af55fd6276ae6894ed00c3dbc7be5d84228",
-      "reason": "Async ring lifetime: short-ring",
-      "record_sha256": "6dfc1fd1fcbd5982432ace270e222c5d5b66c0911d58c73bbe42bd5737c2022a",
-      "selector": {
-        "version": "async-ring-independent-sum-oracle-v1"
-      },
-      "group": "marked_operators"
-    },
-    {
-      "family": "reduction",
-      "id": "21171f5ca6c366ded10c9865a3160437b8985dd0a89d83770c473c30f8b3e195",
-      "reason": "Async ring lifetime: nondivisible-counter",
-      "record_sha256": "03d96710baf5880ab2bba935ec5b6ecdd1e4ae7c625e1d49f65f9c9eb052c81f",
-      "selector": {
-        "version": "async-ring-independent-sum-oracle-v1"
-      },
-      "group": "marked_operators"
-    },
-    {
-      "family": "reduction",
-      "id": "a083ac93290653c119bae4512c057058495a50fa9d0528dc7ce6e3caff5c6065",
-      "reason": "Async ring lifetime: observable-padding",
-      "record_sha256": "022d4fd5508706fdc2bf2b5af76a95f45df681d09a3b6db659aa2c82849e8c52",
-      "selector": {
-        "version": "async-ring-independent-sum-oracle-v1"
-      },
-      "group": "marked_operators"
-    },
-    {
-      "family": "reduction",
-      "id": "b8c0079b7d4413a1880f4f91f7c435e2281f9b5c92861c7980388a4bd2882555",
-      "reason": "Async ring shorter than prefill lead; initial invalid prefill differs from extent == lead",
-      "record_sha256": "5b490e5b2e615435863e1c0562c3e4502d04f8523c72fdb3576725af2b4063f0",
-      "selector": {
-        "version": "async-ring-independent-sum-oracle-v1"
-      },
-      "group": "marked_operators"
-    },
-    {
-      "family": "matmul",
-      "id": "bfc4b7ce74bafe017db5d345724a8ab527509641a581e2a9906b74a5a3a73c0f",
-      "reason": "Shared pair serial dots extent 8: preserve alignment, explicit/implicit seed and tail boundary",
-      "record_sha256": "85932c8877515bd2c47dcac95f20afd5cc0c9e4eba858fbe1e262c7c65489051",
-      "selector": {
-        "version": "shared-pair-per-lane-serial-dot-v1"
-      },
-      "group": "hidden_set_coverage"
-    },
-    {
-      "family": "matmul",
-      "id": "0192aa8028246287221f7448e6c9dfec47cc2cfdfa3ec825d1c7ee28cec28c6a",
-      "reason": "Shared pair serial dots extent 9: preserve alignment, explicit/implicit seed and tail boundary",
-      "record_sha256": "b02b050911ec65f6fbc939d7ea71954c2bbb6bef0810b6269b760098d1c78f2c",
-      "selector": {
-        "version": "shared-pair-per-lane-serial-dot-v1"
-      },
-      "group": "hidden_set_coverage"
-    },
-    {
-      "family": "matmul",
-      "id": "6ac8c7773141710aafc9375e2ac493eada0dd20901b152f729d6255f79336317",
-      "reason": "Shared pair serial dots extent 12: preserve alignment, explicit/implicit seed and tail boundary",
-      "record_sha256": "d4b9613fb878d5ee8c356283737788828ba92dfab5e81494d75707e0c5f924f4",
-      "selector": {
-        "version": "shared-pair-per-lane-serial-dot-v1"
-      },
-      "group": "hidden_set_coverage"
-    },
-    {
-      "family": "matmul",
-      "id": "55256bcbea1510499cff61c4f643eb7de10964fca4a7d43dc9cb8eca5a323236",
-      "reason": "Shared pair serial dots extent 17: preserve alignment, explicit/implicit seed and tail boundary",
-      "record_sha256": "2f8f1a2f1881d8b854d0ff57ae2e9f068dd74c55bbffe17841f4c49092cd4c71",
-      "selector": {
-        "version": "shared-pair-per-lane-serial-dot-v1"
-      },
-      "group": "hidden_set_coverage"
-    },
-    {
-      "family": "pointwise",
-      "id": "6f6357065acf5b24d4be3132257111f2e40e8cc0cba48570e067276205551d25",
-      "reason": "Explicit F16 result with F32 operands computes before one rounding; native all-F16 control",
-      "record_sha256": "5e012979fc09188abd865ad5bf5dda4de7daf17e259a788a5e00b01f72d36383",
-      "selector": {
-        "version": "mixed-f16-result-compute-boundary-v1"
-      },
-      "group": "hidden_set_coverage"
-    },
-    {
-      "family": "attention",
-      "id": "8996904203776bc61d7da020bfba25d6b8df989336f7641ac753c3f80556a25e",
-      "reason": "fused-online-cooperative-coverage-v3: full-segment16; preserve seed, numerical domain and normalization dataflow",
-      "record_sha256": "4c2c8f0e2432521a11efd1af2d1cfc3e727ddfb76a9ef95925c18a28ae9fe4e3",
-      "selector": {
-        "version": "fused-online-cooperative-coverage-v3"
-      },
-      "group": "hidden_set_coverage"
-    },
-    {
-      "family": "attention",
-      "id": "bdd094ff243fd119a72e2e675ee682294887bced491b5131041c7f8ac744fdc3",
-      "reason": "fused-online-cooperative-coverage-v3: partial-fallback; preserve seed, numerical domain and normalization dataflow",
-      "record_sha256": "dc2a72fdc5c0c3e38b396ab1ca0a4aa5f3f8fcdf1e976acac05f9f0eb29003fc",
-      "selector": {
-        "version": "fused-online-cooperative-coverage-v3"
-      },
-      "group": "hidden_set_coverage"
-    },
-    {
-      "family": "attention",
-      "id": "44c6e344374056121b8a007268039a7d7823bf44aed0149ed4d96ddf9164d0c2",
-      "reason": "fused-online-cooperative-coverage-v4: full-segment16; preserve seed, numerical domain and normalization dataflow",
-      "record_sha256": "d65dee2224cade0fa124e514354f51dd3a98dc0573d85395968bde5aa06da45b",
-      "selector": {
-        "version": "fused-online-cooperative-coverage-v4"
-      },
-      "group": "hidden_set_coverage"
-    },
-    {
-      "family": "attention",
-      "id": "dd375967ea3896ace9e00ecb875af9b42a8cc2e0f22ca8525b29b556bbe04389",
-      "reason": "fused-online-cooperative-coverage-v5-full-tail: full-segment16; preserve seed, numerical domain and normalization dataflow",
-      "record_sha256": "31f5ac89288ad65ca87e712d25bff5af756d5977cd57160db88ba4ab20d9cafc",
-      "selector": {
-        "version": "fused-online-cooperative-coverage-v5-full-tail"
-      },
-      "group": "hidden_set_coverage"
-    },
-    {
-      "family": "attention",
-      "id": "c974ec730c3e361d5a62608aa954478a6cea10d6f9183d7f03bd9f45a6a125c8",
-      "reason": "distinct-query-normalization-partition-v7: full-segment16; preserve seed, numerical domain and normalization dataflow",
-      "record_sha256": "8b77dedd3f7c999fe0fbd9638012945aeb13ea3ba69ddeae906be4ad02930fb1",
-      "selector": {
-        "version": "distinct-query-normalization-partition-v7"
-      },
-      "group": "hidden_set_coverage"
-    },
-    {
-      "family": "attention",
-      "id": "aa23bbd00f94abe9dbc6694c46de82eb9301c84a543e450bb885fbd04814cfc9",
-      "reason": "fused-online-seeded-key-coefficients-v8: full-segment32; preserve seed, numerical domain and normalization dataflow",
-      "record_sha256": "d19c2bd2a3bec773824958f86b82d9a79fad352112e7b28da83b1537821a12cc",
-      "selector": {
-        "version": "fused-online-seeded-key-coefficients-v8"
-      },
-      "group": "hidden_set_coverage"
-    },
-    {
-      "family": "attention",
-      "id": "de25e54114aafebfaba9eafe00ae8d6e99c0c9899d8da73bdf1bf36b358a40db",
-      "reason": "fused-online-seeded-key-coefficients-v8: tail32; preserve seed, numerical domain and normalization dataflow",
-      "record_sha256": "bb300adb08c62e4716ff244b3b3506bda9db46b0c0ad7d7b537391ed85d73031",
-      "selector": {
-        "version": "fused-online-seeded-key-coefficients-v8"
-      },
-      "group": "hidden_set_coverage"
-    },
-    {
-      "family": "attention",
-      "id": "ef3488d3d03c4f7f3620186ff7372cca28aa9e0571f7b99093be9ef08570f98c",
-      "reason": "fused-online-seeded-key-coefficients-v8: partial-fallback; preserve seed, numerical domain and normalization dataflow",
-      "record_sha256": "0b5e7523e9b57853475073063e01edcfc0568c36a26e56486fbbaca473dfaebd",
-      "selector": {
-        "version": "fused-online-seeded-key-coefficients-v8"
-      },
-      "group": "hidden_set_coverage"
-    },
-    {
-      "family": "attention",
-      "id": "274cb67281df56837bc7b9c4acf1ab1f3c08fcdfc957790eb7e64d6140c8e2f4",
-      "reason": "duplicate-normalization-attention-v6: full-segment16; preserve seed, numerical domain and normalization dataflow",
-      "record_sha256": "2bb082fef029fb0855bc49f2ca393010e0a14eba2b2557d72f41787573dfe317",
-      "selector": {
-        "version": "duplicate-normalization-attention-v6"
-      },
-      "group": "hidden_set_coverage"
-    },
-    {
-      "family": "attention",
-      "id": "4c6c88581fe20f1735d190ca1889f979dc7f5341908067e2e8355062d25e8d74",
-      "reason": "Optimized KEY nested score scope at subgroup width8 as well as width16",
-      "record_sha256": "9fa478f27d276feeeadec54a8abce5016440620c69ad14b3b38c643b0204e981",
-      "selector": {
-        "version": "nested-key-owned-score-scope-v1"
-      },
-      "group": "hidden_set_coverage"
-    },
-    {
-      "family": "pointwise",
-      "id": "b412a7cb07b9335138462db316ccd81aa36c6f8dfbfa84ca9bdd2edd95793212",
-      "reason": "Nested seeded fold scope, multi-trip ordinary/strided bodies and seedFalse live updates; replaces single-trip witness",
-      "record_sha256": "02405def30a6f2dd3b67723c2a9ef20dcef6c5eb5571a4ae6efb4112be99a9c8",
-      "selector": {
-        "version": "nested-seeded-fold-lexical-scope-v1"
-      },
-      "group": "hidden_set_coverage"
-    },
-    {
       "family": "softmax",
-      "id": "5200ccc23b3176e293f0796e7a473f07aa6cdc78e120c4c8597d634fe018bbd4",
-      "reason": "Cooperative softmax single column slice vs existing 257-column multi-slice boundary",
-      "record_sha256": "ed57f8ff8faba1811137566af58bed3fe4186d1a349373f0f73161cff6b7f8b8",
-      "selector": {
-        "version": "emmy-research-cases-scalar-flatindex-v3"
-      },
-      "group": "hidden_set_coverage"
+      "group": "core",
+      "reason": "A serial width31 row exercises generic max/sum/normalization rather than only the cooperative online recognizer. Tolerance matches published softmax."
     },
     {
+      "id": "9170e7b0641d3224fb2e365ef4bc9d87f45db4ffffe191b1544c0548f485001f",
+      "record_sha256": "abe842972c7f688b601e8dd72d1c596d76784e2bf97c2051d153d709277a032b",
+      "family": "attention",
+      "group": "core",
+      "reason": "Three kernels require intermediate buffers, ordered launches and distinct positional ABIs. A single fused attention kernel cannot replace this coverage."
+    },
+    {
+      "id": "c37693f91a7210ccc513e699de5a289e2f2f909f83a7059ed6e386a2a263a25d",
+      "record_sha256": "1fbf1d278b5be9cdf8b910f2f04a28a4950e2bb3aeb3c1f2233f7858eaf98316",
       "family": "reduction",
-      "id": "cb0368cb52f2f0f055040645a451637f4b7972d40f5736d761c02b858258f8ca",
-      "reason": "Partial CTA direct uniform Loop barrier vs nested StridedLoop barrier entry",
-      "record_sha256": "e43f024837986c22ed51c71a4a164308f19470bfde575f16a29511036ff29a2e",
-      "selector": {
-        "version": "partial-uniform-shared-neighbor-oracle-v1"
-      },
-      "group": "marked_operators"
+      "group": "core",
+      "reason": "Lead2/slots3 with extent7 observes wraparound and dead final lookahead. Small integer-valued sums impose no realistic FP-order penalty."
     },
     {
+      "id": "7bb9d9c27732924a02ca9869601a7af55fd6276ae6894ed00c3dbc7be5d84228",
+      "record_sha256": "6dfc1fd1fcbd5982432ace270e222c5d5b66c0911d58c73bbe42bd5737c2022a",
       "family": "reduction",
-      "id": "1575656197e94c0eaf8603489abcab2416259e541c06c80ebcb11d75d2f81b4e",
-      "reason": "Four-slot/lead3 ring has an additional prefill stage; three-slot/lead2 IR is not its structural replacement",
-      "record_sha256": "0de45d10bcff8dee93567fc031d1b9459bf2b8b3eebe56c61bff1e5f6caff983",
-      "selector": {
-        "version": "async-ring-independent-sum-oracle-v1"
-      },
-      "group": "marked_operators"
+      "group": "core",
+      "reason": "Extent2 equals prefill lead2: the steady-state path disappears while initial stages remain live. Different boundary from extent1 and extent7."
     },
     {
-      "family": "pointwise",
-      "id": "7f86048eb7814d46ed97a1952e39716a6d5c03755faa1f977d954565686342dd",
-      "reason": "Unsigned left-shift typed program retained explicitly, avoiding reliance on common opcode reasoning",
-      "record_sha256": "cfcffec36889e1bb43ec49f1d5f26e5dc943b17ba24412c6de6b40fe42aa9026",
-      "selector": {
-        "version": "native64-shift-oracle-v1"
-      },
-      "group": "hidden_set_coverage"
+      "id": "21171f5ca6c366ded10c9865a3160437b8985dd0a89d83770c473c30f8b3e195",
+      "record_sha256": "03d96710baf5880ab2bba935ec5b6ecdd1e4ae7c625e1d49f65f9c9eb052c81f",
+      "family": "reduction",
+      "group": "core",
+      "reason": "Step2 with nondivisible bound tests logical iteration count versus raw axis extent in ring rotation and wait accounting."
     },
     {
-      "family": "pointwise",
-      "id": "06a6f12448fbb8fa89a986b27daaf213436aecfc3a82bba559eb3ba17e6b8e70",
-      "reason": "Independent scalar F32 add with partial Tile and generated ABI names",
-      "record_sha256": "6d49c9a8f266fda11dc1305300e81a775b150e7efb0e46920b5c2124d7320c86",
-      "selector": {
-        "version": "emmy-research-cases-scalar-flatindex-v3"
-      },
-      "group": "hidden_set_coverage"
+      "id": "a083ac93290653c119bae4512c057058495a50fa9d0528dc7ce6e3caff5c6065",
+      "record_sha256": "022d4fd5508706fdc2bf2b5af76a95f45df681d09a3b6db659aa2c82849e8c52",
+      "family": "reduction",
+      "group": "core",
+      "reason": "Padding is deliberately read later, so a compiler cannot delete a lookahead copy solely because its arithmetic iteration is dead; an effect/visibility check."
     },
     {
-      "family": "pointwise",
-      "id": "fe256034fe7c7c62265efd48a8f68916a616af576075f2b372d88752fcde592c",
-      "reason": "Independent grouped width2 F32 add with tail and cancellation input domain",
-      "record_sha256": "a8daaadeb86479ecc0ca0a6f85f8f4f3cf93b5bde7c95fffa40e59c5da089bfb",
-      "selector": {
-        "version": "emmy-research-cases-scalar-flatindex-v3"
-      },
-      "group": "hidden_set_coverage"
+      "id": "b8c0079b7d4413a1880f4f91f7c435e2281f9b5c92861c7980388a4bd2882555",
+      "record_sha256": "5b490e5b2e615435863e1c0562c3e4502d04f8523c72fdb3576725af2b4063f0",
+      "family": "reduction",
+      "group": "core",
+      "reason": "Extent1 is shorter than lead2 and must suppress invalid initial prefill, unlike extent2 where both prefill stages are valid."
     },
     {
+      "id": "0192aa8028246287221f7448e6c9dfec47cc2cfdfa3ec825d1c7ee28cec28c6a",
+      "record_sha256": "b02b050911ec65f6fbc939d7ea71954c2bbb6bef0810b6269b760098d1c78f2c",
       "family": "matmul",
-      "id": "cc1c8cef5b4d98b091c309d15df9d9e8d44699998053cd6685bd78d9d5ee815f",
-      "reason": "Standalone serial contraction program; ordered multi-kernel attention is not an identical graph",
-      "record_sha256": "a4e9e1a11dd8d310b96d4792d7327455c4375d9abb774bbfdc77a2aab5d446be",
-      "selector": {
-        "version": "emmy-research-cases-scalar-flatindex-v3"
-      },
-      "group": "hidden_set_coverage"
+      "group": "core",
+      "reason": "Extent9, inherited seeds -5/7 and small integer operands yield results up to36. Exactness is harmless for these actual values and catches seed/tail errors without forcing general serial rounding."
+    },
+    {
+      "id": "6ac8c7773141710aafc9375e2ac493eada0dd20901b152f729d6255f79336317",
+      "record_sha256": "d4b9613fb878d5ee8c356283737788828ba92dfab5e81494d75707e0c5f924f4",
+      "family": "matmul",
+      "group": "core",
+      "reason": "Row stride258 differs in alignment from128 and small operands remain exact. This earns a separate runtime/scalar-fallback check from71."
+    },
+    {
+      "id": "8996904203776bc61d7da020bfba25d6b8df989336f7641ac753c3f80556a25e",
+      "record_sha256": "4c2c8f0e2432521a11efd1af2d1cfc3e727ddfb76a9ef95925c18a28ae9fe4e3",
+      "family": "attention",
+      "group": "core",
+      "reason": "Bounded input, D16 and a complete key segment exercise cooperative score reuse at normal tolerances beyond published shapes."
+    },
+    {
+      "id": "bdd094ff243fd119a72e2e675ee682294887bced491b5131041c7f8ac744fdc3",
+      "record_sha256": "dc2a72fdc5c0c3e38b396ab1ca0a4aa5f3f8fcdf1e976acac05f9f0eb29003fc",
+      "family": "attention",
+      "group": "core",
+      "reason": "The19-by19 key/query shape with D7 exercises fallback and masked partial segments, unlike75's complete segment."
+    },
+    {
+      "id": "c974ec730c3e361d5a62608aa954478a6cea10d6f9183d7f03bd9f45a6a125c8",
+      "record_sha256": "8b77dedd3f7c999fe0fbd9638012945aeb13ea3ba69ddeae906be4ad02930fb1",
+      "family": "attention",
+      "group": "core",
+      "reason": "Two bounded queries must retain separate maxima/denominators. Reusing a normalization across distinct queries changes the function, not just rounding."
+    },
+    {
+      "id": "aa23bbd00f94abe9dbc6694c46de82eb9301c84a543e450bb885fbd04814cfc9",
+      "record_sha256": "d19c2bd2a3bec773824958f86b82d9a79fad352112e7b28da83b1537821a12cc",
+      "family": "attention",
+      "group": "core",
+      "reason": "Despite the cancellation label, actual q/kt magnitudes are below0.21. Non-unit seeded coefficients and width32 test recognition legality with an ordinary-domain error budget."
+    },
+    {
+      "id": "de25e54114aafebfaba9eafe00ae8d6e99c0c9899d8da73bdf1bf36b358a40db",
+      "record_sha256": "bb300adb08c62e4716ff244b3b3506bda9db46b0c0ad7d7b537391ed85d73031",
+      "family": "attention",
+      "group": "core",
+      "reason": "Keys65 cross a width32 boundary with non-unit coefficients. The original full32 witness80 cannot establish last-segment masking."
+    },
+    {
+      "id": "ef3488d3d03c4f7f3620186ff7372cca28aa9e0571f7b99093be9ef08570f98c",
+      "record_sha256": "0b5e7523e9b57853475073063e01edcfc0568c36a26e56486fbbaca473dfaebd",
+      "family": "attention",
+      "group": "core",
+      "reason": "Partial D7 geometry plus non-unit coefficients combines a fallback path with coefficient-sensitive semantics; standard-coefficient fallback76 is not its replacement."
+    },
+    {
+      "id": "274cb67281df56837bc7b9c4acf1ab1f3c08fcdfc957790eb7e64d6140c8e2f4",
+      "record_sha256": "2bb082fef029fb0855bc49f2ca393010e0a14eba2b2557d72f41787573dfe317",
+      "family": "attention",
+      "group": "core",
+      "reason": "Two actually equivalent normalization graphs should remain equivalent when values are reused; distinct-query case79 tests the opposite condition and does not replace this."
+    },
+    {
+      "id": "4c6c88581fe20f1735d190ca1889f979dc7f5341908067e2e8355062d25e8d74",
+      "record_sha256": "9fa478f27d276feeeadec54a8abce5016440620c69ad14b3b38c643b0204e981",
+      "family": "attention",
+      "group": "core",
+      "reason": "Same lifetime bug as57, but subgroup width8 selects a distinct lane grouping from width16. Small exact integer data do not constrain FP approximation."
+    },
+    {
+      "id": "b412a7cb07b9335138462db316ccd81aa36c6f8dfbfa84ca9bdd2edd95793212",
+      "record_sha256": "02405def30a6f2dd3b67723c2a9ef20dcef6c5eb5571a4ae6efb4112be99a9c8",
+      "family": "pointwise",
+      "group": "core",
+      "reason": "Multi-trip ordinary and strided loops distinguish local seeded declarations, exported current-loop folds and inherited updates. All actual expected values are small exact integers."
+    },
+    {
+      "id": "5200ccc23b3176e293f0796e7a473f07aa6cdc78e120c4c8597d634fe018bbd4",
+      "record_sha256": "ed57f8ff8faba1811137566af58bed3fe4186d1a349373f0f73161cff6b7f8b8",
+      "family": "softmax",
+      "group": "core",
+      "reason": "Width127 tests a masked single slice. The multi-slice257 case47 exercises different last-slice conditions and is not a dominance proof."
+    },
+    {
+      "id": "cb0368cb52f2f0f055040645a451637f4b7972d40f5736d761c02b858258f8ca",
+      "record_sha256": "e43f024837986c22ed51c71a4a164308f19470bfde575f16a29511036ff29a2e",
+      "family": "reduction",
+      "group": "core",
+      "reason": "Direct Loop and nested StridedLoop56 use different statement dispatch and barrier entry; preserve both code paths with small exact integer sums."
+    },
+    {
+      "id": "1575656197e94c0eaf8603489abcab2416259e541c06c80ebcb11d75d2f81b4e",
+      "record_sha256": "0de45d10bcff8dee93567fc031d1b9459bf2b8b3eebe56c61bff1e5f6caff983",
+      "family": "reduction",
+      "group": "core",
+      "reason": "Lead3/slots4 adds an initial publication/wait stage relative to lead2/slots3. This is an additional scheduling boundary, not just another seed."
+    },
+    {
+      "id": "06a6f12448fbb8fa89a986b27daaf213436aecfc3a82bba559eb3ba17e6b8e70",
+      "record_sha256": "6d49c9a8f266fda11dc1305300e81a775b150e7efb0e46920b5c2124d7320c86",
+      "family": "pointwise",
+      "group": "core",
+      "reason": "Width-one scalar adds over4099 values test the final element and partial Tile without the expression machinery in15 or grouped-vector path in91."
+    },
+    {
+      "id": "fe256034fe7c7c62265efd48a8f68916a616af576075f2b372d88752fcde592c",
+      "record_sha256": "a8daaadeb86479ecc0ca0a6f85f8f4f3cf93b5bde7c95fffa40e59c5da089bfb",
+      "family": "pointwise",
+      "group": "core",
+      "reason": "Grouped width2 add with2049 values has one leftover element; published aligned width2 and width4 row-oriented case25 do not exercise this boundary."
+    },
+    {
+      "id": "125c08ddf52d01a698050d20beee9b68d8529f763aa2144f36d26d44c579a4cc",
+      "record_sha256": "4f3eabd518f03c098428885252329b14f675833ae1ba883bde191b0eb7fb0f6b",
+      "family": "main-typed",
+      "group": "core",
+      "reason": "Collective scratch/right-hand names must restore outer values. Data and expected sums are small exact integers, so the256 wrong outputs are state corruption, not acceptable approximation."
+    },
+    {
+      "id": "d51e9f76fb9d8a7f9d379dc1bc0f3e08f29b8926d6472f41892b7f5cec63da4f",
+      "record_sha256": "09305b8365c067fac62e515b9b753d0b118a887068284585f4057b8e37443b7b",
+      "family": "main-typed",
+      "group": "core",
+      "reason": "Pure renaming of a logical axis to tid must preserve ordinary attention at its unchanged tolerance. It directly catches4095 wrong outputs in a currently optimized path, with no adversarial numeric data."
     }
   ]
 }

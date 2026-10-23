@@ -1,0 +1,155 @@
+{
+  "ok": true,
+  "batches": [
+    {
+      "batch_id": 0,
+      "membership": [
+        {
+          "id": "fb08b0884f3532cd8a601414cd6f2434f05b99602b99dfee396c8b73fc9643f4",
+          "variant": "main100-diagnostic"
+        }
+      ],
+      "quarantined": false,
+      "results": [
+        {
+          "id": "fb08b0884f3532cd8a601414cd6f2434f05b99602b99dfee396c8b73fc9643f4",
+          "variant": "main100-diagnostic",
+          "ok": true,
+          "checks": [
+            {
+              "repetition": 0,
+              "ok": true,
+              "buffers": {
+                "out_318872": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "x_318872": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                }
+              },
+              "outputs": {
+                "out_318872": {
+                  "ok": true,
+                  "elements": 191,
+                  "mismatched": 0,
+                  "max_abs_error": 0.0,
+                  "rtol": 0.0,
+                  "atol": 0.0
+                }
+              }
+            },
+            {
+              "repetition": 1,
+              "ok": true,
+              "buffers": {
+                "out_318872": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "x_318872": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                }
+              },
+              "outputs": {
+                "out_318872": {
+                  "ok": true,
+                  "elements": 191,
+                  "mismatched": 0,
+                  "max_abs_error": 0.0,
+                  "rtol": 0.0,
+                  "atol": 0.0
+                }
+              }
+            },
+            {
+              "repetition": 2,
+              "ok": true,
+              "buffers": {
+                "out_318872": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "x_318872": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                }
+              },
+              "outputs": {
+                "out_318872": {
+                  "ok": true,
+                  "elements": 191,
+                  "mismatched": 0,
+                  "max_abs_error": 0.0,
+                  "rtol": 0.0,
+                  "atol": 0.0
+                }
+              }
+            }
+          ],
+          "resources": [
+            {
+              "entry": "k_318872",
+              "dynamic_shared_bytes": 256,
+              "block_threads": 64,
+              "max_threads_per_block": 64,
+              "static_shared_bytes": 0,
+              "local_bytes": 0,
+              "registers": 23,
+              "max_active_blocks_per_sm": 24,
+              "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+            }
+          ],
+          "quarantined": false,
+          "trusted": true
+        }
+      ],
+      "wall_seconds": 0.0011133262887597084,
+      "requires_all_batchmates_isolated": false,
+      "isolated": true
+    }
+  ],
+  "launch_count": 3,
+  "width": 1,
+  "repetitions": 3,
+  "promotion_eligible": false,
+  "note": "Concurrent results are screening only; fresh isolated confirmation is mandatory.",
+  "mode": "correctness",
+  "device": {
+    "name": "NVIDIA GeForce RTX 4090",
+    "worker_pid": 1177365,
+    "context_identity": "1177365:912131520",
+    "driver_version": 13040,
+    "clock_rate_khz": 2520000,
+    "multiprocessors": 128,
+    "memory_clock_khz": 10501000,
+    "compute_major": 8,
+    "compute_minor": 9,
+    "uuid": "GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+    "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry."
+  },
+  "benchmark_qualified": false,
+  "qualification_note": "Raw diagnostics; benchmark validity requires evaluator-issued source/suite all-15 gates.",
+  "phase_seconds": {
+    "case_loading": 0.005116971675306559,
+    "cuda_initialization": 0.3200091002508998,
+    "execution_and_checks": 0.010472897905856371,
+    "total": 0.3355993600562215
+  },
+  "identities": [
+    {
+      "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/partial-uniform-oracle-validation-667788/nested-strided-loop/meta.json": "c7862d5c46fe4fb450ef8f494aa0aaaee454af92079c0c602e66290f56dd993a",
+      "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/partial-uniform-oracle-validation-667788/nested-strided-loop/expected.npz": "fd301a24173cf482982e8b4ac29291ed4962666578178e080d721075fa62d037",
+      "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/partial-uniform-oracle-validation-667788/nested-strided-loop/inputs.npz": "1b8b062514052f383cddd377b4caac1750b24e896373383f39bad1bc85f7ea37",
+      "/root/nfs/emmy/research/assembly-cache/ff96dfeec99c01af400dfa749eaca8a6d4e41c868c95ed08456cb41f27d1a496/module.cubin": "b29e4c9194f08b7c34d646ddeface55bb93d414be4f942a1ba0c42027560e949"
+    }
+  ]
+}

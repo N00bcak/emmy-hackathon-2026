@@ -1,0 +1,67 @@
+{
+  "atol": 0.002,
+  "graph_inputs": [
+    "x"
+  ],
+  "graph_outputs": [
+    "out"
+  ],
+  "id": "f16_roundtrip",
+  "kernels": [
+    {
+      "arg_order": [
+        "x",
+        "out",
+        "two",
+        "zero"
+      ],
+      "args": [
+        {
+          "dtype": "f16",
+          "name": "x",
+          "shape": [
+            16
+          ]
+        },
+        {
+          "dtype": "f16",
+          "name": "out",
+          "output": true,
+          "shape": [
+            16
+          ]
+        },
+        {
+          "dtype": "f16",
+          "name": "two",
+          "scalar": true,
+          "shape": [],
+          "value": 2.0
+        },
+        {
+          "dtype": "f16",
+          "name": "zero",
+          "scalar": true,
+          "shape": [],
+          "value": 0.0
+        }
+      ],
+      "block": [
+        16,
+        1,
+        1
+      ],
+      "entry": "k_f16",
+      "final": true,
+      "grid": [
+        1,
+        1,
+        1
+      ],
+      "node": "out",
+      "smem_bytes": 32,
+      "zero_outputs": []
+    }
+  ],
+  "rtol": 0.002
+}

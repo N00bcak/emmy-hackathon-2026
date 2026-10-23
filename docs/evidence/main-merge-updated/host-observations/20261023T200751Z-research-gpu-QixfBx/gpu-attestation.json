@@ -1,0 +1,14 @@
+{
+  "observed_no_contention": true,
+  "exit_code": 0,
+  "gpu_uuid": "GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+  "gpu_model": "NVIDIA GeForce RTX 4090",
+  "host_job_dir": "/root/nfs/emmy/measurements/20261023T200751Z-research-gpu-QixfBx",
+  "monitor": {
+    "observed": true,
+    "samples": 2,
+    "foreign": [],
+    "errors": []
+  },
+  "limitation": "Admission and periodic observations are not a reservation or proof of no transient overlap."
+}

@@ -1,3 +1,65 @@
+# Local retained state — 2026-10-24
+
+The routine gate is the audited 65-case policy in `tests/gpu-regression.json`
+(15 published and 50 core cases). The historical 93-case policy remains in
+`tests/gpu-regression-compact-v5.json`; fixtures and tolerances are unchanged.
+
+Retained compiler source identity:
+`e021a2d9d9547c09c7540f5f66ab571010bad2ea84fcea1484f5c9ddb874794e`.
+The [updated-main comparison](evidence/main-merge-updated/REPORT.md) records
+source-bound published gates, the earlier 100-case confirmation, per-case timing,
+and the rejected vector-reduction integration. These are historical evaluation
+receipts; adopting the 65-case selector does not create a fresh GPU receipt.
+The compiler fixes and supporting evidence are retained in the local repository.
+
+The local merge of fetched `origin/main` at `0914413` retains this compiler
+byte-for-byte. Its vector-reduction redistribution is excluded because the
+existing per-lane witness demonstrated changed output ownership; see the
+[legality review](evidence/main-merge-updated/vector-legality-review.json).
+The dynamic shared-memory addressing fix was already present. Incoming tests,
+documentation and historical hosted results are retained; their results describe
+their recorded source, not a new evaluation of this merge. Local merge checks:
+all 15 published IRs lower, 14 gate tests pass, and all 100 bundled cases verify
+with the expected 65 selected. No fresh assembly or GPU execution was performed.
+
+The synchronized handoff below describes an earlier source and is historical.
+Resolve current remote state from private runtime configuration and START.md
+before starting any further authorized research. No research is started by this
+local commit and merge.
+
+---
+
+# Authoritative synchronized handoff — 2026-10-23
+
+Local and remote compiler SHA:
+`12202ea108f615fffd9ab00b5dce985edb3cbe11ffad55042d3d9625b6a49354`.
+Remote retained source:
+`bb4a3a3e6477681afe6852121e52f0f43b217b7107b1927c5f0c3f17baa8531e`.
+
+Resolve the research root from private runtime configuration and read `START.md`.
+Its authoritative handoff is
+`campaigns/campaign-20261023-compiler-handoff-v1/HANDOFF.md`, with `SYNC.json`
+beside it. Canonical `regression-suites/current.json`, `retained/current.json`,
+all three retained compiler files and the plain synchronized workspace name the
+same source. The manifest supplies the exact source directory and selector.
+
+A newly reserved confirmation passed all 93 default cases plus the two existing
+underflow witnesses, with 20 sanitizer checks. No new cases were created.
+The owner synchronization used the retention API; its maintenance run is closed,
+no recorded GPU/preparation work remains, and discovery is off. Current-source
+RTX 5090 execution is still unverified. Historical official results belong to
+the old source. Local changes are uncommitted; no Git network actions occurred.
+
+The [synchronization receipt](evidence/remote-sync.json) records source, policy,
+confirmation, decision and handoff identities. Claude should begin from the
+current START.md, inspect control/state.json, then start a new bounded run only
+when the owner explicitly supplies the research goal. Do not resume the old
+campaign-20261022-6h-v1 handoff or the closed synchronization run.
+
+The prior handoffs below are historical.
+
+---
+
 # Current compiler handoff — selective exponential
 
 Workspace compiler SHA `12202ea108f615fffd9ab00b5dce985edb3cbe11ffad55042d3d9625b6a49354`.

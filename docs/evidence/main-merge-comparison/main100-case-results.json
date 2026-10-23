@@ -1,0 +1,2430 @@
+{
+  "source_id": "799c8e191ac7ab029f0b8201f97a8be351619b403d7f97a14be95af8cfc73b43",
+  "total": 100,
+  "passed": 53,
+  "compile_assembly_failed": 29,
+  "gpu_failed": 18,
+  "default93_passed": 50,
+  "host_attestation": {
+    "observed_no_contention": true,
+    "exit_code": 0,
+    "gpu_uuid": "GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+    "gpu_model": "NVIDIA GeForce RTX 4090",
+    "host_job_dir": "/root/nfs/emmy/measurements/20261023T195833Z-research-gpu-r0DBal",
+    "monitor": {
+      "observed": true,
+      "samples": 33,
+      "foreign": [],
+      "errors": []
+    },
+    "limitation": "Admission and periodic observations are not a reservation or proof of no transient overlap."
+  },
+  "scope": "Existing100 unchanged; published15 receipt e1600777d24f128c1815d61800513d96c43f60fc4881ac5160fc47aff98dffd8 plus56extra isolated3repetition checks;29preparation failures. No timing in diagnostic adapter.",
+  "rows": [
+    {
+      "id": "c10866af73f820553331b01c52e042e5d724c275a6f5fedd9348170ba75d382c",
+      "name": "a01_attention",
+      "family": "published",
+      "problem": "a01_attention",
+      "status": "pass",
+      "stage": "published-isolated-confirmation",
+      "preparation_error": null,
+      "diagnostic": null
+    },
+    {
+      "id": "69db4e7f597c41b0684fb30c3204e197cf56c8647d9a63dc0adb77f2a8a0d867",
+      "name": "a02_attention_128",
+      "family": "published",
+      "problem": "a02_attention_128",
+      "status": "pass",
+      "stage": "published-isolated-confirmation",
+      "preparation_error": null,
+      "diagnostic": null
+    },
+    {
+      "id": "6ab09ab4acc384ee252370a564a13965ece1ad21a3e64d6615f0de1a39b8c665",
+      "name": "f01_rmsnorm",
+      "family": "published",
+      "problem": "f01_rmsnorm",
+      "status": "pass",
+      "stage": "published-isolated-confirmation",
+      "preparation_error": null,
+      "diagnostic": null
+    },
+    {
+      "id": "89d56c168a0b04373ef8d50096c48534c70019b8d2f87371b79aee2289922b44",
+      "name": "f02_row_softmax",
+      "family": "published",
+      "problem": "f02_row_softmax",
+      "status": "pass",
+      "stage": "published-isolated-confirmation",
+      "preparation_error": null,
+      "diagnostic": null
+    },
+    {
+      "id": "1e82d7e58a53e8795ea9d05e3759dfe201e42308efd08dd2a51e79c769dc2fbc",
+      "name": "f03_l2norm",
+      "family": "published",
+      "problem": "f03_l2norm",
+      "status": "pass",
+      "stage": "published-isolated-confirmation",
+      "preparation_error": null,
+      "diagnostic": null
+    },
+    {
+      "id": "cd9a29496fccd9e421c1cfbe14347cb45003f38681e3b4b2e703f5dbbfdd6c5d",
+      "name": "m01_matmul_512",
+      "family": "published",
+      "problem": "m01_matmul_512",
+      "status": "pass",
+      "stage": "published-isolated-confirmation",
+      "preparation_error": null,
+      "diagnostic": null
+    },
+    {
+      "id": "aeb1568894b7afb50ea0b1b6c6fe94b57419452643ec87c5c6561f9ebfc58bbe",
+      "name": "m02_matmul_rect",
+      "family": "published",
+      "problem": "m02_matmul_rect",
+      "status": "pass",
+      "stage": "published-isolated-confirmation",
+      "preparation_error": null,
+      "diagnostic": null
+    },
+    {
+      "id": "4035b0c010105ed7be8aa1a889fe2754d498fc4a27c1719bf547ddad66e48403",
+      "name": "p00_scalar_add",
+      "family": "published",
+      "problem": "p00_scalar_add",
+      "status": "pass",
+      "stage": "published-isolated-confirmation",
+      "preparation_error": null,
+      "diagnostic": null
+    },
+    {
+      "id": "5e973341ada3e33f701293be5a3e6195badb7290a5471f4c6cefa86634d1b168",
+      "name": "p01_vector_add",
+      "family": "published",
+      "problem": "p01_vector_add",
+      "status": "pass",
+      "stage": "published-isolated-confirmation",
+      "preparation_error": null,
+      "diagnostic": null
+    },
+    {
+      "id": "3145aa57f753f64551cd4b83c3d430e6e2375a9feb4819accbfd5e55c39da560",
+      "name": "p02_scale_shift",
+      "family": "published",
+      "problem": "p02_scale_shift",
+      "status": "pass",
+      "stage": "published-isolated-confirmation",
+      "preparation_error": null,
+      "diagnostic": null
+    },
+    {
+      "id": "aeeffce3a36b8cf1b27173b8c1644fc517a24d992173e06bb1664784b009b6ba",
+      "name": "p03_relu_mul",
+      "family": "published",
+      "problem": "p03_relu_mul",
+      "status": "pass",
+      "stage": "published-isolated-confirmation",
+      "preparation_error": null,
+      "diagnostic": null
+    },
+    {
+      "id": "2ffefe7fee88d864b3ac97cd70fe9711643f3551fba367299df52f329649154d",
+      "name": "r01_array_sum",
+      "family": "published",
+      "problem": "r01_array_sum",
+      "status": "pass",
+      "stage": "published-isolated-confirmation",
+      "preparation_error": null,
+      "diagnostic": null
+    },
+    {
+      "id": "a56bdb784a46a763c2b633ebb5d16ee1ffd4287cb0984168b4f80909c323ce22",
+      "name": "r02_big_sum",
+      "family": "published",
+      "problem": "r02_big_sum",
+      "status": "pass",
+      "stage": "published-isolated-confirmation",
+      "preparation_error": null,
+      "diagnostic": null
+    },
+    {
+      "id": "6dfbe2bc925e2b31ceb8eb84bb5016cca8af143ca55cf93078d09decc26a0fd3",
+      "name": "r03_mean",
+      "family": "published",
+      "problem": "r03_mean",
+      "status": "pass",
+      "stage": "published-isolated-confirmation",
+      "preparation_error": null,
+      "diagnostic": null
+    },
+    {
+      "id": "5c2ba872d36e6526a79b9799c059e237f65a34019cd94f1c85da4f0b9f930d3f",
+      "name": "r04_row_sum",
+      "family": "published",
+      "problem": "r04_row_sum",
+      "status": "pass",
+      "stage": "published-isolated-confirmation",
+      "preparation_error": null,
+      "diagnostic": null
+    },
+    {
+      "id": "07247b475413b2486a6138901e9a05e886b2993ef6d21c963b2cc7bce52c3e0d",
+      "name": "case-1",
+      "family": "pointwise",
+      "problem": null,
+      "status": "failed",
+      "stage": "compile-or-assembly",
+      "preparation_error": "compiler rejected/invalid PTX (1): compile.py: NameError: name 'FlatIndex' is not defined\n",
+      "diagnostic": null
+    },
+    {
+      "id": "c5940d93d7e94754b865cde5571eb2e6e91067518afb569e4f871284d5d3985f",
+      "name": "case-5",
+      "family": "pointwise",
+      "problem": null,
+      "status": "failed",
+      "stage": "compile-or-assembly",
+      "preparation_error": "compiler rejected/invalid PTX (1): compile.py: Unsupported: Unsupported expression Builtin\n",
+      "diagnostic": null
+    },
+    {
+      "id": "6cbcd2d465379c7f0d61cf88e1074f31e8296caefc4a85394212978d907873d5",
+      "name": "case-02",
+      "family": "main-typed",
+      "problem": null,
+      "status": "pass",
+      "stage": "GPU-correctness-and-required-sanitizer",
+      "preparation_error": null,
+      "diagnostic": {
+        "correctness_ok": true,
+        "device": {
+          "clock_rate_khz": 2520000,
+          "compute_major": 8,
+          "compute_minor": 9,
+          "context_identity": "1171466:725381008",
+          "driver_version": 13040,
+          "memory_clock_khz": 10501000,
+          "multiprocessors": 128,
+          "name": "NVIDIA GeForce RTX 4090",
+          "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry.",
+          "uuid": "GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+          "worker_pid": 1171466
+        },
+        "host": "/root/nfs/emmy/measurements/20261023T195833Z-research-gpu-r0DBal",
+        "id": "6cbcd2d465379c7f0d61cf88e1074f31e8296caefc4a85394212978d907873d5",
+        "name": "case-02",
+        "sanitizer": null,
+        "status": "pass"
+      }
+    },
+    {
+      "id": "61098ba0cc34ea091b2a821816dec4f8743aa37dc010ee6b20a8c46722a48c4f",
+      "name": "case-03",
+      "family": "main-typed",
+      "problem": null,
+      "status": "pass",
+      "stage": "GPU-correctness-and-required-sanitizer",
+      "preparation_error": null,
+      "diagnostic": {
+        "correctness_ok": true,
+        "device": {
+          "clock_rate_khz": 2520000,
+          "compute_major": 8,
+          "compute_minor": 9,
+          "context_identity": "1171471:149155728",
+          "driver_version": 13040,
+          "memory_clock_khz": 10501000,
+          "multiprocessors": 128,
+          "name": "NVIDIA GeForce RTX 4090",
+          "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry.",
+          "uuid": "GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+          "worker_pid": 1171471
+        },
+        "host": "/root/nfs/emmy/measurements/20261023T195833Z-research-gpu-r0DBal",
+        "id": "61098ba0cc34ea091b2a821816dec4f8743aa37dc010ee6b20a8c46722a48c4f",
+        "name": "case-03",
+        "sanitizer": null,
+        "status": "pass"
+      }
+    },
+    {
+      "id": "3403dbd465d8a05049feb992ea67d9ecf4de0fb1ef106c2bd71146e312b437fb",
+      "name": "case-00",
+      "family": "main-typed",
+      "problem": null,
+      "status": "pass",
+      "stage": "GPU-correctness-and-required-sanitizer",
+      "preparation_error": null,
+      "diagnostic": {
+        "correctness_ok": true,
+        "device": {
+          "clock_rate_khz": 2520000,
+          "compute_major": 8,
+          "compute_minor": 9,
+          "context_identity": "1171476:1046019984",
+          "driver_version": 13040,
+          "memory_clock_khz": 10501000,
+          "multiprocessors": 128,
+          "name": "NVIDIA GeForce RTX 4090",
+          "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry.",
+          "uuid": "GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+          "worker_pid": 1171476
+        },
+        "host": "/root/nfs/emmy/measurements/20261023T195833Z-research-gpu-r0DBal",
+        "id": "3403dbd465d8a05049feb992ea67d9ecf4de0fb1ef106c2bd71146e312b437fb",
+        "name": "case-00",
+        "sanitizer": null,
+        "status": "pass"
+      }
+    },
+    {
+      "id": "61376e724851b5c2da0888a4dd999d755ce44ae5e591390537922d6fe3d4220f",
+      "name": "case-5",
+      "family": "pointwise",
+      "problem": null,
+      "status": "failed",
+      "stage": "compile-or-assembly",
+      "preparation_error": "compiler rejected/invalid PTX (1): compile.py: Unsupported: Unsupported expression FuncCallExpr\n",
+      "diagnostic": null
+    },
+    {
+      "id": "fae06ecf5a68131f772531ea344d7a9c6e1f07075d191720cf5c330930af9f96",
+      "name": "case-28",
+      "family": "pointwise",
+      "problem": null,
+      "status": "failed",
+      "stage": "compile-or-assembly",
+      "preparation_error": "compiler rejected/invalid PTX (1): compile.py: Unsupported: Unsupported scalar conversion pred -> f32\n",
+      "diagnostic": null
+    },
+    {
+      "id": "dc8cc0e8d88e7d60dcdf702bacc8d91e2e1761c18e9040ffd9b34c90477315c5",
+      "name": "case-16",
+      "family": "pointwise",
+      "problem": null,
+      "status": "failed",
+      "stage": "compile-or-assembly",
+      "preparation_error": "assembly/disassembly failed; diagnostics retained at /root/nfs/emmy/research/assembly-cache/.assembly-1x8hb3v_: assembly failed: ptxas /root/nfs/emmy/research/assembly-cache/.assembly-1x8hb3v_/kernel.ptx, line 54; error   : Rounding modifier required for instruction 'cvt'\nptxas fatal   : Ptx assembly aborted due to errors\n",
+      "diagnostic": null
+    },
+    {
+      "id": "31e66c227e064fdcdfdbd607624fae8c845d5a1c7f07668e40759e9961c1435f",
+      "name": "case-1",
+      "family": "pointwise",
+      "problem": null,
+      "status": "failed",
+      "stage": "compile-or-assembly",
+      "preparation_error": "compiler rejected/invalid PTX (1): compile.py: Unsupported: Unsupported expression FuncCallExpr\n",
+      "diagnostic": null
+    },
+    {
+      "id": "b3b9d4ccd080adb9d5a05ae938aec6089818bc50230ec5093d25c135097c90a1",
+      "name": "case-31",
+      "family": "pointwise",
+      "problem": null,
+      "status": "pass",
+      "stage": "GPU-correctness-and-required-sanitizer",
+      "preparation_error": null,
+      "diagnostic": {
+        "correctness_ok": true,
+        "device": {
+          "clock_rate_khz": 2520000,
+          "compute_major": 8,
+          "compute_minor": 9,
+          "context_identity": "1171481:58134416",
+          "driver_version": 13040,
+          "memory_clock_khz": 10501000,
+          "multiprocessors": 128,
+          "name": "NVIDIA GeForce RTX 4090",
+          "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry.",
+          "uuid": "GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+          "worker_pid": 1171481
+        },
+        "host": "/root/nfs/emmy/measurements/20261023T195833Z-research-gpu-r0DBal",
+        "id": "b3b9d4ccd080adb9d5a05ae938aec6089818bc50230ec5093d25c135097c90a1",
+        "name": "case-31",
+        "sanitizer": null,
+        "status": "pass"
+      }
+    },
+    {
+      "id": "b24c76efd4ba9fd8763e69cfd1e0926f876281a2a06fd64c8dc9e882b9a33aed",
+      "name": "case-4",
+      "family": "pointwise",
+      "problem": null,
+      "status": "pass",
+      "stage": "GPU-correctness-and-required-sanitizer",
+      "preparation_error": null,
+      "diagnostic": {
+        "correctness_ok": true,
+        "device": {
+          "clock_rate_khz": 2520000,
+          "compute_major": 8,
+          "compute_minor": 9,
+          "context_identity": "1171486:539643792",
+          "driver_version": 13040,
+          "memory_clock_khz": 10501000,
+          "multiprocessors": 128,
+          "name": "NVIDIA GeForce RTX 4090",
+          "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry.",
+          "uuid": "GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+          "worker_pid": 1171486
+        },
+        "host": "/root/nfs/emmy/measurements/20261023T195833Z-research-gpu-r0DBal",
+        "id": "b24c76efd4ba9fd8763e69cfd1e0926f876281a2a06fd64c8dc9e882b9a33aed",
+        "name": "case-4",
+        "sanitizer": {
+          "command": [
+            "compute-sanitizer",
+            "--tool",
+            "memcheck",
+            "--error-exitcode",
+            "99",
+            "/opt/emmy-venv/bin/python",
+            "-m",
+            "tools.research_gpu",
+            "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v3/main-merge-comparison/gpu/b24c76efd4ba9fd8763e69cfd1e0926f876281a2a06fd64c8dc9e882b9a33aed/sanitizer-job.json"
+          ],
+          "exit_code": 0,
+          "ok": true,
+          "timed_out": false
+        },
+        "status": "pass"
+      }
+    },
+    {
+      "id": "f188ef762959e2f777587b9dbfb60421c6765cfd5412b37516c4b7113e7ff42a",
+      "name": "case-14",
+      "family": "merge-expression-cse",
+      "problem": null,
+      "status": "failed",
+      "stage": "compile-or-assembly",
+      "preparation_error": "compiler rejected/invalid PTX (1): compile.py: Unsupported: Unsupported expression CastExpr\n",
+      "diagnostic": null
+    },
+    {
+      "id": "0e80b09925f0f9637cdef513d58020e8dbd3fe023ee87c0372fbc01393d37f7e",
+      "name": "case-15",
+      "family": "merge-expression-cse",
+      "problem": null,
+      "status": "failed",
+      "stage": "compile-or-assembly",
+      "preparation_error": "compiler rejected/invalid PTX (1): compile.py: Unsupported: Unsupported expression FuncCallExpr\n",
+      "diagnostic": null
+    },
+    {
+      "id": "bd8a59fd719b12c89bb2bef8b221fb1c007d5ade73a552c1d35f9a055886d363",
+      "name": "case-16",
+      "family": "merge-expression-cse",
+      "problem": null,
+      "status": "failed",
+      "stage": "compile-or-assembly",
+      "preparation_error": "compiler rejected/invalid PTX (1): compile.py: NameError: name 'FlatIndex' is not defined\n",
+      "diagnostic": null
+    },
+    {
+      "id": "3e9203274f6927cb955cf2e8d0af2e7e870ace628d9a26e6b356409a4e032631",
+      "name": "case-17",
+      "family": "merge-expression-cse",
+      "problem": null,
+      "status": "failed",
+      "stage": "compile-or-assembly",
+      "preparation_error": "compiler rejected/invalid PTX (1): compile.py: Unsupported: Unsupported expression Builtin\n",
+      "diagnostic": null
+    },
+    {
+      "id": "068fb6cb67fb91185ea4063ac15b15ae1ea8b0ebeb9a05d6fef2e777f31f2348",
+      "name": "04-nested-restore",
+      "family": "merge-tile-scope-cse",
+      "problem": null,
+      "status": "failed",
+      "stage": "GPU-correctness-and-required-sanitizer",
+      "preparation_error": null,
+      "diagnostic": {
+        "correctness_ok": false,
+        "device": {
+          "clock_rate_khz": 2520000,
+          "compute_major": 8,
+          "compute_minor": 9,
+          "context_identity": "1171573:776486800",
+          "driver_version": 13040,
+          "memory_clock_khz": 10501000,
+          "multiprocessors": 128,
+          "name": "NVIDIA GeForce RTX 4090",
+          "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry.",
+          "uuid": "GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+          "worker_pid": 1171573
+        },
+        "host": "/root/nfs/emmy/measurements/20261023T195833Z-research-gpu-r0DBal",
+        "id": "068fb6cb67fb91185ea4063ac15b15ae1ea8b0ebeb9a05d6fef2e777f31f2348",
+        "name": "04-nested-restore",
+        "sanitizer": {
+          "command": [
+            "compute-sanitizer",
+            "--tool",
+            "memcheck",
+            "--error-exitcode",
+            "99",
+            "/opt/emmy-venv/bin/python",
+            "-m",
+            "tools.research_gpu",
+            "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v3/main-merge-comparison/gpu/068fb6cb67fb91185ea4063ac15b15ae1ea8b0ebeb9a05d6fef2e777f31f2348/sanitizer-job.json"
+          ],
+          "exit_code": 1,
+          "ok": false,
+          "timed_out": false
+        },
+        "status": "failed"
+      }
+    },
+    {
+      "id": "1f9428cef0a7750c55fec497401857955bd037aed43ab72a1abf26627ef390af",
+      "name": "07-loop-axis-shadow",
+      "family": "merge-tile-scope-cse",
+      "problem": null,
+      "status": "failed",
+      "stage": "GPU-correctness-and-required-sanitizer",
+      "preparation_error": null,
+      "diagnostic": {
+        "correctness_ok": false,
+        "device": {
+          "clock_rate_khz": 2520000,
+          "compute_major": 8,
+          "compute_minor": 9,
+          "context_identity": "1171660:727678864",
+          "driver_version": 13040,
+          "memory_clock_khz": 10501000,
+          "multiprocessors": 128,
+          "name": "NVIDIA GeForce RTX 4090",
+          "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry.",
+          "uuid": "GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+          "worker_pid": 1171660
+        },
+        "host": "/root/nfs/emmy/measurements/20261023T195833Z-research-gpu-r0DBal",
+        "id": "1f9428cef0a7750c55fec497401857955bd037aed43ab72a1abf26627ef390af",
+        "name": "07-loop-axis-shadow",
+        "sanitizer": {
+          "command": [
+            "compute-sanitizer",
+            "--tool",
+            "memcheck",
+            "--error-exitcode",
+            "99",
+            "/opt/emmy-venv/bin/python",
+            "-m",
+            "tools.research_gpu",
+            "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v3/main-merge-comparison/gpu/1f9428cef0a7750c55fec497401857955bd037aed43ab72a1abf26627ef390af/sanitizer-job.json"
+          ],
+          "exit_code": 1,
+          "ok": false,
+          "timed_out": false
+        },
+        "status": "failed"
+      }
+    },
+    {
+      "id": "807f6dfcde812fedd65efdbd0428a3f07108c21131ef242269c5fa5df0fec1c2",
+      "name": "09-nested-unequal-guard",
+      "family": "merge-tile-scope-cse",
+      "problem": null,
+      "status": "failed",
+      "stage": "GPU-correctness-and-required-sanitizer",
+      "preparation_error": null,
+      "diagnostic": {
+        "correctness_ok": false,
+        "device": {
+          "clock_rate_khz": 2520000,
+          "compute_major": 8,
+          "compute_minor": 9,
+          "context_identity": "1171747:1081708432",
+          "driver_version": 13040,
+          "memory_clock_khz": 10501000,
+          "multiprocessors": 128,
+          "name": "NVIDIA GeForce RTX 4090",
+          "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry.",
+          "uuid": "GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+          "worker_pid": 1171747
+        },
+        "host": "/root/nfs/emmy/measurements/20261023T195833Z-research-gpu-r0DBal",
+        "id": "807f6dfcde812fedd65efdbd0428a3f07108c21131ef242269c5fa5df0fec1c2",
+        "name": "09-nested-unequal-guard",
+        "sanitizer": {
+          "command": [
+            "compute-sanitizer",
+            "--tool",
+            "memcheck",
+            "--error-exitcode",
+            "99",
+            "/opt/emmy-venv/bin/python",
+            "-m",
+            "tools.research_gpu",
+            "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v3/main-merge-comparison/gpu/807f6dfcde812fedd65efdbd0428a3f07108c21131ef242269c5fa5df0fec1c2/sanitizer-job.json"
+          ],
+          "exit_code": 1,
+          "ok": false,
+          "timed_out": false
+        },
+        "status": "failed"
+      }
+    },
+    {
+      "id": "fff293a2235c2158ffc525f848ce136c020fdfa506b79c147ccadd0a39931751",
+      "name": "case-14",
+      "family": "reduction",
+      "problem": null,
+      "status": "pass",
+      "stage": "GPU-correctness-and-required-sanitizer",
+      "preparation_error": null,
+      "diagnostic": {
+        "correctness_ok": true,
+        "device": {
+          "clock_rate_khz": 2520000,
+          "compute_major": 8,
+          "compute_minor": 9,
+          "context_identity": "1171834:320806816",
+          "driver_version": 13040,
+          "memory_clock_khz": 10501000,
+          "multiprocessors": 128,
+          "name": "NVIDIA GeForce RTX 4090",
+          "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry.",
+          "uuid": "GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+          "worker_pid": 1171834
+        },
+        "host": "/root/nfs/emmy/measurements/20261023T195833Z-research-gpu-r0DBal",
+        "id": "fff293a2235c2158ffc525f848ce136c020fdfa506b79c147ccadd0a39931751",
+        "name": "case-14",
+        "sanitizer": null,
+        "status": "pass"
+      }
+    },
+    {
+      "id": "061d7084b7298d83ba14950823669b4734ed6cc3f9f51bd5ee830f10e18ee56a",
+      "name": "case-30",
+      "family": "reduction",
+      "problem": null,
+      "status": "pass",
+      "stage": "GPU-correctness-and-required-sanitizer",
+      "preparation_error": null,
+      "diagnostic": {
+        "correctness_ok": true,
+        "device": {
+          "clock_rate_khz": 2520000,
+          "compute_major": 8,
+          "compute_minor": 9,
+          "context_identity": "1171845:418267024",
+          "driver_version": 13040,
+          "memory_clock_khz": 10501000,
+          "multiprocessors": 128,
+          "name": "NVIDIA GeForce RTX 4090",
+          "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry.",
+          "uuid": "GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+          "worker_pid": 1171845
+        },
+        "host": "/root/nfs/emmy/measurements/20261023T195833Z-research-gpu-r0DBal",
+        "id": "061d7084b7298d83ba14950823669b4734ed6cc3f9f51bd5ee830f10e18ee56a",
+        "name": "case-30",
+        "sanitizer": null,
+        "status": "pass"
+      }
+    },
+    {
+      "id": "da018f96fc2e54583814b7dc39cce909d332add031820662839c2706fccdc91d",
+      "name": "case-22",
+      "family": "reduction",
+      "problem": null,
+      "status": "pass",
+      "stage": "GPU-correctness-and-required-sanitizer",
+      "preparation_error": null,
+      "diagnostic": {
+        "correctness_ok": true,
+        "device": {
+          "clock_rate_khz": 2520000,
+          "compute_major": 8,
+          "compute_minor": 9,
+          "context_identity": "1171862:709668752",
+          "driver_version": 13040,
+          "memory_clock_khz": 10501000,
+          "multiprocessors": 128,
+          "name": "NVIDIA GeForce RTX 4090",
+          "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry.",
+          "uuid": "GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+          "worker_pid": 1171862
+        },
+        "host": "/root/nfs/emmy/measurements/20261023T195833Z-research-gpu-r0DBal",
+        "id": "da018f96fc2e54583814b7dc39cce909d332add031820662839c2706fccdc91d",
+        "name": "case-22",
+        "sanitizer": null,
+        "status": "pass"
+      }
+    },
+    {
+      "id": "b5cc80a79e59c19edb2f07d14c0afe088a9c440310666187b50e20cd69c4397c",
+      "name": "case-24",
+      "family": "merge-explicit-seed-extreme",
+      "problem": null,
+      "status": "failed",
+      "stage": "GPU-correctness-and-required-sanitizer",
+      "preparation_error": null,
+      "diagnostic": {
+        "correctness_ok": false,
+        "device": {
+          "clock_rate_khz": 2520000,
+          "compute_major": 8,
+          "compute_minor": 9,
+          "context_identity": "1171874:453046160",
+          "driver_version": 13040,
+          "memory_clock_khz": 10501000,
+          "multiprocessors": 128,
+          "name": "NVIDIA GeForce RTX 4090",
+          "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry.",
+          "uuid": "GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+          "worker_pid": 1171874
+        },
+        "host": "/root/nfs/emmy/measurements/20261023T195833Z-research-gpu-r0DBal",
+        "id": "b5cc80a79e59c19edb2f07d14c0afe088a9c440310666187b50e20cd69c4397c",
+        "name": "case-24",
+        "sanitizer": null,
+        "status": "failed"
+      }
+    },
+    {
+      "id": "943cbd88c1f4ca66ae34098886c73543341807db35df0d3289820b2be0ab4a74",
+      "name": "case-22",
+      "family": "merge-explicit-seed-extreme",
+      "problem": null,
+      "status": "failed",
+      "stage": "GPU-correctness-and-required-sanitizer",
+      "preparation_error": null,
+      "diagnostic": {
+        "correctness_ok": false,
+        "device": {
+          "clock_rate_khz": 2520000,
+          "compute_major": 8,
+          "compute_minor": 9,
+          "context_identity": "1171879:425549712",
+          "driver_version": 13040,
+          "memory_clock_khz": 10501000,
+          "multiprocessors": 128,
+          "name": "NVIDIA GeForce RTX 4090",
+          "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry.",
+          "uuid": "GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+          "worker_pid": 1171879
+        },
+        "host": "/root/nfs/emmy/measurements/20261023T195833Z-research-gpu-r0DBal",
+        "id": "943cbd88c1f4ca66ae34098886c73543341807db35df0d3289820b2be0ab4a74",
+        "name": "case-22",
+        "sanitizer": {
+          "command": [
+            "compute-sanitizer",
+            "--tool",
+            "memcheck",
+            "--error-exitcode",
+            "99",
+            "/opt/emmy-venv/bin/python",
+            "-m",
+            "tools.research_gpu",
+            "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v3/main-merge-comparison/gpu/943cbd88c1f4ca66ae34098886c73543341807db35df0d3289820b2be0ab4a74/sanitizer-job.json"
+          ],
+          "exit_code": 1,
+          "ok": false,
+          "timed_out": false
+        },
+        "status": "failed"
+      }
+    },
+    {
+      "id": "2623ef7bdace949bb90f19ab8499a43d44db719441a3583870dbdf14d0c08172",
+      "name": "case-5",
+      "family": "reduction",
+      "problem": null,
+      "status": "failed",
+      "stage": "GPU-correctness-and-required-sanitizer",
+      "preparation_error": null,
+      "diagnostic": {
+        "correctness_ok": false,
+        "device": {
+          "clock_rate_khz": 2520000,
+          "compute_major": 8,
+          "compute_minor": 9,
+          "context_identity": "1171966:756428688",
+          "driver_version": 13040,
+          "memory_clock_khz": 10501000,
+          "multiprocessors": 128,
+          "name": "NVIDIA GeForce RTX 4090",
+          "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry.",
+          "uuid": "GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+          "worker_pid": 1171966
+        },
+        "host": "/root/nfs/emmy/measurements/20261023T195833Z-research-gpu-r0DBal",
+        "id": "2623ef7bdace949bb90f19ab8499a43d44db719441a3583870dbdf14d0c08172",
+        "name": "case-5",
+        "sanitizer": {
+          "command": [
+            "compute-sanitizer",
+            "--tool",
+            "memcheck",
+            "--error-exitcode",
+            "99",
+            "/opt/emmy-venv/bin/python",
+            "-m",
+            "tools.research_gpu",
+            "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v3/main-merge-comparison/gpu/2623ef7bdace949bb90f19ab8499a43d44db719441a3583870dbdf14d0c08172/sanitizer-job.json"
+          ],
+          "exit_code": 1,
+          "ok": false,
+          "timed_out": false
+        },
+        "status": "failed"
+      }
+    },
+    {
+      "id": "48189071240806b192fd70230a1d4af9b7fce13e389c91f4c88a93a35c9388a9",
+      "name": "case-13",
+      "family": "reduction",
+      "problem": null,
+      "status": "failed",
+      "stage": "GPU-correctness-and-required-sanitizer",
+      "preparation_error": null,
+      "diagnostic": {
+        "correctness_ok": false,
+        "device": {
+          "clock_rate_khz": 2520000,
+          "compute_major": 8,
+          "compute_minor": 9,
+          "context_identity": "1172053:491503504",
+          "driver_version": 13040,
+          "memory_clock_khz": 10501000,
+          "multiprocessors": 128,
+          "name": "NVIDIA GeForce RTX 4090",
+          "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry.",
+          "uuid": "GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+          "worker_pid": 1172053
+        },
+        "host": "/root/nfs/emmy/measurements/20261023T195833Z-research-gpu-r0DBal",
+        "id": "48189071240806b192fd70230a1d4af9b7fce13e389c91f4c88a93a35c9388a9",
+        "name": "case-13",
+        "sanitizer": {
+          "command": [
+            "compute-sanitizer",
+            "--tool",
+            "memcheck",
+            "--error-exitcode",
+            "99",
+            "/opt/emmy-venv/bin/python",
+            "-m",
+            "tools.research_gpu",
+            "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v3/main-merge-comparison/gpu/48189071240806b192fd70230a1d4af9b7fce13e389c91f4c88a93a35c9388a9/sanitizer-job.json"
+          ],
+          "exit_code": 1,
+          "ok": false,
+          "timed_out": false
+        },
+        "status": "failed"
+      }
+    },
+    {
+      "id": "5224818b2d26d5b73af6c783a756518a271351ca1a5529cbc0686f7e181387fa",
+      "name": "case-8",
+      "family": "pointwise",
+      "problem": null,
+      "status": "pass",
+      "stage": "GPU-correctness-and-required-sanitizer",
+      "preparation_error": null,
+      "diagnostic": {
+        "correctness_ok": true,
+        "device": {
+          "clock_rate_khz": 2520000,
+          "compute_major": 8,
+          "compute_minor": 9,
+          "context_identity": "1172140:741994384",
+          "driver_version": 13040,
+          "memory_clock_khz": 10501000,
+          "multiprocessors": 128,
+          "name": "NVIDIA GeForce RTX 4090",
+          "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry.",
+          "uuid": "GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+          "worker_pid": 1172140
+        },
+        "host": "/root/nfs/emmy/measurements/20261023T195833Z-research-gpu-r0DBal",
+        "id": "5224818b2d26d5b73af6c783a756518a271351ca1a5529cbc0686f7e181387fa",
+        "name": "case-8",
+        "sanitizer": null,
+        "status": "pass"
+      }
+    },
+    {
+      "id": "669f6890c8882493e5571cfcd0f2a0172bc9b729375ab98513331ac0d089e3a4",
+      "name": "00-compound",
+      "family": "strided-live-step",
+      "problem": null,
+      "status": "failed",
+      "stage": "compile-or-assembly",
+      "preparation_error": "compiler rejected/invalid PTX (1): compile.py: Unsupported: Unsupported expression CastExpr\n",
+      "diagnostic": null
+    },
+    {
+      "id": "83fb961f7fc2aee057d579cd6309ef1cce9d1c66a0521d78c4c6978d50b289e5",
+      "name": "05-shadow-control",
+      "family": "strided-live-step",
+      "problem": null,
+      "status": "failed",
+      "stage": "compile-or-assembly",
+      "preparation_error": "compiler rejected/invalid PTX (1): compile.py: Unsupported: Unsupported expression CastExpr\n",
+      "diagnostic": null
+    },
+    {
+      "id": "8e6693eaac063e733279668d2476edb7ac5fad6f11b9a493541574512c7552b7",
+      "name": "00-live-end-width2",
+      "family": "strided-end-snapshot",
+      "problem": null,
+      "status": "failed",
+      "stage": "compile-or-assembly",
+      "preparation_error": "assembly/disassembly failed; diagnostics retained at /root/nfs/emmy/research/assembly-cache/.assembly-j7cawejj: assembly failed: ptxas /root/nfs/emmy/research/assembly-cache/.assembly-j7cawejj/kernel.ptx, line 54; error   : Rounding modifier required for instruction 'cvt'\nptxas /root/nfs/emmy/research/assembly-cache/.assembly-j7cawejj/kernel.ptx, line 68; error   : Rounding modifier required for instruction 'cvt'\nptxas fatal   : Ptx assembly aborted due to errors\n",
+      "diagnostic": null
+    },
+    {
+      "id": "cc0b21f91dca260efa45b680481e1ba9f39dcee329f149f6db678c8c8b9f97be",
+      "name": "case-92006",
+      "family": "pointwise",
+      "problem": null,
+      "status": "pass",
+      "stage": "GPU-correctness-and-required-sanitizer",
+      "preparation_error": null,
+      "diagnostic": {
+        "correctness_ok": true,
+        "device": {
+          "clock_rate_khz": 2520000,
+          "compute_major": 8,
+          "compute_minor": 9,
+          "context_identity": "1172145:529854352",
+          "driver_version": 13040,
+          "memory_clock_khz": 10501000,
+          "multiprocessors": 128,
+          "name": "NVIDIA GeForce RTX 4090",
+          "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry.",
+          "uuid": "GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+          "worker_pid": 1172145
+        },
+        "host": "/root/nfs/emmy/measurements/20261023T195833Z-research-gpu-r0DBal",
+        "id": "cc0b21f91dca260efa45b680481e1ba9f39dcee329f149f6db678c8c8b9f97be",
+        "name": "case-92006",
+        "sanitizer": {
+          "command": [
+            "compute-sanitizer",
+            "--tool",
+            "memcheck",
+            "--error-exitcode",
+            "99",
+            "/opt/emmy-venv/bin/python",
+            "-m",
+            "tools.research_gpu",
+            "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v3/main-merge-comparison/gpu/cc0b21f91dca260efa45b680481e1ba9f39dcee329f149f6db678c8c8b9f97be/sanitizer-job.json"
+          ],
+          "exit_code": 0,
+          "ok": true,
+          "timed_out": false
+        },
+        "status": "pass"
+      }
+    },
+    {
+      "id": "72f1deeac451a01002043dead776384004b887cdcec9089a0bdfcc02923c022d",
+      "name": "case-7",
+      "family": "matmul",
+      "problem": null,
+      "status": "pass",
+      "stage": "GPU-correctness-and-required-sanitizer",
+      "preparation_error": null,
+      "diagnostic": {
+        "correctness_ok": true,
+        "device": {
+          "clock_rate_khz": 2520000,
+          "compute_major": 8,
+          "compute_minor": 9,
+          "context_identity": "1172232:943177616",
+          "driver_version": 13040,
+          "memory_clock_khz": 10501000,
+          "multiprocessors": 128,
+          "name": "NVIDIA GeForce RTX 4090",
+          "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry.",
+          "uuid": "GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+          "worker_pid": 1172232
+        },
+        "host": "/root/nfs/emmy/measurements/20261023T195833Z-research-gpu-r0DBal",
+        "id": "72f1deeac451a01002043dead776384004b887cdcec9089a0bdfcc02923c022d",
+        "name": "case-7",
+        "sanitizer": {
+          "command": [
+            "compute-sanitizer",
+            "--tool",
+            "memcheck",
+            "--error-exitcode",
+            "99",
+            "/opt/emmy-venv/bin/python",
+            "-m",
+            "tools.research_gpu",
+            "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v3/main-merge-comparison/gpu/72f1deeac451a01002043dead776384004b887cdcec9089a0bdfcc02923c022d/sanitizer-job.json"
+          ],
+          "exit_code": 0,
+          "ok": true,
+          "timed_out": false
+        },
+        "status": "pass"
+      }
+    },
+    {
+      "id": "9e1f76b1c9291d28133d85a85ae619cdd4d7ca52d54f649c3e7e9d925e54e0e8",
+      "name": "case-644651300530683049",
+      "family": "attention",
+      "problem": null,
+      "status": "pass",
+      "stage": "GPU-correctness-and-required-sanitizer",
+      "preparation_error": null,
+      "diagnostic": {
+        "correctness_ok": true,
+        "device": {
+          "clock_rate_khz": 2520000,
+          "compute_major": 8,
+          "compute_minor": 9,
+          "context_identity": "1172319:712843152",
+          "driver_version": 13040,
+          "memory_clock_khz": 10501000,
+          "multiprocessors": 128,
+          "name": "NVIDIA GeForce RTX 4090",
+          "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry.",
+          "uuid": "GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+          "worker_pid": 1172319
+        },
+        "host": "/root/nfs/emmy/measurements/20261023T195833Z-research-gpu-r0DBal",
+        "id": "9e1f76b1c9291d28133d85a85ae619cdd4d7ca52d54f649c3e7e9d925e54e0e8",
+        "name": "case-644651300530683049",
+        "sanitizer": null,
+        "status": "pass"
+      }
+    },
+    {
+      "id": "0a50249d1218b576c10e21a7020336fa287d4d5d6bd7a39511aa2219aa070556",
+      "name": "softmax-1",
+      "family": "softmax",
+      "problem": null,
+      "status": "pass",
+      "stage": "GPU-correctness-and-required-sanitizer",
+      "preparation_error": null,
+      "diagnostic": {
+        "correctness_ok": true,
+        "device": {
+          "clock_rate_khz": 2520000,
+          "compute_major": 8,
+          "compute_minor": 9,
+          "context_identity": "1172324:337866640",
+          "driver_version": 13040,
+          "memory_clock_khz": 10501000,
+          "multiprocessors": 128,
+          "name": "NVIDIA GeForce RTX 4090",
+          "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry.",
+          "uuid": "GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+          "worker_pid": 1172324
+        },
+        "host": "/root/nfs/emmy/measurements/20261023T195833Z-research-gpu-r0DBal",
+        "id": "0a50249d1218b576c10e21a7020336fa287d4d5d6bd7a39511aa2219aa070556",
+        "name": "softmax-1",
+        "sanitizer": null,
+        "status": "pass"
+      }
+    },
+    {
+      "id": "e4ac354528a2ab697578716e36b5ac607df309f75252462e861b435ad2f5d7c5",
+      "name": "case-08",
+      "family": "reduction",
+      "problem": null,
+      "status": "failed",
+      "stage": "GPU-correctness-and-required-sanitizer",
+      "preparation_error": null,
+      "diagnostic": {
+        "correctness_ok": false,
+        "device": {
+          "clock_rate_khz": 2520000,
+          "compute_major": 8,
+          "compute_minor": 9,
+          "context_identity": "1172329:73031568",
+          "driver_version": 13040,
+          "memory_clock_khz": 10501000,
+          "multiprocessors": 128,
+          "name": "NVIDIA GeForce RTX 4090",
+          "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry.",
+          "uuid": "GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+          "worker_pid": 1172329
+        },
+        "host": "/root/nfs/emmy/measurements/20261023T195833Z-research-gpu-r0DBal",
+        "id": "e4ac354528a2ab697578716e36b5ac607df309f75252462e861b435ad2f5d7c5",
+        "name": "case-08",
+        "sanitizer": null,
+        "status": "failed"
+      }
+    },
+    {
+      "id": "57e82125a796bb9080bee679a08f137d78367aa66643aca4080c92adc9932dfe",
+      "name": "i64-right_shift",
+      "family": "pointwise",
+      "problem": null,
+      "status": "failed",
+      "stage": "compile-or-assembly",
+      "preparation_error": "assembly/disassembly failed; diagnostics retained at /root/nfs/emmy/research/assembly-cache/.assembly-mb6fxut8: assembly failed: ptxas /root/nfs/emmy/research/assembly-cache/.assembly-mb6fxut8/kernel.ptx, line 50; error   : Arguments mismatch for instruction 'shr'\nptxas fatal   : Ptx assembly aborted due to errors\n",
+      "diagnostic": null
+    },
+    {
+      "id": "fa41b5e778718c3209536b85787001a3fce87f9cbc7f4b8288e18ffa0777fcc6",
+      "name": "scalar-shadow",
+      "family": "pointwise",
+      "problem": null,
+      "status": "failed",
+      "stage": "GPU-correctness-and-required-sanitizer",
+      "preparation_error": null,
+      "diagnostic": {
+        "correctness_ok": false,
+        "device": {
+          "clock_rate_khz": 2520000,
+          "compute_major": 8,
+          "compute_minor": 9,
+          "context_identity": "1172334:698810256",
+          "driver_version": 13040,
+          "memory_clock_khz": 10501000,
+          "multiprocessors": 128,
+          "name": "NVIDIA GeForce RTX 4090",
+          "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry.",
+          "uuid": "GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+          "worker_pid": 1172334
+        },
+        "host": "/root/nfs/emmy/measurements/20261023T195833Z-research-gpu-r0DBal",
+        "id": "fa41b5e778718c3209536b85787001a3fce87f9cbc7f4b8288e18ffa0777fcc6",
+        "name": "scalar-shadow",
+        "sanitizer": null,
+        "status": "failed"
+      }
+    },
+    {
+      "id": "8a7db526571189e3b67c95f11a3294d910c6e10a53d58c33f0c9a97031e3a9b8",
+      "name": "grouped-simultaneous",
+      "family": "pointwise",
+      "problem": null,
+      "status": "failed",
+      "stage": "GPU-correctness-and-required-sanitizer",
+      "preparation_error": null,
+      "diagnostic": {
+        "correctness_ok": false,
+        "device": {
+          "clock_rate_khz": 2520000,
+          "compute_major": 8,
+          "compute_minor": 9,
+          "context_identity": "1172339:49217424",
+          "driver_version": 13040,
+          "memory_clock_khz": 10501000,
+          "multiprocessors": 128,
+          "name": "NVIDIA GeForce RTX 4090",
+          "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry.",
+          "uuid": "GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+          "worker_pid": 1172339
+        },
+        "host": "/root/nfs/emmy/measurements/20261023T195833Z-research-gpu-r0DBal",
+        "id": "8a7db526571189e3b67c95f11a3294d910c6e10a53d58c33f0c9a97031e3a9b8",
+        "name": "grouped-simultaneous",
+        "sanitizer": null,
+        "status": "failed"
+      }
+    },
+    {
+      "id": "ee167cb896bcfad085da910c9c0eb88a93bf186403b908a2524fca7e8a4c5378",
+      "name": "nested-init-and-carried-update",
+      "family": "pointwise",
+      "problem": null,
+      "status": "failed",
+      "stage": "GPU-correctness-and-required-sanitizer",
+      "preparation_error": null,
+      "diagnostic": {
+        "correctness_ok": false,
+        "device": {
+          "clock_rate_khz": 2520000,
+          "compute_major": 8,
+          "compute_minor": 9,
+          "context_identity": "1172344:215375760",
+          "driver_version": 13040,
+          "memory_clock_khz": 10501000,
+          "multiprocessors": 128,
+          "name": "NVIDIA GeForce RTX 4090",
+          "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry.",
+          "uuid": "GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+          "worker_pid": 1172344
+        },
+        "host": "/root/nfs/emmy/measurements/20261023T195833Z-research-gpu-r0DBal",
+        "id": "ee167cb896bcfad085da910c9c0eb88a93bf186403b908a2524fca7e8a4c5378",
+        "name": "nested-init-and-carried-update",
+        "sanitizer": null,
+        "status": "failed"
+      }
+    },
+    {
+      "id": "2c15db2e5679909cef087ecdd13de5ce6fb7cf56ae54b090f7a966d6dcb6a30e",
+      "name": "binary",
+      "family": "pointwise",
+      "problem": null,
+      "status": "failed",
+      "stage": "compile-or-assembly",
+      "preparation_error": "compiler rejected/invalid PTX (1): compile.py: Unsupported: Buffer a_out_733213 absent from metadata ABI\n",
+      "diagnostic": null
+    },
+    {
+      "id": "7d586595132adb5191192231cef884f5daa56077f115b310c20d34f5b65b7c95",
+      "name": "ternary",
+      "family": "pointwise",
+      "problem": null,
+      "status": "failed",
+      "stage": "compile-or-assembly",
+      "preparation_error": "compiler rejected/invalid PTX (1): compile.py: Unsupported: Buffer a_out_322823 absent from metadata ABI\n",
+      "diagnostic": null
+    },
+    {
+      "id": "a3637b82238835d8027901de0aee04a9d7df15e69ac12d965e1c9f490c209ef5",
+      "name": "select-shadow-and-snapshot",
+      "family": "pointwise",
+      "problem": null,
+      "status": "failed",
+      "stage": "GPU-correctness-and-required-sanitizer",
+      "preparation_error": null,
+      "diagnostic": {
+        "correctness_ok": false,
+        "device": {
+          "clock_rate_khz": 2520000,
+          "compute_major": 8,
+          "compute_minor": 9,
+          "context_identity": "1172349:953929616",
+          "driver_version": 13040,
+          "memory_clock_khz": 10501000,
+          "multiprocessors": 128,
+          "name": "NVIDIA GeForce RTX 4090",
+          "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry.",
+          "uuid": "GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+          "worker_pid": 1172349
+        },
+        "host": "/root/nfs/emmy/measurements/20261023T195833Z-research-gpu-r0DBal",
+        "id": "a3637b82238835d8027901de0aee04a9d7df15e69ac12d965e1c9f490c209ef5",
+        "name": "select-shadow-and-snapshot",
+        "sanitizer": null,
+        "status": "failed"
+      }
+    },
+    {
+      "id": "fb08b0884f3532cd8a601414cd6f2434f05b99602b99dfee396c8b73fc9643f4",
+      "name": "nested-strided-loop",
+      "family": "reduction",
+      "problem": null,
+      "status": "failed",
+      "stage": "compile-or-assembly",
+      "preparation_error": "compiler rejected/invalid PTX (1): compile.py: Unsupported: Unsupported expression FuncCallExpr\n",
+      "diagnostic": null
+    },
+    {
+      "id": "d7be87bc0caabbc560a024cd044944f15da13f4085819fc40ebcba4940f64200",
+      "name": "nested-key-score-shadow",
+      "family": "attention",
+      "problem": null,
+      "status": "failed",
+      "stage": "GPU-correctness-and-required-sanitizer",
+      "preparation_error": null,
+      "diagnostic": {
+        "correctness_ok": false,
+        "device": {
+          "clock_rate_khz": 2520000,
+          "compute_major": 8,
+          "compute_minor": 9,
+          "context_identity": "1172354:473227152",
+          "driver_version": 13040,
+          "memory_clock_khz": 10501000,
+          "multiprocessors": 128,
+          "name": "NVIDIA GeForce RTX 4090",
+          "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry.",
+          "uuid": "GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+          "worker_pid": 1172354
+        },
+        "host": "/root/nfs/emmy/measurements/20261023T195833Z-research-gpu-r0DBal",
+        "id": "d7be87bc0caabbc560a024cd044944f15da13f4085819fc40ebcba4940f64200",
+        "name": "nested-key-score-shadow",
+        "sanitizer": null,
+        "status": "failed"
+      }
+    },
+    {
+      "id": "09d6470c83d329ff46f9a20e9fee4ac3aebe60c50227116328113f9a20a888f0",
+      "name": "rmsnorm-0",
+      "family": "rmsnorm",
+      "problem": null,
+      "status": "pass",
+      "stage": "GPU-correctness-and-required-sanitizer",
+      "preparation_error": null,
+      "diagnostic": {
+        "correctness_ok": true,
+        "device": {
+          "clock_rate_khz": 2520000,
+          "compute_major": 8,
+          "compute_minor": 9,
+          "context_identity": "1172359:705982352",
+          "driver_version": 13040,
+          "memory_clock_khz": 10501000,
+          "multiprocessors": 128,
+          "name": "NVIDIA GeForce RTX 4090",
+          "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry.",
+          "uuid": "GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+          "worker_pid": 1172359
+        },
+        "host": "/root/nfs/emmy/measurements/20261023T195833Z-research-gpu-r0DBal",
+        "id": "09d6470c83d329ff46f9a20e9fee4ac3aebe60c50227116328113f9a20a888f0",
+        "name": "rmsnorm-0",
+        "sanitizer": null,
+        "status": "pass"
+      }
+    },
+    {
+      "id": "e8f4437dd934a945ab53494a64920d8c0145bacfe1a4df3dd4fcba6a08c4790d",
+      "name": "l2norm-0",
+      "family": "l2norm",
+      "problem": null,
+      "status": "pass",
+      "stage": "GPU-correctness-and-required-sanitizer",
+      "preparation_error": null,
+      "diagnostic": {
+        "correctness_ok": true,
+        "device": {
+          "clock_rate_khz": 2520000,
+          "compute_major": 8,
+          "compute_minor": 9,
+          "context_identity": "1172376:1024290704",
+          "driver_version": 13040,
+          "memory_clock_khz": 10501000,
+          "multiprocessors": 128,
+          "name": "NVIDIA GeForce RTX 4090",
+          "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry.",
+          "uuid": "GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+          "worker_pid": 1172376
+        },
+        "host": "/root/nfs/emmy/measurements/20261023T195833Z-research-gpu-r0DBal",
+        "id": "e8f4437dd934a945ab53494a64920d8c0145bacfe1a4df3dd4fcba6a08c4790d",
+        "name": "l2norm-0",
+        "sanitizer": null,
+        "status": "pass"
+      }
+    },
+    {
+      "id": "b0bb43becf74a1f513ddbfb8df76804664d52c90fbbc9104b45c889a6cdbabc5",
+      "name": "atomic_matmul-0",
+      "family": "atomic_matmul",
+      "problem": null,
+      "status": "pass",
+      "stage": "GPU-correctness-and-required-sanitizer",
+      "preparation_error": null,
+      "diagnostic": {
+        "correctness_ok": true,
+        "device": {
+          "clock_rate_khz": 2520000,
+          "compute_major": 8,
+          "compute_minor": 9,
+          "context_identity": "1172419:140386192",
+          "driver_version": 13040,
+          "memory_clock_khz": 10501000,
+          "multiprocessors": 128,
+          "name": "NVIDIA GeForce RTX 4090",
+          "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry.",
+          "uuid": "GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+          "worker_pid": 1172419
+        },
+        "host": "/root/nfs/emmy/measurements/20261023T195833Z-research-gpu-r0DBal",
+        "id": "b0bb43becf74a1f513ddbfb8df76804664d52c90fbbc9104b45c889a6cdbabc5",
+        "name": "atomic_matmul-0",
+        "sanitizer": {
+          "command": [
+            "compute-sanitizer",
+            "--tool",
+            "memcheck",
+            "--error-exitcode",
+            "99",
+            "/opt/emmy-venv/bin/python",
+            "-m",
+            "tools.research_gpu",
+            "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v3/main-merge-comparison/gpu/b0bb43becf74a1f513ddbfb8df76804664d52c90fbbc9104b45c889a6cdbabc5/sanitizer-job.json"
+          ],
+          "exit_code": 0,
+          "ok": true,
+          "timed_out": false
+        },
+        "status": "pass"
+      }
+    },
+    {
+      "id": "d7aa0ab891e7af29fab0846614d52d73add946c3a47a8872624bbec069c6bff3",
+      "name": "softmax-2",
+      "family": "softmax",
+      "problem": null,
+      "status": "pass",
+      "stage": "GPU-correctness-and-required-sanitizer",
+      "preparation_error": null,
+      "diagnostic": {
+        "correctness_ok": true,
+        "device": {
+          "clock_rate_khz": 2520000,
+          "compute_major": 8,
+          "compute_minor": 9,
+          "context_identity": "1172506:85999504",
+          "driver_version": 13040,
+          "memory_clock_khz": 10501000,
+          "multiprocessors": 128,
+          "name": "NVIDIA GeForce RTX 4090",
+          "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry.",
+          "uuid": "GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+          "worker_pid": 1172506
+        },
+        "host": "/root/nfs/emmy/measurements/20261023T195833Z-research-gpu-r0DBal",
+        "id": "d7aa0ab891e7af29fab0846614d52d73add946c3a47a8872624bbec069c6bff3",
+        "name": "softmax-2",
+        "sanitizer": null,
+        "status": "pass"
+      }
+    },
+    {
+      "id": "9170e7b0641d3224fb2e365ef4bc9d87f45db4ffffe191b1544c0548f485001f",
+      "name": "attention-0",
+      "family": "attention",
+      "problem": null,
+      "status": "pass",
+      "stage": "GPU-correctness-and-required-sanitizer",
+      "preparation_error": null,
+      "diagnostic": {
+        "correctness_ok": true,
+        "device": {
+          "clock_rate_khz": 2520000,
+          "compute_major": 8,
+          "compute_minor": 9,
+          "context_identity": "1172511:688750480",
+          "driver_version": 13040,
+          "memory_clock_khz": 10501000,
+          "multiprocessors": 128,
+          "name": "NVIDIA GeForce RTX 4090",
+          "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry.",
+          "uuid": "GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+          "worker_pid": 1172511
+        },
+        "host": "/root/nfs/emmy/measurements/20261023T195833Z-research-gpu-r0DBal",
+        "id": "9170e7b0641d3224fb2e365ef4bc9d87f45db4ffffe191b1544c0548f485001f",
+        "name": "attention-0",
+        "sanitizer": null,
+        "status": "pass"
+      }
+    },
+    {
+      "id": "0ae55875282f68e45972d28c44d9c31c0b3499e2227776855effb0b9b6595d4f",
+      "name": "i64-left_shift",
+      "family": "pointwise",
+      "problem": null,
+      "status": "failed",
+      "stage": "compile-or-assembly",
+      "preparation_error": "assembly/disassembly failed; diagnostics retained at /root/nfs/emmy/research/assembly-cache/.assembly-tqyb4l4q: assembly failed: ptxas /root/nfs/emmy/research/assembly-cache/.assembly-tqyb4l4q/kernel.ptx, line 50; error   : Arguments mismatch for instruction 'shl'\nptxas fatal   : Ptx assembly aborted due to errors\n",
+      "diagnostic": null
+    },
+    {
+      "id": "cd76e69248753128806ede69cd08da03329d51a9db2948a7b0cf07cb01217721",
+      "name": "u64-right_shift",
+      "family": "pointwise",
+      "problem": null,
+      "status": "failed",
+      "stage": "compile-or-assembly",
+      "preparation_error": "assembly/disassembly failed; diagnostics retained at /root/nfs/emmy/research/assembly-cache/.assembly-s1m56t0m: assembly failed: ptxas /root/nfs/emmy/research/assembly-cache/.assembly-s1m56t0m/kernel.ptx, line 50; error   : Arguments mismatch for instruction 'shr'\nptxas fatal   : Ptx assembly aborted due to errors\n",
+      "diagnostic": null
+    },
+    {
+      "id": "c37693f91a7210ccc513e699de5a289e2f2f909f83a7059ed6e386a2a263a25d",
+      "name": "canonical-tail",
+      "family": "reduction",
+      "problem": null,
+      "status": "failed",
+      "stage": "compile-or-assembly",
+      "preparation_error": "compiler rejected/invalid PTX (1): compile.py: Unsupported: Unsupported expression FuncCallExpr\n",
+      "diagnostic": null
+    },
+    {
+      "id": "7bb9d9c27732924a02ca9869601a7af55fd6276ae6894ed00c3dbc7be5d84228",
+      "name": "short-ring",
+      "family": "reduction",
+      "problem": null,
+      "status": "failed",
+      "stage": "compile-or-assembly",
+      "preparation_error": "compiler rejected/invalid PTX (1): compile.py: Unsupported: Unsupported expression FuncCallExpr\n",
+      "diagnostic": null
+    },
+    {
+      "id": "21171f5ca6c366ded10c9865a3160437b8985dd0a89d83770c473c30f8b3e195",
+      "name": "nondivisible-counter",
+      "family": "reduction",
+      "problem": null,
+      "status": "failed",
+      "stage": "compile-or-assembly",
+      "preparation_error": "compiler rejected/invalid PTX (1): compile.py: Unsupported: Unsupported expression FuncCallExpr\n",
+      "diagnostic": null
+    },
+    {
+      "id": "a083ac93290653c119bae4512c057058495a50fa9d0528dc7ce6e3caff5c6065",
+      "name": "observable-padding",
+      "family": "reduction",
+      "problem": null,
+      "status": "failed",
+      "stage": "compile-or-assembly",
+      "preparation_error": "compiler rejected/invalid PTX (1): compile.py: Unsupported: Unsupported expression FuncCallExpr\n",
+      "diagnostic": null
+    },
+    {
+      "id": "b8c0079b7d4413a1880f4f91f7c435e2281f9b5c92861c7980388a4bd2882555",
+      "name": "short-ring",
+      "family": "reduction",
+      "problem": null,
+      "status": "failed",
+      "stage": "compile-or-assembly",
+      "preparation_error": "compiler rejected/invalid PTX (1): compile.py: Unsupported: Unsupported expression FuncCallExpr\n",
+      "diagnostic": null
+    },
+    {
+      "id": "bfc4b7ce74bafe017db5d345724a8ab527509641a581e2a9906b74a5a3a73c0f",
+      "name": "case-0",
+      "family": "matmul",
+      "problem": null,
+      "status": "pass",
+      "stage": "GPU-correctness-and-required-sanitizer",
+      "preparation_error": null,
+      "diagnostic": {
+        "correctness_ok": true,
+        "device": {
+          "clock_rate_khz": 2520000,
+          "compute_major": 8,
+          "compute_minor": 9,
+          "context_identity": "1172516:765517712",
+          "driver_version": 13040,
+          "memory_clock_khz": 10501000,
+          "multiprocessors": 128,
+          "name": "NVIDIA GeForce RTX 4090",
+          "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry.",
+          "uuid": "GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+          "worker_pid": 1172516
+        },
+        "host": "/root/nfs/emmy/measurements/20261023T195833Z-research-gpu-r0DBal",
+        "id": "bfc4b7ce74bafe017db5d345724a8ab527509641a581e2a9906b74a5a3a73c0f",
+        "name": "case-0",
+        "sanitizer": {
+          "command": [
+            "compute-sanitizer",
+            "--tool",
+            "memcheck",
+            "--error-exitcode",
+            "99",
+            "/opt/emmy-venv/bin/python",
+            "-m",
+            "tools.research_gpu",
+            "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v3/main-merge-comparison/gpu/bfc4b7ce74bafe017db5d345724a8ab527509641a581e2a9906b74a5a3a73c0f/sanitizer-job.json"
+          ],
+          "exit_code": 0,
+          "ok": true,
+          "timed_out": false
+        },
+        "status": "pass"
+      }
+    },
+    {
+      "id": "0192aa8028246287221f7448e6c9dfec47cc2cfdfa3ec825d1c7ee28cec28c6a",
+      "name": "case-1",
+      "family": "matmul",
+      "problem": null,
+      "status": "pass",
+      "stage": "GPU-correctness-and-required-sanitizer",
+      "preparation_error": null,
+      "diagnostic": {
+        "correctness_ok": true,
+        "device": {
+          "clock_rate_khz": 2520000,
+          "compute_major": 8,
+          "compute_minor": 9,
+          "context_identity": "1172603:1035546512",
+          "driver_version": 13040,
+          "memory_clock_khz": 10501000,
+          "multiprocessors": 128,
+          "name": "NVIDIA GeForce RTX 4090",
+          "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry.",
+          "uuid": "GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+          "worker_pid": 1172603
+        },
+        "host": "/root/nfs/emmy/measurements/20261023T195833Z-research-gpu-r0DBal",
+        "id": "0192aa8028246287221f7448e6c9dfec47cc2cfdfa3ec825d1c7ee28cec28c6a",
+        "name": "case-1",
+        "sanitizer": {
+          "command": [
+            "compute-sanitizer",
+            "--tool",
+            "memcheck",
+            "--error-exitcode",
+            "99",
+            "/opt/emmy-venv/bin/python",
+            "-m",
+            "tools.research_gpu",
+            "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v3/main-merge-comparison/gpu/0192aa8028246287221f7448e6c9dfec47cc2cfdfa3ec825d1c7ee28cec28c6a/sanitizer-job.json"
+          ],
+          "exit_code": 0,
+          "ok": true,
+          "timed_out": false
+        },
+        "status": "pass"
+      }
+    },
+    {
+      "id": "6ac8c7773141710aafc9375e2ac493eada0dd20901b152f729d6255f79336317",
+      "name": "case-2",
+      "family": "matmul",
+      "problem": null,
+      "status": "pass",
+      "stage": "GPU-correctness-and-required-sanitizer",
+      "preparation_error": null,
+      "diagnostic": {
+        "correctness_ok": true,
+        "device": {
+          "clock_rate_khz": 2520000,
+          "compute_major": 8,
+          "compute_minor": 9,
+          "context_identity": "1172690:1006755728",
+          "driver_version": 13040,
+          "memory_clock_khz": 10501000,
+          "multiprocessors": 128,
+          "name": "NVIDIA GeForce RTX 4090",
+          "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry.",
+          "uuid": "GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+          "worker_pid": 1172690
+        },
+        "host": "/root/nfs/emmy/measurements/20261023T195833Z-research-gpu-r0DBal",
+        "id": "6ac8c7773141710aafc9375e2ac493eada0dd20901b152f729d6255f79336317",
+        "name": "case-2",
+        "sanitizer": {
+          "command": [
+            "compute-sanitizer",
+            "--tool",
+            "memcheck",
+            "--error-exitcode",
+            "99",
+            "/opt/emmy-venv/bin/python",
+            "-m",
+            "tools.research_gpu",
+            "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v3/main-merge-comparison/gpu/6ac8c7773141710aafc9375e2ac493eada0dd20901b152f729d6255f79336317/sanitizer-job.json"
+          ],
+          "exit_code": 0,
+          "ok": true,
+          "timed_out": false
+        },
+        "status": "pass"
+      }
+    },
+    {
+      "id": "55256bcbea1510499cff61c4f643eb7de10964fca4a7d43dc9cb8eca5a323236",
+      "name": "case-3",
+      "family": "matmul",
+      "problem": null,
+      "status": "pass",
+      "stage": "GPU-correctness-and-required-sanitizer",
+      "preparation_error": null,
+      "diagnostic": {
+        "correctness_ok": true,
+        "device": {
+          "clock_rate_khz": 2520000,
+          "compute_major": 8,
+          "compute_minor": 9,
+          "context_identity": "1172777:152031120",
+          "driver_version": 13040,
+          "memory_clock_khz": 10501000,
+          "multiprocessors": 128,
+          "name": "NVIDIA GeForce RTX 4090",
+          "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry.",
+          "uuid": "GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+          "worker_pid": 1172777
+        },
+        "host": "/root/nfs/emmy/measurements/20261023T195833Z-research-gpu-r0DBal",
+        "id": "55256bcbea1510499cff61c4f643eb7de10964fca4a7d43dc9cb8eca5a323236",
+        "name": "case-3",
+        "sanitizer": {
+          "command": [
+            "compute-sanitizer",
+            "--tool",
+            "memcheck",
+            "--error-exitcode",
+            "99",
+            "/opt/emmy-venv/bin/python",
+            "-m",
+            "tools.research_gpu",
+            "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v3/main-merge-comparison/gpu/55256bcbea1510499cff61c4f643eb7de10964fca4a7d43dc9cb8eca5a323236/sanitizer-job.json"
+          ],
+          "exit_code": 0,
+          "ok": true,
+          "timed_out": false
+        },
+        "status": "pass"
+      }
+    },
+    {
+      "id": "6f6357065acf5b24d4be3132257111f2e40e8cc0cba48570e067276205551d25",
+      "name": "mixed-f16-result-native-controls",
+      "family": "pointwise",
+      "problem": null,
+      "status": "failed",
+      "stage": "GPU-correctness-and-required-sanitizer",
+      "preparation_error": null,
+      "diagnostic": {
+        "correctness_ok": false,
+        "device": {
+          "clock_rate_khz": 2520000,
+          "compute_major": 8,
+          "compute_minor": 9,
+          "context_identity": "1172864:1015840656",
+          "driver_version": 13040,
+          "memory_clock_khz": 10501000,
+          "multiprocessors": 128,
+          "name": "NVIDIA GeForce RTX 4090",
+          "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry.",
+          "uuid": "GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+          "worker_pid": 1172864
+        },
+        "host": "/root/nfs/emmy/measurements/20261023T195833Z-research-gpu-r0DBal",
+        "id": "6f6357065acf5b24d4be3132257111f2e40e8cc0cba48570e067276205551d25",
+        "name": "mixed-f16-result-native-controls",
+        "sanitizer": null,
+        "status": "failed"
+      }
+    },
+    {
+      "id": "8996904203776bc61d7da020bfba25d6b8df989336f7641ac753c3f80556a25e",
+      "name": "full-segment16",
+      "family": "attention",
+      "problem": null,
+      "status": "pass",
+      "stage": "GPU-correctness-and-required-sanitizer",
+      "preparation_error": null,
+      "diagnostic": {
+        "correctness_ok": true,
+        "device": {
+          "clock_rate_khz": 2520000,
+          "compute_major": 8,
+          "compute_minor": 9,
+          "context_identity": "1172869:367374224",
+          "driver_version": 13040,
+          "memory_clock_khz": 10501000,
+          "multiprocessors": 128,
+          "name": "NVIDIA GeForce RTX 4090",
+          "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry.",
+          "uuid": "GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+          "worker_pid": 1172869
+        },
+        "host": "/root/nfs/emmy/measurements/20261023T195833Z-research-gpu-r0DBal",
+        "id": "8996904203776bc61d7da020bfba25d6b8df989336f7641ac753c3f80556a25e",
+        "name": "full-segment16",
+        "sanitizer": null,
+        "status": "pass"
+      }
+    },
+    {
+      "id": "bdd094ff243fd119a72e2e675ee682294887bced491b5131041c7f8ac744fdc3",
+      "name": "partial-fallback",
+      "family": "attention",
+      "problem": null,
+      "status": "pass",
+      "stage": "GPU-correctness-and-required-sanitizer",
+      "preparation_error": null,
+      "diagnostic": {
+        "correctness_ok": true,
+        "device": {
+          "clock_rate_khz": 2520000,
+          "compute_major": 8,
+          "compute_minor": 9,
+          "context_identity": "1172874:444985232",
+          "driver_version": 13040,
+          "memory_clock_khz": 10501000,
+          "multiprocessors": 128,
+          "name": "NVIDIA GeForce RTX 4090",
+          "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry.",
+          "uuid": "GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+          "worker_pid": 1172874
+        },
+        "host": "/root/nfs/emmy/measurements/20261023T195833Z-research-gpu-r0DBal",
+        "id": "bdd094ff243fd119a72e2e675ee682294887bced491b5131041c7f8ac744fdc3",
+        "name": "partial-fallback",
+        "sanitizer": null,
+        "status": "pass"
+      }
+    },
+    {
+      "id": "44c6e344374056121b8a007268039a7d7823bf44aed0149ed4d96ddf9164d0c2",
+      "name": "full-segment16",
+      "family": "attention",
+      "problem": null,
+      "status": "pass",
+      "stage": "GPU-correctness-and-required-sanitizer",
+      "preparation_error": null,
+      "diagnostic": {
+        "correctness_ok": true,
+        "device": {
+          "clock_rate_khz": 2520000,
+          "compute_major": 8,
+          "compute_minor": 9,
+          "context_identity": "1172879:474132368",
+          "driver_version": 13040,
+          "memory_clock_khz": 10501000,
+          "multiprocessors": 128,
+          "name": "NVIDIA GeForce RTX 4090",
+          "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry.",
+          "uuid": "GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+          "worker_pid": 1172879
+        },
+        "host": "/root/nfs/emmy/measurements/20261023T195833Z-research-gpu-r0DBal",
+        "id": "44c6e344374056121b8a007268039a7d7823bf44aed0149ed4d96ddf9164d0c2",
+        "name": "full-segment16",
+        "sanitizer": null,
+        "status": "pass"
+      }
+    },
+    {
+      "id": "dd375967ea3896ace9e00ecb875af9b42a8cc2e0f22ca8525b29b556bbe04389",
+      "name": "full-segment16",
+      "family": "attention",
+      "problem": null,
+      "status": "pass",
+      "stage": "GPU-correctness-and-required-sanitizer",
+      "preparation_error": null,
+      "diagnostic": {
+        "correctness_ok": true,
+        "device": {
+          "clock_rate_khz": 2520000,
+          "compute_major": 8,
+          "compute_minor": 9,
+          "context_identity": "1172884:325840784",
+          "driver_version": 13040,
+          "memory_clock_khz": 10501000,
+          "multiprocessors": 128,
+          "name": "NVIDIA GeForce RTX 4090",
+          "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry.",
+          "uuid": "GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+          "worker_pid": 1172884
+        },
+        "host": "/root/nfs/emmy/measurements/20261023T195833Z-research-gpu-r0DBal",
+        "id": "dd375967ea3896ace9e00ecb875af9b42a8cc2e0f22ca8525b29b556bbe04389",
+        "name": "full-segment16",
+        "sanitizer": null,
+        "status": "pass"
+      }
+    },
+    {
+      "id": "c974ec730c3e361d5a62608aa954478a6cea10d6f9183d7f03bd9f45a6a125c8",
+      "name": "full-segment16",
+      "family": "attention",
+      "problem": null,
+      "status": "pass",
+      "stage": "GPU-correctness-and-required-sanitizer",
+      "preparation_error": null,
+      "diagnostic": {
+        "correctness_ok": true,
+        "device": {
+          "clock_rate_khz": 2520000,
+          "compute_major": 8,
+          "compute_minor": 9,
+          "context_identity": "1172889:319594384",
+          "driver_version": 13040,
+          "memory_clock_khz": 10501000,
+          "multiprocessors": 128,
+          "name": "NVIDIA GeForce RTX 4090",
+          "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry.",
+          "uuid": "GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+          "worker_pid": 1172889
+        },
+        "host": "/root/nfs/emmy/measurements/20261023T195833Z-research-gpu-r0DBal",
+        "id": "c974ec730c3e361d5a62608aa954478a6cea10d6f9183d7f03bd9f45a6a125c8",
+        "name": "full-segment16",
+        "sanitizer": null,
+        "status": "pass"
+      }
+    },
+    {
+      "id": "aa23bbd00f94abe9dbc6694c46de82eb9301c84a543e450bb885fbd04814cfc9",
+      "name": "full-segment32",
+      "family": "attention",
+      "problem": null,
+      "status": "pass",
+      "stage": "GPU-correctness-and-required-sanitizer",
+      "preparation_error": null,
+      "diagnostic": {
+        "correctness_ok": true,
+        "device": {
+          "clock_rate_khz": 2520000,
+          "compute_major": 8,
+          "compute_minor": 9,
+          "context_identity": "1172894:101023632",
+          "driver_version": 13040,
+          "memory_clock_khz": 10501000,
+          "multiprocessors": 128,
+          "name": "NVIDIA GeForce RTX 4090",
+          "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry.",
+          "uuid": "GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+          "worker_pid": 1172894
+        },
+        "host": "/root/nfs/emmy/measurements/20261023T195833Z-research-gpu-r0DBal",
+        "id": "aa23bbd00f94abe9dbc6694c46de82eb9301c84a543e450bb885fbd04814cfc9",
+        "name": "full-segment32",
+        "sanitizer": null,
+        "status": "pass"
+      }
+    },
+    {
+      "id": "de25e54114aafebfaba9eafe00ae8d6e99c0c9899d8da73bdf1bf36b358a40db",
+      "name": "tail32",
+      "family": "attention",
+      "problem": null,
+      "status": "pass",
+      "stage": "GPU-correctness-and-required-sanitizer",
+      "preparation_error": null,
+      "diagnostic": {
+        "correctness_ok": true,
+        "device": {
+          "clock_rate_khz": 2520000,
+          "compute_major": 8,
+          "compute_minor": 9,
+          "context_identity": "1172899:611430288",
+          "driver_version": 13040,
+          "memory_clock_khz": 10501000,
+          "multiprocessors": 128,
+          "name": "NVIDIA GeForce RTX 4090",
+          "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry.",
+          "uuid": "GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+          "worker_pid": 1172899
+        },
+        "host": "/root/nfs/emmy/measurements/20261023T195833Z-research-gpu-r0DBal",
+        "id": "de25e54114aafebfaba9eafe00ae8d6e99c0c9899d8da73bdf1bf36b358a40db",
+        "name": "tail32",
+        "sanitizer": null,
+        "status": "pass"
+      }
+    },
+    {
+      "id": "ef3488d3d03c4f7f3620186ff7372cca28aa9e0571f7b99093be9ef08570f98c",
+      "name": "partial-fallback",
+      "family": "attention",
+      "problem": null,
+      "status": "pass",
+      "stage": "GPU-correctness-and-required-sanitizer",
+      "preparation_error": null,
+      "diagnostic": {
+        "correctness_ok": true,
+        "device": {
+          "clock_rate_khz": 2520000,
+          "compute_major": 8,
+          "compute_minor": 9,
+          "context_identity": "1172904:215302032",
+          "driver_version": 13040,
+          "memory_clock_khz": 10501000,
+          "multiprocessors": 128,
+          "name": "NVIDIA GeForce RTX 4090",
+          "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry.",
+          "uuid": "GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+          "worker_pid": 1172904
+        },
+        "host": "/root/nfs/emmy/measurements/20261023T195833Z-research-gpu-r0DBal",
+        "id": "ef3488d3d03c4f7f3620186ff7372cca28aa9e0571f7b99093be9ef08570f98c",
+        "name": "partial-fallback",
+        "sanitizer": null,
+        "status": "pass"
+      }
+    },
+    {
+      "id": "274cb67281df56837bc7b9c4acf1ab1f3c08fcdfc957790eb7e64d6140c8e2f4",
+      "name": "full-segment16",
+      "family": "attention",
+      "problem": null,
+      "status": "pass",
+      "stage": "GPU-correctness-and-required-sanitizer",
+      "preparation_error": null,
+      "diagnostic": {
+        "correctness_ok": true,
+        "device": {
+          "clock_rate_khz": 2520000,
+          "compute_major": 8,
+          "compute_minor": 9,
+          "context_identity": "1172909:301776784",
+          "driver_version": 13040,
+          "memory_clock_khz": 10501000,
+          "multiprocessors": 128,
+          "name": "NVIDIA GeForce RTX 4090",
+          "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry.",
+          "uuid": "GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+          "worker_pid": 1172909
+        },
+        "host": "/root/nfs/emmy/measurements/20261023T195833Z-research-gpu-r0DBal",
+        "id": "274cb67281df56837bc7b9c4acf1ab1f3c08fcdfc957790eb7e64d6140c8e2f4",
+        "name": "full-segment16",
+        "sanitizer": null,
+        "status": "pass"
+      }
+    },
+    {
+      "id": "4c6c88581fe20f1735d190ca1889f979dc7f5341908067e2e8355062d25e8d74",
+      "name": "nested-key-score-shadow",
+      "family": "attention",
+      "problem": null,
+      "status": "failed",
+      "stage": "GPU-correctness-and-required-sanitizer",
+      "preparation_error": null,
+      "diagnostic": {
+        "correctness_ok": false,
+        "device": {
+          "clock_rate_khz": 2520000,
+          "compute_major": 8,
+          "compute_minor": 9,
+          "context_identity": "1172914:766578576",
+          "driver_version": 13040,
+          "memory_clock_khz": 10501000,
+          "multiprocessors": 128,
+          "name": "NVIDIA GeForce RTX 4090",
+          "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry.",
+          "uuid": "GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+          "worker_pid": 1172914
+        },
+        "host": "/root/nfs/emmy/measurements/20261023T195833Z-research-gpu-r0DBal",
+        "id": "4c6c88581fe20f1735d190ca1889f979dc7f5341908067e2e8355062d25e8d74",
+        "name": "nested-key-score-shadow",
+        "sanitizer": null,
+        "status": "failed"
+      }
+    },
+    {
+      "id": "b412a7cb07b9335138462db316ccd81aa36c6f8dfbfa84ca9bdd2edd95793212",
+      "name": "nested-seeded-fold-scopes",
+      "family": "pointwise",
+      "problem": null,
+      "status": "failed",
+      "stage": "GPU-correctness-and-required-sanitizer",
+      "preparation_error": null,
+      "diagnostic": {
+        "correctness_ok": false,
+        "device": {
+          "clock_rate_khz": 2520000,
+          "compute_major": 8,
+          "compute_minor": 9,
+          "context_identity": "1172919:573616016",
+          "driver_version": 13040,
+          "memory_clock_khz": 10501000,
+          "multiprocessors": 128,
+          "name": "NVIDIA GeForce RTX 4090",
+          "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry.",
+          "uuid": "GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+          "worker_pid": 1172919
+        },
+        "host": "/root/nfs/emmy/measurements/20261023T195833Z-research-gpu-r0DBal",
+        "id": "b412a7cb07b9335138462db316ccd81aa36c6f8dfbfa84ca9bdd2edd95793212",
+        "name": "nested-seeded-fold-scopes",
+        "sanitizer": null,
+        "status": "failed"
+      }
+    },
+    {
+      "id": "5200ccc23b3176e293f0796e7a473f07aa6cdc78e120c4c8597d634fe018bbd4",
+      "name": "softmax-0",
+      "family": "softmax",
+      "problem": null,
+      "status": "pass",
+      "stage": "GPU-correctness-and-required-sanitizer",
+      "preparation_error": null,
+      "diagnostic": {
+        "correctness_ok": true,
+        "device": {
+          "clock_rate_khz": 2520000,
+          "compute_major": 8,
+          "compute_minor": 9,
+          "context_identity": "1172924:700092304",
+          "driver_version": 13040,
+          "memory_clock_khz": 10501000,
+          "multiprocessors": 128,
+          "name": "NVIDIA GeForce RTX 4090",
+          "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry.",
+          "uuid": "GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+          "worker_pid": 1172924
+        },
+        "host": "/root/nfs/emmy/measurements/20261023T195833Z-research-gpu-r0DBal",
+        "id": "5200ccc23b3176e293f0796e7a473f07aa6cdc78e120c4c8597d634fe018bbd4",
+        "name": "softmax-0",
+        "sanitizer": null,
+        "status": "pass"
+      }
+    },
+    {
+      "id": "cb0368cb52f2f0f055040645a451637f4b7972d40f5736d761c02b858258f8ca",
+      "name": "loop",
+      "family": "reduction",
+      "problem": null,
+      "status": "failed",
+      "stage": "compile-or-assembly",
+      "preparation_error": "compiler rejected/invalid PTX (1): compile.py: Unsupported: Unsupported expression FuncCallExpr\n",
+      "diagnostic": null
+    },
+    {
+      "id": "1575656197e94c0eaf8603489abcab2416259e541c06c80ebcb11d75d2f81b4e",
+      "name": "canonical-tail",
+      "family": "reduction",
+      "problem": null,
+      "status": "failed",
+      "stage": "compile-or-assembly",
+      "preparation_error": "compiler rejected/invalid PTX (1): compile.py: Unsupported: Unsupported expression FuncCallExpr\n",
+      "diagnostic": null
+    },
+    {
+      "id": "7f86048eb7814d46ed97a1952e39716a6d5c03755faa1f977d954565686342dd",
+      "name": "u64-left_shift",
+      "family": "pointwise",
+      "problem": null,
+      "status": "failed",
+      "stage": "compile-or-assembly",
+      "preparation_error": "assembly/disassembly failed; diagnostics retained at /root/nfs/emmy/research/assembly-cache/.assembly-wvmk2zlj: assembly failed: ptxas /root/nfs/emmy/research/assembly-cache/.assembly-wvmk2zlj/kernel.ptx, line 50; error   : Arguments mismatch for instruction 'shl'\nptxas fatal   : Ptx assembly aborted due to errors\n",
+      "diagnostic": null
+    },
+    {
+      "id": "06a6f12448fbb8fa89a986b27daaf213436aecfc3a82bba559eb3ba17e6b8e70",
+      "name": "pointwise-3",
+      "family": "pointwise",
+      "problem": null,
+      "status": "pass",
+      "stage": "GPU-correctness-and-required-sanitizer",
+      "preparation_error": null,
+      "diagnostic": {
+        "correctness_ok": true,
+        "device": {
+          "clock_rate_khz": 2520000,
+          "compute_major": 8,
+          "compute_minor": 9,
+          "context_identity": "1172929:411004816",
+          "driver_version": 13040,
+          "memory_clock_khz": 10501000,
+          "multiprocessors": 128,
+          "name": "NVIDIA GeForce RTX 4090",
+          "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry.",
+          "uuid": "GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+          "worker_pid": 1172929
+        },
+        "host": "/root/nfs/emmy/measurements/20261023T195833Z-research-gpu-r0DBal",
+        "id": "06a6f12448fbb8fa89a986b27daaf213436aecfc3a82bba559eb3ba17e6b8e70",
+        "name": "pointwise-3",
+        "sanitizer": null,
+        "status": "pass"
+      }
+    },
+    {
+      "id": "fe256034fe7c7c62265efd48a8f68916a616af576075f2b372d88752fcde592c",
+      "name": "pointwise-1",
+      "family": "pointwise",
+      "problem": null,
+      "status": "pass",
+      "stage": "GPU-correctness-and-required-sanitizer",
+      "preparation_error": null,
+      "diagnostic": {
+        "correctness_ok": true,
+        "device": {
+          "clock_rate_khz": 2520000,
+          "compute_major": 8,
+          "compute_minor": 9,
+          "context_identity": "1172934:477323152",
+          "driver_version": 13040,
+          "memory_clock_khz": 10501000,
+          "multiprocessors": 128,
+          "name": "NVIDIA GeForce RTX 4090",
+          "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry.",
+          "uuid": "GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+          "worker_pid": 1172934
+        },
+        "host": "/root/nfs/emmy/measurements/20261023T195833Z-research-gpu-r0DBal",
+        "id": "fe256034fe7c7c62265efd48a8f68916a616af576075f2b372d88752fcde592c",
+        "name": "pointwise-1",
+        "sanitizer": null,
+        "status": "pass"
+      }
+    },
+    {
+      "id": "cc1c8cef5b4d98b091c309d15df9d9e8d44699998053cd6685bd78d9d5ee815f",
+      "name": "matmul-2",
+      "family": "matmul",
+      "problem": null,
+      "status": "pass",
+      "stage": "GPU-correctness-and-required-sanitizer",
+      "preparation_error": null,
+      "diagnostic": {
+        "correctness_ok": true,
+        "device": {
+          "clock_rate_khz": 2520000,
+          "compute_major": 8,
+          "compute_minor": 9,
+          "context_identity": "1172939:526360464",
+          "driver_version": 13040,
+          "memory_clock_khz": 10501000,
+          "multiprocessors": 128,
+          "name": "NVIDIA GeForce RTX 4090",
+          "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry.",
+          "uuid": "GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+          "worker_pid": 1172939
+        },
+        "host": "/root/nfs/emmy/measurements/20261023T195833Z-research-gpu-r0DBal",
+        "id": "cc1c8cef5b4d98b091c309d15df9d9e8d44699998053cd6685bd78d9d5ee815f",
+        "name": "matmul-2",
+        "sanitizer": null,
+        "status": "pass"
+      }
+    },
+    {
+      "id": "120bf007fb2d0af543caa8755dcdd83c7603bc6adcb8641fbf9362fff305448c",
+      "name": "f02-extra-cta",
+      "family": "softmax",
+      "problem": null,
+      "status": "failed",
+      "stage": "compile-or-assembly",
+      "preparation_error": "compiler rejected/invalid PTX (1): compile.py: Unsupported: Tree state and combine arity differ\n",
+      "diagnostic": null
+    },
+    {
+      "id": "50933049c21c35c80b8a84e353ad10dc52190cdeec1dac111dc4aa581185ba5a",
+      "name": "aligned-half-offset-partial",
+      "family": "main-typed",
+      "problem": null,
+      "status": "failed",
+      "stage": "compile-or-assembly",
+      "preparation_error": "assembly/disassembly failed; diagnostics retained at /root/nfs/emmy/research/assembly-cache/.assembly-dw9oe3z5: assembly failed: ptxas /root/nfs/emmy/research/assembly-cache/.assembly-dw9oe3z5/kernel.ptx, line 53; error   : Argument 2 of instruction 'cp.async': unexpected value '2', expected to be 4 or 8 or 16\nptxas /root/nfs/emmy/research/assembly-cache/.assembly-dw9oe3z5/kernel.ptx, line 69; error   : Argument 2 of instruction 'cp.async': unexpected value '2', expected to be 4 or 8 or 16\nptxas /root/nfs/emmy/research/assembly-cache/.assembly-dw9oe3z5/kernel.ptx, line 83; error   : Argument 2 of instruction 'cp.async': unexpected value '2', expected to be 4 or 8 or 16\nptxas /root/nfs/emmy/research/assembly-cache/.assembly-dw9oe3z5/kernel.ptx, line 99; error   : Argument 2 of instruction 'cp.async': unexpected value '2', expected to be 4 or 8 or 16\nptxas /root/nfs/emmy/research/assembly-cache/.assembly-dw9oe3z5/kernel.ptx, line 103; error   : Unexpected instruction types specified for 'mov'\nptxas /root/nfs/emmy/research/assembly-cache/.assembly-dw9oe3z5/kernel.ptx, line 114; error   : Unexpected instruction types specified for 'mov'\nptxas /root/nfs/emmy/research/assembly-cache/.assembly-dw9oe3z5/kernel.ptx, line 120; error   : Unexpected instruction types specified for 'mov'\nptxas /root/nfs/emmy/research/assembly-cache/.assembly-dw9oe3z5/kernel.ptx, line 131; error   : Unexpected instruction types specified for 'mov'\nptxas fatal   : Ptx assembly aborted due to errors\n",
+      "diagnostic": null
+    },
+    {
+      "id": "e5a00bcecf77832d362d8926481a665537efc1b93f0bd5cd9d98df9731b4b55b",
+      "name": "axis-rebound-before-load",
+      "family": "main-typed",
+      "problem": null,
+      "status": "pass",
+      "stage": "GPU-correctness-and-required-sanitizer",
+      "preparation_error": null,
+      "diagnostic": {
+        "correctness_ok": true,
+        "device": {
+          "clock_rate_khz": 2520000,
+          "compute_major": 8,
+          "compute_minor": 9,
+          "context_identity": "1172944:807141264",
+          "driver_version": 13040,
+          "memory_clock_khz": 10501000,
+          "multiprocessors": 128,
+          "name": "NVIDIA GeForce RTX 4090",
+          "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry.",
+          "uuid": "GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+          "worker_pid": 1172944
+        },
+        "host": "/root/nfs/emmy/measurements/20261023T195833Z-research-gpu-r0DBal",
+        "id": "e5a00bcecf77832d362d8926481a665537efc1b93f0bd5cd9d98df9731b4b55b",
+        "name": "axis-rebound-before-load",
+        "sanitizer": {
+          "command": [
+            "compute-sanitizer",
+            "--tool",
+            "memcheck",
+            "--error-exitcode",
+            "99",
+            "/opt/emmy-venv/bin/python",
+            "-m",
+            "tools.research_gpu",
+            "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v3/main-merge-comparison/gpu/e5a00bcecf77832d362d8926481a665537efc1b93f0bd5cd9d98df9731b4b55b/sanitizer-job.json"
+          ],
+          "exit_code": 0,
+          "ok": true,
+          "timed_out": false
+        },
+        "status": "pass"
+      }
+    },
+    {
+      "id": "125c08ddf52d01a698050d20beee9b68d8529f763aa2144f36d26d44c579a4cc",
+      "name": "outer-bindings-and-scratch",
+      "family": "main-typed",
+      "problem": null,
+      "status": "failed",
+      "stage": "GPU-correctness-and-required-sanitizer",
+      "preparation_error": null,
+      "diagnostic": {
+        "correctness_ok": false,
+        "device": {
+          "clock_rate_khz": 2520000,
+          "compute_major": 8,
+          "compute_minor": 9,
+          "context_identity": "1173031:35512208",
+          "driver_version": 13040,
+          "memory_clock_khz": 10501000,
+          "multiprocessors": 128,
+          "name": "NVIDIA GeForce RTX 4090",
+          "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry.",
+          "uuid": "GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+          "worker_pid": 1173031
+        },
+        "host": "/root/nfs/emmy/measurements/20261023T195833Z-research-gpu-r0DBal",
+        "id": "125c08ddf52d01a698050d20beee9b68d8529f763aa2144f36d26d44c579a4cc",
+        "name": "outer-bindings-and-scratch",
+        "sanitizer": {
+          "command": [
+            "compute-sanitizer",
+            "--tool",
+            "memcheck",
+            "--error-exitcode",
+            "99",
+            "/opt/emmy-venv/bin/python",
+            "-m",
+            "tools.research_gpu",
+            "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v3/main-merge-comparison/gpu/125c08ddf52d01a698050d20beee9b68d8529f763aa2144f36d26d44c579a4cc/sanitizer-job.json"
+          ],
+          "exit_code": 1,
+          "ok": false,
+          "timed_out": false
+        },
+        "status": "failed"
+      }
+    },
+    {
+      "id": "d0e2d09f8771d8600dcf4e250dfba1cbfd986969522d7bbea746d857966f3720",
+      "name": "f64-source-f32-scratch",
+      "family": "main-typed",
+      "problem": null,
+      "status": "failed",
+      "stage": "GPU-correctness-and-required-sanitizer",
+      "preparation_error": null,
+      "diagnostic": {
+        "correctness_ok": false,
+        "device": {
+          "clock_rate_khz": 2520000,
+          "compute_major": 8,
+          "compute_minor": 9,
+          "context_identity": "1173124:235511696",
+          "driver_version": 13040,
+          "memory_clock_khz": 10501000,
+          "multiprocessors": 128,
+          "name": "NVIDIA GeForce RTX 4090",
+          "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry.",
+          "uuid": "GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+          "worker_pid": 1173124
+        },
+        "host": "/root/nfs/emmy/measurements/20261023T195833Z-research-gpu-r0DBal",
+        "id": "d0e2d09f8771d8600dcf4e250dfba1cbfd986969522d7bbea746d857966f3720",
+        "name": "f64-source-f32-scratch",
+        "sanitizer": {
+          "command": [
+            "compute-sanitizer",
+            "--tool",
+            "memcheck",
+            "--error-exitcode",
+            "99",
+            "/opt/emmy-venv/bin/python",
+            "-m",
+            "tools.research_gpu",
+            "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v3/main-merge-comparison/gpu/d0e2d09f8771d8600dcf4e250dfba1cbfd986969522d7bbea746d857966f3720/sanitizer-job.json"
+          ],
+          "exit_code": 1,
+          "ok": false,
+          "timed_out": false
+        },
+        "status": "failed"
+      }
+    },
+    {
+      "id": "d51e9f76fb9d8a7f9d379dc1bc0f3e08f29b8926d6472f41892b7f5cec63da4f",
+      "name": "root-axis-alpha-rename-tid",
+      "family": "main-typed",
+      "problem": null,
+      "status": "pass",
+      "stage": "GPU-correctness-and-required-sanitizer",
+      "preparation_error": null,
+      "diagnostic": {
+        "correctness_ok": true,
+        "device": {
+          "clock_rate_khz": 2520000,
+          "compute_major": 8,
+          "compute_minor": 9,
+          "context_identity": "1173230:84180880",
+          "driver_version": 13040,
+          "memory_clock_khz": 10501000,
+          "multiprocessors": 128,
+          "name": "NVIDIA GeForce RTX 4090",
+          "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry.",
+          "uuid": "GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+          "worker_pid": 1173230
+        },
+        "host": "/root/nfs/emmy/measurements/20261023T195833Z-research-gpu-r0DBal",
+        "id": "d51e9f76fb9d8a7f9d379dc1bc0f3e08f29b8926d6472f41892b7f5cec63da4f",
+        "name": "root-axis-alpha-rename-tid",
+        "sanitizer": {
+          "command": [
+            "compute-sanitizer",
+            "--tool",
+            "memcheck",
+            "--error-exitcode",
+            "99",
+            "/opt/emmy-venv/bin/python",
+            "-m",
+            "tools.research_gpu",
+            "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v3/main-merge-comparison/gpu/d51e9f76fb9d8a7f9d379dc1bc0f3e08f29b8926d6472f41892b7f5cec63da4f/sanitizer-job.json"
+          ],
+          "exit_code": 0,
+          "ok": true,
+          "timed_out": false
+        },
+        "status": "pass"
+      }
+    },
+    {
+      "id": "991d11340dcd1bfffd619a05729b8e19afb2b8866be99d6d0d7ef17d80598a18",
+      "name": "maxfinite-times-zero-v2",
+      "family": "main-typed",
+      "problem": null,
+      "status": "pass",
+      "stage": "GPU-correctness-and-required-sanitizer",
+      "preparation_error": null,
+      "diagnostic": {
+        "correctness_ok": true,
+        "device": {
+          "clock_rate_khz": 2520000,
+          "compute_major": 8,
+          "compute_minor": 9,
+          "context_identity": "1173317:27086736",
+          "driver_version": 13040,
+          "memory_clock_khz": 10501000,
+          "multiprocessors": 128,
+          "name": "NVIDIA GeForce RTX 4090",
+          "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry.",
+          "uuid": "GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+          "worker_pid": 1173317
+        },
+        "host": "/root/nfs/emmy/measurements/20261023T195833Z-research-gpu-r0DBal",
+        "id": "991d11340dcd1bfffd619a05729b8e19afb2b8866be99d6d0d7ef17d80598a18",
+        "name": "maxfinite-times-zero-v2",
+        "sanitizer": {
+          "command": [
+            "compute-sanitizer",
+            "--tool",
+            "memcheck",
+            "--error-exitcode",
+            "99",
+            "/opt/emmy-venv/bin/python",
+            "-m",
+            "tools.research_gpu",
+            "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v3/main-merge-comparison/gpu/991d11340dcd1bfffd619a05729b8e19afb2b8866be99d6d0d7ef17d80598a18/sanitizer-job.json"
+          ],
+          "exit_code": 0,
+          "ok": true,
+          "timed_out": false
+        },
+        "status": "pass"
+      }
+    }
+  ]
+}
