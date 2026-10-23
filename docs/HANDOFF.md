@@ -123,3 +123,13 @@ resumable campaign state: `campaigns/campaign-20261023-12h-v2/HANDOFF.md`; root
 Next action: inspect the saved official m01 PTX/request reproducer and identify
 where its result diverges before changing the compiler. A future research run or
 endpoint batch requires explicit activation; reading this handoff starts neither.
+
+## Local commit organization — 2026-10-23
+
+The retained compiler changes are now split into 14 source commits, followed by
+the preserved compact-tooling and remote-coverage audit commits. See
+[the confirmed experiment index](successful-experiments.md) for the sequence,
+source/evidence identities, historical coverage limits and local recovery ref.
+The split reproduced the complete prior `b900be8` tree exactly; compiler bytes,
+audited tests, owner-amended archive tracking and ignore rules are unchanged.
+No rejected source, generated test case or new GPU/endpoint result was imported.
