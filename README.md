@@ -1,18 +1,15 @@
 # Emmy compiler workspace
 
 A direct **Kernel IR → PTX** compiler and a local CUDA research system. The
-correctness baseline covers all 15 published problems at the frozen source hash
-`6db2dad4...`; verification details, local timing evidence, and limits are
-recorded in [the baseline report](docs/baseline-correctness.md). Hidden-set
-correctness and RTX 5090 performance remain unverified.
+retained compiler is `f47c21b0...`: all 15 published problems pass on the configured
+RTX 4090, but the official RTX 5090 evaluation passes **14/15**, with
+`m01_matmul_512` unresolved. See [the current handoff](docs/HANDOFF.md) for exact
+identities, independently confirmed timings, regressions, and resume instructions.
+The [RTX 4060 baseline report](docs/baseline-correctness.md) is historical.
 
 The lowering is ours, using Emmy's typed loader and sibling metadata for ABI and
-launch contracts. It emits PTX targeting sm_89; it does not delegate lowering to
-Emmy's renderer, nvcc, or another compiler. The baseline prioritizes correctness.
-On the local sm_89 RTX 4060, a frozen paired comparison shows a clear
-`m01_matmul_512` improvement (median `0.4893x`); `m02_matmul_rect` is small and
-noisy (`0.9831x`, not claimed as stable), and the remaining measured cases are
-neutral within timer resolution. No RTX 5090 or evaluator-issued speed claim is made.
+launch contracts. It emits direct PTX; it does not delegate lowering to Emmy's
+renderer, nvcc, or another compiler. Correctness takes priority over performance.
 
 The matmul-first tensor-core design—dataflow recognition, warp-atom lowering,
 three-term TF32 precision evidence, split-K/atomics, and the attention
@@ -85,6 +82,10 @@ GPU benchmarking is valid. The research tools bind this gate to frozen source
 and evaluator identities. A source change requires a new gate. Partial sweeps
 are useful for correctness debugging and cannot qualify performance evidence.
 Fresh independent confirmation is additionally required for promotion.
+
+Routine GPU checks use the [compact 73-case regression suite](docs/gpu-regression.md),
+including all 15 published contracts. The full archive is retained for targeted
+expansion; previous random confirmation draws do not accumulate into every run.
 
 Compiler prototypes are developed as plain snapshots in the evaluation workspace.
 Only evaluated, shortlisted compilers return here. No Git runs on a remote GPU

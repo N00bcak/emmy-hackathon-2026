@@ -32,6 +32,12 @@ repository again does not reactivate discovery.
 
 ## Mandatory all-15 correctness
 
+Routine GPU checks use the [compact regression suite](gpu-regression.md): all
+15 published contracts plus distinct generated behavior witnesses. The complete
+archive remains available for targeted expansion; do not replay every earlier
+random draw by default. New protocols use one fresh draw per selected family,
+with a separate post-freeze confirmation draw. Existing frozen suites stay fixed.
+
 The working baseline must pass **all 15 published problems**. Every valid GPU
 evaluation or benchmark requires an immutable all-15 correctness receipt for
 the exact frozen compiler source and evaluation suite. Focused one-case timing,
