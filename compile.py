@@ -2216,6 +2216,139 @@ class Emitter:
         self.mark(done)
         return True
 
+    def find_serial_read_plans(self, statements):
+        """Recognize a closed readonly, uniform-trip scalar reduction stream."""
+        if self.geometry_3d or len(statements) != 1 or type(statements[0]).__name__ != 'Tile':
+            return {}
+        tile = statements[0]
+        axes = {axis.name: static(axis.extent) for axis in tile.axes}
+        if (len(axes) != len(tile.axes) or tile.aux_threads
+                or tile.block_threads != self.block_threads
+                or math.prod(axes.values()) != self.block_threads * self.grid_blocks
+                or set(axes) & defined_names(tile.body)):
+            return {}
+        known = {'Tile', 'StridedLoop', 'Loop', 'Load', 'Accum', 'Assign', 'Let',
+                 'Init', 'WarpShuffle', 'TreeHalve', 'Cond', 'Sync', 'Smem', 'Write'}
+        def walk(body):
+            for statement in body:
+                yield statement
+                for nested in statement_bodies(statement):
+                    yield from walk(nested)
+        whole = list(walk(statements))
+        if any(type(statement).__name__ not in known for statement in whole):
+            return {}
+        written = {statement.output for statement in whole if type(statement).__name__ == 'Write'}
+        plans = {}
+        for loop in tile.body:
+            if (type(loop).__name__ != 'StridedLoop' or loop.unroll or loop.end is not None
+                    or len(loop.body) != 2 or type(loop.start).__name__ != 'Var'
+                    or type(loop.step).__name__ != 'Literal'
+                    or type(loop.step.value) is not int or loop.step.dtype not in ('int', 'i32')):
+                continue
+            step, end = loop.step.value, static(loop.axis.extent)
+            if (step <= 0 or axes.get(loop.start.name) != step or end <= 0
+                    or end > I32_MAX or end % step or end + step - 1 > I32_MAX):
+                continue
+            trips = end // step
+            if trips < 8 or loop.axis.name in axes:
+                continue
+            load, accum = loop.body
+            if (type(load).__name__ != 'Load' or type(accum).__name__ != 'Accum'
+                    or len(load.names) != 1 or load.dtype is None
+                    or getattr(load.dtype, 'name', load.dtype) != 'f32'
+                    or len(load.index) != 1 or type(load.index[0]).__name__ != 'Var'
+                    or load.index[0].name != loop.axis.name
+                    or load.input in self.shared or load.input in self.scalar_parameters
+                    or load.input not in self.buffers or load.input in written):
+                continue
+            shape, dtype = self.buffers[load.input]
+            if len(shape) != 1 or shape[0] < end or dtype_name(dtype) != 'f32':
+                continue
+            if (accum.dtype is None or getattr(accum.dtype, 'name', accum.dtype) != 'f32'
+                    or accum.op.name != 'add' or accum.base is not None
+                    or tuple(accum.axes) != (loop.axis.name,)
+                    or accum.value != load.names[0]
+                    or len({loop.axis.name, loop.start.name, load.names[0], accum.name}) != 4):
+                continue
+            # Conservative lexical inventory: any use or same-name declaration
+            # outside this direct loop declines; no public load value escapes.
+            outside = repr(tuple(statement for statement in tile.body if statement is not loop))
+            if re.search(r'(?<![A-Za-z0-9_])' + re.escape(load.names[0]) + r'(?![A-Za-z0-9_])', outside):
+                continue
+            plans[id(loop)] = (step, trips, end, load, accum)
+        return plans
+
+    def serial_read_pipeline(self, loop):
+        plan = self.serial_read_plans.get(id(loop))
+        if plan is None or self.inactive:
+            return False
+        step, trips, end, load, accum = plan
+        if (loop.start.name not in self.values or self.values[loop.start.name][1] != 'i32'
+                or accum.name not in self.values or self.values[accum.name][1] != 'f32'
+                or load.names[0] in self.mutable or load.input not in self.ptrs):
+            return False
+        start, dtype = self.expr(loop.start)
+        if dtype != 'i32':
+            return False
+        current_axis = self.reg('r')
+        self.emit(f'mov.s32 {current_axis}, {start};')
+        self.set_integer_range(current_axis, checked_i32_interval(0, end - 1))
+
+        def load_at(offset):
+            point = current_axis
+            if offset:
+                point = self.reg('r')
+                self.emit(f'add.s32 {point}, {current_axis}, {offset};')
+            self.set_integer_range(point, checked_i32_interval(0, end - 1))
+            self.values[loop.axis.name] = (point, 'i32')
+            self.rebind(loop.axis.name)
+            self.statements((load,))
+            value, dtype = self.values[load.names[0]]
+            if dtype != 'f32':
+                raise Unsupported('Serial prefetch requires an F32 load')
+            return value
+
+        def consume(bank):
+            # Accum has no expression/address operand; only its original loaded
+            # value changes. The named carrier performs the same four updates.
+            self.values[loop.axis.name] = (current_axis, 'i32')
+            self.rebind(loop.axis.name)
+            for value in bank:
+                self.values[load.names[0]] = (value, 'f32')
+                self.mutable.pop(load.names[0], None)
+                self.rebind(load.names[0])
+                self.statements((accum,))
+
+        # Every current-bank load is issued before its first use. Next-bank
+        # registers are distinct and survive until the backedge move.
+        current = [load_at(j * step) for j in range(4)]
+        group = self.reg('r')
+        self.emit(f'mov.s32 {group}, 0;')
+        begin, drain = self.label('serial_prefetch'), self.label('serial_prefetch_drain')
+        self.mark(begin)
+        stop = self.reg('p')
+        groups, remainder = divmod(trips, 4)
+        self.emit(f'setp.ge.s32 {stop}, {group}, {groups - 1};')
+        self.emit(f'@{stop} bra {drain};')
+        future = [load_at((j + 4) * step) for j in range(4)]
+        consume(current)
+        for destination, value in zip(current, future, strict=True):
+            self.emit(f'mov.f32 {destination}, {value};')
+        self.emit(f'add.s32 {current_axis}, {current_axis}, {4 * step};')
+        self.emit(f'add.s32 {group}, {group}, 1;')
+        self.rebind(loop.axis.name)
+        self.emit(f'bra {begin};')
+        self.mark(drain)
+        consume(current)
+        for j in range(remainder):
+            value = load_at((4 + j) * step)
+            consume((value,))
+        self.emit(f'add.s32 {current_axis}, {current_axis}, {(4 + remainder) * step};')
+        self.values[loop.axis.name] = (current_axis, 'i32')
+        self.set_integer_range(current_axis, checked_i32_interval(end, end + step - 1))
+        self.rebind(loop.axis.name)
+        return True
+
     def shared_compute_body(self, loop):
         """Prove a flat, active, shared-F32 compute loop without emitting code."""
         if self.inactive or loop.axis.name in defined_names(loop.body):
@@ -2775,6 +2908,8 @@ class Emitter:
                         self.init_accums(s.body)
                     loop_init_frame = self.init_scope_frame(s.body)
                     extent = static(s.axis.extent)
+                    if kind == 'StridedLoop' and self.serial_read_pipeline(s):
+                        continue
                     if kind == 'Loop' and self.ordered_key_batch(s):
                         continue
                     if kind == 'Loop' and 8 <= extent <= I32_MAX and self.shared_compute_body(s):
@@ -3167,6 +3302,7 @@ class Emitter:
                 raise Unsupported(f'Unsupported statement {kind}')
 
     def render(self):
+        self.serial_read_plans = self.find_serial_read_plans(self.node.op.body)
         self.key_batches = self.find_key_batches(self.node.op.body)
         self.statements(self.node.op.body)
         by_name = {arg['name']: arg for arg in self.meta['args']}
