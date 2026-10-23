@@ -1738,6 +1738,22 @@ class Emitter:
         """
         absolute = self.reg('f')
         self.emit(f'abs.f32 {absolute}, {value};')
+        signed = self.reg('f')
+        small = self.reg('p')
+        large, joined = self.label('erf_large'), self.label('erf_ready')
+        self.emit(f'setp.le.f32 {small}, {absolute}, {f32(0.5)};')
+        self.emit(f'@!{small} bra {large};')
+        # The odd series retains the linear term near zero. For z=x*x<=1/4,
+        # the next alternating term gives relative truncation below2.85e-8.
+        square_small, polynomial_small, linear = self.reg('f'), self.reg('f'), self.reg('f')
+        self.emit(f'mul.rn.f32 {square_small}, {value}, {value};')
+        self.emit(f'mov.f32 {polynomial_small}, {f32(-1.0 / 1320.0)};')
+        for coefficient in (1.0 / 216.0, -1.0 / 42.0, 1.0 / 10.0, -1.0 / 3.0, 1.0):
+            self.emit(f'fma.rn.f32 {polynomial_small}, {square_small}, {polynomial_small}, {f32(coefficient)};')
+        self.emit(f'mul.rn.f32 {linear}, {value}, {f32(2.0 / math.sqrt(math.pi))};')
+        self.emit(f'mul.rn.f32 {signed}, {linear}, {polynomial_small};')
+        self.emit(f'bra {joined};')
+        self.mark(large)
         t = self.reg('f')
         self.emit(f'mul.rn.f32 {t}, {absolute}, {f32(0.3275911)};')
         self.emit(f'add.rn.f32 {t}, {t}, {f32(1.0)};')
@@ -1761,8 +1777,8 @@ class Emitter:
         self.emit(f'setp.lt.f32 {negative}, {value}, {f32(0.0)};')
         negated = self.reg('f')
         self.emit(f'neg.f32 {negated}, {magnitude};')
-        signed = self.reg('f')
         self.emit(f'selp.f32 {signed}, {negated}, {magnitude}, {negative};')
+        self.mark(joined)
         return signed
 
     def init_accums(self, statements):
