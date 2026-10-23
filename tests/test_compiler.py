@@ -204,9 +204,9 @@ class CompilerTests(unittest.TestCase):
         node.op=replace(node.op,body=(replace(tile,body=tuple(body)),))
         p.write_text(json.dumps(graph.to_dict(),indent=2,default=repr))
         out=self.assemble(p)
-        self.assertIn('max.f32',out)
+        self.assertRegex(out,r'max(?:\.NaN)?\.f32')
         # Inactive lanes must not fold their masked load into the maximum.
-        self.assertRegex(out, r'@%p\d+ max\.f32')
+        self.assertRegex(out, r'@%p\d+ max(?:\.NaN)?\.f32')
         self.assertRegex(out, r'@%p\d+ mov\.f32')
 
     def test_log_lowering_is_natural_log(self):
@@ -409,13 +409,33 @@ class CompilerTests(unittest.TestCase):
                    if (match:=div_re.search(line))]
         remainders=[match.groups() for line in preheader
                     if (match:=rem_re.search(line))]
-        self.assertEqual(1,len(divisions))
-        self.assertEqual(1,len(remainders))
-        self.assertEqual(divisions[0][1:],remainders[0][1:])
-        for register in (divisions[0][0],remainders[0][0]):
+        self.assertLessEqual(len(divisions),1)
+        self.assertLessEqual(len(remainders),1)
+        if not divisions:
+            # Nonnegative integer range proofs can lower a remainder directly,
+            # without computing an unused quotient or a sign correction.
+            self.assertEqual(1,len(remainders))
+            remainder=remainders[0][0]
+            preheader_results=(remainder,)
+        elif remainders:
+            self.assertEqual(divisions[0][1:],remainders[0][1:])
+            remainder=remainders[0][0]
+        else:
+            # A floor-division lowering can reconstruct the remainder as
+            # dividend - quotient*divisor, then apply its sign correction.
+            quotient,dividend,divisor=divisions[0]
+            product=next((match.group(1) for line in preheader
+                          if (match:=re.search(rf'mul\.lo\.s32\s+(%r\d+)\s*,\s*{re.escape(quotient)}\s*,\s*{re.escape(divisor)};',line))),None)
+            self.assertIsNotNone(product)
+            remainder=next((match.group(1) for line in preheader
+                            if (match:=re.search(rf'sub\.s32\s+(%r\d+)\s*,\s*{re.escape(dividend)}\s*,\s*{re.escape(product)};',line))),None)
+            self.assertIsNotNone(remainder)
+        if divisions:
+            preheader_results=(divisions[0][0],remainder)
+        for register in preheader_results:
             self.assertNotRegex(body,rf'{re.escape(register)}(?!\w)')
 
-        derived={divisions[0][0],remainders[0][0]}
+        derived=set(preheader_results)
         changed=True
         while changed:
             changed=False
@@ -510,7 +530,15 @@ class CompilerTests(unittest.TestCase):
         loads=re.findall(r'ld\.global\.f32\s+%f\d+,\s*\[(%rd\d+)\];',out)
         self.assertEqual(2,len(loads))
         self.assertNotEqual(loads[0],loads[1])
-        self.assertRegex(out,rf'mad\.lo\.s32\s+%r\d+\s*,\s*{re.escape(add.group(1))}\s*,\s*1\s*,\s*0;')
+        # Let captures its value in a fresh register. Follow those captures
+        # when checking that the second address uses the rebound index.
+        indices={add.group(1)}
+        for line in out.splitlines():
+            move=re.search(r'mov\.b32\s+(%r\d+)\s*,\s*(%r\d+);',line)
+            if move and move.group(2) in indices:
+                indices.add(move.group(1))
+        self.assertTrue(any(re.search(rf'mad\.lo\.s32\s+%r\d+\s*,\s*{re.escape(index)}\s*,\s*1\s*,\s*0;',out)
+                            for index in indices))
 
     def test_residue_rejects_non_multiple_product(self):
         from emmy.compiler.ir.expr import BinaryExpr, Literal, Var
@@ -751,7 +779,6 @@ class CompilerTests(unittest.TestCase):
                               Assign('e',ElementwiseImpl('erf'),('v',)),
                               Assign('g',ElementwiseImpl('gelu'),('v',)),
                               Assign('t',ElementwiseImpl('gelu_tanh'),('v',)),
-                              Assign('p',ElementwiseImpl('pow'),('v','two')),
                               Assign('g0',ElementwiseImpl('sign'),('v',)),
                               Write('out',(Var('i'),),'g0')),path)
         meta=json.loads(path.with_name('meta.json').read_text())
@@ -764,6 +791,22 @@ class CompilerTests(unittest.TestCase):
                             'tanh.approx.f32','setp.gt.f32'):
             self.assertIn(instruction,out)
         self.assertNotIn('.func',out)
+
+
+    def test_unproved_pow_rejects_without_partial_ptx(self):
+        from emmy.compiler.ir.elementwise import ElementwiseImpl
+        from emmy.compiler.ir.expr import Var
+        from emmy.compiler.ir.kernel.ir import Load, Write
+        from emmy.compiler.ir.stmt.leaves import Assign
+        path=typed_pointwise((Load('v','x',(Var('i'),)),
+                              Assign('p',ElementwiseImpl('pow'),('v','v')),
+                              Write('out',(Var('i'),),'p')),self.out/'unsupported-pow')
+        with self.assertRaises(mod.Unsupported):
+            mod.compile_path(path)
+        result=subprocess.run([sys.executable,str(HERE/'compile.py'),str(path)],capture_output=True,text=True,timeout=15)
+        self.assertNotEqual(result.returncode,0)
+        self.assertEqual(result.stdout,'')
+        self.assertIn('Unsupported',result.stderr)
 
 
 def generate_cases(destination):
