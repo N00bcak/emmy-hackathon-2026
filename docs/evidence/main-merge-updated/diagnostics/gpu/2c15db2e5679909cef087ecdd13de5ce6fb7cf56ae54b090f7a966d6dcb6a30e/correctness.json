@@ -1,0 +1,140 @@
+{
+  "ok": true,
+  "batches": [
+    {
+      "batch_id": 0,
+      "membership": [
+        {
+          "id": "2c15db2e5679909cef087ecdd13de5ce6fb7cf56ae54b090f7a966d6dcb6a30e",
+          "variant": "main100-diagnostic"
+        }
+      ],
+      "quarantined": false,
+      "results": [
+        {
+          "id": "2c15db2e5679909cef087ecdd13de5ce6fb7cf56ae54b090f7a966d6dcb6a30e",
+          "variant": "main100-diagnostic",
+          "ok": true,
+          "checks": [
+            {
+              "repetition": 0,
+              "ok": true,
+              "buffers": {
+                "out_733213": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                }
+              },
+              "outputs": {
+                "out_733213": {
+                  "ok": true,
+                  "elements": 32,
+                  "mismatched": 0,
+                  "max_abs_error": 0.0,
+                  "rtol": 0.0,
+                  "atol": 0.0
+                }
+              }
+            },
+            {
+              "repetition": 1,
+              "ok": true,
+              "buffers": {
+                "out_733213": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                }
+              },
+              "outputs": {
+                "out_733213": {
+                  "ok": true,
+                  "elements": 32,
+                  "mismatched": 0,
+                  "max_abs_error": 0.0,
+                  "rtol": 0.0,
+                  "atol": 0.0
+                }
+              }
+            },
+            {
+              "repetition": 2,
+              "ok": true,
+              "buffers": {
+                "out_733213": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                }
+              },
+              "outputs": {
+                "out_733213": {
+                  "ok": true,
+                  "elements": 32,
+                  "mismatched": 0,
+                  "max_abs_error": 0.0,
+                  "rtol": 0.0,
+                  "atol": 0.0
+                }
+              }
+            }
+          ],
+          "resources": [
+            {
+              "entry": "k_out_733213",
+              "dynamic_shared_bytes": 0,
+              "block_threads": 32,
+              "max_threads_per_block": 32,
+              "static_shared_bytes": 0,
+              "local_bytes": 0,
+              "registers": 12,
+              "max_active_blocks_per_sm": 24,
+              "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+            }
+          ],
+          "quarantined": false,
+          "trusted": true
+        }
+      ],
+      "wall_seconds": 0.0004377500154078007,
+      "requires_all_batchmates_isolated": false,
+      "isolated": true
+    }
+  ],
+  "launch_count": 3,
+  "width": 1,
+  "repetitions": 3,
+  "promotion_eligible": false,
+  "note": "Concurrent results are screening only; fresh isolated confirmation is mandatory.",
+  "mode": "correctness",
+  "device": {
+    "name": "NVIDIA GeForce RTX 4090",
+    "worker_pid": 1177336,
+    "context_identity": "1177336:70766480",
+    "driver_version": 13040,
+    "clock_rate_khz": 2520000,
+    "multiprocessors": 128,
+    "memory_clock_khz": 10501000,
+    "compute_major": 8,
+    "compute_minor": 9,
+    "uuid": "GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+    "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry."
+  },
+  "benchmark_qualified": false,
+  "qualification_note": "Raw diagnostics; benchmark validity requires evaluator-issued source/suite all-15 gates.",
+  "phase_seconds": {
+    "case_loading": 0.006487242877483368,
+    "cuda_initialization": 6.901100277900696e-07,
+    "execution_and_checks": 0.008385478984564543,
+    "total": 0.014873592182993889
+  },
+  "identities": [
+    {
+      "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/opaque-screen/binary/meta.json": "9a0b4e8bbb4be78e736af659dd9d3d9cdb3151cafb0d095cacb705ba68cbd967",
+      "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/opaque-screen/binary/expected.npz": "9434698e4f2d82703098d99c9357762115770f1acee5b093043a2832191a0b7c",
+      "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/opaque-screen/binary/inputs.npz": "8739c76e681f900923b900c9df0ef75cf421d39cabb54650c4b9ad19b6a76d85",
+      "/root/nfs/emmy/research/assembly-cache/e6798c9f95fbcd05224dcbbf998485e32b0f68c099f0ae3a586dfa004c490f3f/module.cubin": "b30666e87fcd3f87eb5f4d3766f43fb5f7c04854aa34a07af9c119c0ec01c9fa"
+    }
+  ]
+}

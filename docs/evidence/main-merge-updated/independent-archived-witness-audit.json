@@ -1,0 +1,139 @@
+{
+  "approved": true,
+  "status": "CONFIRMED-archived-perlane-ownership-regression",
+  "cached_main_commit": "09144135c03e10cccbce3569ba9e31e8b82217eb",
+  "main_source": "8a649cd89434ebc543b3eb9221b8684a8e22749042f6a4a6b75cfbd84917dd98",
+  "retained_safe_merge_source": "e021a2d9d9547c09c7540f5f66ab571010bad2ea84fcea1484f5c9ddb874794e",
+  "case_id": "5ac01e040156b424b17a99e962e9b0bc098682db271cb5e10181003c87d1cf58",
+  "existing_case_directory": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/prefetch8-independent-v1/tail-0",
+  "case_files": {
+    "expected.npz": "a2dce44096a445a372ed452a99501c8fb12cb4a48ce38b87bfa9a93e6e418466",
+    "inputs.npz": "c8be68df6528dc056590a4a099f7a9bba521cafee568229300eaba5f863f14c1",
+    "k_349172.ir.json": "94a9f65592a23df2bdb4df256a619da3291e9e09dfeb320bb6cc8cef93b29d0b",
+    "meta.json": "d82db107b2704312b12777a2d7f9d75c1b23b2ce7803af596daa1021a201d882"
+  },
+  "prepared_sha256": "91e6b18215dd665059c449bf5a0f0d7a62b219b172a59120b973c0c0b482a2c2",
+  "summary_sha256": "2469cdab95c63454f8a6ff0b5e738aeaadd7e8c6272cc7d0108d7b3e311278aa",
+  "raw_rows": [
+    {
+      "arm": "main",
+      "source_id": "8a649cd89434ebc543b3eb9221b8684a8e22749042f6a4a6b75cfbd84917dd98",
+      "case_id": "5ac01e040156b424b17a99e962e9b0bc098682db271cb5e10181003c87d1cf58",
+      "correctness_sha256": "052ac5fb7c1ee3bd2092487b6c6dd3634ae2ff5280205401b417302b897c6fc7",
+      "observed_checks": 1,
+      "guards_inputs_all_true": true,
+      "output_checks": [
+        {
+          "out_349172": {
+            "ok": false,
+            "elements": 128,
+            "mismatched": 105,
+            "max_abs_error": 268435460.0,
+            "rtol": 0.0,
+            "atol": 0.0
+          }
+        }
+      ],
+      "source_hashes": {
+        "compile.py": "858f5f275ac455423ab197f5932a637ca263137de52b5038ceb5d2f836123685",
+        "tensor_core.py": "ca5af9c9f41826f9e2000de7a8537745c0393007d8eaaaf9fd212b3bfd3364a6",
+        "tf32_emitter.py": "fc460b050b8c9ad97104869df5390571940ce57299b2115be7e12bb2a28b505d"
+      },
+      "raw_identities": [
+        {
+          "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/prefetch8-independent-v1/tail-0/meta.json": "d82db107b2704312b12777a2d7f9d75c1b23b2ce7803af596daa1021a201d882",
+          "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/prefetch8-independent-v1/tail-0/expected.npz": "a2dce44096a445a372ed452a99501c8fb12cb4a48ce38b87bfa9a93e6e418466",
+          "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/prefetch8-independent-v1/tail-0/inputs.npz": "c8be68df6528dc056590a4a099f7a9bba521cafee568229300eaba5f863f14c1",
+          "/root/nfs/emmy/research/assembly-cache/8d4a1520fff49ff294e429816189cbe92c6483db1ef9ae7853497bce750dd62c/module.cubin": "3558a1a366fda9ecb2529d83c106b95f94e0882f4c09b053ad6f6621e0601490"
+        }
+      ]
+    },
+    {
+      "arm": "current",
+      "source_id": "e021a2d9d9547c09c7540f5f66ab571010bad2ea84fcea1484f5c9ddb874794e",
+      "case_id": "5ac01e040156b424b17a99e962e9b0bc098682db271cb5e10181003c87d1cf58",
+      "correctness_sha256": "29366ec10e3283b2bd5d6787fafe9b3088e6e6c567d04410acf3dc5263e52638",
+      "observed_checks": 3,
+      "guards_inputs_all_true": true,
+      "output_checks": [
+        {
+          "out_349172": {
+            "ok": true,
+            "elements": 128,
+            "mismatched": 0,
+            "max_abs_error": 0.0,
+            "rtol": 0.0,
+            "atol": 0.0
+          }
+        },
+        {
+          "out_349172": {
+            "ok": true,
+            "elements": 128,
+            "mismatched": 0,
+            "max_abs_error": 0.0,
+            "rtol": 0.0,
+            "atol": 0.0
+          }
+        },
+        {
+          "out_349172": {
+            "ok": true,
+            "elements": 128,
+            "mismatched": 0,
+            "max_abs_error": 0.0,
+            "rtol": 0.0,
+            "atol": 0.0
+          }
+        }
+      ],
+      "source_hashes": {
+        "compile.py": "233768bcc4f105e49d2084357516b20a33052c71f0e88c8d889a5685e7fcf5be",
+        "tensor_core.py": "23473557893eeb7b141d78a3ee1f13a33aa3cc4a50f2c09d792931af27b608b2",
+        "tf32_emitter.py": "72292107ce1c60cd8dae57a8f3081d81c8cc2358d3a390ba7df338ec704adef2"
+      },
+      "raw_identities": [
+        {
+          "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/prefetch8-independent-v1/tail-0/meta.json": "d82db107b2704312b12777a2d7f9d75c1b23b2ce7803af596daa1021a201d882",
+          "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/prefetch8-independent-v1/tail-0/expected.npz": "a2dce44096a445a372ed452a99501c8fb12cb4a48ce38b87bfa9a93e6e418466",
+          "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/prefetch8-independent-v1/tail-0/inputs.npz": "c8be68df6528dc056590a4a099f7a9bba521cafee568229300eaba5f863f14c1",
+          "/root/nfs/emmy/research/assembly-cache/096e9190e1ba0203946de58bcabfd838139366759321e7d0fe00e459fa13f75c/module.cubin": "cea7d107dbe9c8465215cfa8cc597e7d3701c929cdc853fbed38e6e8f0dda449"
+        }
+      ]
+    }
+  ],
+  "target_file_hashchecks": 36,
+  "host_attestation": {
+    "observed_no_contention": true,
+    "exit_code": 0,
+    "gpu_uuid": "GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+    "gpu_model": "NVIDIA GeForce RTX 4090",
+    "host_job_dir": "/root/nfs/emmy/measurements/20261023T200751Z-research-gpu-QixfBx",
+    "monitor": {
+      "observed": true,
+      "samples": 2,
+      "foreign": [],
+      "errors": []
+    },
+    "limitation": "Admission and periodic observations are not a reservation or proof of no transient overlap."
+  },
+  "host_evidence_hashes": {
+    "gpu-attestation.json": "d1842f39e8d274731b3cf31bd1900937413687f7f0710b5cfa0ab33af18dfd05",
+    "monitor-result.json": "494edebed083c7876b1bdc8d56abbe44c73e7c25d5d651c25cb4a28fdaf0a6e8",
+    "telemetry.jsonl": "2469a7000cdc10d0c1e775add2e1bb1dcf472860d453d75ea9c77b271344fe2e",
+    "command.txt": "9b9ae047b50594e0f736f60b0134e78b6016786d5fb62c3d5c5cbbb27e128a41",
+    "processes.csv": "d9d8c7aced18fc82db1568f22684223b9cc154920cf6cb7693b29c5362dc50b6",
+    "after.csv": "474d1f6007ab19c5d5f8c43426a2b5abef16d8708bfe5db1d50e5eaf921b428e"
+  },
+  "finding": "Actualmain091128outputs105mismatchesagainstunchangedexactperlaneoracle; retainede0213repetitionsall0mismatch. Allrawprefix/suffix/inputchecksTRUE. Numericalownershipregression, notobservedmemorycorruption. Mainstoppedafterfirstfailedcheck, not3failedrepetitions.",
+  "mechanism": "Newvectorpathredistributesoriginalstridedsubsetsacrossthreadswithoutwhole-continuationownershipproof; archivedcasewritesperlaneaccumulatorstoout[lane], soexactglobalinputcoveragecannotjustifyrewrite. IndependentpriorCPUreplaypredicted105mismatchesonunchangedarrays, nowGPUconfirmed.",
+  "new_cases": 0,
+  "timing": false,
+  "recommendation": "Retainexacte021safemerge; rejectnaivemergeca205unsafevectorpath. Anyusefulsubsetneedswholeownership,elementdependency,numerical,seed/carrier/scopeproof beforeimplementation/gates.",
+  "limits": [
+    "Existingarchivedcaseoutsideoriginal93/selected100; nofreshgenerator/tolerancechange.",
+    "4090only;sm120assemblynot5090correctness.",
+    "Directreadhostpostvalidated; pendingimmutableexportdoesnotalterrawhashesrecordedhere.",
+    "No reviewerGPU/compiler/Store/evaluator/source/casechanges."
+  ]
+}

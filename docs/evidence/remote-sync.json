@@ -1,0 +1,38 @@
+{
+  "case_count": 93,
+  "compiler_sha256": "12202ea108f615fffd9ab00b5dce985edb3cbe11ffad55042d3d9625b6a49354",
+  "decision": {
+    "decided_at": 1792759578.6471798,
+    "decision": "promote",
+    "decision_id": "84c73e518b847181b922d9222cb4939add37dfc4d072f19562badf125d8c87a1",
+    "evidence_id": "e9752800e5963b682aa91a7896d250c1c36cc1a582b45b240a890bfa092dcea5",
+    "parent_baseline_id": "13b17fd9634637c9d863403a6920ef89e84d4ac5845fd737f6e766c7d255f0db",
+    "performance_debt": null,
+    "reason": "Owner-requested synchronization of the selected GPU-evaluated compiler. Fresh reserved replay passes all 93 default cases and two existing underflow witnesses; all previously closed families represented. Existing paired timing receipts remain source-bound and separate.",
+    "source_id": "bb4a3a3e6477681afe6852121e52f0f43b217b7107b1927c5f0c3f17baa8531e"
+  },
+  "discovery_enabled": false,
+  "evidence_id": "e9752800e5963b682aa91a7896d250c1c36cc1a582b45b240a890bfa092dcea5",
+  "official_sm120": "unverified for current source",
+  "policy_sha256": "7725d2f98cde89aa451686c050b458c35ded18c551a32764a61629b5261d3393",
+  "published_cases": 15,
+  "published_gate_id": "175977b60a79a1db316a1e70c33a2ef5a1aae7b3cd750dcec4e32b704c63254d",
+  "reserved_confirmation_cases": 95,
+  "run": "owner-handoff-sync-20261023-v1",
+  "run_closed": true,
+  "sanitizer_checks": 20,
+  "source_id": "bb4a3a3e6477681afe6852121e52f0f43b217b7107b1927c5f0c3f17baa8531e",
+  "sources": {
+    "compile.py": "12202ea108f615fffd9ab00b5dce985edb3cbe11ffad55042d3d9625b6a49354",
+    "tensor_core.py": "ca5af9c9f41826f9e2000de7a8537745c0393007d8eaaaf9fd212b3bfd3364a6",
+    "tf32_emitter.py": "fc460b050b8c9ad97104869df5390571940ce57299b2115be7e12bb2a28b505d"
+  },
+  "status": "complete",
+  "suite_id": "362d7f9351d1038e492fc4023b6606fa13bc69ddabec5bb34be86bde87e44c96",
+  "research_root": "Resolve from ignored private runtime configuration",
+  "handoff": "campaigns/campaign-20261023-compiler-handoff-v1/HANDOFF.md",
+  "start": "START.md",
+  "source_directory": "objects/bb4a3a3e6477681afe6852121e52f0f43b217b7107b1927c5f0c3f17baa8531e/files",
+  "workspace": "compile-handoff-20261023-v1",
+  "canonical_manifest": "regression-suites/current.json"
+}

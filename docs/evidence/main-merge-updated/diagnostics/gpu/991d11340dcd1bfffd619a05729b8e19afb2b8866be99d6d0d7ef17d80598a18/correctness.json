@@ -1,0 +1,108 @@
+{
+  "ok": false,
+  "batches": [
+    {
+      "batch_id": 0,
+      "membership": [
+        {
+          "id": "991d11340dcd1bfffd619a05729b8e19afb2b8866be99d6d0d7ef17d80598a18",
+          "variant": "main100-diagnostic"
+        }
+      ],
+      "quarantined": true,
+      "results": [
+        {
+          "id": "991d11340dcd1bfffd619a05729b8e19afb2b8866be99d6d0d7ef17d80598a18",
+          "variant": "main100-diagnostic",
+          "ok": false,
+          "checks": [
+            {
+              "repetition": 0,
+              "ok": false,
+              "buffers": {
+                "rhs": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "lhs": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "result": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                }
+              },
+              "outputs": {
+                "result": {
+                  "ok": false,
+                  "elements": 128,
+                  "mismatched": 128,
+                  "max_abs_error": null,
+                  "rtol": 0.001,
+                  "atol": 0.001
+                }
+              }
+            }
+          ],
+          "resources": [
+            {
+              "entry": "kernel",
+              "dynamic_shared_bytes": 0,
+              "block_threads": 32,
+              "max_threads_per_block": 32,
+              "static_shared_bytes": 0,
+              "local_bytes": 0,
+              "registers": 26,
+              "max_active_blocks_per_sm": 24,
+              "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+            }
+          ],
+          "quarantined": true,
+          "trusted": false
+        }
+      ],
+      "wall_seconds": 0.00025876471772789955,
+      "requires_all_batchmates_isolated": true,
+      "isolated": true
+    }
+  ],
+  "launch_count": 1,
+  "width": 1,
+  "repetitions": 3,
+  "promotion_eligible": false,
+  "note": "Concurrent results are screening only; fresh isolated confirmation is mandatory.",
+  "mode": "correctness",
+  "device": {
+    "name": "NVIDIA GeForce RTX 4090",
+    "worker_pid": 1178571,
+    "context_identity": "1178571:53448592",
+    "driver_version": 13040,
+    "clock_rate_khz": 2520000,
+    "multiprocessors": 128,
+    "memory_clock_khz": 10501000,
+    "compute_major": 8,
+    "compute_minor": 9,
+    "uuid": "GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+    "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry."
+  },
+  "benchmark_qualified": false,
+  "qualification_note": "Raw diagnostics; benchmark validity requires evaluator-issued source/suite all-15 gates.",
+  "phase_seconds": {
+    "case_loading": 0.006731253582984209,
+    "cuda_initialization": 9.201467037200928e-07,
+    "execution_and_checks": 0.008642218075692654,
+    "total": 0.0153746516443789
+  },
+  "identities": [
+    {
+      "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v3/bugs-types/tf32-finite-decomposition-overflow-v1/maxfinite-times-zero-v2/meta.json": "81c4f3afa4c18bf3bac46584f69a9cd83a1c8363d25bd4828c12f53808b5c64a",
+      "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v3/bugs-types/tf32-finite-decomposition-overflow-v1/maxfinite-times-zero-v2/expected.npz": "3aa4d470b53499ed4c0af6d1818b3c718d86293359fcf7666fc9888675770e4b",
+      "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v3/bugs-types/tf32-finite-decomposition-overflow-v1/maxfinite-times-zero-v2/inputs.npz": "d3e23cfe9ac2f55a31612de04198fe43170d9afbfb599db73fd6ce5e0600653d",
+      "/root/nfs/emmy/research/assembly-cache/ff9f4ab050279a37d398613f8e08d3f981b204b713c2ed88def9cda2d8432dd0/module.cubin": "821b6c0f28467ce1de7b71f414d6a4eaffaa79c4c2f8640ddaffa5338f397d3e"
+    }
+  ]
+}

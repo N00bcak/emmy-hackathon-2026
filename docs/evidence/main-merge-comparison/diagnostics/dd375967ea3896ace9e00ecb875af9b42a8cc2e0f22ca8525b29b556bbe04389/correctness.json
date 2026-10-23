@@ -1,0 +1,200 @@
+{
+  "ok": true,
+  "batches": [
+    {
+      "batch_id": 0,
+      "membership": [
+        {
+          "id": "dd375967ea3896ace9e00ecb875af9b42a8cc2e0f22ca8525b29b556bbe04389",
+          "variant": "main100-diagnostic"
+        }
+      ],
+      "quarantined": false,
+      "results": [
+        {
+          "id": "dd375967ea3896ace9e00ecb875af9b42a8cc2e0f22ca8525b29b556bbe04389",
+          "variant": "main100-diagnostic",
+          "ok": true,
+          "checks": [
+            {
+              "repetition": 0,
+              "ok": true,
+              "buffers": {
+                "out_503078": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "scale_632129": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "q_868857": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "v_257647": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "kt_122830": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                }
+              },
+              "outputs": {
+                "out_503078": {
+                  "ok": true,
+                  "elements": 192,
+                  "mismatched": 0,
+                  "max_abs_error": 4.470348358154297e-08,
+                  "rtol": 0.001,
+                  "atol": 0.0001
+                }
+              }
+            },
+            {
+              "repetition": 1,
+              "ok": true,
+              "buffers": {
+                "out_503078": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "scale_632129": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "q_868857": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "v_257647": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "kt_122830": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                }
+              },
+              "outputs": {
+                "out_503078": {
+                  "ok": true,
+                  "elements": 192,
+                  "mismatched": 0,
+                  "max_abs_error": 4.470348358154297e-08,
+                  "rtol": 0.001,
+                  "atol": 0.0001
+                }
+              }
+            },
+            {
+              "repetition": 2,
+              "ok": true,
+              "buffers": {
+                "out_503078": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "scale_632129": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "q_868857": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "v_257647": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                },
+                "kt_122830": {
+                  "prefix_ok": true,
+                  "suffix_ok": true,
+                  "input_ok": true
+                }
+              },
+              "outputs": {
+                "out_503078": {
+                  "ok": true,
+                  "elements": 192,
+                  "mismatched": 0,
+                  "max_abs_error": 4.470348358154297e-08,
+                  "rtol": 0.001,
+                  "atol": 0.0001
+                }
+              }
+            }
+          ],
+          "resources": [
+            {
+              "entry": "k_out_503078",
+              "dynamic_shared_bytes": 0,
+              "block_threads": 64,
+              "max_threads_per_block": 1024,
+              "static_shared_bytes": 0,
+              "local_bytes": 0,
+              "registers": 48,
+              "max_active_blocks_per_sm": 20,
+              "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+            }
+          ],
+          "quarantined": false,
+          "trusted": true
+        }
+      ],
+      "wall_seconds": 0.000588505994528532,
+      "requires_all_batchmates_isolated": false,
+      "isolated": true
+    }
+  ],
+  "launch_count": 3,
+  "width": 1,
+  "repetitions": 3,
+  "promotion_eligible": false,
+  "note": "Concurrent results are screening only; fresh isolated confirmation is mandatory.",
+  "mode": "correctness",
+  "device": {
+    "name": "NVIDIA GeForce RTX 4090",
+    "worker_pid": 1172884,
+    "context_identity": "1172884:325840784",
+    "driver_version": 13040,
+    "clock_rate_khz": 2520000,
+    "multiprocessors": 128,
+    "memory_clock_khz": 10501000,
+    "compute_major": 8,
+    "compute_minor": 9,
+    "uuid": "GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+    "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry."
+  },
+  "benchmark_qualified": false,
+  "qualification_note": "Raw diagnostics; benchmark validity requires evaluator-issued source/suite all-15 gates.",
+  "phase_seconds": {
+    "case_loading": 0.0068158651702106,
+    "cuda_initialization": 7.799826562404633e-07,
+    "execution_and_checks": 0.009677089750766754,
+    "total": 0.01649408508092165
+  },
+  "identities": [
+    {
+      "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/attention-full-tail-independent/full-segment16/meta.json": "ba86d2d0819dd87079454c1d14795579aa6280440639a43402f159e4648ad5f8",
+      "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/attention-full-tail-independent/full-segment16/expected.npz": "19eb9b33b3b864a1efe5616cdb514ec5bd7e5d80513faadda6681be261fd672d",
+      "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/attention-full-tail-independent/full-segment16/inputs.npz": "e468c0b651e0f7109e511d8ac57fd673e2f5b88df633a783afc28c7eaa7c0b2f",
+      "/root/nfs/emmy/research/assembly-cache/40a770b0cec96bec5194f1e7d5d9e787fcefaf90b293e1adf92d9ea28fb1b3c7/module.cubin": "c6605f760c7b1d6c25a08518bd985fb0b14582d26d9ad4a3678c4e2bb575b4fb"
+    }
+  ]
+}

@@ -3221,6 +3221,30 @@ class Emitter:
                 self.mutable[name] = mutable
             self.rebind(name)
 
+    def merge_scope_frame(self, statement):
+        # Typed collective merges export only their carried state. Right-hand
+        # shuffle/tree operands and every other Assign target are block locals.
+        states = set(statement.state)
+        names = (set(statement.state_b) |
+                 {s.name for s in statement.combine_states
+                  if type(s).__name__ == 'Assign'}) - states
+        return {name: (self.values.get(name), self.mutable.get(name))
+                for name in names}
+
+    def restore_merge_scope(self, frame):
+        for name, (value, mutable) in frame.items():
+            if value is None:
+                self.values.pop(name, None)
+            else:
+                self.values[name] = value
+            if mutable is None:
+                self.mutable.pop(name, None)
+            else:
+                self.mutable[name] = mutable
+            # Restored outer registers retain their range facts. Every index
+            # expression using this lexical name must bind to the outer value.
+            self.rebind(name)
+
     def statements_with_init_scope(self, statements, frame, shared_prefetch=None):
         try:
             self.statements(statements, shared_prefetch)
@@ -3410,6 +3434,7 @@ class Emitter:
         extent = static_or_none(loop.axis.extent)
         if (extent is None or extent % VECTOR_UNROLL or self.inactive
                 or not straight_line(loop.body)
+                or loop.axis.name in defined_names(loop.body)
                 or any(id(s) in self.hoisted or id(s) in self.vn_skip for s in loop.body)):
             return None
         axis = ('var', loop.axis.name)
@@ -3786,7 +3811,7 @@ class Emitter:
         extent = static(outer.axis.extent)
         names = {outer.axis.name} | {name for plan in plans for name, _ in plan.used}
         saved = {name: self.values.get(name) for name in names}
-        tid = self.value('tid')
+        tid = self.hardware_tid
         groups = {}
         for plan in plans:
             if type(plan.statement).__name__ == 'Loop':
@@ -3968,7 +3993,7 @@ class Emitter:
             for (load, dims, offset), count in zip(copies, trips):
                 for k in range(int(count)):
                     item = self.reg('r')
-                    self.emit(f'add.u32 {item}, {self.value("tid")}, {k * launched};')
+                    self.emit(f'add.u32 {item}, {self.hardware_tid}, {k * launched};')
                     self.bind_coords(self.decode_config(item, dims))
                     addr, space = self.address(load.input, load.index)
                     value = self.reg('f')
@@ -3990,7 +4015,7 @@ class Emitter:
         ``dims`` ((axis name, extent), last fastest), many loads in flight."""
         work = math.prod(extent for _, extent in dims)
         w = self.reg('r')
-        self.emit(f'mov.u32 {w}, {self.value("tid")};')
+        self.emit(f'mov.u32 {w}, {self.hardware_tid};')
         for batch in (*STRIDED_UNROLL, 1):
             if work + (batch - 1) * launched >= (1 << 31):
                 continue
@@ -4049,7 +4074,7 @@ class Emitter:
         blocks = extent // 4
         work = lead.configs * blocks
         w = self.reg('r')
-        self.emit(f'mov.u32 {w}, {self.value("tid")};')
+        self.emit(f'mov.u32 {w}, {self.hardware_tid};')
         begin, done = self.label('mm'), self.label('mm_items_done')
         self.mark(begin)
         p = self.reg('p')
@@ -4129,7 +4154,7 @@ class Emitter:
         blocks = lead.extent // tn
         work = lead.configs * blocks
         w = self.reg('r')
-        self.emit(f'mov.u32 {w}, {self.value("tid")};')
+        self.emit(f'mov.u32 {w}, {self.hardware_tid};')
         begin, done = self.label('mm'), self.label('mm_items_done')
         self.mark(begin)
         p = self.reg('p')
@@ -4361,11 +4386,20 @@ class Emitter:
                 p = self.reg('p')
                 self.emit(f'setp.ge.u32 {p}, {self.hardware_gid}, {n};')
                 tile_done = None
-                if not collective:
+                # A top-level Tile starts converged. When its logical extent
+                # ends exactly at a physical CTA boundary, surplus CTAs can
+                # skip the entire body uniformly, including coupled collectives.
+                # Keep a Tile-local continuation so later siblings still run.
+                whole_cta_surplus = (collective and inactive and n % launched == 0
+                                     and not self.inactive
+                                     and any(s is top for top in self.node.op.body))
+                if not collective or whole_cta_surplus:
                     # A Tile guard scopes this body; later sibling statements
                     # still run for threads outside this Tile's coordinate set.
                     tile_done = self.label('tile_done')
                     self.emit(f'@{p} bra {tile_done};')
+                    if whole_cta_surplus:
+                        inactive = False
                 previous_axes = {axis.name: self.values.get(axis.name) for axis in s.axes}
                 try:
                     for i, axis in enumerate(s.axes):
@@ -4730,6 +4764,7 @@ class Emitter:
                 # Collective state is updated in place, including across skipped
                 # enclosing Cond/Loop paths. Capture before padding can allocate.
                 carried_values = {name: self.values[name] for name in s.state}
+                merge_frame = self.merge_scope_frame(s)
                 saved_inactive = self.inactive
                 if saved_inactive:
                     self.pad_partial_shuffle(s, saved_inactive[-1])
@@ -4795,6 +4830,7 @@ class Emitter:
                         offset //= 2
                 finally:
                     self.inactive = saved_inactive
+                    self.restore_merge_scope(merge_frame)
             elif kind == 'Smem':
                 # Layout, buffer registration, and the PTX declaration are
                 # emitted once by the initialization scan. Declaration order
@@ -4804,9 +4840,8 @@ class Emitter:
                 if s.swizzle not in ('NONE', None) or s.nbytes not in (4, 8, 16):
                     raise Unsupported('Only nonswizzled 4/8/16-byte copy groups supported')
                 dtype = dtype_name(self.buffers[s.smem][1])
+                source_dtype = dtype_name(self.buffers[s.src][1])
                 nbytes = dtype_info(dtype)[0]
-                if s.nbytes % nbytes:
-                    raise Unsupported(f'Copy width {s.nbytes} is not a whole number of {dtype} elements')
                 from emmy.compiler.ir.expr import BinaryExpr
                 destination = s.smem_index
                 if s.lane_index is not None:
@@ -4817,6 +4852,35 @@ class Emitter:
                 if source_space != 'global' or destination_space != 'shared':
                     raise Unsupported('Copy must transport global to shared')
                 active = self.inactive[-1] if self.inactive else None
+                if dtype == 'f16' and dtype_name(self.buffers[s.src][1]) == 'f16':
+                    # cp.async has no 2-byte form, and a legal half-cell start
+                    # need not be 4-byte aligned. Preserve every payload bit
+                    # with scalar 16-bit transport, including half-offset
+                    # chunks. Later commit/wait/barriers retain their order.
+                    pred = f'@{active} ' if active is not None else ''
+                    for offset in range(width):
+                        src_half, _ = self.address(s.src, s.src_index, offset)
+                        dst_half, _ = self.address(s.smem, destination, offset)
+                        bits = self.reg('rh')
+                        self.emit(f'{pred}ld.global.b16 {bits}, [{src_half}];')
+                        self.emit(f'{pred}st.shared.b16 [{dst_half}], {bits};')
+                    continue
+                if source_dtype != dtype or nbytes < 4 or s.nbytes % nbytes:
+                    # CpAsyncCopy transports contiguous bytes, not converted
+                    # cells. Typed start pointers account for element widths
+                    # once; subsequent offsets must be bytes. Byte operations
+                    # also cover subword alignment and partial destination cells.
+                    pred = f'@{active} ' if active is not None else ''
+                    for byte_offset in range(s.nbytes):
+                        src_byte, dst_byte = src, dst
+                        if byte_offset:
+                            src_byte, dst_byte = self.reg('rd'), self.reg('rd')
+                            self.emit(f'add.u64 {src_byte}, {src}, {byte_offset};')
+                            self.emit(f'add.u64 {dst_byte}, {dst}, {byte_offset};')
+                        bits = self.reg('r')
+                        self.emit(f'{pred}ld.global.u8 {bits}, [{src_byte}];')
+                        self.emit(f'{pred}st.shared.u8 [{dst_byte}], {bits};')
+                    continue
                 destination_residue = flat_residue(self.buffers[s.smem][0], destination, width, self.var_residue)
                 source_residue = flat_residue(self.buffers[s.src][0], s.src_index, width, self.var_residue)
                 statically_aligned = (width == 4 and dtype == 'f32'
@@ -4904,6 +4968,7 @@ class Emitter:
                 else:
                     self.emit(f'bar.sync {s.barrier_id};')
             elif kind == 'TreeHalve':
+                merge_frame = self.merge_scope_frame(s)
                 saved_tree_inactive = self.inactive
                 if saved_tree_inactive:
                     self.validate_partial_tree(s)
@@ -4991,6 +5056,7 @@ class Emitter:
                         self.rebind(a)
                 finally:
                     self.inactive = saved_tree_inactive
+                    self.restore_merge_scope(merge_frame)
             else:
                 raise Unsupported(f'Unsupported statement {kind}')
         for name, key in pending:
@@ -5056,6 +5122,8 @@ def compile_path(path):
     try:
         import tensor_core
         from tf32_emitter import production_ptx
+        if not tensor_core.implicit_f32_mma_numerically_legal():
+            return simt_ptx
         decision = tensor_core.classify(graph, node, matches[0])
         if (decision.verdict == tensor_core.PLAN and decision.plan is not None
                 and decision.plan.staging in ('global', 'shared', 'pipeline')):
