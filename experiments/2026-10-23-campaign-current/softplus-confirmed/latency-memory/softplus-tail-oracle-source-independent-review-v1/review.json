@@ -1,0 +1,42 @@
+{
+  "status": "APPROVE exact parent oracle SOURCE for development draw",
+  "generator": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/generators/softplus_f32_tail_v1.py",
+  "generator_sha256": "15f62f181a33a13f5e5184ec4ba6827fb40946b810d660a2fe335db5c2c436bd",
+  "source_artifact": "9b0c0448f44dd8b576755a3bad5b1450b67a75299ad74cecea9a006eac62be34",
+  "contract": {
+    "installed_definition": "emmy/compiler/ir/elementwise.py:59 softplus=lambda x:np.logaddexp(0.0,x)",
+    "typed_constructors": "Load has F32 explicit; canonical _assign creates Assign(name,ElementwiseImpl(op),args,F32), valid unarysoftplus then binarymultiply; Write F32 shape[n,2]",
+    "ABI": "Graphinput scalar amp Tensor shape() is explicit scalarTrue F32 value inmeta, deliberately omitted from inputsNPZ; runtime scalar param Load() contract. Rotating complete metaargs and arg_order together preserves position. x onlyinput buffer, out onlyexpected buffer.",
+    "launch": "n35/65/97 Tile32 with ceilgrid, active logical cells each write exacttwo distinct outputslots; partialpadding outside indexdomain; no atomics/zerooutput dependency.",
+    "reference": "F64 logaddexp\u2192F32 operationboundary\u2192F32 multiply scalaramp (itself exactlyF32-represented), independently log1p(exp) cast crosscheck for everyrealizedx; no compiler/renderer reuse.",
+    "bounds": "FiniteF32x[-80,80]; exp80 fitsF64, softplusmin exp(-80)~1.8e-35 normalF32, maxsoft80; ampF32~1e30 yields finite scaled [~1.8e-5,~8e31].",
+    "fixed_tolerances": {
+      "rtol": 1e-05,
+      "atol": 1e-07
+    }
+  },
+  "negative_tail_math_controls": [
+    {
+      "x": -20.0,
+      "rounded1_plus_exp": 1.0,
+      "independent_softplus_F32": 2.06115369216775e-09,
+      "independent_scaled_F32": 2.061153715734377e+21,
+      "zero_candidate_discriminated": true
+    },
+    {
+      "x": -24.0,
+      "rounded1_plus_exp": 1.0,
+      "independent_softplus_F32": 3.775134371775124e-11,
+      "independent_scaled_F32": 3.775134471159598e+19,
+      "zero_candidate_discriminated": true
+    }
+  ],
+  "coverage_note": "Both small/large proposed candidate paths represented by existing specialvalues. Exact y=.125 transition x=-ln8 is not a forced special; optional later sourceversion if direct threshold-neighbor coverage desired, not a source correctness blocker.",
+  "limits": [
+    "SOURCE review plus two independent plain arithmetic counters; no generator execution, case draw, compiler, assembly or GPU.",
+    "Actual case typed/hash/ABI/reference/outputcount review required after parent developmentdraw.",
+    "Domain excludes NaN/Inf/underflow/overflow; no universal amplified relative promise outside finite normal domain."
+  ],
+  "created_utc": "2026-10-23T00:50:30.337446+00:00",
+  "owned_jobs": []
+}

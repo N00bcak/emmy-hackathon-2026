@@ -1,0 +1,33 @@
+{
+  "status": "APPROVE exactparentoracleSOURCE beforedevelopmentdraw",
+  "generator": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/generators/erf_f32_small_v1.py",
+  "generator_sha256": "945c561519f134b1183cfe275d2fae17b8a0f38e7fe170b226e5fbec5fc6bd24",
+  "source_artifact": "47fb0d9020c054acfc221d57b5046bbf612d858521e1f70293910e8e1fbab50b",
+  "contract": [
+    "Publicerf=scipy.special.erf mathematicalprimitive, typedAssignF32thenordinaryseparateF32multiply. Canonical_assign helperF32Load/Write constructors consistentinstalledAPI. No compiler/renderer lowering reused.",
+    "Scalaramp2^80 isexactfiniteF32normal, graphTensor shape()andLoadindex() matchmeta scalarTrue/value; excludedfrominputsNPZ. Allargs rotatewitharg_order, out[n,2] onlyexpectedarray andx[n] onlyinputbuffer.",
+    "N35/65/97 logicalTilecells,block32ceilgrid,2distinctwritesperlogicalcell coveralloutputswithnoatomics/resets; paddingsemanticmask excludesinvalidcoords."
+  ],
+  "independent_reference_math": [
+    "Machinpi=16atan(1/5)-4atan(1/239), withcorrectalternatingarctanrecurrence and110decimaldigits; stop1e-105 givespierrorfarbelowF32precision.",
+    "erfTaylor termrecurrence term*=-(x*x)/k;part=term/(2k+1), beginningx, iscorrecterf=(2/sqrtpi)sum(-1)^kx^(2k+1)/(k!(2k+1)). On|x|<=3, termsdecreasemonotonicallyafterk9and300termlimitmorethansufficientfor1e-100tail.",
+    "Explicitzero pathcopiesoriginalsign; Decimalandmath.erfF64resultsbothcastF32andmustmatchbitsbeforeamplifierF32multiply. F32operationboundarythuspreserved,notF64fusedcomposition.",
+    "Allforcednonzerotinyvalues\u00b12^-80/\u00b12^-79 haveNORMALinput/raw/scaledreferences; randomuniform[-3,3]normalnonzerosandzerosfinite; maxscaled~2^80finite. Internalchosenloweringunderflowisnotnewsubnormalcontract."
+  ],
+  "discriminators": [
+    "Forcedpositive2^-80/2^-79 produce disjointscaledF32intervals~1.128379/2.256758 atfixed1e-5/1e-7, asindependentlyprovedearlier; commonoutputcannotpassboth.",
+    "Signs/\u00b1zero/2^-20/2^-10/\u00b1.125 andexact\u00b1.5plusadjacentF32neighbors/\u00b11/\u00b13 testsmall,transitionandlargebrancheswithoutshapeorfixtureassumption."
+  ],
+  "tolerances_fixed_beforeexecution": {
+    "rtol": 1e-05,
+    "atol": 1e-07
+  },
+  "source_only_limits": [
+    "No generator/case draw ornumericalcase/referencegeneration executedbyreviewer. Parentmaymakeoneauthorizeddevelopmentdraw,thenactualtyped/hash/ABI/referencechecksrequired.",
+    "No compiler/method/preparation/assembly/GPU; previous96adefectremains sourcepredictionuntilactualbaselineevidence.",
+    "Inventory81unchangedhere; parentownsacceptance/freezeandboundednewcontractincrement."
+  ],
+  "candidate_review_already_complete": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/latency-memory/erf-small-series-source-math-independent-review-v1/review.json",
+  "created_utc": "2026-10-23T01:27:06.230261+00:00",
+  "owned_jobs": []
+}

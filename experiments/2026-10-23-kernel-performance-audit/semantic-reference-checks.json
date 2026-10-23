@@ -1,0 +1,18 @@
+[
+  {
+    "case": "a01_attention",
+    "ordinary_numpy_qk_stable_softmax_pv_matches_expected": true,
+    "max_abs_error": 4.470348358154297e-07,
+    "rtol": 0.001,
+    "atol": 0.0001,
+    "scope": "CPU semantic accounting check only; no new GPU correctness evidence."
+  },
+  {
+    "case": "a02_attention_128",
+    "ordinary_numpy_qk_stable_softmax_pv_matches_expected": true,
+    "max_abs_error": 2.384185791015625e-07,
+    "rtol": 0.001,
+    "atol": 0.0001,
+    "scope": "CPU semantic accounting check only; no new GPU correctness evidence."
+  }
+]

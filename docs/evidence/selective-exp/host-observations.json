@@ -1,0 +1,74 @@
+[
+  {
+    "job": "20261023T122402Z-research-gpu-wXQTyy",
+    "sha256": "e1dd6a8c336f564541ce05cac638b5aedfd3e85f9edd70e0dc5d69c52450a429",
+    "attestation": {
+      "observed_no_contention": true,
+      "exit_code": 0,
+      "gpu_uuid": "GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+      "gpu_model": "NVIDIA GeForce RTX 4090",
+      "host_job_dir": "<artifact-root>/measurements/20261023T122402Z-research-gpu-wXQTyy",
+      "monitor": {
+        "observed": true,
+        "samples": 7,
+        "foreign": [],
+        "errors": []
+      },
+      "limitation": "Admission and periodic observations are not a reservation or proof of no transient overlap."
+    }
+  },
+  {
+    "job": "20261023T122455Z-research-gpu-UNML9j",
+    "sha256": "710e0e04beb2f7623d39569aa5e5f625b58dcefc8620efb5dd6b1aad1537cc38",
+    "attestation": {
+      "observed_no_contention": true,
+      "exit_code": 0,
+      "gpu_uuid": "GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+      "gpu_model": "NVIDIA GeForce RTX 4090",
+      "host_job_dir": "<artifact-root>/measurements/20261023T122455Z-research-gpu-UNML9j",
+      "monitor": {
+        "observed": true,
+        "samples": 8,
+        "foreign": [],
+        "errors": []
+      },
+      "limitation": "Admission and periodic observations are not a reservation or proof of no transient overlap."
+    }
+  },
+  {
+    "job": "20261023T122602Z-research-gpu-6nvS8r",
+    "sha256": "cc69d9cc25ac88f8fdeed40a8376f602e63b5b63dae9cee68132ec46a59343c0",
+    "attestation": {
+      "observed_no_contention": true,
+      "exit_code": 0,
+      "gpu_uuid": "GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+      "gpu_model": "NVIDIA GeForce RTX 4090",
+      "host_job_dir": "<artifact-root>/measurements/20261023T122602Z-research-gpu-6nvS8r",
+      "monitor": {
+        "observed": true,
+        "samples": 40,
+        "foreign": [],
+        "errors": []
+      },
+      "limitation": "Admission and periodic observations are not a reservation or proof of no transient overlap."
+    }
+  },
+  {
+    "job": "20261023T122727Z-research-gpu-NVcyAf",
+    "sha256": "0e1624e3b2ac0a8368f088903e1685a54079b1e6faa95d8fe0ac69fa7c16d3fe",
+    "attestation": {
+      "observed_no_contention": true,
+      "exit_code": 0,
+      "gpu_uuid": "GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+      "gpu_model": "NVIDIA GeForce RTX 4090",
+      "host_job_dir": "<artifact-root>/measurements/20261023T122727Z-research-gpu-NVcyAf",
+      "monitor": {
+        "observed": true,
+        "samples": 8,
+        "foreign": [],
+        "errors": []
+      },
+      "limitation": "Admission and periodic observations are not a reservation or proof of no transient overlap."
+    }
+  }
+]

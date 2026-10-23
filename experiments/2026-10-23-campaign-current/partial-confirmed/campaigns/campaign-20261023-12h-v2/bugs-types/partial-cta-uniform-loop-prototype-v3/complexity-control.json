@@ -1,0 +1,113 @@
+{
+  "source_sha256": "3acaaf37709c7926a1c4cbbf8b16f34d8c86d0df4ed68384909bb01f2e023f28",
+  "old_c807_SHA256": "c807e4ae318cd7ba7c8347a7b698021d2598087deda85a63edda88c0a432c6a2",
+  "results": [
+    {
+      "source": "c807",
+      "depth": 4,
+      "counts": {
+        "uniform_loop": 15
+      },
+      "seconds_with_profile": 0.0006935158744454384
+    },
+    {
+      "source": "memoized",
+      "depth": 4,
+      "counts": {
+        "uniform_loop": 10,
+        "prove_uniform_loop": 4
+      },
+      "seconds_with_profile": 0.0002577616833150387
+    },
+    {
+      "source": "c807",
+      "depth": 6,
+      "counts": {
+        "uniform_loop": 63
+      },
+      "seconds_with_profile": 0.0009428579360246658
+    },
+    {
+      "source": "memoized",
+      "depth": 6,
+      "counts": {
+        "uniform_loop": 21,
+        "prove_uniform_loop": 6
+      },
+      "seconds_with_profile": 0.00022510206326842308
+    },
+    {
+      "source": "c807",
+      "depth": 8,
+      "counts": {
+        "uniform_loop": 255
+      },
+      "seconds_with_profile": 0.00509103387594223
+    },
+    {
+      "source": "memoized",
+      "depth": 8,
+      "counts": {
+        "uniform_loop": 36,
+        "prove_uniform_loop": 8
+      },
+      "seconds_with_profile": 0.0005563544109463692
+    },
+    {
+      "source": "c807",
+      "depth": 10,
+      "counts": {
+        "uniform_loop": 1023
+      },
+      "seconds_with_profile": 0.014909187331795692
+    },
+    {
+      "source": "memoized",
+      "depth": 10,
+      "counts": {
+        "uniform_loop": 55,
+        "prove_uniform_loop": 10
+      },
+      "seconds_with_profile": 0.00037357304245233536
+    },
+    {
+      "source": "c807",
+      "depth": 12,
+      "counts": {
+        "uniform_loop": 4095
+      },
+      "seconds_with_profile": 0.05714599695056677
+    },
+    {
+      "source": "memoized",
+      "depth": 12,
+      "counts": {
+        "uniform_loop": 78,
+        "prove_uniform_loop": 12
+      },
+      "seconds_with_profile": 0.0005999552085995674
+    },
+    {
+      "source": "memoized",
+      "depth": 20,
+      "counts": {
+        "uniform_loop": 210,
+        "prove_uniform_loop": 20
+      },
+      "seconds_with_profile": 0.001228179782629013
+    },
+    {
+      "source": "memoized",
+      "depth": 40,
+      "counts": {
+        "uniform_loop": 820,
+        "prove_uniform_loop": 40
+      },
+      "seconds_with_profile": 0.005520826205611229
+    }
+  ],
+  "each_distinct_uniform_loop_proved_once": true,
+  "same_statement_cached_in_divergent_ancestry_still_declines": true,
+  "scope": "Bounded method-only typed loop chains, no testcase/input/reference draw, no assembly/GPU",
+  "limit": "Axis-preservation traversal still revisits descendants conservatively; measured validation is polynomial rather than exponential. No linear-total-time claim."
+}

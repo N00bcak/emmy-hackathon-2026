@@ -107,20 +107,22 @@ def artifacts_from_tree(root):
     return {p.relative_to(root).as_posix():p.read_bytes() for p in root.rglob('*') if p.is_file() and not p.is_symlink()}
 
 
-def register_protocol(store,version='research-all15-v1',families=('pointwise','reduction')):
+def register_protocol(store,version='research-all15-compact-v2',families=('pointwise','reduction'),*,cases_per_family=1):
+    if type(cases_per_family) is not int or not 1<=cases_per_family<=16:
+        raise Invalid('case count must be between 1 and 16 per family')
     # Freeze actual local-evaluator dependencies. CLI/qualification drivers and
     # hosted transport have their own execution records, not local scoring logic.
     names=('research_pipeline.py','research_store.py','research_prepare.py',
            'research_gpu.py','research_cases.py','published.py')
     files={name:Path(__file__).with_name(name).read_bytes() for name in names}
     contract={'generator':VERSION,'families':list(families),'tolerances':TOLERANCES,
-              'exploration_cases_per_family':4,'confirmation_cases_per_family':4,
+              'exploration_cases_per_family':cases_per_family,'confirmation_cases_per_family':cases_per_family,
               'confirmation_pairs':32,'screening_blocks':2,'pairs_per_block':8,
               'maximum_pairs':200,'isolated_confirmation_required':True,
               'published_problems':list(PUBLISHED_PROBLEMS),
               'performance_requires_all15':True,
               'published_files':_published_fingerprints(),
-              'softmax_schedules':'Two cooperative online cases (3x127,5x257), remaining cases serial.',
+              'softmax_schedules':'First draw cooperative 3x127; second, if requested, cooperative 5x257; remaining draws serial. Routine witnesses retain the 5x257 path.',
               'independence':'Coordinator-owned generators; independently reviewed direct NumPy references.',
               'scope':'Published cooperative/async/fused anchors plus fresh serial schedules. New hidden schedule coverage remains unproven.'}
     return store.register_suite(version,contract,files)
@@ -143,8 +145,12 @@ def _verify_protocol(store,suite_id):
     return suite
 
 
-def make_cases(store, suite_id, seed, label, count=4, published=True):
+def make_cases(store, suite_id, seed, label, count=None, published=True):
     component(label)
+    if count is None:
+        # Existing frozen contracts retain their original draw count. A compact
+        # contract changes sampling policy, never tolerances or archived cases.
+        count=_verify_protocol(store,suite_id)['payload'].get('exploration_cases_per_family',4)
     with (store.root/'suites'/('cases-'+label+'.lock')).open('a+') as lock:
         fcntl.flock(lock,fcntl.LOCK_EX)
         return _make_cases_unlocked(store,suite_id,seed,label,count,published)
@@ -860,7 +866,7 @@ def attest_confirmation(store,experiment):
 def main():
     p=argparse.ArgumentParser(description=__doc__); p.add_argument('--root',type=Path); p.add_argument('--work-root',type=Path)
     sub=p.add_subparsers(dest='command',required=True)
-    suite=sub.add_parser('suite'); suite.add_argument('--version',default='research-all15-v1'); suite.add_argument('--families',nargs='+',choices=sorted(TOLERANCES),default=['pointwise','reduction'])
+    suite=sub.add_parser('suite'); suite.add_argument('--version',default='research-all15-compact-v2'); suite.add_argument('--families',nargs='+',choices=sorted(TOLERANCES),default=['pointwise','reduction']); suite.add_argument('--cases-per-family',type=int,default=1)
     cases=sub.add_parser('cases'); cases.add_argument('--suite-id',required=True); cases.add_argument('--seed',type=int,required=True); cases.add_argument('--label',required=True)
     prep=sub.add_parser('prepare'); prep.add_argument('--case-list',type=Path,required=True)
     gpu=sub.add_parser('gpu-step'); gpu.add_argument('--width',type=int,choices=[1,2,4],help='Override the qualified width in control/runtime.json')
@@ -868,7 +874,7 @@ def main():
     pc=sub.add_parser('prepare-confirmation'); pc.add_argument('experiment'); pc.add_argument('--suite-id',required=True)
     attest=sub.add_parser('attest-confirmation'); attest.add_argument('experiment')
     args=p.parse_args(); store=Store(args.root,args.work_root)
-    if args.command=='suite': result={'suite_id':register_protocol(store,args.version,args.families)}
+    if args.command=='suite': result={'suite_id':register_protocol(store,args.version,args.families,cases_per_family=args.cases_per_family)}
     elif args.command=='cases': result={'cases':make_cases(store,args.suite_id,args.seed,args.label),
                                        'case_list':str(store.root/'suites'/('cases-'+component(args.label))/'case-list.json'),
                                        'suite_id':args.suite_id}

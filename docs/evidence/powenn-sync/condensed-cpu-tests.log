@@ -1,0 +1,5 @@
+cp: warning: behavior of -n is non-portable and may change in future; use --update=none instead
+----------------------------------------------------------------------
+Ran 51 tests in 14.872s
+
+OK

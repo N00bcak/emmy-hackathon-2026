@@ -1,0 +1,10 @@
+{
+  "decision": "inconclusive",
+  "reason": "All117 correctnesscases pass includingall15published. BroadversionedCSE shows no resolved speedgain: m01andm02 medianratio1.0; a01observed+0.5128percent slowdown remainsbelowits1.6106percentnoiseband. All3changedcases have200pairs, qualified4090warm-allocationevidence and observednocontention. Do notpromote orretain as speedimprovement.",
+  "evidence_id": "e6cebff604a7781d589e65730fc0a57abd14bc02e26f73365afc84b3e1a9a89b",
+  "source_id": "767b6f3d85507cb1df6f67122fd707ba3a0f4254fa0516db9d2f3c30b1190b12",
+  "parent_baseline_id": "d9a29034ab72243e1b5e3ac7a5f4625b003605a7f0b2b829ab0d21b5f88ed566",
+  "performance_debt": null,
+  "decided_at": 1792703607.4733775,
+  "decision_id": "9912379c16c9d7eac634ac169ef3aa6ffc08e0c76e25d0410012b0c8814e46ad"
+}

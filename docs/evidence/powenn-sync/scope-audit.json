@@ -1,0 +1,4048 @@
+{
+  "summary": {
+    "ABI or dtype beyond documented challenge arguments": {
+      "total": 10,
+      "failures": 8
+    },
+    "explicitly excluded starred constructs": {
+      "total": 21,
+      "failures": 21
+    },
+    "unstarred vocabulary; relevance requires scenario review": {
+      "total": 91,
+      "failures": 34
+    }
+  },
+  "cases": [
+    {
+      "index": 0,
+      "name": "a01_attention",
+      "path": "<research-root>/suites/cases-7d98069b826d772d9210327b78269b674abf6ef2d7b01a21c06c8e09489ddb38/a01_attention",
+      "passed": true,
+      "published": true,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": null,
+      "spec": {
+        "family": "published",
+        "problem": "a01_attention"
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/0/result.json"
+    },
+    {
+      "index": 1,
+      "name": "a02_attention_128",
+      "path": "<research-root>/suites/cases-7d98069b826d772d9210327b78269b674abf6ef2d7b01a21c06c8e09489ddb38/a02_attention_128",
+      "passed": true,
+      "published": true,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": null,
+      "spec": {
+        "family": "published",
+        "problem": "a02_attention_128"
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/1/result.json"
+    },
+    {
+      "index": 2,
+      "name": "f01_rmsnorm",
+      "path": "<research-root>/suites/cases-7d98069b826d772d9210327b78269b674abf6ef2d7b01a21c06c8e09489ddb38/f01_rmsnorm",
+      "passed": true,
+      "published": true,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": null,
+      "spec": {
+        "family": "published",
+        "problem": "f01_rmsnorm"
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/2/result.json"
+    },
+    {
+      "index": 3,
+      "name": "f02_row_softmax",
+      "path": "<research-root>/suites/cases-7d98069b826d772d9210327b78269b674abf6ef2d7b01a21c06c8e09489ddb38/f02_row_softmax",
+      "passed": true,
+      "published": true,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": null,
+      "spec": {
+        "family": "published",
+        "problem": "f02_row_softmax"
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/3/result.json"
+    },
+    {
+      "index": 4,
+      "name": "f03_l2norm",
+      "path": "<research-root>/suites/cases-7d98069b826d772d9210327b78269b674abf6ef2d7b01a21c06c8e09489ddb38/f03_l2norm",
+      "passed": true,
+      "published": true,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": null,
+      "spec": {
+        "family": "published",
+        "problem": "f03_l2norm"
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/4/result.json"
+    },
+    {
+      "index": 5,
+      "name": "m01_matmul_512",
+      "path": "<research-root>/suites/cases-7d98069b826d772d9210327b78269b674abf6ef2d7b01a21c06c8e09489ddb38/m01_matmul_512",
+      "passed": true,
+      "published": true,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": null,
+      "spec": {
+        "family": "published",
+        "problem": "m01_matmul_512"
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/5/result.json"
+    },
+    {
+      "index": 6,
+      "name": "m02_matmul_rect",
+      "path": "<research-root>/suites/cases-7d98069b826d772d9210327b78269b674abf6ef2d7b01a21c06c8e09489ddb38/m02_matmul_rect",
+      "passed": true,
+      "published": true,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": null,
+      "spec": {
+        "family": "published",
+        "problem": "m02_matmul_rect"
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/6/result.json"
+    },
+    {
+      "index": 7,
+      "name": "p00_scalar_add",
+      "path": "<research-root>/suites/cases-7d98069b826d772d9210327b78269b674abf6ef2d7b01a21c06c8e09489ddb38/p00_scalar_add",
+      "passed": true,
+      "published": true,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": null,
+      "spec": {
+        "family": "published",
+        "problem": "p00_scalar_add"
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/7/result.json"
+    },
+    {
+      "index": 8,
+      "name": "p01_vector_add",
+      "path": "<research-root>/suites/cases-7d98069b826d772d9210327b78269b674abf6ef2d7b01a21c06c8e09489ddb38/p01_vector_add",
+      "passed": true,
+      "published": true,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": null,
+      "spec": {
+        "family": "published",
+        "problem": "p01_vector_add"
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/8/result.json"
+    },
+    {
+      "index": 9,
+      "name": "p02_scale_shift",
+      "path": "<research-root>/suites/cases-7d98069b826d772d9210327b78269b674abf6ef2d7b01a21c06c8e09489ddb38/p02_scale_shift",
+      "passed": true,
+      "published": true,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": null,
+      "spec": {
+        "family": "published",
+        "problem": "p02_scale_shift"
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/9/result.json"
+    },
+    {
+      "index": 10,
+      "name": "p03_relu_mul",
+      "path": "<research-root>/suites/cases-7d98069b826d772d9210327b78269b674abf6ef2d7b01a21c06c8e09489ddb38/p03_relu_mul",
+      "passed": true,
+      "published": true,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": null,
+      "spec": {
+        "family": "published",
+        "problem": "p03_relu_mul"
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/10/result.json"
+    },
+    {
+      "index": 11,
+      "name": "r01_array_sum",
+      "path": "<research-root>/suites/cases-7d98069b826d772d9210327b78269b674abf6ef2d7b01a21c06c8e09489ddb38/r01_array_sum",
+      "passed": true,
+      "published": true,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": null,
+      "spec": {
+        "family": "published",
+        "problem": "r01_array_sum"
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/11/result.json"
+    },
+    {
+      "index": 12,
+      "name": "r02_big_sum",
+      "path": "<research-root>/suites/cases-7d98069b826d772d9210327b78269b674abf6ef2d7b01a21c06c8e09489ddb38/r02_big_sum",
+      "passed": true,
+      "published": true,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": null,
+      "spec": {
+        "family": "published",
+        "problem": "r02_big_sum"
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/12/result.json"
+    },
+    {
+      "index": 13,
+      "name": "r03_mean",
+      "path": "<research-root>/suites/cases-7d98069b826d772d9210327b78269b674abf6ef2d7b01a21c06c8e09489ddb38/r03_mean",
+      "passed": true,
+      "published": true,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": null,
+      "spec": {
+        "family": "published",
+        "problem": "r03_mean"
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/13/result.json"
+    },
+    {
+      "index": 14,
+      "name": "r04_row_sum",
+      "path": "<research-root>/suites/cases-7d98069b826d772d9210327b78269b674abf6ef2d7b01a21c06c8e09489ddb38/r04_row_sum",
+      "passed": true,
+      "published": true,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": null,
+      "spec": {
+        "family": "published",
+        "problem": "r04_row_sum"
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/14/result.json"
+    },
+    {
+      "index": 15,
+      "name": "case-1",
+      "path": "<research-root>/campaigns/campaign-20261022-12h-v1/confirmations/corrected-baseline-v1/identity/case-1",
+      "passed": false,
+      "published": false,
+      "category": "ABI or dtype beyond documented challenge arguments",
+      "starred": [],
+      "scalar_by_value": true,
+      "argument_dtypes": [
+        "f16",
+        "f32"
+      ],
+      "error": "compiler rejected/invalid PTX (1): compile.py: Unsupported: Unknown buffer scale_391599\n",
+      "spec": {
+        "block": 32,
+        "family": "pointwise",
+        "independent_tensor_labels": true,
+        "mode": 1,
+        "names": {
+          "out": "out_845498",
+          "scale": "scale_391599",
+          "shift": "shift_769111",
+          "x": "x_359781"
+        },
+        "parent_case_id": "4db06ae425cedcf7b0e4b4c7f29100e94cafd304d6e1bdb55cbb32e2277d461e",
+        "scalar_dtype": "f16",
+        "seed": 166292607746674214606269182587265908344,
+        "shape": [
+          193
+        ],
+        "version": "scalar-abi-buffer-identity-v1"
+      },
+      "result": null
+    },
+    {
+      "index": 16,
+      "name": "case-10",
+      "path": "<research-root>/campaigns/campaign-20261022-12h-v1/confirmations/corrected-baseline-v1/identity/case-10",
+      "passed": false,
+      "published": false,
+      "category": "ABI or dtype beyond documented challenge arguments",
+      "starred": [],
+      "scalar_by_value": true,
+      "argument_dtypes": [
+        "f32",
+        "f64"
+      ],
+      "error": "compiler rejected/invalid PTX (1): compile.py: Unsupported: Unknown buffer scale_132925\n",
+      "spec": {
+        "block": 128,
+        "family": "pointwise",
+        "independent_tensor_labels": true,
+        "mode": 2,
+        "names": {
+          "out": "out_863929",
+          "scale": "scale_132925",
+          "shift": "shift_725109",
+          "x": "x_594371"
+        },
+        "parent_case_id": "f4aca2eb02bd49bd7b1379162679950df4c9da23bd7805e30bd9e4852e48b3f1",
+        "scalar_dtype": "f64",
+        "seed": 166292607746674214606269182587265908344,
+        "shape": [
+          129
+        ],
+        "version": "scalar-abi-buffer-identity-v1"
+      },
+      "result": null
+    },
+    {
+      "index": 17,
+      "name": "case-15",
+      "path": "<research-root>/campaigns/campaign-20261022-12h-v1/confirmations/corrected-baseline-v1/identity/case-15",
+      "passed": false,
+      "published": false,
+      "category": "ABI or dtype beyond documented challenge arguments",
+      "starred": [],
+      "scalar_by_value": true,
+      "argument_dtypes": [
+        "f32",
+        "i32"
+      ],
+      "error": "compiler rejected/invalid PTX (1): compile.py: Unsupported: Unknown buffer scale_682362\n",
+      "spec": {
+        "block": 32,
+        "family": "pointwise",
+        "independent_tensor_labels": true,
+        "mode": 3,
+        "names": {
+          "out": "out_500705",
+          "scale": "scale_682362",
+          "shift": "shift_106520",
+          "x": "x_705970"
+        },
+        "parent_case_id": "828ee7b52ced6d096d80681a35d82509d3150c260f69117d74cb0effd56e1f72",
+        "scalar_dtype": "i32",
+        "seed": 166292607746674214606269182587265908344,
+        "shape": [
+          193
+        ],
+        "version": "scalar-abi-buffer-identity-v1"
+      },
+      "result": null
+    },
+    {
+      "index": 18,
+      "name": "case-16",
+      "path": "<research-root>/campaigns/campaign-20261022-12h-v1/confirmations/corrected-baseline-v1/identity/case-16",
+      "passed": false,
+      "published": false,
+      "category": "ABI or dtype beyond documented challenge arguments",
+      "starred": [],
+      "scalar_by_value": true,
+      "argument_dtypes": [
+        "f32",
+        "i64"
+      ],
+      "error": "compiler rejected/invalid PTX (1): compile.py: Unsupported: Unknown buffer scale_441993\n",
+      "spec": {
+        "block": 64,
+        "family": "pointwise",
+        "independent_tensor_labels": true,
+        "mode": 0,
+        "names": {
+          "out": "out_186581",
+          "scale": "scale_441993",
+          "shift": "shift_104414",
+          "x": "x_762754"
+        },
+        "parent_case_id": "89c349128fa636eb91843d4646642f503a0900536176ce807fc2c0f465f648d3",
+        "scalar_dtype": "i64",
+        "seed": 166292607746674214606269182587265908344,
+        "shape": [
+          35
+        ],
+        "version": "scalar-abi-buffer-identity-v1"
+      },
+      "result": null
+    },
+    {
+      "index": 19,
+      "name": "case-0",
+      "path": "<research-root>/campaigns/campaign-20261022-12h-v1/confirmations/corrected-baseline-v1/unused/case-0",
+      "passed": false,
+      "published": false,
+      "category": "ABI or dtype beyond documented challenge arguments",
+      "starred": [],
+      "scalar_by_value": true,
+      "argument_dtypes": [
+        "f16",
+        "f32"
+      ],
+      "error": "compiler rejected/invalid PTX (1): compile.py: Unsupported: Buffer scale_973391 absent from metadata ABI\n",
+      "spec": {
+        "block": 32,
+        "family": "pointwise",
+        "mode": 0,
+        "names": {
+          "out": "out_322484",
+          "scale": "scale_973391",
+          "shift": "shift_923143",
+          "x": "x_719135"
+        },
+        "parent_case_id": "9e27d5c528df8d3be4dba1d24000174f5d412d5e1768be697ad743bbed1f3a31",
+        "scalar_dtype": "f32",
+        "seed": 166292607746674214606269182587265908041,
+        "shape": [
+          129
+        ],
+        "unused_scalar_dtype": "f16",
+        "version": "unused-scalar-abi-v1"
+      },
+      "result": null
+    },
+    {
+      "index": 20,
+      "name": "case-1",
+      "path": "<research-root>/campaigns/campaign-20261022-12h-v1/confirmations/corrected-baseline-v1/interactions/case-1",
+      "passed": false,
+      "published": false,
+      "category": "explicitly excluded starred constructs",
+      "starred": [
+        "Builtin",
+        "CastExpr",
+        "FlatIndex",
+        "FuncCallExpr"
+      ],
+      "scalar_by_value": true,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": "compiler rejected/invalid PTX (1): compile.py: NameError: name 'FlatIndex' is not defined\n",
+      "spec": {
+        "block": 32,
+        "family": "pointwise",
+        "names": {
+          "alpha": "alpha_183334",
+          "bias": "bias_334666",
+          "out": "out_468352",
+          "x": "x_235352"
+        },
+        "physical_block": [
+          8,
+          2,
+          2
+        ],
+        "physical_grid": [
+          2,
+          3,
+          2
+        ],
+        "scalar_dtype": "f32",
+        "seed": 166292607746674214606269182587265907610,
+        "shape": [
+          3,
+          127
+        ],
+        "version": "scalar-geometry-math-interactions-v1"
+      },
+      "result": null
+    },
+    {
+      "index": 21,
+      "name": "case-5",
+      "path": "<research-root>/campaigns/campaign-20261022-12h-v1/confirmations/corrected-baseline-v1/geometry/case-5",
+      "passed": false,
+      "published": false,
+      "category": "explicitly excluded starred constructs",
+      "starred": [
+        "Builtin"
+      ],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": "compiler rejected/invalid PTX (1): compile.py: Unsupported: Unsupported expression Builtin\n",
+      "spec": {
+        "block": 64,
+        "family": "pointwise",
+        "mode": "builtin",
+        "names": {
+          "out": "out_567522",
+          "x": "x_975803"
+        },
+        "physical_block": [
+          16,
+          2,
+          2
+        ],
+        "physical_grid": [
+          2,
+          3,
+          2
+        ],
+        "seed": 166292607746674214606269182587265905037,
+        "shape": [
+          768
+        ],
+        "version": "geometry-cartesian-v1"
+      },
+      "result": null
+    },
+    {
+      "index": 22,
+      "name": "case-02",
+      "path": "<research-root>/campaigns/campaign-20261022-12h-v1/integration-main-83a3944/replay-plan-v4-canonical/cases/case-02",
+      "passed": true,
+      "published": false,
+      "category": "ABI or dtype beyond documented challenge arguments",
+      "starred": [],
+      "scalar_by_value": true,
+      "argument_dtypes": [
+        "f16"
+      ],
+      "error": null,
+      "spec": {
+        "case": "f16_roundtrip",
+        "family": "main-typed",
+        "reference": "independent plain NumPy re-evaluation of frozen upstream references"
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/22/result.json"
+    },
+    {
+      "index": 23,
+      "name": "case-03",
+      "path": "<research-root>/campaigns/campaign-20261022-12h-v1/integration-main-83a3944/replay-plan-v4-canonical/cases/case-03",
+      "passed": true,
+      "published": false,
+      "category": "ABI or dtype beyond documented challenge arguments",
+      "starred": [],
+      "scalar_by_value": true,
+      "argument_dtypes": [
+        "f64"
+      ],
+      "error": null,
+      "spec": {
+        "case": "f64_values",
+        "family": "main-typed",
+        "reference": "independent plain NumPy re-evaluation of frozen upstream references"
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/23/result.json"
+    },
+    {
+      "index": 24,
+      "name": "case-00",
+      "path": "<research-root>/campaigns/campaign-20261022-12h-v1/integration-main-83a3944/replay-plan-v4-canonical/cases/case-00",
+      "passed": true,
+      "published": false,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": null,
+      "spec": {
+        "case": "bitcast_roundtrip",
+        "family": "main-typed",
+        "reference": "independent plain NumPy re-evaluation of frozen upstream references"
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/24/result.json"
+    },
+    {
+      "index": 25,
+      "name": "case-5",
+      "path": "<research-root>/campaigns/campaign-20261022-12h-v1/reviews/funcall-i32-v1/draw-0/case-5",
+      "passed": false,
+      "published": false,
+      "category": "explicitly excluded starred constructs",
+      "starred": [
+        "CastExpr",
+        "FuncCallExpr"
+      ],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32",
+        "i32"
+      ],
+      "error": "compiler rejected/invalid PTX (1): compile.py: Unsupported: Unsupported expression FuncCallExpr\n",
+      "spec": {
+        "block": 32,
+        "family": "pointwise",
+        "mode": "global",
+        "names": {
+          "anchor": "anchor_106658",
+          "out": "out_540011",
+          "x": "x_183387",
+          "y": "y_825055"
+        },
+        "op": "add",
+        "seed": 18424959816055033726,
+        "shape": [
+          35
+        ],
+        "version": "funcall-native-i32-v1"
+      },
+      "result": null
+    },
+    {
+      "index": 26,
+      "name": "case-28",
+      "path": "<research-root>/campaigns/campaign-20261022-12h-v1/supplement-6a7065784ebfd2f113b9acb0af7fbf1c95dfd543754f566142257c09a77291fa/typed-values/case-28",
+      "passed": false,
+      "published": false,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": "compiler rejected/invalid PTX (1): compile.py: Unsupported: Unsupported scalar conversion pred -> f32\n",
+      "spec": {
+        "block": 32,
+        "family": "pointwise",
+        "mode": "group_mixed4",
+        "names": {
+          "out": "out_670744",
+          "x": "x_877103",
+          "y": "y_252053"
+        },
+        "seed": 27430989758607568666337195257646545889,
+        "shape": [
+          32
+        ],
+        "version": "typed-values-f32-destination-v1"
+      },
+      "result": null
+    },
+    {
+      "index": 27,
+      "name": "case-16",
+      "path": "<research-root>/campaigns/campaign-20261022-12h-v1/supplement-6a7065784ebfd2f113b9acb0af7fbf1c95dfd543754f566142257c09a77291fa/scalar/case-16",
+      "passed": false,
+      "published": false,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": "assembly/disassembly failed; diagnostics retained at <artifact-root>/sync-powenn-20261023/assembly-cache/.assembly-kfic0fh8: assembly failed: ptxas <artifact-root>/sync-powenn-20261023/assembly-cache/.assembly-kfic0fh8/kernel.ptx, line 55; error   : Rounding modifier required for instruction 'cvt'\nptxas fatal   : Ptx assembly aborted due to errors\n",
+      "spec": {
+        "block": 32,
+        "family": "pointwise",
+        "mode": "float_literal_rounding",
+        "names": {
+          "out": "out_198994",
+          "x": "x_983840",
+          "y": "y_780173"
+        },
+        "seed": 27430989758607568666337195257646545789,
+        "shape": [
+          7
+        ],
+        "version": "scalar-predicate-literal-v1"
+      },
+      "result": null
+    },
+    {
+      "index": 28,
+      "name": "case-11",
+      "path": "<research-root>/campaigns/campaign-20261022-12h-v1/supplement-6a7065784ebfd2f113b9acb0af7fbf1c95dfd543754f566142257c09a77291fa/scalar/case-11",
+      "passed": false,
+      "published": false,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": null,
+      "spec": {
+        "block": 128,
+        "family": "pointwise",
+        "mode": "internal_nan_bool",
+        "names": {
+          "out": "out_716128",
+          "x": "x_242739",
+          "y": "y_679832"
+        },
+        "seed": 27430989758607568666337195257646545789,
+        "shape": [
+          31
+        ],
+        "version": "scalar-predicate-literal-v1"
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/28/result.json"
+    },
+    {
+      "index": 29,
+      "name": "case-1",
+      "path": "<research-root>/campaigns/campaign-20261022-12h-v1/confirmations/corrected-baseline-v1/math/case-1",
+      "passed": false,
+      "published": false,
+      "category": "explicitly excluded starred constructs",
+      "starred": [
+        "FuncCallExpr"
+      ],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": "compiler rejected/invalid PTX (1): compile.py: Unsupported: Unsupported expression FuncCallExpr\n",
+      "spec": {
+        "block": 32,
+        "family": "pointwise",
+        "mode": "log_call",
+        "names": {
+          "out": "out_854378",
+          "x": "x_414039"
+        },
+        "seed": 166292607746674214606269182587265904862,
+        "shape": [
+          67
+        ],
+        "version": "math-cast-flatindex-v1"
+      },
+      "result": null
+    },
+    {
+      "index": 30,
+      "name": "case-31",
+      "path": "<research-root>/campaigns/campaign-20261022-12h-v1/supplement-6a7065784ebfd2f113b9acb0af7fbf1c95dfd543754f566142257c09a77291fa/signed/case-31",
+      "passed": true,
+      "published": false,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": null,
+      "spec": {
+        "block": 32,
+        "family": "pointwise",
+        "input_length": 22,
+        "names": {
+          "out": "out_116831",
+          "x": "x_493565"
+        },
+        "offset": 13,
+        "parameters": {
+          "divisor": -1,
+          "dynamic": true,
+          "multiplier": 1,
+          "n": 31,
+          "op": "//",
+          "seed": 7674677781671106564,
+          "shift": 11
+        },
+        "schedule": "signed-intermediate-copy",
+        "shape": [
+          31
+        ],
+        "version": "signed-index-fresh-v2"
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/30/result.json"
+    },
+    {
+      "index": 31,
+      "name": "case-4",
+      "path": "<research-root>/campaigns/campaign-20261022-12h-v1/supplement-6a7065784ebfd2f113b9acb0af7fbf1c95dfd543754f566142257c09a77291fa/vector/case-4",
+      "passed": true,
+      "published": false,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": null,
+      "spec": {
+        "block": 32,
+        "family": "pointwise",
+        "names": {
+          "out": "out_750445",
+          "x": "x_799729",
+          "y": "y_221412"
+        },
+        "shape": [
+          65,
+          4
+        ],
+        "version": "vector-offset-v1",
+        "width": 4,
+        "x_offset": 1,
+        "y_offset": 2
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/31/result.json"
+    },
+    {
+      "index": 32,
+      "name": "case-14",
+      "path": "<research-root>/campaigns/campaign-20261022-12h-v1/integration-main-83a3944/replay-plan-v4-canonical/cases/case-14",
+      "passed": false,
+      "published": false,
+      "category": "explicitly excluded starred constructs",
+      "starred": [
+        "CastExpr"
+      ],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "i32"
+      ],
+      "error": "compiler rejected/invalid PTX (1): compile.py: Unsupported: Unsupported expression CastExpr\n",
+      "spec": {
+        "family": "merge-expression-cse",
+        "kind": "cast",
+        "reference": "independent NumPy integer expressions; Builtin hardware geometry; rowmajor offset",
+        "reservation_id": "fc575b6ed0f769506fef9e9b9f369946e7ca24a1dc3216e8851a890d7e73153a",
+        "seed": 9137448493145225347,
+        "source_frozen_before_draw": "9f43f8ac4feced8a97504972a7e9b15f01940078cfdbce11ba90de8d0a6460d5"
+      },
+      "result": null
+    },
+    {
+      "index": 33,
+      "name": "case-15",
+      "path": "<research-root>/campaigns/campaign-20261022-12h-v1/integration-main-83a3944/replay-plan-v4-canonical/cases/case-15",
+      "passed": false,
+      "published": false,
+      "category": "explicitly excluded starred constructs",
+      "starred": [
+        "FuncCallExpr"
+      ],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "i32"
+      ],
+      "error": "compiler rejected/invalid PTX (1): compile.py: Unsupported: Unsupported expression FuncCallExpr\n",
+      "spec": {
+        "family": "merge-expression-cse",
+        "kind": "funcall",
+        "reference": "independent NumPy integer expressions; Builtin hardware geometry; rowmajor offset",
+        "reservation_id": "fc575b6ed0f769506fef9e9b9f369946e7ca24a1dc3216e8851a890d7e73153a",
+        "seed": 9137448493145225347,
+        "source_frozen_before_draw": "9f43f8ac4feced8a97504972a7e9b15f01940078cfdbce11ba90de8d0a6460d5"
+      },
+      "result": null
+    },
+    {
+      "index": 34,
+      "name": "case-16",
+      "path": "<research-root>/campaigns/campaign-20261022-12h-v1/integration-main-83a3944/replay-plan-v4-canonical/cases/case-16",
+      "passed": false,
+      "published": false,
+      "category": "explicitly excluded starred constructs",
+      "starred": [
+        "FlatIndex"
+      ],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "i32"
+      ],
+      "error": "compiler rejected/invalid PTX (1): compile.py: NameError: name 'FlatIndex' is not defined\n",
+      "spec": {
+        "family": "merge-expression-cse",
+        "kind": "flatindex",
+        "reference": "independent NumPy integer expressions; Builtin hardware geometry; rowmajor offset",
+        "reservation_id": "fc575b6ed0f769506fef9e9b9f369946e7ca24a1dc3216e8851a890d7e73153a",
+        "seed": 9137448493145225347,
+        "source_frozen_before_draw": "9f43f8ac4feced8a97504972a7e9b15f01940078cfdbce11ba90de8d0a6460d5"
+      },
+      "result": null
+    },
+    {
+      "index": 35,
+      "name": "case-17",
+      "path": "<research-root>/campaigns/campaign-20261022-12h-v1/integration-main-83a3944/replay-plan-v4-canonical/cases/case-17",
+      "passed": false,
+      "published": false,
+      "category": "explicitly excluded starred constructs",
+      "starred": [
+        "Builtin"
+      ],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "i32"
+      ],
+      "error": "compiler rejected/invalid PTX (1): compile.py: Unsupported: Unsupported expression Builtin\n",
+      "spec": {
+        "family": "merge-expression-cse",
+        "kind": "builtin",
+        "reference": "independent NumPy integer expressions; Builtin hardware geometry; rowmajor offset",
+        "reservation_id": "fc575b6ed0f769506fef9e9b9f369946e7ca24a1dc3216e8851a890d7e73153a",
+        "seed": 9137448493145225347,
+        "source_frozen_before_draw": "9f43f8ac4feced8a97504972a7e9b15f01940078cfdbce11ba90de8d0a6460d5"
+      },
+      "result": null
+    },
+    {
+      "index": 36,
+      "name": "04-nested-restore",
+      "path": "<research-root>/campaigns/campaign-20261022-12h-v1/integration-main-83a3944/replay-plan-v7-full/fresh-tile-cases/04-nested-restore",
+      "passed": false,
+      "published": false,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": null,
+      "spec": {
+        "cols": 13,
+        "family": "merge-tile-scope-cse",
+        "mode": "nested-restore",
+        "n": 26,
+        "reference": "Independent NumPy indexing from global id, lexical scope and per-Tile guarded-body semantics; finite F32 transport",
+        "reservation_id": "7492ffb77a5c6e91d08a27f85c68f42046160c0b6142756dad4aa5b5f7ac70e4",
+        "rows": 2,
+        "seed": 263651620109669738,
+        "source_frozen_before_draw": "1d4280e30cc19b79b01363177d5b271c3d19c26e78df0af30976776e003a3cce"
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/36/result.json"
+    },
+    {
+      "index": 37,
+      "name": "07-loop-axis-shadow",
+      "path": "<research-root>/campaigns/campaign-20261022-12h-v1/integration-main-83a3944/replay-plan-v7-full/fresh-tile-cases/07-loop-axis-shadow",
+      "passed": false,
+      "published": false,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": null,
+      "spec": {
+        "cols": 16,
+        "family": "merge-tile-scope-cse",
+        "mode": "loop-axis-shadow",
+        "n": 48,
+        "reference": "Independent NumPy indexing from global id, lexical scope and per-Tile guarded-body semantics; finite F32 transport",
+        "reservation_id": "7492ffb77a5c6e91d08a27f85c68f42046160c0b6142756dad4aa5b5f7ac70e4",
+        "rows": 3,
+        "seed": 263651620109669738,
+        "source_frozen_before_draw": "1d4280e30cc19b79b01363177d5b271c3d19c26e78df0af30976776e003a3cce"
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/37/result.json"
+    },
+    {
+      "index": 38,
+      "name": "09-nested-unequal-guard",
+      "path": "<research-root>/campaigns/campaign-20261022-12h-v1/integration-main-83a3944/replay-plan-v7-full/fresh-tile-cases/09-nested-unequal-guard",
+      "passed": false,
+      "published": false,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": null,
+      "spec": {
+        "cols": 7,
+        "family": "merge-tile-scope-cse",
+        "mode": "nested-unequal-guard",
+        "n": 14,
+        "reference": "Independent NumPy indexing from global id, lexical scope and per-Tile guarded-body semantics; finite F32 transport",
+        "reservation_id": "7492ffb77a5c6e91d08a27f85c68f42046160c0b6142756dad4aa5b5f7ac70e4",
+        "rows": 2,
+        "seed": 263651620109669738,
+        "source_frozen_before_draw": "1d4280e30cc19b79b01363177d5b271c3d19c26e78df0af30976776e003a3cce"
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/38/result.json"
+    },
+    {
+      "index": 39,
+      "name": "case-14",
+      "path": "<research-root>/campaigns/campaign-20261022-12h-v1/confirmations/corrected-baseline-v1/partial/case-14",
+      "passed": true,
+      "published": false,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": null,
+      "spec": {
+        "block": 32,
+        "explicit_seed": false,
+        "family": "reduction",
+        "names": {
+          "out": "out_208013",
+          "x": "x_292471"
+        },
+        "operation": "multiply",
+        "seed": 166292607746674214606269182587265908527,
+        "shape": [
+          127
+        ],
+        "version": "partial-reductions-primary-identities-v1"
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/39/result.json"
+    },
+    {
+      "index": 40,
+      "name": "case-30",
+      "path": "<research-root>/campaigns/campaign-20261022-12h-v1/confirmations/corrected-baseline-v1/partial/case-30",
+      "passed": true,
+      "published": false,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": null,
+      "spec": {
+        "block": 32,
+        "explicit_seed": false,
+        "family": "reduction",
+        "names": {
+          "out": "out_628812",
+          "x": "x_189278"
+        },
+        "operation": "minimum",
+        "seed": 166292607746674214606269182587265908527,
+        "shape": [
+          127
+        ],
+        "version": "partial-reductions-primary-identities-v1"
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/40/result.json"
+    },
+    {
+      "index": 41,
+      "name": "case-22",
+      "path": "<research-root>/campaigns/campaign-20261022-12h-v1/confirmations/corrected-baseline-v1/partial/case-22",
+      "passed": true,
+      "published": false,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": null,
+      "spec": {
+        "block": 32,
+        "explicit_seed": false,
+        "family": "reduction",
+        "names": {
+          "out": "out_686723",
+          "x": "x_226310"
+        },
+        "operation": "maximum",
+        "seed": 166292607746674214606269182587265908527,
+        "shape": [
+          127
+        ],
+        "version": "partial-reductions-primary-identities-v1"
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/41/result.json"
+    },
+    {
+      "index": 42,
+      "name": "case-24",
+      "path": "<research-root>/campaigns/campaign-20261022-12h-v1/integration-main-83a3944/replay-plan-v4-canonical/cases/case-24",
+      "passed": false,
+      "published": false,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": null,
+      "spec": {
+        "active": 3,
+        "family": "merge-explicit-seed-extreme",
+        "operation": "minimum",
+        "reference": "independent NumPy max/min; explicit Init seed; no Accum seed ambiguity",
+        "reservation_id": "fc575b6ed0f769506fef9e9b9f369946e7ca24a1dc3216e8851a890d7e73153a",
+        "seed": 6160447054327622611,
+        "source_frozen_before_draw": "9f43f8ac4feced8a97504972a7e9b15f01940078cfdbce11ba90de8d0a6460d5"
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/42/result.json"
+    },
+    {
+      "index": 43,
+      "name": "case-22",
+      "path": "<research-root>/campaigns/campaign-20261022-12h-v1/integration-main-83a3944/replay-plan-v4-canonical/cases/case-22",
+      "passed": false,
+      "published": false,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": null,
+      "spec": {
+        "active": 3,
+        "family": "merge-explicit-seed-extreme",
+        "operation": "maximum",
+        "reference": "independent NumPy max/min; explicit Init seed; no Accum seed ambiguity",
+        "reservation_id": "fc575b6ed0f769506fef9e9b9f369946e7ca24a1dc3216e8851a890d7e73153a",
+        "seed": 6160447054327622611,
+        "source_frozen_before_draw": "9f43f8ac4feced8a97504972a7e9b15f01940078cfdbce11ba90de8d0a6460d5"
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/43/result.json"
+    },
+    {
+      "index": 44,
+      "name": "case-22",
+      "path": "<research-root>/campaigns/campaign-20261022-12h-v1/confirmations/corrected-baseline-v1/nan/case-22",
+      "passed": false,
+      "published": false,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": "compiler rejected/invalid PTX (1): compile.py: Unsupported: Unsupported scalar conversion pred -> f32\n",
+      "spec": {
+        "block": 128,
+        "family": "reduction",
+        "names": {
+          "out": "out_639600",
+          "x": "x_739776"
+        },
+        "nan_position": "left",
+        "operation": "minimum",
+        "seed": 166292607746674214606269182587265906996,
+        "shape": [
+          256
+        ],
+        "style": "warp",
+        "version": "minmax-relu-internal-nan-v1"
+      },
+      "result": null
+    },
+    {
+      "index": 45,
+      "name": "case-20",
+      "path": "<research-root>/campaigns/campaign-20261022-12h-v1/confirmations/bugfix-integration-pre-nan-v1/nan/case-20",
+      "passed": false,
+      "published": false,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": "compiler rejected/invalid PTX (1): compile.py: Unsupported: Unsupported scalar conversion pred -> f32\n",
+      "spec": {
+        "block": 128,
+        "family": "reduction",
+        "names": {
+          "out": "out_931397",
+          "x": "x_360255"
+        },
+        "nan_position": "left",
+        "operation": "maximum",
+        "seed": 236249601734354210904404303181159201590,
+        "shape": [
+          256
+        ],
+        "style": "tree",
+        "version": "minmax-relu-internal-nan-v1"
+      },
+      "result": null
+    },
+    {
+      "index": 46,
+      "name": "case-11",
+      "path": "<research-root>/campaigns/campaign-20261022-12h-v1/tree-2fd6308c7237da72d5e340f09165e354c782cfcf30f67e6fa8724d8411d85fbc/tree/case-11",
+      "passed": false,
+      "published": false,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": null,
+      "spec": {
+        "block": 256,
+        "dynamic": true,
+        "family": "reduction",
+        "mode": "affine",
+        "monoid": "affinefunctioncomposition",
+        "names": {
+          "out": "out_469284",
+          "x": "x_717346"
+        },
+        "reference": "closedformdyadicsubsets;affineorderedbitreversalcoefficientformula",
+        "repeats": 8,
+        "seed": 123019284291886213981024992950587336861,
+        "shape": [
+          3,
+          10,
+          2
+        ],
+        "tree_length": 8,
+        "version": "tree-halve-live-shared-v1"
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/46/result.json"
+    },
+    {
+      "index": 47,
+      "name": "case-5",
+      "path": "<research-root>/campaigns/campaign-20261022-12h-v1/confirmations/corrected-baseline-v1/collective/case-5",
+      "passed": false,
+      "published": false,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": null,
+      "spec": {
+        "block": 128,
+        "family": "reduction",
+        "kind": "tree",
+        "mode": "loop0",
+        "names": {
+          "out": "out_769703",
+          "x": "x_889993"
+        },
+        "seed": 166292607746674214606269182587265907435,
+        "shape": [
+          3,
+          128
+        ],
+        "uniform_condition": "explicit Tile block axis only",
+        "version": "collective-inplace-control-v1"
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/47/result.json"
+    },
+    {
+      "index": 48,
+      "name": "case-13",
+      "path": "<research-root>/campaigns/campaign-20261022-12h-v1/confirmations/corrected-baseline-v1/collective/case-13",
+      "passed": false,
+      "published": false,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": null,
+      "spec": {
+        "block": 128,
+        "family": "reduction",
+        "kind": "warp",
+        "mode": "loop0",
+        "names": {
+          "out": "out_240379",
+          "x": "x_165591"
+        },
+        "seed": 166292607746674214606269182587265907435,
+        "shape": [
+          4,
+          128
+        ],
+        "uniform_condition": "explicit Tile block axis only",
+        "version": "collective-inplace-control-v1"
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/48/result.json"
+    },
+    {
+      "index": 49,
+      "name": "case-8",
+      "path": "<research-root>/campaigns/campaign-20261022-12h-v1/scope-358714ba77d69c3f808b4831023f7c88c0b0e61064d06e5044513886735c4c5c/scope/case-8",
+      "passed": true,
+      "published": false,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": null,
+      "spec": {
+        "block": 64,
+        "constants": [
+          5.0,
+          34.0,
+          32.0,
+          29.0,
+          1.0
+        ],
+        "family": "pointwise",
+        "mode": "nested",
+        "names": {
+          "out": "out_420232",
+          "x": "x_842234"
+        },
+        "seed": 80969618119510479128449135582899809955,
+        "shape": [
+          7,
+          3
+        ],
+        "version": "raw-kernel-init-shadow-v1"
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/49/result.json"
+    },
+    {
+      "index": 50,
+      "name": "00-compound",
+      "path": "<research-root>/campaigns/campaign-20261022-12h-v1/integration-main-83a3944/strided-live-step-v11-probe/00-compound",
+      "passed": false,
+      "published": false,
+      "category": "explicitly excluded starred constructs",
+      "starred": [
+        "CastExpr"
+      ],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": "compiler rejected/invalid PTX (1): compile.py: Unsupported: Unsupported expression CastExpr\n",
+      "spec": {
+        "bias": 2,
+        "delta": 2,
+        "end": 13,
+        "exit": 13,
+        "family": "strided-live-step",
+        "initial": 1,
+        "mode": "compound",
+        "reference": "Plain NumPy F32 carried state, primary less-than test and live post-body integer step",
+        "reservation_id": "964bd65da7b97e3fba6bdabe69bd2b44d1142c035317052d84fce86e16200596",
+        "seed": 4670128610059566574,
+        "source_frozen_before_draw": "f2ae635129f93c54092a1326bac3dc1ac3e97724e4e91a710efaccc72f3fe16b",
+        "start": 1,
+        "visited": [
+          1,
+          6
+        ]
+      },
+      "result": null
+    },
+    {
+      "index": 51,
+      "name": "05-shadow-control",
+      "path": "<research-root>/campaigns/campaign-20261022-12h-v1/integration-main-83a3944/strided-step-v12-fresh/05-shadow-control",
+      "passed": false,
+      "published": false,
+      "category": "explicitly excluded starred constructs",
+      "starred": [
+        "CastExpr"
+      ],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": "compiler rejected/invalid PTX (1): compile.py: Unsupported: Unsupported expression CastExpr\n",
+      "spec": {
+        "bias": 1,
+        "delta": 3,
+        "end": 22,
+        "exit": 23,
+        "family": "strided-live-step",
+        "initial": 2,
+        "mode": "shadow-control",
+        "reference": "Plain NumPy F32 carried state, primary less-than test and live post-body integer step",
+        "reservation_id": "7d98069b826d772d9210327b78269b674abf6ef2d7b01a21c06c8e09489ddb38",
+        "seed": 8937932267246804970,
+        "source_frozen_before_draw": "d883119296f923cc179e64220d8fc3937930ec1cafe15a8e14e2693325f04aed",
+        "start": 2,
+        "visited": [
+          2,
+          5,
+          8,
+          11,
+          14,
+          17,
+          20
+        ]
+      },
+      "result": null
+    },
+    {
+      "index": 52,
+      "name": "00-live-end-width2",
+      "path": "<research-root>/campaigns/campaign-20261022-12h-v1/integration-main-83a3944/strided-end-v11-probe/00-live-end-width2",
+      "passed": false,
+      "published": false,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": "assembly/disassembly failed; diagnostics retained at <artifact-root>/sync-powenn-20261023/assembly-cache/.assembly-wmsuzotm: assembly failed: ptxas <artifact-root>/sync-powenn-20261023/assembly-cache/.assembly-wmsuzotm/kernel.ptx, line 55; error   : Rounding modifier required for instruction 'cvt'\nptxas <artifact-root>/sync-powenn-20261023/assembly-cache/.assembly-wmsuzotm/kernel.ptx, line 69; error   : Rounding modifier required for instruction 'cvt'\nptxas fatal   : Ptx assembly aborted due to errors\n",
+      "spec": {
+        "family": "strided-end-snapshot",
+        "mode": "live-end",
+        "n": 4,
+        "reference": "Copied end=n; exact uniform I32 subgroup sum repeated n times; F32 count/indexsum",
+        "reservation_id": "964bd65da7b97e3fba6bdabe69bd2b44d1142c035317052d84fce86e16200596",
+        "seed": 11902273356176299799,
+        "source_frozen_before_draw": "f2ae635129f93c54092a1326bac3dc1ac3e97724e4e91a710efaccc72f3fe16b",
+        "subgroup_width": 2
+      },
+      "result": null
+    },
+    {
+      "index": 53,
+      "name": "case-92006",
+      "path": "<research-root>/campaigns/campaign-20261022-6h-v1/async-probes-v2/case-92006",
+      "passed": true,
+      "published": false,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": null,
+      "spec": {
+        "block": 32,
+        "dynamic": true,
+        "family": "pointwise",
+        "lane_index": true,
+        "names": {
+          "out": "out_386448",
+          "x": "x_253303",
+          "y": "y_719097"
+        },
+        "nbytes": 16,
+        "seed": 92006,
+        "shape": [
+          3,
+          32,
+          4
+        ],
+        "version": "async-transport-diagnostic-v2"
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/53/result.json"
+    },
+    {
+      "index": 54,
+      "name": "case-7",
+      "path": "<research-root>/campaigns/campaign-20261022-12h-v1/supplement-6a7065784ebfd2f113b9acb0af7fbf1c95dfd543754f566142257c09a77291fa/shared/case-7",
+      "passed": true,
+      "published": false,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": null,
+      "spec": {
+        "active_k": 63,
+        "block": 128,
+        "cond": true,
+        "family": "matmul",
+        "names": {
+          "out": "out_969982",
+          "x": "x_528562",
+          "y": "y_873341"
+        },
+        "seeded": false,
+        "shape": [
+          64,
+          32,
+          65
+        ],
+        "version": "shared-explicit-init-aligned-v2"
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/54/result.json"
+    },
+    {
+      "index": 55,
+      "name": "case-644651300530683049",
+      "path": "<research-root>/campaigns/campaign-20261022-12h-v1/supplement-6a7065784ebfd2f113b9acb0af7fbf1c95dfd543754f566142257c09a77291fa/fused/case-644651300530683049",
+      "passed": true,
+      "published": false,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": null,
+      "spec": {
+        "block": 64,
+        "family": "attention",
+        "names": {
+          "out": "out_602848",
+          "scale": "scale_633435",
+          "v": "v_956009",
+          "x": "x_552251",
+          "y": "y_920134"
+        },
+        "schedule": "fused-online-chunked-key-tail",
+        "seed": 644651300530683049,
+        "shape": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "version": "fused-online-explicit-init-v2"
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/55/result.json"
+    },
+    {
+      "index": 56,
+      "name": "softmax-1",
+      "path": "<research-root>/suites/cases-81555745e006dc3cf6ef9e35a2be7c6eb35c5ca27fe835bc5d5e79fc8242b851/softmax-1",
+      "passed": true,
+      "published": false,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": null,
+      "spec": {
+        "block": 128,
+        "epsilon": 1e-05,
+        "family": "softmax",
+        "names": {
+          "out": "softmax",
+          "probs": "probs_774683",
+          "scale": "scale_539238",
+          "scores": "scores_178330",
+          "shift": "shift_782961",
+          "v": "v_190545",
+          "x": "x",
+          "y": "y_102394"
+        },
+        "operation": "scale_shift",
+        "pattern": "cancellation",
+        "reference": "independent-numpy-f64/plain-stable-softmax",
+        "schedule": "cooperative-online-softmax",
+        "seed": 10571001967417340278,
+        "shape": [
+          5,
+          257
+        ],
+        "vector_width": 4,
+        "version": "emmy-research-cases-scalar-flatindex-v3"
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/56/result.json"
+    },
+    {
+      "index": 57,
+      "name": "case-08",
+      "path": "<research-root>/campaigns/campaign-20261022-6h-v1/range-shared8-vector-v1-diagnostics-v1/subgroups/case-08",
+      "passed": false,
+      "published": false,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": null,
+      "spec": {
+        "axisname": "_gid",
+        "block": 80,
+        "family": "reduction",
+        "names": {
+          "out": "out_998512",
+          "x": "x_507379"
+        },
+        "pattern": "cancellation",
+        "reference": "plain-numpy-f64-row-sum",
+        "schedule": "aligned-subgroup-partial-cta",
+        "seed": 2589934197505271027,
+        "shape": [
+          3,
+          4
+        ],
+        "version": "post-freeze-subgroup-diagnostic-v1"
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/57/result.json"
+    },
+    {
+      "index": 58,
+      "name": "i64-right_shift",
+      "path": "<research-root>/campaigns/campaign-20261023-12h-v2/cases/native64-shift-screen-v1/i64-right_shift",
+      "passed": false,
+      "published": false,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "i64"
+      ],
+      "error": "assembly/disassembly failed; diagnostics retained at <artifact-root>/sync-powenn-20261023/assembly-cache/.assembly-5aqmzn2t: assembly failed: ptxas <artifact-root>/sync-powenn-20261023/assembly-cache/.assembly-5aqmzn2t/kernel.ptx, line 51; error   : Arguments mismatch for instruction 'shr'\nptxas fatal   : Ptx assembly aborted due to errors\n",
+      "spec": {
+        "block": 32,
+        "family": "pointwise",
+        "ir_dtype": "i64",
+        "names": {
+          "count": "count_907250",
+          "out": "out_221719",
+          "x": "x_811212"
+        },
+        "op": "right_shift",
+        "seed": 3429721464421278618,
+        "shape": [
+          97
+        ],
+        "storage": "i64 raw bit patterns",
+        "version": "native64-shift-oracle-v1"
+      },
+      "result": null
+    },
+    {
+      "index": 59,
+      "name": "scalar-shadow",
+      "path": "<research-root>/campaigns/campaign-20261023-12h-v2/cases/load-screen-v1/scalar-shadow",
+      "passed": false,
+      "published": false,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "i32"
+      ],
+      "error": null,
+      "spec": {
+        "block": 32,
+        "family": "pointwise",
+        "mode": "scalar-shadow",
+        "names": {
+          "indices": "indices_291144",
+          "out": "out_579822",
+          "x": "x_609298"
+        },
+        "seed": 6225590090851498203,
+        "shape": [
+          65,
+          2
+        ],
+        "version": "lexical-load-oracle-v1"
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/59/result.json"
+    },
+    {
+      "index": 60,
+      "name": "grouped-simultaneous",
+      "path": "<research-root>/campaigns/campaign-20261023-12h-v2/cases/load-screen-v1/grouped-simultaneous",
+      "passed": false,
+      "published": false,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "i32"
+      ],
+      "error": null,
+      "spec": {
+        "block": 32,
+        "family": "pointwise",
+        "mode": "grouped-simultaneous",
+        "names": {
+          "indices": "indices_885554",
+          "out": "out_825342",
+          "x": "x_532673"
+        },
+        "seed": 6225590090851498203,
+        "shape": [
+          65,
+          2
+        ],
+        "version": "lexical-load-oracle-v1"
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/60/result.json"
+    },
+    {
+      "index": 61,
+      "name": "nested-init-and-carried-update",
+      "path": "<research-root>/campaigns/campaign-20261023-12h-v2/tile-init-screen/cases/nested-init-and-carried-update",
+      "passed": false,
+      "published": false,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": null,
+      "spec": {
+        "block": 32,
+        "family": "pointwise",
+        "increment": 2.0,
+        "inner_seed": -4.0,
+        "names": {
+          "out": "out_766476",
+          "state": "state_473935",
+          "step": "step_447948"
+        },
+        "outer_seed": -10.0,
+        "seed": 533822171595057634,
+        "shape": [
+          65,
+          4
+        ],
+        "version": "nested-tile-init-oracle-v1"
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/61/result.json"
+    },
+    {
+      "index": 62,
+      "name": "binary",
+      "path": "<research-root>/campaigns/campaign-20261023-12h-v2/opaque-screen/binary",
+      "passed": false,
+      "published": false,
+      "category": "explicitly excluded starred constructs",
+      "starred": [
+        "CastExpr"
+      ],
+      "scalar_by_value": true,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": "compiler rejected/invalid PTX (1): compile.py: Unsupported: Buffer a_out_733213 absent from metadata ABI\n",
+      "spec": {
+        "a": 19.25,
+        "b": 0.75,
+        "family": "pointwise",
+        "first": 6.0,
+        "indices": [
+          20,
+          1
+        ],
+        "second": -5.0,
+        "seed": 315465122309401295466616167848850436193,
+        "type": "binary-opaque-child-cache-key",
+        "version": "opaque-child-address-oracle-v1"
+      },
+      "result": null
+    },
+    {
+      "index": 63,
+      "name": "ternary",
+      "path": "<research-root>/campaigns/campaign-20261023-12h-v2/opaque-screen/ternary",
+      "passed": false,
+      "published": false,
+      "category": "explicitly excluded starred constructs",
+      "starred": [
+        "CastExpr"
+      ],
+      "scalar_by_value": true,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": "compiler rejected/invalid PTX (1): compile.py: Unsupported: Buffer a_out_322823 absent from metadata ABI\n",
+      "spec": {
+        "a": 24.25,
+        "b": 17.75,
+        "family": "pointwise",
+        "first": 8.0,
+        "indices": [
+          25,
+          18
+        ],
+        "second": -13.0,
+        "seed": 315465122309401295466616167848850436193,
+        "type": "ternary-opaque-child-cache-key",
+        "version": "opaque-child-address-oracle-v1"
+      },
+      "result": null
+    },
+    {
+      "index": 64,
+      "name": "let-vector-scalar-shadow",
+      "path": "<research-root>/campaigns/campaign-20261023-12h-v2/carrier-v2-screen/let-vector-scalar-shadow",
+      "passed": false,
+      "published": false,
+      "category": "ABI or dtype beyond documented challenge arguments",
+      "starred": [],
+      "scalar_by_value": true,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": "compiler rejected/invalid PTX (1): compile.py: Unsupported: Buffer p_out_744573 absent from metadata ABI\n",
+      "spec": {
+        "family": "pointwise",
+        "increment": 3.0,
+        "local": 10.0,
+        "outer": 5.0,
+        "scalar": 0.0,
+        "seed": 101638171202583753525687892597247056594,
+        "shape": [
+          35,
+          8
+        ],
+        "types": [
+          "Let-local-carrier-shadow",
+          "Load-buffer-local-carrier-shadow",
+          "Load-scalar-local-carrier-shadow",
+          "Assign-local-carrier-shadow"
+        ]
+      },
+      "result": null
+    },
+    {
+      "index": 65,
+      "name": "select-shadow-and-snapshot",
+      "path": "<research-root>/campaigns/campaign-20261023-12h-v2/select-oracle-validation-13579/select-shadow-and-snapshot",
+      "passed": false,
+      "published": false,
+      "category": "explicitly excluded starred constructs",
+      "starred": [
+        "Select"
+      ],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": null,
+      "spec": {
+        "block": 32,
+        "family": "pointwise",
+        "seed": 13579,
+        "shape": [
+          97,
+          6
+        ],
+        "types": [
+          "Select-local-carrier-shadow",
+          "Select-single-branch-snapshot"
+        ]
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/65/result.json"
+    },
+    {
+      "index": 66,
+      "name": "nested-strided-loop",
+      "path": "<research-root>/campaigns/campaign-20261023-12h-v2/partial-uniform-oracle-validation-667788/nested-strided-loop",
+      "passed": false,
+      "published": false,
+      "category": "explicitly excluded starred constructs",
+      "starred": [
+        "FuncCallExpr"
+      ],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": "compiler rejected/invalid PTX (1): compile.py: Unsupported: Unsupported expression FuncCallExpr\n",
+      "spec": {
+        "block": 64,
+        "ctas": 3,
+        "family": "reduction",
+        "n": 191,
+        "repeats": 7,
+        "schedule": "nested-strided-loop",
+        "seed": 667788,
+        "tail": 1,
+        "types": [
+          "partial-cta-finite-uniform-loop-barrier"
+        ]
+      },
+      "result": null
+    },
+    {
+      "index": 67,
+      "name": "scalar-relations",
+      "path": "<research-root>/campaigns/campaign-20261023-12h-v2/scalar-bool-v2-oracle-validation-884411/scalar-relations",
+      "passed": false,
+      "published": false,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": "compiler rejected/invalid PTX (1): compile.py: Unsupported: Unsupported buffer dtype bool\n",
+      "spec": {
+        "block": 64,
+        "family": "pointwise",
+        "initial": null,
+        "n": 71,
+        "schedule": "scalar-relations",
+        "seed": 884411,
+        "semantic_contract": "scalar-BOOL-relational-Assign-and-BinaryExpr",
+        "trips": null
+      },
+      "result": null
+    },
+    {
+      "index": 68,
+      "name": "four-folds-seed-false",
+      "path": "<research-root>/campaigns/campaign-20261023-12h-v2/scalar-bool-v2-oracle-validation-884411/four-folds-seed-false",
+      "passed": false,
+      "published": false,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": "compiler rejected/invalid PTX (1): compile.py: Unsupported: Unsupported buffer dtype bool\n",
+      "spec": {
+        "block": 32,
+        "family": "reduction",
+        "initial": [
+          false,
+          true,
+          false,
+          true
+        ],
+        "n": 33,
+        "schedule": "four-folds-seed-false",
+        "seed": 884411,
+        "semantic_contract": "explicit-scalar-BOOL-carrier",
+        "trips": 7
+      },
+      "result": null
+    },
+    {
+      "index": 69,
+      "name": "nested-key-score-shadow",
+      "path": "<research-root>/campaigns/campaign-20261023-12h-v2/nested-key-scope-oracle-validation-710331/nested-key-score-shadow",
+      "passed": false,
+      "published": false,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": null,
+      "spec": {
+        "dim": 8,
+        "family": "attention",
+        "keys": 7,
+        "names": {
+          "col": "col_460613",
+          "key": "key_460613",
+          "kt": "kt_460613",
+          "out": "out_460613",
+          "q": "q_460613",
+          "row": "row_460613",
+          "scores": [
+            "score0_460613",
+            "score1_460613"
+          ],
+          "totals": [
+            "total0_460613",
+            "total1_460613"
+          ]
+        },
+        "outer": [
+          -17.0,
+          -42.0
+        ],
+        "rows": 4,
+        "seed": 710331,
+        "semantic_contract": "Two seeded child dot folds shadow ancestor scoreInit only inside KEYbody; KEY-own total folds export finalized sums, ancestor scores restored after KEYloop. Mathematical output combines two independent queries perrow, replicatedoverfullCTAcol lanes.",
+        "version": "nested-key-owned-score-scope-v1",
+        "width": 16
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/69/result.json"
+    },
+    {
+      "index": 70,
+      "name": "softplus-and-amplified-tail",
+      "path": "<research-root>/campaigns/campaign-20261023-12h-v2/softplus-tail-oracle-validation-665541/softplus-and-amplified-tail",
+      "passed": false,
+      "published": false,
+      "category": "ABI or dtype beyond documented challenge arguments",
+      "starred": [],
+      "scalar_by_value": true,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": "compiler rejected/invalid PTX (1): compile.py: Unsupported: Buffer amp_711030 absent from metadata ABI\n",
+      "spec": {
+        "amplifier": 1.0000000150474662e+30,
+        "family": "pointwise",
+        "names": {
+          "amplifier": "amp_711030",
+          "axis": "cell_711030",
+          "input": "x_711030",
+          "out": "out_711030",
+          "scaled": "scaled_711030",
+          "soft": "soft_711030"
+        },
+        "seed": 665541,
+        "semantic_contract": "F32softplus per publiclogaddexp(0,x), roundedtoF32beforeordinaryF32multiply withscalaramplifier; finite-negative-tail information mustsurvive beforecomposition. Independent references modeltypedoperationboundary andfixedordinary1e-5/1e-7 tolerances.",
+        "shape": [
+          97,
+          2
+        ],
+        "version": "softplus-f32-negative-tail-composition-v1"
+      },
+      "result": null
+    },
+    {
+      "index": 71,
+      "name": "erf-and-amplified-small-values",
+      "path": "<research-root>/campaigns/campaign-20261023-12h-v2/erf-small-oracle-validation-884271/erf-and-amplified-small-values",
+      "passed": false,
+      "published": false,
+      "category": "ABI or dtype beyond documented challenge arguments",
+      "starred": [],
+      "scalar_by_value": true,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": "compiler rejected/invalid PTX (1): compile.py: Unsupported: Buffer amp_717820 absent from metadata ABI\n",
+      "spec": {
+        "amplifier": 1.2089258196146292e+24,
+        "family": "pointwise",
+        "names": {
+          "amplifier": "amp_717820",
+          "axis": "cell_717820",
+          "erf": "erf_717820",
+          "input": "x_717820",
+          "out": "out_717820",
+          "scaled": "scaled_717820"
+        },
+        "seed": 884271,
+        "semantic_contract": "Public erf F32 operation rounded to F32, then ordinary finite F32 scalar multiply. All nonzero forced tiny inputs and raw/scaled references NORMAL; square underflow inside a chosen lowering cannot erase primitive information. Signed zero and small/transition/large/partialTile controls included.",
+        "shape": [
+          35,
+          2
+        ],
+        "version": "erf-f32-normal-small-composition-v1"
+      },
+      "result": null
+    },
+    {
+      "index": 72,
+      "name": "rmsnorm-0",
+      "path": "<research-root>/suites/cases-61fd828c21bf594154c940d29038b9a25e4a4b4f30db1f9dc4c4ee6fd5668c08/rmsnorm-0",
+      "passed": true,
+      "published": false,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": null,
+      "spec": {
+        "block": 64,
+        "epsilon": 1e-05,
+        "family": "rmsnorm",
+        "names": {
+          "out": "out_408564",
+          "probs": "probs_133551",
+          "scale": "scale_289547",
+          "scores": "scores_518885",
+          "shift": "shift_529374",
+          "v": "v_857846",
+          "x": "x_616571",
+          "y": "y_575109"
+        },
+        "operation": "multiply",
+        "pattern": "normal",
+        "reference": "independent-numpy-f64/plain-stable-softmax",
+        "schedule": "serial-per-cell",
+        "seed": 4348341430831913587,
+        "shape": [
+          1,
+          32
+        ],
+        "vector_width": 2,
+        "version": "emmy-research-cases-scalar-flatindex-v3"
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/72/result.json"
+    },
+    {
+      "index": 73,
+      "name": "l2norm-0",
+      "path": "<research-root>/suites/cases-61fd828c21bf594154c940d29038b9a25e4a4b4f30db1f9dc4c4ee6fd5668c08/l2norm-0",
+      "passed": true,
+      "published": false,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": null,
+      "spec": {
+        "block": 256,
+        "epsilon": 1e-05,
+        "family": "l2norm",
+        "names": {
+          "out": "out_348309",
+          "probs": "probs_103306",
+          "scale": "scale_169417",
+          "scores": "scores_715811",
+          "shift": "shift_885715",
+          "v": "v_528091",
+          "x": "x_137250",
+          "y": "y_614725"
+        },
+        "operation": "multiply",
+        "pattern": "normal",
+        "reference": "independent-numpy-f64/plain-stable-softmax",
+        "schedule": "serial-per-cell",
+        "seed": 4348341430832013590,
+        "shape": [
+          7,
+          3
+        ],
+        "vector_width": 2,
+        "version": "emmy-research-cases-scalar-flatindex-v3"
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/73/result.json"
+    },
+    {
+      "index": 74,
+      "name": "atomic_matmul-0",
+      "path": "<research-root>/suites/cases-61fd828c21bf594154c940d29038b9a25e4a4b4f30db1f9dc4c4ee6fd5668c08/atomic_matmul-0",
+      "passed": true,
+      "published": false,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": null,
+      "spec": {
+        "block": 128,
+        "epsilon": 1e-05,
+        "family": "atomic_matmul",
+        "names": {
+          "out": "out_934462",
+          "probs": "probs_950430",
+          "scale": "scale_102121",
+          "scores": "scores_884285",
+          "shift": "shift_325707",
+          "v": "v_413164",
+          "x": "x_793929",
+          "y": "y_634210"
+        },
+        "operation": "scale_shift",
+        "pattern": "normal",
+        "reference": "independent-numpy-f64/plain-stable-softmax",
+        "schedule": "serial-per-cell",
+        "seed": 4348341430832213596,
+        "shape": [
+          32,
+          1,
+          31
+        ],
+        "vector_width": 2,
+        "version": "emmy-research-cases-scalar-flatindex-v3"
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/74/result.json"
+    },
+    {
+      "index": 75,
+      "name": "softmax-2",
+      "path": "<research-root>/suites/cases-61fd828c21bf594154c940d29038b9a25e4a4b4f30db1f9dc4c4ee6fd5668c08/softmax-2",
+      "passed": true,
+      "published": false,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": null,
+      "spec": {
+        "block": 64,
+        "epsilon": 1e-05,
+        "family": "softmax",
+        "names": {
+          "out": "out_938738",
+          "probs": "probs_860461",
+          "scale": "scale_150655",
+          "scores": "scores_488664",
+          "shift": "shift_897517",
+          "v": "v_575884",
+          "x": "x_266884",
+          "y": "y_347443"
+        },
+        "operation": "relu_mul",
+        "pattern": "impulse",
+        "reference": "independent-numpy-f64/plain-stable-softmax",
+        "schedule": "serial-per-cell",
+        "seed": 4348341430832313601,
+        "shape": [
+          32,
+          31
+        ],
+        "vector_width": 2,
+        "version": "emmy-research-cases-scalar-flatindex-v3"
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/75/result.json"
+    },
+    {
+      "index": 76,
+      "name": "attention-0",
+      "path": "<research-root>/suites/cases-61fd828c21bf594154c940d29038b9a25e4a4b4f30db1f9dc4c4ee6fd5668c08/attention-0",
+      "passed": true,
+      "published": false,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": null,
+      "spec": {
+        "block": 128,
+        "epsilon": 1e-05,
+        "family": "attention",
+        "names": {
+          "out": "out_444258",
+          "probs": "probs_104771",
+          "scale": "scale_236779",
+          "scores": "scores_238734",
+          "shift": "shift_982111",
+          "v": "v_192026",
+          "x": "x_992187",
+          "y": "y_390031"
+        },
+        "operation": "scale_shift",
+        "pattern": "normal",
+        "reference": "independent-numpy-f64/plain-stable-softmax",
+        "schedule": "ordered-three-kernel-attention",
+        "seed": 4348341430832413602,
+        "shape": [
+          3,
+          33,
+          33,
+          7
+        ],
+        "vector_width": 1,
+        "version": "emmy-research-cases-scalar-flatindex-v3"
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/76/result.json"
+    },
+    {
+      "index": 77,
+      "name": "i64-left_shift",
+      "path": "<research-root>/campaigns/campaign-20261023-12h-v2/bug-independent/shift/i64-left_shift",
+      "passed": false,
+      "published": false,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "i64"
+      ],
+      "error": "assembly/disassembly failed; diagnostics retained at <artifact-root>/sync-powenn-20261023/assembly-cache/.assembly-hx4i01dg: assembly failed: ptxas <artifact-root>/sync-powenn-20261023/assembly-cache/.assembly-hx4i01dg/kernel.ptx, line 51; error   : Arguments mismatch for instruction 'shl'\nptxas fatal   : Ptx assembly aborted due to errors\n",
+      "spec": {
+        "block": 32,
+        "family": "pointwise",
+        "ir_dtype": "i64",
+        "names": {
+          "count": "count_524029",
+          "out": "out_648819",
+          "x": "x_678011"
+        },
+        "op": "left_shift",
+        "seed": 1173599798491476258,
+        "shape": [
+          97
+        ],
+        "storage": "i64 raw bit patterns",
+        "version": "native64-shift-oracle-v1"
+      },
+      "result": null
+    },
+    {
+      "index": 78,
+      "name": "u64-right_shift",
+      "path": "<research-root>/campaigns/campaign-20261023-12h-v2/bug-independent/shift/u64-right_shift",
+      "passed": false,
+      "published": false,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "i64"
+      ],
+      "error": "assembly/disassembly failed; diagnostics retained at <artifact-root>/sync-powenn-20261023/assembly-cache/.assembly-n4kg_xa_: assembly failed: ptxas <artifact-root>/sync-powenn-20261023/assembly-cache/.assembly-n4kg_xa_/kernel.ptx, line 51; error   : Arguments mismatch for instruction 'shr'\nptxas fatal   : Ptx assembly aborted due to errors\n",
+      "spec": {
+        "block": 32,
+        "family": "pointwise",
+        "ir_dtype": "u64",
+        "names": {
+          "count": "count_189223",
+          "out": "out_749651",
+          "x": "x_585411"
+        },
+        "op": "right_shift",
+        "seed": 1173599798491476258,
+        "shape": [
+          97
+        ],
+        "storage": "i64 raw bit patterns",
+        "version": "native64-shift-oracle-v1"
+      },
+      "result": null
+    },
+    {
+      "index": 79,
+      "name": "canonical-tail",
+      "path": "<research-root>/campaigns/campaign-20261023-12h-v2/async-oracle-validation-112233/canonical-tail",
+      "passed": false,
+      "published": false,
+      "category": "explicitly excluded starred constructs",
+      "starred": [
+        "FuncCallExpr"
+      ],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": "compiler rejected/invalid PTX (1): compile.py: Unsupported: Unsupported expression FuncCallExpr\n",
+      "spec": {
+        "extent": 7,
+        "family": "reduction",
+        "lead": 2,
+        "observable_padding": false,
+        "schedule": "canonical-tail",
+        "seed": 112233,
+        "shape": [
+          3,
+          7,
+          64
+        ],
+        "slots": 3,
+        "step": 1,
+        "types": [
+          "async-ring-dead-lookahead"
+        ]
+      },
+      "result": null
+    },
+    {
+      "index": 80,
+      "name": "short-ring",
+      "path": "<research-root>/campaigns/campaign-20261023-12h-v2/async-oracle-validation-112233/short-ring",
+      "passed": false,
+      "published": false,
+      "category": "explicitly excluded starred constructs",
+      "starred": [
+        "FuncCallExpr"
+      ],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": "compiler rejected/invalid PTX (1): compile.py: Unsupported: Unsupported expression FuncCallExpr\n",
+      "spec": {
+        "extent": 2,
+        "family": "reduction",
+        "lead": 2,
+        "observable_padding": false,
+        "schedule": "short-ring",
+        "seed": 112233,
+        "shape": [
+          1,
+          2,
+          32
+        ],
+        "slots": 3,
+        "step": 1,
+        "types": [
+          "async-ring-short-ring"
+        ]
+      },
+      "result": null
+    },
+    {
+      "index": 81,
+      "name": "nondivisible-counter",
+      "path": "<research-root>/campaigns/campaign-20261023-12h-v2/async-oracle-validation-112233/nondivisible-counter",
+      "passed": false,
+      "published": false,
+      "category": "explicitly excluded starred constructs",
+      "starred": [
+        "FuncCallExpr"
+      ],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": "compiler rejected/invalid PTX (1): compile.py: Unsupported: Unsupported expression FuncCallExpr\n",
+      "spec": {
+        "extent": 13,
+        "family": "reduction",
+        "lead": 2,
+        "observable_padding": false,
+        "schedule": "nondivisible-counter",
+        "seed": 112233,
+        "shape": [
+          1,
+          7,
+          32
+        ],
+        "slots": 3,
+        "step": 2,
+        "types": [
+          "async-ring-nondivisible-counter"
+        ]
+      },
+      "result": null
+    },
+    {
+      "index": 82,
+      "name": "observable-padding",
+      "path": "<research-root>/campaigns/campaign-20261023-12h-v2/async-oracle-validation-112233/observable-padding",
+      "passed": false,
+      "published": false,
+      "category": "explicitly excluded starred constructs",
+      "starred": [
+        "FuncCallExpr"
+      ],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": "compiler rejected/invalid PTX (1): compile.py: Unsupported: Unsupported expression FuncCallExpr\n",
+      "spec": {
+        "extent": 7,
+        "family": "reduction",
+        "lead": 2,
+        "observable_padding": true,
+        "schedule": "observable-padding",
+        "seed": 112233,
+        "shape": [
+          2,
+          7,
+          32
+        ],
+        "slots": 3,
+        "step": 1,
+        "types": [
+          "async-ring-observable-padding"
+        ]
+      },
+      "result": null
+    },
+    {
+      "index": 83,
+      "name": "short-ring",
+      "path": "<research-root>/campaigns/campaign-20261023-12h-v2/pair-phase-tree-vector-screen-v1-async/short-ring",
+      "passed": false,
+      "published": false,
+      "category": "explicitly excluded starred constructs",
+      "starred": [
+        "FuncCallExpr"
+      ],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": "compiler rejected/invalid PTX (1): compile.py: Unsupported: Unsupported expression FuncCallExpr\n",
+      "spec": {
+        "extent": 1,
+        "family": "reduction",
+        "lead": 2,
+        "observable_padding": false,
+        "schedule": "short-ring",
+        "seed": 259401874085756968901949805365332019973,
+        "shape": [
+          3,
+          1,
+          64
+        ],
+        "slots": 3,
+        "step": 1,
+        "types": [
+          "async-ring-short-ring"
+        ]
+      },
+      "result": null
+    },
+    {
+      "index": 84,
+      "name": "tree-2-root-snapshot",
+      "path": "<research-root>/campaigns/campaign-20261023-12h-v2/exact-tree-oracle-validation-557733/tree-2-root-snapshot",
+      "passed": false,
+      "published": false,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": null,
+      "spec": {
+        "block": 64,
+        "family": "reduction",
+        "huge": 1073741824.0,
+        "increment": 4,
+        "initial": 65.0,
+        "length": 2,
+        "names": {
+          "buf": "scratch_925908",
+          "input": "in_925908",
+          "out": "out_925908",
+          "peer": "peer_925908",
+          "snapshot": "snapshot_925908",
+          "state": "state_925908"
+        },
+        "scratch_liveout": false,
+        "seed": 557733,
+        "semantic_contract": "Exact power-of-two shared F32 halving tree, full physical warp participation, in-place carrier broadcast and pre-tree immutable snapshot; scratch observable continuation must retain its documented intermediate contents.",
+        "version": "exact-shared-tree-f32-order-v1"
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/84/result.json"
+    },
+    {
+      "index": 85,
+      "name": "tree-4-root-snapshot",
+      "path": "<research-root>/campaigns/campaign-20261023-12h-v2/exact-tree-oracle-validation-557733/tree-4-root-snapshot",
+      "passed": false,
+      "published": false,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": null,
+      "spec": {
+        "block": 128,
+        "family": "reduction",
+        "huge": 1073741824.0,
+        "increment": 3,
+        "initial": 92.0,
+        "length": 4,
+        "names": {
+          "buf": "scratch_816956",
+          "input": "in_816956",
+          "out": "out_816956",
+          "peer": "peer_816956",
+          "snapshot": "snapshot_816956",
+          "state": "state_816956"
+        },
+        "scratch_liveout": false,
+        "seed": 557733,
+        "semantic_contract": "Exact power-of-two shared F32 halving tree, full physical warp participation, in-place carrier broadcast and pre-tree immutable snapshot; scratch observable continuation must retain its documented intermediate contents.",
+        "version": "exact-shared-tree-f32-order-v1"
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/85/result.json"
+    },
+    {
+      "index": 86,
+      "name": "tree-8-root-snapshot",
+      "path": "<research-root>/campaigns/campaign-20261023-12h-v2/exact-tree-oracle-validation-557733/tree-8-root-snapshot",
+      "passed": false,
+      "published": false,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": null,
+      "spec": {
+        "block": 256,
+        "family": "reduction",
+        "huge": 67108864.0,
+        "increment": 4,
+        "initial": 80.0,
+        "length": 8,
+        "names": {
+          "buf": "scratch_687097",
+          "input": "in_687097",
+          "out": "out_687097",
+          "peer": "peer_687097",
+          "snapshot": "snapshot_687097",
+          "state": "state_687097"
+        },
+        "scratch_liveout": false,
+        "seed": 557733,
+        "semantic_contract": "Exact power-of-two shared F32 halving tree, full physical warp participation, in-place carrier broadcast and pre-tree immutable snapshot; scratch observable continuation must retain its documented intermediate contents.",
+        "version": "exact-shared-tree-f32-order-v1"
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/86/result.json"
+    },
+    {
+      "index": 87,
+      "name": "tree-4-scratch-liveout",
+      "path": "<research-root>/campaigns/campaign-20261023-12h-v2/exact-tree-oracle-validation-557733/tree-4-scratch-liveout",
+      "passed": false,
+      "published": false,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": null,
+      "spec": {
+        "block": 128,
+        "family": "reduction",
+        "huge": 1073741824.0,
+        "increment": 1,
+        "initial": 66.0,
+        "length": 4,
+        "names": {
+          "buf": "scratch_526271",
+          "input": "in_526271",
+          "out": "out_526271",
+          "peer": "peer_526271",
+          "snapshot": "snapshot_526271",
+          "state": "state_526271"
+        },
+        "scratch_liveout": true,
+        "seed": 557733,
+        "semantic_contract": "Exact power-of-two shared F32 halving tree, full physical warp participation, in-place carrier broadcast and pre-tree immutable snapshot; scratch observable continuation must retain its documented intermediate contents.",
+        "version": "exact-shared-tree-f32-order-v1"
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/87/result.json"
+    },
+    {
+      "index": 88,
+      "name": "case-0",
+      "path": "<research-root>/campaigns/campaign-20261023-12h-v2/pair-phase-tree-vector-screen-v1-pair/case-0",
+      "passed": true,
+      "published": false,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": null,
+      "spec": {
+        "block": 32,
+        "extent": 8,
+        "family": "matmul",
+        "initial": [
+          0.0,
+          0.0
+        ],
+        "names": {
+          "a": "a_922894",
+          "b": "b_922894",
+          "out": "out_922894"
+        },
+        "row_stride": 64,
+        "seeded": true,
+        "semantic_contract": "two adjacent readonly shared words with later SSA publication across original F32 arithmetic; two strict serial dot carriers",
+        "version": "shared-pair-per-lane-serial-dot-v1"
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/88/result.json"
+    },
+    {
+      "index": 89,
+      "name": "case-1",
+      "path": "<research-root>/campaigns/campaign-20261023-12h-v2/pair-phase-tree-vector-screen-v1-pair/case-1",
+      "passed": true,
+      "published": false,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": null,
+      "spec": {
+        "block": 64,
+        "extent": 9,
+        "family": "matmul",
+        "initial": [
+          -5.0,
+          7.0
+        ],
+        "names": {
+          "a": "a_844384",
+          "b": "b_844384",
+          "out": "out_844384"
+        },
+        "row_stride": 128,
+        "seeded": false,
+        "semantic_contract": "two adjacent readonly shared words with later SSA publication across original F32 arithmetic; two strict serial dot carriers",
+        "version": "shared-pair-per-lane-serial-dot-v1"
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/89/result.json"
+    },
+    {
+      "index": 90,
+      "name": "case-2",
+      "path": "<research-root>/campaigns/campaign-20261023-12h-v2/pair-phase-tree-vector-screen-v1-pair/case-2",
+      "passed": true,
+      "published": false,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": null,
+      "spec": {
+        "block": 128,
+        "extent": 12,
+        "family": "matmul",
+        "initial": [
+          -5.0,
+          7.0
+        ],
+        "names": {
+          "a": "a_440390",
+          "b": "b_440390",
+          "out": "out_440390"
+        },
+        "row_stride": 258,
+        "seeded": false,
+        "semantic_contract": "two adjacent readonly shared words with later SSA publication across original F32 arithmetic; two strict serial dot carriers",
+        "version": "shared-pair-per-lane-serial-dot-v1"
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/90/result.json"
+    },
+    {
+      "index": 91,
+      "name": "case-3",
+      "path": "<research-root>/campaigns/campaign-20261023-12h-v2/pair-phase-tree-vector-screen-v1-pair/case-3",
+      "passed": true,
+      "published": false,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": null,
+      "spec": {
+        "block": 64,
+        "extent": 17,
+        "family": "matmul",
+        "initial": [
+          0.0,
+          0.0
+        ],
+        "names": {
+          "a": "a_847069",
+          "b": "b_847069",
+          "out": "out_847069"
+        },
+        "row_stride": 128,
+        "seeded": true,
+        "semantic_contract": "two adjacent readonly shared words with later SSA publication across original F32 arithmetic; two strict serial dot carriers",
+        "version": "shared-pair-per-lane-serial-dot-v1"
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/91/result.json"
+    },
+    {
+      "index": 92,
+      "name": "mixed-f16-result-native-controls",
+      "path": "<research-root>/campaigns/campaign-20261023-12h-v2/mixed-f16-oracle-validation-773941/mixed-f16-result-native-controls",
+      "passed": false,
+      "published": false,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": null,
+      "spec": {
+        "family": "pointwise",
+        "names": {
+          "a": "a_357053",
+          "av": "av_357053",
+          "b": "b_357053",
+          "bv": "bv_357053",
+          "c": "c_357053",
+          "cell": "cell_357053",
+          "cond": "cond_357053",
+          "cv": "cv_357053",
+          "d": "d_357053",
+          "dv": "dv_357053",
+          "entry": "entry_357053",
+          "ha": "ha_357053",
+          "hb": "hb_357053",
+          "native": "native_357053",
+          "nb": "nb_357053",
+          "out": "out_357053"
+        },
+        "operations": [
+          "add",
+          "subtract",
+          "greater",
+          "less_equal",
+          "multiply",
+          "divide",
+          "sqrt",
+          "reciprocal",
+          "negative",
+          "abs",
+          "maximum",
+          "minimum",
+          "where",
+          "native-all-f16-add"
+        ],
+        "seed": 773941,
+        "semantic_contract": "ExplicitF16 result with F32 operands computes public operation in F32 then rounds once toF16; copy toF32 exposes exact boundary. All-F16 nativeadd remains a separate zero control; positive partialTile and rotated ABI.",
+        "shape": [
+          97,
+          14
+        ],
+        "version": "mixed-f16-result-compute-boundary-v1"
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/92/result.json"
+    },
+    {
+      "index": 93,
+      "name": "tail-0",
+      "path": "<research-root>/campaigns/campaign-20261023-12h-v2/prefetch8-independent-v1/tail-0",
+      "passed": false,
+      "published": false,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": null,
+      "spec": {
+        "block": 128,
+        "family": "reduction",
+        "initial": 0,
+        "schedule": "full-cta-per-lane-strided-add",
+        "seed": 297926320278574769207949829793186884941,
+        "seeded": true,
+        "semantic_contract": "strict-serial-add-order",
+        "tail_mod4": 0,
+        "trips": 16
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/93/result.json"
+    },
+    {
+      "index": 94,
+      "name": "tail-1",
+      "path": "<research-root>/campaigns/campaign-20261023-12h-v2/prefetch8-independent-v1/tail-1",
+      "passed": true,
+      "published": false,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": null,
+      "spec": {
+        "block": 64,
+        "family": "reduction",
+        "initial": 0,
+        "schedule": "full-cta-per-lane-strided-add",
+        "seed": 297926320278574769207949829793186884941,
+        "seeded": true,
+        "semantic_contract": "strict-serial-add-order",
+        "tail_mod4": 1,
+        "trips": 17
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/94/result.json"
+    },
+    {
+      "index": 95,
+      "name": "tail-2",
+      "path": "<research-root>/campaigns/campaign-20261023-12h-v2/prefetch8-independent-v1/tail-2",
+      "passed": true,
+      "published": false,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": null,
+      "spec": {
+        "block": 32,
+        "family": "reduction",
+        "initial": 3,
+        "schedule": "full-cta-per-lane-strided-add",
+        "seed": 297926320278574769207949829793186884941,
+        "seeded": false,
+        "semantic_contract": "explicit-init-seed-false",
+        "tail_mod4": 2,
+        "trips": 18
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/95/result.json"
+    },
+    {
+      "index": 96,
+      "name": "tail-3",
+      "path": "<research-root>/campaigns/campaign-20261023-12h-v2/prefetch8-independent-v1/tail-3",
+      "passed": true,
+      "published": false,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": null,
+      "spec": {
+        "block": 32,
+        "family": "reduction",
+        "initial": 3,
+        "schedule": "full-cta-per-lane-strided-add",
+        "seed": 297926320278574769207949829793186884941,
+        "seeded": false,
+        "semantic_contract": "explicit-init-seed-false",
+        "tail_mod4": 3,
+        "trips": 19
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/96/result.json"
+    },
+    {
+      "index": 97,
+      "name": "full-segment16",
+      "path": "<research-root>/campaigns/campaign-20261023-12h-v2/attention-bounded-independent/full-segment16",
+      "passed": true,
+      "published": false,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": null,
+      "spec": {
+        "block": 64,
+        "family": "attention",
+        "names": {
+          "kt": "kt_778431",
+          "out": "out_650920",
+          "q": "q_903807",
+          "scale": "scale_716448",
+          "v": "v_998076"
+        },
+        "pattern": "normal",
+        "schedule": "fused-online-serial-key-full-segment16",
+        "seed": 54704585352383771411512846367133408299,
+        "shape": [
+          12,
+          3,
+          48,
+          16
+        ],
+        "version": "fused-online-cooperative-coverage-v3"
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/97/result.json"
+    },
+    {
+      "index": 98,
+      "name": "full-segment32",
+      "path": "<research-root>/campaigns/campaign-20261023-12h-v2/attention-bounded-independent/full-segment32",
+      "passed": true,
+      "published": false,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": null,
+      "spec": {
+        "block": 64,
+        "family": "attention",
+        "names": {
+          "kt": "kt_704196",
+          "out": "out_879522",
+          "q": "q_180223",
+          "scale": "scale_883640",
+          "v": "v_413159"
+        },
+        "pattern": "cancellation",
+        "schedule": "fused-online-serial-key-full-segment32",
+        "seed": 54704585352383771411512846367133408299,
+        "shape": [
+          6,
+          3,
+          160,
+          32
+        ],
+        "version": "fused-online-cooperative-coverage-v3"
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/98/result.json"
+    },
+    {
+      "index": 99,
+      "name": "partial-fallback",
+      "path": "<research-root>/campaigns/campaign-20261023-12h-v2/attention-bounded-independent/partial-fallback",
+      "passed": true,
+      "published": false,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": null,
+      "spec": {
+        "block": 64,
+        "family": "attention",
+        "names": {
+          "kt": "kt_759924",
+          "out": "out_758743",
+          "q": "q_709753",
+          "scale": "scale_758029",
+          "v": "v_698169"
+        },
+        "pattern": "bounded",
+        "schedule": "fused-online-serial-key-partial-fallback",
+        "seed": 54704585352383771411512846367133408299,
+        "shape": [
+          9,
+          19,
+          19,
+          7
+        ],
+        "version": "fused-online-cooperative-coverage-v3"
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/99/result.json"
+    },
+    {
+      "index": 100,
+      "name": "full-segment16",
+      "path": "<research-root>/campaigns/campaign-20261023-12h-v2/attention-order-independent/full-segment16",
+      "passed": true,
+      "published": false,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": null,
+      "spec": {
+        "block": 64,
+        "family": "attention",
+        "names": {
+          "kt": "kt_893440",
+          "out": "out_235761",
+          "q": "q_650360",
+          "scale": "scale_970714",
+          "v": "v_758067"
+        },
+        "pattern": "wide-cancellation-sequential-order",
+        "schedule": "fused-online-serial-key-full-segment16",
+        "seed": 206416980825247061830498090637091088403,
+        "shape": [
+          8,
+          13,
+          80,
+          16
+        ],
+        "small_terms": [
+          1.0,
+          2.0,
+          3.0,
+          3.0,
+          4.0,
+          1.0,
+          2.0,
+          4.0,
+          1.0,
+          3.0,
+          2.0,
+          5.0,
+          1.0
+        ],
+        "version": "fused-online-cooperative-coverage-v4"
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/100/result.json"
+    },
+    {
+      "index": 101,
+      "name": "full-segment32",
+      "path": "<research-root>/campaigns/campaign-20261023-12h-v2/attention-order-independent/full-segment32",
+      "passed": true,
+      "published": false,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": null,
+      "spec": {
+        "block": 64,
+        "family": "attention",
+        "names": {
+          "kt": "kt_966840",
+          "out": "out_808703",
+          "q": "q_441297",
+          "scale": "scale_233171",
+          "v": "v_940161"
+        },
+        "pattern": "wide-cancellation-sequential-order",
+        "schedule": "fused-online-serial-key-full-segment32",
+        "seed": 206416980825247061830498090637091088403,
+        "shape": [
+          4,
+          19,
+          160,
+          32
+        ],
+        "small_terms": [
+          1.0,
+          2.0,
+          3.0,
+          5.0,
+          3.0,
+          2.0,
+          2.0,
+          4.0,
+          4.0,
+          1.0,
+          3.0,
+          5.0,
+          4.0,
+          4.0,
+          4.0,
+          5.0,
+          3.0,
+          4.0,
+          1.0
+        ],
+        "version": "fused-online-cooperative-coverage-v4"
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/101/result.json"
+    },
+    {
+      "index": 102,
+      "name": "full-segment16",
+      "path": "<research-root>/campaigns/campaign-20261023-12h-v2/attention-full-tail-independent/full-segment16",
+      "passed": true,
+      "published": false,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": null,
+      "spec": {
+        "block": 64,
+        "family": "attention",
+        "names": {
+          "kt": "kt_122830",
+          "out": "out_503078",
+          "q": "q_868857",
+          "scale": "scale_632129",
+          "v": "v_257647"
+        },
+        "pattern": "wide-cancellation-sequential-order",
+        "schedule": "fused-online-serial-key-full-segment16",
+        "seed": 128648368262823858153268302652221117238,
+        "shape": [
+          12,
+          33,
+          48,
+          16
+        ],
+        "small_terms": [
+          1.0,
+          2.0,
+          5.0,
+          3.0,
+          2.0,
+          3.0,
+          3.0,
+          2.0,
+          2.0,
+          3.0,
+          5.0,
+          2.0,
+          5.0,
+          3.0,
+          3.0,
+          5.0,
+          4.0,
+          2.0,
+          1.0,
+          3.0,
+          2.0,
+          2.0,
+          5.0,
+          4.0,
+          4.0,
+          4.0,
+          4.0,
+          3.0,
+          4.0,
+          2.0,
+          1.0,
+          3.0,
+          4.0
+        ],
+        "version": "fused-online-cooperative-coverage-v5-full-tail"
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/102/result.json"
+    },
+    {
+      "index": 103,
+      "name": "full-segment32",
+      "path": "<research-root>/campaigns/campaign-20261023-12h-v2/attention-full-tail-independent/full-segment32",
+      "passed": true,
+      "published": false,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": null,
+      "spec": {
+        "block": 64,
+        "family": "attention",
+        "names": {
+          "kt": "kt_945104",
+          "out": "out_967531",
+          "q": "q_923935",
+          "scale": "scale_906817",
+          "v": "v_377494"
+        },
+        "pattern": "wide-cancellation-sequential-order",
+        "schedule": "fused-online-serial-key-full-segment32",
+        "seed": 128648368262823858153268302652221117238,
+        "shape": [
+          6,
+          67,
+          96,
+          32
+        ],
+        "small_terms": [
+          1.0,
+          2.0,
+          4.0,
+          2.0,
+          4.0,
+          4.0,
+          1.0,
+          1.0,
+          1.0,
+          5.0,
+          4.0,
+          4.0,
+          4.0,
+          2.0,
+          1.0,
+          1.0,
+          5.0,
+          1.0,
+          1.0,
+          1.0,
+          3.0,
+          5.0,
+          2.0,
+          4.0,
+          4.0,
+          3.0,
+          1.0,
+          2.0,
+          5.0,
+          2.0,
+          4.0,
+          5.0,
+          2.0,
+          4.0,
+          5.0,
+          4.0,
+          2.0,
+          3.0,
+          4.0,
+          4.0,
+          5.0,
+          3.0,
+          1.0,
+          4.0,
+          5.0,
+          3.0,
+          4.0,
+          2.0,
+          4.0,
+          1.0,
+          2.0,
+          1.0,
+          4.0,
+          4.0,
+          1.0,
+          3.0,
+          3.0,
+          3.0,
+          2.0,
+          4.0,
+          1.0,
+          4.0,
+          4.0,
+          1.0,
+          1.0,
+          4.0,
+          3.0
+        ],
+        "version": "fused-online-cooperative-coverage-v5-full-tail"
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/103/result.json"
+    },
+    {
+      "index": 104,
+      "name": "full-segment16",
+      "path": "<research-root>/campaigns/campaign-20261023-12h-v2/attention-selected-erf-independent-v1-partition/full-segment16",
+      "passed": true,
+      "published": false,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": null,
+      "spec": {
+        "block": 64,
+        "family": "attention",
+        "names": {
+          "kt": "kt_340851",
+          "out": "out_743261",
+          "q": "q_622558",
+          "scale": "scale_938863",
+          "v": "v_963836"
+        },
+        "pattern": "opposite-query-partition-bounded",
+        "schedule": "fused-online-serial-key-full-segment16",
+        "seed": 243540570292161983860057517407440285474,
+        "shape": [
+          24,
+          33,
+          48,
+          32
+        ],
+        "tile_width": 16,
+        "version": "distinct-query-normalization-partition-v7"
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/104/result.json"
+    },
+    {
+      "index": 105,
+      "name": "full-segment32",
+      "path": "<research-root>/campaigns/campaign-20261023-12h-v2/attention-selected-erf-independent-v1-partition/full-segment32",
+      "passed": true,
+      "published": false,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": null,
+      "spec": {
+        "block": 64,
+        "family": "attention",
+        "names": {
+          "kt": "kt_706747",
+          "out": "out_780683",
+          "q": "q_197171",
+          "scale": "scale_334274",
+          "v": "v_911930"
+        },
+        "pattern": "opposite-query-partition-bounded",
+        "schedule": "fused-online-serial-key-full-segment32",
+        "seed": 243540570292161983860057517407440285474,
+        "shape": [
+          4,
+          65,
+          160,
+          64
+        ],
+        "tile_width": 32,
+        "version": "distinct-query-normalization-partition-v7"
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/105/result.json"
+    },
+    {
+      "index": 106,
+      "name": "full-segment16",
+      "path": "<research-root>/campaigns/campaign-20261023-12h-v2/key-prefix-exp-phase-tree-pair-screen-v2-seeded/full-segment16",
+      "passed": true,
+      "published": false,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": null,
+      "spec": {
+        "block": 64,
+        "family": "attention",
+        "names": {
+          "kt": "kt_685903",
+          "out": "out_524929",
+          "q": "q_472988",
+          "scale": "scale_665922",
+          "v": "v_461980"
+        },
+        "pattern": "normal",
+        "schedule": "fused-online-serial-key-full-segment16",
+        "seed": 300487030990033547009867004044587337705,
+        "shape": [
+          4,
+          48,
+          16,
+          16
+        ],
+        "version": "fused-online-seeded-key-coefficients-v8"
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/106/result.json"
+    },
+    {
+      "index": 107,
+      "name": "full-segment32",
+      "path": "<research-root>/campaigns/campaign-20261023-12h-v2/key-prefix-exp-phase-tree-pair-screen-v2-seeded/full-segment32",
+      "passed": true,
+      "published": false,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": null,
+      "spec": {
+        "block": 64,
+        "family": "attention",
+        "names": {
+          "kt": "kt_700450",
+          "out": "out_774451",
+          "q": "q_376543",
+          "scale": "scale_221864",
+          "v": "v_562772"
+        },
+        "pattern": "cancellation",
+        "schedule": "fused-online-serial-key-full-segment32",
+        "seed": 300487030990033547009867004044587337705,
+        "shape": [
+          2,
+          128,
+          160,
+          32
+        ],
+        "version": "fused-online-seeded-key-coefficients-v8"
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/107/result.json"
+    },
+    {
+      "index": 108,
+      "name": "tail32",
+      "path": "<research-root>/campaigns/campaign-20261023-12h-v2/key-prefix-exp-phase-tree-pair-screen-v2-seeded/tail32",
+      "passed": true,
+      "published": false,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": null,
+      "spec": {
+        "block": 64,
+        "family": "attention",
+        "names": {
+          "kt": "kt_167477",
+          "out": "out_146582",
+          "q": "q_513743",
+          "scale": "scale_271091",
+          "v": "v_991451"
+        },
+        "pattern": "bounded",
+        "schedule": "fused-online-serial-key-tail32",
+        "seed": 300487030990033547009867004044587337705,
+        "shape": [
+          2,
+          65,
+          160,
+          32
+        ],
+        "version": "fused-online-seeded-key-coefficients-v8"
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/108/result.json"
+    },
+    {
+      "index": 109,
+      "name": "partial-fallback",
+      "path": "<research-root>/campaigns/campaign-20261023-12h-v2/key-prefix-exp-phase-tree-pair-screen-v2-seeded/partial-fallback",
+      "passed": true,
+      "published": false,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": null,
+      "spec": {
+        "block": 64,
+        "family": "attention",
+        "names": {
+          "kt": "kt_457709",
+          "out": "out_271355",
+          "q": "q_284282",
+          "scale": "scale_520653",
+          "v": "v_800601"
+        },
+        "pattern": "bounded",
+        "schedule": "fused-online-serial-key-partial-fallback",
+        "seed": 300487030990033547009867004044587337705,
+        "shape": [
+          3,
+          19,
+          19,
+          7
+        ],
+        "version": "fused-online-seeded-key-coefficients-v8"
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/109/result.json"
+    },
+    {
+      "index": 110,
+      "name": "full-segment16",
+      "path": "<research-root>/campaigns/campaign-20261023-12h-v2/recurrence-oracle-validation-314159/full-segment16",
+      "passed": true,
+      "published": false,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": null,
+      "spec": {
+        "block": 64,
+        "family": "attention",
+        "names": {
+          "kt": "kt_340795",
+          "out": "out_831479",
+          "q": "q_382391",
+          "scale": "scale_727427",
+          "v": "v_685395"
+        },
+        "pattern": "normal",
+        "schedule": "fused-online-serial-key-full-segment16",
+        "seed": 314159,
+        "shape": [
+          12,
+          35,
+          80,
+          32
+        ],
+        "tile_width": 16,
+        "version": "duplicate-normalization-attention-v6"
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/110/result.json"
+    },
+    {
+      "index": 111,
+      "name": "full-segment32",
+      "path": "<research-root>/campaigns/campaign-20261023-12h-v2/recurrence-oracle-validation-314159/full-segment32",
+      "passed": true,
+      "published": false,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": null,
+      "spec": {
+        "block": 64,
+        "family": "attention",
+        "names": {
+          "kt": "kt_326645",
+          "out": "out_643066",
+          "q": "q_737742",
+          "scale": "scale_716825",
+          "v": "v_773218"
+        },
+        "pattern": "cancellation",
+        "schedule": "fused-online-serial-key-full-segment32",
+        "seed": 314159,
+        "shape": [
+          6,
+          67,
+          96,
+          64
+        ],
+        "tile_width": 32,
+        "version": "duplicate-normalization-attention-v6"
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/111/result.json"
+    },
+    {
+      "index": 112,
+      "name": "empty-folds-seed-false",
+      "path": "<research-root>/campaigns/campaign-20261023-12h-v2/scalar-bool-v2-independent-v1/empty-folds-seed-false",
+      "passed": false,
+      "published": false,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": "compiler rejected/invalid PTX (1): compile.py: Unsupported: Unsupported buffer dtype bool\n",
+      "spec": {
+        "block": 64,
+        "family": "reduction",
+        "initial": [
+          true,
+          false,
+          true,
+          false
+        ],
+        "n": 71,
+        "schedule": "empty-folds-seed-false",
+        "seed": 227721130062977045031214529786041699123,
+        "semantic_contract": "explicit-scalar-BOOL-carrier",
+        "trips": 0
+      },
+      "result": null
+    },
+    {
+      "index": 113,
+      "name": "nested-key-score-shadow",
+      "path": "<research-root>/campaigns/campaign-20261023-12h-v2/nested-key-scope-independent-v2/nested-key-score-shadow",
+      "passed": false,
+      "published": false,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": null,
+      "spec": {
+        "dim": 8,
+        "family": "attention",
+        "keys": 7,
+        "names": {
+          "col": "col_684742",
+          "key": "key_684742",
+          "kt": "kt_684742",
+          "out": "out_684742",
+          "q": "q_684742",
+          "row": "row_684742",
+          "scores": [
+            "score0_684742",
+            "score1_684742"
+          ],
+          "totals": [
+            "total0_684742",
+            "total1_684742"
+          ]
+        },
+        "outer": [
+          -25.0,
+          -37.0
+        ],
+        "rows": 4,
+        "seed": 331061064998076161400541947749541224351,
+        "semantic_contract": "Two seeded child dot folds shadow ancestor scoreInit only inside KEYbody; KEY-own total folds export finalized sums, ancestor scores restored after KEYloop. Mathematical output combines two independent queries perrow, replicatedoverfullCTAcol lanes.",
+        "version": "nested-key-owned-score-scope-v1",
+        "width": 8
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/113/result.json"
+    },
+    {
+      "index": 114,
+      "name": "nested-seeded-fold-scopes",
+      "path": "<research-root>/campaigns/campaign-20261023-12h-v2/nested-seeded-fold-independent-v1/nested-seeded-fold-scopes",
+      "passed": false,
+      "published": false,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": null,
+      "spec": {
+        "end": 4,
+        "expected_row": [
+          12,
+          92,
+          92,
+          124,
+          12,
+          8,
+          12,
+          12
+        ],
+        "export_steps": 3,
+        "family": "pointwise",
+        "increment": 4,
+        "names": {
+          "exported": "exported_935711",
+          "one": "one_935711",
+          "out": "out_935711",
+          "state": "state_935711"
+        },
+        "nested_steps": 3,
+        "outer": 92,
+        "seed": 301353112464554577820365034459586486141,
+        "semantic_contract": "Nested Loop/StridedLoop implicit seeded fold declaration belongs to enclosing loop body; restore ancestor binding at body exit; keep seedFalse carried updates and current-loop own finalized export.",
+        "shape": [
+          35,
+          8
+        ],
+        "start": 0,
+        "step": 2,
+        "stride_count": 2,
+        "stride_inner": 2,
+        "update_inner": 4,
+        "update_outer": 2,
+        "version": "nested-seeded-fold-lexical-scope-v1"
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/114/result.json"
+    },
+    {
+      "index": 115,
+      "name": "softmax-0",
+      "path": "<research-root>/suites/cases-61fd828c21bf594154c940d29038b9a25e4a4b4f30db1f9dc4c4ee6fd5668c08/softmax-0",
+      "passed": true,
+      "published": false,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": null,
+      "spec": {
+        "block": 128,
+        "epsilon": 1e-05,
+        "family": "softmax",
+        "names": {
+          "out": "softmax",
+          "probs": "probs_976865",
+          "scale": "scale_479830",
+          "scores": "scores_221994",
+          "shift": "shift_727572",
+          "v": "v_182361",
+          "x": "x",
+          "y": "y_739949"
+        },
+        "operation": "add",
+        "pattern": "normal",
+        "reference": "independent-numpy-f64/plain-stable-softmax",
+        "schedule": "cooperative-online-softmax",
+        "seed": 4348341430832313599,
+        "shape": [
+          3,
+          127
+        ],
+        "vector_width": 2,
+        "version": "emmy-research-cases-scalar-flatindex-v3"
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/115/result.json"
+    },
+    {
+      "index": 116,
+      "name": "loop",
+      "path": "<research-root>/campaigns/campaign-20261023-12h-v2/partial-uniform-independent-v3/loop",
+      "passed": false,
+      "published": false,
+      "category": "explicitly excluded starred constructs",
+      "starred": [
+        "FuncCallExpr"
+      ],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": "compiler rejected/invalid PTX (1): compile.py: Unsupported: Unsupported expression FuncCallExpr\n",
+      "spec": {
+        "block": 32,
+        "ctas": 3,
+        "family": "reduction",
+        "n": 81,
+        "repeats": 5,
+        "schedule": "loop",
+        "seed": 82747033007526079568242630615183833038,
+        "tail": 15,
+        "types": [
+          "partial-cta-finite-uniform-loop-barrier"
+        ]
+      },
+      "result": null
+    },
+    {
+      "index": 117,
+      "name": "canonical-tail",
+      "path": "<research-root>/campaigns/campaign-20261023-12h-v2/async-screen/canonical-tail",
+      "passed": false,
+      "published": false,
+      "category": "explicitly excluded starred constructs",
+      "starred": [
+        "FuncCallExpr"
+      ],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": "compiler rejected/invalid PTX (1): compile.py: Unsupported: Unsupported expression FuncCallExpr\n",
+      "spec": {
+        "extent": 9,
+        "family": "reduction",
+        "lead": 3,
+        "observable_padding": false,
+        "schedule": "canonical-tail",
+        "seed": 322034004866446104121848439441903548499,
+        "shape": [
+          2,
+          9,
+          64
+        ],
+        "slots": 4,
+        "step": 1,
+        "types": [
+          "async-ring-dead-lookahead"
+        ]
+      },
+      "result": null
+    },
+    {
+      "index": 118,
+      "name": "u64-left_shift",
+      "path": "<research-root>/campaigns/campaign-20261023-12h-v2/bug-independent/shift/u64-left_shift",
+      "passed": false,
+      "published": false,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "i64"
+      ],
+      "error": "assembly/disassembly failed; diagnostics retained at <artifact-root>/sync-powenn-20261023/assembly-cache/.assembly-x2but3vx: assembly failed: ptxas <artifact-root>/sync-powenn-20261023/assembly-cache/.assembly-x2but3vx/kernel.ptx, line 51; error   : Arguments mismatch for instruction 'shl'\nptxas fatal   : Ptx assembly aborted due to errors\n",
+      "spec": {
+        "block": 32,
+        "family": "pointwise",
+        "ir_dtype": "u64",
+        "names": {
+          "count": "count_915271",
+          "out": "out_174025",
+          "x": "x_730615"
+        },
+        "op": "left_shift",
+        "seed": 1173599798491476258,
+        "shape": [
+          97
+        ],
+        "storage": "i64 raw bit patterns",
+        "version": "native64-shift-oracle-v1"
+      },
+      "result": null
+    },
+    {
+      "index": 119,
+      "name": "pointwise-3",
+      "path": "<research-root>/suites/cases-61fd828c21bf594154c940d29038b9a25e4a4b4f30db1f9dc4c4ee6fd5668c08/pointwise-3",
+      "passed": true,
+      "published": false,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": null,
+      "spec": {
+        "block": 64,
+        "epsilon": 1e-05,
+        "family": "pointwise",
+        "names": {
+          "out": "out_638002",
+          "probs": "probs_798213",
+          "scale": "scale_977650",
+          "scores": "scores_521174",
+          "shift": "shift_524536",
+          "v": "v_442771",
+          "x": "x_641409",
+          "y": "y_323214"
+        },
+        "operation": "add",
+        "pattern": "bounded",
+        "reference": "independent-numpy-f64/plain-stable-softmax",
+        "schedule": "serial-per-cell",
+        "seed": 4348341430831713584,
+        "shape": [
+          4099
+        ],
+        "vector_width": 1,
+        "version": "emmy-research-cases-scalar-flatindex-v3"
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/119/result.json"
+    },
+    {
+      "index": 120,
+      "name": "pointwise-1",
+      "path": "<research-root>/suites/cases-61fd828c21bf594154c940d29038b9a25e4a4b4f30db1f9dc4c4ee6fd5668c08/pointwise-1",
+      "passed": true,
+      "published": false,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": null,
+      "spec": {
+        "block": 64,
+        "epsilon": 1e-05,
+        "family": "pointwise",
+        "names": {
+          "out": "out_904538",
+          "probs": "probs_536026",
+          "scale": "scale_738401",
+          "scores": "scores_166381",
+          "shift": "shift_673565",
+          "v": "v_144998",
+          "x": "x_263356",
+          "y": "y_107096"
+        },
+        "operation": "add",
+        "pattern": "cancellation",
+        "reference": "independent-numpy-f64/plain-stable-softmax",
+        "schedule": "serial-per-cell",
+        "seed": 4348341430831713582,
+        "shape": [
+          2049
+        ],
+        "vector_width": 2,
+        "version": "emmy-research-cases-scalar-flatindex-v3"
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/120/result.json"
+    },
+    {
+      "index": 121,
+      "name": "matmul-2",
+      "path": "<research-root>/suites/cases-61fd828c21bf594154c940d29038b9a25e4a4b4f30db1f9dc4c4ee6fd5668c08/matmul-2",
+      "passed": true,
+      "published": false,
+      "category": "unstarred vocabulary; relevance requires scenario review",
+      "starred": [],
+      "scalar_by_value": false,
+      "argument_dtypes": [
+        "f32"
+      ],
+      "error": null,
+      "spec": {
+        "block": 256,
+        "epsilon": 1e-05,
+        "family": "matmul",
+        "names": {
+          "out": "out_511255",
+          "probs": "probs_106434",
+          "scale": "scale_338166",
+          "scores": "scores_769953",
+          "shift": "shift_321831",
+          "v": "v_964491",
+          "x": "x_786334",
+          "y": "y_637842"
+        },
+        "operation": "add",
+        "pattern": "impulse",
+        "reference": "independent-numpy-f64/plain-stable-softmax",
+        "schedule": "serial-per-cell",
+        "seed": 4348341430832113595,
+        "shape": [
+          3,
+          16,
+          31
+        ],
+        "vector_width": 4,
+        "version": "emmy-research-cases-scalar-flatindex-v3"
+      },
+      "result": "<artifact-root>/sync-powenn-20261023/theirs/correctness/121/result.json"
+    }
+  ]
+}

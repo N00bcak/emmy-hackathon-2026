@@ -15,6 +15,251 @@ from emmy.compiler.graph import Graph
 from emmy.compiler.ir.elementwise import reduce_canon
 
 
+I32_MIN = -(1 << 31)
+I32_MAX = (1 << 31) - 1
+
+def checked_i32_interval(lower, upper):
+    if (isinstance(lower, int) and isinstance(upper, int)
+            and I32_MIN <= lower <= upper <= I32_MAX):
+        return lower, upper
+    return None
+
+def i32_binary_interval(op, left, right):
+    """Conservative mathematical bounds; never infer through signed overflow."""
+    if left is None or right is None:
+        return None
+    a, z = left
+    b, y = right
+    if checked_i32_interval(a, z) is None or checked_i32_interval(b, y) is None:
+        return None
+    if op == '+':
+        return checked_i32_interval(a + b, z + y)
+    if op == '-':
+        return checked_i32_interval(a - y, z - b)
+    if op == '*':
+        products = (a * b, a * y, z * b, z * y)
+        return checked_i32_interval(min(products), max(products))
+    if op in ('/', '//') and b > 0:
+        quotients = (a // b, a // y, z // b, z // y)
+        return checked_i32_interval(min(quotients), max(quotients))
+    if op == '%' and b > 0:
+        return checked_i32_interval(0, min(z, y - 1) if a >= 0 else y - 1)
+    if op in ('>>', '<<') and b == y and 0 <= b <= 31:
+        if op == '>>':
+            return checked_i32_interval(a >> b, z >> b)
+        return checked_i32_interval(a << b, z << b)
+    if op == '&':
+        if b == y and b >= 0:
+            return checked_i32_interval(0, min(z, b) if a >= 0 else b)
+        if a == z and a >= 0:
+            return checked_i32_interval(0, min(y, a) if b >= 0 else a)
+        if a >= 0 and b >= 0:
+            return checked_i32_interval(0, min(z, y))
+    if op == '|' and a >= 0 and b >= 0:
+        return checked_i32_interval(0, (1 << max(z, y).bit_length()) - 1)
+    return None
+
+_INTEGER_ELEMENTWISE_OPS = frozenset(['add', 'bitwise_and', 'bitwise_count', 'bitwise_or', 'bitwise_xor', 'floor_divide', 'left_shift', 'mod', 'multiply', 'remainder', 'right_shift', 'subtract'])
+_INTEGER_DTYPES = frozenset(['i16', 'i32', 'i64', 'u16', 'u32', 'u64', 'u8'])
+def infer_assign_dtype(op_name: str, arg_dtypes: list[str]) -> str:
+    """Promote an elementwise op's arg dtypes to a single result dtype.
+
+    Mirrors the inline rule in ``Assign.render``: the result is the
+    common dtype iff every arg agrees; any disagreement promotes to f32.
+    Floating point keeps the historical "all f16 → f16, otherwise f32"
+    rule. Integer arithmetic/bit manipulation must instead retain a common
+    integer dtype: promoting packed words to f32 loses bits before the CUDA
+    renderer sees the operation. Comparisons and logical masks deliberately
+    stay on the floating-point rule.
+
+    Lifted out of ``Assign.render`` so the ``030_stamp_types`` pass can
+    reuse the same rule when stamping ``Assign.dtype`` on the IR.
+    """
+    if arg_dtypes and op_name in _INTEGER_ELEMENTWISE_OPS and all(d in _INTEGER_DTYPES for d in arg_dtypes):
+        # Keep packed arithmetic in the integer family.  NumPy promotes u64+i32 to f64 because
+        # neither integer type contains the other's full range; that is disastrous for bit
+        # extraction.  Use the usual C-style rank/sign rule instead: the widest unsigned type
+        # wins a tie, while a strictly wider signed type can represent the narrower unsigned
+        # range.  This gives u16+u32 -> u32, u64+i32 -> u64, and i64+u32 -> i64.
+        widths = {"u8": 8, "i16": 16, "u16": 16, "i32": 32, "u32": 32, "i64": 64, "u64": 64}
+        signed_width = max((widths[d] for d in arg_dtypes if d.startswith("i")), default=0)
+        unsigned_width = max((widths[d] for d in arg_dtypes if d.startswith("u")), default=0)
+        if unsigned_width >= signed_width:
+            return f"u{unsigned_width}"
+        return f"i{signed_width}"
+    if arg_dtypes and all(d == "f16" for d in arg_dtypes):
+        return "f16"
+    return "f32"
+
+
+from emmy.compiler.ir import expr as _typed_expr
+from emmy.compiler.graph import _stmt_eval_scope
+_stmt_eval_scope().setdefault("FlatIndex", _typed_expr.FlatIndex)
+
+
+def _constant_literal_operand(expr):
+    if type(expr).__name__ != 'Literal':
+        return None
+    try:
+        declared = getattr(expr, 'dtype', 'float')
+        if declared == 'float' or (isinstance(expr.value, float) and declared in ('int','bool')):
+            dtype = 'f32'
+        else:
+            dtype = {'double':'f64','int':'i32','bool':'i32'}.get(declared,declared)
+            if dtype not in DTYPES:
+                dtype = 'i32' if isinstance(expr.value,(bool,int)) else 'f32'
+        if dtype in FLOAT_DTYPES:
+            code = {'f16':'e','f32':'f','f64':'d'}[dtype]
+            value = struct.unpack('<'+code,struct.pack('<'+code,float(expr.value)))[0]
+        else:
+            if not isinstance(expr.value,(bool,int)):
+                return None
+            value = int(expr.value)
+            width = dtype_info(dtype)[0]*8
+            lower, upper = (0,(1<<width)-1) if dtype.startswith('u') else (-(1<<(width-1)),(1<<(width-1))-1)
+            if not lower <= value <= upper:
+                return None
+        return value,dtype
+    except (OverflowError,ValueError,TypeError,struct.error):
+        return None
+
+def constant_predicate(expr):
+    """Prove only typed literal comparisons and compositions of such predicates."""
+    if type(expr).__name__ != 'BinaryExpr':
+        return None
+    if expr.op in ('&&','||'):
+        left,right=constant_predicate(expr.left),constant_predicate(expr.right)
+        if left is None or right is None:
+            return None
+        return (left and right) if expr.op=='&&' else (left or right)
+    if expr.op not in ('==','!=','<','<=','>','>='):
+        return None
+    left,right=_constant_literal_operand(expr.left),_constant_literal_operand(expr.right)
+    if left is None or right is None:
+        return None
+    a,at=left;b,bt=right
+    if at != bt:
+        if at in INT_DTYPES and bt in INT_DTYPES:
+            target=infer_assign_dtype('add',[at,bt]);width=dtype_info(target)[0]*8
+            def integer_convert(value):
+                value%=1<<width
+                return value-(1<<width) if target.startswith('i') and value>=(1<<(width-1)) else value
+            a,b=integer_convert(a),integer_convert(b)
+        else:
+            # Exact F32 conversion of arbitrary I64 values needs a separate proof;
+            # retain the ordinary conservative path for that mixed literal domain.
+            if at in ('i64','u64') or bt in ('i64','u64'):
+                return None
+            target='f64' if 'f64'in(at,bt) else 'f32';code='d' if target=='f64'else'f'
+            try:a,b=(struct.unpack('<'+code,struct.pack('<'+code,float(v)))[0]for v in(a,b))
+            except (OverflowError,ValueError,TypeError,struct.error):return None
+    return {'==':a==b,'!=':a!=b,'<':a<b,'<=':a<=b,'>':a>b,'>=':a>=b}[expr.op]
+
+def selected_constant_branches(statements):
+    """Project proven selected arms for participation/seeding analysis only.
+
+    Actual Cond nodes and their lexical restoration remain in executable IR.
+    """
+    result=[]
+    for statement in statements:
+        if type(statement).__name__=='Cond':
+            decision=constant_predicate(statement.cond)
+            if decision is not None:
+                selected=statement.body if decision else statement.else_body
+                result.extend(selected_constant_branches(selected))
+                continue
+        result.append(statement)
+    return tuple(result)
+
+def validate_partial_tile_collectives(statements, emitter):
+    """Prove direct full-physical-CTA collective participation."""
+    tree_buffer_requirements = {}
+    uniform_cache = {}
+    def uniform_loop(statement):
+        # This predicate depends only on the immutable typed statement tree.
+        # Cache within this validation call; participation ancestry is separate.
+        key = id(statement)
+        if key not in uniform_cache:
+            uniform_cache[key] = prove_uniform_loop(statement)
+        return uniform_cache[key]
+    def prove_uniform_loop(statement):
+        kind = type(statement).__name__
+        if kind not in ('Loop', 'StridedLoop'):
+            return False
+        axis = statement.axis.name
+        known = frozenset(('Load', 'Write', 'Assign', 'Accum', 'Init', 'Let',
+                           'Select', 'Smem', 'CpAsyncCopy', 'CpAsyncCommit',
+                           'CpAsyncWait', 'Sync', 'Loop', 'StridedLoop',
+                           'Cond', 'WarpShuffle', 'TreeHalve'))
+        def preserves_axis(items):
+            for child in items:
+                child_kind = type(child).__name__
+                if child_kind not in known:
+                    return False
+                # Every descendant must terminate for padding physical lanes,
+                # even if its own body contains no barrier.
+                if child_kind in ('Loop', 'StridedLoop') and not uniform_loop(child):
+                    return False
+                if (getattr(child, 'name', None) == axis
+                        or axis in getattr(child, 'names', ())
+                        or axis in getattr(child, 'state', ())
+                        or axis in getattr(child, 'state_b', ())
+                        or getattr(getattr(child, 'axis', None), 'name', None) == axis):
+                    return False
+                if not all(preserves_axis(body) for body in statement_bodies(child)):
+                    return False
+            return True
+        if not preserves_axis(statement.body):
+            return False
+        extent = static(statement.axis.extent)
+        if not 0 < extent <= I32_MAX:
+            return False
+        if kind == 'Loop':
+            return True
+        def integer_literal(expr):
+            if (type(expr).__name__ == 'Literal' and type(expr.value) is int
+                    and expr.dtype in ('int', 'i32')
+                    and I32_MIN <= expr.value <= I32_MAX):
+                return expr.value
+            return None
+        start, step = integer_literal(statement.start), integer_literal(statement.step)
+        end = extent if statement.end is None else integer_literal(statement.end)
+        return (start is not None and step is not None and end is not None
+                and 0 <= start < end <= extent and step > 0
+                and end - 1 + step <= I32_MAX)
+    def visit(items, direct, uniform):
+        for index, statement in enumerate(items):
+            kind = type(statement).__name__
+            if kind == 'Tile':
+                raise Unsupported('Partial collective Tile contains a nested Tile exit')
+            if kind == 'WarpShuffle':
+                if not direct:
+                    raise Unsupported('Partial collective Tile has a nested/divergent shuffle')
+                continue
+            if kind == 'TreeHalve':
+                if not direct:
+                    raise Unsupported('Partial collective Tile has a nested/divergent tree')
+                emitter.validate_partial_tree(statement)
+                for buffer, combine in zip(statement.bufs, statement.combine_states, strict=True):
+                    requirement = (statement.length, statement.inner,
+                                   emitter.buffers[buffer][1], reduce_canon(combine.op.name))
+                    previous_requirement = tree_buffer_requirements.setdefault(buffer, requirement)
+                    if previous_requirement != requirement:
+                        raise Unsupported('Partial tree slab reuse has incompatible seed requirements')
+                # A visible shared publication barrier is required before the tree.
+                previous = items[index - 1] if index else None
+                if (type(previous).__name__ != 'Sync' or previous.warp
+                        or previous.count is not None or previous.barrier_id != 0):
+                    raise Unsupported('Partial CTA tree needs a direct publication barrier')
+                continue
+            if kind == 'Sync':
+                if not uniform or statement.warp or statement.count is not None:
+                    raise Unsupported('Partial collective Tile has an unproven barrier')
+                continue
+            for body in statement_bodies(statement):
+                visit(body, False, uniform and uniform_loop(statement))
+    visit(statements, True, True)
+
 class Unsupported(ValueError):
     pass
 
@@ -74,6 +319,12 @@ def dtype_info(dtype):
     return DTYPES[dtype_name(dtype)]
 
 
+def ssa_dtype_name(dtype):
+    """Normalize value annotations separately from buffer storage types."""
+    name = getattr(dtype, 'name', dtype)
+    return 'pred' if name in ('bool', 'pred') else dtype_name(name)
+
+
 def literal(value, dtype):
     if dtype == 'f16':
         return '0x%04x' % struct.unpack('<H', struct.pack('<e', float(value)))[0]
@@ -122,6 +373,8 @@ def convert_register(emitter, value, source, target):
     """Convert one typed scalar register to ``target`` and return its name."""
     if source == target:
         return value
+    if source == 'pred' or target == 'pred':
+        return emitter.snapshot_operand(value, source, target)[0]
     if target == 'f16':
         reg = emitter.reg('rh')
         if source in ('f32', 'f64'):
@@ -144,7 +397,8 @@ def convert_register(emitter, value, source, target):
         return reg
     if source in FLOAT_DTYPES and target in FLOAT_DTYPES:
         reg = emitter.reg(reg_suffix(target))
-        emitter.emit(f'cvt.{target}.{source} {reg}, {value};')
+        mode = '.rn' if dtype_info(target)[0] < dtype_info(source)[0] else ''
+        emitter.emit(f'cvt{mode}.{target}.{source} {reg}, {value};')
         return reg
     if source in INT_DTYPES and target in INT_DTYPES:
         kind = 's' if source in ('i32', 'i64') else 'u'
@@ -154,7 +408,7 @@ def convert_register(emitter, value, source, target):
     if source in INT_DTYPES and target in FLOAT_DTYPES:
         kind = 's' if source in ('i32', 'i64') else 'u'
         reg = emitter.reg(reg_suffix(target))
-        emitter.emit(f'cvt.{target}.{kind}{dtype_info(source)[0] * 8} {reg}, {value};')
+        emitter.emit(f'cvt.rn.{target}.{kind}{dtype_info(source)[0] * 8} {reg}, {value};')
         return reg
     if source in FLOAT_DTYPES and target in INT_DTYPES:
         kind = 's' if target in ('i32', 'i64') else 'u'
@@ -191,7 +445,7 @@ def as_predicate(emitter, value, dtype):
         if dtype == 'f16':
             value = convert_register(emitter, value, 'f16', 'f32')
             dtype = 'f32'
-        emitter.emit(f'setp.ne.{dtype} {p}, {value}, {literal(0, dtype)};')
+        emitter.emit(f'setp.neu.{dtype} {p}, {value}, {literal(0, dtype)};')
     else:
         emitter.emit(f'setp.ne.{ptx_compare_type(dtype)} {p}, {value}, 0;')
     return p
@@ -216,6 +470,9 @@ def emit_integer_binary(emitter, op, result, a, b):
         'right_shift': f'shr.{kind}{width}',
     }
     if op in direct:
+        if width == 64 and op in ('left_shift', 'right_shift'):
+            # PTX shift counts are always32-bit, including64-bit values.
+            b = convert_register(emitter, b, result, 'u32')
         emitter.emit(f'{direct[op]} {out}, {a}, {b};')
         return out
     if op not in ('divide', 'floor_divide', 'remainder', 'mod'):
@@ -368,6 +625,8 @@ def defined_names(statements):
             found.update(statement.state_b)
         elif kind in ('Loop', 'StridedLoop'):
             found.add(statement.axis.name)
+        elif kind == 'Tile':
+            found.update(axis.name for axis in statement.axes)
         # Iterate the IR's own nesting protocol, including Cond bodies.
         # Enumerating a hand-picked field list silently missed Cond and let
         # a branch-local rebind be hoisted as if it were loop-invariant.
@@ -387,6 +646,321 @@ def statement_bodies(statement):
     if combine and all(combine is not body for body in bodies):
         bodies.append(combine)
     return bodies
+
+
+STRAIGHT_LINE_KINDS = frozenset(('Load', 'Let', 'Assign', 'Accum'))
+# Group sizes for thread-strided loops, largest first. On the RTX 5090, 32
+# halved r02's latency against 8; 64 measured the same as 32.
+STRIDED_UNROLL = (32, 8)
+STRIDED_VECTOR_BATCH = (32, 8, 1)
+
+
+def straight_line(statements):
+    """Loads, pure bindings and folds only: no memory writes, collectives or
+    control flow, so consecutive iterations may be emitted back to back."""
+    return all(type(s).__name__ in STRAIGHT_LINE_KINDS for s in statements)
+
+
+def static_or_none(value):
+    try:
+        return static(value)
+    except Unsupported:
+        return None
+
+
+# Shared bytes one Tile may spend on cooperatively hoisted values.
+HOIST_SHARED_LIMIT = 32 * 1024
+# Work items a thread evaluates together in one hoisted reduction trip.
+HOIST_REDUCTION_BATCH = 4
+# Most elements per thread a staged copy issues straight-line.
+STAGE_STRAIGHT_LINE = 64
+
+
+def touched_names(statements):
+    """Every name a statement tree reads or binds, carried folds included."""
+    found = set(defined_names(statements))
+    for s in statements:
+        found.update(s.deps())
+        if type(s).__name__ == 'Accum':
+            found.add(s.name)
+        for nested in statement_bodies(s):
+            found.update(touched_names(nested))
+    return found
+
+
+def written_buffers(statements):
+    found = set()
+    for s in statements:
+        kind = type(s).__name__
+        if kind == 'Write':
+            found.add(s.output)
+        elif kind == 'CpAsyncCopy':
+            found.add(s.smem)
+        for nested in statement_bodies(s):
+            found.update(written_buffers(nested))
+    return found
+
+
+# Copies per trip when a loop's shared loads combine into vector loads.
+VECTOR_UNROLL = 4
+
+
+def affine_form(expr):
+    """An integer index AST as (constant, {term: coefficient}), or None.
+
+    Terms are variable names or the structural keys of non-affine
+    subexpressions, which stand for arbitrary runtime integers.
+    """
+    kind = type(expr).__name__
+    if kind == 'Literal':
+        if isinstance(expr.value, int) and not isinstance(expr.value, bool):
+            return expr.value, {}
+        return None
+    if kind == 'Var':
+        return 0, {('var', expr.name): 1}
+    if kind == 'BinaryExpr' and expr.op in ('+', '-', '*'):
+        left, right = affine_form(expr.left), affine_form(expr.right)
+        if left is not None and right is not None:
+            if expr.op in ('+', '-'):
+                sign = 1 if expr.op == '+' else -1
+                terms = dict(left[1])
+                for term, c in right[1].items():
+                    terms[term] = terms.get(term, 0) + sign * c
+                return left[0] + sign * right[0], {k: c for k, c in terms.items() if c}
+            for scale, other in ((left, right), (right, left)):
+                if not scale[1]:
+                    return (scale[0] * other[0],
+                            {k: scale[0] * c for k, c in other[1].items() if scale[0] * c})
+    key = structural_key(expr)
+    return None if key is None else (0, {('opaque', key): 1})
+
+
+def flat_affine(shape, index):
+    """Row-major flattened element offset of ``index`` in affine form."""
+    if len(index) != len(shape):
+        return None
+    constant, terms = 0, {}
+    for axis, coord in enumerate(index):
+        form = affine_form(coord)
+        if form is None:
+            return None
+        stride = math.prod(shape[axis + 1:])
+        constant += stride * form[0]
+        for term, c in form[1].items():
+            terms[term] = terms.get(term, 0) + stride * c
+    return constant, {k: c for k, c in terms.items() if c}
+
+
+VN_KINDS = frozenset(('Load', 'Let', 'Assign', 'Accum'))
+
+
+def online_max_carriers(body, opaque):
+    """Running maxima of an online softmax whose final value can be known
+    before the loop.
+
+    Matches ``acc <- maximum(acc, x)`` where ``x`` depends only on this
+    iteration (its definitions in the body reach no carried fold), and
+    ``acc`` is read only by ``gn = maximum(acc, x)`` and
+    ``dg = subtract(acc, gn)``, typically followed by ``alpha = exp(dg)``.
+    Seeding ``acc`` with max over the loop of ``x`` makes every
+    ``gn`` that maximum, ``dg`` zero and ``alpha`` one, which turns the
+    online recurrence into the two-pass softmax. Returns, per carrier, the
+    fold, ``x``, ``gn``, ``dg``, ``alpha`` (or None) and the statements
+    that compute ``x``, in body order.
+    """
+    folds = [s for s in body if type(s).__name__ == 'Accum']
+    carried = {s.name for s in folds}
+    definer = {}
+    for s in body:
+        for name in defined_names([s]):
+            definer.setdefault(name, s)
+    plans = []
+    for fold in folds:
+        if (reduce_canon(fold.op.name) != 'maximum' or fold.base not in (None, fold.name)
+                or sum(s.name == fold.name for s in folds) != 1):
+            continue
+        x = fold.value
+        needed, stack, ok = set(), [x], True
+        while stack and ok:
+            name = stack.pop()
+            if name in carried:
+                ok = False
+            elif name in definer and id(definer[name]) not in needed:
+                s = definer[name]
+                needed.add(id(s))
+                if id(s) in opaque:
+                    continue
+                if type(s).__name__ not in ('Load', 'Let', 'Assign'):
+                    ok = False
+                stack.extend(s.deps())
+        if not ok:
+            continue
+        readers = [s for s in body if s is not fold and fold.name in s.deps()]
+        if len(readers) != 2 or any(type(s).__name__ != 'Assign' for s in readers):
+            continue
+        gn = next((s for s in readers if s.op.name == 'maximum'
+                   and sorted(s.args) == sorted((fold.name, x))), None)
+        dg = next((s for s in readers if s.op.name == 'subtract'
+                   and gn is not None and tuple(s.args) == (fold.name, gn.name)), None)
+        if gn is None or dg is None:
+            continue
+        users = [s for s in body if dg.name in s.deps()]
+        alpha = users[0] if (len(users) == 1 and type(users[0]).__name__ == 'Assign'
+                             and users[0].op.name == 'exp') else None
+        plans.append((fold, x, gn, dg, alpha, [s for s in body if id(s) in needed]))
+    return plans
+
+
+def vn_expr(expr, vn):
+    kind = type(expr).__name__
+    if kind == 'Var':
+        return vn(expr.name)
+    if kind == 'Literal':
+        return ('lit', repr(expr.value), str(getattr(expr, 'dtype', None)))
+    if kind == 'BinaryExpr':
+        return ('bin', expr.op, vn_expr(expr.left, vn), vn_expr(expr.right, vn))
+    if kind == 'TernaryExpr':
+        return ('sel', vn_expr(expr.cond, vn), vn_expr(expr.if_true, vn), vn_expr(expr.if_false, vn))
+    return ('opaque', id(expr))
+
+
+def loop_value_numbering(body, opaque, fixed=None):
+    """Optimistic value numbering of one loop body, carried folds included.
+
+    Seeded folds with the same op start congruent; the body is numbered under
+    that assumption and classes whose end-of-iteration values differ are
+    split until stable (optimistic congruence, as in SSA GVN). Returns
+    (skip, record, carried): ``skip`` maps a redundant top-level statement to
+    the (name, value number) pairs it would define, ``record`` maps first
+    occurrences to theirs, and ``carried`` aliases folds to a representative.
+    Statements of other kinds, and ids in ``opaque``, define fresh values;
+    ``fixed`` maps a statement id to a function of the numbering that gives
+    the (name, value number) pairs of a statement with a known meaning.
+    """
+    fixed = fixed or {}
+    pure = all(type(s).__name__ in VN_KINDS or id(s) in opaque for s in body)
+    # These rewrites require unique scalar bindings. General IR permits
+    # lexical shadowing and mutation, which stay on the scoped fallback.
+    if not pure:
+        return {}, {}, {}
+    bindings = []
+    for statement in body:
+        if id(statement) in opaque:
+            # A hoisted loop exports its accumulators, not its private axis
+            # and load temporaries. Repeated private axis names are lexical.
+            if type(statement).__name__ == 'Loop':
+                bindings.extend(dict.fromkeys(x.name for x in statement.body
+                                              if type(x).__name__ == 'Accum'))
+            elif type(statement).__name__ == 'Load':
+                bindings.extend(statement.names)
+            else:
+                return {}, {}, {}
+        elif type(statement).__name__ == 'Load':
+            bindings.extend(statement.names)
+        else:
+            bindings.append(statement.name)
+    if len(bindings) != len(set(bindings)):
+        return {}, {}, {}
+    folds = list(dict.fromkeys(s.name for s in body if type(s).__name__ == 'Accum'))
+    ops = {s.name: (reduce_canon(s.op.name), str(s.dtype)) for s in body
+           if type(s).__name__ == 'Accum'}
+    classes = {name: ops[name] for name in folds}
+
+    def number(classes):
+        state = {name: ('carried', classes[name]) for name in folds}
+        values, keys = {}, []
+        vn = lambda name: state.get(name, values.get(name, ('ext', name)))
+        for s in body:
+            kind = type(s).__name__
+            if id(s) in fixed:
+                pairs = fixed[id(s)](vn)
+                values.update(pairs)
+                keys.append(pairs)
+            elif kind not in VN_KINDS or id(s) in opaque:
+                for name in defined_names([s]):
+                    fresh = ('opaque', id(s), name)
+                    if name in state:
+                        state[name] = fresh
+                    else:
+                        values[name] = fresh
+                keys.append(None)
+            elif kind == 'Load':
+                index = tuple(vn_expr(c, vn) for c in s.index)
+                base = ('load', s.input, str(s.dtype), index) if pure else ('opaque', id(s))
+                pairs = [(name, (*base, i)) for i, name in enumerate(s.names)]
+                values.update(pairs)
+                keys.append(pairs)
+            elif kind == 'Let':
+                pairs = [(s.name, ('let', str(s.dtype), vn_expr(s.value, vn)))]
+                values.update(pairs)
+                keys.append(pairs)
+            elif kind == 'Assign':
+                args = tuple(vn(a) if isinstance(a, str) else ('arg', repr(a)) for a in s.args)
+                pairs = [(s.name, ('assign', s.op.name, str(s.dtype), args))]
+                values.update(pairs)
+                keys.append(pairs)
+            else:
+                state[s.name] = ('fold', ops[s.name], vn(s.base or s.name), vn(s.value))
+                keys.append(None)
+        return state, keys
+
+    while True:
+        state, keys = number(classes)
+        refined = {name: (classes[name], state[name]) for name in folds}
+        if len(set(refined.values())) == len(set(classes.values())):
+            break
+        classes = refined
+    rep = {}
+    carried = {}
+    for name in folds:
+        carried[name] = rep.setdefault(classes[name], name)
+    carried = {name: r for name, r in carried.items() if name != r}
+    skip, record, seen = {}, {}, set()
+    for s, pairs in zip(body, keys):
+        if type(s).__name__ == 'Accum' and s.name in carried:
+            skip[id(s)] = []
+        elif pairs is not None:
+            if all(key in seen for _, key in pairs):
+                skip[id(s)] = pairs
+            else:
+                record[id(s)] = pairs
+                seen.update(key for _, key in pairs)
+    # A surviving statement must never read an aliased fold mid-iteration:
+    # the representative's register may already hold this trip's update.
+    live = [s for s in body if id(s) not in skip]
+    read = set()
+    for s in live:
+        read.update(s.deps())
+        for nested in statement_bodies(s):
+            read.update(touched_names(nested))
+    for name in list(carried):
+        if name in read:
+            del carried[name]
+            for s in body:
+                if type(s).__name__ == 'Accum' and s.name == name:
+                    skip.pop(id(s), None)
+    return skip, record, carried
+
+
+class HoistedValue:
+    """A pure statement in a serial loop (a nested reduction loop or a global
+    Load) evaluated once per distinct (serial index, used thread-axis values)
+    by the whole CTA before the loop.
+
+    ``used`` lists the CTA-varying axes the statement reads, row-major; the
+    remaining CTA-varying axes only replicated the same value across threads.
+    Results live in shared rows of ``extent + 1`` words (padded so that
+    threads reading different rows at one serial index hit distinct banks).
+    ``serial_fastest`` orders work items so that the global index the
+    statement reads contiguously varies across adjacent threads.
+    """
+
+    def __init__(self, statement, exports, used, configs, extent, symbol, serial_fastest):
+        self.statement, self.exports, self.used = statement, exports, used
+        self.configs, self.extent, self.symbol = configs, extent, symbol
+        self.serial_fastest = serial_fastest
+        self.row_words = extent + 1
+        self.nbytes = len(exports) * configs * self.row_words * 4
 
 
 def index_addresses(statements):
@@ -422,6 +996,10 @@ def provisional_versions(statements, versions=None):
             versions[statement.name] = versions.get(statement.name, 0) + 1
         elif kind in ('Loop', 'StridedLoop'):
             versions[statement.axis.name] = versions.get(statement.axis.name, 0) + 1
+        elif kind == 'Tile':
+            # Entering and leaving a lexical Tile both replace its axis bindings.
+            for axis in statement.axes:
+                versions[axis.name] = versions.get(axis.name, 0) + 2
         for nested in statement_bodies(statement):
             versions = provisional_versions(nested, versions)
     return versions
@@ -511,10 +1089,23 @@ def smem_alignment(statement):
 class Emitter:
     def __init__(self, graph, node, meta):
         self.graph, self.node, self.meta = graph, node, meta
+        for key in ('block', 'grid'):
+            dimensions = meta.get(key)
+            if (not isinstance(dimensions, (list, tuple)) or len(dimensions) != 3
+                    or any(type(d) is not int or not 0 < d <= I32_MAX for d in dimensions)):
+                raise Unsupported('Launch geometry requires three positive signed32 dimensions')
+        self.block_threads = math.prod(meta['block'])
+        self.grid_blocks = math.prod(meta['grid'])
+        if self.block_threads > 1024 or self.block_threads * self.grid_blocks > I32_MAX:
+            raise Unsupported('Linear launch geometry exceeds supported signed32 bounds')
+        self.geometry_3d = any(d != 1 for d in (*meta['block'][1:], *meta['grid'][1:]))
+        self.physical_builtins = {}
         self.lines, self.declarations = [], []
         self.externals = []
         self.counts = {'r': 0, 'rh': 0, 'rd': 0, 'f': 0, 'fd': 0, 'p': 0}
         self.values, self.buffers, self.shared = {}, {}, {}
+        self.int_ranges = {}
+        self.partial_tile_shuffle = False
         self.label_count = 0
         self.accum_ops = {}
         self.mutable = {}
@@ -530,6 +1121,13 @@ class Emitter:
         self.shared_bytes = 0
         self.has_cp_async = False
         self.cp_async_base = '__emmy_smem'
+        self.hoist_plans = {}
+        self.hoisted = {}
+        self.hoist_bytes = 0
+        self.vn_skip, self.vn_record, self.vn_registers = {}, {}, {}
+        self.vector_loops = 0
+        self.tile_extents = {}
+        self.subst = {}
         def shared_layout(statements):
             for statement in statements:
                 if type(statement).__name__ == 'Smem':
@@ -568,90 +1166,114 @@ class Emitter:
             for name, statement in self.shared_statements.items():
                 self.declarations.append(
                     f'.shared .align {smem_alignment(statement)} .b8 {name}[{statement_nbytes(statement)}];')
-        for n in graph.nodes.values():
-            for tensor in n.outputs:
-                self.buffers[tensor.name] = (tuple(static(d) for d in tensor.shape), tensor.dtype.name)
-        arg_info = {}
-        for arg in meta['args']:
-            arg_info[arg['name']] = arg
-            # A by-value scalar is not addressable storage. Registering it as a
-            # buffer would let a Load of the same name bypass the parameter.
-            if not arg.get('scalar'):
-                self.buffers[arg['name']] = (tuple(arg.get('shape', (1,))), arg['dtype'])
+        for producer in graph.nodes.values():
+            for buffer_name, tensor in zip(producer.buffer_names(), producer.outputs, strict=True):
+                self.buffers[buffer_name] = (tuple(static(d) for d in tensor.shape), tensor.dtype.name)
+        arguments = {arg['name']: arg for arg in meta['args']}
+        if (len(arguments) != len(meta['args']) or len(meta['arg_order']) != len(meta['args'])
+                or set(arguments) != set(meta['arg_order'])):
+            raise Unsupported('Metadata arguments must match positional arg_order exactly')
+        self.scalar_parameters = {}
+        self.scalar_args = self.scalar_parameters
+        self.scalar_shapes = {}
+        # Runtime parameter values are never compiler constants.
+        self.scalar_constants = {}
+        for argument in meta['args']:
+            name = argument['name']
+            dtype = dtype_name(argument['dtype'])
+            if argument.get('scalar'):
+                if dtype not in ('f16', 'f32', 'f64', 'i32', 'i64'):
+                    raise Unsupported('Unsupported scalar parameter ABI dtype')
+                shape, graph_dtype = self.buffers.get(name, (None, None))
+                declared_shape = argument.get('shape', shape if shape is not None else ())
+                if (not isinstance(declared_shape, (list, tuple)) or len(declared_shape) > 1
+                        or any(type(d) is not int or d <= 0 for d in declared_shape)
+                        or math.prod(declared_shape) != 1
+                        or (shape is not None and (len(shape) > 1 or math.prod(shape) != 1
+                                                   or graph_dtype != dtype))
+                        or argument.get('output') or name in meta.get('zero_outputs', ())):
+                    raise Unsupported('Scalar parameter requires consistent scalar metadata and graph storage')
+                self.scalar_shapes[name] = shape if shape is not None else tuple(declared_shape)
+                self.buffers.pop(name, None)
+            else:
+                if 'shape' not in argument:
+                    raise Unsupported(f'Buffer {name!r} lacks metadata shape')
+                self.buffers[name] = (tuple(argument['shape']), dtype)
         if node.op.serial:
             raise Unsupported('Serial runtime axes are not supported')
-        self.scalar_args = {}
-        self.scalar_constants = {}
         self.ptrs = {}
-        for i, name in enumerate(meta['arg_order']):
+        self.parameter_types = []
+        for index, name in enumerate(meta['arg_order']):
             ident(name)
-            arg = arg_info.get(name)
-            if arg is None:
-                raise Unsupported(f'Argument {name!r} absent from metadata args')
-            dtype = dtype_name(arg['dtype'])
-            if arg.get('scalar'):
-                phys = dtype_info(dtype)[1]
-                reg = self.reg(reg_suffix(dtype))
-                self.emit(f'ld.param.{phys} {reg}, [param_{i}];')
-                self.scalar_args[name] = (reg, dtype)
-                if 'value' in arg:
-                    self.scalar_constants[name] = arg['value']
-                continue
-            if 'shape' not in arg:
-                raise Unsupported(f'Buffer {name!r} lacks metadata shape')
-            ptr = self.reg('rd')
-            self.emit(f'ld.param.u64 {ptr}, [param_{i}];')
-            self.emit(f'cvta.to.global.u64 {ptr}, {ptr};')
-            self.ptrs[name] = ptr
-        block_dims = tuple(static(v) for v in self.meta['block'])
-        grid_dims = tuple(static(v) for v in self.meta['grid'])
-        if len(block_dims) != 3 or len(grid_dims) != 3 or min(*block_dims, *grid_dims) <= 0:
-            raise Unsupported('Launch geometry must be three positive dimensions')
-        block_size = math.prod(block_dims)
-        if block_size > 1024 or block_size >= (1 << 31):
-            raise Unsupported('Launch block size outside supported range')
-        thread_xyz = []
-        for axis, suffix in enumerate('xyz'):
+            argument = arguments[name]
+            dtype = dtype_name(argument['dtype'])
+            if argument.get('scalar'):
+                suffix = dtype_info(dtype)[1]
+                register = self.reg(reg_suffix(dtype))
+                self.emit(f'ld.param.{suffix} {register}, [param_{index}];')
+                self.scalar_parameters[name] = (register, dtype)
+                self.parameter_types.append(suffix)
+            else:
+                pointer = self.reg('rd')
+                self.emit(f'ld.param.u64 {pointer}, [param_{index}];')
+                self.emit(f'cvta.to.global.u64 {pointer}, {pointer};')
+                self.ptrs[name] = pointer
+                self.parameter_types.append('u64')
+        for name, op, suffix in [('tid', '%tid.x', 'u32'), ('bid', '%ctaid.x', 'u32'), ('ntid', '%ntid.x', 'u32')]:
             reg = self.reg('r')
-            self.emit(f'mov.u32 {reg}, %tid.{suffix};')
-            thread_xyz.append(reg)
-            if axis:
-                self.values[f'tid_{suffix}'] = (reg, 'i32')
-        block_xyz = []
-        for axis, suffix in enumerate('xyz'):
-            reg = self.reg('r')
-            self.emit(f'mov.u32 {reg}, %ctaid.{suffix};')
-            block_xyz.append(reg)
-            if axis:
-                self.values[f'bid_{suffix}'] = (reg, 'i32')
-        def linear(parts, dims):
-            value = parts[0]
-            for axis in range(1, 3):
-                reg = self.reg('r')
-                self.emit(f'mad.lo.u32 {reg}, {value}, {dims[axis]}, {parts[axis]};')
-                value = reg
-            return value
-        tid = linear(thread_xyz, block_dims)
-        bid = linear(block_xyz, grid_dims)
-        if tid != thread_xyz[0]:
-            self.emit(f'mov.u32 {thread_xyz[0]}, {tid};')
-        if bid != block_xyz[0]:
-            self.emit(f'mov.u32 {block_xyz[0]}, {bid};')
-        self.values['tid'] = (thread_xyz[0], 'i32')
-        self.values['bid'] = (block_xyz[0], 'i32')
-        ntid = self.reg('r')
-        self.emit(f'mov.u32 {ntid}, {block_size};')
-        self.values['ntid'] = (ntid, 'i32')
+            self.emit(f'mov.{suffix} {reg}, {op};')
+            self.values[name] = (reg, 'i32')
+            physical_name = {'tid': 'thread_idx.x', 'bid': 'block_idx.x', 'ntid': 'block_dim.x'}[name]
+            self.physical_builtins[physical_name] = reg
+            size = meta['grid'][0] if name == 'bid' else meta['block'][0]
+            self.set_integer_range(reg, checked_i32_interval(size, size) if name == 'ntid'
+                                   else checked_i32_interval(0, size - 1))
+        if self.geometry_3d:
+            for logical, family, dimensions in (
+                    ('tid', 'thread_idx', meta['block']),
+                    ('bid', 'block_idx', meta['grid'])):
+                x, y, z = (self.physical_builtin(f'{family}.{axis}')[0] for axis in 'xyz')
+                yz, linear = self.reg('r'), self.reg('r')
+                self.emit(f'mad.lo.u32 {yz}, {z}, {dimensions[1]}, {y};')
+                self.emit(f'mad.lo.u32 {linear}, {yz}, {dimensions[0]}, {x};')
+                total = math.prod(dimensions)
+                self.set_integer_range(yz, (0, dimensions[1] * dimensions[2] - 1))
+                self.set_integer_range(linear, (0, total - 1))
+                self.values[logical] = (linear, 'i32')
+            total_threads = self.reg('r')
+            self.emit(f'mov.u32 {total_threads}, {self.block_threads};')
+            self.set_integer_range(total_threads, (self.block_threads, self.block_threads))
+            self.values['ntid'] = (total_threads, 'i32')
+        tid, bid, ntid = (self.values[k][0] for k in ('tid', 'bid', 'ntid'))
+        self.hardware_tid, self.hardware_bid, self.hardware_ntid = tid, bid, ntid
         gid = self.reg('r')
         self.emit(f'mad.lo.u32 {gid}, {bid}, {ntid}, {tid};')
         self.values['_gid'] = (gid, 'i32')
+        self.hardware_gid = gid
+        product = i32_binary_interval('*', self.integer_range(bid), self.integer_range(ntid))
+        self.set_integer_range(gid, i32_binary_interval('+', product, self.integer_range(tid)))
         for name, instruction, rhs in [('lane', 'and.b32', 31), ('warp', 'shr.u32', 5)]:
             reg = self.reg('r')
             self.emit(f'{instruction} {reg}, {tid}, {rhs};')
             self.values[name] = (reg, 'i32')
-        # A by-value parameter is an SSA binding; it is never a buffer name.
-        for name, (reg, dtype) in self.scalar_args.items():
-            self.values[name] = (reg, dtype)
+            if name == 'lane':
+                self.hardware_lane = reg
+                self.set_integer_range(reg, checked_i32_interval(0, min(31, self.block_threads - 1)))
+            else:
+                self.hardware_warp = reg
+                self.set_integer_range(reg, checked_i32_interval(0, (self.block_threads - 1) // 32))
+        # Keep upstream logical aliases for physical y/z coordinates.
+        for axis, position in (('y', 1), ('z', 2)):
+            for logical, family, dimensions in (
+                    ('tid', 'thread_idx', meta['block']),
+                    ('bid', 'block_idx', meta['grid'])):
+                value = (self.physical_builtin(f'{family}.{axis}')[0]
+                         if dimensions[position] > 1 else '0')
+                self.values[f'{logical}_{axis}'] = (value, 'i32')
+        # Logical IR names may be rebound or used as carried state. Keep their
+        # initial values distinct from immutable physical scheduling operands.
+        for name, (operand, dtype) in tuple(self.values.items()):
+            self.values[name] = self.convert_operand(operand, dtype, dtype, copy_same_type=True)
 
     def reg(self, kind):
         self.counts[kind] += 1
@@ -766,53 +1388,108 @@ class Emitter:
         if kind == 'Literal':
             return 'literal', repr(x.value), getattr(x, 'dtype', None)
         if kind == 'BinaryExpr':
-            return 'binary', x.op, self.expr_key_at(x.left, versions), self.expr_key_at(x.right, versions)
+            left = self.expr_key_at(x.left, versions)
+            right = self.expr_key_at(x.right, versions)
+            return None if left is None or right is None else ('binary', x.op, left, right)
         if kind == 'TernaryExpr':
-            return ('ternary', self.expr_key_at(x.cond, versions),
-                    self.expr_key_at(x.if_true, versions), self.expr_key_at(x.if_false, versions))
+            parts = (self.expr_key_at(x.cond, versions),
+                     self.expr_key_at(x.if_true, versions), self.expr_key_at(x.if_false, versions))
+            return None if any(part is None for part in parts) else ('ternary', *parts)
         return None
 
     def expr(self, x):
+        value = self.expr_uncached(x)
+        if type(x).__name__ == 'BinaryExpr' and x.op in ('/', '//', '%'):
+            # Floor division and remainder cost several instructions each;
+            # cache them under the same versioned key as the cheaper ops.
+            key = self.expr_key(x)
+            if key is not None:
+                self.expr_cache[key] = value
+        return value
+
+    def expr_uncached(self, x):
         kind = type(x).__name__
         key = self.expr_key(x)
         if key is not None and key in self.expr_cache:
             return self.expr_cache[key]
         if kind == 'Var':
-            if x.name not in self.values:
-                raise Unsupported(f'Unknown IR value {x.name}')
-            return self.values[x.name]
+            return self.binding(x.name)
+        if kind == 'Builtin':
+            return self.physical_builtin(x.name)
         if kind == 'Literal':
+            declared = getattr(x, 'dtype', 'float')
+            if declared == 'float' or (isinstance(x.value, float) and declared in ('int', 'bool')):
+                return f32(float(x.value)), 'f32'
+            aliases = {'double': 'f64', 'int': 'i32', 'bool': 'i32'}
+            dtype = aliases.get(declared, declared)
+            if dtype in FLOAT_DTYPES:
+                return literal(x.value, dtype), dtype
             if isinstance(x.value, (bool, int)):
-                if not -(1 << 31) <= int(x.value) < (1 << 31):
-                    raise Unsupported('Integer literal exceeds signed32 bounds')
-                dtype = x.dtype if x.dtype in INT_DTYPES else 'i32'
-                if dtype in ('i64', 'u64') and not -(1 << 63) <= int(x.value) < (1 << 63):
-                    raise Unsupported('Integer literal exceeds signed64 bounds')
+                dtype = dtype if dtype in INT_DTYPES else 'i32'
+                bits = dtype_info(dtype)[0] * 8
+                lower, upper = (0, (1 << bits) - 1) if dtype.startswith('u') else (-(1 << (bits - 1)), (1 << (bits - 1)) - 1)
+                if not lower <= int(x.value) <= upper:
+                    raise Unsupported(f'Integer literal exceeds {dtype} bounds')
                 return str(int(x.value)), dtype
-            # Emmy's default float literal dtype is ``float``; the declared
-            # dtype selects f32 or f64, never the operand's incidental spelling.
-            dtype = getattr(x, 'dtype', 'float')
-            if dtype in ('f64', 'double'):
-                return f64(x.value), 'f64'
             return f32(x.value), 'f32'
         if kind == 'BinaryExpr':
             a, at = self.expr(x.left)
             b, bt = self.expr(x.right)
+            if x.op in ('<<', '>>') and at in INT_DTYPES and bt in INT_DTYPES:
+                count = b if dtype_info(bt)[0] == 4 else convert_register(self, b, bt, 'u32')
+                width = dtype_info(at)[0] * 8
+                kind = 'u' if at.startswith('u') else 's'
+                r = self.reg(reg_suffix(at))
+                instruction = 'shl.b' + str(width) if x.op == '<<' else 'shr.' + kind + str(width)
+                self.emit(f'{instruction} {r}, {a}, {count};')
+                if at == 'i32':
+                    self.set_integer_range(r, i32_binary_interval(x.op, self.integer_range(a), self.integer_range(b)))
+                return r, at
+            if x.op in ('&&', '||'):
+                if at != 'pred' or bt != 'pred':
+                    raise Unsupported('Logical expressions require predicates')
+                r = self.reg('p')
+                self.emit(f'{"and.pred" if x.op == "&&" else "or.pred"} {r}, {a}, {b};')
+                return r, 'pred'
+            if at == bt == 'pred' and x.op in ('==', '!='):
+                r = self.reg('p')
+                self.emit(f'xor.pred {r}, {a}, {b};')
+                if x.op == '==':
+                    self.emit(f'not.pred {r}, {r};')
+                return r, 'pred'
             comparisons = {'==':'eq', '!=':'ne', '<':'lt', '<=':'le', '>':'gt', '>=':'ge'}
             if x.op in comparisons:
+                if at == bt == 'pred' and x.op in ('<', '<=', '>', '>='):
+                    # Ordered BOOL comparisons use numeric zero/one operands;
+                    # PTX setp has no predicate source-operand form.
+                    a = convert_register(self, a, 'pred', 'i32')
+                    b = convert_register(self, b, 'pred', 'i32')
+                    at = bt = 'i32'
                 if at != bt:
-                    target = 'f64' if 'f64' in (at, bt) else 'f32'
+                    target = infer_assign_dtype('add', [at, bt]) if at in INT_DTYPES and bt in INT_DTYPES else ('f64' if 'f64' in (at, bt) else 'f32')
                     a = convert_register(self, a, at, target)
                     b = convert_register(self, b, bt, target)
                     at = bt = target
+                if at == 'f16':
+                    a = convert_register(self, a, at, 'f32')
+                    b = convert_register(self, b, bt, 'f32')
+                    at = bt = 'f32'
                 p = self.reg('p')
-                self.emit(f'setp.{comparisons[x.op]}.{ptx_compare_type(at)} {p}, {a}, {b};')
+                comparison = 'neu' if at in FLOAT_DTYPES and x.op == '!=' else comparisons[x.op]
+                self.emit(f'setp.{comparison}.{ptx_compare_type(at)} {p}, {a}, {b};')
                 return p, 'pred'
             if at != bt:
-                target = 'f64' if 'f64' in (at, bt) else 'f32'
+                target = infer_assign_dtype('add', [at, bt]) if at in INT_DTYPES and bt in INT_DTYPES else ('f64' if 'f64' in (at, bt) else 'f32')
                 a = convert_register(self, a, at, target)
                 b = convert_register(self, b, bt, target)
                 at = bt = target
+            if at == 'f32':
+                instructions = {'+':'add.rn.f32', '-':'sub.rn.f32', '*':'mul.rn.f32', '/':'div.rn.f32'}
+                if x.op not in instructions:
+                    raise Unsupported(f'Unsupported floating expression {x.op}')
+                r = self.reg('f')
+                self.emit(f'{instructions[x.op]} {r}, {a}, {b};')
+                return r, 'f32'
             ops = {'+':'add.s32', '-':'sub.s32', '*':'mul.lo.s32', '&':'and.b32', '|':'or.b32', '>>':'shr.s32', '<<':'shl.b32'}
             if x.op in ('&&', '||'):
                 if at != 'pred' or bt != 'pred':
@@ -821,6 +1498,10 @@ class Emitter:
                 self.emit(f'{"and.pred" if x.op == "&&" else "or.pred"} {p}, {a}, {b};')
                 return p, 'pred'
             if x.op in ('/', '//', '%'):
+                if at == 'i32':
+                    return self.integer_floor_divmod(x.op, a, b)
+                if re.fullmatch(r'-?[0-9]+', b) and int(b) == 0:
+                    raise Unsupported('Integer division by known zero')
                 if at not in INT_DTYPES:
                     raise Unsupported(f'Unsupported expression operator {x.op} for {at}')
                 # Emmy's typed binary ops use floor division and Python floor
@@ -880,16 +1561,22 @@ class Emitter:
                 wide = {'+': 'add', '-': 'sub', '*': 'mul.lo', '&': 'and', '|': 'or', '>>': 'shr', '<<': 'shl'}
                 kind = 'u' if at == 'u64' else 's'
                 r = self.reg('rd')
-                self.emit(f'{wide[x.op]}.{kind}64 {r}, {a}, {b};')
+                instruction_type = 'b64' if x.op in ('&', '|', '<<') else kind + '64'
+                self.emit(f'{wide[x.op]}.{instruction_type} {r}, {a}, {b};')
                 return r, at
-            key = ('binary', x.op, self.expr_key(x.left), self.expr_key(x.right))
-            cached = self.expr_cache.get(key)
+            left_key, right_key = self.expr_key(x.left), self.expr_key(x.right)
+            key = ('binary', x.op, left_key, right_key) if left_key is not None and right_key is not None else None
+            cached = self.expr_cache.get(key) if key is not None else None
             if cached is not None:
                 return cached
             r = self.reg('r')
-            self.emit(f'{ops[x.op]} {r}, {a}, {b};')
-            self.expr_cache[key] = (r, 'i32')
-            return r, 'i32'
+            instruction = 'shr.u32' if at == 'u32' and x.op == '>>' else ops[x.op]
+            self.emit(f'{instruction} {r}, {a}, {b};')
+            if at == 'i32':
+                self.set_integer_range(r, i32_binary_interval(x.op, self.integer_range(a), self.integer_range(b)))
+            if key is not None:
+                self.expr_cache[key] = (r, at)
+            return r, at
         if kind == 'TernaryExpr':
             p, pt = self.expr(x.cond)
             a, at = self.expr(x.if_true)
@@ -897,19 +1584,35 @@ class Emitter:
             if pt != 'pred':
                 raise Unsupported('Ternary condition must be a predicate')
             if at != bt:
-                target = 'f64' if 'f64' in (at, bt) else 'f32'
+                target = infer_assign_dtype('add', [at, bt]) if at in INT_DTYPES and bt in INT_DTYPES else ('f64' if 'f64' in (at, bt) else 'f32')
                 a = convert_register(self, a, at, target)
                 b = convert_register(self, b, bt, target)
                 at = bt = target
+            if at == 'pred':
+                yes, no, inverted, r = (self.reg('p') for _ in range(4))
+                self.emit(f'and.pred {yes}, {p}, {a};')
+                self.emit(f'not.pred {inverted}, {p};')
+                self.emit(f'and.pred {no}, {inverted}, {b};')
+                self.emit(f'or.pred {r}, {yes}, {no};')
+                return r, 'pred'
             r = self.reg(reg_suffix(at))
             self.emit(f'selp.{select_type(at)} {r}, {a}, {b}, {p};')
             return r, at
+        if kind == 'CastExpr':
+            operand, source = self.expr(x.expr)
+            aliases = {'float':'f32','int':'i32','bool':'pred','double':'f64'}
+            target = aliases.get(x.dtype, x.dtype)
+            if target not in DTYPES and target != 'pred':
+                raise Unsupported(f'Unsupported expression cast {target}')
+            return self.convert_operand(operand, source, target, copy_same_type=False)
+        if kind == 'FuncCallExpr':
+            return self.funcall_operation(x.name, [self.expr(a) for a in x.args])
+        if kind == 'FlatIndex':
+            return self.flatten_offset(x.buffer, x.index, record_ranges=True), 'i32'
         raise Unsupported(f'Unsupported expression {kind}')
 
     def value(self, name):
-        if name not in self.values:
-            raise Unsupported(f'Unbound SSA value {name!r}')
-        return self.values[name][0]
+        return self.binding(name)[0]
 
     def address(self, name, index, element_offset=0):
         if name not in self.buffers:
@@ -995,18 +1698,76 @@ class Emitter:
                   f'[{shared32}], [{source}], {nbytes};')
 
     def assign(self, name, op, args, dtype=None):
-        op = reduce_canon(getattr(op, 'name', None))
-        operands = [self.value(a) for a in args]
-        operand_types = [self.values[a][1] for a in args]
-        literal_args = [self.scalar_constants.get(a, self.value(a) if a in self.values else None)
-                        for a in args]
-        if dtype is not None:
-            result = dtype_name(dtype)
+        typed = [self.binding(a) for a in args]
+        operation = reduce_canon(getattr(op, 'name', op))
+        argument_types = [t for _, t in typed]
+        result = ('pred' if getattr(dtype, 'name', dtype) == 'bool' else dtype_name(dtype)) if dtype is not None else infer_assign_dtype(operation, argument_types)
+        native_integer = (INTEGER_ELEMENTWISE - {'divide'}) | set(COMPARISONS) | {'copy', 'negative', 'abs', 'maximum', 'minimum', 'where'}
+        native_half = {'add','subtract','multiply','divide','maximum','minimum','negative','abs','sqrt','reciprocal','copy','relu','where'} | set(COMPARISONS)
+        native_double = {'add','subtract','multiply','divide','maximum','minimum','negative','abs','sqrt','reciprocal','copy','relu','where','square','floor','ceil','round','trunc'} | set(COMPARISONS)
+        value_types = argument_types[1:] if operation == 'where' else argument_types
+        all_at_result = bool(value_types) and all(t == result for t in value_types)
+        integer_promotion = result in INT_DTYPES and bool(value_types) and all(t in INT_DTYPES for t in value_types)
+        native_op = (result == 'f32' or (result in INT_DTYPES and operation in native_integer)
+                     or (result == 'f16' and operation in native_half)
+                     or (result == 'f64' and operation in native_double))
+        native_computation = True
+        if result == 'pred':
+            # Public BOOL scalar results promote their BOOL inputs to F32,
+            # evaluate the ordinary op, then convert back to truth once.
+            # Numeric-to-BOOL folds have a different upstream conversion law.
+            if not typed or any(t != 'pred' for t in argument_types):
+                raise Unsupported('BOOL assignments require all-BOOL operands')
+            if operation == 'bitcast':
+                raise Unsupported('Predicate bitcasts unsupported')
+            if operation == 'copy' and len(typed) == 1:
+                register, result = self.snapshot_operand(*typed[0], 'pred')
+            else:
+                register, actual = self.emit_operation(op, typed, 'f32')
+                register, result = self.snapshot_operand(register, actual, 'pred')
+            native_computation = False
+        elif operation == 'bitcast':
+            if dtype is None:
+                raise Unsupported('Bitcast requires explicit destination dtype')
+            register, result = self.emit_operation(op, typed, result)
+        elif operation == 'copy':
+            # Copy is a numeric conversion of one value, with no arithmetic rounding step.
+            # This deliberately preserves typed native integer/wide copies.
+            register, result = self.emit_operation(op, typed, result)
+        elif result == 'f32' or (native_op and (all_at_result or integer_promotion)):
+            register, result = self.emit_operation(op, typed, result)
         else:
-            if not operand_types:
-                raise Unsupported(f'Elementwise operation {op} has no operands')
-            result = operand_types[0]
-        result = dtype_name(result)
+            if any(t in ('f64','i64','u64') for t in argument_types):
+                raise Unsupported('Mixed/non-native wide stamped arithmetic has no established computation law')
+            # Mixed operands no wider than F32 compute in F32, then demote exactly once.
+            # In particular F32(.6)+F32(.6) stampedI32 is1, not0+0.
+            register, actual = self.emit_operation(op, typed, 'f32')
+            register, result = self.convert_operand(register, actual, result, copy_same_type=False)
+            native_computation = False
+        if name in self.mutable:
+            stable = self.mutable[name]
+            if self.values[name][1] != result:
+                raise Unsupported('Mutable assignment changes carrier dtype')
+            move_type = 'pred' if result == 'pred' else select_type(result)
+            self.emit(f'mov.{move_type} {stable}, {register};')
+            register = stable
+        self.values[name] = (register, result)
+        if result == 'i32':
+            interval_op = {'add':'+','subtract':'-','multiply':'*'}.get(operation)
+            interval = (i32_binary_interval(interval_op, *(self.integer_range(v) for v, _ in typed))
+                        if native_computation and interval_op and len(typed) == 2
+                        else self.integer_range(typed[0][0]) if operation == 'copy' and len(typed) == 1 and typed[0][1] == 'i32'
+                        else None)
+            self.set_integer_range(register, interval)
+
+    def emit_operation(self, op, args, dtype=None, literal_args=None):
+        op = reduce_canon(getattr(op, 'name', op))
+        operands = [v for v, _ in args]
+        operand_types = [t for _, t in args]
+        if not operands:
+            raise Unsupported('Elementwise operation needs operands')
+        result = dtype_name(dtype) if dtype is not None else infer_assign_dtype(op, operand_types)
+        literal_args = [None] * len(args) if literal_args is None else literal_args
         # A bitcast is a same-width reinterpretation, never a numerical
         # conversion. Handle it before any operand promotion.
         if op == 'bitcast':
@@ -1018,14 +1779,13 @@ class Emitter:
                 raise Unsupported(f'bitcast width mismatch {operand_types[0]} -> {result}')
             reg = self.reg(reg_suffix(result))
             self.emit(f'mov.b{target_width * 8} {reg}, {operands[0]};')
-            self.values[name] = (reg, result)
-            return
+            return reg, result
         # Integer arithmetic, bit manipulation, and comparisons retain their
         # typed registers. Only the explicitly listed operations are legal;
         # an unknown integer op must fail rather than silently truncate.
         integer_result = result in INT_DTYPES
         if integer_result and not (op in INTEGER_ELEMENTWISE or op in COMPARISONS
-                                   or op in ('copy', 'negative', 'abs')):
+                                   or op in ('copy', 'negative', 'abs', 'maximum', 'minimum')):
             raise Unsupported(f'Non-floating elementwise arithmetic unsupported: {result}')
         # where carries a predicate alongside two values. A predicate is not a
         # numeric operand and must never be fed through convert_register.
@@ -1051,25 +1811,28 @@ class Emitter:
                 operands = [convert_register(self, value, 'f16', 'f32') for value in operands]
                 compare_type = 'f32'
             p = self.reg('p')
-            self.emit(f'setp.{COMPARISONS[op]}.{compare_type} '
+            comparison = 'neu' if compare_type in FLOAT_DTYPES and COMPARISONS[op] in ('ne', 'neu') else COMPARISONS[op]
+            self.emit(f'setp.{comparison}.{compare_type} '
                       f'{p}, {operands[0]}, {operands[1]};')
             reg = self.reg(reg_suffix(result))
             if result in FLOAT_DTYPES:
                 self.emit(f'selp.{select_type(result)} {reg}, {literal(1, result)}, {literal(0, result)}, {p};')
             else:
                 self.emit(f'selp.{compare_type} {reg}, 1, 0, {p};')
-            self.values[name] = (reg, result)
-            return
+            return reg, result
         if op == 'where' and len(operands) == 3:
             condition = as_predicate(self, operands[0], operand_types[0])
             reg = self.reg(reg_suffix(result))
             self.emit(f'selp.{select_type(result)} {reg}, {operands[1]}, {operands[2]}, {condition};')
-            self.values[name] = (reg, result)
-            return
+            return reg, result
+        if integer_result and op in ('maximum', 'minimum') and len(operands) == 2:
+            reg = self.reg(reg_suffix(result))
+            instruction = 'max' if op == 'maximum' else 'min'
+            self.emit(f'{instruction}.{dtype_info(result)[1]} {reg}, {operands[0]}, {operands[1]};')
+            return reg, result
         if integer_result and op in INTEGER_ELEMENTWISE and len(operands) == 2:
             reg = emit_integer_binary(self, op, result, operands[0], operands[1])
-            self.values[name] = (reg, result)
-            return
+            return reg, result
         if integer_result and op in ('negative', 'abs') and len(operands) == 1:
             reg = self.reg(reg_suffix(result))
             # PTX neg/abs apply only to signed numeric types. The absolute
@@ -1083,8 +1846,7 @@ class Emitter:
             else:
                 self.emit(f'{op if op == "abs" else "neg"}.{dtype_info(result)[1]} '
                           f'{reg}, {operands[0]};')
-            self.values[name] = (reg, result)
-            return
+            return reg, result
         reg = self.reg(reg_suffix(result))
         binary = {'add':'add', 'subtract':'sub', 'multiply':'mul', 'divide':'div.rn', 'maximum':'max', 'minimum':'min'}
         unary = {'negative':'neg', 'abs':'abs', 'sqrt':'sqrt.rn', 'reciprocal':'rcp.rn'}
@@ -1099,10 +1861,15 @@ class Emitter:
                     self.emit(f'div.rn.f32 {wide}, {left}, {right};')
                     self.emit(f'cvt.rn.f16.f32 {reg}, {wide};')
                 else:
-                    instruction = binary[op] + ('.rn' if op in ('add', 'subtract', 'multiply') else '')
+                    instruction = binary[op] + ('.NaN' if op in ('maximum', 'minimum') else '') + ('.rn' if op in ('add', 'subtract', 'multiply') else '')
                     self.emit(f'{instruction}.f16 {reg}, {operands[0]}, {operands[1]};')
             else:
-                self.emit(f'{binary[op]}.{result} {reg}, {operands[0]}, {operands[1]};')
+                instruction = binary[op] + ('.NaN' if result == 'f32' and op in ('maximum', 'minimum') else '')
+                self.emit(f'{instruction}.{result} {reg}, {operands[0]}, {operands[1]};')
+                if result == 'f64' and op in ('maximum', 'minimum'):
+                    nan = self.reg('p')
+                    self.emit(f'setp.nan.f64 {nan}, {operands[0]}, {operands[1]};')
+                    self.emit(f'@{nan} mov.f64 {reg}, {f64(float("nan"))};')
         elif op in unary and len(operands) == 1:
             if result == 'f16':
                 if op in ('sqrt', 'reciprocal'):
@@ -1133,18 +1900,19 @@ class Emitter:
             # PTX register moves name signed/unsigned integers explicitly;
             # ``i32``/``u32`` are IR dtype names, not legal ``mov`` modifiers.
             self.emit(f'mov.{dtype_info(result)[1]} {reg}, {operands[0]};')
-        elif op == 'exp' and len(operands) == 1:
+        elif op in ('exp', 'exp_fast') and len(operands) == 1:
             if result != 'f32':
-                raise Unsupported('exp is only supported for f32')
+                raise Unsupported(f'{op} is only supported for f32')
             scaled = self.reg('f')
             self.emit(f'mul.f32 {scaled}, {operands[0]}, {f32(math.log2(math.e))};')
-            self.emit(f'ex2.approx.f32 {reg}, {scaled};')
-        elif op == 'exp_fast' and len(operands) == 1:
-            if result != 'f32':
-                raise Unsupported('exp_fast is only supported for f32')
-            scaled = self.reg('f')
-            self.emit(f'mul.f32 {scaled}, {operands[0]}, {f32(math.log2(math.e))};')
-            self.emit(f'ex2.approx.f32 {reg}, {scaled};')
+            # Keep exp2's operand/result normal, then restore tiny results.
+            # The offset is exact in the only range with nonzero subnormals;
+            # the final multiply deliberately does not use .ftz.
+            tiny = self.reg('p')
+            self.emit(f'setp.lt.f32 {tiny}, {scaled}, {f32(-125.0)};')
+            self.emit(f'@{tiny} add.f32 {scaled}, {scaled}, {f32(126.0)};')
+            self.emit(f'ex2.approx.ftz.f32 {reg}, {scaled};')
+            self.emit(f'@{tiny} mul.rn.f32 {reg}, {reg}, {f32(2.0 ** -126)};')
         elif op == 'log2' and len(operands) == 1:
             if result != 'f32':
                 raise Unsupported('log2 is only supported for f32')
@@ -1184,9 +1952,25 @@ class Emitter:
             self.emit(f'abs.f32 {absolute}, {operands[0]};')
             self.emit(f'mul.f32 {absolute}, {absolute}, {f32(-math.log2(math.e))};')
             self.emit(f'ex2.approx.f32 {exponent}, {absolute};')
+            # log(1+y) must not first round tiny y away in the addition to1.
+            # For0<=y<=1/8 the alternating degree6 series has relative
+            # truncation error <=(1+y)*y**6/7, below6.14e-7. The threshold
+            # is an analytic approximation interval, independent of inputs.
+            small = self.reg('p')
+            large, joined = self.label('softplus_log'), self.label('softplus_ready')
+            self.emit(f'setp.le.f32 {small}, {exponent}, {f32(0.125)};')
+            self.emit(f'@!{small} bra {large};')
+            polynomial = self.reg('f')
+            self.emit(f'fma.rn.f32 {polynomial}, {exponent}, {f32(-1.0 / 6.0)}, {f32(1.0 / 5.0)};')
+            for coefficient in (-1.0 / 4.0, 1.0 / 3.0, -1.0 / 2.0, 1.0):
+                self.emit(f'fma.rn.f32 {polynomial}, {exponent}, {polynomial}, {f32(coefficient)};')
+            self.emit(f'mul.rn.f32 {logarithm}, {exponent}, {polynomial};')
+            self.emit(f'bra {joined};')
+            self.mark(large)
             self.emit(f'add.f32 {shifted}, {exponent}, {f32(1.0)};')
             self.emit(f'lg2.approx.f32 {logarithm}, {shifted};')
             self.emit(f'mul.f32 {logarithm}, {logarithm}, {f32(math.log(2.0))};')
+            self.mark(joined)
             self.emit(f'max.f32 {maximum}, {operands[0]}, {f32(0.0)};')
             self.emit(f'add.f32 {reg}, {maximum}, {logarithm};')
         elif op == 'square' and len(operands) == 1:
@@ -1198,7 +1982,12 @@ class Emitter:
             mode = 'rzi' if op == 'trunc' else {'floor': 'rmi', 'ceil': 'rpi', 'round': 'rni'}[op]
             self.emit(f'cvt.{mode}.{result}.{result} {reg}, {operands[0]};')
         elif op == 'relu' and len(operands) == 1:
-            self.emit(f'max.{result} {reg}, {operands[0]}, {literal(0, result)};')
+            modifier = '.NaN' if result in ('f16', 'f32') else ''
+            self.emit(f'max{modifier}.{result} {reg}, {operands[0]}, {literal(0, result)};')
+            if result == 'f64':
+                nan = self.reg('p')
+                self.emit(f'setp.nan.f64 {nan}, {operands[0]}, {operands[0]};')
+                self.emit(f'@{nan} mov.f64 {reg}, {f64(float("nan"))};')
         elif op in ('sin', 'cos') and len(operands) == 1:
             if result != 'f32':
                 raise Unsupported(f'{op} is only supported for f32')
@@ -1213,28 +2002,7 @@ class Emitter:
             self.emit(f'cos.approx.f32 {cosine}, {operands[0]};')
             self.emit(f'div.rn.f32 {reg}, {sine}, {cosine};')
         elif op == 'pow' and len(operands) == 2:
-            if result != 'f32':
-                raise Unsupported('pow is only supported for f32')
-            # PTX has no general pow instruction. x**y = exp2(y*log2(x)) is
-            # the normal form, but log2 is undefined for negative x even when
-            # y is integral (the common square/cube spelling). Fold integral
-            # constant exponents into repeated multiplication so the sign is
-            # preserved; everything else stays on the log/exp path.
-            exponent = operands[1]
-            constant = literal_args[1] if len(literal_args) == 2 else None
-            if isinstance(constant, (int, float)) and float(constant).is_integer() and 0 <= constant <= 8:
-                count = int(constant)
-                if count == 0:
-                    self.emit(f'mov.f32 {reg}, {f32(1.0)};')
-                else:
-                    self.emit(f'mov.f32 {reg}, {operands[0]};')
-                    for _ in range(count - 1):
-                        self.emit(f'mul.rn.f32 {reg}, {reg}, {operands[0]};')
-            else:
-                logarithm, product = self.reg('f'), self.reg('f')
-                self.emit(f'lg2.approx.f32 {logarithm}, {operands[0]};')
-                self.emit(f'mul.rn.f32 {product}, {logarithm}, {exponent};')
-                self.emit(f'ex2.approx.f32 {reg}, {product};')
+            raise Unsupported('General pow accuracy/domain is not established; no metadata-value specialization')
         elif op == 'sign' and len(operands) == 1:
             if result != 'f32':
                 raise Unsupported('sign is only supported for f32')
@@ -1245,6 +2013,9 @@ class Emitter:
             self.emit(f'selp.f32 {pos_value}, {f32(1.0)}, {f32(0.0)}, {positive};')
             self.emit(f'selp.f32 {neg_value}, {f32(1.0)}, {f32(0.0)}, {negative};')
             self.emit(f'sub.rn.f32 {reg}, {pos_value}, {neg_value};')
+            unordered = self.reg('p')
+            self.emit(f'setp.nan.f32 {unordered}, {operands[0]}, {operands[0]};')
+            self.emit(f'@{unordered} mov.f32 {reg}, {f32(float("nan"))};')
         elif op == 'erf' and len(operands) == 1:
             if result != 'f32':
                 raise Unsupported('erf is only supported for f32')
@@ -1275,12 +2046,7 @@ class Emitter:
                 self.emit(f'mul.rn.f32 {reg}, {half}, {shifted};')
         else:
             raise Unsupported(f'Unsupported elementwise operation {op}/{len(args)} under {result}')
-        if name in self.mutable:
-            stable = self.mutable[name]
-            self.emit(f'mov.{dtype_info(result)[1]} {stable}, {reg};')
-            self.values[name] = (stable, result)
-        else:
-            self.values[name] = (reg, result)
+        return reg, result
 
     def emit_erf(self, value):
         """Return an f32 register holding erf(value).
@@ -1293,6 +2059,22 @@ class Emitter:
         """
         absolute = self.reg('f')
         self.emit(f'abs.f32 {absolute}, {value};')
+        signed = self.reg('f')
+        small = self.reg('p')
+        large, joined = self.label('erf_large'), self.label('erf_ready')
+        self.emit(f'setp.le.f32 {small}, {absolute}, {f32(0.5)};')
+        self.emit(f'@!{small} bra {large};')
+        # The odd series retains the linear term near zero. For z=x*x<=1/4,
+        # the next alternating term gives relative truncation below2.85e-8.
+        square_small, polynomial_small, linear = self.reg('f'), self.reg('f'), self.reg('f')
+        self.emit(f'mul.rn.f32 {square_small}, {value}, {value};')
+        self.emit(f'mov.f32 {polynomial_small}, {f32(-1.0 / 1320.0)};')
+        for coefficient in (1.0 / 216.0, -1.0 / 42.0, 1.0 / 10.0, -1.0 / 3.0, 1.0):
+            self.emit(f'fma.rn.f32 {polynomial_small}, {square_small}, {polynomial_small}, {f32(coefficient)};')
+        self.emit(f'mul.rn.f32 {linear}, {value}, {f32(2.0 / math.sqrt(math.pi))};')
+        self.emit(f'mul.rn.f32 {signed}, {linear}, {polynomial_small};')
+        self.emit(f'bra {joined};')
+        self.mark(large)
         t = self.reg('f')
         self.emit(f'mul.rn.f32 {t}, {absolute}, {f32(0.3275911)};')
         self.emit(f'add.rn.f32 {t}, {t}, {f32(1.0)};')
@@ -1316,8 +2098,8 @@ class Emitter:
         self.emit(f'setp.lt.f32 {negative}, {value}, {f32(0.0)};')
         negated = self.reg('f')
         self.emit(f'neg.f32 {negated}, {magnitude};')
-        signed = self.reg('f')
         self.emit(f'selp.f32 {signed}, {negated}, {magnitude}, {negative};')
+        self.mark(joined)
         return signed
 
     def init_accums(self, statements):
@@ -1331,7 +2113,7 @@ class Emitter:
                 if dtype not in FLOAT_DTYPES:
                     raise Unsupported(f'Only floating reductions supported: {dtype}')
                 reg = self.reg(reg_suffix(dtype))
-                self.emit(f'mov.{dtype} {reg}, {literal(identities[op], dtype)};')
+                self.emit(f'mov.{select_type(dtype)} {reg}, {literal(identities[op], dtype)};')
                 self.values[s.name] = (reg, dtype)
                 self.mutable[s.name] = reg
                 self.accum_ops[s.name] = op
@@ -1349,9 +2131,7 @@ class Emitter:
         """
         selected = None
         for branch in reversed(statement.branches):
-            if branch.value not in self.values:
-                raise Unsupported(f'Unknown Select branch value {branch.value}')
-            value, value_type = self.values[branch.value]
+            value, value_type = self.binding(branch.value)
             value = convert_register(self, value, value_type, 'f32')
             if selected is None:
                 selected = value
@@ -1362,7 +2142,8 @@ class Emitter:
             reg = self.reg('f')
             self.emit(f'selp.f32 {reg}, {value}, {selected}, {condition};')
             selected = reg
-        self.values[statement.name] = (selected, 'f32')
+        self.values[statement.name] = self.snapshot_operand(selected, 'f32', 'f32')
+        self.mutable.pop(statement.name, None)
         self.rebind(statement.name)
 
     def preinitialize_trees(self, statements):
@@ -1397,7 +2178,7 @@ class Emitter:
             for buf, combine in zip(tree.bufs, tree.combine_states, strict=True):
                 op = combine.op.name
                 op = reduce_canon(op)
-                identities = {'add': 0.0, 'multiply': 1.0, 'maximum': -1e30, 'minimum': 1e30}
+                identities = {'add': 0.0, 'multiply': 1.0, 'maximum': float('-inf'), 'minimum': float('inf')}
                 if op not in identities:
                     raise Unsupported(f'Unsupported tree reduction {op}')
                 identity = identities[op]
@@ -1414,24 +2195,2238 @@ class Emitter:
                 # thread per tree position.
                 from emmy.compiler.ir.expr import BinaryExpr, Literal, Var
                 slot = self.reg('r')
-                self.emit(f'mov.u32 {slot}, {self.value("tid")};')
-                self.values['_tree_slot'] = (slot, 'i32')
-                begin, done = self.label('tree_seed'), self.label('tree_seed_done')
+                self.emit(f'mov.u32 {slot}, {self.hardware_tid};')
+                previous_slot = self.values.get('_tree_slot')
+                self.rebind('_tree_slot')
+                try:
+                    self.values['_tree_slot'] = (slot, 'i32')
+                    begin, done = self.label('tree_seed'), self.label('tree_seed_done')
+                    self.mark(begin)
+                    active = self.reg('p')
+                    self.emit(f'setp.ge.u32 {active}, {slot}, {total_slots};')
+                    self.emit(f'@{active} bra {done};')
+                    addr, space = self.address(buf, (Var('_tree_slot'),))
+                    if space != 'shared':
+                        raise Unsupported('Tree buffer is not shared')
+                    self.emit(f'st.shared.{dtype_info(dtype)[1]} [{addr}], {literal_value};')
+                    self.emit(f'add.u32 {slot}, {slot}, {launched};')
+                    self.emit(f'bra {begin};')
+                    self.mark(done)
+                finally:
+                    if previous_slot is None:
+                        self.values.pop('_tree_slot', None)
+                    else:
+                        self.values['_tree_slot'] = previous_slot
+                    self.rebind('_tree_slot')
+
+    def integer_range(self, operand):
+            if re.fullmatch(r'-?[0-9]+', operand):
+                value = int(operand)
+                return checked_i32_interval(value, value)
+            return self.int_ranges.get(operand)
+
+    def set_integer_range(self, operand, interval):
+            if interval is None:
+                self.int_ranges.pop(operand, None)
+            else:
+                self.int_ranges[operand] = interval
+
+    def physical_builtin(self, name):
+            families = {'thread_idx': ('tid', 'block', True),
+                        'block_idx': ('ctaid', 'grid', True),
+                        'block_dim': ('ntid', 'block', False),
+                        'grid_dim': ('nctaid', 'grid', False)}
+            known = {f'{family}.{axis}': (special, dimensions, index, position, axis)
+                     for family, (special, dimensions, index) in families.items()
+                     for position, axis in enumerate('xyz')}
+            if name not in known:
+                raise Unsupported(f'Unsupported physical Builtin {name}')
+            if name not in self.physical_builtins:
+                special, dimensions, index, position, axis = known[name]
+                reg = self.reg('r')
+                self.emit(f'mov.u32 {reg}, %{special}.{axis};')
+                size = self.meta[dimensions][position]
+                self.set_integer_range(reg, (0, size - 1) if index else (size, size))
+                self.physical_builtins[name] = reg
+            return self.physical_builtins[name], 'i32'
+
+    def integer_floor_divmod(self, op, a, b):
+            # Literal operands arrive as decimal immediates; register operands are
+            # dynamic and retain the IR's nonzero/representable signed32 precondition.
+            divisor = int(b) if re.fullmatch(r'-?[0-9]+', b) else None
+            if divisor == 0:
+                raise Unsupported('Integer division by a known zero divisor')
+            result = self.reg('r')
+            left_range, right_range = self.integer_range(a), self.integer_range(b)
+            self.set_integer_range(result, i32_binary_interval(op, left_range, right_range))
+            if op == '%' and divisor in (-1, 1):
+                self.set_integer_range(result, (0, 0))
+                self.emit(f'mov.b32 {result}, 0;')
+                return result, 'i32'
+            if divisor == -1 and a == str(-(1 << 31)):
+                raise Unsupported('Integer quotient exceeds signed32 bounds')
+            if divisor is not None and divisor > 0 and not divisor & (divisor - 1):
+                if op == '%':
+                    self.emit(f'and.b32 {result}, {a}, {divisor - 1};')
+                else:
+                    self.emit(f'shr.s32 {result}, {a}, {divisor.bit_length() - 1};')
+                return result, 'i32'
+
+            if (left_range is not None and right_range is not None
+                    and left_range[0] >= 0 and right_range[0] > 0):
+                instruction = 'rem.u32' if op == '%' else 'div.u32'
+                self.emit(f'{instruction} {result}, {a}, {b};')
+                return result, 'i32'
+
+            modulo_done = None
+            if op == '%' and divisor is None:
+                # INTMIN % -1 is zero even though its intermediate quotient cannot
+                # be represented. Bypass division for every dynamic divisor -1.
+                ordinary = self.label('modulo_divide')
+                modulo_done = self.label('modulo_done')
+                negative_one = self.reg('p')
+                self.emit(f'setp.eq.s32 {negative_one}, {b}, -1;')
+                self.emit(f'@!{negative_one} bra {ordinary};')
+                self.emit(f'mov.b32 {result}, 0;')
+                self.emit(f'bra {modulo_done};')
+                self.mark(ordinary)
+
+            quotient, product, remainder = (self.reg('r') for _ in range(3))
+            self.emit(f'div.s32 {quotient}, {a}, {b};')
+            self.emit(f'mul.lo.s32 {product}, {quotient}, {b};')
+            self.emit(f'sub.s32 {remainder}, {a}, {product};')
+            nonzero, opposite, adjust = (self.reg('p') for _ in range(3))
+            signs = self.reg('r')
+            self.emit(f'setp.ne.s32 {nonzero}, {remainder}, 0;')
+            self.emit(f'xor.b32 {signs}, {remainder}, {b};')
+            self.emit(f'setp.lt.s32 {opposite}, {signs}, 0;')
+            self.emit(f'and.pred {adjust}, {nonzero}, {opposite};')
+            corrected = self.reg('r')
+            if op == '%':
+                self.emit(f'add.s32 {corrected}, {remainder}, {b};')
+                self.emit(f'selp.b32 {result}, {corrected}, {remainder}, {adjust};')
+            else:
+                self.emit(f'sub.s32 {corrected}, {quotient}, 1;')
+                self.emit(f'selp.b32 {result}, {corrected}, {quotient}, {adjust};')
+            if modulo_done is not None:
+                self.mark(modulo_done)
+            return result, 'i32'
+
+    def flatten_offset(self, name, index, element_offset=0, *, record_ranges=False):
+            if name not in self.buffers:
+                raise Unsupported(f'Unknown buffer {name}')
+            shape, _ = self.buffers[name]
+            if len(index) != len(shape):
+                # Scalar buffers may have [] IR indices and shape [1] metadata.
+                if index or math.prod(shape) != 1:
+                    raise Unsupported(f'Index rank mismatch for {name}: {len(index)} vs {shape}')
+            offset = '0'
+            for axis, coord in enumerate(index):
+                value, dt = self.expr(coord)
+                if dt != 'i32':
+                    raise Unsupported('Only signed32 indices are supported')
+                stride = math.prod(shape[axis+1:])
+                tmp = self.reg('r')
+                self.emit(f'mad.lo.s32 {tmp}, {value}, {stride}, {offset};')
+                if record_ranges:
+                    product = i32_binary_interval('*', self.integer_range(value), (stride, stride))
+                    self.set_integer_range(tmp, i32_binary_interval('+', product, self.integer_range(offset)))
+                offset = tmp
+            if element_offset:
+                tmp = self.reg('r')
+                self.emit(f'add.s32 {tmp}, {offset}, {element_offset};')
+                offset = tmp
+            return offset
+
+    def scalar_load(self, statement):
+        name = statement.input
+        shape = self.scalar_shapes[name]
+        if (len(statement.names) != 1
+                or (len(statement.index) != len(shape) and statement.index)):
+            raise Unsupported('Scalar parameter Load must address exactly one scalar cell')
+        for coordinate in statement.index:
+            operand, dtype = self.expr(coordinate)
+            if dtype != 'i32' or self.integer_range(operand) != (0, 0):
+                raise Unsupported('Scalar parameter Load index must be proven zero')
+        operand, source_dtype = self.scalar_parameters[name]
+        target_dtype = source_dtype if statement.dtype is None else dtype_name(statement.dtype)
+        register, target_dtype = self.convert_operand(operand, source_dtype, target_dtype,
+                                                     copy_same_type=True)
+        self.values[statement.names[0]] = (register, target_dtype)
+        self.mutable.pop(statement.names[0], None)
+        self.rebind(statement.names[0])
+
+    def snapshot_operand(self, operand, source_dtype, dtype):
+        """Capture a typed value without aliasing a mutable physical carrier."""
+        dtype = getattr(dtype, 'name', dtype)
+        if dtype == 'bool':
+            dtype = 'pred'
+        if dtype != 'pred':
+            dtype = dtype_name(dtype)
+        if dtype == 'pred':
+            register = self.reg('p')
+            if source_dtype == 'pred':
+                self.emit(f'mov.pred {register}, {operand};')
+            else:
+                compare_dtype = source_dtype
+                if compare_dtype == 'f16':
+                    operand = convert_register(self, operand, 'f16', 'f32')
+                    compare_dtype = 'f32'
+                if compare_dtype in FLOAT_DTYPES:
+                    self.emit(f'setp.neu.{compare_dtype} {register}, {operand}, {literal(0, compare_dtype)};')
+                elif compare_dtype in INT_DTYPES:
+                    self.emit(f'setp.ne.{ptx_compare_type(compare_dtype)} {register}, {operand}, 0;')
+                else:
+                    raise Unsupported(f'Unsupported Let source dtype {source_dtype}')
+            return register, dtype
+        if source_dtype == 'pred':
+            register = self.reg(reg_suffix(dtype))
+            self.emit(f'selp.{select_type(dtype)} {register}, {literal(1, dtype)}, {literal(0, dtype)}, {operand};')
+            return register, dtype
+        if source_dtype == dtype:
+            register = self.reg(reg_suffix(dtype))
+            self.emit(f'mov.{select_type(dtype)} {register}, {operand};')
+            return register, dtype
+        return convert_register(self, operand, source_dtype, dtype), dtype
+
+
+    def find_key_batches(self, statements):
+        """Batch independent readonly scores, keeping every F32 operation ordered."""
+        if self.geometry_3d or len(statements) != 1 or type(statements[0]).__name__ != 'Tile':
+            return {}
+        tile = statements[0]
+        names = [a.name for a in tile.axes]
+        extents = [static(a.extent) for a in tile.axes]
+        if not names or len(set(names)) != len(names):
+            return {}
+        width = extents[-1]
+        if (width < 2 or width > 32 or width & (width - 1)
+                or tile.aux_threads or tile.block_threads != self.block_threads
+                or self.block_threads % 32
+                or math.prod(extents) != self.block_threads * self.grid_blocks):
+            return {}
+        if tile.raster_group and tile.raster_axes:
+            pair = tile.raster_axes
+            if (len(pair) != 2 or any(a not in names[:-1] for a in pair)
+                    or names.index(pair[1]) != names.index(pair[0]) + 1):
+                return {}
+        def flat(body):
+            for statement in body:
+                yield statement
+                for nested in statement_bodies(statement):
+                    yield from flat(nested)
+        whole = list(flat(tile.body))
+        allowed = {'Load', 'Assign', 'Let', 'Init', 'Loop', 'Accum', 'Write'}
+        if any(type(statement).__name__ not in allowed for statement in whole):
+            return {}
+        written = {statement.output for statement in whole
+                   if type(statement).__name__ == 'Write'}
+        def used(body):
+            result = set()
+            for statement in flat(body):
+                result.update(statement.deps())
+                result.update(getattr(statement, 'carried_names', lambda: ())())
+                for expression in statement.exprs():
+                    result.update(expression.free_vars())
+            return result
+        def index_ok(expression, dot_axis, key_axis, uniform):
+            kind = type(expression).__name__
+            if kind == 'Literal':
+                return (isinstance(expression.value, (bool, int))
+                        and expression.dtype in ('int', 'bool', 'i32')
+                        and I32_MIN <= int(expression.value) <= I32_MAX)
+            if kind == 'Var':
+                return expression.name in uniform | {dot_axis, key_axis}
+            return (kind == 'BinaryExpr'
+                    and expression.op in ('+', '-', '*', '/', '//', '%', '&', '|', '<<', '>>')
+                    and index_ok(expression.left, dot_axis, key_axis, uniform)
+                    and index_ok(expression.right, dot_axis, key_axis, uniform))
+        plans = {}
+        def scan(body, uniform, external):
+            uniform = set(uniform)
+            body = list(body)
+            for position, loop in enumerate(body):
+                if type(loop).__name__ != 'Loop':
+                    uniform -= defined_names((loop,))
+                    continue
+                key = loop.axis.name
+                extent = static(loop.axis.extent)
+                definitions = defined_names(loop.body)
+                stable = uniform - definitions
+                outside = external | used(body[:position]) | used(body[position + 1:])
+                parts, dots = list(loop.body), []
+                for part in parts:
+                    if type(part).__name__ != 'Loop':
+                        break
+                    dots.append(part)
+                tail = parts[len(dots):]
+                valid = (0 < extent <= I32_MAX - (width - 1)
+                         and key not in definitions and dots and tail
+                         and all(type(part).__name__ in ('Load', 'Assign', 'Let', 'Accum')
+                                 for part in tail))
+                all_names, score_names, temps, address_names, dot_axes = set(), set(), set(), set(), set()
+                for dot in dots:
+                    axis = dot.axis.name
+                    dot_axes.add(axis)
+                    if (not dot.seed or not 0 < static(dot.axis.extent) <= I32_MAX
+                            or axis in defined_names(dot.body) or axis == key
+                            or [type(part).__name__ for part in dot.body]
+                               != ['Load', 'Load', 'Assign', 'Accum']):
+                        valid = False
+                        break
+                    left, right, product, accumulator = dot.body
+                    local_temps = (*left.names, *right.names, product.name)
+                    local_names = (*local_temps, accumulator.name)
+                    load_ok = all(
+                        len(load.names) == 1 and load.input not in written
+                        and load.input in self.buffers and load.input not in self.scalar_parameters
+                        and load.input not in self.shared
+                        and dtype_name(self.buffers[load.input][1]) == 'f32'
+                        and (load.dtype is None or dtype_name(load.dtype) == 'f32')
+                        and all(index_ok(index, axis, key, stable) for index in load.index)
+                        for load in (left, right))
+                    if (not load_ok or len(set(local_names)) != 4
+                            or set(local_names) & (all_names | stable | {axis, key})
+                            or product.op.name != 'multiply'
+                            or sorted(product.args) != sorted((left.names[0], right.names[0]))
+                            or (product.dtype is not None and dtype_name(product.dtype) != 'f32')
+                            or accumulator.value != product.name or accumulator.op.name != 'add'
+                            or accumulator.base is not None or tuple(accumulator.axes) != (axis,)
+                            or (accumulator.dtype is not None and dtype_name(accumulator.dtype) != 'f32')):
+                        valid = False
+                        break
+                    all_names.update(local_names)
+                    score_names.add(accumulator.name)
+                    temps.update(local_temps)
+                    address_names.update(set().union(*(set(index.free_vars())
+                        for load in (left, right) for index in load.index)) - {axis, key})
+                tail_defs = defined_names(tail)
+                if (valid and not temps & (outside | used(tail))
+                        and not score_names & tail_defs
+                        and not tail_defs & (stable | dot_axes | {key})
+                        and not all_names & dot_axes
+                        and all(type(part).__name__ != 'Load' or
+                                part.input not in written for part in tail)):
+                    plans[id(loop)] = (width, tuple(dots), tuple(tail),
+                                       frozenset(address_names), frozenset(temps))
+                if key not in definitions and 0 < extent <= I32_MAX:
+                    scan(loop.body, stable | {key}, outside)
+                old_axis_uniform = key in uniform
+                uniform -= definitions
+                if old_axis_uniform:
+                    uniform.add(key)
+        scan(tile.body, set(names[:-1]), set())
+        return plans
+
+    def ordered_key_batch(self, loop):
+        plan = self.key_batches.get(id(loop))
+        if plan is None or self.inactive:
+            return False
+        width, dots, tail, uniform, temps = plan
+        # Cooperative precomputation has already removed duplicated score work.
+        # Replaying those shared scalars through shuffles adds only overhead.
+        if all(id(dot) in self.hoisted for dot in dots):
+            return False
+        if (any(name not in self.values or self.values[name][1] != 'i32'
+                for name in uniform)
+                or any(name in self.mutable for name in temps)):
+            return False
+        extent = static(loop.axis.extent)
+        base, lane, segment = self.reg('r'), self.reg('r'), self.reg('r')
+        self.emit(f'mov.s32 {base}, 0;')
+        self.emit(f'and.b32 {lane}, {self.hardware_lane}, {width - 1};')
+        self.emit(f'and.b32 {segment}, {self.hardware_lane}, {32 - width};')
+        private = [self.reg('f') for _ in dots]
+        begin, done = self.label('key_batch'), self.label('key_batch_done')
+        self.mark(begin)
+        stop = self.reg('p')
+        self.emit(f'setp.ge.s32 {stop}, {base}, {extent};')
+        self.emit(f'@{stop} bra {done};')
+        for saved in private:
+            self.emit(f'mov.f32 {saved}, 0f00000000;')
+        key = self.reg('r')
+        self.emit(f'add.s32 {key}, {base}, {lane};')
+        self.values[loop.axis.name] = (key, 'i32')
+        self.set_integer_range(key, checked_i32_interval(0, extent + width - 2))
+        self.rebind(loop.axis.name)
+        absent, joined = self.reg('p'), self.label('key_scores_ready')
+        self.emit(f'setp.ge.s32 {absent}, {key}, {extent};')
+        self.emit(f'@{absent} bra {joined};')
+        # These are the original serial-D loops. Snapshot explicitly: replay
+        # must not overwrite the per-lane private scores needed by later slots.
+        for dot, saved in zip(dots, private, strict=True):
+            self.statements((dot,))
+            value, dtype = self.values[dot.body[-1].name]
+            if dtype != 'f32':
+                raise Unsupported('Key batching requires an F32 score')
+            self.emit(f'mov.f32 {saved}, {value};')
+        self.mark(joined)
+        # Every physical lane reconverges before any full-mask indexed shuffle.
+        slot = self.reg('r')
+        self.emit(f'mov.s32 {slot}, 0;')
+        replay, replay_done = self.label('key_replay'), self.label('key_replay_done')
+        self.mark(replay)
+        self.emit(f'setp.ge.s32 {stop}, {slot}, {width};')
+        self.emit(f'@{stop} bra {replay_done};')
+        replay_key = self.reg('r')
+        self.emit(f'add.s32 {replay_key}, {base}, {slot};')
+        self.emit(f'setp.ge.s32 {stop}, {replay_key}, {extent};')
+        self.emit(f'@{stop} bra {replay_done};')
+        self.values[loop.axis.name] = (replay_key, 'i32')
+        self.set_integer_range(replay_key, checked_i32_interval(0, extent - 1))
+        self.rebind(loop.axis.name)
+        source = self.reg('r')
+        self.emit(f'add.s32 {source}, {segment}, {slot};')
+        for dot, saved in zip(dots, private, strict=True):
+            name = dot.body[-1].name
+            public = self.reg('f')
+            self.emit(f'shfl.sync.idx.b32 {public}, {saved}, {source}, 31, 0xffffffff;')
+            self.values[name] = (public, 'f32')
+            self.mutable[name] = public
+            self.rebind(name)
+        self.statements(tail)
+        self.emit(f'add.s32 {slot}, {slot}, 1;')
+        self.emit(f'bra {replay};')
+        self.mark(replay_done)
+        self.emit(f'add.s32 {base}, {base}, {width};')
+        self.rebind(loop.axis.name)
+        self.emit(f'bra {begin};')
+        self.mark(done)
+        return True
+
+    def find_serial_read_plans(self, statements):
+        """Recognize a closed readonly, uniform-trip scalar reduction stream."""
+        if self.geometry_3d or len(statements) != 1 or type(statements[0]).__name__ != 'Tile':
+            return {}
+        tile = statements[0]
+        axes = {axis.name: static(axis.extent) for axis in tile.axes}
+        if (len(axes) != len(tile.axes) or tile.aux_threads
+                or tile.block_threads != self.block_threads
+                or math.prod(axes.values()) != self.block_threads * self.grid_blocks
+                or set(axes) & defined_names(tile.body)):
+            return {}
+        known = {'Tile', 'StridedLoop', 'Loop', 'Load', 'Accum', 'Assign', 'Let',
+                 'Init', 'WarpShuffle', 'TreeHalve', 'Cond', 'Sync', 'Smem', 'Write'}
+        def walk(body):
+            for statement in body:
+                yield statement
+                for nested in statement_bodies(statement):
+                    yield from walk(nested)
+        whole = list(walk(statements))
+        if any(type(statement).__name__ not in known for statement in whole):
+            return {}
+        written = {statement.output for statement in whole if type(statement).__name__ == 'Write'}
+        plans = {}
+        for loop in tile.body:
+            if (type(loop).__name__ != 'StridedLoop' or loop.unroll or loop.end is not None
+                    or len(loop.body) != 2 or type(loop.start).__name__ != 'Var'
+                    or type(loop.step).__name__ != 'Literal'
+                    or type(loop.step.value) is not int or loop.step.dtype not in ('int', 'i32')):
+                continue
+            step, end = loop.step.value, static(loop.axis.extent)
+            if (step <= 0 or axes.get(loop.start.name) != step or end <= 0
+                    or end > I32_MAX or end % step or end + step - 1 > I32_MAX):
+                continue
+            trips = end // step
+            if trips < 8 or loop.axis.name in axes:
+                continue
+            load, accum = loop.body
+            if (type(load).__name__ != 'Load' or type(accum).__name__ != 'Accum'
+                    or len(load.names) != 1 or load.dtype is None
+                    or getattr(load.dtype, 'name', load.dtype) != 'f32'
+                    or len(load.index) != 1 or type(load.index[0]).__name__ != 'Var'
+                    or load.index[0].name != loop.axis.name
+                    or load.input in self.shared or load.input in self.scalar_parameters
+                    or load.input not in self.buffers or load.input in written):
+                continue
+            shape, dtype = self.buffers[load.input]
+            if len(shape) != 1 or shape[0] < end or dtype_name(dtype) != 'f32':
+                continue
+            if (accum.dtype is None or getattr(accum.dtype, 'name', accum.dtype) != 'f32'
+                    or accum.op.name != 'add' or accum.base is not None
+                    or tuple(accum.axes) != (loop.axis.name,)
+                    or accum.value != load.names[0]
+                    or len({loop.axis.name, loop.start.name, load.names[0], accum.name}) != 4):
+                continue
+            # Conservative lexical inventory: any use or same-name declaration
+            # outside this direct loop declines; no public load value escapes.
+            outside = repr(tuple(statement for statement in tile.body if statement is not loop))
+            if re.search(r'(?<![A-Za-z0-9_])' + re.escape(load.names[0]) + r'(?![A-Za-z0-9_])', outside):
+                continue
+            plans[id(loop)] = (step, trips, end, load, accum)
+        return plans
+
+    def serial_read_pipeline(self, loop):
+        plan = self.serial_read_plans.get(id(loop))
+        if plan is None or self.inactive:
+            return False
+        step, trips, end, load, accum = plan
+        if (loop.start.name not in self.values or self.values[loop.start.name][1] != 'i32'
+                or accum.name not in self.values or self.values[accum.name][1] != 'f32'
+                or load.names[0] in self.mutable or load.input not in self.ptrs):
+            return False
+        start, dtype = self.expr(loop.start)
+        if dtype != 'i32':
+            return False
+        current_axis = self.reg('r')
+        self.emit(f'mov.s32 {current_axis}, {start};')
+        self.set_integer_range(current_axis, checked_i32_interval(0, end - 1))
+
+        def load_at(offset):
+            point = current_axis
+            if offset:
+                point = self.reg('r')
+                self.emit(f'add.s32 {point}, {current_axis}, {offset};')
+            self.set_integer_range(point, checked_i32_interval(0, end - 1))
+            self.values[loop.axis.name] = (point, 'i32')
+            self.rebind(loop.axis.name)
+            self.statements((load,))
+            value, dtype = self.values[load.names[0]]
+            if dtype != 'f32':
+                raise Unsupported('Serial prefetch requires an F32 load')
+            return value
+
+        def consume(bank):
+            # Accum has no expression/address operand; only its original loaded
+            # value changes. The named carrier performs the same four updates.
+            self.values[loop.axis.name] = (current_axis, 'i32')
+            self.rebind(loop.axis.name)
+            for value in bank:
+                self.values[load.names[0]] = (value, 'f32')
+                self.mutable.pop(load.names[0], None)
+                self.rebind(load.names[0])
+                self.statements((accum,))
+
+        # Every current-bank load is issued before its first use. Next-bank
+        # registers are distinct and survive until the backedge move.
+        current = [load_at(j * step) for j in range(4)]
+        group = self.reg('r')
+        self.emit(f'mov.s32 {group}, 0;')
+        begin, drain = self.label('serial_prefetch'), self.label('serial_prefetch_drain')
+        self.mark(begin)
+        stop = self.reg('p')
+        groups, remainder = divmod(trips, 4)
+        self.emit(f'setp.ge.s32 {stop}, {group}, {groups - 1};')
+        self.emit(f'@{stop} bra {drain};')
+        future = [load_at((j + 4) * step) for j in range(4)]
+        consume(current)
+        for destination, value in zip(current, future, strict=True):
+            self.emit(f'mov.f32 {destination}, {value};')
+        self.emit(f'add.s32 {current_axis}, {current_axis}, {4 * step};')
+        self.emit(f'add.s32 {group}, {group}, 1;')
+        self.rebind(loop.axis.name)
+        self.emit(f'bra {begin};')
+        self.mark(drain)
+        consume(current)
+        for j in range(remainder):
+            value = load_at((4 + j) * step)
+            consume((value,))
+        self.emit(f'add.s32 {current_axis}, {current_axis}, {(4 + remainder) * step};')
+        self.values[loop.axis.name] = (current_axis, 'i32')
+        self.set_integer_range(current_axis, checked_i32_interval(end, end + step - 1))
+        self.rebind(loop.axis.name)
+        return True
+
+    def shared_compute_body(self, loop):
+        """Prove a flat, active, shared-F32 compute loop without emitting code."""
+        if self.inactive or loop.axis.name in defined_names(loop.body):
+            return None
+        types = {name: dtype for name, (_, dtype) in self.scalar_parameters.items()}
+        types.update({name: dtype for name, (_, dtype) in self.values.items()})
+        def i32_index(expr):
+            kind = type(expr).__name__
+            if kind == 'Literal':
+                return (isinstance(expr.value, (bool, int))
+                        and expr.dtype in ('int', 'bool', 'i32')
+                        and I32_MIN <= int(expr.value) <= I32_MAX)
+            if kind == 'Var':
+                return expr.name == loop.axis.name or types.get(expr.name) == 'i32'
+            return (kind == 'BinaryExpr'
+                    and expr.op in ('+', '-', '*', '/', '//', '%', '&', '|', '<<', '>>')
+                    and i32_index(expr.left) and i32_index(expr.right))
+        loads = 0
+        for statement in loop.body:
+            kind = type(statement).__name__
+            if kind == 'Load':
+                if (statement.input not in self.shared
+                        or dtype_name(self.buffers[statement.input][1]) != 'f32'
+                        or (statement.dtype is not None and dtype_name(statement.dtype) != 'f32')
+                        or not all(i32_index(index) for index in statement.index)):
+                    return None
+                for name in statement.names:
+                    types[name] = 'f32'
+                loads += 1
+            elif kind in ('Assign', 'Accum'):
+                op = reduce_canon(getattr(statement.op, 'name', statement.op))
+                if op not in ('add', 'subtract', 'multiply', 'divide', 'maximum', 'minimum', 'copy'):
+                    return None
+                args = (statement.args if kind == 'Assign' else
+                        (statement.base if statement.base is not None else statement.name, statement.value))
+                if (not args or any(types.get(name) != 'f32' for name in args)
+                        or (statement.dtype is not None and dtype_name(statement.dtype) != 'f32')):
+                    return None
+                types[statement.name] = 'f32'
+            else:
+                return None
+        return loads
+
+    def global_dot_vector_plan(self, loop):
+        """Prove four existing readonly global dot reads form one vector group.
+
+        Forms use actual i32 operands rather than SSA spelling. Every expression
+        subtree and flattening intermediate is bounded in signed32 arithmetic.
+        This analysis emits no instructions and never changes range/value state.
+        """
+        body, axis_name = loop.body, loop.axis.name
+        if (id(loop) not in self.global_dot_candidates or self.inactive or not loop.seed
+                or not 4 <= static(loop.axis.extent) <= I32_MAX
+                or [type(s).__name__ for s in body] != ['Load', 'Load', 'Assign', 'Accum']):
+            return {}
+        first, second, product, update = body
+        if (len(first.names) != 1 or len(second.names) != 1
+                or product.op.name != 'multiply' or update.op.name != 'add'
+                or update.value != product.name or update.base is not None
+                or tuple(update.axes) != (axis_name,)
+                or any(s.dtype is None or ssa_dtype_name(s.dtype) != 'f32'
+                       for s in (product, update))):
+            return {}
+        loaded = (first.names[0], second.names[0])
+        if any(name in self.mutable for name in (*loaded, product.name)):
+            return {}
+        if (len(set((*loaded, product.name, update.name, axis_name))) != 5
+                or len(product.args) != 2 or set(product.args) != set(loaded)):
+            return {}
+        for load in (first, second):
+            if (load.input in self.scalar_parameters or load.input not in self.buffers
+                    or load.input in self.shared or load.input not in self.ptrs
+                    or dtype_name(self.buffers[load.input][1]) != 'f32'
+                    or (load.dtype is not None and ssa_dtype_name(load.dtype) != 'f32')):
+                return {}
+        defined = set()
+        for s in body:
+            defined.update(s.names if type(s).__name__ == 'Load' else (s.name,))
+        if axis_name in defined:
+            return {}
+        extent = static(loop.axis.extent)
+        axis_key = ('axis',)
+        atoms = {axis_key: checked_i32_interval(0, extent - 1)}
+
+        def finish(c, terms):
+            terms = {key: value for key, value in terms.items() if value}
+            low = high = c
+            for key, value in terms.items():
+                bounds = atoms[key]
+                if bounds is None:
+                    raise ValueError('Unknown atom range')
+                a, b = (value * bounds[0], value * bounds[1])
+                low += min(a, b)
+                high += max(a, b)
+            bounds = checked_i32_interval(low, high)
+            if bounds is None:
+                raise ValueError('Unbounded signed32 intermediate')
+            if low == high:
+                return low, {}, bounds
+            return c, terms, bounds
+
+        def scale(form, coefficient):
+            return finish(form[0] * coefficient,
+                          {k: v * coefficient for k, v in form[1].items()})
+
+        def add(left, right, sign=1):
+            terms = dict(left[1])
+            for key, value in right[1].items():
+                terms[key] = terms.get(key, 0) + sign * value
+            return finish(left[0] + sign * right[0], terms)
+
+        def key(form):
+            return form[0], tuple(sorted(form[1].items(), key=repr))
+
+        def parse(expr):
+            kind = type(expr).__name__
+            # Mirror expr(): Python floats and default/float-tagged literals
+            # lower to f32, even when their Python/JSON value is an integer.
+            if (kind == 'Literal' and isinstance(expr.value, (bool, int))
+                    and expr.dtype in ('int', 'bool', 'i32')):
+                return finish(int(expr.value), {})
+            if kind == 'Var':
+                if expr.name == axis_name:
+                    return finish(0, {axis_key: 1})
+                if expr.name in defined or expr.name not in self.values:
+                    raise ValueError('Modified or unknown address dependency')
+                operand, dtype = self.values[expr.name]
+                if dtype != 'i32':
+                    raise ValueError('Noninteger address dependency')
+                bounds = self.integer_range(operand)
+                if bounds is None:
+                    raise ValueError('Unknown address range')
+                if bounds[0] == bounds[1]:
+                    return finish(bounds[0], {})
+                atom = ('operand', operand)
+                atoms[atom] = bounds
+                return finish(0, {atom: 1})
+            if kind != 'BinaryExpr':
+                raise ValueError('Unsupported expression proof')
+            left, right = parse(expr.left), parse(expr.right)
+            if expr.op == '+':
+                return add(left, right)
+            if expr.op == '-':
+                return add(left, right, -1)
+            if expr.op == '*' and not left[1]:
+                return scale(right, left[0])
+            if expr.op == '*' and not right[1]:
+                return scale(left, right[0])
+            if axis_key in left[1] or axis_key in right[1]:
+                raise ValueError('Nonaffine axis dependency')
+            bounds = i32_binary_interval(expr.op, left[2], right[2])
+            if bounds is None:
+                raise ValueError('Unsupported opaque integer expression')
+            if bounds[0] == bounds[1]:
+                return finish(bounds[0], {})
+            atom = ('binary', expr.op, key(left), key(right))
+            atoms[atom] = bounds
+            return finish(0, {atom: 1})
+
+        result = {}
+        for position, statement in enumerate(body):
+            if type(statement).__name__ != 'Load' or len(statement.names) != 1:
+                continue
+            shape, dtype = self.buffers[statement.input]
+            if (not shape or shape[-1] % 4 or not statement.index
+                    or type(statement.index[-1]).__name__ != 'Var'
+                    or statement.index[-1].name != axis_name
+                    or any(axis_name in coordinate.free_vars()
+                           for coordinate in statement.index[:-1])):
+                continue
+            if (dtype_name(dtype) != 'f32' or len(statement.index) != len(shape)
+                    or math.prod(shape) > I32_MAX):
+                continue
+            try:
+                flat = finish(0, {})
+                for coordinate, dimension in zip(statement.index, shape, strict=True):
+                    form = parse(coordinate)
+                    if not 0 <= form[2][0] <= form[2][1] < static(dimension):
+                        raise ValueError('Coordinate outside global declaration')
+                    flat = add(scale(flat, static(dimension)), form)
+                if flat[1].get(axis_key) != 1 or flat[0] % 4:
+                    continue
+                if any(value % 4 for atom, value in flat[1].items()
+                       if atom != axis_key):
+                    continue
+                result[position] = statement
+            except ValueError:
+                continue
+        return result
+
+
+    def global_dot_alignment(self, name):
+        # Parameter low bits are immutable. Insert the test before all body
+        # control so a skipped first use can never leave a cached predicate unset.
+        if name not in self.global_dot_alignments:
+            low, pred = self.reg('rd'), self.reg('p')
+            lines = [f'    and.b64 {low}, {self.ptrs[name]}, 15;',
+                     f'    setp.eq.u64 {pred}, {low}, 0;']
+            anchor = self.global_dot_prologue_end
+            self.lines[anchor:anchor] = lines
+            self.global_dot_prologue_end += len(lines)
+            self.global_dot_alignments[name] = pred
+        return self.global_dot_alignments[name]
+
+    def global_dot_prefetch(self, plan):
+        result = {}
+        for position, statement in plan.items():
+            address, space = self.address(statement.input, statement.index)
+            assert space == 'global'
+            registers = tuple(self.reg('f') for _ in range(4))
+            self.emit('ld.global.v4.f32 {' + ', '.join(registers)
+                      + f'}}, [{address}];')
+            result[position] = registers
+        return result
+
+    def global_dot_vector_loop(self, loop, frame):
+        plan = self.global_dot_vector_plan(loop)
+        if not plan:
+            return False
+        extent = static(loop.axis.extent)
+        limit = extent - extent % 4
+        # KEY admission proves these dot temporaries are dead outside the dot.
+        # Both routes mutate the SAME already-seeded public accumulator register.
+        name = loop.body[-1].name
+        carrier = self.values[name]
+        if carrier[1] != 'f32' or self.mutable.get(name) != carrier[0]:
+            return False
+        saved_values = dict(self.values)
+        saved_mutable = dict(self.mutable)
+        saved_ranges = dict(self.int_ranges)
+        saved_ops = dict(self.accum_ops)
+        invariant_depth, expression_depth = len(self.loop_invariants), len(self.loop_expressions)
+
+        def restore_context():
+            self.values = dict(saved_values)
+            self.mutable = dict(saved_mutable)
+            self.int_ranges = dict(saved_ranges)
+            self.accum_ops = dict(saved_ops)
+            self.address_cache.clear()
+            self.expr_cache.clear()
+            del self.loop_invariants[invariant_depth:]
+            del self.loop_expressions[expression_depth:]
+
+        predicates = [self.global_dot_alignment(statement.input)
+                      for statement in plan.values()]
+        aligned = predicates[0]
+        for pred in predicates[1:]:
+            both = self.reg('p')
+            self.emit(f'and.pred {both}, {aligned}, {pred};')
+            aligned = both
+        scalar, joined = self.label('dot_scalar'), self.label('dot_complete')
+        self.emit(f'@!{aligned} bra {scalar};')
+        r = self.reg('r')
+        self.emit(f'mov.s32 {r}, 0;')
+        self.set_integer_range(r, checked_i32_interval(0, limit - 4))
+        self.values[loop.axis.name] = (r, 'i32')
+        self.rebind(loop.axis.name)
+        self.hoist_invariants(loop.body, defined_names(loop.body) | {loop.axis.name})
+        begin, tail = self.label('dot_vector4'), self.label('dot_vector4_tail')
+        self.mark(begin)
+        stop = self.reg('p')
+        self.emit(f'setp.ge.s32 {stop}, {r}, {limit};')
+        self.emit(f'@{stop} bra {tail};')
+        prefetched = self.global_dot_prefetch(plan)
+        for offset in range(4):
+            axis = r
+            if offset:
+                axis = self.reg('r')
+                self.emit(f'add.s32 {axis}, {r}, {offset};')
+                self.set_integer_range(axis, checked_i32_interval(offset, limit - 4 + offset))
+            self.values[loop.axis.name] = (axis, 'i32')
+            self.rebind(loop.axis.name)
+            bindings = {position: registers[offset]
+                        for position, registers in prefetched.items()}
+            self.statements_with_init_scope(loop.body, frame, bindings)
+        self.emit(f'add.s32 {r}, {r}, 4;')
+        self.rebind(loop.axis.name)
+        self.emit(f'bra {begin};')
+        self.mark(tail)
+        self.set_integer_range(r, checked_i32_interval(limit, limit))
+        for coordinate in range(limit, extent):
+            self.values[loop.axis.name] = (str(coordinate), 'i32')
+            self.rebind(loop.axis.name)
+            self.statements_with_init_scope(loop.body, frame)
+        assert self.values[name] == carrier and self.mutable[name] == carrier[0]
+        self.emit(f'bra {joined};')
+
+        # Exact inherited scalar iteration, with the same seed register and
+        # original per-iteration memory/arithmetic order. No second seed or FMA
+        # result capture is introduced.
+        restore_context()
+        self.mark(scalar)
+        scalar_axis = self.reg('r')
+        self.emit(f'mov.s32 {scalar_axis}, 0;')
+        self.set_integer_range(scalar_axis, checked_i32_interval(0, extent - 1))
+        self.values[loop.axis.name] = (scalar_axis, 'i32')
+        self.rebind(loop.axis.name)
+        self.hoist_invariants(loop.body, defined_names(loop.body) | {loop.axis.name})
+        begin, done = self.label('dot_scalar_loop'), self.label('dot_scalar_done')
+        self.mark(begin)
+        stop = self.reg('p')
+        self.emit(f'setp.ge.s32 {stop}, {scalar_axis}, {extent};')
+        self.emit(f'@{stop} bra {done};')
+        self.statements_with_init_scope(loop.body, frame)
+        self.emit(f'add.s32 {scalar_axis}, {scalar_axis}, 1;')
+        self.rebind(loop.axis.name)
+        self.emit(f'bra {begin};')
+        self.mark(done)
+        assert self.values[name] == carrier and self.mutable[name] == carrier[0]
+        self.mark(joined)
+        # All temporary definitions are local under the whole-KEY proof.
+        # Preserve only the shared carrier's runtime value and outer contexts.
+        restore_context()
+        self.rebind(name)
+        self.rebind(loop.axis.name)
+        return True
+
+
+    def shared_vector_plan(self, loop):
+        """Prove four existing scalar shared reads form one aligned vector.
+
+        Forms use actual i32 operands rather than SSA spelling. Every expression
+        subtree and flattening intermediate is bounded in signed32 arithmetic.
+        This analysis emits no instructions and never changes range/value state.
+        """
+        body, axis_name = loop.body, loop.axis.name
+        if any(type(s).__name__ not in ('Load', 'Assign', 'Accum') for s in body):
+            return {}
+        defined = set()
+        for s in body:
+            defined.update(s.names if type(s).__name__ == 'Load' else (s.name,))
+        if axis_name in defined:
+            return {}
+        extent = static(loop.axis.extent)
+        axis_key = ('axis',)
+        atoms = {axis_key: checked_i32_interval(0, extent - 1)}
+
+        def finish(c, terms):
+            terms = {key: value for key, value in terms.items() if value}
+            low = high = c
+            for key, value in terms.items():
+                bounds = atoms[key]
+                if bounds is None:
+                    raise ValueError('Unknown atom range')
+                a, b = (value * bounds[0], value * bounds[1])
+                low += min(a, b)
+                high += max(a, b)
+            bounds = checked_i32_interval(low, high)
+            if bounds is None:
+                raise ValueError('Unbounded signed32 intermediate')
+            if low == high:
+                return low, {}, bounds
+            return c, terms, bounds
+
+        def scale(form, coefficient):
+            return finish(form[0] * coefficient,
+                          {k: v * coefficient for k, v in form[1].items()})
+
+        def add(left, right, sign=1):
+            terms = dict(left[1])
+            for key, value in right[1].items():
+                terms[key] = terms.get(key, 0) + sign * value
+            return finish(left[0] + sign * right[0], terms)
+
+        def key(form):
+            return form[0], tuple(sorted(form[1].items(), key=repr))
+
+        def parse(expr):
+            kind = type(expr).__name__
+            # Mirror expr(): Python floats and default/float-tagged literals
+            # lower to f32, even when their Python/JSON value is an integer.
+            if (kind == 'Literal' and isinstance(expr.value, (bool, int))
+                    and expr.dtype in ('int', 'bool', 'i32')):
+                return finish(int(expr.value), {})
+            if kind == 'Var':
+                if expr.name == axis_name:
+                    return finish(0, {axis_key: 1})
+                if expr.name in defined or expr.name not in self.values:
+                    raise ValueError('Modified or unknown address dependency')
+                operand, dtype = self.values[expr.name]
+                if dtype != 'i32':
+                    raise ValueError('Noninteger address dependency')
+                bounds = self.integer_range(operand)
+                if bounds is None:
+                    raise ValueError('Unknown address range')
+                if bounds[0] == bounds[1]:
+                    return finish(bounds[0], {})
+                atom = ('operand', operand)
+                atoms[atom] = bounds
+                return finish(0, {atom: 1})
+            if kind != 'BinaryExpr':
+                raise ValueError('Unsupported expression proof')
+            left, right = parse(expr.left), parse(expr.right)
+            if expr.op == '+':
+                return add(left, right)
+            if expr.op == '-':
+                return add(left, right, -1)
+            if expr.op == '*' and not left[1]:
+                return scale(right, left[0])
+            if expr.op == '*' and not right[1]:
+                return scale(left, right[0])
+            if axis_key in left[1] or axis_key in right[1]:
+                raise ValueError('Nonaffine axis dependency')
+            bounds = i32_binary_interval(expr.op, left[2], right[2])
+            if bounds is None:
+                raise ValueError('Unsupported opaque integer expression')
+            if bounds[0] == bounds[1]:
+                return finish(bounds[0], {})
+            atom = ('binary', expr.op, key(left), key(right))
+            atoms[atom] = bounds
+            return finish(0, {atom: 1})
+
+        result = {}
+        for position, statement in enumerate(body):
+            if type(statement).__name__ != 'Load' or len(statement.names) != 1:
+                continue
+            if statement.input not in self.shared:
+                continue
+            if statement.dtype is not None and dtype_name(statement.dtype) != 'f32':
+                continue
+            declaration = self.shared[statement.input]
+            if self.dynamic_shared:
+                aligned = self.shared_offsets[statement.input] % 16 == 0
+            else:
+                aligned = smem_alignment(declaration) % 16 == 0
+            if not aligned:
+                continue
+            shape, dtype = self.buffers[statement.input]
+            if (dtype_name(dtype) != 'f32' or len(statement.index) != len(shape)
+                    or math.prod(shape) > I32_MAX):
+                continue
+            try:
+                flat = finish(0, {})
+                for coordinate, dimension in zip(statement.index, shape, strict=True):
+                    form = parse(coordinate)
+                    if not 0 <= form[2][0] <= form[2][1] < static(dimension):
+                        raise ValueError('Coordinate outside shared declaration')
+                    flat = add(scale(flat, static(dimension)), form)
+                if flat[1].get(axis_key) != 1 or flat[0] % 4:
+                    continue
+                if any(value % 4 for atom, value in flat[1].items()
+                       if atom != axis_key):
+                    continue
+                result[position] = statement
+            except ValueError:
+                continue
+        return result
+
+    def shared_vector_prefetch(self, plan):
+        result = {}
+        for position, statement in plan.items():
+            address, space = self.address(statement.input, statement.index)
+            assert space == 'shared'
+            registers = tuple(self.reg('f') for _ in range(4))
+            self.emit('ld.shared.v4.f32 {' + ', '.join(registers)
+                      + f'}}, [{address}];')
+            result[position] = registers
+        return result
+
+
+    def init_scope_frame(self, statements):
+        # A seeded child fold declares its carrier in THIS body, before its
+        # own loop. Its finalized value remains visible inside this body, but
+        # an ancestor binding must return when this body closes. seedFalse
+        # children declare nothing and keep updating their existing carrier.
+        def owned_seeds(items):
+            # Mirror init_accums ownership, without crossing a nested loop.
+            for statement in items:
+                kind = type(statement).__name__
+                if kind == 'Accum':
+                    yield statement.name
+                elif kind == 'Cond':
+                    yield from owned_seeds(statement.body)
+                    yield from owned_seeds(statement.else_body)
+
+        names = set()
+        for statement in statements:
+            kind = type(statement).__name__
+            if kind == 'Init':
+                names.add(statement.name)
+            elif kind in ('Loop', 'StridedLoop') and statement.seed:
+                names.update(owned_seeds(statement.body))
+        # Fresh names retain the enclosing construct's export/join policy.
+        return {name: (self.values[name], self.mutable.get(name))
+                for name in names if name in self.values}
+
+    def restore_init_scope(self, frame):
+        for name, (value, mutable) in frame.items():
+            self.values[name] = value
+            if mutable is None:
+                self.mutable.pop(name, None)
+            else:
+                self.mutable[name] = mutable
+            self.rebind(name)
+
+    def statements_with_init_scope(self, statements, frame, shared_prefetch=None):
+        try:
+            self.statements(statements, shared_prefetch)
+        finally:
+            self.restore_init_scope(frame)
+
+
+    def binding(self, name):
+        if name in self.values:
+            return self.values[name]
+        if name in self.scalar_parameters:
+            return self.scalar_parameters[name]
+        raise Unsupported(f'Unbound SSA value {name!r}')
+
+    def live_loop_step(self, expression, header_values, axis_name, axis_register):
+        """Evaluate a backedge step in its header scope using live carrier storage."""
+        saved_values = self.values
+        saved_expressions, saved_addresses = self.expr_cache, self.address_cache
+        self.values = dict(header_values)
+        self.values[axis_name] = (axis_register, 'i32')
+        # Body locals and preheader CSE entries cannot redirect or stale the update.
+        self.expr_cache, self.address_cache = {}, {}
+        try:
+            return self.expr(expression)
+        finally:
+            self.values = saved_values
+            self.expr_cache, self.address_cache = saved_expressions, saved_addresses
+
+    def convert_operand(self, operand, source_dtype, dtype, *, copy_same_type=True):
+        dtype = getattr(dtype, 'name', dtype)
+        if dtype == 'bool':
+            dtype = 'pred'
+        if source_dtype == dtype and not copy_same_type:
+            return operand, dtype
+        value, dtype = self.snapshot_operand(operand, source_dtype, dtype)
+        if source_dtype == dtype == 'i32':
+            self.set_integer_range(value, self.integer_range(operand))
+        elif source_dtype == 'pred' and dtype == 'i32':
+            self.set_integer_range(value, (0, 1))
+        return value, dtype
+
+    def scalar_operation(self, op, args, dtype=None):
+        return self.emit_operation(op, args, dtype)
+    def funcall_operation(self, op, args):
+            # Direct registry calls retain their operand dtype; Assign has its own
+            # deliberate promotion law and continues to use scalar_operation.
+            if args and all(dtype == 'f32' for _, dtype in args):
+                return self.scalar_operation(op, args)
+            if not args or any(dtype != 'i32' for _, dtype in args):
+                raise Unsupported('FuncCall requires all f32 or supported all i32 operands')
+            if op in ('add', 'subtract', 'multiply'):
+                return self.scalar_operation(op, args, 'i32')
+            native = {'maximum': ('max.s32', 2), 'minimum': ('min.s32', 2),
+                      'copy': ('mov.b32', 1), 'abs': ('abs.s32', 1),
+                      'negative': ('neg.s32', 1)}
+            if op not in native or len(args) != native[op][1]:
+                raise Unsupported(f'Unsupported i32 FuncCall {op}/{len(args)}')
+            instruction, _ = native[op]
+            register = self.reg('r')
+            operands = ', '.join(operand for operand, _ in args)
+            self.emit(f'{instruction} {register}, {operands};')
+            if op == 'copy':
+                self.set_integer_range(register, self.integer_range(args[0][0]))
+            return register, 'i32'
+
+    def pad_partial_shuffle(self, statement, active):
+        """Pad only independently proved monoid components, before shuffling."""
+        if self.block_threads % statement.length:
+            raise Unsupported('Partial shuffle requires complete physical groups')
+        states, others = tuple(statement.state), tuple(statement.state_b)
+        if (len(states) != len(others) or len(statement.combine_states) != len(states)
+                or len(set(states)) != len(states) or len(set(others)) != len(others)
+                or set(states) & set(others)):
+            raise Unsupported('Partial shuffle requires independent state components')
+        updates = {}
+        for combine in statement.combine_states:
+            if type(combine).__name__ != 'Assign' or combine.name in updates:
+                raise Unsupported('Partial shuffle requires one pure Assign per component')
+            updates[combine.name] = combine
+        plans = []
+        for state, other in zip(states, others, strict=True):
+            combine = updates.get(state)
+            if combine is None or tuple(combine.args) not in ((state, other), (other, state)):
+                raise Unsupported('Partial shuffle combine crosses state components')
+            operation = reduce_canon(combine.op.name)
+            operand, dtype = self.values[state]
+            if dtype != (dtype_name(statement.dtype) if statement.dtype is not None else 'f32'):
+                raise Unsupported('Partial shuffle state dtype differs from its declaration')
+            if combine.dtype is not None and dtype_name(combine.dtype) != dtype:
+                raise Unsupported('Partial shuffle combine changes component dtype')
+            if dtype == 'f32':
+                identities = {'add': 0.0, 'multiply': 1.0,
+                              'maximum': float('-inf'), 'minimum': float('inf')}
+            elif dtype in ('i32', 'u32'):
+                identities = {'add': 0, 'multiply': 1}
+            else:
+                raise Unsupported('Partial shuffle identity is unproved for this dtype')
+            if operation not in identities:
+                raise Unsupported('Partial shuffle combine identity is unproved')
+            plans.append((state, operand, dtype, identities[operation]))
+        for state, operand, dtype, identity in plans:
+            target = self.mutable.get(state)
+            if target is None:
+                target = self.reg(reg_suffix(dtype))
+            self.emit(f'selp.{select_type(dtype)} {target}, {operand}, '
+                      f'{literal(identity, dtype)}, {active};')
+            self.values[state] = (target, dtype)
+
+    def validate_partial_tree(self, tree):
+        """Prove the simple unsegmented partial-CTA tree padding law."""
+        if (tree.tid_var != 'warp' or tree.inner is not None
+                or tree.barrier_id != 0 or tree.barrier_count is not None
+                or self.block_threads % 32 or tree.length <= 0
+                or tree.length & (tree.length - 1)
+                or tree.length > self.block_threads // 32):
+            raise Unsupported('Partial CTA TreeHalve participation is unproved')
+        states, others = tuple(tree.state), tuple(tree.state_b)
+        if (not states or len(tree.bufs) != len(states) or len(set(tree.bufs)) != len(tree.bufs)
+                or len(others) != len(states)
+                or len(tree.combine_states) != len(states)
+                or len(set(states)) != len(states) or len(set(others)) != len(others)
+                or set(states) & set(others)):
+            raise Unsupported('Partial CTA tree requires independent state components')
+        for buf, state, other, combine in zip(tree.bufs, states, others,
+                                               tree.combine_states, strict=True):
+            if (type(combine).__name__ != 'Assign' or combine.name != state
+                    or tuple(combine.args) not in ((state, other), (other, state))
+                    or reduce_canon(combine.op.name) not in
+                       ('add', 'multiply', 'maximum', 'minimum')):
+                raise Unsupported('Partial CTA tree combine identity is unproved')
+            if buf not in self.shared or buf not in self.buffers:
+                raise Unsupported('Partial CTA tree requires shared slabs')
+            shape, dtype = self.buffers[buf]
+            if (len(shape) != 1 or shape[0] < tree.length or dtype != 'f32'
+                    or (dtype_name(tree.dtype) if tree.dtype is not None else 'f32') != 'f32'
+                    or (combine.dtype is not None and dtype_name(combine.dtype) != 'f32')):
+                raise Unsupported('Partial CTA tree dtype/layout identity is unproved')
+
+
+    def strided_vector_plan(self, s, stride, bound):
+        """Loads a thread-strided reduction may fetch four elements at a time.
+
+        The loop folds f(x[..., a]) for a = t, t + stride, ... where t is a
+        Tile axis of extent ``stride``: together the threads cover every
+        element once. Reassigning elements so thread t folds 4t..4t+3,
+        4t + 4*stride.. keeps that exact cover, and is legal when every fold
+        is add/max/min of a value computed from the current element only
+        (not from carried state): the per-thread partial is then an
+        ordinary associative reduction, merged as before. Sums change only
+        by floating-point reassociation, as in any parallel reduction.
+        Requires 4*stride | bound and the axis only as the contiguous last
+        coordinate of f32 global loads whose other strides are multiples
+        of 4. Returns those loads, or None.
+        """
+        start = s.start
+        if (type(start).__name__ != 'Var' or self.tile_extents.get(start.name) != stride
+                or bound % (4 * stride) or bound + 4 * stride >= (1 << 31) or self.inactive):
+            return None
+        axis = s.axis.name
+        carried = {x.name for x in s.body if type(x).__name__ == 'Accum'}
+        tainted, loads = set(), []
+        for x in s.body:
+            kind = type(x).__name__
+            if kind == 'Load':
+                names = [expr_names(c) for c in x.index]
+                if any(n is None for n in names):
+                    return None
+                if axis in set().union(*names):
+                    shape, dtype = self.buffers[x.input]
+                    last = x.index[-1]
+                    if (len(x.names) != 1 or dtype_name(dtype) != 'f32' or x.input not in self.ptrs
+                            or x.input in self.shared
+                            or not (type(last).__name__ == 'Var' and last.name == axis)
+                            or any(axis in n for n in names[:-1])
+                            or any(math.prod(shape[i + 1:]) % 4 for i in range(len(shape) - 1))):
+                        return None
+                    loads.append(x)
+            elif kind in ('Assign', 'Let'):
+                deps = set(x.deps())
+                if axis in deps:
+                    return None
+                if deps & (carried | tainted):
+                    tainted.add(x.name)
+            elif kind == 'Accum':
+                if (reduce_canon(x.op.name) not in ('add', 'maximum', 'minimum')
+                        or x.base not in (None, x.name) or x.value in carried | tainted):
+                    return None
+            else:
+                return None
+        return loads or None
+
+    def strided_vector_path(self, s, r, stride, bound, end, loads):
+        """Fold the whole strided loop with 128-bit loads, then leave the
+        induction register at the bound so the ordered loops below run no
+        trips. A misaligned base pointer skips straight to those loops."""
+        skip = self.label('vec_skip')
+        misaligned = None
+        for load in dict.fromkeys(x.input for x in loads):
+            low, p = self.reg('rd'), self.reg('p')
+            self.emit(f'and.b64 {low}, {self.ptrs[load]}, 15;')
+            self.emit(f'setp.ne.u64 {p}, {low}, 0;')
+            if misaligned is not None:
+                self.emit(f'or.pred {p}, {p}, {misaligned};')
+            misaligned = p
+        self.emit(f'@{misaligned} bra {skip};')
+        va = self.reg('r')
+        self.emit(f'shl.b32 {va}, {r}, 2;')
+        vstep = 4 * stride
+        for group in STRIDED_VECTOR_BATCH:
+            begin, done = self.label('vec'), self.label('vec_done')
+            self.mark(begin)
+            last, p = self.reg('r'), self.reg('p')
+            self.emit(f'add.s32 {last}, {va}, {(group - 1) * vstep};')
+            self.emit(f'setp.ge.s32 {p}, {last}, {bound};')
+            self.emit(f'@{p} bra {done};')
+            fetched = []
+            for k in range(group):
+                ak = self.reg('r')
+                self.emit(f'add.s32 {ak}, {va}, {k * vstep};')
+                self.values[s.axis.name] = (ak, 'i32')
+                self.rebind(s.axis.name)
+                lanes = {}
+                for load in loads:
+                    addr, space = self.address(load.input, load.index)
+                    regs = [self.reg('f') for _ in range(4)]
+                    self.emit(f'ld.{space}.v4.f32 {{{", ".join(regs)}}}, [{addr}];')
+                    lanes[id(load)] = regs
+                fetched.append(lanes)
+            for lanes in fetched:
+                for j in range(4):
+                    for x in s.body:
+                        if id(x) in lanes:
+                            self.values[x.names[0]] = (lanes[id(x)][j], 'f32')
+                            self.rebind(x.names[0])
+                        else:
+                            self.statements([x])
+            self.emit(f'add.s32 {va}, {va}, {group * vstep};')
+            self.emit(f'bra {begin};')
+            self.mark(done)
+        self.emit(f'mov.s32 {r}, {end};')
+        self.mark(skip)
+        self.values[s.axis.name] = (r, 'i32')
+        self.rebind(s.axis.name)
+
+    def strided_main_loop(self, s, r, step, end):
+        """Run whole groups of iterations of a thread-strided loop back to
+        back, largest STRIDED_UNROLL group first; the caller's loop then
+        finishes the remainder one iteration at a time.
+
+        A runtime start (usually the thread index) keeps ptxas from unrolling,
+        leaving one load in flight per thread. The iterations still execute in
+        their original order, so every fold sees the same operands in the same
+        sequence and results are bit-identical; the loads merely become
+        independent instructions ptxas can issue ahead of the dependent folds.
+        """
+        stride = static_or_none(s.step)
+        bound = static_or_none(s.end if s.end is not None else s.axis.extent)
+        if (not straight_line(s.body) or stride is None or stride <= 0 or bound is None
+                or s.axis.name in defined_names(s.body)):
+            return
+        vector = self.strided_vector_plan(s, stride, bound)
+        if vector is not None:
+            self.strided_vector_path(s, r, stride, bound, end, vector)
+        for group in STRIDED_UNROLL:
+            if bound + (group - 1) * stride >= (1 << 31):
+                continue
+            last = self.reg('r')
+            p = self.reg('p')
+            begin, done = self.label('loop_unrolled'), self.label('loop_unrolled_done')
+            self.mark(begin)
+            self.emit(f'setp.ge.s32 {p}, {r}, {bound};')
+            self.emit(f'@{p} bra {done};')
+            self.emit(f'add.s32 {last}, {r}, {(group - 1) * stride};')
+            self.emit(f'setp.ge.s32 {p}, {last}, {end};')
+            self.emit(f'@{p} bra {done};')
+            for _ in range(group):
+                self.statements(s.body)
+                self.emit(f'add.s32 {r}, {r}, {step};')
+                self.rebind(s.axis.name)
+            self.emit(f'bra {begin};')
+            self.mark(done)
+
+    def vector_load_plan(self, loop):
+        """Plan 128/64-bit shared loads for a loop unrolled VECTOR_UNROLL times.
+
+        Copy k binds the axis to (trip base + k), and the trip base is a
+        multiple of VECTOR_UNROLL. Scalar shared loads (in any copy) whose
+        flat offsets share every non-constant term form runs of consecutive
+        elements; an aligned run of 4 or 2 becomes one vector load. A run is
+        aligned when its first constant and every term coefficient are
+        multiples of the width (the axis term contributes a multiple of
+        VECTOR_UNROLL) and the buffer's shared offset is width-aligned.
+        Returns {(copy, id(load)): (leader, registers slot, lane)} or None.
+        """
+        extent = static_or_none(loop.axis.extent)
+        if (extent is None or extent % VECTOR_UNROLL or self.inactive
+                or not straight_line(loop.body)
+                or any(id(s) in self.hoisted or id(s) in self.vn_skip for s in loop.body)):
+            return None
+        axis = ('var', loop.axis.name)
+        # Base addresses are computed once before the loop, so an index may
+        # read only the axis and names bound outside the body.
+        varying = defined_names(loop.body) - {loop.axis.name}
+        entries, bases = {}, {}
+        for position, s in enumerate(loop.body):
+            if type(s).__name__ != 'Load' or len(s.names) != 1 or s.input not in self.shared:
+                continue
+            names = [expr_names(c) for c in s.index]
+            if any(n is None or n & varying for n in names):
+                continue
+            shape, dtype = self.buffers[s.input]
+            if dtype_name(dtype) != 'f32' or (s.dtype is not None and dtype_name(s.dtype) != 'f32'):
+                continue
+            form = flat_affine(shape, s.index)
+            if form is None:
+                continue
+            constant, terms = form
+            step = terms.get(axis, 0)
+            others = {k: c for k, c in terms.items() if k != axis}
+            if self.dynamic_shared:
+                aligned_base = self.shared_offsets[s.input] % 16 == 0
+            else:
+                aligned_base = smem_alignment(self.shared_statements[s.input]) >= 16
+            key = (s.input, frozenset(terms.items()))
+            bases.setdefault(key, (s, constant, step))
+            for copy in range(VECTOR_UNROLL):
+                entries.setdefault(key, []).append(
+                    (constant + copy * step, copy, position, s, others, aligned_base))
+        plan, slot = {}, 0
+        for key, members in entries.items():
+            origin = bases[key][1]
+            by_const = {}
+            for member in members:
+                by_const.setdefault(member[0], member)
+            consts = sorted(by_const)
+            used = set()
+            for c in consts:
+                if c in used:
+                    continue
+                for width in (4, 2, 1):
+                    run = [by_const.get(c + i) for i in range(width)]
+                    if (None in run or any(m[0] in used for m in run) or c % width
+                            or not run[0][5]
+                            or any(coef % width for coef in run[0][4].values())):
+                        continue
+                    # The lowest element must be emitted first: it carries
+                    # the aligned address the vector load uses.
+                    order = sorted(run, key=lambda m: (m[1], m[2]))
+                    if order[0] is not run[0]:
+                        continue
+                    for lane, m in enumerate(run):
+                        plan[(m[1], id(m[3]))] = (m is run[0], slot, lane, width, key, c - origin)
+                        used.add(m[0])
+                    slot += 1
+                    break
+        if not any(entry[3] > 1 for entry in plan.values()):
+            return None
+        return plan, bases
+
+    def vector_unrolled_body(self, loop, r, plan):
+        """Emit VECTOR_UNROLL consecutive iterations with combined loads.
+
+        Each iteration's statements run in their original order (folds are
+        unchanged); a combined load is issued at its lowest element and later
+        elements only bind the already-loaded lane.
+        """
+        plan, bases = plan
+        slots, pointers = {}, {}
+        for key, (base, space, step) in bases.items():
+            if step:
+                offset, pointer = self.reg('rd'), self.reg('rd')
+                self.emit(f'mul.wide.s32 {offset}, {r}, {4 * step};')
+                self.emit(f'add.u64 {pointer}, {base}, {offset};')
+            else:
+                pointer = base
+            pointers[key] = (pointer, space)
+        for copy in range(VECTOR_UNROLL):
+            if copy:
+                rk = self.reg('r')
+                self.emit(f'add.s32 {rk}, {r}, {copy};')
+            else:
+                rk = r
+            self.values[loop.axis.name] = (rk, 'i32')
+            self.rebind(loop.axis.name)
+            for s in loop.body:
+                entry = plan.get((copy, id(s)))
+                if entry is None:
+                    self.statements([s])
+                    continue
+                leader, slot, lane, width, key, element = entry
+                if leader:
+                    pointer, space = pointers[key]
+                    regs = [self.reg('f') for _ in range(width)]
+                    vector = f'.v{width}' if width > 1 else ''
+                    dest = f'{{{", ".join(regs)}}}' if width > 1 else regs[0]
+                    self.emit(f'ld.{space}{vector}.f32 {dest}, [{pointer}+{4 * element}];')
+                    slots[slot] = regs
+                self.values[s.names[0]] = (slots[slot][lane], 'f32')
+                self.rebind(s.names[0])
+
+
+    def two_pass_softmax(self, loop, online):
+        """Seed online-softmax maxima with their final values.
+
+        A pre-pass over the loop folds each carrier's ``x`` with maximum from
+        the same identity, in the same order as the online loop would, so
+        the seed equals the online loop's final maximum. The main loop then
+        reads that constant: the carrier's fold is dropped, ``gn`` is the
+        maximum, ``dg`` is 0 and ``alpha`` is 1, leaving one exponential
+        and no rescaling chain per step.
+        """
+        seeds = {}
+        for fold, x, gn, dg, alpha, _ in online:
+            m = self.reg('f')
+            self.emit(f'mov.f32 {m}, {literal(-1e30, "f32")};')
+            seeds[fold.name] = m
+        needed = {id(s) for *_, statements in online for s in statements}
+        r = self.reg('r')
+        self.emit(f'mov.s32 {r}, 0;')
+        self.values[loop.axis.name] = (r, 'i32')
+        self.rebind(loop.axis.name)
+        begin, done = self.label('maxpass'), self.label('maxpass_done')
+        self.mark(begin)
+        p = self.reg('p')
+        self.emit(f'setp.ge.s32 {p}, {r}, {static(loop.axis.extent)};')
+        self.emit(f'@{p} bra {done};')
+        self.statements([s for s in loop.body if id(s) in needed])
+        for fold, x, *_ in online:
+            self.emit(f'max.f32 {seeds[fold.name]}, {seeds[fold.name]}, {self.value(x)};')
+        self.emit(f'add.s32 {r}, {r}, 1;')
+        self.rebind(loop.axis.name)
+        self.emit(f'bra {begin};')
+        self.mark(done)
+        zero, one = self.reg('f'), self.reg('f')
+        self.emit(f'mov.f32 {zero}, {literal(0.0, "f32")};')
+        self.emit(f'mov.f32 {one}, {literal(1.0, "f32")};')
+        for fold, x, gn, dg, alpha, _ in online:
+            m = seeds[fold.name]
+            self.values[fold.name] = (m, 'f32')
+            self.mutable[fold.name] = m
+            self.rebind(fold.name)
+            self.subst[id(fold)] = []
+            self.subst[id(gn)] = [(gn.name, m)]
+            self.subst[id(dg)] = [(dg.name, zero)]
+            if alpha is not None:
+                self.subst[id(alpha)] = [(alpha.name, one)]
+
+
+    def normalized_softmax_plans(self, loop):
+        """Require the complete rescaled numerator/denominator recurrence.
+
+        Matching a running maximum alone is insufficient: prefix maxima and
+        raw rescaled sums are observable. Only ratios of equally rescaled
+        states may leave this loop; intermediate max/exp values may not escape.
+        """
+        plans = online_max_carriers(loop.body, set(self.hoisted))
+        if not plans:
+            return []
+        body = list(loop.body)
+        definitions = {s.name: s for s in body if type(s).__name__ in ('Assign', 'Let', 'Accum', 'Init')}
+        descendants = set()
+        outside = []
+        def collect(statements, inside=False):
+            for statement in statements:
+                nested_inside = inside or statement is loop
+                if nested_inside:
+                    descendants.add(id(statement))
+                else:
+                    outside.append(statement)
+                for nested in statement_bodies(statement):
+                    collect(nested, nested_inside)
+        collect(self.node.op.body)
+        def readers(name, statements):
+            return [s for s in statements if name in set(s.deps())]
+        def assignment(s, op, args=None):
+            return (type(s).__name__ == 'Assign' and s.op.name == op
+                    and (s.dtype is None or dtype_name(s.dtype) == 'f32')
+                    and (args is None or tuple(s.args) == tuple(args)))
+        accepted = []
+        for plan in plans:
+            fold, score, maximum, delta, alpha, _ = plan
+            if alpha is None or (fold.dtype is not None and dtype_name(fold.dtype) != 'f32'):
+                continue
+            differences = [s for s in body if assignment(s, 'subtract', (score, maximum.name))]
+            if len(differences) != 1:
+                continue
+            difference = differences[0]
+            exponentials = readers(difference.name, body)
+            if len(exponentials) != 1 or not assignment(exponentials[0], 'exp', (difference.name,)):
+                continue
+            beta = exponentials[0]
+            if {id(s) for s in readers(maximum.name, body)} != {id(delta), id(difference)}:
+                continue
+            all_folds = {s.name for s in body if type(s).__name__ == 'Accum'}
+            value_definitions = dict(definitions)
+            for statement in body:
+                if type(statement).__name__ == 'Load':
+                    value_definitions.update((name, statement) for name in statement.names)
+            def independent(name, seen=None):
+                seen = set() if seen is None else seen
+                if name in all_folds:
+                    return False
+                if name in seen or name not in value_definitions:
+                    return True
+                statement = value_definitions[name]
+                if type(statement).__name__ not in ('Load', 'Let', 'Assign'):
+                    return False
+                return all(independent(dep, seen | {name}) for dep in statement.deps())
+            states, old_scales, new_scales, denominators = {}, [], [], set()
+            valid = True
+            for old in readers(alpha.name, body):
+                if not assignment(old, 'multiply') or len(old.args) != 2:
+                    valid = False; break
+                other = [a for a in old.args if a != alpha.name]
+                if len(other) != 1:
+                    valid = False; break
+                name = other[0]
+                update = definitions.get(name)
+                if (type(update).__name__ != 'Accum' or reduce_canon(update.op.name) != 'add'
+                        or update.base != old.name
+                        or (update.dtype is not None and dtype_name(update.dtype) != 'f32')):
+                    valid = False; break
+                new = definitions.get(update.value)
+                if not assignment(new, 'multiply') or len(new.args) != 2 or beta.name not in new.args:
+                    valid = False; break
+                coefficient = next((a for a in new.args if a != beta.name), None)
+                if coefficient is None or not independent(coefficient):
+                    valid = False; break
+                if ([id(s) for s in readers(name, body)] != [id(old)]
+                        or [id(s) for s in readers(old.name, body)] != [id(update)]
+                        or [id(s) for s in readers(new.name, body)] != [id(update)]):
+                    valid = False; break
+                constant = definitions.get(coefficient)
+                if (type(constant).__name__ == 'Let' and type(constant.value).__name__ == 'Literal'
+                        and constant.value.value == 1.0):
+                    denominators.add(name)
+                states[name] = update
+                old_scales.append(old); new_scales.append(new)
+            if (not valid or not denominators or not states
+                    or {id(s) for s in readers(beta.name, body)} != {id(s) for s in new_scales}):
+                continue
+            temporaries = [maximum, delta, alpha, difference, beta, *old_scales, *new_scales]
+            if any(readers(s.name, outside) for s in temporaries):
+                continue
+            reciprocal_denominators = {}
+            for denominator in denominators:
+                for user in readers(denominator, outside):
+                    if assignment(user, 'reciprocal', (denominator,)):
+                        reciprocal_denominators[user.name] = denominator
+            def normalized(user, numerator):
+                if assignment(user, 'divide') and tuple(user.args) in [(numerator, d) for d in denominators]:
+                    return True
+                return (assignment(user, 'multiply') and len(user.args) == 2
+                        and any(sorted(user.args) == sorted((numerator, reciprocal))
+                                for reciprocal in reciprocal_denominators))
+            for name in states:
+                for user in readers(name, outside):
+                    if name in denominators and assignment(user, 'reciprocal', (name,)):
+                        continue
+                    if not normalized(user, name):
+                        valid = False
+            for reciprocal in reciprocal_denominators:
+                if any(not any(normalized(user, name) for name in states)
+                       for user in readers(reciprocal, outside)):
+                    valid = False
+            if valid:
+                accepted.append(plan)
+        return accepted
+
+    def plan_hoists(self, tile, extents, launched):
+        """Find reductions that CTA threads recompute redundantly.
+
+        In a serial loop ``for o``, a nested reduction loop that reads only
+        Tile axes, ``o`` and unwritten global inputs yields the same value in
+        every thread that agrees on the axes it reads. Attention's QK^T dot
+        product is the motivating case: each output column thread recomputes
+        its row's scores. Such a reduction can run once per distinct
+        (o, used axes) before the serial loop, split across the CTA, with the
+        serial loop reading the results back from shared memory. Each value is
+        produced by the identical statement sequence, so results are
+        bit-identical.
+        """
+        cut = next((i for i in range(len(extents) + 1)
+                    if math.prod(extents[i:]) == launched), None)
+        if cut is None:
+            return
+        axis_extent = {axis.name: extent for axis, extent in zip(tile.axes, extents)}
+        cta_axes = [axis.name for axis in tile.axes[cut:]]
+        outputs = {arg['name'] for arg in self.meta['args'] if arg.get('output')}
+        written = written_buffers(tile.body) | outputs
+        budget = HOIST_SHARED_LIMIT
+        for outer in tile.body:
+            if type(outer).__name__ != 'Loop':
+                continue
+            extent = static_or_none(outer.axis.extent)
+            if extent is None:
+                continue
+            elsewhere = touched_names([s for s in tile.body if s is not outer])
+            carried = any(type(x).__name__ == 'Accum' for x in outer.body)
+
+            def unwritten_input(load):
+                return (load.input not in written and load.input not in self.shared
+                        and load.input in self.ptrs and self.buffers[load.input][1] == 'f32'
+                        and (load.dtype is None or dtype_name(load.dtype) == 'f32'))
+
+            def contiguous_on_serial(load):
+                part = expr_names(load.index[-1])
+                return part is not None and outer.axis.name in part
+
+            candidates = []
+            for inner in outer.body:
+                inner_kind = type(inner).__name__
+                if inner_kind == 'Loop':
+                    # A reduction recomputed by several threads.
+                    if not inner.seed or not straight_line(inner.body):
+                        continue
+                    free = touched_names(inner.body) - defined_names(inner.body) - {inner.axis.name}
+                    loads = [x for x in inner.body if type(x).__name__ == 'Load']
+                    accums = [x for x in inner.body if type(x).__name__ == 'Accum']
+                    if not accums or any(x.dtype is not None and dtype_name(x.dtype) != 'f32'
+                                         for x in accums):
+                        continue
+                    exports = list(dict.fromkeys(x.name for x in accums))
+                elif inner_kind == 'Load' and carried:
+                    # A global load on a loop-carried chain: staging it lets the
+                    # CTA fetch every iteration's operand with full parallelism.
+                    free = set(inner.deps())
+                    loads = [inner]
+                    exports = list(inner.names)
+                else:
+                    continue
+                if not free <= set(axis_extent) | {outer.axis.name}:
+                    continue
+                if not all(unwritten_input(x) for x in loads):
+                    continue
+                siblings = [x for x in outer.body if x is not inner]
+                if set(exports) & (defined_names(siblings) | elsewhere):
+                    continue
+                used = [name for name in cta_axes if name in free]
+                # Only values that several threads would recompute or reload
+                # are worth a shared round trip.
+                if math.prod(axis_extent[name] for name in cta_axes if name not in free) < 2:
+                    continue
+                configs = math.prod(axis_extent[name] for name in used)
+                plan = HoistedValue(inner, exports, [(name, axis_extent[name]) for name in used],
+                                    configs, extent, f'__hoist{len(self.declarations)}',
+                                    any(contiguous_on_serial(x) for x in loads))
+                if plan.nbytes > budget or plan.nbytes + self.shared_bytes > 48 * 1024:
+                    continue
+                budget -= plan.nbytes
+                self.hoist_bytes += plan.nbytes
+                self.declarations.append(f'.shared .align 16 .b8 {plan.symbol}[{plan.nbytes}];')
+                candidates.append(plan)
+            if candidates:
+                self.hoist_plans[id(outer)] = (outer, candidates, launched)
+
+    def decode_config(self, index, used):
+        """Row-major axis values of a hoist configuration index."""
+        values = {}
+        for position, (name, extent) in enumerate(used):
+            stride = math.prod(e for _, e in used[position + 1:])
+            r = self.reg('r')
+            self.emit(f'div.u32 {r}, {index}, {stride};')
+            if position:
+                self.emit(f'rem.u32 {r}, {r}, {extent};')
+            values[name] = r
+        return values
+
+    def emit_hoisted(self, outer, plans, launched):
+        """Evaluate each hoisted reduction across the CTA, then barrier."""
+        extent = static(outer.axis.extent)
+        names = {outer.axis.name} | {name for plan in plans for name, _ in plan.used}
+        saved = {name: self.values.get(name) for name in names}
+        tid = self.value('tid')
+        groups = {}
+        for plan in plans:
+            if type(plan.statement).__name__ == 'Loop':
+                # Reductions over the same coordinates run fused in one item:
+                # independent chains overlap and shared operands load once.
+                key = ('Loop', tuple(plan.used), plan.serial_fastest,
+                       static(plan.statement.axis.extent))
+            else:
+                key = ('Load', id(plan))
+            groups.setdefault(key, []).append(plan)
+        for key, members in groups.items():
+            lead = members[0]
+            if key[0] == 'Loop':
+                shape = self.matmul_members(members, outer)
+                if shape is not None:
+                    self.emit_hoisted_matmul(shape, members, outer, launched)
+                    continue
+            work = lead.configs * extent
+            w = self.reg('r')
+            self.emit(f'mov.u32 {w}, {tid};')
+            # Batches keep many independent loads in flight: one per staged
+            # load item, a whole fused loop's worth per reduction item.
+            batches = STRIDED_UNROLL if key[0] == 'Load' else (HOIST_REDUCTION_BATCH,)
+            for batch in (*batches, 1):
+                if work + (batch - 1) * launched >= (1 << 31):
+                    continue
+                begin, done = self.label('hoist'), self.label('hoist_done')
                 self.mark(begin)
-                active = self.reg('p')
-                self.emit(f'setp.ge.u32 {active}, {slot}, {total_slots};')
-                self.emit(f'@{active} bra {done};')
-                addr, space = self.address(buf, (Var('_tree_slot'),))
-                if space != 'shared':
-                    raise Unsupported('Tree buffer is not shared')
-                self.emit(f'st.shared.{dtype_info(dtype)[1]} [{addr}], {literal_value};')
-                self.emit(f'add.u32 {slot}, {slot}, {launched};')
+                last, p = self.reg('r'), self.reg('p')
+                self.emit(f'add.u32 {last}, {w}, {(batch - 1) * launched};')
+                self.emit(f'setp.ge.u32 {p}, {last}, {work};')
+                self.emit(f'@{p} bra {done};')
+                coords = []
+                for k in range(batch):
+                    item = self.reg('r')
+                    self.emit(f'add.u32 {item}, {w}, {k * launched};')
+                    coords.append(self.hoist_item_coords(lead, outer, item))
+                items = self.evaluate_hoist_items(members, coords)
+                # Every item's operands are requested before any is stored.
+                for config, serial, results in items:
+                    for plan, values in results:
+                        for k, value in enumerate(values):
+                            word = self.reg('r')
+                            self.emit(f'mad.lo.u32 {word}, {config}, {plan.row_words}, {serial};')
+                            self.emit(f'add.u32 {word}, {word}, {k * plan.configs * plan.row_words};')
+                            addr = self.reg('rd')
+                            self.emit(f'mul.wide.u32 {addr}, {word}, 4;')
+                            base = self.reg('rd')
+                            self.emit(f'mov.u64 {base}, {plan.symbol};')
+                            self.emit(f'add.u64 {addr}, {base}, {addr};')
+                            self.emit(f'st.shared.f32 [{addr}], {value};')
+                self.emit(f'add.u32 {w}, {w}, {batch * launched};')
                 self.emit(f'bra {begin};')
                 self.mark(done)
-                self.values.pop('_tree_slot', None)
+        for name, value in saved.items():
+            if value is None:
+                self.values.pop(name, None)
+            else:
+                self.values[name] = value
+            self.rebind(name)
+        self.emit('bar.sync 0;')
+        for plan in plans:
+            # This thread's own configuration index, from its own axis values.
+            config = self.reg('r')
+            self.emit(f'mov.u32 {config}, 0;')
+            for name, extent_ in plan.used:
+                self.emit(f'mad.lo.u32 {config}, {config}, {extent_}, {self.value(name)};')
+            rows = []
+            for k in range(len(plan.exports)):
+                word = self.reg('r')
+                self.emit(f'mad.lo.u32 {word}, {config}, {plan.row_words}, '
+                          f'{k * plan.configs * plan.row_words};')
+                row = self.reg('rd')
+                self.emit(f'mul.wide.u32 {row}, {word}, 4;')
+                base = self.reg('rd')
+                self.emit(f'mov.u64 {base}, {plan.symbol};')
+                self.emit(f'add.u64 {row}, {base}, {row};')
+                rows.append(row)
+            self.hoisted[id(plan.statement)] = (plan, outer.axis.name, rows)
 
-    def statements(self, statements):
-        for s in statements:
+    def matmul_members(self, members, outer):
+        """Recognize hoisted reductions of the form acc += A[c, k] * B[k, s].
+
+        Every member must be a Load/Load/multiply/add-fold loop whose ``B``
+        operand (indexed by the serial axis, not by thread axes) is one
+        shared expression. Returns (b_load, [(a_load, a_first)]) or None.
+        """
+        serial = outer.axis.name
+        used = {name for name, _ in members[0].used}
+        b_key, operands = None, []
+        for plan in members:
+            body = list(plan.statement.body)
+            kinds = sorted(type(s).__name__ for s in body)
+            if kinds != ['Accum', 'Assign', 'Load', 'Load']:
+                return None
+            loads = [s for s in body if type(s).__name__ == 'Load']
+            product = next(s for s in body if type(s).__name__ == 'Assign')
+            fold = next(s for s in body if type(s).__name__ == 'Accum')
+            if (any(len(s.names) != 1 or self.buffers[s.input][1] != 'f32' for s in loads)
+                    or product.op.name != 'multiply' or reduce_canon(fold.op.name) != 'add'
+                    or fold.value != product.name or fold.base not in (None, fold.name)
+                    or any(x.dtype is not None and dtype_name(x.dtype) != 'f32'
+                           for x in (product, fold))
+                    or sorted(product.args) != sorted(s.names[0] for s in loads)
+                    or body.index(product) < max(body.index(s) for s in loads)
+                    or body.index(fold) < body.index(product)):
+                return None
+            free = [set().union(*(expr_names(c) or {None} for c in s.index)) for s in loads]
+            b_side = [serial in f and not f & used and None not in f for f in free]
+            a_side = [serial not in f and None not in f for f in free]
+            if sorted(b_side) != [False, True] or not a_side[b_side.index(False)]:
+                return None
+            b, a = loads[b_side.index(True)], loads[b_side.index(False)]
+            key = (b.input, tuple(structural_key(c) for c in b.index))
+            if None in key[1] or (b_key is not None and key != b_key):
+                return None
+            b_key = key
+            operands.append((a, product.args[0] == a.names[0]))
+        return b, operands
+
+    def emit_hoisted_matmul(self, shape, members, outer, launched):
+        """Register-tiled evaluation of hoisted A·B reductions.
+
+        Each work item is one thread-axis configuration ``c`` and ``tn``
+        consecutive serial columns; the thread keeps every member's
+        accumulators for those columns, so each B load feeds all members and
+        each A load feeds ``tn`` columns. Every output still folds
+        ``mul(a, b)`` over k in order from the same identity, so results
+        match the unhoisted loop exactly. With a contiguous, 16-byte aligned
+        B row a single 128-bit load fetches the ``tn`` = 4 columns.
+        """
+        b, operands = shape
+        lead = members[0]
+        extent = lead.extent
+        k_loops = [plan.statement for plan in members]
+        k_extent = static(k_loops[0].axis.extent)
+        staged = 4 * (len(members) * lead.configs * k_extent + k_extent * extent)
+        # Staging pays off only when each B element feeds several output rows.
+        if (extent % 4 == 0 and k_extent % 4 == 0 and lead.configs * len(members) >= 2
+                and self.shared_bytes + self.hoist_bytes + staged <= 48 * 1024):
+            self.hoist_bytes += staged
+            self.emit_staged_matmul(shape, members, outer, launched)
+            return
+        last = b.index[-1]
+        shape_b = self.buffers[b.input][0]
+        vector = (extent % 4 == 0 and type(last).__name__ == 'Var' and last.name == outer.axis.name
+                  and all(math.prod(shape_b[i + 1:]) % 4 == 0 for i in range(len(shape_b) - 1)))
+        saved = {name: self.values.get(name) for name in
+                 {outer.axis.name, *(name for name, _ in lead.used), *(l.axis.name for l in k_loops)}}
+        done = self.label('mm_done')
+        if vector:
+            scalar = self.label('mm_scalar')
+            low, p = self.reg('rd'), self.reg('p')
+            self.emit(f'and.b64 {low}, {self.ptrs[b.input]}, 15;')
+            self.emit(f'setp.ne.u64 {p}, {low}, 0;')
+            self.emit(f'@{p} bra {scalar};')
+            self.matmul_work_loop(shape, members, outer, launched, 4)
+            self.emit(f'bra {done};')
+            self.mark(scalar)
+        self.matmul_work_loop(shape, members, outer, launched, 1)
+        self.mark(done)
+        for name, value in saved.items():
+            if value is None:
+                self.values.pop(name, None)
+            else:
+                self.values[name] = value
+            self.rebind(name)
+
+    def stage_operands(self, copies, symbol, launched):
+        """Copy several loads' CTA footprints to shared memory.
+
+        When every footprint divides evenly among the threads and the total
+        per thread is modest, all loads are issued straight-line before any
+        store, so the whole copy costs about one memory latency.
+        """
+        trips = [math.prod(e for _, e in dims) / launched for _, dims, _ in copies]
+        if all(x == int(x) for x in trips) and sum(trips) <= STAGE_STRAIGHT_LINE:
+            pending = []
+            for (load, dims, offset), count in zip(copies, trips):
+                for k in range(int(count)):
+                    item = self.reg('r')
+                    self.emit(f'add.u32 {item}, {self.value("tid")}, {k * launched};')
+                    self.bind_coords(self.decode_config(item, dims))
+                    addr, space = self.address(load.input, load.index)
+                    value = self.reg('f')
+                    self.emit(f'ld.{space}.f32 {value}, [{addr}];')
+                    pending.append((item, value, offset))
+            base = self.reg('rd')
+            self.emit(f'mov.u64 {base}, {symbol};')
+            for item, value, offset in pending:
+                sa = self.reg('rd')
+                self.emit(f'mul.wide.u32 {sa}, {item}, 4;')
+                self.emit(f'add.u64 {sa}, {base}, {sa};')
+                self.emit(f'st.shared.f32 [{sa}+{offset}], {value};')
+            return
+        for load, dims, offset in copies:
+            self.stage_operand(load, dims, symbol, offset, launched)
+
+    def stage_operand(self, load, dims, symbol, offset, launched):
+        """Copy one load's CTA footprint to shared memory, row-major over
+        ``dims`` ((axis name, extent), last fastest), many loads in flight."""
+        work = math.prod(extent for _, extent in dims)
+        w = self.reg('r')
+        self.emit(f'mov.u32 {w}, {self.value("tid")};')
+        for batch in (*STRIDED_UNROLL, 1):
+            if work + (batch - 1) * launched >= (1 << 31):
+                continue
+            begin, done = self.label('stage'), self.label('stage_done')
+            self.mark(begin)
+            last, p = self.reg('r'), self.reg('p')
+            self.emit(f'add.u32 {last}, {w}, {(batch - 1) * launched};')
+            self.emit(f'setp.ge.u32 {p}, {last}, {work};')
+            self.emit(f'@{p} bra {done};')
+            pending = []
+            for k in range(batch):
+                item = self.reg('r')
+                self.emit(f'add.u32 {item}, {w}, {k * launched};')
+                self.bind_coords(self.decode_config(item, dims))
+                addr, space = self.address(load.input, load.index)
+                value = self.reg('f')
+                self.emit(f'ld.{space}.f32 {value}, [{addr}];')
+                pending.append((item, value))
+            for item, value in pending:
+                sa = self.reg('rd')
+                self.emit(f'mul.wide.u32 {sa}, {item}, 4;')
+                base = self.reg('rd')
+                self.emit(f'mov.u64 {base}, {symbol};')
+                self.emit(f'add.u64 {sa}, {base}, {sa};')
+                self.emit(f'st.shared.f32 [{sa}+{offset}], {value};')
+            self.emit(f'add.u32 {w}, {w}, {batch * launched};')
+            self.emit(f'bra {begin};')
+            self.mark(done)
+
+    def emit_staged_matmul(self, shape, members, outer, launched):
+        """Shared-memory tiled evaluation of hoisted A·B reductions.
+
+        The A rows of every member and the B tile are first copied to shared
+        memory with batched loads (the global latency is paid a few times,
+        not once per k step). Each work item then owns one configuration and
+        four consecutive columns and walks k four at a time with 128-bit
+        shared loads: per four k steps, one A vector per member and four B
+        vectors feed 16 x members FMAs. Every output still folds mul(a, b)
+        over k in order from the same identity, so results are unchanged.
+        """
+        b, operands = shape
+        lead = members[0]
+        extent = lead.extent
+        k_axis = members[0].statement.axis.name
+        k_extent = static(members[0].statement.axis.extent)
+        a_words = lead.configs * k_extent
+        symbol = f'__stage{len(self.declarations)}'
+        nbytes = 4 * (len(members) * a_words + k_extent * extent)
+        self.declarations.append(f'.shared .align 16 .b8 {symbol}[{nbytes}];')
+        b_offset = 4 * len(members) * a_words
+        dims_a = [*lead.used, (k_axis, k_extent)]
+        copies = [(a, dims_a, 4 * m * a_words) for m, (a, _) in enumerate(operands)]
+        copies.append((b, [(k_axis, k_extent), (outer.axis.name, extent)], b_offset))
+        self.stage_operands(copies, symbol, launched)
+        self.emit('bar.sync 0;')
+        blocks = extent // 4
+        work = lead.configs * blocks
+        w = self.reg('r')
+        self.emit(f'mov.u32 {w}, {self.value("tid")};')
+        begin, done = self.label('mm'), self.label('mm_items_done')
+        self.mark(begin)
+        p = self.reg('p')
+        self.emit(f'setp.ge.u32 {p}, {w}, {work};')
+        self.emit(f'@{p} bra {done};')
+        block, config, serial = self.reg('r'), self.reg('r'), self.reg('r')
+        self.emit(f'rem.u32 {block}, {w}, {blocks};')
+        self.emit(f'div.u32 {config}, {w}, {blocks};')
+        self.emit(f'shl.b32 {serial}, {block}, 2;')
+        base = self.reg('rd')
+        self.emit(f'mov.u64 {base}, {symbol};')
+        a_rows = []
+        for m in range(len(members)):
+            word = self.reg('r')
+            self.emit(f'mad.lo.u32 {word}, {config}, {k_extent}, {m * a_words};')
+            row = self.reg('rd')
+            self.emit(f'mul.wide.u32 {row}, {word}, 4;')
+            self.emit(f'add.u64 {row}, {base}, {row};')
+            a_rows.append(row)
+        b_col = self.reg('rd')
+        self.emit(f'mul.wide.u32 {b_col}, {serial}, 4;')
+        self.emit(f'add.u64 {b_col}, {base}, {b_col};')
+        self.emit(f'add.u64 {b_col}, {b_col}, {b_offset};')
+        accs = [[self.reg('f') for _ in range(4)] for _ in members]
+        for row in accs:
+            for acc in row:
+                self.emit(f'mov.f32 {acc}, {literal(0.0, "f32")};')
+        k = self.reg('r')
+        self.emit(f'mov.u32 {k}, 0;')
+        k_begin, k_done = self.label('mm_k'), self.label('mm_k_done')
+        self.mark(k_begin)
+        q = self.reg('p')
+        self.emit(f'setp.ge.u32 {q}, {k}, {k_extent};')
+        self.emit(f'@{q} bra {k_done};')
+        a_off = self.reg('rd')
+        self.emit(f'mul.wide.u32 {a_off}, {k}, 4;')
+        b_off = self.reg('rd')
+        self.emit(f'mul.wide.u32 {b_off}, {k}, {4 * extent};')
+        b_ptr = self.reg('rd')
+        self.emit(f'add.u64 {b_ptr}, {b_col}, {b_off};')
+        bvecs = []
+        for step in range(4):
+            vec = [self.reg('f') for _ in range(4)]
+            self.emit(f'ld.shared.v4.f32 {{{", ".join(vec)}}}, [{b_ptr}+{4 * step * extent}];')
+            bvecs.append(vec)
+        for (a, a_first), row, a_row in zip(operands, accs, a_rows):
+            a_ptr = self.reg('rd')
+            self.emit(f'add.u64 {a_ptr}, {a_row}, {a_off};')
+            avec = [self.reg('f') for _ in range(4)]
+            self.emit(f'ld.shared.v4.f32 {{{", ".join(avec)}}}, [{a_ptr}];')
+            for step in range(4):
+                for bv, acc in zip(bvecs[step], row):
+                    product = self.reg('f')
+                    x, y = (avec[step], bv) if a_first else (bv, avec[step])
+                    self.emit(f'mul.f32 {product}, {x}, {y};')
+                    self.emit(f'add.f32 {acc}, {acc}, {product};')
+        self.emit(f'add.u32 {k}, {k}, 4;')
+        self.emit(f'bra {k_begin};')
+        self.mark(k_done)
+        for plan, row in zip(members, accs):
+            word = self.reg('r')
+            self.emit(f'mad.lo.u32 {word}, {config}, {plan.row_words}, {serial};')
+            sa = self.reg('rd')
+            self.emit(f'mul.wide.u32 {sa}, {word}, 4;')
+            sbase = self.reg('rd')
+            self.emit(f'mov.u64 {sbase}, {plan.symbol};')
+            self.emit(f'add.u64 {sa}, {sbase}, {sa};')
+            for j, acc in enumerate(row):
+                self.emit(f'st.shared.f32 [{sa}+{4 * j}], {acc};')
+        self.emit(f'add.u32 {w}, {w}, {launched};')
+        self.emit(f'bra {begin};')
+        self.mark(done)
+
+    def matmul_work_loop(self, shape, members, outer, launched, tn):
+        b, operands = shape
+        lead = members[0]
+        blocks = lead.extent // tn
+        work = lead.configs * blocks
+        w = self.reg('r')
+        self.emit(f'mov.u32 {w}, {self.value("tid")};')
+        begin, done = self.label('mm'), self.label('mm_items_done')
+        self.mark(begin)
+        p = self.reg('p')
+        self.emit(f'setp.ge.u32 {p}, {w}, {work};')
+        self.emit(f'@{p} bra {done};')
+        # Column blocks vary fastest across threads so B rows coalesce.
+        block, config, serial = self.reg('r'), self.reg('r'), self.reg('r')
+        self.emit(f'rem.u32 {block}, {w}, {blocks};')
+        self.emit(f'div.u32 {config}, {w}, {blocks};')
+        self.emit(f'mul.lo.u32 {serial}, {block}, {tn};')
+        self.bind_coords({outer.axis.name: serial, **self.decode_config(config, lead.used)})
+        accs = []
+        for _ in members:
+            row = []
+            for _ in range(tn):
+                acc = self.reg('f')
+                self.emit(f'mov.f32 {acc}, {literal(0.0, "f32")};')
+                row.append(acc)
+            accs.append(row)
+        k = self.reg('r')
+        self.emit(f'mov.s32 {k}, 0;')
+        self.bind_coords({plan.statement.axis.name: k for plan in members})
+        self.loop_invariants.append({})
+        self.loop_expressions.append({})
+        k_begin, k_done = self.label('mm_k'), self.label('mm_k_done')
+        self.mark(k_begin)
+        q = self.reg('p')
+        self.emit(f'setp.ge.s32 {q}, {k}, {static(members[0].statement.axis.extent)};')
+        self.emit(f'@{q} bra {k_done};')
+        addr, space = self.address(b.input, b.index)
+        bs = [self.reg('f') for _ in range(tn)]
+        if tn == 4:
+            self.emit(f'ld.{space}.v4.f32 {{{", ".join(bs)}}}, [{addr}];')
+        else:
+            self.emit(f'ld.{space}.f32 {bs[0]}, [{addr}];')
+        for (a, a_first), row in zip(operands, accs):
+            a_addr, a_space = self.address(a.input, a.index)
+            av = self.reg('f')
+            self.emit(f'ld.{a_space}.f32 {av}, [{a_addr}];')
+            for bv, acc in zip(bs, row):
+                product = self.reg('f')
+                x, y = (av, bv) if a_first else (bv, av)
+                self.emit(f'mul.f32 {product}, {x}, {y};')
+                self.emit(f'add.f32 {acc}, {acc}, {product};')
+        self.emit(f'add.s32 {k}, {k}, 1;')
+        self.bind_coords({plan.statement.axis.name: k for plan in members})
+        self.emit(f'bra {k_begin};')
+        self.mark(k_done)
+        self.loop_invariants.pop()
+        self.loop_expressions.pop()
+        for plan, row in zip(members, accs):
+            for j, acc in enumerate(row):
+                word = self.reg('r')
+                self.emit(f'mad.lo.u32 {word}, {config}, {plan.row_words}, {serial};')
+                if j:
+                    self.emit(f'add.u32 {word}, {word}, {j};')
+                sa = self.reg('rd')
+                self.emit(f'mul.wide.u32 {sa}, {word}, 4;')
+                base = self.reg('rd')
+                self.emit(f'mov.u64 {base}, {plan.symbol};')
+                self.emit(f'add.u64 {sa}, {base}, {sa};')
+                self.emit(f'st.shared.f32 [{sa}], {acc};')
+        self.emit(f'add.u32 {w}, {w}, {launched};')
+        self.emit(f'bra {begin};')
+        self.mark(done)
+
+    def hoist_item_coords(self, lead, outer, item):
+        """Decode a work item into (config, serial, axis bindings)."""
+        serial, config = self.reg('r'), self.reg('r')
+        if lead.serial_fastest:
+            self.emit(f'rem.u32 {serial}, {item}, {lead.extent};')
+            self.emit(f'div.u32 {config}, {item}, {lead.extent};')
+        else:
+            self.emit(f'rem.u32 {config}, {item}, {lead.configs};')
+            self.emit(f'div.u32 {serial}, {item}, {lead.configs};')
+        return config, serial, {outer.axis.name: serial, **self.decode_config(config, lead.used)}
+
+    def bind_coords(self, bindings):
+        for name, r in bindings.items():
+            self.values[name] = (r, 'i32')
+            self.rebind(name)
+
+    def evaluate_hoist_items(self, members, coords):
+        """Evaluate a batch of work items; returns per item its exports."""
+        if type(members[0].statement).__name__ == 'Loop':
+            exports = self.fused_loop([plan.statement for plan in members],
+                                      [bindings for _, _, bindings in coords])
+            return [(config, serial, [(plan, [values[name] for name in plan.exports])
+                                      for plan in members])
+                    for (config, serial, _), values in zip(coords, exports)]
+        results = []
+        for config, serial, bindings in coords:
+            self.bind_coords(bindings)
+            self.statements([members[0].statement])
+            results.append((config, serial, [(plan, [self.value(name) for name in plan.exports])
+                                             for plan in members]))
+        return results
+
+    def fused_loop(self, loops, items):
+        """Independent straight-line Loops of one extent sharing one induction,
+        evaluated for several work items (coordinate bindings) per trip.
+
+        Each item keeps its own fold registers, and each body still runs its
+        iterations in order, so every fold is unchanged; bodies and items
+        only interleave, which hoisting has already proved independent (each
+        reads Tile axes and its own bindings). Returns each item's final fold
+        registers by name.
+        """
+        accums = [s.name for loop in loops for s in loop.body if type(s).__name__ == 'Accum']
+        states = []
+        for bindings in items:
+            self.bind_coords(bindings)
+            for loop in loops:
+                if loop.seed:
+                    self.init_accums(loop.body)
+            states.append({name: (self.values[name], self.mutable.get(name)) for name in accums})
+        axes = list(dict.fromkeys(loop.axis.name for loop in loops))
+        r = self.reg('r')
+        self.emit(f'mov.s32 {r}, 0;')
+        for axis in axes:
+            self.values[axis] = (r, 'i32')
+            self.rebind(axis)
+        if len(items) == 1:
+            body = [statement for loop in loops for statement in loop.body]
+            self.hoist_invariants(body, defined_names(body) | set(axes))
+        else:
+            # Preheader addresses would be valid for one item's bindings only.
+            self.loop_invariants.append({})
+            self.loop_expressions.append({})
+        begin, done = self.label('loop'), self.label('loop_done')
+        self.mark(begin)
+        p = self.reg('p')
+        self.emit(f'setp.ge.s32 {p}, {r}, {static(loops[0].axis.extent)};')
+        self.emit(f'@{p} bra {done};')
+        for bindings, state in zip(items, states):
+            if len(items) > 1:
+                self.bind_coords(bindings)
+            for name, (value, mutable) in state.items():
+                self.values[name] = value
+                self.mutable[name] = mutable
+                self.rebind(name)
+            for loop in loops:
+                self.statements(loop.body)
+            for name in accums:
+                state[name] = (self.values[name], self.mutable.get(name))
+        self.emit(f'add.s32 {r}, {r}, 1;')
+        for axis in axes:
+            self.rebind(axis)
+        self.emit(f'bra {begin};')
+        self.mark(done)
+        self.loop_invariants.pop()
+        self.loop_expressions.pop()
+        return [{name: value[0] for name, (value, _) in state.items()} for state in states]
+
+    def load_hoisted(self, statement):
+        plan, serial, rows = self.hoisted[id(statement)]
+        offset = self.reg('rd')
+        self.emit(f'mul.wide.u32 {offset}, {self.value(serial)}, 4;')
+        for name, row in zip(plan.exports, rows):
+            addr, r = self.reg('rd'), self.reg('f')
+            self.emit(f'add.u64 {addr}, {row}, {offset};')
+            self.emit(f'ld.shared.f32 {r}, [{addr}];')
+            self.values[name] = (r, 'f32')
+            self.rebind(name)
+
+    def statements(self, statements, shared_prefetch=None):
+        pending = []
+        for position, s in enumerate(statements):
+            for name, key in pending:
+                self.vn_registers[key] = self.values[name]
+            pending = self.vn_record.get(id(s), [])
+            if id(s) in self.hoist_plans:
+                self.emit_hoisted(*self.hoist_plans.pop(id(s)))
+            if id(s) in self.hoisted:
+                self.load_hoisted(s)
+                continue
+            if id(s) in self.subst:
+                # Rewritten by the two-pass softmax: bind the known value.
+                for name, reg in self.subst[id(s)]:
+                    self.values[name] = (reg, 'f32')
+                    self.rebind(name)
+                continue
+            if id(s) in self.vn_skip:
+                # Value-numbered redundant: reuse the earlier register.
+                for name, key in self.vn_skip[id(s)]:
+                    self.values[name] = self.vn_registers[key]
+                    self.rebind(name)
+                continue
             kind = type(s).__name__
             if kind == 'Tile':
                 if s.aux_threads or s.raster_orient not in ('m', 'n'):
@@ -1473,57 +4468,104 @@ class Emitter:
                 # alive to reach its barriers.
                 inactive = launched * math.prod(self.meta['grid']) > n
                 p = self.reg('p')
-                self.emit(f'setp.ge.u32 {p}, {self.value("_gid")}, {n};')
+                self.emit(f'setp.ge.u32 {p}, {self.hardware_gid}, {n};')
+                tile_done = None
                 if not collective:
-                    self.emit(f'@{p} bra kernel_done;')
-                for i, axis in enumerate(s.axes):
-                    stride = math.prod(extents[i+1:])
-                    r = self.reg('r')
-                    if stride & (stride - 1) == 0:
-                        self.emit(f'shr.u32 {r}, {self.value("_gid")}, {stride.bit_length() - 1};')
-                    else:
-                        self.emit(f'div.u32 {r}, {self.value("_gid")}, {stride};')
-                    extent = extents[i]
-                    if i and extent & (extent - 1) == 0:
-                        self.emit(f'and.b32 {r}, {r}, {extent - 1};')
-                    elif i:
-                        self.emit(f'rem.u32 {r}, {r}, {extent};')
-                    self.values[axis.name] = (r, 'i32')
-                if inactive and collective:
-                    # Inactive threads still execute the body to reach barriers.
-                    # Their addresses are masked at every memory access; the
-                    # axis registers themselves are consumed only within it.
-                    self.preinitialize_trees(s.body)
-                    active = self.reg('p')
-                    self.emit(f'setp.lt.u32 {active}, {self.value("_gid")}, {n};')
-                    self.inactive.append(active)
-                self.statements(s.body)
-                if inactive and collective:
-                    self.inactive.pop()
+                    # A Tile guard scopes this body; later sibling statements
+                    # still run for threads outside this Tile's coordinate set.
+                    tile_done = self.label('tile_done')
+                    self.emit(f'@{p} bra {tile_done};')
+                previous_axes = {axis.name: self.values.get(axis.name) for axis in s.axes}
+                try:
+                    for i, axis in enumerate(s.axes):
+                        stride = math.prod(extents[i+1:])
+                        r = self.reg('r')
+                        self.emit(f'div.u32 {r}, {self.hardware_gid}, {stride};')
+                        extent = extents[i]
+                        if i:
+                            self.emit(f'rem.u32 {r}, {r}, {extent};')
+                        self.rebind(axis.name)
+                        self.values[axis.name] = (r, 'i32')
+                        # Partial collective lanes also execute this body. Do not
+                        # assign their out-of-domain axes active-lane facts.
+                        if all(extent > 0 for extent in extents) and not (inactive and collective):
+                            self.set_integer_range(r, checked_i32_interval(0, extents[i] - 1))
+                    if inactive and collective:
+                        # Inactive threads still execute the body to reach barriers.
+                        # Their addresses are masked at every memory access; the
+                        # axis registers themselves are consumed only within it.
+                        if len(self.node.op.body) != 1 or self.node.op.body[0] is not s:
+                            raise Unsupported('Partial collective Tile requires proven converged CTA entry')
+                        analysis_body = selected_constant_branches(s.body)
+                        validate_partial_tile_collectives(analysis_body, self)
+                        self.preinitialize_trees(analysis_body)
+                        self.emit('bar.sync 0;')
+                        active = self.reg('p')
+                        self.emit(f'setp.lt.u32 {active}, {self.hardware_gid}, {n};')
+                        self.inactive.append(active)
+                    self.tile_extents = {axis.name: extent for axis, extent in zip(s.axes, extents)}
+                    if not inactive and not self.inactive and not self.dynamic_shared:
+                        self.plan_hoists(s, extents, launched)
+                    try:
+                        self.statements_with_init_scope(s.body, self.init_scope_frame(s.body))
+                    finally:
+                        if inactive and collective:
+                            self.inactive.pop()
+                finally:
+                    # Axis registers are lexical bindings. Do not roll back physical
+                    # integer facts: the body may have changed a carried register.
+                    for name, previous in previous_axes.items():
+                        if previous is None:
+                            self.values.pop(name, None)
+                        else:
+                            self.values[name] = previous
+                        self.rebind(name)
+                if tile_done is not None:
+                    self.mark(tile_done)
             elif kind == 'Load':
-                dtype = dtype_name(s.dtype) if s.dtype is not None else dtype_name(self.buffers[s.input][1])
-                phys = dtype_info(dtype)[1]
+                if shared_prefetch is not None and position in shared_prefetch:
+                    self.values[s.names[0]] = (shared_prefetch[position], 'f32')
+                    self.mutable.pop(s.names[0], None)
+                    self.rebind(s.names[0])
+                    continue
+                if s.input in self.scalar_parameters:
+                    self.scalar_load(s)
+                    continue
+                source_dtype = dtype_name(self.buffers[s.input][1])
+                dtype = dtype_name(s.dtype) if s.dtype is not None else source_dtype
+                if len(s.names) > 1 and dtype != source_dtype:
+                    # Emmy's vector renderer reinterprets a typed vector pack;
+                    # numerical conversion is only established for scalar Load.
+                    raise Unsupported('Vector Load stamp must match buffer storage dtype')
+                phys = dtype_info(source_dtype)[1]
+                loaded_bindings = []
                 for i, name in enumerate(s.names):
                     addr, space = self.address(s.input, s.index, i)
-                    reg = self.reg(reg_suffix(dtype))
+                    raw = self.reg(reg_suffix(source_dtype))
                     if self.inactive:
-                        # Inactive lanes must not issue the memory operation, but
-                        # the register still needs a deterministic definition.
-                        self.emit(f'mov.{dtype} {reg}, {literal(0, dtype)};')
-                        self.emit(f'@{self.inactive[-1]} ld.{space}.{phys} {reg}, [{addr}];')
+                        self.emit(f'mov.{select_type(source_dtype)} {raw}, {literal(0, source_dtype)};')
+                        self.emit(f'@{self.inactive[-1]} ld.{space}.{phys} {raw}, [{addr}];')
                     else:
-                        self.emit(f'ld.{space}.{phys} {reg}, [{addr}];')
-                    self.values[name] = (reg, dtype)
+                        self.emit(f'ld.{space}.{phys} {raw}, [{addr}];')
+                    register, result_dtype = self.convert_operand(raw, source_dtype, dtype,
+                                                                 copy_same_type=False)
+                    loaded_bindings.append((name, register, result_dtype))
+                # Grouped loads evaluate every address before publishing any
+                # destination binding, including names that shadow an index.
+                for name, register, result_dtype in loaded_bindings:
+                    self.values[name] = (register, result_dtype)
+                    self.mutable.pop(name, None)
+                    self.rebind(name)
             elif kind == 'Write':
                 if s.swizzle not in ('NONE', None):
                     raise Unsupported('Swizzled writes unsupported')
                 output_dtype = dtype_name(self.buffers[s.output][1])
-                value_dtype = dtype_name(s.value_dtype) if s.value_dtype is not None else output_dtype
+                value_dtype = ssa_dtype_name(s.value_dtype) if s.value_dtype is not None else output_dtype
                 phys = dtype_info(output_dtype)[1]
                 for i, name in enumerate(s.values):
                     addr, space = self.address(s.output, s.index, i)
                     value = self.value(name)
-                    value_type = self.values[name][1]
+                    value_type = self.binding(name)[1]
                     # IR stores convert at the boundary. Selecting the store
                     # width from the output (not the SSA value) preserves both
                     # the stride and the destination representation.
@@ -1549,6 +4591,7 @@ class Emitter:
             elif kind == 'Assign':
                 self.address_cache.clear()
                 self.expr_cache.clear()
+                self.mutable.pop(s.name, None)
                 start = len(self.lines)
                 self.assign(s.name, s.op, s.args, s.dtype)
                 if self.inactive and s.name in self.mutable:
@@ -1557,10 +4600,10 @@ class Emitter:
                         self.lines[i] = f'    @{self.inactive[-1]} {instruction}'
                 self.rebind(s.name)
             elif kind == 'Let':
-                self.values[s.name] = self.expr(s.value)
-                # A repeated Let name is a rebind, not an immutable alias.
-                # Clear versioned address/CSE entries before later expressions
-                # can observe the new binding.
+                operand, source_dtype = self.expr(s.value)
+                target_dtype = source_dtype if s.dtype is None else s.dtype
+                self.values[s.name] = self.snapshot_operand(operand, source_dtype, target_dtype)
+                self.mutable.pop(s.name, None)
                 self.rebind(s.name)
             elif kind == 'Select':
                 self.address_cache.clear()
@@ -1568,11 +4611,15 @@ class Emitter:
                 self.select(s)
             elif kind == 'Init':
                 self.address_cache.clear()
-                dtype = dtype_name(s.dtype)
-                if dtype not in FLOAT_DTYPES:
-                    raise Unsupported(f'Only floating carried state supported: {dtype}')
-                r = self.reg(reg_suffix(dtype))
-                self.emit(f'mov.{dtype} {r}, {literal(s.identity, dtype)};')
+                dtype = ssa_dtype_name(s.dtype)
+                if dtype == 'pred':
+                    # The declaration casts its literal to BOOL; no BOOL storage.
+                    r, dtype = self.snapshot_operand('1' if s.identity else '0', 'i32', 'pred')
+                else:
+                    if dtype not in FLOAT_DTYPES:
+                        raise Unsupported(f'Only floating carried state supported: {dtype}')
+                    r = self.reg(reg_suffix(dtype))
+                    self.emit(f'mov.{select_type(dtype)} {r}, {literal(s.identity, dtype)};')
                 self.values[s.name] = (r, dtype)
                 self.mutable[s.name] = r
                 self.rebind(s.name)
@@ -1580,6 +4627,11 @@ class Emitter:
                 self.address_cache.clear()
                 old = self.value(s.name)
                 left = s.base if s.base is not None else s.name
+                if getattr(s.dtype, 'name', s.dtype) == 'bool':
+                    if reduce_canon(s.op.name) not in ('add', 'multiply', 'maximum', 'minimum'):
+                        raise Unsupported('Unsupported BOOL reduction operation')
+                    if any(self.binding(name)[1] != 'pred' for name in (s.name, left, s.value)):
+                        raise Unsupported('BOOL reductions require all-BOOL carriers and operands')
                 if self.inactive:
                     # A masked lane keeps its seeded identity state. Predicating
                     # the whole fold is op-agnostic: it is correct for maximum /
@@ -1593,79 +4645,271 @@ class Emitter:
                 else:
                     self.assign(s.name, s.op, (left, s.value), s.dtype)
                 if self.value(s.name) != old:
-                    self.emit(f'mov.{self.values[s.name][1]} {old}, {self.value(s.name)};')
+                    # A seedFalse BOOL carrier may originate from a pure Let.
+                    # Keep padding lanes' prior state when no mutable slot exists.
+                    pred = (f'@{self.inactive[-1]} '
+                            if self.values[s.name][1] == 'pred' and self.inactive else '')
+                    self.emit(f'{pred}mov.{self.values[s.name][1]} {old}, {self.value(s.name)};')
                 self.values[s.name] = (old, self.values[s.name][1])
                 self.mutable[s.name] = old
                 self.rebind(s.name)
             elif kind in ('StridedLoop', 'Loop'):
-                # Seeds apply to accumulators owned immediately by this loop.
-                # Nested reductions seed themselves when their loop is entered.
-                if s.seed:
-                    self.init_accums(s.body)
-                r = self.reg('r')
-                start, step, end = ('0', '1', str(static(s.axis.extent)))
-                if kind == 'StridedLoop':
-                    start, _ = self.expr(s.start)
-                    step, _ = self.expr(s.step)
-                    if s.end is not None:
-                        end, _ = self.expr(s.end)
-                self.emit(f'mov.s32 {r}, {start};')
-                self.values[s.axis.name] = (r, 'i32')
-                self.rebind(s.axis.name)
-                self.hoist_invariants(s.body, defined_names(s.body) | {s.axis.name})
-                begin, done = self.label('loop'), self.label('loop_done')
-                self.mark(begin)
-                p = self.reg('p')
-                self.emit(f'setp.ge.s32 {p}, {r}, {end};')
-                self.emit(f'@{p} bra {done};')
-                self.statements(s.body)
-                self.emit(f'add.s32 {r}, {r}, {step};')
-                self.rebind(s.axis.name)
-                self.emit(f'bra {begin};')
-                self.mark(done)
-                self.loop_invariants.pop()
-                self.loop_expressions.pop()
+                previous_axis = self.values.get(s.axis.name)
+                previous_invariant_depth = len(self.loop_invariants)
+                previous_expression_depth = len(self.loop_expressions)
+                try:
+                    # Seeds apply to accumulators owned immediately by this loop.
+                    # Nested reductions seed themselves when their loop is entered.
+                    if s.seed:
+                        self.init_accums(s.body)
+                        body = list(s.body)
+                        fixed, removed = {}, set()
+                        online = (self.normalized_softmax_plans(s)
+                                  if kind == 'Loop' and not self.inactive else [])
+                        for fold, x, gn, dg, alpha, _ in online:
+                            removed.add(id(fold))
+                            fixed[id(gn)] = lambda vn, gn=gn, x=x: [(gn.name, ('maxof', vn(x)))]
+                            fixed[id(dg)] = lambda vn, dg=dg: [(dg.name, ('const', 0.0))]
+                            if alpha is not None:
+                                fixed[id(alpha)] = lambda vn, alpha=alpha: [(alpha.name, ('const', 1.0))]
+                        skip, record, carried = loop_value_numbering(
+                            [x for x in body if id(x) not in removed], set(self.hoisted), fixed)
+                        self.vn_skip.update(skip)
+                        self.vn_record.update(record)
+                        for name, rep in carried.items():
+                            self.values[name] = self.values[rep]
+                            self.mutable[name] = self.mutable[rep]
+                        if online:
+                            self.two_pass_softmax(s, online)
+                    loop_init_frame = self.init_scope_frame(s.body)
+                    extent = static(s.axis.extent)
+                    if kind == 'StridedLoop':
+                        _sv_stride = static_or_none(s.step)
+                        _sv_bound = static_or_none(s.end if s.end is not None else s.axis.extent)
+                        if (_sv_stride is not None and _sv_stride > 0 and _sv_bound is not None
+                                and self.strided_vector_plan(s, _sv_stride, _sv_bound) is not None):
+                            pass
+                        elif self.serial_read_pipeline(s):
+                            continue
+                    if kind == 'Loop' and self.ordered_key_batch(s):
+                        # KEY replays this loop body without the generic wrapper.
+                        # Child dot seeds are body-local even on that route.
+                        self.restore_init_scope(loop_init_frame)
+                        continue
+                    if kind == 'Loop' and self.global_dot_vector_loop(s, loop_init_frame):
+                        continue
+                    if (kind == 'Loop' and 8 <= extent <= I32_MAX and self.shared_compute_body(s)
+                            and self.vector_load_plan(s) is None):
+                        self.vector_loops += 1
+                        factor = 8
+                        vector_plan = self.shared_vector_plan(s)
+                        limit = extent - extent % factor
+                        r = self.reg('r')
+                        self.emit(f'mov.s32 {r}, 0;')
+                        self.set_integer_range(r, checked_i32_interval(0, limit - factor))
+                        self.values[s.axis.name] = (r, 'i32')
+                        self.rebind(s.axis.name)
+                        # Preserve the existing pure-index hoist proof and its
+                        # scoped frames. No body-defined name or axis is invariant.
+                        self.hoist_invariants(s.body, defined_names(s.body) | {s.axis.name})
+                        begin, done = self.label('unroll_loop'), self.label('unroll_done')
+                        self.mark(begin)
+                        p = self.reg('p')
+                        self.emit(f'setp.ge.s32 {p}, {r}, {limit};')
+                        self.emit(f'@{p} bra {done};')
+                        for offset in range(factor):
+                            axis = r
+                            if offset:
+                                axis = self.reg('r')
+                                self.emit(f'add.s32 {axis}, {r}, {offset};')
+                                self.set_integer_range(axis, checked_i32_interval(offset, limit - factor + offset))
+                            self.values[s.axis.name] = (axis, 'i32')
+                            self.rebind(s.axis.name)
+                            if offset % 4 == 0:
+                                prefetched = self.shared_vector_prefetch(vector_plan)
+                            bindings = {position: registers[offset % 4]
+                                        for position, registers in prefetched.items()}
+                            self.statements_with_init_scope(s.body, loop_init_frame, bindings)
+                        self.emit(f'add.s32 {r}, {r}, {factor};')
+                        self.rebind(s.axis.name)
+                        self.emit(f'bra {begin};')
+                        self.mark(done)
+                        self.set_integer_range(r, checked_i32_interval(limit, limit))
+                        for coordinate in range(limit, extent):
+                            self.values[s.axis.name] = (str(coordinate), 'i32')
+                            self.rebind(s.axis.name)
+                            self.statements_with_init_scope(s.body, loop_init_frame)
+                        self.emit(f'mov.s32 {r}, {extent};')
+                        self.set_integer_range(r, checked_i32_interval(extent, extent))
+                        continue
+                    r = self.reg('r')
+                    start, step, end = ('0', '1', str(static(s.axis.extent)))
+                    live_step, step_header_values = False, None
+                    if kind == 'StridedLoop':
+                        end_names = set(s.end.free_vars()) if s.end is not None else set()
+                        if s.axis.name in end_names:
+                            raise Unsupported('StridedLoop end header scope for its induction axis is unsupported')
+                        step_names = set(s.step.free_vars())
+                        live_step = bool(step_names & (defined_names(s.body) | {s.axis.name}))
+                        start, _ = self.expr(s.start)
+                        if not live_step:
+                            step, _ = self.expr(s.step)
+                        if s.end is not None:
+                            end, end_dtype = self.expr(s.end)
+                            if end_names & (defined_names(s.body) | {s.axis.name}):
+                                # The header captures its bound once, even when a
+                                # collective later overwrites the source carrier.
+                                end, _ = self.convert_operand(end, end_dtype, 'i32')
+                        if live_step:
+                            # Capture lexical bindings, not runtime values. Outer carried
+                            # registers remain live across body updates and skipped paths.
+                            step_header_values = dict(self.values)
+                    self.emit(f'mov.s32 {r}, {start};')
+                    # Private plain induction cannot wrap before exit. A body
+                    # that writes its axis (including a collective carrier) is
+                    # conservatively left without a persistent induction fact.
+                    if kind == 'Loop' and s.axis.name not in defined_names(s.body) and 0 < extent <= I32_MAX:
+                        self.set_integer_range(r, checked_i32_interval(0, extent - 1))
+                    elif kind == 'StridedLoop' and s.axis.name not in defined_names(s.body):
+                        # Only immutable typed-I32 constants establish this fact.
+                        # The final add also stays signed32: the loop cannot wrap
+                        # back into its body after the first exit comparison.
+                        def i32_constant(expression):
+                            if (type(expression).__name__ == 'Literal'
+                                    and isinstance(expression.value, (bool, int))
+                                    and expression.dtype in ('int', 'bool', 'i32')
+                                    and I32_MIN <= int(expression.value) <= I32_MAX):
+                                return int(expression.value)
+                            return None
+                        lo, stride = i32_constant(s.start), i32_constant(s.step)
+                        hi = extent if s.end is None else i32_constant(s.end)
+                        if (lo is not None and stride is not None and hi is not None
+                                and 0 <= lo < hi <= I32_MAX and stride > 0
+                                and hi - 1 + stride <= I32_MAX):
+                            self.set_integer_range(r, checked_i32_interval(lo, hi - 1))
+                    self.values[s.axis.name] = (r, 'i32')
+                    self.rebind(s.axis.name)
+                    vector = self.vector_load_plan(s) if kind == 'Loop' else None
+                    if vector is not None:
+                        self.vector_loops += 1
+                        # Strength reduction: each group's address at axis = 0
+                        # (the induction register's value here) is loop-invariant.
+                        # Computed before hoisting so the groups share invariant
+                        # subexpressions through the expression cache.
+                        bases = {}
+                        for key, (stmt, _, step) in vector[1].items():
+                            addr, space = self.address(stmt.input, stmt.index)
+                            base = self.reg('rd')
+                            self.emit(f'mov.u64 {base}, {addr};')
+                            bases[key] = (base, space, step)
+                        vector = (vector[0], bases)
+                    self.hoist_invariants(s.body, defined_names(s.body) | {s.axis.name})
+                    begin, done = self.label('loop'), self.label('loop_done')
+                    if kind == 'StridedLoop' and not live_step:
+                        self.strided_main_loop(s, r, step, end)
+                    self.mark(begin)
+                    p = self.reg('p')
+                    self.emit(f'setp.ge.s32 {p}, {r}, {end};')
+                    self.emit(f'@{p} bra {done};')
+                    if vector is None:
+                        self.statements_with_init_scope(s.body, loop_init_frame)
+                    else:
+                        self.vector_unrolled_body(s, r, vector)
+                        step = str(VECTOR_UNROLL)
+                    if live_step:
+                        step, _ = self.live_loop_step(s.step, step_header_values, s.axis.name, r)
+                    self.emit(f'add.s32 {r}, {r}, {step};')
+                    self.rebind(s.axis.name)
+                    self.emit(f'bra {begin};')
+                    self.mark(done)
+                    self.loop_invariants.pop()
+                    self.loop_expressions.pop()
+                finally:
+                    # Loop induction names are lexical, including empty loops and shadowed Tile axes.
+                    # Preserve data/mutable facts computed by the body; only the axis binding is restored.
+                    del self.loop_invariants[previous_invariant_depth:]
+                    del self.loop_expressions[previous_expression_depth:]
+                    if previous_axis is None:
+                        self.values.pop(s.axis.name, None)
+                    else:
+                        self.values[s.axis.name] = previous_axis
+                    self.rebind(s.axis.name)
             elif kind == 'WarpShuffle':
                 if s.length > 32 or s.length <= 0 or s.length & (s.length-1):
                     raise Unsupported('Shuffle width must be a power of two <=32')
                 dtype = dtype_name(s.dtype) if s.dtype is not None else 'f32'
                 if dtype not in ('f32', 'i32', 'u32'):
                     raise Unsupported(f'Shuffle dtype {dtype} needs a 64-bit shuffle')
-                mask = self.reg('r')
-                self.emit(f'activemask.b32 {mask};')
-                offset = s.length // 2
-                while offset:
-                    prior = {name: self.values[name] for name in s.state}
-                    for a, b in zip(s.state, s.state_b, strict=True):
-                        r = self.reg(reg_suffix(dtype))
-                        self.emit(f'shfl.sync.bfly.b32 {r}, {self.value(a)}, {offset}, 31, {mask};')
-                        self.values[b] = (r, dtype)
-                    # The shuffle source is undefined when this lane's XOR
-                    # partner is absent from activemask. Compute the merge
-                    # unconditionally, then select the lane's prior state back
-                    # when the peer is absent. The per-lane test is exact for a
-                    # partial warp and for sparse masks, unlike assuming that
-                    # active lanes always form a prefix. Selecting after the
-                    # merge ensures the carried register is defined on both
-                    # paths for the next shuffle step.
-                    partner = self.reg('r')
-                    bit = self.reg('r')
-                    peer_active = self.reg('p')
-                    self.emit(f'xor.b32 {partner}, {self.value("lane")}, {offset};')
-                    self.emit(f'shr.u32 {bit}, {mask}, {partner};')
-                    self.emit(f'and.b32 {bit}, {bit}, 1;')
-                    self.emit(f'setp.ne.u32 {peer_active}, {bit}, 0;')
-                    self.statements(s.combine_states)
-                    for name in s.state:
-                        merged, merged_type = self.values[name]
-                        before, before_type = prior[name]
-                        if merged_type != before_type:
-                            raise Unsupported('Shuffle combine changed the state dtype')
-                        kept = self.reg(reg_suffix(merged_type))
-                        self.emit(f'selp.{select_type(merged_type)} {kept}, {merged}, '
-                                  f'{before}, {peer_active};')
-                        self.values[name] = (kept, merged_type)
-                    offset //= 2
+                if self.block_threads % s.length:
+                    raise Unsupported('Shuffle requires complete physical subgroups')
+                # Collective state is updated in place, including across skipped
+                # enclosing Cond/Loop paths. Capture before padding can allocate.
+                carried_values = {name: self.values[name] for name in s.state}
+                saved_inactive = self.inactive
+                if saved_inactive:
+                    self.pad_partial_shuffle(s, saved_inactive[-1])
+                    for name, (stable, original_type) in carried_values.items():
+                        padded, padded_type = self.values[name]
+                        if padded_type != original_type:
+                            raise Unsupported('Shuffle padding changed the state dtype')
+                        if padded != stable:
+                            self.emit(f'mov.{select_type(original_type)} {stable}, {padded};')
+                        self.values[name] = (stable, original_type)
+                        if name in self.mutable:
+                            self.mutable[name] = stable
+                        if original_type == 'i32':
+                            self.set_integer_range(stable, None)
+                        self.rebind(name)
+                    self.inactive = []
+                try:
+                    mask = self.reg('r')
+                    self.emit(f'activemask.b32 {mask};')
+                    offset = s.length // 2
+                    while offset:
+                        # A mutable Assign in the combine may overwrite its
+                        # carrier. Preserve the absent-peer fallback beforehand.
+                        prior = {name: self.convert_operand(*self.values[name],
+                                                          self.values[name][1])
+                                 for name in s.state}
+                        for a, b in zip(s.state, s.state_b, strict=True):
+                            r = self.reg(reg_suffix(dtype))
+                            self.emit(f'shfl.sync.bfly.b32 {r}, {self.value(a)}, {offset}, 31, {mask};')
+                            self.values[b] = (r, dtype)
+                        # The shuffle source is undefined when this lane's XOR
+                        # partner is absent from activemask. Compute the merge
+                        # unconditionally, then select the lane's prior state back
+                        # when the peer is absent. The per-lane test is exact for a
+                        # partial warp and for sparse masks, unlike assuming that
+                        # active lanes always form a prefix. Selecting after the
+                        # merge ensures the carried register is defined on both
+                        # paths for the next shuffle step.
+                        partner = self.reg('r')
+                        bit = self.reg('r')
+                        peer_active = self.reg('p')
+                        self.emit(f'xor.b32 {partner}, {self.hardware_lane}, {offset};')
+                        self.emit(f'shr.u32 {bit}, {mask}, {partner};')
+                        self.emit(f'and.b32 {bit}, {bit}, 1;')
+                        self.emit(f'setp.ne.u32 {peer_active}, {bit}, 0;')
+                        self.statements(s.combine_states)
+                        for name in s.state:
+                            merged, merged_type = self.values[name]
+                            before, before_type = prior[name]
+                            if merged_type != before_type:
+                                raise Unsupported('Shuffle combine changed the state dtype')
+                            stable, original_type = carried_values[name]
+                            if merged_type != original_type:
+                                raise Unsupported('Shuffle changed the carrier dtype')
+                            self.emit(f'selp.{select_type(merged_type)} {stable}, {merged}, '
+                                      f'{before}, {peer_active};')
+                            self.values[name] = (stable, merged_type)
+                            if name in self.mutable:
+                                self.mutable[name] = stable
+                            if merged_type == 'i32':
+                                self.set_integer_range(stable, None)
+                            self.rebind(name)
+                        offset //= 2
+                finally:
+                    self.inactive = saved_inactive
             elif kind == 'Smem':
                 # Layout, buffer registration, and the PTX declaration are
                 # emitted once by the initialization scan. Declaration order
@@ -1749,15 +4993,19 @@ class Emitter:
                 outer_mutable = dict(self.mutable)
                 otherwise, done = self.label('else'), self.label('endif')
                 self.emit(f'@!{p} bra {otherwise};')
-                self.statements(s.body)
+                self.statements_with_init_scope(s.body, self.init_scope_frame(s.body))
                 self.values = dict(outer_values)
                 self.mutable = dict(outer_mutable)
+                self.address_cache.clear()
+                self.expr_cache.clear()
                 self.emit(f'bra {done};')
                 self.mark(otherwise)
-                self.statements(s.else_body)
+                self.statements_with_init_scope(s.else_body, self.init_scope_frame(s.else_body))
                 self.mark(done)
                 self.values = dict(outer_values)
                 self.mutable = dict(outer_mutable)
+                self.address_cache.clear()
+                self.expr_cache.clear()
                 for name, register in outer_mutable.items():
                     if name in self.values:
                         self.values[name] = (register, self.values[name][1])
@@ -1771,72 +5019,106 @@ class Emitter:
                 else:
                     self.emit(f'bar.sync {s.barrier_id};')
             elif kind == 'TreeHalve':
-                if s.length <= 0 or s.length & (s.length-1):
-                    raise Unsupported('Unsupported shared tree configuration')
-                if len(s.bufs) != len(s.state) or len(s.state) != len(s.state_b) or not s.combine_states:
-                    raise Unsupported('Tree state, buffer, and combine arity differ')
-                if s.tid_var != 'warp':
-                    raise Unsupported('Only warp-indexed TreeHalve is supported')
-                if s.barrier_id != 0 and s.barrier_count is None:
-                    raise Unsupported('Named TreeHalve barrier requires a thread count')
-                if s.inner is not None:
-                    inner_var, inner_scale = s.inner
-                    if inner_scale <= 0 or inner_var not in self.values:
-                        raise Unsupported('Invalid TreeHalve inner segment')
-                    from emmy.compiler.ir.expr import BinaryExpr, Literal, Var
-                    inner_expr = Var(inner_var)
-                    def tree_index(offset):
-                        segment = Var(s.tid_var) if offset == 0 else BinaryExpr('+', Var(s.tid_var), Literal(offset, 'int'))
-                        return BinaryExpr('+', BinaryExpr('*', segment, Literal(inner_scale, 'int')),
-                                          inner_expr)
-                    root_index = inner_expr
-                else:
-                    from emmy.compiler.ir.expr import BinaryExpr, Literal, Var
-                    def tree_index(offset):
-                        return Var(s.tid_var) if offset == 0 else BinaryExpr('+', Var(s.tid_var), Literal(offset, 'int'))
-                    root_index = Literal(0, 'int')
-                # Emmy stores from every participating tree thread. A lane-0
-                # guard here would publish only one slot per warp and silently
-                # drop the other warp partials for a non-unit tree.
-                size = s.length // 2
-                while size:
-                    p = self.reg('p')
-                    self.emit(f'setp.lt.s32 {p}, {self.value(s.tid_var)}, {size};')
-                    skip = self.label('tree_skip')
-                    self.emit(f'@!{p} bra {skip};')
-                    for buf, a, b in zip(s.bufs, s.state, s.state_b, strict=True):
-                        from emmy.compiler.ir.expr import Var, BinaryExpr, Literal
-                        addr, _ = self.address(buf, (tree_index(0),))
-                        dtype = dtype_name(self.buffers[buf][1])
-                        ar = self.reg(reg_suffix(dtype))
-                        self.emit(f'ld.shared.{dtype_info(dtype)[1]} {ar}, [{addr}];')
-                        self.values[a] = (ar, dtype)
-                        addr2, _ = self.address(buf, (tree_index(size),))
-                        br = self.reg(reg_suffix(dtype))
-                        self.emit(f'ld.shared.{dtype_info(dtype)[1]} {br}, [{addr2}];')
-                        self.values[b] = (br, dtype)
-                    self.statements(s.combine_states)
-                    for buf, a in zip(s.bufs, s.state, strict=True):
-                        addr, _ = self.address(buf, (tree_index(0),))
-                        dtype = dtype_name(self.buffers[buf][1])
-                        self.emit(f'st.shared.{dtype_info(dtype)[1]} [{addr}], {self.value(a)};')
-                    self.mark(skip)
-                    if s.barrier_id != 0:
-                        self.emit(f'bar.sync {s.barrier_id}, {s.barrier_count};')
+                saved_tree_inactive = self.inactive
+                if saved_tree_inactive:
+                    self.validate_partial_tree(s)
+                    self.inactive = []
+                try:
+                    if s.length <= 0 or s.length & (s.length-1):
+                        raise Unsupported('Unsupported shared tree configuration')
+                    if len(s.bufs) != len(s.state) or len(s.state) != len(s.state_b) or not s.combine_states:
+                        raise Unsupported('Tree state, buffer, and combine arity differ')
+                    if s.tid_var != 'warp':
+                        raise Unsupported('Only warp-indexed TreeHalve is supported')
+                    if s.barrier_id != 0 and s.barrier_count is None:
+                        raise Unsupported('Named TreeHalve barrier requires a thread count')
+                    if s.inner is not None:
+                        inner_var, inner_scale = s.inner
+                        if inner_scale <= 0 or inner_var not in self.values:
+                            raise Unsupported('Invalid TreeHalve inner segment')
+                        from emmy.compiler.ir.expr import BinaryExpr, Literal, Var
+                        inner_expr = Var(inner_var)
+                        def tree_index(offset):
+                            segment = Var(s.tid_var) if offset == 0 else BinaryExpr('+', Var(s.tid_var), Literal(offset, 'int'))
+                            return BinaryExpr('+', BinaryExpr('*', segment, Literal(inner_scale, 'int')),
+                                              inner_expr)
+                        root_index = inner_expr
                     else:
-                        self.emit('bar.sync 0;')
-                    size //= 2
-                for buf, a in zip(s.bufs, s.state, strict=True):
-                    from emmy.compiler.ir.expr import Literal
-                    addr, _ = self.address(buf, (root_index,))
-                    dtype = dtype_name(self.buffers[buf][1])
-                    r = self.reg(reg_suffix(dtype))
-                    self.emit(f'ld.shared.{dtype_info(dtype)[1]} {r}, [{addr}];')
-                    self.values[a] = (r, dtype)
+                        from emmy.compiler.ir.expr import BinaryExpr, Literal, Var
+                        def tree_index(offset):
+                            return Var(s.tid_var) if offset == 0 else BinaryExpr('+', Var(s.tid_var), Literal(offset, 'int'))
+                        root_index = Literal(0, 'int')
+                    # An enclosing mutable carrier must survive skipped control flow.
+                    carried_values = {a: self.values.get(a) for a in s.state}
+                    # Emmy stores from every participating tree thread. A lane-0
+                    # guard here would publish only one slot per warp and silently
+                    # drop the other warp partials for a non-unit tree.
+                    size = s.length // 2
+                    while size:
+                        p = self.reg('p')
+                        self.emit(f'setp.lt.s32 {p}, {self.value(s.tid_var)}, {size};')
+                        skip = self.label('tree_skip')
+                        self.emit(f'@!{p} bra {skip};')
+                        for buf, a, b in zip(s.bufs, s.state, s.state_b, strict=True):
+                            from emmy.compiler.ir.expr import Var, BinaryExpr, Literal
+                            addr, _ = self.address(buf, (tree_index(0),))
+                            dtype = dtype_name(self.buffers[buf][1])
+                            ar = self.reg(reg_suffix(dtype))
+                            self.emit(f'ld.shared.{dtype_info(dtype)[1]} {ar}, [{addr}];')
+                            self.values[a] = (ar, dtype)
+                            addr2, _ = self.address(buf, (tree_index(size),))
+                            br = self.reg(reg_suffix(dtype))
+                            self.emit(f'ld.shared.{dtype_info(dtype)[1]} {br}, [{addr2}];')
+                            self.values[b] = (br, dtype)
+                        self.statements(s.combine_states)
+                        for buf, a in zip(s.bufs, s.state, strict=True):
+                            addr, _ = self.address(buf, (tree_index(0),))
+                            dtype = dtype_name(self.buffers[buf][1])
+                            predication = ''
+                            if saved_tree_inactive and s.inner is None:
+                                writer = self.reg('p')
+                                self.emit(f'setp.eq.s32 {writer}, {self.hardware_lane}, 0;')
+                                predication = f'@{writer} '
+                            self.emit(f'{predication}st.shared.{dtype_info(dtype)[1]} [{addr}], {self.value(a)};')
+                        self.mark(skip)
+                        if s.barrier_id != 0:
+                            self.emit(f'bar.sync {s.barrier_id}, {s.barrier_count};')
+                        else:
+                            self.emit('bar.sync 0;')
+                        size //= 2
+                    for buf, a in zip(s.bufs, s.state, strict=True):
+                        from emmy.compiler.ir.expr import Literal
+                        addr, _ = self.address(buf, (root_index,))
+                        dtype = dtype_name(self.buffers[buf][1])
+                        carried = carried_values[a]
+                        if carried is None:
+                            r = self.reg(reg_suffix(dtype))
+                        else:
+                            r, carried_dtype = carried
+                            if carried_dtype != dtype:
+                                raise Unsupported('Tree carrier and shared buffer dtypes differ')
+                        self.emit(f'ld.shared.{dtype_info(dtype)[1]} {r}, [{addr}];')
+                        if dtype == 'i32':
+                            self.set_integer_range(r, None)
+                        self.values[a] = (r, dtype)
+                        if a in self.mutable:
+                            self.mutable[a] = r
+                        self.rebind(a)
+                finally:
+                    self.inactive = saved_tree_inactive
             else:
                 raise Unsupported(f'Unsupported statement {kind}')
+        for name, key in pending:
+            self.vn_registers[key] = self.values[name]
+
 
     def render(self):
+        self.serial_read_plans = self.find_serial_read_plans(self.node.op.body)
+        self.global_dot_alignments = {}
+        self.global_dot_prologue_end = len(self.lines)
+        self.key_batches = self.find_key_batches(self.node.op.body)
+        self.global_dot_candidates = {id(dot) for plan in self.key_batches.values()
+                                      for dot in plan[1]}
         self.statements(self.node.op.body)
         by_name = {arg['name']: arg for arg in self.meta['args']}
         params = []
@@ -1848,7 +5130,11 @@ class Emitter:
             params.append(f'    .param .{phys} param_{i}')
         decl = [f'    .reg .{suffix} %{kind}<{self.counts[kind]+1}>;' for kind,suffix in [('r','b32'),('rh','b16'),('rd','b64'),('f','f32'),('fd','f64'),('p','pred')]]
         decl += ['    '+x for x in self.declarations]
-        return '\n'.join(['.version 8.0', '.target sm_89', '.address_size 64', '', *self.externals, f'.visible .entry {ident(self.node.op.name)}(', ',\n'.join(params), ')', '{', *decl, *self.lines, 'kernel_done:', '    ret;', '}', ''])
+        # The metadata block shape is the launch contract. Declaring it lets
+        # ptxas budget registers for the real thread count instead of the
+        # 1024-thread worst case (a 64-register cap).
+        bounds = '.maxntid ' + ', '.join(str(int(x)) for x in self.meta['block'])
+        return '\n'.join(['.version 8.0', '.target sm_89', '.address_size 64', '', *self.externals, f'.visible .entry {ident(self.node.op.name)}(', ',\n'.join(params), ')', bounds, '{', *decl, *self.lines, 'kernel_done:', '    ret;', '}', ''])
 
 
 def compile_path(path):
@@ -1872,7 +5158,35 @@ def compile_path(path):
         raise Unsupported('Expected exactly one metadata kernel matching node and entry')
     if len(set(matches[0]['arg_order'])) != len(matches[0]['arg_order']):
         raise Unsupported('Duplicate argument names in metadata')
-    return Emitter(graph, node, matches[0]).render()
+    # A SIMT reduction loop whose shared operands lower to strength-reduced
+    # vector loads computes in exact fp32 and, on the RTX 5090, beat the
+    # three-term TF32 path on m01 (17.0 vs 21.1 us); prefer it outright.
+    simt = Emitter(graph, node, matches[0])
+    simt_ptx = simt.render()
+    if simt.vector_loops:
+        return simt_ptx
+    # The tensor-core path is fail-closed: only an independently validated
+    # one-atom plan bypasses the existing SIMT emitter.  Every other typed
+    # region retains the scoped SIMT lowering.
+    try:
+        import tensor_core
+        from tf32_emitter import production_ptx
+        decision = tensor_core.classify(graph, node, matches[0])
+        if (decision.verdict == tensor_core.PLAN and decision.plan is not None
+                and decision.plan.staging in ('global', 'shared', 'pipeline')):
+            try:
+                return production_ptx(decision.plan, matches[0], node=node, graph=graph)
+            except Exception as exc:
+                # A plan is an optimization, never a correctness dependency.
+                # Any emitter rejection falls back to the untouched SIMT path.
+                print(f'compile.py: tensor-core emitter fallback: '
+                      f'{type(exc).__name__}: {exc}', file=sys.stderr)
+                return simt_ptx
+    except (ImportError, ValueError, KeyError, TypeError, AttributeError,
+            IndexError, ArithmeticError) as exc:
+        print(f'compile.py: tensor-core fallback: {type(exc).__name__}: {exc}',
+              file=sys.stderr)
+    return simt_ptx
 
 
 def main():

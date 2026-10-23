@@ -1,0 +1,388 @@
+{
+  "verdict": "APPROVE actualselected-vector fresh8 independent reference draw beforeGPU",
+  "source_id": "549b6047f91818ea876deb76adfc88cabc36f554c05ab2bc51b2c961aa9143f2",
+  "compile_sha256": "f47c21b0bb2818df21cd218573cd3cd1231f87955ee78c43a779f5b0be6ebac0",
+  "selection_artifact_id": "2f17b1460e1c6ff76afcd74d4bd53682f7f1e64facfa37b9584d4e84bf108dd5",
+  "immutablechoice_source_oracle_content_hashes_verified": true,
+  "choice_before_freeze_reserve_derive_draw": {
+    "selected": 1792722475.3818812,
+    "frozen": 1792722497.046825,
+    "reserved": 1792722497.1371744,
+    "groups": {
+      "bounded": {
+        "derived_before_generation": 1792722497.6686244,
+        "generated_at": 1792722499.1753945
+      },
+      "order": {
+        "derived_before_generation": 1792722499.277427,
+        "generated_at": 1792722500.9458444
+      },
+      "partition": {
+        "derived_before_generation": 1792722501.0851002,
+        "generated_at": 1792722502.2535384
+      }
+    }
+  },
+  "actual_liveexperiment_frozenmanifest_reservation_equal_draw": true,
+  "reservation": {
+    "id": "61fd828c21bf594154c940d29038b9a25e4a4b4f30db1f9dc4c4ee6fd5668c08",
+    "reserved_at": 1792722497.1371744,
+    "seed": 332056245368918470233647391243861658925,
+    "source_id": "549b6047f91818ea876deb76adfc88cabc36f554c05ab2bc51b2c961aa9143f2",
+    "suite_id": "0fa85c2e98ef65616058b558c1008d80f0f3530ae13cfdf276774050f8a2d5ce"
+  },
+  "draw_manifest_sha256": "d8566e594c9defbe290442f26b669af0455b67b9350d2e0ac45d93a7c36092a0",
+  "case_count": 8,
+  "expected_F64_cast_words": 1542,
+  "all_words_bitwise_match_independent_denseF64cast": true,
+  "independent_Pythonfsum_max_abs": 2.8017614117636924e-08,
+  "serialF32_originalD_KEY_order_controls_pass": true,
+  "D_reassociation_negative_controls_fail": [
+    {
+      "case_id": "02d4159571da7f0cc142693dc65e3c36f177e1f5cb619fb7833f0c42bd10df8e",
+      "max_abs": 0.10541082918643951
+    },
+    {
+      "case_id": "f8257ec740c225609dc5e08babff4d4708d6c349f7f1d0ef3dc631d2460c7eb5",
+      "max_abs": 0.0650162547826767
+    }
+  ],
+  "wrong_query_negative_controls_fail": [
+    {
+      "case_id": "c974ec730c3e361d5a62608aa954478a6cea10d6f9183d7f03bd9f45a6a125c8",
+      "max_abs": 0.006187349557876587
+    },
+    {
+      "case_id": "e42462914470b170c8821353f22256bf989c43c7b7312374f56169d5574e72d4",
+      "max_abs": 0.0074010128155350685
+    }
+  ],
+  "typedIR_ABI_coverage_tail_andallcasefilehashes_checked": true,
+  "fixed_tolerances": {
+    "rtol": 0.001,
+    "atol": 0.0001
+  },
+  "prior_known_lists_checked": 62,
+  "prior_known_unique_caseIDs": 206,
+  "priorlists": [
+    "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/async-oracle-validation-112233/case-list.json",
+    "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/async-screen/case-list.json",
+    "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/attention-bounded-independent/case-list.json",
+    "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/attention-bounded-screen/case-list.json",
+    "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/attention-full-tail-independent/case-list.json",
+    "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/attention-order-independent/case-list.json",
+    "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/attention-order-screen/case-list.json",
+    "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/bug-independent/case-list.json",
+    "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/bug-screen/case-list.json",
+    "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/carrier-screen/case-list.json",
+    "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/carrier-v2-independent/case-list.json",
+    "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/carrier-v2-screen/case-list.json",
+    "/root/nfs/emmy/research/regression-suites/compact-v2/case-list.json",
+    "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/dot-common-guard-retained-v1-screen-bounded/case-list.json",
+    "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/dot-common-guard-retained-v1-screen-order/case-list.json",
+    "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/dot-common-guard-retained-v1-screen-partition/case-list.json",
+    "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/dot-vector4-retained-v2-screen-bounded/case-list.json",
+    "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/dot-vector4-retained-v2-screen-order/case-list.json",
+    "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/dot-vector4-retained-v2-screen-partition/case-list.json",
+    "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/erf-small-oracle-validation-884271/case-list.json",
+    "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/erf-small-independent-v1/case-list.json",
+    "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/dot-vector4-erf-scope-screen-v1-bounded/case-list.json",
+    "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/dot-vector4-erf-scope-screen-v1-order/case-list.json",
+    "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/dot-vector4-erf-scope-screen-v1-partition/case-list.json",
+    "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/exact-tree-oracle-validation-557733/case-list.json",
+    "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/dot-vector4-retained-independent-v1-bounded/case-list.json",
+    "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/dot-vector4-retained-independent-v1-order/case-list.json",
+    "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/dot-vector4-retained-independent-v1-partition/case-list.json",
+    "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/mixed-f16-oracle-validation-773941/case-list.json",
+    "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/nested-key-scope-oracle-validation-710331/case-list.json",
+    "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/nested-key-scope-independent-v2/case-list.json",
+    "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/nested-seeded-fold-oracle-validation-901127/case-list.json",
+    "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/nested-seeded-fold-independent-v2/case-list.json",
+    "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/nested-seeded-fold-independent-v1/case-list.json",
+    "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/opaque-independent/case-list.json",
+    "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/opaque-screen/case-list.json",
+    "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/partial-uniform-independent-v3/case-list.json",
+    "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/partial-uniform-oracle-validation-667788/case-list.json",
+    "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/prefetch8-independent-v1/case-list.json",
+    "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/prefetch8-screen-v1/case-list.json",
+    "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/key-private-q32-erf-vector-screen-v1-bounded/case-list.json",
+    "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/key-private-q32-erf-vector-screen-v1-order/case-list.json",
+    "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/key-private-q32-erf-vector-screen-v1-partition/case-list.json",
+    "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/recurrence-oracle-validation-314159/case-list.json",
+    "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/recurrence-partition-oracle-validation-271828/case-list.json",
+    "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/recurrence-partition-screen/case-list.json",
+    "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/scalar-bool-oracle-validation-778899/case-list.json",
+    "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/scalar-bool-v2-independent-v1/case-list.json",
+    "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/scalar-bool-v2-oracle-validation-884411/case-list.json",
+    "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/select-independent/case-list.json",
+    "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/select-oracle-validation-13579/case-list.json",
+    "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/shared-pair-oracle-validation-560123/case-list.json",
+    "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/softplus-tail-oracle-validation-665541/case-list.json",
+    "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/softplus-tail-independent-v1/case-list.json",
+    "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/dot-vector4-softplus-scope-screen-v1-bounded/case-list.json",
+    "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/dot-vector4-softplus-scope-screen-v1-order/case-list.json",
+    "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/dot-vector4-softplus-scope-screen-v1-partition/case-list.json",
+    "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/strided-per-lane-oracle-validation-445566/case-list.json",
+    "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/tile-init-independent/case-list.json",
+    "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/tile-init-rebased-screen/case-list.json",
+    "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/vector4-bounded-screen-v1/case-list.json",
+    "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/vector4-order-screen-v1/case-list.json"
+  ],
+  "all8IDs_and_numericbundles_disjointfrom_known62_including_currentQ_vectorscreen": true,
+  "rows": [
+    {
+      "case_id": "9cf1676e95dbfe4794bf8358d49d532b04fe39f92db5c909bcba9ee7d46598d9",
+      "path": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/attention-selected-erf-independent-v1-bounded/full-segment16",
+      "version": 3,
+      "shape": [
+        12,
+        7,
+        48,
+        16
+      ],
+      "fixed_tolerances": {
+        "rtol": 0.001,
+        "atol": 0.0001
+      },
+      "expected_elements_checked": 192,
+      "dense_F64_cast_matches_exact_bits": true,
+      "scalar_fsum_max_abs": 1.4817895688246097e-08,
+      "serial_F32_max_abs": 1.1920928955078125e-07,
+      "serial_control_passes": true,
+      "D_reassociated_max_abs": 1.1920928955078125e-07,
+      "D_reassociated_control_passes": true,
+      "KEY_activation_expected": true,
+      "key_seed_false_dot_seed_true": true,
+      "key_tail": 7,
+      "key_count_less_than_width": true,
+      "typed_graph_valid": true,
+      "numeric_input_identity": "fa210fec7f2bdd62d2c79ad7e1859b321955e29ba2cbb4263c23c6baf49da30f"
+    },
+    {
+      "case_id": "c99263904986dd31c5dd7e8a38489cd12ea9ab9c5bc80674f20aa2597f5d68d7",
+      "path": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/attention-selected-erf-independent-v1-bounded/full-segment32",
+      "version": 3,
+      "shape": [
+        2,
+        13,
+        32,
+        32
+      ],
+      "fixed_tolerances": {
+        "rtol": 0.001,
+        "atol": 0.0001
+      },
+      "expected_elements_checked": 64,
+      "dense_F64_cast_matches_exact_bits": true,
+      "scalar_fsum_max_abs": 1.4892361621665628e-08,
+      "serial_F32_max_abs": 5.960464477539063e-08,
+      "serial_control_passes": true,
+      "D_reassociated_max_abs": 7.450580596923828e-08,
+      "D_reassociated_control_passes": true,
+      "KEY_activation_expected": true,
+      "key_seed_false_dot_seed_true": true,
+      "key_tail": 13,
+      "key_count_less_than_width": true,
+      "typed_graph_valid": true,
+      "numeric_input_identity": "3228d5256e34b3c92f98bdafe5fafe62860877ec78e1186e763696a7d9ed0ceb"
+    },
+    {
+      "case_id": "b2ba82b45d470f88237b50a5c75ed7f230fcc91c1f7331b118018ea4f78718be",
+      "path": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/attention-selected-erf-independent-v1-bounded/partial-fallback",
+      "version": 3,
+      "shape": [
+        5,
+        3,
+        19,
+        7
+      ],
+      "fixed_tolerances": {
+        "rtol": 0.001,
+        "atol": 0.0001
+      },
+      "expected_elements_checked": 35,
+      "dense_F64_cast_matches_exact_bits": true,
+      "scalar_fsum_max_abs": 1.3856572445014592e-08,
+      "serial_F32_max_abs": 5.960464477539063e-08,
+      "serial_control_passes": true,
+      "D_reassociated_max_abs": null,
+      "D_reassociated_control_passes": null,
+      "KEY_activation_expected": false,
+      "key_seed_false_dot_seed_true": true,
+      "key_tail": 3,
+      "key_count_less_than_width": true,
+      "typed_graph_valid": true,
+      "numeric_input_identity": "8577150b970b96f4382fde89292b39e5e06c66fbf1728ab0b56aedc45658fc88"
+    },
+    {
+      "case_id": "02d4159571da7f0cc142693dc65e3c36f177e1f5cb619fb7833f0c42bd10df8e",
+      "path": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/attention-selected-erf-independent-v1-order/full-segment16",
+      "version": 4,
+      "shape": [
+        8,
+        3,
+        48,
+        16
+      ],
+      "fixed_tolerances": {
+        "rtol": 0.001,
+        "atol": 0.0001
+      },
+      "expected_elements_checked": 128,
+      "dense_F64_cast_matches_exact_bits": true,
+      "scalar_fsum_max_abs": 2.8017614117636924e-08,
+      "serial_F32_max_abs": 5.960464477539063e-08,
+      "serial_control_passes": true,
+      "D_reassociated_max_abs": 0.10541082918643951,
+      "D_reassociated_control_passes": false,
+      "KEY_activation_expected": true,
+      "key_seed_false_dot_seed_true": true,
+      "key_tail": 3,
+      "key_count_less_than_width": true,
+      "typed_graph_valid": true,
+      "numeric_input_identity": "647ba71e87ed428204507611a3a72b777b466fc0f4342fcd7cc024ccf2299d7a"
+    },
+    {
+      "case_id": "f8257ec740c225609dc5e08babff4d4708d6c349f7f1d0ef3dc631d2460c7eb5",
+      "path": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/attention-selected-erf-independent-v1-order/full-segment32",
+      "version": 4,
+      "shape": [
+        2,
+        13,
+        96,
+        32
+      ],
+      "fixed_tolerances": {
+        "rtol": 0.001,
+        "atol": 0.0001
+      },
+      "expected_elements_checked": 64,
+      "dense_F64_cast_matches_exact_bits": true,
+      "scalar_fsum_max_abs": 1.0758038015978855e-08,
+      "serial_F32_max_abs": 8.940696716308594e-08,
+      "serial_control_passes": true,
+      "D_reassociated_max_abs": 0.0650162547826767,
+      "D_reassociated_control_passes": false,
+      "KEY_activation_expected": true,
+      "key_seed_false_dot_seed_true": true,
+      "key_tail": 13,
+      "key_count_less_than_width": true,
+      "typed_graph_valid": true,
+      "numeric_input_identity": "39f5424ef70fb4d3c3b703bb511af437871074fc3f076ebb635dd940d467cbf2"
+    },
+    {
+      "case_id": "1e0918cfe4c0b80ff304f231d5f71e319bbad05c3b3ee53992f423f8605001a5",
+      "path": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/attention-selected-erf-independent-v1-order/partial-fallback",
+      "version": 4,
+      "shape": [
+        5,
+        13,
+        29,
+        7
+      ],
+      "fixed_tolerances": {
+        "rtol": 0.001,
+        "atol": 0.0001
+      },
+      "expected_elements_checked": 35,
+      "dense_F64_cast_matches_exact_bits": true,
+      "scalar_fsum_max_abs": 7.0340984981154264e-09,
+      "serial_F32_max_abs": 4.470348358154297e-08,
+      "serial_control_passes": true,
+      "D_reassociated_max_abs": null,
+      "D_reassociated_control_passes": null,
+      "KEY_activation_expected": false,
+      "key_seed_false_dot_seed_true": true,
+      "key_tail": 6,
+      "key_count_less_than_width": false,
+      "typed_graph_valid": true,
+      "numeric_input_identity": "54867f4736a09bdb71a66d963204b129e73d59ab1949bbad2eddb4d16ed7f329"
+    },
+    {
+      "case_id": "c974ec730c3e361d5a62608aa954478a6cea10d6f9183d7f03bd9f45a6a125c8",
+      "path": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/attention-selected-erf-independent-v1-partition/full-segment16",
+      "shape": [
+        24,
+        33,
+        48,
+        32
+      ],
+      "tile_width": 16,
+      "tile_rows": 12,
+      "arg_order": [
+        "q_622558",
+        "scale_938863",
+        "out_743261",
+        "v_963836",
+        "kt_340851"
+      ],
+      "all_four_quadrants_written_once": 768,
+      "dense_F64_expected_bits_checked": 768,
+      "scalar_fsum_max_abs": 7.433286514091364e-09,
+      "typed_terminal_reciprocal_serial_max_abs": 5.960464477539063e-08,
+      "finite_and_infinite_peak_seeds_same_bits": true,
+      "wrong_query_reuse_max_abs": 0.006187349557876587,
+      "wrong_query_reuse_exceeds_fixed_tolerance": true,
+      "expected_same_query_aliases_structural_only": {
+        "alpha0_1": "alpha0_0",
+        "alpha1_1": "alpha1_0",
+        "beta0_1": "beta0_0",
+        "beta1_1": "beta1_0",
+        "inv0_1": "inv0_0",
+        "inv1_1": "inv1_0"
+      },
+      "query_classes_separated": true,
+      "numerator_states_independent": true,
+      "numeric_input_identity": "abd8a5869e6145508993dee014fa665ed13877abc368d321c148b6b7cf65a0a2"
+    },
+    {
+      "case_id": "e42462914470b170c8821353f22256bf989c43c7b7312374f56169d5574e72d4",
+      "path": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/attention-selected-erf-independent-v1-partition/full-segment32",
+      "shape": [
+        4,
+        65,
+        160,
+        64
+      ],
+      "tile_width": 32,
+      "tile_rows": 2,
+      "arg_order": [
+        "kt_706747",
+        "v_911930",
+        "out_780683",
+        "q_197171",
+        "scale_334274"
+      ],
+      "all_four_quadrants_written_once": 256,
+      "dense_F64_expected_bits_checked": 256,
+      "scalar_fsum_max_abs": 7.088977155289555e-09,
+      "typed_terminal_reciprocal_serial_max_abs": 5.21540641784668e-08,
+      "finite_and_infinite_peak_seeds_same_bits": true,
+      "wrong_query_reuse_max_abs": 0.0074010128155350685,
+      "wrong_query_reuse_exceeds_fixed_tolerance": true,
+      "expected_same_query_aliases_structural_only": {
+        "alpha0_1": "alpha0_0",
+        "alpha1_1": "alpha1_0",
+        "beta0_1": "beta0_0",
+        "beta1_1": "beta1_0",
+        "inv0_1": "inv0_0",
+        "inv1_1": "inv1_0"
+      },
+      "query_classes_separated": true,
+      "numerator_states_independent": true,
+      "numeric_input_identity": "9d378d2a673bf311d9cf23c73ad689834f0a90abdfcba146b58f93abfc366780"
+    }
+  ],
+  "types_added": 0,
+  "generator_compiler_emitter_method_prep_GPU_calls": false,
+  "typedGraph_deserialization_validation_only": true,
+  "case_input_expected_oracle_source_evaluator_mutations": false,
+  "limits": [
+    "Independentmath/reference/typedcontractreview, no nativeactivation orGPU/timing assertion.",
+    "CPUF32 exp/div controls checkoriginalalgebra/order atfixedtols, notGPUapproximateSFU bitidentity; frozen denseF64\u2192F32 expectedvalues unchanged.",
+    "Choice hash/time and source/reservation/derive/draw sequence areverifiedrecordidentities; legacyoraclecontentobjects containnoacceptanceepoch, so noartificialclockclaim.",
+    "No redraw, reroll, conveniencecase substitution or newtype."
+  ],
+  "created_utc": "2026-10-23T02:30:34.050262+00:00",
+  "owned_livejobs_afterexit": []
+}

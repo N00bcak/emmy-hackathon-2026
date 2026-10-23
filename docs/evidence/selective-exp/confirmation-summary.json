@@ -1,0 +1,98 @@
+[
+  {
+    "problem": "a01_attention",
+    "baseline": "merged",
+    "candidate": "merged",
+    "baseline_us": 11.264000087976456,
+    "candidate_us": 11.264000087976456,
+    "ratio": 1.0,
+    "block_ratios": [
+      1.0
+    ],
+    "pairs": 32
+  },
+  {
+    "problem": "a01_attention",
+    "baseline": "theirs",
+    "candidate": "theirs",
+    "baseline_us": 9.216000325977802,
+    "candidate_us": 9.216000325977802,
+    "ratio": 1.0,
+    "block_ratios": [
+      1.0
+    ],
+    "pairs": 32
+  },
+  {
+    "problem": "a01_attention",
+    "baseline": "merged",
+    "candidate": "renorm",
+    "baseline_us": 11.264000087976456,
+    "candidate_us": 10.239999741315842,
+    "ratio": 0.9090908790249688,
+    "block_ratios": [
+      0.9090908790249688
+    ],
+    "pairs": 32
+  },
+  {
+    "problem": "a01_attention",
+    "baseline": "theirs",
+    "candidate": "renorm",
+    "baseline_us": 9.216000325977802,
+    "candidate_us": 10.239999741315842,
+    "ratio": 1.1111110437411356,
+    "block_ratios": [
+      1.1111110437411356
+    ],
+    "pairs": 32
+  },
+  {
+    "problem": "a02_attention_128",
+    "baseline": "merged",
+    "candidate": "merged",
+    "baseline_us": 9.216000325977802,
+    "candidate_us": 9.216000325977802,
+    "ratio": 0.9881356017483214,
+    "block_ratios": [
+      0.9881356017483214
+    ],
+    "pairs": 32
+  },
+  {
+    "problem": "a02_attention_128",
+    "baseline": "theirs",
+    "candidate": "theirs",
+    "baseline_us": 6.144000217318535,
+    "candidate_us": 6.144000217318535,
+    "ratio": 1.0,
+    "block_ratios": [
+      1.0
+    ],
+    "pairs": 32
+  },
+  {
+    "problem": "a02_attention_128",
+    "baseline": "merged",
+    "candidate": "renorm",
+    "baseline_us": 9.37600014731288,
+    "candidate_us": 7.168000098317862,
+    "ratio": 0.7000000272848418,
+    "block_ratios": [
+      0.7000000272848418
+    ],
+    "pairs": 32
+  },
+  {
+    "problem": "a02_attention_128",
+    "baseline": "theirs",
+    "candidate": "renorm",
+    "baseline_us": 6.144000217318535,
+    "candidate_us": 7.168000098317862,
+    "ratio": 1.0208333017536573,
+    "block_ratios": [
+      1.0208333017536573
+    ],
+    "pairs": 32
+  }
+]

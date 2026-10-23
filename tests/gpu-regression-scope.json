@@ -1,0 +1,1166 @@
+{
+  "version": "gpu-regression-scope-v5",
+  "previous_policy": {
+    "filename": "gpu-regression-compact-v4.json",
+    "sha256": "8b02e13947b0ac2a55f13233176cf992d96b7b6a8b4a9daf925c733df7752f60"
+  },
+  "powenn_evidence": {
+    "commit": "a3e5ab57e498975205e6a436a2628b5c5b73e49b",
+    "comparison": "sm89 GPU results with target-header-only adaptation; not an sm120 execution receipt",
+    "published_passed": 15,
+    "broad_suite_passed": 59,
+    "broad_suite_cases": 122,
+    "sm120": "User reports all trials pass; not independently inferred from sm89."
+  },
+  "assembly_targets": [
+    "sm_89",
+    "sm_120"
+  ],
+  "numerical_contract": "Keep each frozen case reference and metadata rtol/atol unchanged; no global exact float-order requirement. Integer/representation checks retain exactness.",
+  "cases": [
+    {
+      "id": "c10866af73f820553331b01c52e042e5d724c275a6f5fedd9348170ba75d382c",
+      "previous_index": 0,
+      "disposition": "retain",
+      "reason": "Mandatory published contract: a01_attention",
+      "group": "required_gate",
+      "marked_operators": [],
+      "powenn_sm89_passed": true
+    },
+    {
+      "id": "69db4e7f597c41b0684fb30c3204e197cf56c8647d9a63dc0adb77f2a8a0d867",
+      "previous_index": 1,
+      "disposition": "retain",
+      "reason": "Mandatory published contract: a02_attention_128",
+      "group": "required_gate",
+      "marked_operators": [],
+      "powenn_sm89_passed": true
+    },
+    {
+      "id": "6ab09ab4acc384ee252370a564a13965ece1ad21a3e64d6615f0de1a39b8c665",
+      "previous_index": 2,
+      "disposition": "retain",
+      "reason": "Mandatory published contract: f01_rmsnorm",
+      "group": "required_gate",
+      "marked_operators": [],
+      "powenn_sm89_passed": true
+    },
+    {
+      "id": "89d56c168a0b04373ef8d50096c48534c70019b8d2f87371b79aee2289922b44",
+      "previous_index": 3,
+      "disposition": "retain",
+      "reason": "Mandatory published contract: f02_row_softmax",
+      "group": "required_gate",
+      "marked_operators": [],
+      "powenn_sm89_passed": true
+    },
+    {
+      "id": "1e82d7e58a53e8795ea9d05e3759dfe201e42308efd08dd2a51e79c769dc2fbc",
+      "previous_index": 4,
+      "disposition": "retain",
+      "reason": "Mandatory published contract: f03_l2norm",
+      "group": "required_gate",
+      "marked_operators": [],
+      "powenn_sm89_passed": true
+    },
+    {
+      "id": "cd9a29496fccd9e421c1cfbe14347cb45003f38681e3b4b2e703f5dbbfdd6c5d",
+      "previous_index": 5,
+      "disposition": "retain",
+      "reason": "Mandatory published contract: m01_matmul_512",
+      "group": "required_gate",
+      "marked_operators": [],
+      "powenn_sm89_passed": true
+    },
+    {
+      "id": "aeb1568894b7afb50ea0b1b6c6fe94b57419452643ec87c5c6561f9ebfc58bbe",
+      "previous_index": 6,
+      "disposition": "retain",
+      "reason": "Mandatory published contract: m02_matmul_rect",
+      "group": "required_gate",
+      "marked_operators": [],
+      "powenn_sm89_passed": true
+    },
+    {
+      "id": "4035b0c010105ed7be8aa1a889fe2754d498fc4a27c1719bf547ddad66e48403",
+      "previous_index": 7,
+      "disposition": "retain",
+      "reason": "Mandatory published contract: p00_scalar_add",
+      "group": "required_gate",
+      "marked_operators": [],
+      "powenn_sm89_passed": true
+    },
+    {
+      "id": "5e973341ada3e33f701293be5a3e6195badb7290a5471f4c6cefa86634d1b168",
+      "previous_index": 8,
+      "disposition": "retain",
+      "reason": "Mandatory published contract: p01_vector_add",
+      "group": "required_gate",
+      "marked_operators": [],
+      "powenn_sm89_passed": true
+    },
+    {
+      "id": "3145aa57f753f64551cd4b83c3d430e6e2375a9feb4819accbfd5e55c39da560",
+      "previous_index": 9,
+      "disposition": "retain",
+      "reason": "Mandatory published contract: p02_scale_shift",
+      "group": "required_gate",
+      "marked_operators": [],
+      "powenn_sm89_passed": true
+    },
+    {
+      "id": "aeeffce3a36b8cf1b27173b8c1644fc517a24d992173e06bb1664784b009b6ba",
+      "previous_index": 10,
+      "disposition": "retain",
+      "reason": "Mandatory published contract: p03_relu_mul",
+      "group": "required_gate",
+      "marked_operators": [],
+      "powenn_sm89_passed": true
+    },
+    {
+      "id": "2ffefe7fee88d864b3ac97cd70fe9711643f3551fba367299df52f329649154d",
+      "previous_index": 11,
+      "disposition": "retain",
+      "reason": "Mandatory published contract: r01_array_sum",
+      "group": "required_gate",
+      "marked_operators": [],
+      "powenn_sm89_passed": true
+    },
+    {
+      "id": "a56bdb784a46a763c2b633ebb5d16ee1ffd4287cb0984168b4f80909c323ce22",
+      "previous_index": 12,
+      "disposition": "retain",
+      "reason": "Mandatory published contract: r02_big_sum",
+      "group": "required_gate",
+      "marked_operators": [],
+      "powenn_sm89_passed": true
+    },
+    {
+      "id": "6dfbe2bc925e2b31ceb8eb84bb5016cca8af143ca55cf93078d09decc26a0fd3",
+      "previous_index": 13,
+      "disposition": "retain",
+      "reason": "Mandatory published contract: r03_mean",
+      "group": "required_gate",
+      "marked_operators": [],
+      "powenn_sm89_passed": true
+    },
+    {
+      "id": "5c2ba872d36e6526a79b9799c059e237f65a34019cd94f1c85da4f0b9f930d3f",
+      "previous_index": 14,
+      "disposition": "retain",
+      "reason": "Mandatory published contract: r04_row_sum",
+      "group": "required_gate",
+      "marked_operators": [],
+      "powenn_sm89_passed": true
+    },
+    {
+      "id": "7be68f4ef7d32de1bde415d3c96e21c0aee23c0c175d1339a81abb77eaff8083",
+      "previous_index": 15,
+      "disposition": "archive",
+      "reason": "Extra by-value scalar width/unused-parameter matrix; retain the compound F32 ABI/marked-operator witness and generated reordered ABI coverage.",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": false
+    },
+    {
+      "id": "ed37ac4d2801d41d13b5fd2ce98731e8e717f9651e92193bc9146c008b87aeba",
+      "previous_index": 16,
+      "disposition": "archive",
+      "reason": "Extra by-value scalar width/unused-parameter matrix; retain the compound F32 ABI/marked-operator witness and generated reordered ABI coverage.",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": false
+    },
+    {
+      "id": "605ee03dc09345cfed01434531ed73588a820eb19fd1eaf1327f5e67889756d6",
+      "previous_index": 17,
+      "disposition": "archive",
+      "reason": "Extra by-value scalar width/unused-parameter matrix; retain the compound F32 ABI/marked-operator witness and generated reordered ABI coverage.",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": false
+    },
+    {
+      "id": "4f496d88d4a5739947380eac36ae5592d18e0e980e1038721c926960643b9660",
+      "previous_index": 18,
+      "disposition": "archive",
+      "reason": "Extra by-value scalar width/unused-parameter matrix; retain the compound F32 ABI/marked-operator witness and generated reordered ABI coverage.",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": false
+    },
+    {
+      "id": "babe59769149f7131c83c276e58558a1cc49ab73d0e6d7112b70d4d946be6fc3",
+      "previous_index": 19,
+      "disposition": "archive",
+      "reason": "Extra by-value scalar width/unused-parameter matrix; retain the compound F32 ABI/marked-operator witness and generated reordered ABI coverage.",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": false
+    },
+    {
+      "id": "07247b475413b2486a6138901e9a05e886b2993ef6d21c963b2cc7bce52c3e0d",
+      "previous_index": 20,
+      "disposition": "retain",
+      "reason": "Full XYZ block/grid geometry combined with tail, scalar F32 ABI and math",
+      "group": "marked_operators",
+      "marked_operators": [
+        "Builtin",
+        "CastExpr",
+        "FlatIndex",
+        "FuncCallExpr"
+      ],
+      "powenn_sm89_passed": false
+    },
+    {
+      "id": "c5940d93d7e94754b865cde5571eb2e6e91067518afb569e4f871284d5d3985f",
+      "previous_index": 21,
+      "disposition": "retain",
+      "reason": "Hardware Builtin values across full XYZ block/grid geometry",
+      "group": "marked_operators",
+      "marked_operators": [
+        "Builtin"
+      ],
+      "powenn_sm89_passed": false
+    },
+    {
+      "id": "6cbcd2d465379c7f0d61cf88e1074f31e8296caefc4a85394212978d907873d5",
+      "previous_index": 22,
+      "disposition": "retain",
+      "reason": "Half global/shared transport and promoted arithmetic",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": true
+    },
+    {
+      "id": "61098ba0cc34ea091b2a821816dec4f8743aa37dc010ee6b20a8c46722a48c4f",
+      "previous_index": 23,
+      "disposition": "retain",
+      "reason": "Native F64 arithmetic and storage",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": true
+    },
+    {
+      "id": "3403dbd465d8a05049feb992ea67d9ecf4de0fb1ef106c2bd71146e312b437fb",
+      "previous_index": 24,
+      "disposition": "retain",
+      "reason": "Bit-preserving reinterpretation through memory",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": true
+    },
+    {
+      "id": "61376e724851b5c2da0888a4dd999d755ce44ae5e591390537922d6fe3d4220f",
+      "previous_index": 25,
+      "disposition": "retain",
+      "reason": "Native I32 FuncCall arithmetic preserves low bits above F32 exact range",
+      "group": "marked_operators",
+      "marked_operators": [
+        "CastExpr",
+        "FuncCallExpr"
+      ],
+      "powenn_sm89_passed": false
+    },
+    {
+      "id": "fae06ecf5a68131f772531ea344d7a9c6e1f07075d191720cf5c330930af9f96",
+      "previous_index": 26,
+      "disposition": "retain",
+      "reason": "Grouped mixed integer/predicate writes convert to F32 destinations",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": false
+    },
+    {
+      "id": "dc8cc0e8d88e7d60dcdf702bacc8d91e2e1761c18e9040ffd9b34c90477315c5",
+      "previous_index": 27,
+      "disposition": "retain",
+      "reason": "F32 literal rounding with integer-valued float payload",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": false
+    },
+    {
+      "id": "d42770018f494d678181aa0171c67225bae91861383c3d0149483e02559f14a3",
+      "previous_index": 28,
+      "disposition": "archive",
+      "reason": "NaN-specific internal-domain stress; archive separately from finite tolerance-based challenge coverage.",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": false
+    },
+    {
+      "id": "31e66c227e064fdcdfdbd607624fae8c845d5a1c7f07668e40759e9961c1435f",
+      "previous_index": 29,
+      "disposition": "retain",
+      "reason": "Natural logarithm in FuncCall expression",
+      "group": "marked_operators",
+      "marked_operators": [
+        "FuncCallExpr"
+      ],
+      "powenn_sm89_passed": false
+    },
+    {
+      "id": "b3b9d4ccd080adb9d5a05ae938aec6089818bc50230ec5093d25c135097c90a1",
+      "previous_index": 30,
+      "disposition": "retain",
+      "reason": "Dynamic signed intermediate floor division/remainder addresses",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": true
+    },
+    {
+      "id": "b24c76efd4ba9fd8763e69cfd1e0926f876281a2a06fd64c8dc9e882b9a33aed",
+      "previous_index": 31,
+      "disposition": "retain",
+      "reason": "Unaligned vector-width-four transport and tail fallback",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": true
+    },
+    {
+      "id": "f188ef762959e2f777587b9dbfb60421c6765cfd5412b37516c4b7113e7ff42a",
+      "previous_index": 32,
+      "disposition": "retain",
+      "reason": "Expression cache distinguishes cast children",
+      "group": "marked_operators",
+      "marked_operators": [
+        "CastExpr"
+      ],
+      "powenn_sm89_passed": false
+    },
+    {
+      "id": "0e80b09925f0f9637cdef513d58020e8dbd3fe023ee87c0372fbc01393d37f7e",
+      "previous_index": 33,
+      "disposition": "retain",
+      "reason": "Expression cache distinguishes funcall children",
+      "group": "marked_operators",
+      "marked_operators": [
+        "FuncCallExpr"
+      ],
+      "powenn_sm89_passed": false
+    },
+    {
+      "id": "bd8a59fd719b12c89bb2bef8b221fb1c007d5ade73a552c1d35f9a055886d363",
+      "previous_index": 34,
+      "disposition": "retain",
+      "reason": "Expression cache distinguishes flatindex children",
+      "group": "marked_operators",
+      "marked_operators": [
+        "FlatIndex"
+      ],
+      "powenn_sm89_passed": false
+    },
+    {
+      "id": "3e9203274f6927cb955cf2e8d0af2e7e870ace628d9a26e6b356409a4e032631",
+      "previous_index": 35,
+      "disposition": "retain",
+      "reason": "Expression cache distinguishes builtin children",
+      "group": "marked_operators",
+      "marked_operators": [
+        "Builtin"
+      ],
+      "powenn_sm89_passed": false
+    },
+    {
+      "id": "068fb6cb67fb91185ea4063ac15b15ae1ea8b0ebeb9a05d6fef2e777f31f2348",
+      "previous_index": 36,
+      "disposition": "retain",
+      "reason": "Tile lexical scope: nested-restore",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": false
+    },
+    {
+      "id": "1f9428cef0a7750c55fec497401857955bd037aed43ab72a1abf26627ef390af",
+      "previous_index": 37,
+      "disposition": "retain",
+      "reason": "Tile lexical scope: loop-axis-shadow",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": false
+    },
+    {
+      "id": "807f6dfcde812fedd65efdbd0428a3f07108c21131ef242269c5fa5df0fec1c2",
+      "previous_index": 38,
+      "disposition": "retain",
+      "reason": "Tile lexical scope: nested-unequal-guard",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": false
+    },
+    {
+      "id": "fff293a2235c2158ffc525f848ce136c020fdfa506b79c147ccadd0a39931751",
+      "previous_index": 39,
+      "disposition": "retain",
+      "reason": "Inactive reduction lanes use multiply identity",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": true
+    },
+    {
+      "id": "061d7084b7298d83ba14950823669b4734ed6cc3f9f51bd5ee830f10e18ee56a",
+      "previous_index": 40,
+      "disposition": "retain",
+      "reason": "Inactive reduction lanes use minimum identity",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": true
+    },
+    {
+      "id": "da018f96fc2e54583814b7dc39cce909d332add031820662839c2706fccdc91d",
+      "previous_index": 41,
+      "disposition": "retain",
+      "reason": "Inactive reduction lanes use maximum identity",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": true
+    },
+    {
+      "id": "b5cc80a79e59c19edb2f07d14c0afe088a9c440310666187b50e20cd69c4397c",
+      "previous_index": 42,
+      "disposition": "retain",
+      "reason": "Explicit infinite minimum seed differs from finite default identity",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": false
+    },
+    {
+      "id": "943cbd88c1f4ca66ae34098886c73543341807db35df0d3289820b2be0ab4a74",
+      "previous_index": 43,
+      "disposition": "retain",
+      "reason": "Explicit infinite maximum seed differs from finite default identity",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": false
+    },
+    {
+      "id": "57aac69012ac3b0ee2cf4110e977c7429c12037a02aab06a73beebaa6c090fa1",
+      "previous_index": 44,
+      "disposition": "archive",
+      "reason": "NaN-specific internal-domain stress; archive separately from finite tolerance-based challenge coverage.",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": false
+    },
+    {
+      "id": "70100ed805e7de6600d6952fc9318bce139883a55c5c3918e7bef7c0729baa81",
+      "previous_index": 45,
+      "disposition": "archive",
+      "reason": "NaN-specific internal-domain stress; archive separately from finite tolerance-based challenge coverage.",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": false
+    },
+    {
+      "id": "0eeb170d22182ed9875fc86336fcbc090c2dcc2db2e2234cd704d8bf6614cc63",
+      "previous_index": 46,
+      "disposition": "archive",
+      "reason": "Exotic noncommutative affine-composition reduction; retain ordinary reduction, explicit seed and zero-trip carrier coverage.",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": false
+    },
+    {
+      "id": "2623ef7bdace949bb90f19ab8499a43d44db719441a3583870dbdf14d0c08172",
+      "previous_index": 47,
+      "disposition": "retain",
+      "reason": "Zero-trip loop preserves tree collective entry carrier",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": false
+    },
+    {
+      "id": "48189071240806b192fd70230a1d4af9b7fce13e389c91f4c88a93a35c9388a9",
+      "previous_index": 48,
+      "disposition": "retain",
+      "reason": "Zero-trip loop preserves warp collective entry carrier",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": false
+    },
+    {
+      "id": "5224818b2d26d5b73af6c783a756518a271351ca1a5529cbc0686f7e181387fa",
+      "previous_index": 49,
+      "disposition": "retain",
+      "reason": "Nested Init shadow restores enclosing carrier",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": true
+    },
+    {
+      "id": "669f6890c8882493e5571cfcd0f2a0172bc9b729375ab98513331ac0d089e3a4",
+      "previous_index": 50,
+      "disposition": "retain",
+      "reason": "StridedLoop compound step re-evaluates live state after body",
+      "group": "marked_operators",
+      "marked_operators": [
+        "CastExpr"
+      ],
+      "powenn_sm89_passed": false
+    },
+    {
+      "id": "83fb961f7fc2aee057d579cd6309ef1cce9d1c66a0521d78c4c6978d50b289e5",
+      "previous_index": 51,
+      "disposition": "retain",
+      "reason": "StridedLoop header binding survives body Init shadow",
+      "group": "marked_operators",
+      "marked_operators": [
+        "CastExpr"
+      ],
+      "powenn_sm89_passed": false
+    },
+    {
+      "id": "8e6693eaac063e733279668d2476edb7ac5fad6f11b9a493541574512c7552b7",
+      "previous_index": 52,
+      "disposition": "retain",
+      "reason": "StridedLoop end snapshots live I32 subgroup carrier before iteration",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": false
+    },
+    {
+      "id": "cc0b21f91dca260efa45b680481e1ba9f39dcee329f149f6db678c8c8b9f97be",
+      "previous_index": 53,
+      "disposition": "retain",
+      "reason": "Dynamic masked 16-byte async copy, commit/wait and zero fill",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": true
+    },
+    {
+      "id": "72f1deeac451a01002043dead776384004b887cdcec9089a0bdfcc02923c022d",
+      "previous_index": 54,
+      "disposition": "retain",
+      "reason": "Shared contraction with conditional updates, vector alignment and tail",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": true
+    },
+    {
+      "id": "9e1f76b1c9291d28133d85a85ae619cdd4d7ca52d54f649c3e7e9d925e54e0e8",
+      "previous_index": 55,
+      "disposition": "retain",
+      "reason": "Fused online attention chunked key tail",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": true
+    },
+    {
+      "id": "0a50249d1218b576c10e21a7020336fa287d4d5d6bd7a39511aa2219aa070556",
+      "previous_index": 56,
+      "disposition": "retain",
+      "reason": "Cooperative online softmax loop spans more than one CTA-width column slice",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": true
+    },
+    {
+      "id": "e4ac354528a2ab697578716e36b5ac607df309f75252462e861b435ad2f5d7c5",
+      "previous_index": 57,
+      "disposition": "retain",
+      "reason": "Private launch ID survives a Tile axis named _gid; aligned subgroup and partial physical warp",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": false
+    },
+    {
+      "id": "57e82125a796bb9080bee679a08f137d78367aa66643aca4080c92adc9932dfe",
+      "previous_index": 58,
+      "disposition": "retain",
+      "reason": "64-bit shift count width and signed high-bit behavior; other signedness/direction permutations are targeted expansion",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": false
+    },
+    {
+      "id": "fa41b5e778718c3209536b85787001a3fce87f9cbc7f4b8288e18ffa0777fcc6",
+      "previous_index": 59,
+      "disposition": "retain",
+      "reason": "Load declaration lifetime: scalar-shadow",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": false
+    },
+    {
+      "id": "8a7db526571189e3b67c95f11a3294d910c6e10a53d58c33f0c9a97031e3a9b8",
+      "previous_index": 60,
+      "disposition": "retain",
+      "reason": "Load declaration lifetime: grouped-simultaneous",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": false
+    },
+    {
+      "id": "ee167cb896bcfad085da910c9c0eb88a93bf186403b908a2524fca7e8a4c5378",
+      "previous_index": 61,
+      "disposition": "retain",
+      "reason": "Nested Tile Init and inherited carried update use different lexical owners",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": false
+    },
+    {
+      "id": "2c15db2e5679909cef087ecdd13de5ce6fb7cf56ae54b090f7a966d6dcb6a30e",
+      "previous_index": 62,
+      "disposition": "retain",
+      "reason": "Recursive binary cache keys decline opaque children",
+      "group": "marked_operators",
+      "marked_operators": [
+        "CastExpr"
+      ],
+      "powenn_sm89_passed": false
+    },
+    {
+      "id": "7d586595132adb5191192231cef884f5daa56077f115b310c20d34f5b65b7c95",
+      "previous_index": 63,
+      "disposition": "retain",
+      "reason": "Recursive ternary cache keys decline opaque children",
+      "group": "marked_operators",
+      "marked_operators": [
+        "CastExpr"
+      ],
+      "powenn_sm89_passed": false
+    },
+    {
+      "id": "81efd984435c63b55d728746a2e821c6fa0fd097b2ad92c5870170832f7f3034",
+      "previous_index": 64,
+      "disposition": "archive",
+      "reason": "Compound scalar ABI/shadowing stress; retain focused Load, Init and Select lifetime witnesses.",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": false
+    },
+    {
+      "id": "a3637b82238835d8027901de0aee04a9d7df15e69ac12d965e1c9f490c209ef5",
+      "previous_index": 65,
+      "disposition": "retain",
+      "reason": "Combined Select lexical shadow and single-branch snapshot",
+      "group": "marked_operators",
+      "marked_operators": [
+        "Select"
+      ],
+      "powenn_sm89_passed": false
+    },
+    {
+      "id": "fb08b0884f3532cd8a601414cd6f2434f05b99602b99dfee396c8b73fc9643f4",
+      "previous_index": 66,
+      "disposition": "retain",
+      "reason": "Partial CTA nested uniform loop/StridedLoop collective participation",
+      "group": "marked_operators",
+      "marked_operators": [
+        "FuncCallExpr"
+      ],
+      "powenn_sm89_passed": false
+    },
+    {
+      "id": "69140f84c467e7ecc7554726a235297a4efa74f14f5df59755712fc45f9e77ee",
+      "previous_index": 67,
+      "disposition": "archive",
+      "reason": "Explicit BOOL carrier matrix; retain ordinary predicate writes and nested seeded-fold coverage.",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": false
+    },
+    {
+      "id": "69485ec5d44cd743f835257815304f26ac57e3f1e6b0dbc0873de1a9348c948b",
+      "previous_index": 68,
+      "disposition": "archive",
+      "reason": "Explicit BOOL carrier matrix; retain ordinary predicate writes and nested seeded-fold coverage.",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": false
+    },
+    {
+      "id": "d7be87bc0caabbc560a024cd044944f15da13f4085819fc40ebcba4940f64200",
+      "previous_index": 69,
+      "disposition": "retain",
+      "reason": "Optimized KEY child dot-fold declarations restore ancestor scores",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": false
+    },
+    {
+      "id": "2e5ef73f93e297caf646bf20a032c9c8d7a0060713dd4ced4c5b558097777bc8",
+      "previous_index": 70,
+      "disposition": "archive",
+      "reason": "Amplified extreme numerical-domain stress; retain ordinary math and normalization coverage. This is a scope decision, not a tolerance change.",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": false
+    },
+    {
+      "id": "63558c3da344eded31db3ba070fd5b9bfed72c764d052019d37b715732205e2c",
+      "previous_index": 71,
+      "disposition": "archive",
+      "reason": "Amplified extreme numerical-domain stress; retain ordinary math and normalization coverage. This is a scope decision, not a tolerance change.",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": false
+    },
+    {
+      "id": "09d6470c83d329ff46f9a20e9fee4ac3aebe60c50227116328113f9a20a888f0",
+      "previous_index": 72,
+      "disposition": "retain",
+      "reason": "Independent generated rmsnorm; preserve distinct generated lowering schedule",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": true
+    },
+    {
+      "id": "e8f4437dd934a945ab53494a64920d8c0145bacfe1a4df3dd4fcba6a08c4790d",
+      "previous_index": 73,
+      "disposition": "retain",
+      "reason": "Independent generated l2norm; preserve distinct generated lowering schedule",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": true
+    },
+    {
+      "id": "b0bb43becf74a1f513ddbfb8df76804664d52c90fbbc9104b45c889a6cdbabc5",
+      "previous_index": 74,
+      "disposition": "retain",
+      "reason": "Independent generated atomic_matmul; preserve distinct generated lowering schedule",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": true
+    },
+    {
+      "id": "d7aa0ab891e7af29fab0846614d52d73add946c3a47a8872624bbec069c6bff3",
+      "previous_index": 75,
+      "disposition": "retain",
+      "reason": "Independent generated softmax; preserve distinct generated lowering schedule",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": true
+    },
+    {
+      "id": "9170e7b0641d3224fb2e365ef4bc9d87f45db4ffffe191b1544c0548f485001f",
+      "previous_index": 76,
+      "disposition": "retain",
+      "reason": "Independent generated attention; ordered three-kernel intermediate/ABI execution",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": true
+    },
+    {
+      "id": "0ae55875282f68e45972d28c44d9c31c0b3499e2227776855effb0b9b6595d4f",
+      "previous_index": 77,
+      "disposition": "retain",
+      "reason": "64-bit bitwise left-shift and u32 shift-count lowering; signed/unsigned left shift share shl.b64",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": false
+    },
+    {
+      "id": "cd76e69248753128806ede69cd08da03329d51a9db2948a7b0cf07cb01217721",
+      "previous_index": 78,
+      "disposition": "retain",
+      "reason": "Unsigned 64-bit logical right shift must not become signed shr.s64",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": false
+    },
+    {
+      "id": "c37693f91a7210ccc513e699de5a289e2f2f909f83a7059ed6e386a2a263a25d",
+      "previous_index": 79,
+      "disposition": "retain",
+      "reason": "Async ring lifetime: canonical-tail",
+      "group": "marked_operators",
+      "marked_operators": [
+        "FuncCallExpr"
+      ],
+      "powenn_sm89_passed": false
+    },
+    {
+      "id": "7bb9d9c27732924a02ca9869601a7af55fd6276ae6894ed00c3dbc7be5d84228",
+      "previous_index": 80,
+      "disposition": "retain",
+      "reason": "Async ring lifetime: short-ring",
+      "group": "marked_operators",
+      "marked_operators": [
+        "FuncCallExpr"
+      ],
+      "powenn_sm89_passed": false
+    },
+    {
+      "id": "21171f5ca6c366ded10c9865a3160437b8985dd0a89d83770c473c30f8b3e195",
+      "previous_index": 81,
+      "disposition": "retain",
+      "reason": "Async ring lifetime: nondivisible-counter",
+      "group": "marked_operators",
+      "marked_operators": [
+        "FuncCallExpr"
+      ],
+      "powenn_sm89_passed": false
+    },
+    {
+      "id": "a083ac93290653c119bae4512c057058495a50fa9d0528dc7ce6e3caff5c6065",
+      "previous_index": 82,
+      "disposition": "retain",
+      "reason": "Async ring lifetime: observable-padding",
+      "group": "marked_operators",
+      "marked_operators": [
+        "FuncCallExpr"
+      ],
+      "powenn_sm89_passed": false
+    },
+    {
+      "id": "b8c0079b7d4413a1880f4f91f7c435e2281f9b5c92861c7980388a4bd2882555",
+      "previous_index": 83,
+      "disposition": "retain",
+      "reason": "Async ring shorter than prefill lead; initial invalid prefill differs from extent == lead",
+      "group": "marked_operators",
+      "marked_operators": [
+        "FuncCallExpr"
+      ],
+      "powenn_sm89_passed": false
+    },
+    {
+      "id": "24e447a29f7665e75242d1ca946836b2f542d9cc71953cb5578797962bd97165",
+      "previous_index": 84,
+      "disposition": "archive",
+      "reason": "Exact F32 tree-order diagnostic; challenge output is tolerance-based. Preserve the frozen oracle for targeted investigation.",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": false
+    },
+    {
+      "id": "70ad0f32f8f071770e3dffdcf510ff9fcb64022e08c93f8e775a24ca173596a3",
+      "previous_index": 85,
+      "disposition": "archive",
+      "reason": "Exact F32 tree-order diagnostic; challenge output is tolerance-based. Preserve the frozen oracle for targeted investigation.",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": false
+    },
+    {
+      "id": "59075bf4598eee47a9e806eeebf1a01e2c41d531ea5486a1842431411355f6ca",
+      "previous_index": 86,
+      "disposition": "archive",
+      "reason": "Exact F32 tree-order diagnostic; challenge output is tolerance-based. Preserve the frozen oracle for targeted investigation.",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": false
+    },
+    {
+      "id": "6890db887e9ddeaf5f0a49d1111ec35c0ac97c590f7720d2112e53c5a25b6e1a",
+      "previous_index": 87,
+      "disposition": "archive",
+      "reason": "Exact F32 tree-order diagnostic; challenge output is tolerance-based. Preserve the frozen oracle for targeted investigation.",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": false
+    },
+    {
+      "id": "bfc4b7ce74bafe017db5d345724a8ab527509641a581e2a9906b74a5a3a73c0f",
+      "previous_index": 88,
+      "disposition": "retain",
+      "reason": "Shared pair serial dots extent 8: preserve alignment, explicit/implicit seed and tail boundary",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": true
+    },
+    {
+      "id": "0192aa8028246287221f7448e6c9dfec47cc2cfdfa3ec825d1c7ee28cec28c6a",
+      "previous_index": 89,
+      "disposition": "retain",
+      "reason": "Shared pair serial dots extent 9: preserve alignment, explicit/implicit seed and tail boundary",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": true
+    },
+    {
+      "id": "6ac8c7773141710aafc9375e2ac493eada0dd20901b152f729d6255f79336317",
+      "previous_index": 90,
+      "disposition": "retain",
+      "reason": "Shared pair serial dots extent 12: preserve alignment, explicit/implicit seed and tail boundary",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": true
+    },
+    {
+      "id": "55256bcbea1510499cff61c4f643eb7de10964fca4a7d43dc9cb8eca5a323236",
+      "previous_index": 91,
+      "disposition": "retain",
+      "reason": "Shared pair serial dots extent 17: preserve alignment, explicit/implicit seed and tail boundary",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": true
+    },
+    {
+      "id": "6f6357065acf5b24d4be3132257111f2e40e8cc0cba48570e067276205551d25",
+      "previous_index": 92,
+      "disposition": "retain",
+      "reason": "Explicit F16 result with F32 operands computes before one rounding; native all-F16 control",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": false
+    },
+    {
+      "id": "5ac01e040156b424b17a99e962e9b0bc098682db271cb5e10181003c87d1cf58",
+      "previous_index": 93,
+      "disposition": "archive",
+      "reason": "Strict serial F32 accumulation-order diagnostic; no blanket bitwise/order requirement in the challenge gate.",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": false
+    },
+    {
+      "id": "fb17edb5eaf08fe018ae09f7a909ed7f241e60fdbb719d81f0ff0562f3848fd9",
+      "previous_index": 94,
+      "disposition": "archive",
+      "reason": "Strict serial F32 accumulation-order diagnostic; no blanket bitwise/order requirement in the challenge gate.",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": true
+    },
+    {
+      "id": "eb0abf6ffa45c0ad6e2c8ec229da4c1c59fa51e17f9485865063b43bd897f9bb",
+      "previous_index": 95,
+      "disposition": "archive",
+      "reason": "Strict serial F32 accumulation-order diagnostic; no blanket bitwise/order requirement in the challenge gate.",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": true
+    },
+    {
+      "id": "d90cc1c289bd34b9da0a3d72e23f10626cdae1c90a3cf015c4ae737ae8d1c41b",
+      "previous_index": 96,
+      "disposition": "archive",
+      "reason": "Strict serial F32 accumulation-order diagnostic; no blanket bitwise/order requirement in the challenge gate.",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": true
+    },
+    {
+      "id": "8996904203776bc61d7da020bfba25d6b8df989336f7641ac753c3f80556a25e",
+      "previous_index": 97,
+      "disposition": "retain",
+      "reason": "fused-online-cooperative-coverage-v3: full-segment16; preserve seed, numerical domain and normalization dataflow",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": true
+    },
+    {
+      "id": "7bfe3e8fd6dd18024fb08430b427e687b38faf560d1397e9b210561fb21fc63c",
+      "previous_index": 98,
+      "disposition": "archive",
+      "reason": "Additional subgroup-width permutation; retain each distinct normalization/seed mechanism, plus tail and fallback witnesses. Not claimed equivalent for every input.",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": true
+    },
+    {
+      "id": "bdd094ff243fd119a72e2e675ee682294887bced491b5131041c7f8ac744fdc3",
+      "previous_index": 99,
+      "disposition": "retain",
+      "reason": "fused-online-cooperative-coverage-v3: partial-fallback; preserve seed, numerical domain and normalization dataflow",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": true
+    },
+    {
+      "id": "44c6e344374056121b8a007268039a7d7823bf44aed0149ed4d96ddf9164d0c2",
+      "previous_index": 100,
+      "disposition": "retain",
+      "reason": "fused-online-cooperative-coverage-v4: full-segment16; preserve seed, numerical domain and normalization dataflow",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": true
+    },
+    {
+      "id": "e4180db22f79b911561e72b2ebf63e8552c6c390a1fb0b8aac1b22ddd1d94c7a",
+      "previous_index": 101,
+      "disposition": "archive",
+      "reason": "Additional subgroup-width permutation; retain each distinct normalization/seed mechanism, plus tail and fallback witnesses. Not claimed equivalent for every input.",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": true
+    },
+    {
+      "id": "dd375967ea3896ace9e00ecb875af9b42a8cc2e0f22ca8525b29b556bbe04389",
+      "previous_index": 102,
+      "disposition": "retain",
+      "reason": "fused-online-cooperative-coverage-v5-full-tail: full-segment16; preserve seed, numerical domain and normalization dataflow",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": true
+    },
+    {
+      "id": "69fdea2216c56996b712ccaacacfef660588f54d5b6b08e51e34009f47f07448",
+      "previous_index": 103,
+      "disposition": "archive",
+      "reason": "Additional subgroup-width permutation; retain each distinct normalization/seed mechanism, plus tail and fallback witnesses. Not claimed equivalent for every input.",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": true
+    },
+    {
+      "id": "c974ec730c3e361d5a62608aa954478a6cea10d6f9183d7f03bd9f45a6a125c8",
+      "previous_index": 104,
+      "disposition": "retain",
+      "reason": "distinct-query-normalization-partition-v7: full-segment16; preserve seed, numerical domain and normalization dataflow",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": true
+    },
+    {
+      "id": "e42462914470b170c8821353f22256bf989c43c7b7312374f56169d5574e72d4",
+      "previous_index": 105,
+      "disposition": "archive",
+      "reason": "Additional subgroup-width permutation; retain each distinct normalization/seed mechanism, plus tail and fallback witnesses. Not claimed equivalent for every input.",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": true
+    },
+    {
+      "id": "e71bc833bb43b88ba5b175be89e9125189e28c257e54572c5173b5fac998944d",
+      "previous_index": 106,
+      "disposition": "archive",
+      "reason": "Additional subgroup-width permutation; retain each distinct normalization/seed mechanism, plus tail and fallback witnesses. Not claimed equivalent for every input.",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": true
+    },
+    {
+      "id": "aa23bbd00f94abe9dbc6694c46de82eb9301c84a543e450bb885fbd04814cfc9",
+      "previous_index": 107,
+      "disposition": "retain",
+      "reason": "fused-online-seeded-key-coefficients-v8: full-segment32; preserve seed, numerical domain and normalization dataflow",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": true
+    },
+    {
+      "id": "de25e54114aafebfaba9eafe00ae8d6e99c0c9899d8da73bdf1bf36b358a40db",
+      "previous_index": 108,
+      "disposition": "retain",
+      "reason": "fused-online-seeded-key-coefficients-v8: tail32; preserve seed, numerical domain and normalization dataflow",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": true
+    },
+    {
+      "id": "ef3488d3d03c4f7f3620186ff7372cca28aa9e0571f7b99093be9ef08570f98c",
+      "previous_index": 109,
+      "disposition": "retain",
+      "reason": "fused-online-seeded-key-coefficients-v8: partial-fallback; preserve seed, numerical domain and normalization dataflow",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": true
+    },
+    {
+      "id": "274cb67281df56837bc7b9c4acf1ab1f3c08fcdfc957790eb7e64d6140c8e2f4",
+      "previous_index": 110,
+      "disposition": "retain",
+      "reason": "duplicate-normalization-attention-v6: full-segment16; preserve seed, numerical domain and normalization dataflow",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": true
+    },
+    {
+      "id": "975fbe287e906539c99da3be01277702a07ce646bd22e7b6703e0bae07851058",
+      "previous_index": 111,
+      "disposition": "archive",
+      "reason": "Additional subgroup-width permutation; retain each distinct normalization/seed mechanism, plus tail and fallback witnesses. Not claimed equivalent for every input.",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": true
+    },
+    {
+      "id": "5c3cfbf83939421c745913a84788f75ec06fb5d00bb7c32c10c7285e25b18fb1",
+      "previous_index": 112,
+      "disposition": "archive",
+      "reason": "Explicit BOOL carrier matrix; retain ordinary predicate writes and nested seeded-fold coverage.",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": false
+    },
+    {
+      "id": "4c6c88581fe20f1735d190ca1889f979dc7f5341908067e2e8355062d25e8d74",
+      "previous_index": 113,
+      "disposition": "retain",
+      "reason": "Optimized KEY nested score scope at subgroup width8 as well as width16",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": false
+    },
+    {
+      "id": "b412a7cb07b9335138462db316ccd81aa36c6f8dfbfa84ca9bdd2edd95793212",
+      "previous_index": 114,
+      "disposition": "retain",
+      "reason": "Nested seeded fold scope, multi-trip ordinary/strided bodies and seedFalse live updates; replaces single-trip witness",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": false
+    },
+    {
+      "id": "5200ccc23b3176e293f0796e7a473f07aa6cdc78e120c4c8597d634fe018bbd4",
+      "previous_index": 115,
+      "disposition": "retain",
+      "reason": "Cooperative softmax single column slice vs existing 257-column multi-slice boundary",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": true
+    },
+    {
+      "id": "cb0368cb52f2f0f055040645a451637f4b7972d40f5736d761c02b858258f8ca",
+      "previous_index": 116,
+      "disposition": "retain",
+      "reason": "Partial CTA direct uniform Loop barrier vs nested StridedLoop barrier entry",
+      "group": "marked_operators",
+      "marked_operators": [
+        "FuncCallExpr"
+      ],
+      "powenn_sm89_passed": false
+    },
+    {
+      "id": "1575656197e94c0eaf8603489abcab2416259e541c06c80ebcb11d75d2f81b4e",
+      "previous_index": 117,
+      "disposition": "retain",
+      "reason": "Four-slot/lead3 ring has an additional prefill stage; three-slot/lead2 IR is not its structural replacement",
+      "group": "marked_operators",
+      "marked_operators": [
+        "FuncCallExpr"
+      ],
+      "powenn_sm89_passed": false
+    },
+    {
+      "id": "7f86048eb7814d46ed97a1952e39716a6d5c03755faa1f977d954565686342dd",
+      "previous_index": 118,
+      "disposition": "retain",
+      "reason": "Unsigned left-shift typed program retained explicitly, avoiding reliance on common opcode reasoning",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": false
+    },
+    {
+      "id": "06a6f12448fbb8fa89a986b27daaf213436aecfc3a82bba559eb3ba17e6b8e70",
+      "previous_index": 119,
+      "disposition": "retain",
+      "reason": "Independent scalar F32 add with partial Tile and generated ABI names",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": true
+    },
+    {
+      "id": "fe256034fe7c7c62265efd48a8f68916a616af576075f2b372d88752fcde592c",
+      "previous_index": 120,
+      "disposition": "retain",
+      "reason": "Independent grouped width2 F32 add with tail and cancellation input domain",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": true
+    },
+    {
+      "id": "cc1c8cef5b4d98b091c309d15df9d9e8d44699998053cd6685bd78d9d5ee815f",
+      "previous_index": 121,
+      "disposition": "retain",
+      "reason": "Standalone serial contraction program; ordered multi-kernel attention is not an identical graph",
+      "group": "hidden_set_coverage",
+      "marked_operators": [],
+      "powenn_sm89_passed": true
+    }
+  ]
+}

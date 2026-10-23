@@ -1,0 +1,104 @@
+{
+  "status": "APPROVE actualone-draw erf oracle reference beforecompiler/GPU",
+  "case_id": "63558c3da344eded31db3ba070fd5b9bfed72c764d052019d37b715732205e2c",
+  "case_dir": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/erf-small-oracle-validation-884271/erf-and-amplified-small-values",
+  "file_hashes": {
+    "expected.npz": "2dc575ce79199c005cb76ecf61dff8b59134e5fd60f78677402286285ab62474",
+    "inputs.npz": "1c5c5b08cf3b0c60beee98223fc62e581872a301247f5408d48ce5a0fc8c6104",
+    "k_717820.ir.json": "956fa271f15744eece7986c458505b8a538519bc52fc604c68f646a514db53d8",
+    "meta.json": "86c938c26d87e913f217f3dc60efd013d707754051bc40df495491f022bc372b"
+  },
+  "generator_sha256": "945c561519f134b1183cfe275d2fae17b8a0f38e7fe170b226e5fbec5fc6bd24",
+  "case_list_sha256": "4c5545f1656866fb0f65e9b91db12878e29af760f530e8ce008cb58b4e57b405",
+  "draw_manifest_sha256": "64fa755a8180bef074ad80cc851bdec78313f5940845213dacdaa68b1233a2e9",
+  "seed": 884271,
+  "sourceapproval_before_record_before_generation": {
+    "approved": 1792718826.230261,
+    "recorded": 1792718846.3190238,
+    "generated": 1792718846.6835153
+  },
+  "typed_graph_and_F32_operation_boundary_valid": true,
+  "ABI": [
+    "amp_717820",
+    "x_717820",
+    "out_717820"
+  ],
+  "scalar_amp_exact2power80_inputNPZomitted": true,
+  "normal_nonzero_inputs_raw_scaledrefs_verified": true,
+  "expected_words": 70,
+  "allwords_bitwise_match_Pythonmath_and_independentDecimal120": true,
+  "independent_highprecision_method": "GaussLegendrepi8iterations; directfactorial/powers erfseries to1e-105; explicitadjacentF32rounding-bincheck, signedzero preserved",
+  "max_series_terms": 138,
+  "minimum_fractional_F32_rounding_bin_margin": 0.0008794978284251028,
+  "complete_output_coverage": {
+    "logical_cells": 35,
+    "physical_threads": 64,
+    "padding_threads": 29,
+    "output_slots_every_once": 70
+  },
+  "fixed_tolerances": {
+    "rtol": 1e-05,
+    "atol": 1e-07
+  },
+  "forced_tiny_controls": [
+    {
+      "index": 0,
+      "x": 8.271806125530277e-25,
+      "scaled_reference": 1.128379225730896,
+      "acceptance_interval": [
+        1.1283678419386387,
+        1.1283906095231533
+      ],
+      "source_loss_cut_inputs": [
+        1.0,
+        0.0
+      ]
+    },
+    {
+      "index": 1,
+      "x": 1.6543612251060553e-24,
+      "scaled_reference": 2.256758451461792,
+      "acceptance_interval": [
+        2.2567357838772772,
+        2.2567811190463067
+      ],
+      "source_loss_cut_inputs": [
+        1.0,
+        0.0
+      ]
+    },
+    {
+      "index": 2,
+      "x": -8.271806125530277e-25,
+      "scaled_reference": -1.128379225730896,
+      "acceptance_interval": [
+        -1.1283906095231533,
+        -1.1283678419386387
+      ],
+      "source_loss_cut_inputs": [
+        1.0,
+        0.0
+      ]
+    },
+    {
+      "index": 3,
+      "x": -1.6543612251060553e-24,
+      "scaled_reference": -2.256758451461792,
+      "acceptance_interval": [
+        -2.2567811190463067,
+        -2.2567357838772772
+      ],
+      "source_loss_cut_inputs": [
+        1.0,
+        0.0
+      ]
+    }
+  ],
+  "limits": [
+    "Actualreferencevalidationonly; sourcepredictionnotactualbaselinePTX/SASS/GPUfailure.",
+    "No generator invocation, case/reference/source changesorredraw; no compiler/method/preparation/assembly/GPU.",
+    "Parentmayfreezeacceptedoporaclebeforebaselinecompiler/GPUdiagnostics; numericalcontractnormalfiniteandfixedtolsremainunchanged."
+  ],
+  "created_utc": "2026-10-23T01:29:32.057848+00:00",
+  "owned_jobs": []
+}

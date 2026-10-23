@@ -1,0 +1,59 @@
+{
+  "verdict": "Approved actual partialuniform oracle validation cases before fulloraclefreeze",
+  "generator_sha256": "51c3b8fea1cf41f177b4217e58c4af6da3159909c3e6d1ee3cd43b3d8a8183a8",
+  "source_artifact_id": "1cb18f08236e4fe991d76c84e1ab187006ef4d265a2085a3d8f0ef4356e45f35",
+  "validation_seed": 667788,
+  "compiler_confidence_draw": false,
+  "rows": [
+    {
+      "case_id": "bd0cba1f7d07098c0d584b79d80458a57edfee77e685ab2c2eea3d847f1f4414",
+      "kind": "loop",
+      "n": 81,
+      "block": 32,
+      "ctas": 3,
+      "padding_lanes": 15,
+      "lastCTA_active_writers": 17,
+      "uniform_repeat_count": 3,
+      "exact_expected_words": 81,
+      "all_active_global_shared_addresses_in_bounds": true,
+      "all_physical_padding_shared_divisors_positive": true,
+      "padding_global_effects_require_masking": true,
+      "sameCTA_active_neighbor_has_writer": true,
+      "every_output_written_once": true,
+      "direct_shared_schedule_simulator_matches": true,
+      "crosslane_changed_output_count": 76,
+      "sanitizer_required": true,
+      "expected_max_abs": 24.0
+    },
+    {
+      "case_id": "fb08b0884f3532cd8a601414cd6f2434f05b99602b99dfee396c8b73fc9643f4",
+      "kind": "nested-strided-loop",
+      "n": 191,
+      "block": 64,
+      "ctas": 3,
+      "padding_lanes": 1,
+      "lastCTA_active_writers": 63,
+      "uniform_repeat_count": 7,
+      "exact_expected_words": 191,
+      "all_active_global_shared_addresses_in_bounds": true,
+      "all_physical_padding_shared_divisors_positive": true,
+      "padding_global_effects_require_masking": true,
+      "sameCTA_active_neighbor_has_writer": true,
+      "every_output_written_once": true,
+      "direct_shared_schedule_simulator_matches": true,
+      "crosslane_changed_output_count": 181,
+      "sanitizer_required": true,
+      "expected_max_abs": 56.0
+    }
+  ],
+  "exact_reference_words_checked": 272,
+  "new_semantic_types": 0,
+  "typecap_including_pending": 75,
+  "no_compiler_import_emission_assembly_GPU": true,
+  "no_case_oracle_edits_or_newdraws": true,
+  "limits": [
+    "Developmentvalidation is not fresh frozencompilerconfirmation. Parent alone freezescompleteoracle and reserves qualificationcases.",
+    "Paddinglanes compute legal sharedindices but their globalinputaddresses are intentionally outside logicaln; candidate must predicate these accesses while keeping allphysicalCTAthreads in bothbarriers.",
+    "Need guards and ComputeSanitizer plus isolated all15/fixed/freshpartial GPUqualification before retaining compilercoverage extension."
+  ]
+}

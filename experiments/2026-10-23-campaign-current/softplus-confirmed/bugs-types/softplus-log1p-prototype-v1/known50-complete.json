@@ -1,0 +1,714 @@
+{
+  "status": "PASS known50 preparation complete; published15 exact baseline935 identity and softplusdev/fresh activation inspected",
+  "source_id": "f0f5e4bf8d89a5e16d2c917853c92f08650179fc1bdb5681bef698610dbc76a7",
+  "compile_sha256": "96a954a0edf606637ade95f75510bffcd52da5e2c19edab23848c970bf020f58",
+  "original_plan": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/correctness-softplus-log1p-v1-supplement-plan.json",
+  "list_count": 50,
+  "known_unique_cases": 179,
+  "core47_unique": 47,
+  "union_expected_isolated_cases": 211,
+  "core_known_overlap": 15,
+  "completed_prepared": [
+    {
+      "name": "async-oracle-validation-112233",
+      "source_id": "f0f5e4bf8d89a5e16d2c917853c92f08650179fc1bdb5681bef698610dbc76a7",
+      "cases": 4,
+      "case_ids": [
+        "c37693f91a7210ccc513e699de5a289e2f2f909f83a7059ed6e386a2a263a25d",
+        "7bb9d9c27732924a02ca9869601a7af55fd6276ae6894ed00c3dbc7be5d84228",
+        "21171f5ca6c366ded10c9865a3160437b8985dd0a89d83770c473c30f8b3e195",
+        "a083ac93290653c119bae4512c057058495a50fa9d0528dc7ce6e3caff5c6065"
+      ],
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/correctness-softplus-log1p-v1/async-oracle-validation-112233/preparation/prepared.json",
+      "prepared_sha256": "824543d4b7a2b25da77692f0f1188b15dc7586e2a48427225a12b85c852469c6",
+      "gate": "pass"
+    },
+    {
+      "name": "async-screen",
+      "source_id": "f0f5e4bf8d89a5e16d2c917853c92f08650179fc1bdb5681bef698610dbc76a7",
+      "cases": 4,
+      "case_ids": [
+        "1575656197e94c0eaf8603489abcab2416259e541c06c80ebcb11d75d2f81b4e",
+        "53c4ee4e49567dde97d563245964e2a93c1bc365186ce07da6840bf38b98db61",
+        "e80480098b9a4d5619b69b5deaefee5fe0eff10e2ffc35d7699d8e29a34af638",
+        "be73fec91603b6810925f6480349d6399e117e9a51a7aaf5f652ed66a32eaa61"
+      ],
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/correctness-softplus-log1p-v1/async-screen/preparation/prepared.json",
+      "prepared_sha256": "22cde740b70840d906d7f1673d8d1891bfb313501abc4419a2f436a3a9108720",
+      "gate": "pass"
+    },
+    {
+      "name": "attention-bounded-independent",
+      "source_id": "f0f5e4bf8d89a5e16d2c917853c92f08650179fc1bdb5681bef698610dbc76a7",
+      "cases": 3,
+      "case_ids": [
+        "8996904203776bc61d7da020bfba25d6b8df989336f7641ac753c3f80556a25e",
+        "7bfe3e8fd6dd18024fb08430b427e687b38faf560d1397e9b210561fb21fc63c",
+        "bdd094ff243fd119a72e2e675ee682294887bced491b5131041c7f8ac744fdc3"
+      ],
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/correctness-softplus-log1p-v1/attention-bounded-independent/preparation/prepared.json",
+      "prepared_sha256": "1115b052694003901189d2ce7be3b820611f623de069642b01ff1986e4762dde",
+      "gate": "pass"
+    },
+    {
+      "name": "attention-bounded-screen",
+      "source_id": "f0f5e4bf8d89a5e16d2c917853c92f08650179fc1bdb5681bef698610dbc76a7",
+      "cases": 3,
+      "case_ids": [
+        "e35aeaf4242506aad5305a9183d67ba836273df2e954ca93b8e8f65e3e9a7b46",
+        "7ad3e910941f6bf0e71f664f4c48ac24c4425df7c642fb1bb8cbd04d1edec37d",
+        "8e5b840f53eb525072ff57abd9035966a586dbfa4f323003e82644895eab04fe"
+      ],
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/correctness-softplus-log1p-v1/attention-bounded-screen/preparation/prepared.json",
+      "prepared_sha256": "c9ad35431eabe77676bc3ac7a8bed1be5237651ea4a9558c105f474cd0d3c37a",
+      "gate": "pass"
+    },
+    {
+      "name": "attention-full-tail-independent",
+      "source_id": "f0f5e4bf8d89a5e16d2c917853c92f08650179fc1bdb5681bef698610dbc76a7",
+      "cases": 2,
+      "case_ids": [
+        "dd375967ea3896ace9e00ecb875af9b42a8cc2e0f22ca8525b29b556bbe04389",
+        "69fdea2216c56996b712ccaacacfef660588f54d5b6b08e51e34009f47f07448"
+      ],
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/correctness-softplus-log1p-v1/attention-full-tail-independent/preparation/prepared.json",
+      "prepared_sha256": "12b21c6f27a8d76b44beb6bd3a557afdef9e1d9c4ffb23da7d376438d7573908",
+      "gate": "pass"
+    },
+    {
+      "name": "attention-order-independent",
+      "source_id": "f0f5e4bf8d89a5e16d2c917853c92f08650179fc1bdb5681bef698610dbc76a7",
+      "cases": 3,
+      "case_ids": [
+        "44c6e344374056121b8a007268039a7d7823bf44aed0149ed4d96ddf9164d0c2",
+        "e4180db22f79b911561e72b2ebf63e8552c6c390a1fb0b8aac1b22ddd1d94c7a",
+        "bebbb5fd2f3862042cf1cbae34550467b7ee077c2347be5ed5ca756422f2932c"
+      ],
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/correctness-softplus-log1p-v1/attention-order-independent/preparation/prepared.json",
+      "prepared_sha256": "12e662a657c070d1ebf0b298ea092f979b7c1b65d25452e8ca7b5a95ac97e339",
+      "gate": "pass"
+    },
+    {
+      "name": "attention-order-screen",
+      "source_id": "f0f5e4bf8d89a5e16d2c917853c92f08650179fc1bdb5681bef698610dbc76a7",
+      "cases": 3,
+      "case_ids": [
+        "01e2458a05700443b8644949c123585a5129a9bcee19fe82ec68ea6f95807eed",
+        "fed237f6219251ed922b726d78a7a07aeb8290abd7ff967036ed5bc23e59b90e",
+        "6ebeed85adf3b8c7acbd61f10f37da15ba491432b4ec9a09e28c7e9156d6c69d"
+      ],
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/correctness-softplus-log1p-v1/attention-order-screen/preparation/prepared.json",
+      "prepared_sha256": "7fd068efe936d5f04f080c293d5fe657b1ea3d0b5d51b2b8266343a71224bb6b",
+      "gate": "pass"
+    },
+    {
+      "name": "bug-independent",
+      "source_id": "f0f5e4bf8d89a5e16d2c917853c92f08650179fc1bdb5681bef698610dbc76a7",
+      "cases": 6,
+      "case_ids": [
+        "0ae55875282f68e45972d28c44d9c31c0b3499e2227776855effb0b9b6595d4f",
+        "9e0d1ed8b86484a33e105bd752def7eb9afd8a43b5df5c1b5fcc94febb44df7b",
+        "7f86048eb7814d46ed97a1952e39716a6d5c03755faa1f977d954565686342dd",
+        "cd76e69248753128806ede69cd08da03329d51a9db2948a7b0cf07cb01217721",
+        "8ca73cffb2863a7a82d7871f5463eb230e430e5d35ce03067b9d8b08d23e77a3",
+        "fa9b0ad7ccab9729789dc2103a3a39fe3ae2bdc350973a226494e563fcfc7b8b"
+      ],
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/correctness-softplus-log1p-v1/bug-independent/preparation/prepared.json",
+      "prepared_sha256": "6a1ec5d588f393a7bcd2aad19532c5e003496510c8ead66763d74f4960d62cdc",
+      "gate": "pass"
+    },
+    {
+      "name": "bug-screen",
+      "source_id": "f0f5e4bf8d89a5e16d2c917853c92f08650179fc1bdb5681bef698610dbc76a7",
+      "cases": 6,
+      "case_ids": [
+        "ef34e536dab09fd4c0bcd85ea0c1e9a2171ffef5f27a64981ea6343aab1cd75a",
+        "57e82125a796bb9080bee679a08f137d78367aa66643aca4080c92adc9932dfe",
+        "fb10c3c2c52755ec1dc8ef21efa8ef3a2f268584505b9272815c8d6d54d2f3b1",
+        "b8406f757a784302d3adc6e35bfca634acaf1899b7012fb83ee12f59f1d276e7",
+        "fa41b5e778718c3209536b85787001a3fce87f9cbc7f4b8288e18ffa0777fcc6",
+        "8a7db526571189e3b67c95f11a3294d910c6e10a53d58c33f0c9a97031e3a9b8"
+      ],
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/correctness-softplus-log1p-v1/bug-screen/preparation/prepared.json",
+      "prepared_sha256": "c3b31da667f14e31ec33986554b14a9ca5e871be2abc4717cb73046cebdf1a9e",
+      "gate": "pass"
+    },
+    {
+      "name": "carrier-screen",
+      "source_id": "f0f5e4bf8d89a5e16d2c917853c92f08650179fc1bdb5681bef698610dbc76a7",
+      "cases": 1,
+      "case_ids": [
+        "e49e6ed42d01b423c44d16456ce62177ec5302f9f4eced7c391d16ebdd999a08"
+      ],
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/correctness-softplus-log1p-v1/carrier-screen/preparation/prepared.json",
+      "prepared_sha256": "309317e720ada1e760f0d08605b42d158beac03e4c10d1a4bb9edf6a07ed6fc6",
+      "gate": "pass"
+    },
+    {
+      "name": "carrier-v2-independent",
+      "source_id": "f0f5e4bf8d89a5e16d2c917853c92f08650179fc1bdb5681bef698610dbc76a7",
+      "cases": 1,
+      "case_ids": [
+        "15f3948cd30500b916a474e412a543acc19a0ca24e8a9240aff3d59d531af016"
+      ],
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/correctness-softplus-log1p-v1/carrier-v2-independent/preparation/prepared.json",
+      "prepared_sha256": "01bed216295475f475ca1b1d4c8dfa93687fb71789455e784b30128ec5645806",
+      "gate": "pass"
+    },
+    {
+      "name": "carrier-v2-screen",
+      "source_id": "f0f5e4bf8d89a5e16d2c917853c92f08650179fc1bdb5681bef698610dbc76a7",
+      "cases": 1,
+      "case_ids": [
+        "81efd984435c63b55d728746a2e821c6fa0fd097b2ad92c5870170832f7f3034"
+      ],
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/correctness-softplus-log1p-v1/carrier-v2-screen/preparation/prepared.json",
+      "prepared_sha256": "eb98239d66ef438a55fba476565cfc3d8056cf1c067a67b2eab2a623389430e2",
+      "gate": "pass"
+    },
+    {
+      "name": "compact-v2",
+      "source_id": "f0f5e4bf8d89a5e16d2c917853c92f08650179fc1bdb5681bef698610dbc76a7",
+      "cases": 58,
+      "case_ids": [
+        "c10866af73f820553331b01c52e042e5d724c275a6f5fedd9348170ba75d382c",
+        "69db4e7f597c41b0684fb30c3204e197cf56c8647d9a63dc0adb77f2a8a0d867",
+        "6ab09ab4acc384ee252370a564a13965ece1ad21a3e64d6615f0de1a39b8c665",
+        "89d56c168a0b04373ef8d50096c48534c70019b8d2f87371b79aee2289922b44",
+        "1e82d7e58a53e8795ea9d05e3759dfe201e42308efd08dd2a51e79c769dc2fbc",
+        "cd9a29496fccd9e421c1cfbe14347cb45003f38681e3b4b2e703f5dbbfdd6c5d",
+        "aeb1568894b7afb50ea0b1b6c6fe94b57419452643ec87c5c6561f9ebfc58bbe",
+        "4035b0c010105ed7be8aa1a889fe2754d498fc4a27c1719bf547ddad66e48403",
+        "5e973341ada3e33f701293be5a3e6195badb7290a5471f4c6cefa86634d1b168",
+        "3145aa57f753f64551cd4b83c3d430e6e2375a9feb4819accbfd5e55c39da560",
+        "aeeffce3a36b8cf1b27173b8c1644fc517a24d992173e06bb1664784b009b6ba",
+        "2ffefe7fee88d864b3ac97cd70fe9711643f3551fba367299df52f329649154d",
+        "a56bdb784a46a763c2b633ebb5d16ee1ffd4287cb0984168b4f80909c323ce22",
+        "6dfbe2bc925e2b31ceb8eb84bb5016cca8af143ca55cf93078d09decc26a0fd3",
+        "5c2ba872d36e6526a79b9799c059e237f65a34019cd94f1c85da4f0b9f930d3f",
+        "7be68f4ef7d32de1bde415d3c96e21c0aee23c0c175d1339a81abb77eaff8083",
+        "ed37ac4d2801d41d13b5fd2ce98731e8e717f9651e92193bc9146c008b87aeba",
+        "605ee03dc09345cfed01434531ed73588a820eb19fd1eaf1327f5e67889756d6",
+        "4f496d88d4a5739947380eac36ae5592d18e0e980e1038721c926960643b9660",
+        "babe59769149f7131c83c276e58558a1cc49ab73d0e6d7112b70d4d946be6fc3",
+        "07247b475413b2486a6138901e9a05e886b2993ef6d21c963b2cc7bce52c3e0d",
+        "c5940d93d7e94754b865cde5571eb2e6e91067518afb569e4f871284d5d3985f",
+        "6cbcd2d465379c7f0d61cf88e1074f31e8296caefc4a85394212978d907873d5",
+        "61098ba0cc34ea091b2a821816dec4f8743aa37dc010ee6b20a8c46722a48c4f",
+        "3403dbd465d8a05049feb992ea67d9ecf4de0fb1ef106c2bd71146e312b437fb",
+        "61376e724851b5c2da0888a4dd999d755ce44ae5e591390537922d6fe3d4220f",
+        "fae06ecf5a68131f772531ea344d7a9c6e1f07075d191720cf5c330930af9f96",
+        "dc8cc0e8d88e7d60dcdf702bacc8d91e2e1761c18e9040ffd9b34c90477315c5",
+        "d42770018f494d678181aa0171c67225bae91861383c3d0149483e02559f14a3",
+        "31e66c227e064fdcdfdbd607624fae8c845d5a1c7f07668e40759e9961c1435f",
+        "b3b9d4ccd080adb9d5a05ae938aec6089818bc50230ec5093d25c135097c90a1",
+        "b24c76efd4ba9fd8763e69cfd1e0926f876281a2a06fd64c8dc9e882b9a33aed",
+        "f188ef762959e2f777587b9dbfb60421c6765cfd5412b37516c4b7113e7ff42a",
+        "0e80b09925f0f9637cdef513d58020e8dbd3fe023ee87c0372fbc01393d37f7e",
+        "bd8a59fd719b12c89bb2bef8b221fb1c007d5ade73a552c1d35f9a055886d363",
+        "3e9203274f6927cb955cf2e8d0af2e7e870ace628d9a26e6b356409a4e032631",
+        "068fb6cb67fb91185ea4063ac15b15ae1ea8b0ebeb9a05d6fef2e777f31f2348",
+        "1f9428cef0a7750c55fec497401857955bd037aed43ab72a1abf26627ef390af",
+        "807f6dfcde812fedd65efdbd0428a3f07108c21131ef242269c5fa5df0fec1c2",
+        "fff293a2235c2158ffc525f848ce136c020fdfa506b79c147ccadd0a39931751",
+        "061d7084b7298d83ba14950823669b4734ed6cc3f9f51bd5ee830f10e18ee56a",
+        "da018f96fc2e54583814b7dc39cce909d332add031820662839c2706fccdc91d",
+        "b5cc80a79e59c19edb2f07d14c0afe088a9c440310666187b50e20cd69c4397c",
+        "943cbd88c1f4ca66ae34098886c73543341807db35df0d3289820b2be0ab4a74",
+        "57aac69012ac3b0ee2cf4110e977c7429c12037a02aab06a73beebaa6c090fa1",
+        "70100ed805e7de6600d6952fc9318bce139883a55c5c3918e7bef7c0729baa81",
+        "0eeb170d22182ed9875fc86336fcbc090c2dcc2db2e2234cd704d8bf6614cc63",
+        "2623ef7bdace949bb90f19ab8499a43d44db719441a3583870dbdf14d0c08172",
+        "48189071240806b192fd70230a1d4af9b7fce13e389c91f4c88a93a35c9388a9",
+        "5224818b2d26d5b73af6c783a756518a271351ca1a5529cbc0686f7e181387fa",
+        "669f6890c8882493e5571cfcd0f2a0172bc9b729375ab98513331ac0d089e3a4",
+        "83fb961f7fc2aee057d579cd6309ef1cce9d1c66a0521d78c4c6978d50b289e5",
+        "8e6693eaac063e733279668d2476edb7ac5fad6f11b9a493541574512c7552b7",
+        "cc0b21f91dca260efa45b680481e1ba9f39dcee329f149f6db678c8c8b9f97be",
+        "72f1deeac451a01002043dead776384004b887cdcec9089a0bdfcc02923c022d",
+        "9e1f76b1c9291d28133d85a85ae619cdd4d7ca52d54f649c3e7e9d925e54e0e8",
+        "0a50249d1218b576c10e21a7020336fa287d4d5d6bd7a39511aa2219aa070556",
+        "e4ac354528a2ab697578716e36b5ac607df309f75252462e861b435ad2f5d7c5"
+      ],
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/correctness-softplus-log1p-v1/compact-v2/preparation/prepared.json",
+      "prepared_sha256": "9267ac720399b9f9fefe96ddedaecd2e3602383457742c981453fca2a5ca5e2f",
+      "gate": "pass"
+    },
+    {
+      "name": "dot-common-guard-retained-v1-screen-bounded",
+      "source_id": "f0f5e4bf8d89a5e16d2c917853c92f08650179fc1bdb5681bef698610dbc76a7",
+      "cases": 3,
+      "case_ids": [
+        "fd72ad46fcf0df45f254a6f394abd0b7a89e5826e987cb399ace7e2be3c165df",
+        "0194979eb58fcb2c5494ec6fb0d95f3b05e2317bd7b515d8256a668342246437",
+        "23b1bc8e96633d50b412dd7bd7f7ca97eec5a1ddf3049136e2ed9e9cebf76acd"
+      ],
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/correctness-softplus-log1p-v1/dot-common-guard-retained-v1-screen-bounded/preparation/prepared.json",
+      "prepared_sha256": "2e2720442e90fe40e8dd11ce24aa6a9f769fb1269b1e59343d1e838bd9c3d1e1",
+      "gate": "pass"
+    },
+    {
+      "name": "dot-common-guard-retained-v1-screen-order",
+      "source_id": "f0f5e4bf8d89a5e16d2c917853c92f08650179fc1bdb5681bef698610dbc76a7",
+      "cases": 3,
+      "case_ids": [
+        "49410fed727473eb2a41559b34b0250a48a21297699eec595d6b09533935a897",
+        "b94b7bd68716df3dd03821761da26b791e4631b2e8d72297cf3bb3e28b2f7c44",
+        "5f2447a3ba0fef1cbd9b0c531dd22950b0cd2fbb7cd9e9c279bfe31b2a29c643"
+      ],
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/correctness-softplus-log1p-v1/dot-common-guard-retained-v1-screen-order/preparation/prepared.json",
+      "prepared_sha256": "24261f37081ebbf6b4326e80ecfd703075e78dc130a72054671bc20d90141c24",
+      "gate": "pass"
+    },
+    {
+      "name": "dot-common-guard-retained-v1-screen-partition",
+      "source_id": "f0f5e4bf8d89a5e16d2c917853c92f08650179fc1bdb5681bef698610dbc76a7",
+      "cases": 2,
+      "case_ids": [
+        "dd4290101ad24d3a9bd745f0d56613bf337b611cef9d91db062d92403c4a55d7",
+        "1fe7f658cea777c6d6247df02acc55d578b271215364dc5760bde8c72d34c043"
+      ],
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/correctness-softplus-log1p-v1/dot-common-guard-retained-v1-screen-partition/preparation/prepared.json",
+      "prepared_sha256": "26898d231c0749da82cafc0c7d80b19a86e4b01f1109545dc19c9aefa96f0ac7",
+      "gate": "pass"
+    },
+    {
+      "name": "dot-vector4-retained-v2-screen-bounded",
+      "source_id": "f0f5e4bf8d89a5e16d2c917853c92f08650179fc1bdb5681bef698610dbc76a7",
+      "cases": 3,
+      "case_ids": [
+        "3e614b648c65f9a3b883df6cb5ef78cc98f0d68417b6cd1fe2e0c1ae558d7ab2",
+        "0e82232fd090f13e0bdfe988af65496ee4cf5872abbf143c3e0b768c721f2a79",
+        "32c781a1829dfc7920463ea01b5842f60ba8981fdfd3f5e9cbecc939c1a3d709"
+      ],
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/correctness-softplus-log1p-v1/dot-vector4-retained-v2-screen-bounded/preparation/prepared.json",
+      "prepared_sha256": "37ce453098f0f5e0c67db405c8b474c3ee9ecfbecbff181093ea380c4864d72a",
+      "gate": "pass"
+    },
+    {
+      "name": "dot-vector4-retained-v2-screen-order",
+      "source_id": "f0f5e4bf8d89a5e16d2c917853c92f08650179fc1bdb5681bef698610dbc76a7",
+      "cases": 3,
+      "case_ids": [
+        "e366fa10997d44eacacd8ada02b87df2e638ccdb3ed4664669d6b69c1f3ce795",
+        "2ced9a7eb8ddb13dac6b3ced5f45a0c44d51be6e2d1936a85f7060a98bad9323",
+        "4a2d36df746dd497c51a2cae4aa4aa7dd60324e64ed40a7c9b51064695efa70f"
+      ],
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/correctness-softplus-log1p-v1/dot-vector4-retained-v2-screen-order/preparation/prepared.json",
+      "prepared_sha256": "f5c36f36ad93e3a992d8bfad23518d68d36dfda90a1cd7db9e0c3e73667b778a",
+      "gate": "pass"
+    },
+    {
+      "name": "dot-vector4-retained-v2-screen-partition",
+      "source_id": "f0f5e4bf8d89a5e16d2c917853c92f08650179fc1bdb5681bef698610dbc76a7",
+      "cases": 2,
+      "case_ids": [
+        "f13fd877d0990c645e039d9d183b05c5d76ba9b583fe59df37a7a84cf63b8db1",
+        "eb697a3330e4ca06ed0c2de76fa9f0f65da9c1c1d796a9d6a930ef4e5b8b92e7"
+      ],
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/correctness-softplus-log1p-v1/dot-vector4-retained-v2-screen-partition/preparation/prepared.json",
+      "prepared_sha256": "f238c3449fd42dabda5f5fca6d743f95debf6ba5762d1c83e7aef4c6da8cef1c",
+      "gate": "pass"
+    },
+    {
+      "name": "exact-tree-validation",
+      "source_id": "f0f5e4bf8d89a5e16d2c917853c92f08650179fc1bdb5681bef698610dbc76a7",
+      "cases": 4,
+      "case_ids": [
+        "24e447a29f7665e75242d1ca946836b2f542d9cc71953cb5578797962bd97165",
+        "70ad0f32f8f071770e3dffdcf510ff9fcb64022e08c93f8e775a24ca173596a3",
+        "59075bf4598eee47a9e806eeebf1a01e2c41d531ea5486a1842431411355f6ca",
+        "6890db887e9ddeaf5f0a49d1111ec35c0ac97c590f7720d2112e53c5a25b6e1a"
+      ],
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/correctness-softplus-log1p-v1/exact-tree-oracle-validation-557733/preparation/prepared.json",
+      "prepared_sha256": "a7bb36bdc5e3a37fde81fd66f998642304ad27544517ef17f22b127447f92d6a",
+      "gate": "pass"
+    },
+    {
+      "name": "fresh-bounded",
+      "source_id": "f0f5e4bf8d89a5e16d2c917853c92f08650179fc1bdb5681bef698610dbc76a7",
+      "cases": 3,
+      "case_ids": [
+        "1650fdade129dbaf11cf429696bcb50edf8b87b2b5ef144ac3462db6d685b1e1",
+        "66be28919cf0ef0efd3260e820006f8c760fc3443949ca653fc1de4b8877050f",
+        "c811573f64c56c05108d123641f72feda6101f6f85bcef12aebf31e619ca4a7d"
+      ],
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/correctness-softplus-log1p-v1/dot-vector4-retained-independent-v1-bounded/preparation/prepared.json",
+      "prepared_sha256": "1ad1b34667d20d3eac47bb9fe991aeaa4ae5fefe10b066d6144e2cc43e49a9ee",
+      "gate": "pass"
+    },
+    {
+      "name": "fresh-order",
+      "source_id": "f0f5e4bf8d89a5e16d2c917853c92f08650179fc1bdb5681bef698610dbc76a7",
+      "cases": 3,
+      "case_ids": [
+        "0129a89f059c90878701ac458a9689ef2a26028bb880c0b14749893e7721a6fd",
+        "addd8ced2c0c9ab53ffd88afd9593108afbd6053c0f21a3a94359a7b63633c25",
+        "51af4ba7d4c9c3af6e667460b7ca05ff165a3c096162c60c6e0d8c1e0f96a2fd"
+      ],
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/correctness-softplus-log1p-v1/dot-vector4-retained-independent-v1-order/preparation/prepared.json",
+      "prepared_sha256": "b0b61d76759d16e8f707d34d527aa7eae8e9285cb96363320e790acf7a139cc9",
+      "gate": "pass"
+    },
+    {
+      "name": "fresh-partition",
+      "source_id": "f0f5e4bf8d89a5e16d2c917853c92f08650179fc1bdb5681bef698610dbc76a7",
+      "cases": 2,
+      "case_ids": [
+        "2219eefa7f8ccb77e242e7e569b78f318b15c8fff75a08061551c944d9065b6e",
+        "97abc829e63e7c3432400aa2ddda4a5ab5f3d758b406533c1bfb084a8673bc03"
+      ],
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/correctness-softplus-log1p-v1/dot-vector4-retained-independent-v1-partition/preparation/prepared.json",
+      "prepared_sha256": "e0f0deeafd747735f05dad9acf21659b5afef237d36599046942948719b1d4e8",
+      "gate": "pass"
+    },
+    {
+      "name": "nested-KEY-development",
+      "source_id": "f0f5e4bf8d89a5e16d2c917853c92f08650179fc1bdb5681bef698610dbc76a7",
+      "cases": 1,
+      "case_ids": [
+        "d7be87bc0caabbc560a024cd044944f15da13f4085819fc40ebcba4940f64200"
+      ],
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/correctness-softplus-log1p-v1/nested-key-scope-oracle-validation-710331/preparation/prepared.json",
+      "prepared_sha256": "73803060dbf12e353f0cd139af861b64a1263d60577d0d051218a5929ad4b6bb",
+      "gate": "pass"
+    },
+    {
+      "name": "nested-KEY-fresh-v2",
+      "source_id": "f0f5e4bf8d89a5e16d2c917853c92f08650179fc1bdb5681bef698610dbc76a7",
+      "cases": 1,
+      "case_ids": [
+        "4c6c88581fe20f1735d190ca1889f979dc7f5341908067e2e8355062d25e8d74"
+      ],
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/correctness-softplus-log1p-v1/nested-key-scope-independent-v2/preparation/prepared.json",
+      "prepared_sha256": "70147b01de2da132dda4f4c3caaf9580cdd665f2053fc03ee3f53a61f8d41c10",
+      "gate": "pass"
+    },
+    {
+      "name": "nested-fold-development",
+      "source_id": "f0f5e4bf8d89a5e16d2c917853c92f08650179fc1bdb5681bef698610dbc76a7",
+      "cases": 1,
+      "case_ids": [
+        "ab23254f6a6f908d16e15b06fec69272c6c69cc93e0c56d70b1e4e44c11aa807"
+      ],
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/correctness-softplus-log1p-v1/nested-seeded-fold-oracle-validation-901127/preparation/prepared.json",
+      "prepared_sha256": "ebb1f4ec28841c9b095f2bc51b51c24de700fdee39f5c0784cc3cf38b1b73194",
+      "gate": "pass"
+    },
+    {
+      "name": "nested-fold-fresh-v2",
+      "source_id": "f0f5e4bf8d89a5e16d2c917853c92f08650179fc1bdb5681bef698610dbc76a7",
+      "cases": 1,
+      "case_ids": [
+        "8353f18038868b04151cfa02ef3f2f3ebbdd42760760035c0462d6490151d98a"
+      ],
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/correctness-softplus-log1p-v1/nested-seeded-fold-independent-v2/preparation/prepared.json",
+      "prepared_sha256": "3ba016834231559f816160e6c536e49b8d51eadff9a83917309228f926e9018b",
+      "gate": "pass"
+    },
+    {
+      "name": "nested-fold-superseded-v1-known",
+      "source_id": "f0f5e4bf8d89a5e16d2c917853c92f08650179fc1bdb5681bef698610dbc76a7",
+      "cases": 1,
+      "case_ids": [
+        "b412a7cb07b9335138462db316ccd81aa36c6f8dfbfa84ca9bdd2edd95793212"
+      ],
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/correctness-softplus-log1p-v1/nested-seeded-fold-independent-v1/preparation/prepared.json",
+      "prepared_sha256": "067244a65f6469430859abb5b1e4f3b17a3cf8b89f8c64068d32768688bcbfa3",
+      "gate": "pass"
+    },
+    {
+      "name": "opaque-independent",
+      "source_id": "f0f5e4bf8d89a5e16d2c917853c92f08650179fc1bdb5681bef698610dbc76a7",
+      "cases": 2,
+      "case_ids": [
+        "dfc17cb14cc101c3e47ce1e09dcc44ec96b172d35e76e5cf8794a03078098564",
+        "763465e0de7581afe0062df5160952313a8ec7d0a37a64b7fedc50d5aef5e715"
+      ],
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/correctness-softplus-log1p-v1/opaque-independent/preparation/prepared.json",
+      "prepared_sha256": "a2dcced10f966f928ee33f617b0dd365c1c98826fafe860ae3fd00883129a5b8",
+      "gate": "pass"
+    },
+    {
+      "name": "opaque-screen",
+      "source_id": "f0f5e4bf8d89a5e16d2c917853c92f08650179fc1bdb5681bef698610dbc76a7",
+      "cases": 2,
+      "case_ids": [
+        "2c15db2e5679909cef087ecdd13de5ce6fb7cf56ae54b090f7a966d6dcb6a30e",
+        "7d586595132adb5191192231cef884f5daa56077f115b310c20d34f5b65b7c95"
+      ],
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/correctness-softplus-log1p-v1/opaque-screen/preparation/prepared.json",
+      "prepared_sha256": "68a1833752d086bdfb929891cd23f0abc6f40a5ed8d6cf3cd7c974620f24d0a6",
+      "gate": "pass"
+    },
+    {
+      "name": "partial-uniform-independent-v3",
+      "source_id": "f0f5e4bf8d89a5e16d2c917853c92f08650179fc1bdb5681bef698610dbc76a7",
+      "cases": 2,
+      "case_ids": [
+        "cb0368cb52f2f0f055040645a451637f4b7972d40f5736d761c02b858258f8ca",
+        "3a98fb0a1f2dcbd4db7d38b9edaa56c58b65cc7dcefe24c9e27ebf371d77e5ff"
+      ],
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/correctness-softplus-log1p-v1/partial-uniform-independent-v3/preparation/prepared.json",
+      "prepared_sha256": "290fbe9f2256dc9bb0b2f2c508c106807321f383b31cff1ffa7603a8ca6419e9",
+      "gate": "pass"
+    },
+    {
+      "name": "partial-uniform-oracle-validation-667788",
+      "source_id": "f0f5e4bf8d89a5e16d2c917853c92f08650179fc1bdb5681bef698610dbc76a7",
+      "cases": 2,
+      "case_ids": [
+        "bd0cba1f7d07098c0d584b79d80458a57edfee77e685ab2c2eea3d847f1f4414",
+        "fb08b0884f3532cd8a601414cd6f2434f05b99602b99dfee396c8b73fc9643f4"
+      ],
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/correctness-softplus-log1p-v1/partial-uniform-oracle-validation-667788/preparation/prepared.json",
+      "prepared_sha256": "0ff15fbdd35ce47bc0fb0e3443ec0c1b1a5eff958a98061ef1bce890d3cb1ab9",
+      "gate": "pass"
+    },
+    {
+      "name": "prefetch8-independent-v1",
+      "source_id": "f0f5e4bf8d89a5e16d2c917853c92f08650179fc1bdb5681bef698610dbc76a7",
+      "cases": 4,
+      "case_ids": [
+        "5ac01e040156b424b17a99e962e9b0bc098682db271cb5e10181003c87d1cf58",
+        "fb17edb5eaf08fe018ae09f7a909ed7f241e60fdbb719d81f0ff0562f3848fd9",
+        "eb0abf6ffa45c0ad6e2c8ec229da4c1c59fa51e17f9485865063b43bd897f9bb",
+        "d90cc1c289bd34b9da0a3d72e23f10626cdae1c90a3cf015c4ae737ae8d1c41b"
+      ],
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/correctness-softplus-log1p-v1/prefetch8-independent-v1/preparation/prepared.json",
+      "prepared_sha256": "0e2b05b317541ae0c09c5023830578a501c9379e5d84a189ad8caab4d8f1a228",
+      "gate": "pass"
+    },
+    {
+      "name": "prefetch8-screen-v1",
+      "source_id": "f0f5e4bf8d89a5e16d2c917853c92f08650179fc1bdb5681bef698610dbc76a7",
+      "cases": 4,
+      "case_ids": [
+        "54abab94e9d372d60df6a845f5a3c484ea8be351ac4fe8efc6ca96843b8071bb",
+        "53d30bb3fc2c8cef8ddf87b7e0842949757ccfeeca654935f5827463ec7c7618",
+        "3cc4f72e1ab355feeb81e65555c726ba7fa62f79c830d6549e9bf36f24b87e1f",
+        "2f75673c8e710aa79a4311cba9ada4e1d5256533aa5f327f0cf963a334d491ff"
+      ],
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/correctness-softplus-log1p-v1/prefetch8-screen-v1/preparation/prepared.json",
+      "prepared_sha256": "891749ca2cb59a0e0dc72469810f3328e8aba90c20853b1759cb260e9a898977",
+      "gate": "pass"
+    },
+    {
+      "name": "recurrence-oracle-validation-314159",
+      "source_id": "f0f5e4bf8d89a5e16d2c917853c92f08650179fc1bdb5681bef698610dbc76a7",
+      "cases": 2,
+      "case_ids": [
+        "274cb67281df56837bc7b9c4acf1ab1f3c08fcdfc957790eb7e64d6140c8e2f4",
+        "975fbe287e906539c99da3be01277702a07ce646bd22e7b6703e0bae07851058"
+      ],
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/correctness-softplus-log1p-v1/recurrence-oracle-validation-314159/preparation/prepared.json",
+      "prepared_sha256": "ac219240392c15e590332106e5ee4a6f31322e87655895baff2649ef2f6ae14d",
+      "gate": "pass"
+    },
+    {
+      "name": "recurrence-partition-oracle-validation-271828",
+      "source_id": "f0f5e4bf8d89a5e16d2c917853c92f08650179fc1bdb5681bef698610dbc76a7",
+      "cases": 2,
+      "case_ids": [
+        "c2506f791df9ea8ed9d823dbb3a3aa71e033f57b15928533c1c643e8dea1b6d2",
+        "24e1710bcc5692c488c7b8c779d09c6efbdb3a8c0cb773e4277b7a8413edf145"
+      ],
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/correctness-softplus-log1p-v1/recurrence-partition-oracle-validation-271828/preparation/prepared.json",
+      "prepared_sha256": "7584ef07e318920efbb52afbe177ac3354e068209e5cd72faf8bf0599328fcbe",
+      "gate": "pass"
+    },
+    {
+      "name": "recurrence-partition-screen",
+      "source_id": "f0f5e4bf8d89a5e16d2c917853c92f08650179fc1bdb5681bef698610dbc76a7",
+      "cases": 2,
+      "case_ids": [
+        "c205cd536be8e4bf87892df731b9b8c0216e00cc0d2f78b92d4e9c5af80932fb",
+        "899077ecb47b0bc0aec5af7b628d766ab3972cbfe210c606a649a5f9944f901f"
+      ],
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/correctness-softplus-log1p-v1/recurrence-partition-screen/preparation/prepared.json",
+      "prepared_sha256": "13d7bb7b9703665947468fbc34b1575575a5109daa58c35e6e40e7670199b5f0",
+      "gate": "pass"
+    },
+    {
+      "name": "scalar-bool-oracle-validation-778899",
+      "source_id": "f0f5e4bf8d89a5e16d2c917853c92f08650179fc1bdb5681bef698610dbc76a7",
+      "cases": 3,
+      "case_ids": [
+        "be140c82922d2fa4655d623f3b48e2f16769aadc10ec988a2a5ee7f6f5d77f07",
+        "9161cbcda8db695976f76193a9c2ef7f4e8cf561997f3e25df7e647bbd0e7703",
+        "37d1c24c4d7b100c6997be59505bc014afd90aed44cb0ca7672ef71858f74643"
+      ],
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/correctness-softplus-log1p-v1/scalar-bool-oracle-validation-778899/preparation/prepared.json",
+      "prepared_sha256": "3be57fa6ab1505d3a541d78a33dd365e0318ef3b17092bbf0464842dccc77fe3",
+      "gate": "pass"
+    },
+    {
+      "name": "scalar-bool-v2-independent-v1",
+      "source_id": "f0f5e4bf8d89a5e16d2c917853c92f08650179fc1bdb5681bef698610dbc76a7",
+      "cases": 3,
+      "case_ids": [
+        "55e079ba0209eba308837bd6710878b441902d0a3c6cb2404a6d2d3b74927a97",
+        "c979c0b2d2ce63b7a96fd1493dbc65806b5f507b9f4680bbd092e362cb34bf3f",
+        "5c3cfbf83939421c745913a84788f75ec06fb5d00bb7c32c10c7285e25b18fb1"
+      ],
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/correctness-softplus-log1p-v1/scalar-bool-v2-independent-v1/preparation/prepared.json",
+      "prepared_sha256": "4900ce2192a29b1ba31599fe5479dff6ec834718dfde00b6b413ffa535a324c6",
+      "gate": "pass"
+    },
+    {
+      "name": "scalar-bool-v2-oracle-validation-884411",
+      "source_id": "f0f5e4bf8d89a5e16d2c917853c92f08650179fc1bdb5681bef698610dbc76a7",
+      "cases": 3,
+      "case_ids": [
+        "69140f84c467e7ecc7554726a235297a4efa74f14f5df59755712fc45f9e77ee",
+        "69485ec5d44cd743f835257815304f26ac57e3f1e6b0dbc0873de1a9348c948b",
+        "2b8820d230c11f97c77937c68ffd5b79888f0d9316fcb6945ec05a0d862d3a96"
+      ],
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/correctness-softplus-log1p-v1/scalar-bool-v2-oracle-validation-884411/preparation/prepared.json",
+      "prepared_sha256": "e8f79b4581ed957f096995b9410f4ab6436e9a0dcc48757f6d491077cc367f1c",
+      "gate": "pass"
+    },
+    {
+      "name": "select-independent",
+      "source_id": "f0f5e4bf8d89a5e16d2c917853c92f08650179fc1bdb5681bef698610dbc76a7",
+      "cases": 1,
+      "case_ids": [
+        "cead3ab19f8377da377a355448dad32c51c0866edc7e29bfd67d80101e0c4695"
+      ],
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/correctness-softplus-log1p-v1/select-independent/preparation/prepared.json",
+      "prepared_sha256": "e2e8776d6fd012ec6345429df008034fcb56ea0260e3649eb41670b76a423ed9",
+      "gate": "pass"
+    },
+    {
+      "name": "select-oracle-validation-13579",
+      "source_id": "f0f5e4bf8d89a5e16d2c917853c92f08650179fc1bdb5681bef698610dbc76a7",
+      "cases": 1,
+      "case_ids": [
+        "a3637b82238835d8027901de0aee04a9d7df15e69ac12d965e1c9f490c209ef5"
+      ],
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/correctness-softplus-log1p-v1/select-oracle-validation-13579/preparation/prepared.json",
+      "prepared_sha256": "058634f2f29a67e2539234b334f9d8af280d176205a47f5cd3129ae1714989c6",
+      "gate": "pass"
+    },
+    {
+      "name": "shared-pair-oracle-validation-560123",
+      "source_id": "f0f5e4bf8d89a5e16d2c917853c92f08650179fc1bdb5681bef698610dbc76a7",
+      "cases": 4,
+      "case_ids": [
+        "de705c16257905e2418c7764648606c103b725e60751bcc582ebc6c87f4ee562",
+        "4878a2a692c321ffadbdc850aeb63ac9db94d8c632202d57dcae3a9385af5746",
+        "bc5ccc6e97f4938742737fd282d71e57d5104160666d518ddd99ef244ecea5be",
+        "defad12053f4721f06c34f9f354339b1f5c09e147406c864cea2288dfb25ecb1"
+      ],
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/correctness-softplus-log1p-v1/shared-pair-oracle-validation-560123/preparation/prepared.json",
+      "prepared_sha256": "43320220edbab4004fca58c445cdc63c2309e457c6d5a1b42112da6db5fa98b8",
+      "gate": "pass"
+    },
+    {
+      "name": "softplus-development",
+      "source_id": "f0f5e4bf8d89a5e16d2c917853c92f08650179fc1bdb5681bef698610dbc76a7",
+      "cases": 1,
+      "case_ids": [
+        "2e5ef73f93e297caf646bf20a032c9c8d7a0060713dd4ced4c5b558097777bc8"
+      ],
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/correctness-softplus-log1p-v1/softplus-tail-oracle-validation-665541/preparation/prepared.json",
+      "prepared_sha256": "dc73a3d9562fac051d9f42cf4ec1e6da39104a4acd22bce4c70f2d7376494404",
+      "gate": "pass"
+    },
+    {
+      "name": "softplus-fresh",
+      "source_id": "f0f5e4bf8d89a5e16d2c917853c92f08650179fc1bdb5681bef698610dbc76a7",
+      "cases": 1,
+      "case_ids": [
+        "2749fdfd9a91ddf505d7aa253b8fd1a6c4061bdc3daae61bac2b19072c6fc156"
+      ],
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/correctness-softplus-log1p-v1/softplus-tail-independent-v1/preparation/prepared.json",
+      "prepared_sha256": "893d58d2d0144c06d6634fe3aa5ab95c0af13b8e451c13cfd204c0660c053da7",
+      "gate": "pass"
+    },
+    {
+      "name": "strided-per-lane-oracle-validation-445566",
+      "source_id": "f0f5e4bf8d89a5e16d2c917853c92f08650179fc1bdb5681bef698610dbc76a7",
+      "cases": 4,
+      "case_ids": [
+        "6bb6d5d2dd35f70c3032e8d0b8873cc5e2a62c3925d9ed3d8cb6970111b95f2e",
+        "300f7a96ecca5dfb8306f97f93a1ce449b40df696b60ff9e974bf1218c142b72",
+        "b3b24603d754ef84e88a6c07ac9e4a54a2fa15285ecef6533dd4b80615708754",
+        "c35a644b4610c815459688793971739ba6c88a2ca6873b905cc627afcaacffa7"
+      ],
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/correctness-softplus-log1p-v1/strided-per-lane-oracle-validation-445566/preparation/prepared.json",
+      "prepared_sha256": "e2820100f3f64c385452271f5603be70687a641ca30fefae490b0285d07e3064",
+      "gate": "pass"
+    },
+    {
+      "name": "tile-init-independent",
+      "source_id": "f0f5e4bf8d89a5e16d2c917853c92f08650179fc1bdb5681bef698610dbc76a7",
+      "cases": 1,
+      "case_ids": [
+        "c719289f3813c4abeee827743ffe9e1f1608f150a779ce548ea771ff38eb9ded"
+      ],
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/correctness-softplus-log1p-v1/tile-init-independent/preparation/prepared.json",
+      "prepared_sha256": "29ec863316abc86a4244d97c335042c244a2b33b1f45c23bcb4e449f7fd4f73f",
+      "gate": "pass"
+    },
+    {
+      "name": "tile-init-rebased-screen",
+      "source_id": "f0f5e4bf8d89a5e16d2c917853c92f08650179fc1bdb5681bef698610dbc76a7",
+      "cases": 1,
+      "case_ids": [
+        "ee167cb896bcfad085da910c9c0eb88a93bf186403b908a2524fca7e8a4c5378"
+      ],
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/correctness-softplus-log1p-v1/tile-init-rebased-screen/preparation/prepared.json",
+      "prepared_sha256": "300b2febda5729b1e2e14590f50b7e6eec83d244c79425d14783b704d6efe807",
+      "gate": "pass"
+    },
+    {
+      "name": "vector4-bounded-screen-v1",
+      "source_id": "f0f5e4bf8d89a5e16d2c917853c92f08650179fc1bdb5681bef698610dbc76a7",
+      "cases": 3,
+      "case_ids": [
+        "fcf841c1ef043f153a54b7390f4b801c1b2ba2c7d77d0eebd14beeee5238933b",
+        "7aee98cdc0339a1b742bc16258d758eda54bd470f67e345244659edf755d8e4e",
+        "253fbfcbc7038a4349147b452d81655cf3fd49541f95ff23e2be66092e983bb0"
+      ],
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/correctness-softplus-log1p-v1/vector4-bounded-screen-v1/preparation/prepared.json",
+      "prepared_sha256": "fae1b09dcb5b43d80b68b28f16c5874deb99f862bdec305796d8e0f156decdc9",
+      "gate": "pass"
+    },
+    {
+      "name": "vector4-order-screen-v1",
+      "source_id": "f0f5e4bf8d89a5e16d2c917853c92f08650179fc1bdb5681bef698610dbc76a7",
+      "cases": 3,
+      "case_ids": [
+        "095ed1b8249baea8a917688e4770bfbf0856a3d0980a057c5a40a2d632c1a456",
+        "ffb6d92111cfa333c702dfff09f3ce4023456b572ce96bbac4dfa6933f62ad1a",
+        "497dd85878704f3021502f23fac6f5bf007cdac65ece2936b3551e055f1fa739"
+      ],
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/correctness-softplus-log1p-v1/vector4-order-screen-v1/preparation/prepared.json",
+      "prepared_sha256": "4efb046c3703d4a96a5fcd76374e6ee73f00082d931de9ac681e12aa9c3c7288",
+      "gate": "pass"
+    }
+  ],
+  "published15_comparison": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/bugs-types/softplus-log1p-prototype-v1/published15-exact935-comparison.json",
+  "softplus_activation": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/bugs-types/softplus-log1p-prototype-v1/softplus-dev-fresh-prepared-activation.json",
+  "handles": [
+    {
+      "session": 73277,
+      "job": "20261023T005526Z-research-cpu-xLop9o",
+      "exit": 0,
+      "completed_lists": 49
+    },
+    {
+      "session": 25637,
+      "job": "20261023T005855Z-research-cpu-Dfm0nJ",
+      "exit": 0,
+      "completed_lists": 1
+    }
+  ],
+  "no_completed_list_reprepared": true,
+  "no_compiler_or_GPU_rerun_in_final_audit": true,
+  "candidate_GPU_status": "Parent owns livecoreGPU59100; not inspected or claimed here.",
+  "inventory_total": 81,
+  "owned_jobs": [],
+  "created_utc": "2026-10-23T01:00:38.829151+00:00"
+}

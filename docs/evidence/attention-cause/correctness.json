@@ -1,0 +1,5942 @@
+[
+  {
+    "arm": "merged_ftz",
+    "problem": "a01_attention",
+    "case_id": "c10866af73f820553331b01c52e042e5d724c275a6f5fedd9348170ba75d382c",
+    "case_files": {
+      "expected.npz": "ccc0ad1a70f679781c8aff8064ae73368e04bc35018a537dc15ef8610262ed51",
+      "inputs.npz": "f08a92ed6e149310d309dc302d7eb1ec2f1169cdca5de47d3685f93cd896ec59",
+      "k_matmul_softmax_reduce_b55365.ir.json": "0a6925795c1b8e108befbdc3300c722ea5a7fb19d2337597eca860e9c36eff9a",
+      "meta.json": "c280c572744016ecf6ca2971312ad2ce8a10b28c0f3e38561c1a096c2ea7352f"
+    },
+    "sources": {
+      "tensor_core.py": "ca5af9c9f41826f9e2000de7a8537745c0393007d8eaaaf9fd212b3bfd3364a6",
+      "compile.py": "eff98e6ab5898af6d80cfc3d95bd53d8debe660ffc92961df25078b852a5c8d9",
+      "tf32_emitter.py": "fc460b050b8c9ad97104869df5390571940ce57299b2115be7e12bb2a28b505d"
+    },
+    "evaluator_sha256": "de559ea9f9e0baa64735662128d7dab4eb84abf2c3b2c6cf4840cd19ccee9e57",
+    "pass": true,
+    "sanitizer": false,
+    "result_sha256": "2bc3745cb3b4b5ff41165e1aa6861b5d88c289a4d80241011157d591d9f86705",
+    "checks": [
+      {
+        "repetition": 0,
+        "ok": true,
+        "buffers": {
+          "div_c1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "q": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "kt": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "v": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "matmul_1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "matmul_1": {
+            "ok": true,
+            "elements": 4096,
+            "mismatched": 0,
+            "max_abs_error": 6.556510925292969e-07,
+            "rtol": 0.001,
+            "atol": 0.0001
+          }
+        }
+      },
+      {
+        "repetition": 1,
+        "ok": true,
+        "buffers": {
+          "div_c1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "q": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "kt": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "v": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "matmul_1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "matmul_1": {
+            "ok": true,
+            "elements": 4096,
+            "mismatched": 0,
+            "max_abs_error": 6.556510925292969e-07,
+            "rtol": 0.001,
+            "atol": 0.0001
+          }
+        }
+      },
+      {
+        "repetition": 2,
+        "ok": true,
+        "buffers": {
+          "div_c1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "q": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "kt": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "v": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "matmul_1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "matmul_1": {
+            "ok": true,
+            "elements": 4096,
+            "mismatched": 0,
+            "max_abs_error": 6.556510925292969e-07,
+            "rtol": 0.001,
+            "atol": 0.0001
+          }
+        }
+      }
+    ],
+    "resources": [
+      [
+        {
+          "entry": "k_matmul_softmax_reduce_b55365",
+          "dynamic_shared_bytes": 0,
+          "block_threads": 128,
+          "max_threads_per_block": 128,
+          "static_shared_bytes": 41216,
+          "local_bytes": 0,
+          "registers": 172,
+          "max_active_blocks_per_sm": 2,
+          "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+        }
+      ]
+    ]
+  },
+  {
+    "arm": "merged_ftz",
+    "problem": "a02_attention_128",
+    "case_id": "69db4e7f597c41b0684fb30c3204e197cf56c8647d9a63dc0adb77f2a8a0d867",
+    "case_files": {
+      "expected.npz": "ebd7c000d75e52707f2e65304e05fbf963b4799919f814f685490c76c89e7080",
+      "inputs.npz": "6dc2e8a9ddb77eac508641c5d950f9b6b762ea9092f50300db8f3fd8361f18f0",
+      "k_matmul_softmax_reduce_6f0029.ir.json": "a51792c9e4d920a493054fb2a6986d87766cc1b3717078f8e631a45d1b0bf1dd",
+      "meta.json": "adcc08994786076e7cb9835ab3bab19b0dc9c0d00a999adea124380f8300de18"
+    },
+    "sources": {
+      "tensor_core.py": "ca5af9c9f41826f9e2000de7a8537745c0393007d8eaaaf9fd212b3bfd3364a6",
+      "compile.py": "eff98e6ab5898af6d80cfc3d95bd53d8debe660ffc92961df25078b852a5c8d9",
+      "tf32_emitter.py": "fc460b050b8c9ad97104869df5390571940ce57299b2115be7e12bb2a28b505d"
+    },
+    "evaluator_sha256": "de559ea9f9e0baa64735662128d7dab4eb84abf2c3b2c6cf4840cd19ccee9e57",
+    "pass": true,
+    "sanitizer": false,
+    "result_sha256": "37249ddaf82b2c419e2f9da54827e47e29c11cabeef37e6a9957e82304bb16ed",
+    "checks": [
+      {
+        "repetition": 0,
+        "ok": true,
+        "buffers": {
+          "div_c1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "q": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "kt": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "v": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "matmul_1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "matmul_1": {
+            "ok": true,
+            "elements": 4096,
+            "mismatched": 0,
+            "max_abs_error": 4.172325134277344e-07,
+            "rtol": 0.001,
+            "atol": 0.0001
+          }
+        }
+      },
+      {
+        "repetition": 1,
+        "ok": true,
+        "buffers": {
+          "div_c1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "q": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "kt": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "v": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "matmul_1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "matmul_1": {
+            "ok": true,
+            "elements": 4096,
+            "mismatched": 0,
+            "max_abs_error": 4.172325134277344e-07,
+            "rtol": 0.001,
+            "atol": 0.0001
+          }
+        }
+      },
+      {
+        "repetition": 2,
+        "ok": true,
+        "buffers": {
+          "div_c1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "q": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "kt": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "v": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "matmul_1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "matmul_1": {
+            "ok": true,
+            "elements": 4096,
+            "mismatched": 0,
+            "max_abs_error": 4.172325134277344e-07,
+            "rtol": 0.001,
+            "atol": 0.0001
+          }
+        }
+      }
+    ],
+    "resources": [
+      [
+        {
+          "entry": "k_matmul_softmax_reduce_6f0029",
+          "dynamic_shared_bytes": 0,
+          "block_threads": 32,
+          "max_threads_per_block": 32,
+          "static_shared_bytes": 516,
+          "local_bytes": 0,
+          "registers": 88,
+          "max_active_blocks_per_sm": 20,
+          "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+        }
+      ]
+    ]
+  },
+  {
+    "arm": "merged_ftz",
+    "problem": "f01_rmsnorm",
+    "case_id": "6ab09ab4acc384ee252370a564a13965ece1ad21a3e64d6615f0de1a39b8c665",
+    "case_files": {
+      "expected.npz": "197016500cfca3ee3a1952273d50655e5bbf60093c28ad801e28eb3ccb76a6fb",
+      "inputs.npz": "b83866a6eb01aec17314e0c752bbe491dafe357ac26724b886b851b9b361ac92",
+      "k_mean_cbd1de.ir.json": "a8e6819e3144b942d8983b52b6865fa692868105b20de30f6ba4df424a07862a",
+      "meta.json": "f45014c6b0963ec9727fc0f1c9bb585319c4ac94292260bc8f7c10557c1b8e1d"
+    },
+    "sources": {
+      "tensor_core.py": "ca5af9c9f41826f9e2000de7a8537745c0393007d8eaaaf9fd212b3bfd3364a6",
+      "compile.py": "eff98e6ab5898af6d80cfc3d95bd53d8debe660ffc92961df25078b852a5c8d9",
+      "tf32_emitter.py": "fc460b050b8c9ad97104869df5390571940ce57299b2115be7e12bb2a28b505d"
+    },
+    "evaluator_sha256": "de559ea9f9e0baa64735662128d7dab4eb84abf2c3b2c6cf4840cd19ccee9e57",
+    "pass": true,
+    "sanitizer": false,
+    "result_sha256": "55ba53250343d288069bd688407b0722f284d36fad882a125a383c04b5a1c7f8",
+    "checks": [
+      {
+        "repetition": 0,
+        "ok": true,
+        "buffers": {
+          "mean_count": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "add_c1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "w": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "mul_1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "mul_1": {
+            "ok": true,
+            "elements": 65536,
+            "mismatched": 0,
+            "max_abs_error": 1.9073486328125e-06,
+            "rtol": 0.001,
+            "atol": 0.0001
+          }
+        }
+      },
+      {
+        "repetition": 1,
+        "ok": true,
+        "buffers": {
+          "mean_count": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "add_c1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "w": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "mul_1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "mul_1": {
+            "ok": true,
+            "elements": 65536,
+            "mismatched": 0,
+            "max_abs_error": 1.9073486328125e-06,
+            "rtol": 0.001,
+            "atol": 0.0001
+          }
+        }
+      },
+      {
+        "repetition": 2,
+        "ok": true,
+        "buffers": {
+          "mean_count": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "add_c1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "w": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "mul_1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "mul_1": {
+            "ok": true,
+            "elements": 65536,
+            "mismatched": 0,
+            "max_abs_error": 1.9073486328125e-06,
+            "rtol": 0.001,
+            "atol": 0.0001
+          }
+        }
+      }
+    ],
+    "resources": [
+      [
+        {
+          "entry": "k_mean_cbd1de",
+          "dynamic_shared_bytes": 0,
+          "block_threads": 128,
+          "max_threads_per_block": 128,
+          "static_shared_bytes": 16,
+          "local_bytes": 0,
+          "registers": 40,
+          "max_active_blocks_per_sm": 12,
+          "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+        }
+      ]
+    ]
+  },
+  {
+    "arm": "merged_ftz",
+    "problem": "f02_row_softmax",
+    "case_id": "89d56c168a0b04373ef8d50096c48534c70019b8d2f87371b79aee2289922b44",
+    "case_files": {
+      "expected.npz": "7e38d188cdc0bbb7afda1e6007318b0174bcdf82eb3855775967e49d4b8ee8ce",
+      "inputs.npz": "6e022307b734c374ae43090ac35f7d14684e63ecaa806a4529cd8d5a024fc44b",
+      "k_softmax_05263d.ir.json": "d48b030e9d9a765aa631287f72935bc59f20926f3ccb09dc7f7932106770af03",
+      "meta.json": "ddbe97ea42c7b077d30d140b751f8062caf47b5620cb423a02c1dd848cd61900"
+    },
+    "sources": {
+      "tensor_core.py": "ca5af9c9f41826f9e2000de7a8537745c0393007d8eaaaf9fd212b3bfd3364a6",
+      "compile.py": "eff98e6ab5898af6d80cfc3d95bd53d8debe660ffc92961df25078b852a5c8d9",
+      "tf32_emitter.py": "fc460b050b8c9ad97104869df5390571940ce57299b2115be7e12bb2a28b505d"
+    },
+    "evaluator_sha256": "de559ea9f9e0baa64735662128d7dab4eb84abf2c3b2c6cf4840cd19ccee9e57",
+    "pass": true,
+    "sanitizer": false,
+    "result_sha256": "14c49e4e9ec83246829cddb86950bd6c243eb2913864969f238f9ecd8f6c4aa8",
+    "checks": [
+      {
+        "repetition": 0,
+        "ok": true,
+        "buffers": {
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "softmax": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "softmax": {
+            "ok": true,
+            "elements": 16384,
+            "mismatched": 0,
+            "max_abs_error": 7.450580596923828e-09,
+            "rtol": 0.001,
+            "atol": 1e-05
+          }
+        }
+      },
+      {
+        "repetition": 1,
+        "ok": true,
+        "buffers": {
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "softmax": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "softmax": {
+            "ok": true,
+            "elements": 16384,
+            "mismatched": 0,
+            "max_abs_error": 7.450580596923828e-09,
+            "rtol": 0.001,
+            "atol": 1e-05
+          }
+        }
+      },
+      {
+        "repetition": 2,
+        "ok": true,
+        "buffers": {
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "softmax": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "softmax": {
+            "ok": true,
+            "elements": 16384,
+            "mismatched": 0,
+            "max_abs_error": 7.450580596923828e-09,
+            "rtol": 0.001,
+            "atol": 1e-05
+          }
+        }
+      }
+    ],
+    "resources": [
+      [
+        {
+          "entry": "k_softmax_05263d",
+          "dynamic_shared_bytes": 0,
+          "block_threads": 128,
+          "max_threads_per_block": 128,
+          "static_shared_bytes": 32,
+          "local_bytes": 0,
+          "registers": 40,
+          "max_active_blocks_per_sm": 12,
+          "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+        }
+      ]
+    ]
+  },
+  {
+    "arm": "merged_ftz",
+    "problem": "f03_l2norm",
+    "case_id": "1e82d7e58a53e8795ea9d05e3759dfe201e42308efd08dd2a51e79c769dc2fbc",
+    "case_files": {
+      "expected.npz": "fb2e242cbfe9834c6d45f27f29acc750a5b4ea8ad6ab509baa7a5b4c53586380",
+      "inputs.npz": "f48e91e0bcaeb5cac6b26faf157f7252eae2dcab6a70385c27e63c9af401e49c",
+      "k_div_reduce.ir.json": "34abdb33fe950100029930242777d0b22a12e523117de21bc9d78b43310c567d",
+      "meta.json": "cbf67c2d198f4fea1bb140083ec65c4bf14202090daaa4aac77f1514ecc60b95"
+    },
+    "sources": {
+      "tensor_core.py": "ca5af9c9f41826f9e2000de7a8537745c0393007d8eaaaf9fd212b3bfd3364a6",
+      "compile.py": "eff98e6ab5898af6d80cfc3d95bd53d8debe660ffc92961df25078b852a5c8d9",
+      "tf32_emitter.py": "fc460b050b8c9ad97104869df5390571940ce57299b2115be7e12bb2a28b505d"
+    },
+    "evaluator_sha256": "de559ea9f9e0baa64735662128d7dab4eb84abf2c3b2c6cf4840cd19ccee9e57",
+    "pass": true,
+    "sanitizer": false,
+    "result_sha256": "3c6647b0392ead21f91ff03e07de54b07244b3e290453b930b584c6aacd89579",
+    "checks": [
+      {
+        "repetition": 0,
+        "ok": true,
+        "buffers": {
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "div": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "div": {
+            "ok": true,
+            "elements": 32768,
+            "mismatched": 0,
+            "max_abs_error": 1.4901161193847656e-08,
+            "rtol": 0.001,
+            "atol": 0.0001
+          }
+        }
+      },
+      {
+        "repetition": 1,
+        "ok": true,
+        "buffers": {
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "div": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "div": {
+            "ok": true,
+            "elements": 32768,
+            "mismatched": 0,
+            "max_abs_error": 1.4901161193847656e-08,
+            "rtol": 0.001,
+            "atol": 0.0001
+          }
+        }
+      },
+      {
+        "repetition": 2,
+        "ok": true,
+        "buffers": {
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "div": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "div": {
+            "ok": true,
+            "elements": 32768,
+            "mismatched": 0,
+            "max_abs_error": 1.4901161193847656e-08,
+            "rtol": 0.001,
+            "atol": 0.0001
+          }
+        }
+      }
+    ],
+    "resources": [
+      [
+        {
+          "entry": "k_div_reduce",
+          "dynamic_shared_bytes": 0,
+          "block_threads": 128,
+          "max_threads_per_block": 128,
+          "static_shared_bytes": 16,
+          "local_bytes": 0,
+          "registers": 40,
+          "max_active_blocks_per_sm": 12,
+          "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+        }
+      ]
+    ]
+  },
+  {
+    "arm": "merged_ftz",
+    "problem": "m01_matmul_512",
+    "case_id": "cd9a29496fccd9e421c1cfbe14347cb45003f38681e3b4b2e703f5dbbfdd6c5d",
+    "case_files": {
+      "expected.npz": "6396bececa75b2adee8c83bb0c090f9a68e7297d7de492f5a2f0cd3e67f24c36",
+      "inputs.npz": "eb7048679203a9f4605986f70d1233293e768242df3af371a23b41e293fc457e",
+      "k_matmul_2967be.ir.json": "ed9ab32776ce0de8b0d1f0367da54c586bf993c964efc01482666247a976dc02",
+      "meta.json": "3324370a2d29614c6c7ff7cf549563f9afb22bab0ed31ed62d8ffd27c59dcd57"
+    },
+    "sources": {
+      "tensor_core.py": "ca5af9c9f41826f9e2000de7a8537745c0393007d8eaaaf9fd212b3bfd3364a6",
+      "compile.py": "eff98e6ab5898af6d80cfc3d95bd53d8debe660ffc92961df25078b852a5c8d9",
+      "tf32_emitter.py": "fc460b050b8c9ad97104869df5390571940ce57299b2115be7e12bb2a28b505d"
+    },
+    "evaluator_sha256": "de559ea9f9e0baa64735662128d7dab4eb84abf2c3b2c6cf4840cd19ccee9e57",
+    "pass": true,
+    "sanitizer": false,
+    "result_sha256": "1ccd1c20fdb3649ab1e372d511070b9e347c9d45a7a8b162095c0f7c41be2fe9",
+    "checks": [
+      {
+        "repetition": 0,
+        "ok": true,
+        "buffers": {
+          "x1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "x0": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "matmul": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "matmul": {
+            "ok": true,
+            "elements": 262144,
+            "mismatched": 0,
+            "max_abs_error": 8.392333984375e-05,
+            "rtol": 0.001,
+            "atol": 0.001
+          }
+        }
+      },
+      {
+        "repetition": 1,
+        "ok": true,
+        "buffers": {
+          "x1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "x0": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "matmul": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "matmul": {
+            "ok": true,
+            "elements": 262144,
+            "mismatched": 0,
+            "max_abs_error": 8.392333984375e-05,
+            "rtol": 0.001,
+            "atol": 0.001
+          }
+        }
+      },
+      {
+        "repetition": 2,
+        "ok": true,
+        "buffers": {
+          "x1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "x0": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "matmul": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "matmul": {
+            "ok": true,
+            "elements": 262144,
+            "mismatched": 0,
+            "max_abs_error": 8.392333984375e-05,
+            "rtol": 0.001,
+            "atol": 0.001
+          }
+        }
+      }
+    ],
+    "resources": [
+      [
+        {
+          "entry": "k_matmul_2967be",
+          "dynamic_shared_bytes": 73728,
+          "block_threads": 512,
+          "max_threads_per_block": 512,
+          "static_shared_bytes": 0,
+          "local_bytes": 0,
+          "registers": 40,
+          "max_active_blocks_per_sm": 1,
+          "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+        }
+      ]
+    ]
+  },
+  {
+    "arm": "merged_ftz",
+    "problem": "m02_matmul_rect",
+    "case_id": "aeb1568894b7afb50ea0b1b6c6fe94b57419452643ec87c5c6561f9ebfc58bbe",
+    "case_files": {
+      "expected.npz": "b0a5f6719c01fdc55054d983e7d75f880577e4741c63ae39c9fa704507e58134",
+      "inputs.npz": "24f3a0b42ecaa5278df5b81f4d431b5a05771370d88ac58a3ff7b9bd0cae0809",
+      "k_matmul.ir.json": "c47bb47c529e7362c9272784ac21a31f2a5d79546cc11b19beff891278d22206",
+      "meta.json": "a82fd8d7f5933749868035254537b962d3d0140c8bf3e22f7f8a54a289a9c365"
+    },
+    "sources": {
+      "tensor_core.py": "ca5af9c9f41826f9e2000de7a8537745c0393007d8eaaaf9fd212b3bfd3364a6",
+      "compile.py": "eff98e6ab5898af6d80cfc3d95bd53d8debe660ffc92961df25078b852a5c8d9",
+      "tf32_emitter.py": "fc460b050b8c9ad97104869df5390571940ce57299b2115be7e12bb2a28b505d"
+    },
+    "evaluator_sha256": "de559ea9f9e0baa64735662128d7dab4eb84abf2c3b2c6cf4840cd19ccee9e57",
+    "pass": true,
+    "sanitizer": true,
+    "result_sha256": "1b4a58791ebbaf4ed034b8c98d5c8d0e2b900b8b42c7d0411f27c34e28313d93",
+    "checks": [
+      {
+        "repetition": 0,
+        "ok": true,
+        "buffers": {
+          "x1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "x0": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "matmul": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "matmul": {
+            "ok": true,
+            "elements": 8192,
+            "mismatched": 0,
+            "max_abs_error": 1.1444091796875e-05,
+            "rtol": 0.001,
+            "atol": 0.001
+          }
+        }
+      },
+      {
+        "repetition": 1,
+        "ok": true,
+        "buffers": {
+          "x1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "x0": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "matmul": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "matmul": {
+            "ok": true,
+            "elements": 8192,
+            "mismatched": 0,
+            "max_abs_error": 1.52587890625e-05,
+            "rtol": 0.001,
+            "atol": 0.001
+          }
+        }
+      },
+      {
+        "repetition": 2,
+        "ok": true,
+        "buffers": {
+          "x1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "x0": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "matmul": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "matmul": {
+            "ok": true,
+            "elements": 8192,
+            "mismatched": 0,
+            "max_abs_error": 1.1444091796875e-05,
+            "rtol": 0.001,
+            "atol": 0.001
+          }
+        }
+      }
+    ],
+    "resources": [
+      [
+        {
+          "entry": "k_matmul",
+          "dynamic_shared_bytes": 0,
+          "block_threads": 256,
+          "max_threads_per_block": 256,
+          "static_shared_bytes": 1536,
+          "local_bytes": 0,
+          "registers": 33,
+          "max_active_blocks_per_sm": 6,
+          "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+        }
+      ]
+    ]
+  },
+  {
+    "arm": "merged_ftz",
+    "problem": "p00_scalar_add",
+    "case_id": "4035b0c010105ed7be8aa1a889fe2754d498fc4a27c1719bf547ddad66e48403",
+    "case_files": {
+      "expected.npz": "69e4a749183c5402f03c28a957cb1f523186d16f9b9974c75cd0ebbbfd925478",
+      "inputs.npz": "856da092d678480daf60d766142c81285cd59d9782b58d708341d4cb3aa7d508",
+      "k_add_pointwise.ir.json": "d93c0b232c48f7161c88f0276ea8a69481b06608a24b6e8ed2d5025bd17f4e32",
+      "meta.json": "67f4c80a5c78c9fa571f4088633acc56cae0a758d2a65e7c89c07a96e665709c"
+    },
+    "sources": {
+      "tensor_core.py": "ca5af9c9f41826f9e2000de7a8537745c0393007d8eaaaf9fd212b3bfd3364a6",
+      "compile.py": "eff98e6ab5898af6d80cfc3d95bd53d8debe660ffc92961df25078b852a5c8d9",
+      "tf32_emitter.py": "fc460b050b8c9ad97104869df5390571940ce57299b2115be7e12bb2a28b505d"
+    },
+    "evaluator_sha256": "de559ea9f9e0baa64735662128d7dab4eb84abf2c3b2c6cf4840cd19ccee9e57",
+    "pass": true,
+    "sanitizer": false,
+    "result_sha256": "95b97b04d066a34d820d93ee66d708e6754a9a48cf1e5e70ba27db0d93b67a29",
+    "checks": [
+      {
+        "repetition": 0,
+        "ok": true,
+        "buffers": {
+          "x0": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "x1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "add": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "add": {
+            "ok": true,
+            "elements": 128,
+            "mismatched": 0,
+            "max_abs_error": 0.0,
+            "rtol": 0,
+            "atol": 0
+          }
+        }
+      },
+      {
+        "repetition": 1,
+        "ok": true,
+        "buffers": {
+          "x0": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "x1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "add": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "add": {
+            "ok": true,
+            "elements": 128,
+            "mismatched": 0,
+            "max_abs_error": 0.0,
+            "rtol": 0,
+            "atol": 0
+          }
+        }
+      },
+      {
+        "repetition": 2,
+        "ok": true,
+        "buffers": {
+          "x0": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "x1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "add": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "add": {
+            "ok": true,
+            "elements": 128,
+            "mismatched": 0,
+            "max_abs_error": 0.0,
+            "rtol": 0,
+            "atol": 0
+          }
+        }
+      }
+    ],
+    "resources": [
+      [
+        {
+          "entry": "k_add_pointwise",
+          "dynamic_shared_bytes": 0,
+          "block_threads": 256,
+          "max_threads_per_block": 256,
+          "static_shared_bytes": 0,
+          "local_bytes": 0,
+          "registers": 20,
+          "max_active_blocks_per_sm": 6,
+          "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+        }
+      ]
+    ]
+  },
+  {
+    "arm": "merged_ftz",
+    "problem": "p01_vector_add",
+    "case_id": "5e973341ada3e33f701293be5a3e6195badb7290a5471f4c6cefa86634d1b168",
+    "case_files": {
+      "expected.npz": "1a72f87aa3afd4e84746d2c0bfcfde9d024f573ce863322f72d2c6b3bb133086",
+      "inputs.npz": "49bd2b9f819b4dd4833a0d0a43303ee795329db0a947083e38a1b3c82bc2bdaf",
+      "k_add_pointwise.ir.json": "90088bc4c7346b9a5916205fdb96926f52cc0f5e3c5c08527d7b0796b0c47fc5",
+      "meta.json": "4607a6a14553ec256b2073ff8fef18a850e315033f4fdace21f26fdcc2a867c6"
+    },
+    "sources": {
+      "tensor_core.py": "ca5af9c9f41826f9e2000de7a8537745c0393007d8eaaaf9fd212b3bfd3364a6",
+      "compile.py": "eff98e6ab5898af6d80cfc3d95bd53d8debe660ffc92961df25078b852a5c8d9",
+      "tf32_emitter.py": "fc460b050b8c9ad97104869df5390571940ce57299b2115be7e12bb2a28b505d"
+    },
+    "evaluator_sha256": "de559ea9f9e0baa64735662128d7dab4eb84abf2c3b2c6cf4840cd19ccee9e57",
+    "pass": true,
+    "sanitizer": false,
+    "result_sha256": "07f882e59f2f0e1000f085d02cabf3f83dd02123b4b631113d5ef29142f290cf",
+    "checks": [
+      {
+        "repetition": 0,
+        "ok": true,
+        "buffers": {
+          "x0": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "x1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "add": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "add": {
+            "ok": true,
+            "elements": 1024,
+            "mismatched": 0,
+            "max_abs_error": 0.0,
+            "rtol": 0,
+            "atol": 0
+          }
+        }
+      },
+      {
+        "repetition": 1,
+        "ok": true,
+        "buffers": {
+          "x0": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "x1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "add": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "add": {
+            "ok": true,
+            "elements": 1024,
+            "mismatched": 0,
+            "max_abs_error": 0.0,
+            "rtol": 0,
+            "atol": 0
+          }
+        }
+      },
+      {
+        "repetition": 2,
+        "ok": true,
+        "buffers": {
+          "x0": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "x1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "add": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "add": {
+            "ok": true,
+            "elements": 1024,
+            "mismatched": 0,
+            "max_abs_error": 0.0,
+            "rtol": 0,
+            "atol": 0
+          }
+        }
+      }
+    ],
+    "resources": [
+      [
+        {
+          "entry": "k_add_pointwise",
+          "dynamic_shared_bytes": 0,
+          "block_threads": 256,
+          "max_threads_per_block": 256,
+          "static_shared_bytes": 0,
+          "local_bytes": 0,
+          "registers": 20,
+          "max_active_blocks_per_sm": 6,
+          "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+        }
+      ]
+    ]
+  },
+  {
+    "arm": "merged_ftz",
+    "problem": "p02_scale_shift",
+    "case_id": "3145aa57f753f64551cd4b83c3d430e6e2375a9feb4819accbfd5e55c39da560",
+    "case_files": {
+      "expected.npz": "515539ace84b0cb38ab3e5e6ed20894b774ab428a86be180529d54fd8ad63dd6",
+      "inputs.npz": "0a8f07efdec95d3d1b752be42e78d9af7a5f9f089d57a700fdc40793e401b7cf",
+      "k_add_pointwise.ir.json": "2bae0a54cbcd037d6c13e70b5c4f5728f2f94af163a53ebe35b88ab8f68ec021",
+      "meta.json": "7c1c3ea69e4d61128d72fbaf3a82a76125a5273c3ced6197ac2f150d03d121e1"
+    },
+    "sources": {
+      "tensor_core.py": "ca5af9c9f41826f9e2000de7a8537745c0393007d8eaaaf9fd212b3bfd3364a6",
+      "compile.py": "eff98e6ab5898af6d80cfc3d95bd53d8debe660ffc92961df25078b852a5c8d9",
+      "tf32_emitter.py": "fc460b050b8c9ad97104869df5390571940ce57299b2115be7e12bb2a28b505d"
+    },
+    "evaluator_sha256": "de559ea9f9e0baa64735662128d7dab4eb84abf2c3b2c6cf4840cd19ccee9e57",
+    "pass": true,
+    "sanitizer": false,
+    "result_sha256": "29f0eb0c562e88dfecdb43412673c4090fcdb13358fe888fafde1edd76bcd7b6",
+    "checks": [
+      {
+        "repetition": 0,
+        "ok": true,
+        "buffers": {
+          "mul_c1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "add_c1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "add": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "add": {
+            "ok": true,
+            "elements": 4096,
+            "mismatched": 0,
+            "max_abs_error": 0.0,
+            "rtol": 1e-06,
+            "atol": 1e-06
+          }
+        }
+      },
+      {
+        "repetition": 1,
+        "ok": true,
+        "buffers": {
+          "mul_c1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "add_c1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "add": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "add": {
+            "ok": true,
+            "elements": 4096,
+            "mismatched": 0,
+            "max_abs_error": 0.0,
+            "rtol": 1e-06,
+            "atol": 1e-06
+          }
+        }
+      },
+      {
+        "repetition": 2,
+        "ok": true,
+        "buffers": {
+          "mul_c1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "add_c1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "add": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "add": {
+            "ok": true,
+            "elements": 4096,
+            "mismatched": 0,
+            "max_abs_error": 0.0,
+            "rtol": 1e-06,
+            "atol": 1e-06
+          }
+        }
+      }
+    ],
+    "resources": [
+      [
+        {
+          "entry": "k_add_pointwise",
+          "dynamic_shared_bytes": 0,
+          "block_threads": 256,
+          "max_threads_per_block": 256,
+          "static_shared_bytes": 0,
+          "local_bytes": 0,
+          "registers": 28,
+          "max_active_blocks_per_sm": 6,
+          "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+        }
+      ]
+    ]
+  },
+  {
+    "arm": "merged_ftz",
+    "problem": "p03_relu_mul",
+    "case_id": "aeeffce3a36b8cf1b27173b8c1644fc517a24d992173e06bb1664784b009b6ba",
+    "case_files": {
+      "expected.npz": "a0fc97901b28331b29bb5f01cf104944c3376c633dd4cce65d551ad61035e52f",
+      "inputs.npz": "e3174d850920a7e888b9a8dc58a43d1dca6b202d7ed1e701cbc729668c1e2ee9",
+      "k_mul_pointwise.ir.json": "b2429e790dac9fd0db9fafadaa3624cafaeff85c834851a9034a730a1620a892",
+      "meta.json": "a2dbbe3a3cec7c45fcdde2c08f0d3276647c2a4b56ede3345be16404d1ded8c9"
+    },
+    "sources": {
+      "tensor_core.py": "ca5af9c9f41826f9e2000de7a8537745c0393007d8eaaaf9fd212b3bfd3364a6",
+      "compile.py": "eff98e6ab5898af6d80cfc3d95bd53d8debe660ffc92961df25078b852a5c8d9",
+      "tf32_emitter.py": "fc460b050b8c9ad97104869df5390571940ce57299b2115be7e12bb2a28b505d"
+    },
+    "evaluator_sha256": "de559ea9f9e0baa64735662128d7dab4eb84abf2c3b2c6cf4840cd19ccee9e57",
+    "pass": true,
+    "sanitizer": false,
+    "result_sha256": "52762107c1f32c14294e5a736c3956658f11d896c65ec11b4405a0ce028e8115",
+    "checks": [
+      {
+        "repetition": 0,
+        "ok": true,
+        "buffers": {
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "y": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "mul": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "mul": {
+            "ok": true,
+            "elements": 2048,
+            "mismatched": 0,
+            "max_abs_error": 0.0,
+            "rtol": 0,
+            "atol": 0
+          }
+        }
+      },
+      {
+        "repetition": 1,
+        "ok": true,
+        "buffers": {
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "y": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "mul": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "mul": {
+            "ok": true,
+            "elements": 2048,
+            "mismatched": 0,
+            "max_abs_error": 0.0,
+            "rtol": 0,
+            "atol": 0
+          }
+        }
+      },
+      {
+        "repetition": 2,
+        "ok": true,
+        "buffers": {
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "y": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "mul": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "mul": {
+            "ok": true,
+            "elements": 2048,
+            "mismatched": 0,
+            "max_abs_error": 0.0,
+            "rtol": 0,
+            "atol": 0
+          }
+        }
+      }
+    ],
+    "resources": [
+      [
+        {
+          "entry": "k_mul_pointwise",
+          "dynamic_shared_bytes": 0,
+          "block_threads": 256,
+          "max_threads_per_block": 256,
+          "static_shared_bytes": 0,
+          "local_bytes": 0,
+          "registers": 28,
+          "max_active_blocks_per_sm": 6,
+          "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+        }
+      ]
+    ]
+  },
+  {
+    "arm": "merged_ftz",
+    "problem": "r01_array_sum",
+    "case_id": "2ffefe7fee88d864b3ac97cd70fe9711643f3551fba367299df52f329649154d",
+    "case_files": {
+      "expected.npz": "899c8058da70456bc3714d71ffc2814dd9777e37d39be7379b359e452924cb5c",
+      "inputs.npz": "3d07ca7b63aa6ba36c6dbc61c11fa1e5acf5eeb281888fa5d77a1ff0f92e8904",
+      "k_sum_1_reduce.ir.json": "a5ad6af023562e1632e929afb8cd6387603c2edcd4d4b1590b1a3b2ee962675f",
+      "meta.json": "46cf07073f4e612e811decbc2ca900ea210811194a1e336053a6f179ecb4b00e"
+    },
+    "sources": {
+      "tensor_core.py": "ca5af9c9f41826f9e2000de7a8537745c0393007d8eaaaf9fd212b3bfd3364a6",
+      "compile.py": "eff98e6ab5898af6d80cfc3d95bd53d8debe660ffc92961df25078b852a5c8d9",
+      "tf32_emitter.py": "fc460b050b8c9ad97104869df5390571940ce57299b2115be7e12bb2a28b505d"
+    },
+    "evaluator_sha256": "de559ea9f9e0baa64735662128d7dab4eb84abf2c3b2c6cf4840cd19ccee9e57",
+    "pass": true,
+    "sanitizer": false,
+    "result_sha256": "a3890fffcb1f4bfc954d5f5823dd643ff767655aed84f8385df98bca9bd2824d",
+    "checks": [
+      {
+        "repetition": 0,
+        "ok": true,
+        "buffers": {
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "sum_1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "sum_1": {
+            "ok": true,
+            "elements": 1,
+            "mismatched": 0,
+            "max_abs_error": 3.814697265625e-06,
+            "rtol": 0.0001,
+            "atol": 0.0001
+          }
+        }
+      },
+      {
+        "repetition": 1,
+        "ok": true,
+        "buffers": {
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "sum_1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "sum_1": {
+            "ok": true,
+            "elements": 1,
+            "mismatched": 0,
+            "max_abs_error": 3.814697265625e-06,
+            "rtol": 0.0001,
+            "atol": 0.0001
+          }
+        }
+      },
+      {
+        "repetition": 2,
+        "ok": true,
+        "buffers": {
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "sum_1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "sum_1": {
+            "ok": true,
+            "elements": 1,
+            "mismatched": 0,
+            "max_abs_error": 3.814697265625e-06,
+            "rtol": 0.0001,
+            "atol": 0.0001
+          }
+        }
+      }
+    ],
+    "resources": [
+      [
+        {
+          "entry": "k_sum_1_reduce",
+          "dynamic_shared_bytes": 0,
+          "block_threads": 128,
+          "max_threads_per_block": 128,
+          "static_shared_bytes": 16,
+          "local_bytes": 0,
+          "registers": 20,
+          "max_active_blocks_per_sm": 12,
+          "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+        }
+      ]
+    ]
+  },
+  {
+    "arm": "merged_ftz",
+    "problem": "r02_big_sum",
+    "case_id": "a56bdb784a46a763c2b633ebb5d16ee1ffd4287cb0984168b4f80909c323ce22",
+    "case_files": {
+      "expected.npz": "0109852644d0785b770fa38d996b063b156f01e8bfccb303ea0581e42696eec1",
+      "inputs.npz": "1f6a5024cb5ea517cb64c35096f412de038fc3a5026d66d468ca5f180ec0f26a",
+      "k_sum_1_reduce.ir.json": "777e3f2dd170849133e19d303cdb3d273c135c9a9896786ee40fbc6a2ff4ec7c",
+      "meta.json": "db364be00e35402a3d6f10fcd55562115c7604dea94f8126a02179a80476d19e"
+    },
+    "sources": {
+      "tensor_core.py": "ca5af9c9f41826f9e2000de7a8537745c0393007d8eaaaf9fd212b3bfd3364a6",
+      "compile.py": "eff98e6ab5898af6d80cfc3d95bd53d8debe660ffc92961df25078b852a5c8d9",
+      "tf32_emitter.py": "fc460b050b8c9ad97104869df5390571940ce57299b2115be7e12bb2a28b505d"
+    },
+    "evaluator_sha256": "de559ea9f9e0baa64735662128d7dab4eb84abf2c3b2c6cf4840cd19ccee9e57",
+    "pass": true,
+    "sanitizer": false,
+    "result_sha256": "fd46270d2d82ddb74d55db03f316356ecea1d2dee79591ebde33751b0564ac78",
+    "checks": [
+      {
+        "repetition": 0,
+        "ok": true,
+        "buffers": {
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "sum_1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "sum_1": {
+            "ok": true,
+            "elements": 1,
+            "mismatched": 0,
+            "max_abs_error": 1.52587890625e-05,
+            "rtol": 0.001,
+            "atol": 0.001
+          }
+        }
+      },
+      {
+        "repetition": 1,
+        "ok": true,
+        "buffers": {
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "sum_1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "sum_1": {
+            "ok": true,
+            "elements": 1,
+            "mismatched": 0,
+            "max_abs_error": 1.52587890625e-05,
+            "rtol": 0.001,
+            "atol": 0.001
+          }
+        }
+      },
+      {
+        "repetition": 2,
+        "ok": true,
+        "buffers": {
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "sum_1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "sum_1": {
+            "ok": true,
+            "elements": 1,
+            "mismatched": 0,
+            "max_abs_error": 1.52587890625e-05,
+            "rtol": 0.001,
+            "atol": 0.001
+          }
+        }
+      }
+    ],
+    "resources": [
+      [
+        {
+          "entry": "k_sum_1_reduce",
+          "dynamic_shared_bytes": 0,
+          "block_threads": 128,
+          "max_threads_per_block": 128,
+          "static_shared_bytes": 16,
+          "local_bytes": 0,
+          "registers": 40,
+          "max_active_blocks_per_sm": 12,
+          "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+        }
+      ]
+    ]
+  },
+  {
+    "arm": "merged_ftz",
+    "problem": "r03_mean",
+    "case_id": "6dfbe2bc925e2b31ceb8eb84bb5016cca8af143ca55cf93078d09decc26a0fd3",
+    "case_files": {
+      "expected.npz": "9c53fd65aebbc9b6ca477653643273195149be2d93ab472a135883a0a128c5f7",
+      "inputs.npz": "61030dd9a1df40227f64aac8f1ea2dbaaad350740850f50bf054e646f837728b",
+      "k_mean_ffcca3.ir.json": "7eeca2c7869ab2ddf880a0ac7fb689d3ab814d7523eab472ec80ad2458100b86",
+      "meta.json": "d7ab661c388ad447f5661a3b36cba448cf5142402756f1e1c35d110db06c84fe"
+    },
+    "sources": {
+      "tensor_core.py": "ca5af9c9f41826f9e2000de7a8537745c0393007d8eaaaf9fd212b3bfd3364a6",
+      "compile.py": "eff98e6ab5898af6d80cfc3d95bd53d8debe660ffc92961df25078b852a5c8d9",
+      "tf32_emitter.py": "fc460b050b8c9ad97104869df5390571940ce57299b2115be7e12bb2a28b505d"
+    },
+    "evaluator_sha256": "de559ea9f9e0baa64735662128d7dab4eb84abf2c3b2c6cf4840cd19ccee9e57",
+    "pass": true,
+    "sanitizer": false,
+    "result_sha256": "7258d309ecd06ca04375f9feb5e031a4472433eeb0a0a6095271b815973e4fdc",
+    "checks": [
+      {
+        "repetition": 0,
+        "ok": true,
+        "buffers": {
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "mean_keepdim_count": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "mean": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "mean": {
+            "ok": true,
+            "elements": 1,
+            "mismatched": 0,
+            "max_abs_error": 9.313225746154785e-10,
+            "rtol": 0.0001,
+            "atol": 0.0001
+          }
+        }
+      },
+      {
+        "repetition": 1,
+        "ok": true,
+        "buffers": {
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "mean_keepdim_count": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "mean": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "mean": {
+            "ok": true,
+            "elements": 1,
+            "mismatched": 0,
+            "max_abs_error": 9.313225746154785e-10,
+            "rtol": 0.0001,
+            "atol": 0.0001
+          }
+        }
+      },
+      {
+        "repetition": 2,
+        "ok": true,
+        "buffers": {
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "mean_keepdim_count": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "mean": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "mean": {
+            "ok": true,
+            "elements": 1,
+            "mismatched": 0,
+            "max_abs_error": 9.313225746154785e-10,
+            "rtol": 0.0001,
+            "atol": 0.0001
+          }
+        }
+      }
+    ],
+    "resources": [
+      [
+        {
+          "entry": "k_mean_ffcca3",
+          "dynamic_shared_bytes": 0,
+          "block_threads": 128,
+          "max_threads_per_block": 128,
+          "static_shared_bytes": 16,
+          "local_bytes": 0,
+          "registers": 40,
+          "max_active_blocks_per_sm": 12,
+          "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+        }
+      ]
+    ]
+  },
+  {
+    "arm": "merged_ftz",
+    "problem": "r04_row_sum",
+    "case_id": "5c2ba872d36e6526a79b9799c059e237f65a34019cd94f1c85da4f0b9f930d3f",
+    "case_files": {
+      "expected.npz": "cb724cbe21276b1438add7263e418f52c0eb90c4501954a245678dcc793c895d",
+      "inputs.npz": "f48e91e0bcaeb5cac6b26faf157f7252eae2dcab6a70385c27e63c9af401e49c",
+      "k_sum_1_reduce.ir.json": "4c7befc76b72c6c69be4675d69ccd14e336b9139fe22aaec1b94230858c8ab03",
+      "meta.json": "803cb710590156ad319eb44b2d2aa6c1ee9b0e3a666ebc09de259e50d83a3ba1"
+    },
+    "sources": {
+      "tensor_core.py": "ca5af9c9f41826f9e2000de7a8537745c0393007d8eaaaf9fd212b3bfd3364a6",
+      "compile.py": "eff98e6ab5898af6d80cfc3d95bd53d8debe660ffc92961df25078b852a5c8d9",
+      "tf32_emitter.py": "fc460b050b8c9ad97104869df5390571940ce57299b2115be7e12bb2a28b505d"
+    },
+    "evaluator_sha256": "de559ea9f9e0baa64735662128d7dab4eb84abf2c3b2c6cf4840cd19ccee9e57",
+    "pass": true,
+    "sanitizer": false,
+    "result_sha256": "cc4af5eabec2f4775e37b698f981813ae72c5e40465a630c16bc0a71d8846a4c",
+    "checks": [
+      {
+        "repetition": 0,
+        "ok": true,
+        "buffers": {
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "sum_1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "sum_1": {
+            "ok": true,
+            "elements": 64,
+            "mismatched": 0,
+            "max_abs_error": 5.7220458984375e-06,
+            "rtol": 0.0001,
+            "atol": 0.0001
+          }
+        }
+      },
+      {
+        "repetition": 1,
+        "ok": true,
+        "buffers": {
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "sum_1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "sum_1": {
+            "ok": true,
+            "elements": 64,
+            "mismatched": 0,
+            "max_abs_error": 5.7220458984375e-06,
+            "rtol": 0.0001,
+            "atol": 0.0001
+          }
+        }
+      },
+      {
+        "repetition": 2,
+        "ok": true,
+        "buffers": {
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "sum_1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "sum_1": {
+            "ok": true,
+            "elements": 64,
+            "mismatched": 0,
+            "max_abs_error": 5.7220458984375e-06,
+            "rtol": 0.0001,
+            "atol": 0.0001
+          }
+        }
+      }
+    ],
+    "resources": [
+      [
+        {
+          "entry": "k_sum_1_reduce",
+          "dynamic_shared_bytes": 0,
+          "block_threads": 128,
+          "max_threads_per_block": 128,
+          "static_shared_bytes": 16,
+          "local_bytes": 0,
+          "registers": 40,
+          "max_active_blocks_per_sm": 12,
+          "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+        }
+      ]
+    ]
+  },
+  {
+    "arm": "merged_plain",
+    "problem": "a01_attention",
+    "case_id": "c10866af73f820553331b01c52e042e5d724c275a6f5fedd9348170ba75d382c",
+    "case_files": {
+      "expected.npz": "ccc0ad1a70f679781c8aff8064ae73368e04bc35018a537dc15ef8610262ed51",
+      "inputs.npz": "f08a92ed6e149310d309dc302d7eb1ec2f1169cdca5de47d3685f93cd896ec59",
+      "k_matmul_softmax_reduce_b55365.ir.json": "0a6925795c1b8e108befbdc3300c722ea5a7fb19d2337597eca860e9c36eff9a",
+      "meta.json": "c280c572744016ecf6ca2971312ad2ce8a10b28c0f3e38561c1a096c2ea7352f"
+    },
+    "sources": {
+      "tf32_emitter.py": "fc460b050b8c9ad97104869df5390571940ce57299b2115be7e12bb2a28b505d",
+      "tensor_core.py": "ca5af9c9f41826f9e2000de7a8537745c0393007d8eaaaf9fd212b3bfd3364a6",
+      "compile.py": "a199445fac6574a7e14fccd1e9ec25ab68b31930af50c37d492b7720a7871f47"
+    },
+    "evaluator_sha256": "de559ea9f9e0baa64735662128d7dab4eb84abf2c3b2c6cf4840cd19ccee9e57",
+    "pass": true,
+    "sanitizer": false,
+    "result_sha256": "4ec2899b0605f4e3dffee122b32502049d84a337eea1cafc4c10167c50987325",
+    "checks": [
+      {
+        "repetition": 0,
+        "ok": true,
+        "buffers": {
+          "div_c1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "q": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "kt": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "v": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "matmul_1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "matmul_1": {
+            "ok": true,
+            "elements": 4096,
+            "mismatched": 0,
+            "max_abs_error": 6.556510925292969e-07,
+            "rtol": 0.001,
+            "atol": 0.0001
+          }
+        }
+      },
+      {
+        "repetition": 1,
+        "ok": true,
+        "buffers": {
+          "div_c1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "q": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "kt": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "v": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "matmul_1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "matmul_1": {
+            "ok": true,
+            "elements": 4096,
+            "mismatched": 0,
+            "max_abs_error": 6.556510925292969e-07,
+            "rtol": 0.001,
+            "atol": 0.0001
+          }
+        }
+      },
+      {
+        "repetition": 2,
+        "ok": true,
+        "buffers": {
+          "div_c1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "q": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "kt": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "v": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "matmul_1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "matmul_1": {
+            "ok": true,
+            "elements": 4096,
+            "mismatched": 0,
+            "max_abs_error": 6.556510925292969e-07,
+            "rtol": 0.001,
+            "atol": 0.0001
+          }
+        }
+      }
+    ],
+    "resources": [
+      [
+        {
+          "entry": "k_matmul_softmax_reduce_b55365",
+          "dynamic_shared_bytes": 0,
+          "block_threads": 128,
+          "max_threads_per_block": 128,
+          "static_shared_bytes": 41216,
+          "local_bytes": 0,
+          "registers": 172,
+          "max_active_blocks_per_sm": 2,
+          "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+        }
+      ]
+    ]
+  },
+  {
+    "arm": "merged_plain",
+    "problem": "a02_attention_128",
+    "case_id": "69db4e7f597c41b0684fb30c3204e197cf56c8647d9a63dc0adb77f2a8a0d867",
+    "case_files": {
+      "expected.npz": "ebd7c000d75e52707f2e65304e05fbf963b4799919f814f685490c76c89e7080",
+      "inputs.npz": "6dc2e8a9ddb77eac508641c5d950f9b6b762ea9092f50300db8f3fd8361f18f0",
+      "k_matmul_softmax_reduce_6f0029.ir.json": "a51792c9e4d920a493054fb2a6986d87766cc1b3717078f8e631a45d1b0bf1dd",
+      "meta.json": "adcc08994786076e7cb9835ab3bab19b0dc9c0d00a999adea124380f8300de18"
+    },
+    "sources": {
+      "tf32_emitter.py": "fc460b050b8c9ad97104869df5390571940ce57299b2115be7e12bb2a28b505d",
+      "tensor_core.py": "ca5af9c9f41826f9e2000de7a8537745c0393007d8eaaaf9fd212b3bfd3364a6",
+      "compile.py": "a199445fac6574a7e14fccd1e9ec25ab68b31930af50c37d492b7720a7871f47"
+    },
+    "evaluator_sha256": "de559ea9f9e0baa64735662128d7dab4eb84abf2c3b2c6cf4840cd19ccee9e57",
+    "pass": true,
+    "sanitizer": false,
+    "result_sha256": "7e0f878e5b420c30bd286e7eda73c19ccf5c44cf7ef67495f5702eb4e27e33eb",
+    "checks": [
+      {
+        "repetition": 0,
+        "ok": true,
+        "buffers": {
+          "div_c1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "q": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "kt": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "v": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "matmul_1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "matmul_1": {
+            "ok": true,
+            "elements": 4096,
+            "mismatched": 0,
+            "max_abs_error": 4.172325134277344e-07,
+            "rtol": 0.001,
+            "atol": 0.0001
+          }
+        }
+      },
+      {
+        "repetition": 1,
+        "ok": true,
+        "buffers": {
+          "div_c1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "q": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "kt": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "v": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "matmul_1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "matmul_1": {
+            "ok": true,
+            "elements": 4096,
+            "mismatched": 0,
+            "max_abs_error": 4.172325134277344e-07,
+            "rtol": 0.001,
+            "atol": 0.0001
+          }
+        }
+      },
+      {
+        "repetition": 2,
+        "ok": true,
+        "buffers": {
+          "div_c1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "q": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "kt": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "v": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "matmul_1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "matmul_1": {
+            "ok": true,
+            "elements": 4096,
+            "mismatched": 0,
+            "max_abs_error": 4.172325134277344e-07,
+            "rtol": 0.001,
+            "atol": 0.0001
+          }
+        }
+      }
+    ],
+    "resources": [
+      [
+        {
+          "entry": "k_matmul_softmax_reduce_6f0029",
+          "dynamic_shared_bytes": 0,
+          "block_threads": 32,
+          "max_threads_per_block": 32,
+          "static_shared_bytes": 516,
+          "local_bytes": 0,
+          "registers": 88,
+          "max_active_blocks_per_sm": 20,
+          "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+        }
+      ]
+    ]
+  },
+  {
+    "arm": "merged_plain",
+    "problem": "f01_rmsnorm",
+    "case_id": "6ab09ab4acc384ee252370a564a13965ece1ad21a3e64d6615f0de1a39b8c665",
+    "case_files": {
+      "expected.npz": "197016500cfca3ee3a1952273d50655e5bbf60093c28ad801e28eb3ccb76a6fb",
+      "inputs.npz": "b83866a6eb01aec17314e0c752bbe491dafe357ac26724b886b851b9b361ac92",
+      "k_mean_cbd1de.ir.json": "a8e6819e3144b942d8983b52b6865fa692868105b20de30f6ba4df424a07862a",
+      "meta.json": "f45014c6b0963ec9727fc0f1c9bb585319c4ac94292260bc8f7c10557c1b8e1d"
+    },
+    "sources": {
+      "tf32_emitter.py": "fc460b050b8c9ad97104869df5390571940ce57299b2115be7e12bb2a28b505d",
+      "tensor_core.py": "ca5af9c9f41826f9e2000de7a8537745c0393007d8eaaaf9fd212b3bfd3364a6",
+      "compile.py": "a199445fac6574a7e14fccd1e9ec25ab68b31930af50c37d492b7720a7871f47"
+    },
+    "evaluator_sha256": "de559ea9f9e0baa64735662128d7dab4eb84abf2c3b2c6cf4840cd19ccee9e57",
+    "pass": true,
+    "sanitizer": false,
+    "result_sha256": "6791cac21e3f204e7c5b98e681e67a5e3ea973fdfc35030ca6faafdc8a2105e0",
+    "checks": [
+      {
+        "repetition": 0,
+        "ok": true,
+        "buffers": {
+          "mean_count": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "add_c1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "w": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "mul_1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "mul_1": {
+            "ok": true,
+            "elements": 65536,
+            "mismatched": 0,
+            "max_abs_error": 1.9073486328125e-06,
+            "rtol": 0.001,
+            "atol": 0.0001
+          }
+        }
+      },
+      {
+        "repetition": 1,
+        "ok": true,
+        "buffers": {
+          "mean_count": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "add_c1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "w": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "mul_1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "mul_1": {
+            "ok": true,
+            "elements": 65536,
+            "mismatched": 0,
+            "max_abs_error": 1.9073486328125e-06,
+            "rtol": 0.001,
+            "atol": 0.0001
+          }
+        }
+      },
+      {
+        "repetition": 2,
+        "ok": true,
+        "buffers": {
+          "mean_count": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "add_c1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "w": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "mul_1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "mul_1": {
+            "ok": true,
+            "elements": 65536,
+            "mismatched": 0,
+            "max_abs_error": 1.9073486328125e-06,
+            "rtol": 0.001,
+            "atol": 0.0001
+          }
+        }
+      }
+    ],
+    "resources": [
+      [
+        {
+          "entry": "k_mean_cbd1de",
+          "dynamic_shared_bytes": 0,
+          "block_threads": 128,
+          "max_threads_per_block": 128,
+          "static_shared_bytes": 16,
+          "local_bytes": 0,
+          "registers": 40,
+          "max_active_blocks_per_sm": 12,
+          "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+        }
+      ]
+    ]
+  },
+  {
+    "arm": "merged_plain",
+    "problem": "f02_row_softmax",
+    "case_id": "89d56c168a0b04373ef8d50096c48534c70019b8d2f87371b79aee2289922b44",
+    "case_files": {
+      "expected.npz": "7e38d188cdc0bbb7afda1e6007318b0174bcdf82eb3855775967e49d4b8ee8ce",
+      "inputs.npz": "6e022307b734c374ae43090ac35f7d14684e63ecaa806a4529cd8d5a024fc44b",
+      "k_softmax_05263d.ir.json": "d48b030e9d9a765aa631287f72935bc59f20926f3ccb09dc7f7932106770af03",
+      "meta.json": "ddbe97ea42c7b077d30d140b751f8062caf47b5620cb423a02c1dd848cd61900"
+    },
+    "sources": {
+      "tf32_emitter.py": "fc460b050b8c9ad97104869df5390571940ce57299b2115be7e12bb2a28b505d",
+      "tensor_core.py": "ca5af9c9f41826f9e2000de7a8537745c0393007d8eaaaf9fd212b3bfd3364a6",
+      "compile.py": "a199445fac6574a7e14fccd1e9ec25ab68b31930af50c37d492b7720a7871f47"
+    },
+    "evaluator_sha256": "de559ea9f9e0baa64735662128d7dab4eb84abf2c3b2c6cf4840cd19ccee9e57",
+    "pass": true,
+    "sanitizer": false,
+    "result_sha256": "ec48f5543024c2e18b7a8a4645eaa4d68d88855d74e241293fa34fbf3990dc85",
+    "checks": [
+      {
+        "repetition": 0,
+        "ok": true,
+        "buffers": {
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "softmax": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "softmax": {
+            "ok": true,
+            "elements": 16384,
+            "mismatched": 0,
+            "max_abs_error": 7.450580596923828e-09,
+            "rtol": 0.001,
+            "atol": 1e-05
+          }
+        }
+      },
+      {
+        "repetition": 1,
+        "ok": true,
+        "buffers": {
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "softmax": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "softmax": {
+            "ok": true,
+            "elements": 16384,
+            "mismatched": 0,
+            "max_abs_error": 7.450580596923828e-09,
+            "rtol": 0.001,
+            "atol": 1e-05
+          }
+        }
+      },
+      {
+        "repetition": 2,
+        "ok": true,
+        "buffers": {
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "softmax": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "softmax": {
+            "ok": true,
+            "elements": 16384,
+            "mismatched": 0,
+            "max_abs_error": 7.450580596923828e-09,
+            "rtol": 0.001,
+            "atol": 1e-05
+          }
+        }
+      }
+    ],
+    "resources": [
+      [
+        {
+          "entry": "k_softmax_05263d",
+          "dynamic_shared_bytes": 0,
+          "block_threads": 128,
+          "max_threads_per_block": 128,
+          "static_shared_bytes": 32,
+          "local_bytes": 0,
+          "registers": 40,
+          "max_active_blocks_per_sm": 12,
+          "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+        }
+      ]
+    ]
+  },
+  {
+    "arm": "merged_plain",
+    "problem": "f03_l2norm",
+    "case_id": "1e82d7e58a53e8795ea9d05e3759dfe201e42308efd08dd2a51e79c769dc2fbc",
+    "case_files": {
+      "expected.npz": "fb2e242cbfe9834c6d45f27f29acc750a5b4ea8ad6ab509baa7a5b4c53586380",
+      "inputs.npz": "f48e91e0bcaeb5cac6b26faf157f7252eae2dcab6a70385c27e63c9af401e49c",
+      "k_div_reduce.ir.json": "34abdb33fe950100029930242777d0b22a12e523117de21bc9d78b43310c567d",
+      "meta.json": "cbf67c2d198f4fea1bb140083ec65c4bf14202090daaa4aac77f1514ecc60b95"
+    },
+    "sources": {
+      "tf32_emitter.py": "fc460b050b8c9ad97104869df5390571940ce57299b2115be7e12bb2a28b505d",
+      "tensor_core.py": "ca5af9c9f41826f9e2000de7a8537745c0393007d8eaaaf9fd212b3bfd3364a6",
+      "compile.py": "a199445fac6574a7e14fccd1e9ec25ab68b31930af50c37d492b7720a7871f47"
+    },
+    "evaluator_sha256": "de559ea9f9e0baa64735662128d7dab4eb84abf2c3b2c6cf4840cd19ccee9e57",
+    "pass": true,
+    "sanitizer": false,
+    "result_sha256": "45152b12c55cd05c43f7b1ca5378d246c991e7dd902eeca000c852099f65e4aa",
+    "checks": [
+      {
+        "repetition": 0,
+        "ok": true,
+        "buffers": {
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "div": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "div": {
+            "ok": true,
+            "elements": 32768,
+            "mismatched": 0,
+            "max_abs_error": 1.4901161193847656e-08,
+            "rtol": 0.001,
+            "atol": 0.0001
+          }
+        }
+      },
+      {
+        "repetition": 1,
+        "ok": true,
+        "buffers": {
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "div": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "div": {
+            "ok": true,
+            "elements": 32768,
+            "mismatched": 0,
+            "max_abs_error": 1.4901161193847656e-08,
+            "rtol": 0.001,
+            "atol": 0.0001
+          }
+        }
+      },
+      {
+        "repetition": 2,
+        "ok": true,
+        "buffers": {
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "div": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "div": {
+            "ok": true,
+            "elements": 32768,
+            "mismatched": 0,
+            "max_abs_error": 1.4901161193847656e-08,
+            "rtol": 0.001,
+            "atol": 0.0001
+          }
+        }
+      }
+    ],
+    "resources": [
+      [
+        {
+          "entry": "k_div_reduce",
+          "dynamic_shared_bytes": 0,
+          "block_threads": 128,
+          "max_threads_per_block": 128,
+          "static_shared_bytes": 16,
+          "local_bytes": 0,
+          "registers": 40,
+          "max_active_blocks_per_sm": 12,
+          "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+        }
+      ]
+    ]
+  },
+  {
+    "arm": "merged_plain",
+    "problem": "m01_matmul_512",
+    "case_id": "cd9a29496fccd9e421c1cfbe14347cb45003f38681e3b4b2e703f5dbbfdd6c5d",
+    "case_files": {
+      "expected.npz": "6396bececa75b2adee8c83bb0c090f9a68e7297d7de492f5a2f0cd3e67f24c36",
+      "inputs.npz": "eb7048679203a9f4605986f70d1233293e768242df3af371a23b41e293fc457e",
+      "k_matmul_2967be.ir.json": "ed9ab32776ce0de8b0d1f0367da54c586bf993c964efc01482666247a976dc02",
+      "meta.json": "3324370a2d29614c6c7ff7cf549563f9afb22bab0ed31ed62d8ffd27c59dcd57"
+    },
+    "sources": {
+      "tf32_emitter.py": "fc460b050b8c9ad97104869df5390571940ce57299b2115be7e12bb2a28b505d",
+      "tensor_core.py": "ca5af9c9f41826f9e2000de7a8537745c0393007d8eaaaf9fd212b3bfd3364a6",
+      "compile.py": "a199445fac6574a7e14fccd1e9ec25ab68b31930af50c37d492b7720a7871f47"
+    },
+    "evaluator_sha256": "de559ea9f9e0baa64735662128d7dab4eb84abf2c3b2c6cf4840cd19ccee9e57",
+    "pass": true,
+    "sanitizer": false,
+    "result_sha256": "4f89138750cc00a5050617c5f91f04f01780ef64aa3b4eed0a9be2886492fb65",
+    "checks": [
+      {
+        "repetition": 0,
+        "ok": true,
+        "buffers": {
+          "x1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "x0": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "matmul": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "matmul": {
+            "ok": true,
+            "elements": 262144,
+            "mismatched": 0,
+            "max_abs_error": 8.392333984375e-05,
+            "rtol": 0.001,
+            "atol": 0.001
+          }
+        }
+      },
+      {
+        "repetition": 1,
+        "ok": true,
+        "buffers": {
+          "x1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "x0": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "matmul": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "matmul": {
+            "ok": true,
+            "elements": 262144,
+            "mismatched": 0,
+            "max_abs_error": 8.392333984375e-05,
+            "rtol": 0.001,
+            "atol": 0.001
+          }
+        }
+      },
+      {
+        "repetition": 2,
+        "ok": true,
+        "buffers": {
+          "x1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "x0": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "matmul": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "matmul": {
+            "ok": true,
+            "elements": 262144,
+            "mismatched": 0,
+            "max_abs_error": 8.392333984375e-05,
+            "rtol": 0.001,
+            "atol": 0.001
+          }
+        }
+      }
+    ],
+    "resources": [
+      [
+        {
+          "entry": "k_matmul_2967be",
+          "dynamic_shared_bytes": 73728,
+          "block_threads": 512,
+          "max_threads_per_block": 512,
+          "static_shared_bytes": 0,
+          "local_bytes": 0,
+          "registers": 40,
+          "max_active_blocks_per_sm": 1,
+          "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+        }
+      ]
+    ]
+  },
+  {
+    "arm": "merged_plain",
+    "problem": "m02_matmul_rect",
+    "case_id": "aeb1568894b7afb50ea0b1b6c6fe94b57419452643ec87c5c6561f9ebfc58bbe",
+    "case_files": {
+      "expected.npz": "b0a5f6719c01fdc55054d983e7d75f880577e4741c63ae39c9fa704507e58134",
+      "inputs.npz": "24f3a0b42ecaa5278df5b81f4d431b5a05771370d88ac58a3ff7b9bd0cae0809",
+      "k_matmul.ir.json": "c47bb47c529e7362c9272784ac21a31f2a5d79546cc11b19beff891278d22206",
+      "meta.json": "a82fd8d7f5933749868035254537b962d3d0140c8bf3e22f7f8a54a289a9c365"
+    },
+    "sources": {
+      "tf32_emitter.py": "fc460b050b8c9ad97104869df5390571940ce57299b2115be7e12bb2a28b505d",
+      "tensor_core.py": "ca5af9c9f41826f9e2000de7a8537745c0393007d8eaaaf9fd212b3bfd3364a6",
+      "compile.py": "a199445fac6574a7e14fccd1e9ec25ab68b31930af50c37d492b7720a7871f47"
+    },
+    "evaluator_sha256": "de559ea9f9e0baa64735662128d7dab4eb84abf2c3b2c6cf4840cd19ccee9e57",
+    "pass": true,
+    "sanitizer": true,
+    "result_sha256": "ae66234976428c201ed25634be7a0ac4d584d99254474da2a94f4056edec9dfa",
+    "checks": [
+      {
+        "repetition": 0,
+        "ok": true,
+        "buffers": {
+          "x1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "x0": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "matmul": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "matmul": {
+            "ok": true,
+            "elements": 8192,
+            "mismatched": 0,
+            "max_abs_error": 1.52587890625e-05,
+            "rtol": 0.001,
+            "atol": 0.001
+          }
+        }
+      },
+      {
+        "repetition": 1,
+        "ok": true,
+        "buffers": {
+          "x1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "x0": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "matmul": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "matmul": {
+            "ok": true,
+            "elements": 8192,
+            "mismatched": 0,
+            "max_abs_error": 1.1444091796875e-05,
+            "rtol": 0.001,
+            "atol": 0.001
+          }
+        }
+      },
+      {
+        "repetition": 2,
+        "ok": true,
+        "buffers": {
+          "x1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "x0": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "matmul": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "matmul": {
+            "ok": true,
+            "elements": 8192,
+            "mismatched": 0,
+            "max_abs_error": 1.1444091796875e-05,
+            "rtol": 0.001,
+            "atol": 0.001
+          }
+        }
+      }
+    ],
+    "resources": [
+      [
+        {
+          "entry": "k_matmul",
+          "dynamic_shared_bytes": 0,
+          "block_threads": 256,
+          "max_threads_per_block": 256,
+          "static_shared_bytes": 1536,
+          "local_bytes": 0,
+          "registers": 33,
+          "max_active_blocks_per_sm": 6,
+          "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+        }
+      ]
+    ]
+  },
+  {
+    "arm": "merged_plain",
+    "problem": "p00_scalar_add",
+    "case_id": "4035b0c010105ed7be8aa1a889fe2754d498fc4a27c1719bf547ddad66e48403",
+    "case_files": {
+      "expected.npz": "69e4a749183c5402f03c28a957cb1f523186d16f9b9974c75cd0ebbbfd925478",
+      "inputs.npz": "856da092d678480daf60d766142c81285cd59d9782b58d708341d4cb3aa7d508",
+      "k_add_pointwise.ir.json": "d93c0b232c48f7161c88f0276ea8a69481b06608a24b6e8ed2d5025bd17f4e32",
+      "meta.json": "67f4c80a5c78c9fa571f4088633acc56cae0a758d2a65e7c89c07a96e665709c"
+    },
+    "sources": {
+      "tf32_emitter.py": "fc460b050b8c9ad97104869df5390571940ce57299b2115be7e12bb2a28b505d",
+      "tensor_core.py": "ca5af9c9f41826f9e2000de7a8537745c0393007d8eaaaf9fd212b3bfd3364a6",
+      "compile.py": "a199445fac6574a7e14fccd1e9ec25ab68b31930af50c37d492b7720a7871f47"
+    },
+    "evaluator_sha256": "de559ea9f9e0baa64735662128d7dab4eb84abf2c3b2c6cf4840cd19ccee9e57",
+    "pass": true,
+    "sanitizer": false,
+    "result_sha256": "069a3b484b39b78cd5934a4898d8b9758f9084d2da81aebc39930f69c42a5422",
+    "checks": [
+      {
+        "repetition": 0,
+        "ok": true,
+        "buffers": {
+          "x0": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "x1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "add": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "add": {
+            "ok": true,
+            "elements": 128,
+            "mismatched": 0,
+            "max_abs_error": 0.0,
+            "rtol": 0,
+            "atol": 0
+          }
+        }
+      },
+      {
+        "repetition": 1,
+        "ok": true,
+        "buffers": {
+          "x0": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "x1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "add": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "add": {
+            "ok": true,
+            "elements": 128,
+            "mismatched": 0,
+            "max_abs_error": 0.0,
+            "rtol": 0,
+            "atol": 0
+          }
+        }
+      },
+      {
+        "repetition": 2,
+        "ok": true,
+        "buffers": {
+          "x0": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "x1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "add": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "add": {
+            "ok": true,
+            "elements": 128,
+            "mismatched": 0,
+            "max_abs_error": 0.0,
+            "rtol": 0,
+            "atol": 0
+          }
+        }
+      }
+    ],
+    "resources": [
+      [
+        {
+          "entry": "k_add_pointwise",
+          "dynamic_shared_bytes": 0,
+          "block_threads": 256,
+          "max_threads_per_block": 256,
+          "static_shared_bytes": 0,
+          "local_bytes": 0,
+          "registers": 20,
+          "max_active_blocks_per_sm": 6,
+          "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+        }
+      ]
+    ]
+  },
+  {
+    "arm": "merged_plain",
+    "problem": "p01_vector_add",
+    "case_id": "5e973341ada3e33f701293be5a3e6195badb7290a5471f4c6cefa86634d1b168",
+    "case_files": {
+      "expected.npz": "1a72f87aa3afd4e84746d2c0bfcfde9d024f573ce863322f72d2c6b3bb133086",
+      "inputs.npz": "49bd2b9f819b4dd4833a0d0a43303ee795329db0a947083e38a1b3c82bc2bdaf",
+      "k_add_pointwise.ir.json": "90088bc4c7346b9a5916205fdb96926f52cc0f5e3c5c08527d7b0796b0c47fc5",
+      "meta.json": "4607a6a14553ec256b2073ff8fef18a850e315033f4fdace21f26fdcc2a867c6"
+    },
+    "sources": {
+      "tf32_emitter.py": "fc460b050b8c9ad97104869df5390571940ce57299b2115be7e12bb2a28b505d",
+      "tensor_core.py": "ca5af9c9f41826f9e2000de7a8537745c0393007d8eaaaf9fd212b3bfd3364a6",
+      "compile.py": "a199445fac6574a7e14fccd1e9ec25ab68b31930af50c37d492b7720a7871f47"
+    },
+    "evaluator_sha256": "de559ea9f9e0baa64735662128d7dab4eb84abf2c3b2c6cf4840cd19ccee9e57",
+    "pass": true,
+    "sanitizer": false,
+    "result_sha256": "2179e9c060b51e16f5fdf9aaef88cd72a0f9dae5de65caea6c1daa3988ea9178",
+    "checks": [
+      {
+        "repetition": 0,
+        "ok": true,
+        "buffers": {
+          "x0": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "x1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "add": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "add": {
+            "ok": true,
+            "elements": 1024,
+            "mismatched": 0,
+            "max_abs_error": 0.0,
+            "rtol": 0,
+            "atol": 0
+          }
+        }
+      },
+      {
+        "repetition": 1,
+        "ok": true,
+        "buffers": {
+          "x0": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "x1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "add": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "add": {
+            "ok": true,
+            "elements": 1024,
+            "mismatched": 0,
+            "max_abs_error": 0.0,
+            "rtol": 0,
+            "atol": 0
+          }
+        }
+      },
+      {
+        "repetition": 2,
+        "ok": true,
+        "buffers": {
+          "x0": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "x1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "add": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "add": {
+            "ok": true,
+            "elements": 1024,
+            "mismatched": 0,
+            "max_abs_error": 0.0,
+            "rtol": 0,
+            "atol": 0
+          }
+        }
+      }
+    ],
+    "resources": [
+      [
+        {
+          "entry": "k_add_pointwise",
+          "dynamic_shared_bytes": 0,
+          "block_threads": 256,
+          "max_threads_per_block": 256,
+          "static_shared_bytes": 0,
+          "local_bytes": 0,
+          "registers": 20,
+          "max_active_blocks_per_sm": 6,
+          "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+        }
+      ]
+    ]
+  },
+  {
+    "arm": "merged_plain",
+    "problem": "p02_scale_shift",
+    "case_id": "3145aa57f753f64551cd4b83c3d430e6e2375a9feb4819accbfd5e55c39da560",
+    "case_files": {
+      "expected.npz": "515539ace84b0cb38ab3e5e6ed20894b774ab428a86be180529d54fd8ad63dd6",
+      "inputs.npz": "0a8f07efdec95d3d1b752be42e78d9af7a5f9f089d57a700fdc40793e401b7cf",
+      "k_add_pointwise.ir.json": "2bae0a54cbcd037d6c13e70b5c4f5728f2f94af163a53ebe35b88ab8f68ec021",
+      "meta.json": "7c1c3ea69e4d61128d72fbaf3a82a76125a5273c3ced6197ac2f150d03d121e1"
+    },
+    "sources": {
+      "tf32_emitter.py": "fc460b050b8c9ad97104869df5390571940ce57299b2115be7e12bb2a28b505d",
+      "tensor_core.py": "ca5af9c9f41826f9e2000de7a8537745c0393007d8eaaaf9fd212b3bfd3364a6",
+      "compile.py": "a199445fac6574a7e14fccd1e9ec25ab68b31930af50c37d492b7720a7871f47"
+    },
+    "evaluator_sha256": "de559ea9f9e0baa64735662128d7dab4eb84abf2c3b2c6cf4840cd19ccee9e57",
+    "pass": true,
+    "sanitizer": false,
+    "result_sha256": "96ea59013b77f39289c40cbab6fca27f41cceab895f60aab4eb928c10eceb146",
+    "checks": [
+      {
+        "repetition": 0,
+        "ok": true,
+        "buffers": {
+          "mul_c1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "add_c1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "add": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "add": {
+            "ok": true,
+            "elements": 4096,
+            "mismatched": 0,
+            "max_abs_error": 0.0,
+            "rtol": 1e-06,
+            "atol": 1e-06
+          }
+        }
+      },
+      {
+        "repetition": 1,
+        "ok": true,
+        "buffers": {
+          "mul_c1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "add_c1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "add": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "add": {
+            "ok": true,
+            "elements": 4096,
+            "mismatched": 0,
+            "max_abs_error": 0.0,
+            "rtol": 1e-06,
+            "atol": 1e-06
+          }
+        }
+      },
+      {
+        "repetition": 2,
+        "ok": true,
+        "buffers": {
+          "mul_c1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "add_c1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "add": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "add": {
+            "ok": true,
+            "elements": 4096,
+            "mismatched": 0,
+            "max_abs_error": 0.0,
+            "rtol": 1e-06,
+            "atol": 1e-06
+          }
+        }
+      }
+    ],
+    "resources": [
+      [
+        {
+          "entry": "k_add_pointwise",
+          "dynamic_shared_bytes": 0,
+          "block_threads": 256,
+          "max_threads_per_block": 256,
+          "static_shared_bytes": 0,
+          "local_bytes": 0,
+          "registers": 28,
+          "max_active_blocks_per_sm": 6,
+          "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+        }
+      ]
+    ]
+  },
+  {
+    "arm": "merged_plain",
+    "problem": "p03_relu_mul",
+    "case_id": "aeeffce3a36b8cf1b27173b8c1644fc517a24d992173e06bb1664784b009b6ba",
+    "case_files": {
+      "expected.npz": "a0fc97901b28331b29bb5f01cf104944c3376c633dd4cce65d551ad61035e52f",
+      "inputs.npz": "e3174d850920a7e888b9a8dc58a43d1dca6b202d7ed1e701cbc729668c1e2ee9",
+      "k_mul_pointwise.ir.json": "b2429e790dac9fd0db9fafadaa3624cafaeff85c834851a9034a730a1620a892",
+      "meta.json": "a2dbbe3a3cec7c45fcdde2c08f0d3276647c2a4b56ede3345be16404d1ded8c9"
+    },
+    "sources": {
+      "tf32_emitter.py": "fc460b050b8c9ad97104869df5390571940ce57299b2115be7e12bb2a28b505d",
+      "tensor_core.py": "ca5af9c9f41826f9e2000de7a8537745c0393007d8eaaaf9fd212b3bfd3364a6",
+      "compile.py": "a199445fac6574a7e14fccd1e9ec25ab68b31930af50c37d492b7720a7871f47"
+    },
+    "evaluator_sha256": "de559ea9f9e0baa64735662128d7dab4eb84abf2c3b2c6cf4840cd19ccee9e57",
+    "pass": true,
+    "sanitizer": false,
+    "result_sha256": "2008b6d8532bc092dbfd7785e8f83e14e1483d76bff69ccd2f1a8f547b817357",
+    "checks": [
+      {
+        "repetition": 0,
+        "ok": true,
+        "buffers": {
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "y": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "mul": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "mul": {
+            "ok": true,
+            "elements": 2048,
+            "mismatched": 0,
+            "max_abs_error": 0.0,
+            "rtol": 0,
+            "atol": 0
+          }
+        }
+      },
+      {
+        "repetition": 1,
+        "ok": true,
+        "buffers": {
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "y": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "mul": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "mul": {
+            "ok": true,
+            "elements": 2048,
+            "mismatched": 0,
+            "max_abs_error": 0.0,
+            "rtol": 0,
+            "atol": 0
+          }
+        }
+      },
+      {
+        "repetition": 2,
+        "ok": true,
+        "buffers": {
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "y": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "mul": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "mul": {
+            "ok": true,
+            "elements": 2048,
+            "mismatched": 0,
+            "max_abs_error": 0.0,
+            "rtol": 0,
+            "atol": 0
+          }
+        }
+      }
+    ],
+    "resources": [
+      [
+        {
+          "entry": "k_mul_pointwise",
+          "dynamic_shared_bytes": 0,
+          "block_threads": 256,
+          "max_threads_per_block": 256,
+          "static_shared_bytes": 0,
+          "local_bytes": 0,
+          "registers": 28,
+          "max_active_blocks_per_sm": 6,
+          "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+        }
+      ]
+    ]
+  },
+  {
+    "arm": "merged_plain",
+    "problem": "r01_array_sum",
+    "case_id": "2ffefe7fee88d864b3ac97cd70fe9711643f3551fba367299df52f329649154d",
+    "case_files": {
+      "expected.npz": "899c8058da70456bc3714d71ffc2814dd9777e37d39be7379b359e452924cb5c",
+      "inputs.npz": "3d07ca7b63aa6ba36c6dbc61c11fa1e5acf5eeb281888fa5d77a1ff0f92e8904",
+      "k_sum_1_reduce.ir.json": "a5ad6af023562e1632e929afb8cd6387603c2edcd4d4b1590b1a3b2ee962675f",
+      "meta.json": "46cf07073f4e612e811decbc2ca900ea210811194a1e336053a6f179ecb4b00e"
+    },
+    "sources": {
+      "tf32_emitter.py": "fc460b050b8c9ad97104869df5390571940ce57299b2115be7e12bb2a28b505d",
+      "tensor_core.py": "ca5af9c9f41826f9e2000de7a8537745c0393007d8eaaaf9fd212b3bfd3364a6",
+      "compile.py": "a199445fac6574a7e14fccd1e9ec25ab68b31930af50c37d492b7720a7871f47"
+    },
+    "evaluator_sha256": "de559ea9f9e0baa64735662128d7dab4eb84abf2c3b2c6cf4840cd19ccee9e57",
+    "pass": true,
+    "sanitizer": false,
+    "result_sha256": "6e1fa00738e77791d0facb88cbc952e17cdcf7d1a1aa4338a006440dc6427477",
+    "checks": [
+      {
+        "repetition": 0,
+        "ok": true,
+        "buffers": {
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "sum_1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "sum_1": {
+            "ok": true,
+            "elements": 1,
+            "mismatched": 0,
+            "max_abs_error": 3.814697265625e-06,
+            "rtol": 0.0001,
+            "atol": 0.0001
+          }
+        }
+      },
+      {
+        "repetition": 1,
+        "ok": true,
+        "buffers": {
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "sum_1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "sum_1": {
+            "ok": true,
+            "elements": 1,
+            "mismatched": 0,
+            "max_abs_error": 3.814697265625e-06,
+            "rtol": 0.0001,
+            "atol": 0.0001
+          }
+        }
+      },
+      {
+        "repetition": 2,
+        "ok": true,
+        "buffers": {
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "sum_1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "sum_1": {
+            "ok": true,
+            "elements": 1,
+            "mismatched": 0,
+            "max_abs_error": 3.814697265625e-06,
+            "rtol": 0.0001,
+            "atol": 0.0001
+          }
+        }
+      }
+    ],
+    "resources": [
+      [
+        {
+          "entry": "k_sum_1_reduce",
+          "dynamic_shared_bytes": 0,
+          "block_threads": 128,
+          "max_threads_per_block": 128,
+          "static_shared_bytes": 16,
+          "local_bytes": 0,
+          "registers": 20,
+          "max_active_blocks_per_sm": 12,
+          "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+        }
+      ]
+    ]
+  },
+  {
+    "arm": "merged_plain",
+    "problem": "r02_big_sum",
+    "case_id": "a56bdb784a46a763c2b633ebb5d16ee1ffd4287cb0984168b4f80909c323ce22",
+    "case_files": {
+      "expected.npz": "0109852644d0785b770fa38d996b063b156f01e8bfccb303ea0581e42696eec1",
+      "inputs.npz": "1f6a5024cb5ea517cb64c35096f412de038fc3a5026d66d468ca5f180ec0f26a",
+      "k_sum_1_reduce.ir.json": "777e3f2dd170849133e19d303cdb3d273c135c9a9896786ee40fbc6a2ff4ec7c",
+      "meta.json": "db364be00e35402a3d6f10fcd55562115c7604dea94f8126a02179a80476d19e"
+    },
+    "sources": {
+      "tf32_emitter.py": "fc460b050b8c9ad97104869df5390571940ce57299b2115be7e12bb2a28b505d",
+      "tensor_core.py": "ca5af9c9f41826f9e2000de7a8537745c0393007d8eaaaf9fd212b3bfd3364a6",
+      "compile.py": "a199445fac6574a7e14fccd1e9ec25ab68b31930af50c37d492b7720a7871f47"
+    },
+    "evaluator_sha256": "de559ea9f9e0baa64735662128d7dab4eb84abf2c3b2c6cf4840cd19ccee9e57",
+    "pass": true,
+    "sanitizer": false,
+    "result_sha256": "ff67f30e12356b29f418b1c7090474e0819eae0debc33bb8c58f92fda7c597a7",
+    "checks": [
+      {
+        "repetition": 0,
+        "ok": true,
+        "buffers": {
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "sum_1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "sum_1": {
+            "ok": true,
+            "elements": 1,
+            "mismatched": 0,
+            "max_abs_error": 1.52587890625e-05,
+            "rtol": 0.001,
+            "atol": 0.001
+          }
+        }
+      },
+      {
+        "repetition": 1,
+        "ok": true,
+        "buffers": {
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "sum_1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "sum_1": {
+            "ok": true,
+            "elements": 1,
+            "mismatched": 0,
+            "max_abs_error": 1.52587890625e-05,
+            "rtol": 0.001,
+            "atol": 0.001
+          }
+        }
+      },
+      {
+        "repetition": 2,
+        "ok": true,
+        "buffers": {
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "sum_1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "sum_1": {
+            "ok": true,
+            "elements": 1,
+            "mismatched": 0,
+            "max_abs_error": 1.52587890625e-05,
+            "rtol": 0.001,
+            "atol": 0.001
+          }
+        }
+      }
+    ],
+    "resources": [
+      [
+        {
+          "entry": "k_sum_1_reduce",
+          "dynamic_shared_bytes": 0,
+          "block_threads": 128,
+          "max_threads_per_block": 128,
+          "static_shared_bytes": 16,
+          "local_bytes": 0,
+          "registers": 40,
+          "max_active_blocks_per_sm": 12,
+          "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+        }
+      ]
+    ]
+  },
+  {
+    "arm": "merged_plain",
+    "problem": "r03_mean",
+    "case_id": "6dfbe2bc925e2b31ceb8eb84bb5016cca8af143ca55cf93078d09decc26a0fd3",
+    "case_files": {
+      "expected.npz": "9c53fd65aebbc9b6ca477653643273195149be2d93ab472a135883a0a128c5f7",
+      "inputs.npz": "61030dd9a1df40227f64aac8f1ea2dbaaad350740850f50bf054e646f837728b",
+      "k_mean_ffcca3.ir.json": "7eeca2c7869ab2ddf880a0ac7fb689d3ab814d7523eab472ec80ad2458100b86",
+      "meta.json": "d7ab661c388ad447f5661a3b36cba448cf5142402756f1e1c35d110db06c84fe"
+    },
+    "sources": {
+      "tf32_emitter.py": "fc460b050b8c9ad97104869df5390571940ce57299b2115be7e12bb2a28b505d",
+      "tensor_core.py": "ca5af9c9f41826f9e2000de7a8537745c0393007d8eaaaf9fd212b3bfd3364a6",
+      "compile.py": "a199445fac6574a7e14fccd1e9ec25ab68b31930af50c37d492b7720a7871f47"
+    },
+    "evaluator_sha256": "de559ea9f9e0baa64735662128d7dab4eb84abf2c3b2c6cf4840cd19ccee9e57",
+    "pass": true,
+    "sanitizer": false,
+    "result_sha256": "ef4830c880ac9d730ffacaac3d3eea06490def5c5c207e8d0cb03029b78d1130",
+    "checks": [
+      {
+        "repetition": 0,
+        "ok": true,
+        "buffers": {
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "mean_keepdim_count": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "mean": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "mean": {
+            "ok": true,
+            "elements": 1,
+            "mismatched": 0,
+            "max_abs_error": 9.313225746154785e-10,
+            "rtol": 0.0001,
+            "atol": 0.0001
+          }
+        }
+      },
+      {
+        "repetition": 1,
+        "ok": true,
+        "buffers": {
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "mean_keepdim_count": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "mean": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "mean": {
+            "ok": true,
+            "elements": 1,
+            "mismatched": 0,
+            "max_abs_error": 9.313225746154785e-10,
+            "rtol": 0.0001,
+            "atol": 0.0001
+          }
+        }
+      },
+      {
+        "repetition": 2,
+        "ok": true,
+        "buffers": {
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "mean_keepdim_count": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "mean": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "mean": {
+            "ok": true,
+            "elements": 1,
+            "mismatched": 0,
+            "max_abs_error": 9.313225746154785e-10,
+            "rtol": 0.0001,
+            "atol": 0.0001
+          }
+        }
+      }
+    ],
+    "resources": [
+      [
+        {
+          "entry": "k_mean_ffcca3",
+          "dynamic_shared_bytes": 0,
+          "block_threads": 128,
+          "max_threads_per_block": 128,
+          "static_shared_bytes": 16,
+          "local_bytes": 0,
+          "registers": 40,
+          "max_active_blocks_per_sm": 12,
+          "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+        }
+      ]
+    ]
+  },
+  {
+    "arm": "merged_plain",
+    "problem": "r04_row_sum",
+    "case_id": "5c2ba872d36e6526a79b9799c059e237f65a34019cd94f1c85da4f0b9f930d3f",
+    "case_files": {
+      "expected.npz": "cb724cbe21276b1438add7263e418f52c0eb90c4501954a245678dcc793c895d",
+      "inputs.npz": "f48e91e0bcaeb5cac6b26faf157f7252eae2dcab6a70385c27e63c9af401e49c",
+      "k_sum_1_reduce.ir.json": "4c7befc76b72c6c69be4675d69ccd14e336b9139fe22aaec1b94230858c8ab03",
+      "meta.json": "803cb710590156ad319eb44b2d2aa6c1ee9b0e3a666ebc09de259e50d83a3ba1"
+    },
+    "sources": {
+      "tf32_emitter.py": "fc460b050b8c9ad97104869df5390571940ce57299b2115be7e12bb2a28b505d",
+      "tensor_core.py": "ca5af9c9f41826f9e2000de7a8537745c0393007d8eaaaf9fd212b3bfd3364a6",
+      "compile.py": "a199445fac6574a7e14fccd1e9ec25ab68b31930af50c37d492b7720a7871f47"
+    },
+    "evaluator_sha256": "de559ea9f9e0baa64735662128d7dab4eb84abf2c3b2c6cf4840cd19ccee9e57",
+    "pass": true,
+    "sanitizer": false,
+    "result_sha256": "8a6f22eb0442cab5fb1d479cc6a68a076a25c2e8068d3c073e69efb6d32e73c2",
+    "checks": [
+      {
+        "repetition": 0,
+        "ok": true,
+        "buffers": {
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "sum_1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "sum_1": {
+            "ok": true,
+            "elements": 64,
+            "mismatched": 0,
+            "max_abs_error": 5.7220458984375e-06,
+            "rtol": 0.0001,
+            "atol": 0.0001
+          }
+        }
+      },
+      {
+        "repetition": 1,
+        "ok": true,
+        "buffers": {
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "sum_1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "sum_1": {
+            "ok": true,
+            "elements": 64,
+            "mismatched": 0,
+            "max_abs_error": 5.7220458984375e-06,
+            "rtol": 0.0001,
+            "atol": 0.0001
+          }
+        }
+      },
+      {
+        "repetition": 2,
+        "ok": true,
+        "buffers": {
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "sum_1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "sum_1": {
+            "ok": true,
+            "elements": 64,
+            "mismatched": 0,
+            "max_abs_error": 5.7220458984375e-06,
+            "rtol": 0.0001,
+            "atol": 0.0001
+          }
+        }
+      }
+    ],
+    "resources": [
+      [
+        {
+          "entry": "k_sum_1_reduce",
+          "dynamic_shared_bytes": 0,
+          "block_threads": 128,
+          "max_threads_per_block": 128,
+          "static_shared_bytes": 16,
+          "local_bytes": 0,
+          "registers": 40,
+          "max_active_blocks_per_sm": 12,
+          "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+        }
+      ]
+    ]
+  },
+  {
+    "arm": "powenn_guard",
+    "problem": "a01_attention",
+    "case_id": "c10866af73f820553331b01c52e042e5d724c275a6f5fedd9348170ba75d382c",
+    "case_files": {
+      "expected.npz": "ccc0ad1a70f679781c8aff8064ae73368e04bc35018a537dc15ef8610262ed51",
+      "inputs.npz": "f08a92ed6e149310d309dc302d7eb1ec2f1169cdca5de47d3685f93cd896ec59",
+      "k_matmul_softmax_reduce_b55365.ir.json": "0a6925795c1b8e108befbdc3300c722ea5a7fb19d2337597eca860e9c36eff9a",
+      "meta.json": "c280c572744016ecf6ca2971312ad2ce8a10b28c0f3e38561c1a096c2ea7352f"
+    },
+    "sources": {
+      "tensor_core.py": "ca5af9c9f41826f9e2000de7a8537745c0393007d8eaaaf9fd212b3bfd3364a6",
+      "compile.py": "d8f5689b8d09bc1109dc683d442b0c355b30559ecda0acd9eea738321cfc54be",
+      "tf32_emitter.py": "19820f4dfb995955ce342c84269b6cf7ed92208dc2a94054858738e89cbf0b28"
+    },
+    "evaluator_sha256": "de559ea9f9e0baa64735662128d7dab4eb84abf2c3b2c6cf4840cd19ccee9e57",
+    "pass": true,
+    "sanitizer": false,
+    "result_sha256": "9e7814b4bc6881b99778b0f9af9a8922fbf28d47d0d0cb8e470ed7e950afdce4",
+    "checks": [
+      {
+        "repetition": 0,
+        "ok": true,
+        "buffers": {
+          "div_c1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "q": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "kt": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "v": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "matmul_1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "matmul_1": {
+            "ok": true,
+            "elements": 4096,
+            "mismatched": 0,
+            "max_abs_error": 6.556510925292969e-07,
+            "rtol": 0.001,
+            "atol": 0.0001
+          }
+        }
+      },
+      {
+        "repetition": 1,
+        "ok": true,
+        "buffers": {
+          "div_c1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "q": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "kt": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "v": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "matmul_1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "matmul_1": {
+            "ok": true,
+            "elements": 4096,
+            "mismatched": 0,
+            "max_abs_error": 6.556510925292969e-07,
+            "rtol": 0.001,
+            "atol": 0.0001
+          }
+        }
+      },
+      {
+        "repetition": 2,
+        "ok": true,
+        "buffers": {
+          "div_c1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "q": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "kt": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "v": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "matmul_1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "matmul_1": {
+            "ok": true,
+            "elements": 4096,
+            "mismatched": 0,
+            "max_abs_error": 6.556510925292969e-07,
+            "rtol": 0.001,
+            "atol": 0.0001
+          }
+        }
+      }
+    ],
+    "resources": [
+      [
+        {
+          "entry": "k_matmul_softmax_reduce_b55365",
+          "dynamic_shared_bytes": 0,
+          "block_threads": 128,
+          "max_threads_per_block": 128,
+          "static_shared_bytes": 41216,
+          "local_bytes": 0,
+          "registers": 172,
+          "max_active_blocks_per_sm": 2,
+          "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+        }
+      ]
+    ]
+  },
+  {
+    "arm": "powenn_guard",
+    "problem": "a02_attention_128",
+    "case_id": "69db4e7f597c41b0684fb30c3204e197cf56c8647d9a63dc0adb77f2a8a0d867",
+    "case_files": {
+      "expected.npz": "ebd7c000d75e52707f2e65304e05fbf963b4799919f814f685490c76c89e7080",
+      "inputs.npz": "6dc2e8a9ddb77eac508641c5d950f9b6b762ea9092f50300db8f3fd8361f18f0",
+      "k_matmul_softmax_reduce_6f0029.ir.json": "a51792c9e4d920a493054fb2a6986d87766cc1b3717078f8e631a45d1b0bf1dd",
+      "meta.json": "adcc08994786076e7cb9835ab3bab19b0dc9c0d00a999adea124380f8300de18"
+    },
+    "sources": {
+      "tensor_core.py": "ca5af9c9f41826f9e2000de7a8537745c0393007d8eaaaf9fd212b3bfd3364a6",
+      "compile.py": "d8f5689b8d09bc1109dc683d442b0c355b30559ecda0acd9eea738321cfc54be",
+      "tf32_emitter.py": "19820f4dfb995955ce342c84269b6cf7ed92208dc2a94054858738e89cbf0b28"
+    },
+    "evaluator_sha256": "de559ea9f9e0baa64735662128d7dab4eb84abf2c3b2c6cf4840cd19ccee9e57",
+    "pass": true,
+    "sanitizer": false,
+    "result_sha256": "49e675cb5239aac123ca140865ed04137ca70c9e36e4e5c746bdddd656ba256a",
+    "checks": [
+      {
+        "repetition": 0,
+        "ok": true,
+        "buffers": {
+          "div_c1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "q": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "kt": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "v": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "matmul_1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "matmul_1": {
+            "ok": true,
+            "elements": 4096,
+            "mismatched": 0,
+            "max_abs_error": 4.172325134277344e-07,
+            "rtol": 0.001,
+            "atol": 0.0001
+          }
+        }
+      },
+      {
+        "repetition": 1,
+        "ok": true,
+        "buffers": {
+          "div_c1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "q": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "kt": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "v": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "matmul_1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "matmul_1": {
+            "ok": true,
+            "elements": 4096,
+            "mismatched": 0,
+            "max_abs_error": 4.172325134277344e-07,
+            "rtol": 0.001,
+            "atol": 0.0001
+          }
+        }
+      },
+      {
+        "repetition": 2,
+        "ok": true,
+        "buffers": {
+          "div_c1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "q": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "kt": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "v": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "matmul_1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "matmul_1": {
+            "ok": true,
+            "elements": 4096,
+            "mismatched": 0,
+            "max_abs_error": 4.172325134277344e-07,
+            "rtol": 0.001,
+            "atol": 0.0001
+          }
+        }
+      }
+    ],
+    "resources": [
+      [
+        {
+          "entry": "k_matmul_softmax_reduce_6f0029",
+          "dynamic_shared_bytes": 0,
+          "block_threads": 32,
+          "max_threads_per_block": 32,
+          "static_shared_bytes": 516,
+          "local_bytes": 0,
+          "registers": 84,
+          "max_active_blocks_per_sm": 20,
+          "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+        }
+      ]
+    ]
+  },
+  {
+    "arm": "powenn_guard",
+    "problem": "f01_rmsnorm",
+    "case_id": "6ab09ab4acc384ee252370a564a13965ece1ad21a3e64d6615f0de1a39b8c665",
+    "case_files": {
+      "expected.npz": "197016500cfca3ee3a1952273d50655e5bbf60093c28ad801e28eb3ccb76a6fb",
+      "inputs.npz": "b83866a6eb01aec17314e0c752bbe491dafe357ac26724b886b851b9b361ac92",
+      "k_mean_cbd1de.ir.json": "a8e6819e3144b942d8983b52b6865fa692868105b20de30f6ba4df424a07862a",
+      "meta.json": "f45014c6b0963ec9727fc0f1c9bb585319c4ac94292260bc8f7c10557c1b8e1d"
+    },
+    "sources": {
+      "tensor_core.py": "ca5af9c9f41826f9e2000de7a8537745c0393007d8eaaaf9fd212b3bfd3364a6",
+      "compile.py": "d8f5689b8d09bc1109dc683d442b0c355b30559ecda0acd9eea738321cfc54be",
+      "tf32_emitter.py": "19820f4dfb995955ce342c84269b6cf7ed92208dc2a94054858738e89cbf0b28"
+    },
+    "evaluator_sha256": "de559ea9f9e0baa64735662128d7dab4eb84abf2c3b2c6cf4840cd19ccee9e57",
+    "pass": true,
+    "sanitizer": false,
+    "result_sha256": "fc1a3c4ce191419d469d5cbf1aa4c4fc3c6937bba2e34cd10fcb3569a9b80489",
+    "checks": [
+      {
+        "repetition": 0,
+        "ok": true,
+        "buffers": {
+          "mean_count": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "add_c1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "w": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "mul_1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "mul_1": {
+            "ok": true,
+            "elements": 65536,
+            "mismatched": 0,
+            "max_abs_error": 1.9073486328125e-06,
+            "rtol": 0.001,
+            "atol": 0.0001
+          }
+        }
+      },
+      {
+        "repetition": 1,
+        "ok": true,
+        "buffers": {
+          "mean_count": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "add_c1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "w": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "mul_1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "mul_1": {
+            "ok": true,
+            "elements": 65536,
+            "mismatched": 0,
+            "max_abs_error": 1.9073486328125e-06,
+            "rtol": 0.001,
+            "atol": 0.0001
+          }
+        }
+      },
+      {
+        "repetition": 2,
+        "ok": true,
+        "buffers": {
+          "mean_count": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "add_c1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "w": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "mul_1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "mul_1": {
+            "ok": true,
+            "elements": 65536,
+            "mismatched": 0,
+            "max_abs_error": 1.9073486328125e-06,
+            "rtol": 0.001,
+            "atol": 0.0001
+          }
+        }
+      }
+    ],
+    "resources": [
+      [
+        {
+          "entry": "k_mean_cbd1de",
+          "dynamic_shared_bytes": 0,
+          "block_threads": 128,
+          "max_threads_per_block": 128,
+          "static_shared_bytes": 16,
+          "local_bytes": 0,
+          "registers": 40,
+          "max_active_blocks_per_sm": 12,
+          "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+        }
+      ]
+    ]
+  },
+  {
+    "arm": "powenn_guard",
+    "problem": "f02_row_softmax",
+    "case_id": "89d56c168a0b04373ef8d50096c48534c70019b8d2f87371b79aee2289922b44",
+    "case_files": {
+      "expected.npz": "7e38d188cdc0bbb7afda1e6007318b0174bcdf82eb3855775967e49d4b8ee8ce",
+      "inputs.npz": "6e022307b734c374ae43090ac35f7d14684e63ecaa806a4529cd8d5a024fc44b",
+      "k_softmax_05263d.ir.json": "d48b030e9d9a765aa631287f72935bc59f20926f3ccb09dc7f7932106770af03",
+      "meta.json": "ddbe97ea42c7b077d30d140b751f8062caf47b5620cb423a02c1dd848cd61900"
+    },
+    "sources": {
+      "tensor_core.py": "ca5af9c9f41826f9e2000de7a8537745c0393007d8eaaaf9fd212b3bfd3364a6",
+      "compile.py": "d8f5689b8d09bc1109dc683d442b0c355b30559ecda0acd9eea738321cfc54be",
+      "tf32_emitter.py": "19820f4dfb995955ce342c84269b6cf7ed92208dc2a94054858738e89cbf0b28"
+    },
+    "evaluator_sha256": "de559ea9f9e0baa64735662128d7dab4eb84abf2c3b2c6cf4840cd19ccee9e57",
+    "pass": true,
+    "sanitizer": false,
+    "result_sha256": "642cd76d7e1161356732367f7843a8491df468b972b016f4d06304d9e5c203cc",
+    "checks": [
+      {
+        "repetition": 0,
+        "ok": true,
+        "buffers": {
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "softmax": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "softmax": {
+            "ok": true,
+            "elements": 16384,
+            "mismatched": 0,
+            "max_abs_error": 7.450580596923828e-09,
+            "rtol": 0.001,
+            "atol": 1e-05
+          }
+        }
+      },
+      {
+        "repetition": 1,
+        "ok": true,
+        "buffers": {
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "softmax": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "softmax": {
+            "ok": true,
+            "elements": 16384,
+            "mismatched": 0,
+            "max_abs_error": 7.450580596923828e-09,
+            "rtol": 0.001,
+            "atol": 1e-05
+          }
+        }
+      },
+      {
+        "repetition": 2,
+        "ok": true,
+        "buffers": {
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "softmax": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "softmax": {
+            "ok": true,
+            "elements": 16384,
+            "mismatched": 0,
+            "max_abs_error": 7.450580596923828e-09,
+            "rtol": 0.001,
+            "atol": 1e-05
+          }
+        }
+      }
+    ],
+    "resources": [
+      [
+        {
+          "entry": "k_softmax_05263d",
+          "dynamic_shared_bytes": 0,
+          "block_threads": 128,
+          "max_threads_per_block": 128,
+          "static_shared_bytes": 32,
+          "local_bytes": 0,
+          "registers": 40,
+          "max_active_blocks_per_sm": 12,
+          "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+        }
+      ]
+    ]
+  },
+  {
+    "arm": "powenn_guard",
+    "problem": "f03_l2norm",
+    "case_id": "1e82d7e58a53e8795ea9d05e3759dfe201e42308efd08dd2a51e79c769dc2fbc",
+    "case_files": {
+      "expected.npz": "fb2e242cbfe9834c6d45f27f29acc750a5b4ea8ad6ab509baa7a5b4c53586380",
+      "inputs.npz": "f48e91e0bcaeb5cac6b26faf157f7252eae2dcab6a70385c27e63c9af401e49c",
+      "k_div_reduce.ir.json": "34abdb33fe950100029930242777d0b22a12e523117de21bc9d78b43310c567d",
+      "meta.json": "cbf67c2d198f4fea1bb140083ec65c4bf14202090daaa4aac77f1514ecc60b95"
+    },
+    "sources": {
+      "tensor_core.py": "ca5af9c9f41826f9e2000de7a8537745c0393007d8eaaaf9fd212b3bfd3364a6",
+      "compile.py": "d8f5689b8d09bc1109dc683d442b0c355b30559ecda0acd9eea738321cfc54be",
+      "tf32_emitter.py": "19820f4dfb995955ce342c84269b6cf7ed92208dc2a94054858738e89cbf0b28"
+    },
+    "evaluator_sha256": "de559ea9f9e0baa64735662128d7dab4eb84abf2c3b2c6cf4840cd19ccee9e57",
+    "pass": true,
+    "sanitizer": false,
+    "result_sha256": "82a8238b6b21744c82d9c7870a2e14cb9176c2a68272c3c09b70994b773aeb52",
+    "checks": [
+      {
+        "repetition": 0,
+        "ok": true,
+        "buffers": {
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "div": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "div": {
+            "ok": true,
+            "elements": 32768,
+            "mismatched": 0,
+            "max_abs_error": 1.4901161193847656e-08,
+            "rtol": 0.001,
+            "atol": 0.0001
+          }
+        }
+      },
+      {
+        "repetition": 1,
+        "ok": true,
+        "buffers": {
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "div": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "div": {
+            "ok": true,
+            "elements": 32768,
+            "mismatched": 0,
+            "max_abs_error": 1.4901161193847656e-08,
+            "rtol": 0.001,
+            "atol": 0.0001
+          }
+        }
+      },
+      {
+        "repetition": 2,
+        "ok": true,
+        "buffers": {
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "div": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "div": {
+            "ok": true,
+            "elements": 32768,
+            "mismatched": 0,
+            "max_abs_error": 1.4901161193847656e-08,
+            "rtol": 0.001,
+            "atol": 0.0001
+          }
+        }
+      }
+    ],
+    "resources": [
+      [
+        {
+          "entry": "k_div_reduce",
+          "dynamic_shared_bytes": 0,
+          "block_threads": 128,
+          "max_threads_per_block": 128,
+          "static_shared_bytes": 16,
+          "local_bytes": 0,
+          "registers": 40,
+          "max_active_blocks_per_sm": 12,
+          "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+        }
+      ]
+    ]
+  },
+  {
+    "arm": "powenn_guard",
+    "problem": "m01_matmul_512",
+    "case_id": "cd9a29496fccd9e421c1cfbe14347cb45003f38681e3b4b2e703f5dbbfdd6c5d",
+    "case_files": {
+      "expected.npz": "6396bececa75b2adee8c83bb0c090f9a68e7297d7de492f5a2f0cd3e67f24c36",
+      "inputs.npz": "eb7048679203a9f4605986f70d1233293e768242df3af371a23b41e293fc457e",
+      "k_matmul_2967be.ir.json": "ed9ab32776ce0de8b0d1f0367da54c586bf993c964efc01482666247a976dc02",
+      "meta.json": "3324370a2d29614c6c7ff7cf549563f9afb22bab0ed31ed62d8ffd27c59dcd57"
+    },
+    "sources": {
+      "tensor_core.py": "ca5af9c9f41826f9e2000de7a8537745c0393007d8eaaaf9fd212b3bfd3364a6",
+      "compile.py": "d8f5689b8d09bc1109dc683d442b0c355b30559ecda0acd9eea738321cfc54be",
+      "tf32_emitter.py": "19820f4dfb995955ce342c84269b6cf7ed92208dc2a94054858738e89cbf0b28"
+    },
+    "evaluator_sha256": "de559ea9f9e0baa64735662128d7dab4eb84abf2c3b2c6cf4840cd19ccee9e57",
+    "pass": true,
+    "sanitizer": false,
+    "result_sha256": "8a841fa99ab949360b87c283c162eaa5c2be28471337fbd40c8577284be4d481",
+    "checks": [
+      {
+        "repetition": 0,
+        "ok": true,
+        "buffers": {
+          "x1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "x0": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "matmul": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "matmul": {
+            "ok": true,
+            "elements": 262144,
+            "mismatched": 0,
+            "max_abs_error": 8.392333984375e-05,
+            "rtol": 0.001,
+            "atol": 0.001
+          }
+        }
+      },
+      {
+        "repetition": 1,
+        "ok": true,
+        "buffers": {
+          "x1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "x0": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "matmul": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "matmul": {
+            "ok": true,
+            "elements": 262144,
+            "mismatched": 0,
+            "max_abs_error": 8.392333984375e-05,
+            "rtol": 0.001,
+            "atol": 0.001
+          }
+        }
+      },
+      {
+        "repetition": 2,
+        "ok": true,
+        "buffers": {
+          "x1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "x0": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "matmul": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "matmul": {
+            "ok": true,
+            "elements": 262144,
+            "mismatched": 0,
+            "max_abs_error": 8.392333984375e-05,
+            "rtol": 0.001,
+            "atol": 0.001
+          }
+        }
+      }
+    ],
+    "resources": [
+      [
+        {
+          "entry": "k_matmul_2967be",
+          "dynamic_shared_bytes": 73728,
+          "block_threads": 512,
+          "max_threads_per_block": 512,
+          "static_shared_bytes": 0,
+          "local_bytes": 0,
+          "registers": 40,
+          "max_active_blocks_per_sm": 1,
+          "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+        }
+      ]
+    ]
+  },
+  {
+    "arm": "powenn_guard",
+    "problem": "m02_matmul_rect",
+    "case_id": "aeb1568894b7afb50ea0b1b6c6fe94b57419452643ec87c5c6561f9ebfc58bbe",
+    "case_files": {
+      "expected.npz": "b0a5f6719c01fdc55054d983e7d75f880577e4741c63ae39c9fa704507e58134",
+      "inputs.npz": "24f3a0b42ecaa5278df5b81f4d431b5a05771370d88ac58a3ff7b9bd0cae0809",
+      "k_matmul.ir.json": "c47bb47c529e7362c9272784ac21a31f2a5d79546cc11b19beff891278d22206",
+      "meta.json": "a82fd8d7f5933749868035254537b962d3d0140c8bf3e22f7f8a54a289a9c365"
+    },
+    "sources": {
+      "tensor_core.py": "ca5af9c9f41826f9e2000de7a8537745c0393007d8eaaaf9fd212b3bfd3364a6",
+      "compile.py": "d8f5689b8d09bc1109dc683d442b0c355b30559ecda0acd9eea738321cfc54be",
+      "tf32_emitter.py": "19820f4dfb995955ce342c84269b6cf7ed92208dc2a94054858738e89cbf0b28"
+    },
+    "evaluator_sha256": "de559ea9f9e0baa64735662128d7dab4eb84abf2c3b2c6cf4840cd19ccee9e57",
+    "pass": true,
+    "sanitizer": true,
+    "result_sha256": "d7c0135494fc2965275bb7a70d9b91dad517098809765152d2a3615982f037a3",
+    "checks": [
+      {
+        "repetition": 0,
+        "ok": true,
+        "buffers": {
+          "x1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "x0": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "matmul": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "matmul": {
+            "ok": true,
+            "elements": 8192,
+            "mismatched": 0,
+            "max_abs_error": 1.1444091796875e-05,
+            "rtol": 0.001,
+            "atol": 0.001
+          }
+        }
+      },
+      {
+        "repetition": 1,
+        "ok": true,
+        "buffers": {
+          "x1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "x0": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "matmul": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "matmul": {
+            "ok": true,
+            "elements": 8192,
+            "mismatched": 0,
+            "max_abs_error": 1.1444091796875e-05,
+            "rtol": 0.001,
+            "atol": 0.001
+          }
+        }
+      },
+      {
+        "repetition": 2,
+        "ok": true,
+        "buffers": {
+          "x1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "x0": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "matmul": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "matmul": {
+            "ok": true,
+            "elements": 8192,
+            "mismatched": 0,
+            "max_abs_error": 1.1444091796875e-05,
+            "rtol": 0.001,
+            "atol": 0.001
+          }
+        }
+      }
+    ],
+    "resources": [
+      [
+        {
+          "entry": "k_matmul",
+          "dynamic_shared_bytes": 0,
+          "block_threads": 256,
+          "max_threads_per_block": 256,
+          "static_shared_bytes": 1536,
+          "local_bytes": 0,
+          "registers": 33,
+          "max_active_blocks_per_sm": 6,
+          "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+        }
+      ]
+    ]
+  },
+  {
+    "arm": "powenn_guard",
+    "problem": "p00_scalar_add",
+    "case_id": "4035b0c010105ed7be8aa1a889fe2754d498fc4a27c1719bf547ddad66e48403",
+    "case_files": {
+      "expected.npz": "69e4a749183c5402f03c28a957cb1f523186d16f9b9974c75cd0ebbbfd925478",
+      "inputs.npz": "856da092d678480daf60d766142c81285cd59d9782b58d708341d4cb3aa7d508",
+      "k_add_pointwise.ir.json": "d93c0b232c48f7161c88f0276ea8a69481b06608a24b6e8ed2d5025bd17f4e32",
+      "meta.json": "67f4c80a5c78c9fa571f4088633acc56cae0a758d2a65e7c89c07a96e665709c"
+    },
+    "sources": {
+      "tensor_core.py": "ca5af9c9f41826f9e2000de7a8537745c0393007d8eaaaf9fd212b3bfd3364a6",
+      "compile.py": "d8f5689b8d09bc1109dc683d442b0c355b30559ecda0acd9eea738321cfc54be",
+      "tf32_emitter.py": "19820f4dfb995955ce342c84269b6cf7ed92208dc2a94054858738e89cbf0b28"
+    },
+    "evaluator_sha256": "de559ea9f9e0baa64735662128d7dab4eb84abf2c3b2c6cf4840cd19ccee9e57",
+    "pass": true,
+    "sanitizer": false,
+    "result_sha256": "1e636d6eb165648e442245eaec5a24c053547ae778abd5dda68c421d10b9fb70",
+    "checks": [
+      {
+        "repetition": 0,
+        "ok": true,
+        "buffers": {
+          "x0": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "x1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "add": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "add": {
+            "ok": true,
+            "elements": 128,
+            "mismatched": 0,
+            "max_abs_error": 0.0,
+            "rtol": 0,
+            "atol": 0
+          }
+        }
+      },
+      {
+        "repetition": 1,
+        "ok": true,
+        "buffers": {
+          "x0": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "x1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "add": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "add": {
+            "ok": true,
+            "elements": 128,
+            "mismatched": 0,
+            "max_abs_error": 0.0,
+            "rtol": 0,
+            "atol": 0
+          }
+        }
+      },
+      {
+        "repetition": 2,
+        "ok": true,
+        "buffers": {
+          "x0": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "x1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "add": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "add": {
+            "ok": true,
+            "elements": 128,
+            "mismatched": 0,
+            "max_abs_error": 0.0,
+            "rtol": 0,
+            "atol": 0
+          }
+        }
+      }
+    ],
+    "resources": [
+      [
+        {
+          "entry": "k_add_pointwise",
+          "dynamic_shared_bytes": 0,
+          "block_threads": 256,
+          "max_threads_per_block": 256,
+          "static_shared_bytes": 0,
+          "local_bytes": 0,
+          "registers": 20,
+          "max_active_blocks_per_sm": 6,
+          "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+        }
+      ]
+    ]
+  },
+  {
+    "arm": "powenn_guard",
+    "problem": "p01_vector_add",
+    "case_id": "5e973341ada3e33f701293be5a3e6195badb7290a5471f4c6cefa86634d1b168",
+    "case_files": {
+      "expected.npz": "1a72f87aa3afd4e84746d2c0bfcfde9d024f573ce863322f72d2c6b3bb133086",
+      "inputs.npz": "49bd2b9f819b4dd4833a0d0a43303ee795329db0a947083e38a1b3c82bc2bdaf",
+      "k_add_pointwise.ir.json": "90088bc4c7346b9a5916205fdb96926f52cc0f5e3c5c08527d7b0796b0c47fc5",
+      "meta.json": "4607a6a14553ec256b2073ff8fef18a850e315033f4fdace21f26fdcc2a867c6"
+    },
+    "sources": {
+      "tensor_core.py": "ca5af9c9f41826f9e2000de7a8537745c0393007d8eaaaf9fd212b3bfd3364a6",
+      "compile.py": "d8f5689b8d09bc1109dc683d442b0c355b30559ecda0acd9eea738321cfc54be",
+      "tf32_emitter.py": "19820f4dfb995955ce342c84269b6cf7ed92208dc2a94054858738e89cbf0b28"
+    },
+    "evaluator_sha256": "de559ea9f9e0baa64735662128d7dab4eb84abf2c3b2c6cf4840cd19ccee9e57",
+    "pass": true,
+    "sanitizer": false,
+    "result_sha256": "58157057a47da7b13423df9de5cf619ab3656e442229daa94940271c5a19bfe4",
+    "checks": [
+      {
+        "repetition": 0,
+        "ok": true,
+        "buffers": {
+          "x0": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "x1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "add": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "add": {
+            "ok": true,
+            "elements": 1024,
+            "mismatched": 0,
+            "max_abs_error": 0.0,
+            "rtol": 0,
+            "atol": 0
+          }
+        }
+      },
+      {
+        "repetition": 1,
+        "ok": true,
+        "buffers": {
+          "x0": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "x1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "add": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "add": {
+            "ok": true,
+            "elements": 1024,
+            "mismatched": 0,
+            "max_abs_error": 0.0,
+            "rtol": 0,
+            "atol": 0
+          }
+        }
+      },
+      {
+        "repetition": 2,
+        "ok": true,
+        "buffers": {
+          "x0": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "x1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "add": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "add": {
+            "ok": true,
+            "elements": 1024,
+            "mismatched": 0,
+            "max_abs_error": 0.0,
+            "rtol": 0,
+            "atol": 0
+          }
+        }
+      }
+    ],
+    "resources": [
+      [
+        {
+          "entry": "k_add_pointwise",
+          "dynamic_shared_bytes": 0,
+          "block_threads": 256,
+          "max_threads_per_block": 256,
+          "static_shared_bytes": 0,
+          "local_bytes": 0,
+          "registers": 20,
+          "max_active_blocks_per_sm": 6,
+          "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+        }
+      ]
+    ]
+  },
+  {
+    "arm": "powenn_guard",
+    "problem": "p02_scale_shift",
+    "case_id": "3145aa57f753f64551cd4b83c3d430e6e2375a9feb4819accbfd5e55c39da560",
+    "case_files": {
+      "expected.npz": "515539ace84b0cb38ab3e5e6ed20894b774ab428a86be180529d54fd8ad63dd6",
+      "inputs.npz": "0a8f07efdec95d3d1b752be42e78d9af7a5f9f089d57a700fdc40793e401b7cf",
+      "k_add_pointwise.ir.json": "2bae0a54cbcd037d6c13e70b5c4f5728f2f94af163a53ebe35b88ab8f68ec021",
+      "meta.json": "7c1c3ea69e4d61128d72fbaf3a82a76125a5273c3ced6197ac2f150d03d121e1"
+    },
+    "sources": {
+      "tensor_core.py": "ca5af9c9f41826f9e2000de7a8537745c0393007d8eaaaf9fd212b3bfd3364a6",
+      "compile.py": "d8f5689b8d09bc1109dc683d442b0c355b30559ecda0acd9eea738321cfc54be",
+      "tf32_emitter.py": "19820f4dfb995955ce342c84269b6cf7ed92208dc2a94054858738e89cbf0b28"
+    },
+    "evaluator_sha256": "de559ea9f9e0baa64735662128d7dab4eb84abf2c3b2c6cf4840cd19ccee9e57",
+    "pass": true,
+    "sanitizer": false,
+    "result_sha256": "d0f0f7ff136107c676ff73eb9e3ad02f4a7564a12af0c54eee9242f0081c1da3",
+    "checks": [
+      {
+        "repetition": 0,
+        "ok": true,
+        "buffers": {
+          "mul_c1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "add_c1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "add": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "add": {
+            "ok": true,
+            "elements": 4096,
+            "mismatched": 0,
+            "max_abs_error": 0.0,
+            "rtol": 1e-06,
+            "atol": 1e-06
+          }
+        }
+      },
+      {
+        "repetition": 1,
+        "ok": true,
+        "buffers": {
+          "mul_c1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "add_c1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "add": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "add": {
+            "ok": true,
+            "elements": 4096,
+            "mismatched": 0,
+            "max_abs_error": 0.0,
+            "rtol": 1e-06,
+            "atol": 1e-06
+          }
+        }
+      },
+      {
+        "repetition": 2,
+        "ok": true,
+        "buffers": {
+          "mul_c1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "add_c1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "add": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "add": {
+            "ok": true,
+            "elements": 4096,
+            "mismatched": 0,
+            "max_abs_error": 0.0,
+            "rtol": 1e-06,
+            "atol": 1e-06
+          }
+        }
+      }
+    ],
+    "resources": [
+      [
+        {
+          "entry": "k_add_pointwise",
+          "dynamic_shared_bytes": 0,
+          "block_threads": 256,
+          "max_threads_per_block": 256,
+          "static_shared_bytes": 0,
+          "local_bytes": 0,
+          "registers": 28,
+          "max_active_blocks_per_sm": 6,
+          "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+        }
+      ]
+    ]
+  },
+  {
+    "arm": "powenn_guard",
+    "problem": "p03_relu_mul",
+    "case_id": "aeeffce3a36b8cf1b27173b8c1644fc517a24d992173e06bb1664784b009b6ba",
+    "case_files": {
+      "expected.npz": "a0fc97901b28331b29bb5f01cf104944c3376c633dd4cce65d551ad61035e52f",
+      "inputs.npz": "e3174d850920a7e888b9a8dc58a43d1dca6b202d7ed1e701cbc729668c1e2ee9",
+      "k_mul_pointwise.ir.json": "b2429e790dac9fd0db9fafadaa3624cafaeff85c834851a9034a730a1620a892",
+      "meta.json": "a2dbbe3a3cec7c45fcdde2c08f0d3276647c2a4b56ede3345be16404d1ded8c9"
+    },
+    "sources": {
+      "tensor_core.py": "ca5af9c9f41826f9e2000de7a8537745c0393007d8eaaaf9fd212b3bfd3364a6",
+      "compile.py": "d8f5689b8d09bc1109dc683d442b0c355b30559ecda0acd9eea738321cfc54be",
+      "tf32_emitter.py": "19820f4dfb995955ce342c84269b6cf7ed92208dc2a94054858738e89cbf0b28"
+    },
+    "evaluator_sha256": "de559ea9f9e0baa64735662128d7dab4eb84abf2c3b2c6cf4840cd19ccee9e57",
+    "pass": true,
+    "sanitizer": false,
+    "result_sha256": "b57dc3d38ab6c67da2521f699d8fda22aee1089c9b59cb6c627ed956ecaff30d",
+    "checks": [
+      {
+        "repetition": 0,
+        "ok": true,
+        "buffers": {
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "y": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "mul": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "mul": {
+            "ok": true,
+            "elements": 2048,
+            "mismatched": 0,
+            "max_abs_error": 0.0,
+            "rtol": 0,
+            "atol": 0
+          }
+        }
+      },
+      {
+        "repetition": 1,
+        "ok": true,
+        "buffers": {
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "y": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "mul": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "mul": {
+            "ok": true,
+            "elements": 2048,
+            "mismatched": 0,
+            "max_abs_error": 0.0,
+            "rtol": 0,
+            "atol": 0
+          }
+        }
+      },
+      {
+        "repetition": 2,
+        "ok": true,
+        "buffers": {
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "y": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "mul": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "mul": {
+            "ok": true,
+            "elements": 2048,
+            "mismatched": 0,
+            "max_abs_error": 0.0,
+            "rtol": 0,
+            "atol": 0
+          }
+        }
+      }
+    ],
+    "resources": [
+      [
+        {
+          "entry": "k_mul_pointwise",
+          "dynamic_shared_bytes": 0,
+          "block_threads": 256,
+          "max_threads_per_block": 256,
+          "static_shared_bytes": 0,
+          "local_bytes": 0,
+          "registers": 28,
+          "max_active_blocks_per_sm": 6,
+          "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+        }
+      ]
+    ]
+  },
+  {
+    "arm": "powenn_guard",
+    "problem": "r01_array_sum",
+    "case_id": "2ffefe7fee88d864b3ac97cd70fe9711643f3551fba367299df52f329649154d",
+    "case_files": {
+      "expected.npz": "899c8058da70456bc3714d71ffc2814dd9777e37d39be7379b359e452924cb5c",
+      "inputs.npz": "3d07ca7b63aa6ba36c6dbc61c11fa1e5acf5eeb281888fa5d77a1ff0f92e8904",
+      "k_sum_1_reduce.ir.json": "a5ad6af023562e1632e929afb8cd6387603c2edcd4d4b1590b1a3b2ee962675f",
+      "meta.json": "46cf07073f4e612e811decbc2ca900ea210811194a1e336053a6f179ecb4b00e"
+    },
+    "sources": {
+      "tensor_core.py": "ca5af9c9f41826f9e2000de7a8537745c0393007d8eaaaf9fd212b3bfd3364a6",
+      "compile.py": "d8f5689b8d09bc1109dc683d442b0c355b30559ecda0acd9eea738321cfc54be",
+      "tf32_emitter.py": "19820f4dfb995955ce342c84269b6cf7ed92208dc2a94054858738e89cbf0b28"
+    },
+    "evaluator_sha256": "de559ea9f9e0baa64735662128d7dab4eb84abf2c3b2c6cf4840cd19ccee9e57",
+    "pass": true,
+    "sanitizer": false,
+    "result_sha256": "34bae8aa9ca2f7b457fe977046305b02134105055822068b5b7df155a7030791",
+    "checks": [
+      {
+        "repetition": 0,
+        "ok": true,
+        "buffers": {
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "sum_1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "sum_1": {
+            "ok": true,
+            "elements": 1,
+            "mismatched": 0,
+            "max_abs_error": 3.814697265625e-06,
+            "rtol": 0.0001,
+            "atol": 0.0001
+          }
+        }
+      },
+      {
+        "repetition": 1,
+        "ok": true,
+        "buffers": {
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "sum_1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "sum_1": {
+            "ok": true,
+            "elements": 1,
+            "mismatched": 0,
+            "max_abs_error": 3.814697265625e-06,
+            "rtol": 0.0001,
+            "atol": 0.0001
+          }
+        }
+      },
+      {
+        "repetition": 2,
+        "ok": true,
+        "buffers": {
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "sum_1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "sum_1": {
+            "ok": true,
+            "elements": 1,
+            "mismatched": 0,
+            "max_abs_error": 3.814697265625e-06,
+            "rtol": 0.0001,
+            "atol": 0.0001
+          }
+        }
+      }
+    ],
+    "resources": [
+      [
+        {
+          "entry": "k_sum_1_reduce",
+          "dynamic_shared_bytes": 0,
+          "block_threads": 128,
+          "max_threads_per_block": 128,
+          "static_shared_bytes": 16,
+          "local_bytes": 0,
+          "registers": 40,
+          "max_active_blocks_per_sm": 12,
+          "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+        }
+      ]
+    ]
+  },
+  {
+    "arm": "powenn_guard",
+    "problem": "r02_big_sum",
+    "case_id": "a56bdb784a46a763c2b633ebb5d16ee1ffd4287cb0984168b4f80909c323ce22",
+    "case_files": {
+      "expected.npz": "0109852644d0785b770fa38d996b063b156f01e8bfccb303ea0581e42696eec1",
+      "inputs.npz": "1f6a5024cb5ea517cb64c35096f412de038fc3a5026d66d468ca5f180ec0f26a",
+      "k_sum_1_reduce.ir.json": "777e3f2dd170849133e19d303cdb3d273c135c9a9896786ee40fbc6a2ff4ec7c",
+      "meta.json": "db364be00e35402a3d6f10fcd55562115c7604dea94f8126a02179a80476d19e"
+    },
+    "sources": {
+      "tensor_core.py": "ca5af9c9f41826f9e2000de7a8537745c0393007d8eaaaf9fd212b3bfd3364a6",
+      "compile.py": "d8f5689b8d09bc1109dc683d442b0c355b30559ecda0acd9eea738321cfc54be",
+      "tf32_emitter.py": "19820f4dfb995955ce342c84269b6cf7ed92208dc2a94054858738e89cbf0b28"
+    },
+    "evaluator_sha256": "de559ea9f9e0baa64735662128d7dab4eb84abf2c3b2c6cf4840cd19ccee9e57",
+    "pass": true,
+    "sanitizer": false,
+    "result_sha256": "817b7b14946a2ef7a04037a64bf6983371eb5f1945c61465817ec13ffb96ad89",
+    "checks": [
+      {
+        "repetition": 0,
+        "ok": true,
+        "buffers": {
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "sum_1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "sum_1": {
+            "ok": true,
+            "elements": 1,
+            "mismatched": 0,
+            "max_abs_error": 9.1552734375e-05,
+            "rtol": 0.001,
+            "atol": 0.001
+          }
+        }
+      },
+      {
+        "repetition": 1,
+        "ok": true,
+        "buffers": {
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "sum_1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "sum_1": {
+            "ok": true,
+            "elements": 1,
+            "mismatched": 0,
+            "max_abs_error": 9.1552734375e-05,
+            "rtol": 0.001,
+            "atol": 0.001
+          }
+        }
+      },
+      {
+        "repetition": 2,
+        "ok": true,
+        "buffers": {
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "sum_1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "sum_1": {
+            "ok": true,
+            "elements": 1,
+            "mismatched": 0,
+            "max_abs_error": 9.1552734375e-05,
+            "rtol": 0.001,
+            "atol": 0.001
+          }
+        }
+      }
+    ],
+    "resources": [
+      [
+        {
+          "entry": "k_sum_1_reduce",
+          "dynamic_shared_bytes": 0,
+          "block_threads": 128,
+          "max_threads_per_block": 128,
+          "static_shared_bytes": 16,
+          "local_bytes": 0,
+          "registers": 40,
+          "max_active_blocks_per_sm": 12,
+          "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+        }
+      ]
+    ]
+  },
+  {
+    "arm": "powenn_guard",
+    "problem": "r03_mean",
+    "case_id": "6dfbe2bc925e2b31ceb8eb84bb5016cca8af143ca55cf93078d09decc26a0fd3",
+    "case_files": {
+      "expected.npz": "9c53fd65aebbc9b6ca477653643273195149be2d93ab472a135883a0a128c5f7",
+      "inputs.npz": "61030dd9a1df40227f64aac8f1ea2dbaaad350740850f50bf054e646f837728b",
+      "k_mean_ffcca3.ir.json": "7eeca2c7869ab2ddf880a0ac7fb689d3ab814d7523eab472ec80ad2458100b86",
+      "meta.json": "d7ab661c388ad447f5661a3b36cba448cf5142402756f1e1c35d110db06c84fe"
+    },
+    "sources": {
+      "tensor_core.py": "ca5af9c9f41826f9e2000de7a8537745c0393007d8eaaaf9fd212b3bfd3364a6",
+      "compile.py": "d8f5689b8d09bc1109dc683d442b0c355b30559ecda0acd9eea738321cfc54be",
+      "tf32_emitter.py": "19820f4dfb995955ce342c84269b6cf7ed92208dc2a94054858738e89cbf0b28"
+    },
+    "evaluator_sha256": "de559ea9f9e0baa64735662128d7dab4eb84abf2c3b2c6cf4840cd19ccee9e57",
+    "pass": true,
+    "sanitizer": false,
+    "result_sha256": "dc4e77804f8b12128bcb961f76aa5c3edb5fefca11bfbcba7da2edbc8f9461e5",
+    "checks": [
+      {
+        "repetition": 0,
+        "ok": true,
+        "buffers": {
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "mean_keepdim_count": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "mean": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "mean": {
+            "ok": true,
+            "elements": 1,
+            "mismatched": 0,
+            "max_abs_error": 2.7939677238464355e-09,
+            "rtol": 0.0001,
+            "atol": 0.0001
+          }
+        }
+      },
+      {
+        "repetition": 1,
+        "ok": true,
+        "buffers": {
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "mean_keepdim_count": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "mean": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "mean": {
+            "ok": true,
+            "elements": 1,
+            "mismatched": 0,
+            "max_abs_error": 2.7939677238464355e-09,
+            "rtol": 0.0001,
+            "atol": 0.0001
+          }
+        }
+      },
+      {
+        "repetition": 2,
+        "ok": true,
+        "buffers": {
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "mean_keepdim_count": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "mean": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "mean": {
+            "ok": true,
+            "elements": 1,
+            "mismatched": 0,
+            "max_abs_error": 2.7939677238464355e-09,
+            "rtol": 0.0001,
+            "atol": 0.0001
+          }
+        }
+      }
+    ],
+    "resources": [
+      [
+        {
+          "entry": "k_mean_ffcca3",
+          "dynamic_shared_bytes": 0,
+          "block_threads": 128,
+          "max_threads_per_block": 128,
+          "static_shared_bytes": 16,
+          "local_bytes": 0,
+          "registers": 40,
+          "max_active_blocks_per_sm": 12,
+          "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+        }
+      ]
+    ]
+  },
+  {
+    "arm": "powenn_guard",
+    "problem": "r04_row_sum",
+    "case_id": "5c2ba872d36e6526a79b9799c059e237f65a34019cd94f1c85da4f0b9f930d3f",
+    "case_files": {
+      "expected.npz": "cb724cbe21276b1438add7263e418f52c0eb90c4501954a245678dcc793c895d",
+      "inputs.npz": "f48e91e0bcaeb5cac6b26faf157f7252eae2dcab6a70385c27e63c9af401e49c",
+      "k_sum_1_reduce.ir.json": "4c7befc76b72c6c69be4675d69ccd14e336b9139fe22aaec1b94230858c8ab03",
+      "meta.json": "803cb710590156ad319eb44b2d2aa6c1ee9b0e3a666ebc09de259e50d83a3ba1"
+    },
+    "sources": {
+      "tensor_core.py": "ca5af9c9f41826f9e2000de7a8537745c0393007d8eaaaf9fd212b3bfd3364a6",
+      "compile.py": "d8f5689b8d09bc1109dc683d442b0c355b30559ecda0acd9eea738321cfc54be",
+      "tf32_emitter.py": "19820f4dfb995955ce342c84269b6cf7ed92208dc2a94054858738e89cbf0b28"
+    },
+    "evaluator_sha256": "de559ea9f9e0baa64735662128d7dab4eb84abf2c3b2c6cf4840cd19ccee9e57",
+    "pass": true,
+    "sanitizer": false,
+    "result_sha256": "72cbc897dfb4c7469f3f13983024f0b3adf1b18d62cc31b40b91af3ab7654328",
+    "checks": [
+      {
+        "repetition": 0,
+        "ok": true,
+        "buffers": {
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "sum_1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "sum_1": {
+            "ok": true,
+            "elements": 64,
+            "mismatched": 0,
+            "max_abs_error": 4.76837158203125e-06,
+            "rtol": 0.0001,
+            "atol": 0.0001
+          }
+        }
+      },
+      {
+        "repetition": 1,
+        "ok": true,
+        "buffers": {
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "sum_1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "sum_1": {
+            "ok": true,
+            "elements": 64,
+            "mismatched": 0,
+            "max_abs_error": 4.76837158203125e-06,
+            "rtol": 0.0001,
+            "atol": 0.0001
+          }
+        }
+      },
+      {
+        "repetition": 2,
+        "ok": true,
+        "buffers": {
+          "x": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          },
+          "sum_1": {
+            "prefix_ok": true,
+            "suffix_ok": true,
+            "input_ok": true
+          }
+        },
+        "outputs": {
+          "sum_1": {
+            "ok": true,
+            "elements": 64,
+            "mismatched": 0,
+            "max_abs_error": 4.76837158203125e-06,
+            "rtol": 0.0001,
+            "atol": 0.0001
+          }
+        }
+      }
+    ],
+    "resources": [
+      [
+        {
+          "entry": "k_sum_1_reduce",
+          "dynamic_shared_bytes": 0,
+          "block_threads": 128,
+          "max_threads_per_block": 128,
+          "static_shared_bytes": 16,
+          "local_bytes": 0,
+          "registers": 40,
+          "max_active_blocks_per_sm": 12,
+          "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+        }
+      ]
+    ]
+  }
+]

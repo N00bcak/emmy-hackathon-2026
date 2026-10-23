@@ -1,0 +1,68 @@
+{
+  "status": "inconclusive, not promoted",
+  "source_id": "767b6f3d85507cb1df6f67122fd707ba3a0f4254fa0516db9d2f3c30b1190b12",
+  "baseline_id": "d9a29034ab72243e1b5e3ac7a5f4625b003605a7f0b2b829ab0d21b5f88ed566",
+  "suite_id": "0fa85c2e98ef65616058b558c1008d80f0f3530ae13cfdf276774050f8a2d5ce",
+  "qualified_receipt": "e6cebff604a7781d589e65730fc0a57abd14bc02e26f73365afc84b3e1a9a89b",
+  "decision_id": "9912379c16c9d7eac634ac169ef3aa6ffc08e0c76e25d0410012b0c8814e46ad",
+  "correctness_distinct_cases": 117,
+  "published_gate_id": "30be817d41a434e4aa3e70da3fd9c1758fda5bb0555699acc6850f376db324a9",
+  "baseline_published_gate_id": "8c16523c8ef47951d1dbe34d51d980552cad39c35443c72a88b853d1d024a879",
+  "benchmark_qualified": true,
+  "admission_status": "observed_no_contention",
+  "device": {
+    "clock_rate_khz": 2520000,
+    "compute_major": 8,
+    "compute_minor": 9,
+    "context_identity": "545555:472891008",
+    "driver_version": 13040,
+    "memory_clock_khz": 10501000,
+    "multiprocessors": 128,
+    "name": "NVIDIA GeForce RTX 4090",
+    "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry.",
+    "uuid": "GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+    "worker_pid": 545555
+  },
+  "per_case": [
+    {
+      "case": "a01_attention",
+      "case_id": "c10866af73f820553331b01c52e042e5d724c275a6f5fedd9348170ba75d382c",
+      "pairs": 200,
+      "baseline_median_us": 199.68000054359436,
+      "candidate_median_us": 200.70399343967438,
+      "median_pair_ratio": 1.0051281695377223,
+      "ratio_of_medians": 1.0051281695377223,
+      "noise_threshold": 0.016105723917482884,
+      "observed_median_change_percent": 0.5128169537722327,
+      "conclusion": "No resolved gain or regression; within case-specific noise band"
+    },
+    {
+      "case": "m01_matmul_512",
+      "case_id": "cd9a29496fccd9e421c1cfbe14347cb45003f38681e3b4b2e703f5dbbfdd6c5d",
+      "pairs": 200,
+      "baseline_median_us": 25.599999353289604,
+      "candidate_median_us": 25.599999353289604,
+      "median_pair_ratio": 1.0,
+      "ratio_of_medians": 1.0,
+      "noise_threshold": 0.12499981052194364,
+      "observed_median_change_percent": 0.0,
+      "conclusion": "No resolved gain or regression; within case-specific noise band"
+    },
+    {
+      "case": "m02_matmul_rect",
+      "case_id": "aeb1568894b7afb50ea0b1b6c6fe94b57419452643ec87c5c6561f9ebfc58bbe",
+      "pairs": 200,
+      "baseline_median_us": 5.119999870657921,
+      "candidate_median_us": 5.119999870657921,
+      "median_pair_ratio": 1.0,
+      "ratio_of_medians": 1.0,
+      "noise_threshold": 0.7499999147348717,
+      "observed_median_change_percent": 0.0,
+      "conclusion": "No resolved gain or regression; within case-specific noise band"
+    }
+  ],
+  "mechanism": "Versioned integer/address reuse activates m01botharchIMADreductions but doesnotestablish latencygain. Pointwise PTX-onlydifferences areabsorbedbyptxas; a01/m02SASSscheduling-only differences do notresolveperformance. PriorpureCSEb606 nullscreenremainsconsistent.",
+  "regressions": "Observed a01median+0.5128percent is reported separately, but remainswithin1.6106percentA/Anoise. m01/m02medians unchanged. No resolved regression is hidden in aggregate. Untimed unchanged-codecases are not a blanket all-suite performanceclaim.",
+  "limits": "Warmreusedallocations, local4090sm89 only; no5090,streaming, or independentlyconfirmed speedgain. No postselectionperformanceconfirmation warranted for an inconclusivecandidate.",
+  "next_action": "Preserve source767unchanged and do notpromote. Distinct nextquestion is wholetypeddataflowdead-lookaheadcopy elimination with adjustedtailwaits, not another broadcachetuning variant."
+}

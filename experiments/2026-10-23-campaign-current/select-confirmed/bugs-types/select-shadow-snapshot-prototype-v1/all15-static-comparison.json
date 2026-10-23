@@ -1,0 +1,1130 @@
+{
+  "source_parent": "16c72ed98ae241e3f345d15df84be4224aab69bb18106b03a9d017acdfb39e5a",
+  "parent_compile_sha256": "4f4c4ecda08d2e8268d6183996eef2afed28241162e27da078903ca6546be132",
+  "candidate_compile_sha256": "b355e4d4be8c8bf1f54857e93c70131ca719b0a93274fc20a2a65edc8d96f6dc",
+  "parent_prepared_json": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/latency-memory/attention-key-batch/static-all15-prototype-v2/prepared.json",
+  "parent_prepared_json_sha256": "98a61695050b269269a7c1fb893c307d1d1c111a19c7e339ba3a39b37532a987",
+  "baseline_recompiled": false,
+  "candidate_prepared_json": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/bugs-types/select-shadow-snapshot-prototype-v1/all15-candidate/prepared.json",
+  "published_cases": 15,
+  "all_compiles_and_sm89_sm120_assemblies_passed": true,
+  "all_ptx_identical": true,
+  "all_sass_identical": true,
+  "all_resources_identical": true,
+  "rows": [
+    {
+      "case_id": "c10866af73f820553331b01c52e042e5d724c275a6f5fedd9348170ba75d382c",
+      "case_dir": "/root/nfs/emmy/research/suites/cases-7d98069b826d772d9210327b78269b674abf6ef2d7b01a21c06c8e09489ddb38/a01_attention",
+      "modules": [
+        {
+          "ir": "k_matmul_softmax_reduce_b55365.ir.json",
+          "ptx_identical": true,
+          "targets": {
+            "sm_89": {
+              "sass_identical": true,
+              "registers": [
+                [
+                  56
+                ],
+                [
+                  56
+                ]
+              ],
+              "spills": [
+                [
+                  [
+                    "0",
+                    "0"
+                  ]
+                ],
+                [
+                  [
+                    "0",
+                    "0"
+                  ]
+                ]
+              ],
+              "resources_identical": true,
+              "instruction_mix_delta": {},
+              "artifact_folders": [
+                "/root/nfs/emmy/research/assembly-cache/96a87ce725c4a173999d4ca188372f3c024221a8f5fffa2a0e42a0e2bda409dc",
+                "/root/nfs/emmy/research/assembly-cache/96a87ce725c4a173999d4ca188372f3c024221a8f5fffa2a0e42a0e2bda409dc"
+              ]
+            },
+            "sm_120": {
+              "sass_identical": true,
+              "registers": [
+                [
+                  128
+                ],
+                [
+                  128
+                ]
+              ],
+              "spills": [
+                [
+                  [
+                    "0",
+                    "0"
+                  ]
+                ],
+                [
+                  [
+                    "0",
+                    "0"
+                  ]
+                ]
+              ],
+              "resources_identical": true,
+              "instruction_mix_delta": {},
+              "artifact_folders": [
+                "/root/nfs/emmy/research/assembly-cache/33fa0e86070cec431041faf9e6d274960513055458612bb00c6ffefae652405c",
+                "/root/nfs/emmy/research/assembly-cache/33fa0e86070cec431041faf9e6d274960513055458612bb00c6ffefae652405c"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "69db4e7f597c41b0684fb30c3204e197cf56c8647d9a63dc0adb77f2a8a0d867",
+      "case_dir": "/root/nfs/emmy/research/suites/cases-7d98069b826d772d9210327b78269b674abf6ef2d7b01a21c06c8e09489ddb38/a02_attention_128",
+      "modules": [
+        {
+          "ir": "k_matmul_softmax_reduce_6f0029.ir.json",
+          "ptx_identical": true,
+          "targets": {
+            "sm_89": {
+              "sass_identical": true,
+              "registers": [
+                [
+                  40
+                ],
+                [
+                  40
+                ]
+              ],
+              "spills": [
+                [
+                  [
+                    "0",
+                    "0"
+                  ]
+                ],
+                [
+                  [
+                    "0",
+                    "0"
+                  ]
+                ]
+              ],
+              "resources_identical": true,
+              "instruction_mix_delta": {},
+              "artifact_folders": [
+                "/root/nfs/emmy/research/assembly-cache/677fb0732bdaf27334420a7f6794f66a18ea73f1e31090cb5f2b93137bf1825d",
+                "/root/nfs/emmy/research/assembly-cache/677fb0732bdaf27334420a7f6794f66a18ea73f1e31090cb5f2b93137bf1825d"
+              ]
+            },
+            "sm_120": {
+              "sass_identical": true,
+              "registers": [
+                [
+                  56
+                ],
+                [
+                  56
+                ]
+              ],
+              "spills": [
+                [
+                  [
+                    "0",
+                    "0"
+                  ]
+                ],
+                [
+                  [
+                    "0",
+                    "0"
+                  ]
+                ]
+              ],
+              "resources_identical": true,
+              "instruction_mix_delta": {},
+              "artifact_folders": [
+                "/root/nfs/emmy/research/assembly-cache/1bc44ea4c7d96bb2680e99f67ce5f2c6cc5f4bb62673c0b0d2615fda88c4a1a4",
+                "/root/nfs/emmy/research/assembly-cache/1bc44ea4c7d96bb2680e99f67ce5f2c6cc5f4bb62673c0b0d2615fda88c4a1a4"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "6ab09ab4acc384ee252370a564a13965ece1ad21a3e64d6615f0de1a39b8c665",
+      "case_dir": "/root/nfs/emmy/research/suites/cases-7d98069b826d772d9210327b78269b674abf6ef2d7b01a21c06c8e09489ddb38/f01_rmsnorm",
+      "modules": [
+        {
+          "ir": "k_mean_cbd1de.ir.json",
+          "ptx_identical": true,
+          "targets": {
+            "sm_89": {
+              "sass_identical": true,
+              "registers": [
+                [
+                  17
+                ],
+                [
+                  17
+                ]
+              ],
+              "spills": [
+                [
+                  [
+                    "0",
+                    "0"
+                  ]
+                ],
+                [
+                  [
+                    "0",
+                    "0"
+                  ]
+                ]
+              ],
+              "resources_identical": true,
+              "instruction_mix_delta": {},
+              "artifact_folders": [
+                "/root/nfs/emmy/research/assembly-cache/136c323b3cff2ec90b549e2ed3ccf5ea38abed492bd8eeb8c9f75d4d1669f7df",
+                "/root/nfs/emmy/research/assembly-cache/136c323b3cff2ec90b549e2ed3ccf5ea38abed492bd8eeb8c9f75d4d1669f7df"
+              ]
+            },
+            "sm_120": {
+              "sass_identical": true,
+              "registers": [
+                [
+                  22
+                ],
+                [
+                  22
+                ]
+              ],
+              "spills": [
+                [
+                  [
+                    "0",
+                    "0"
+                  ]
+                ],
+                [
+                  [
+                    "0",
+                    "0"
+                  ]
+                ]
+              ],
+              "resources_identical": true,
+              "instruction_mix_delta": {},
+              "artifact_folders": [
+                "/root/nfs/emmy/research/assembly-cache/d3291367f9c6939c3fec9744b39f370243fa87ab322bfccc29d2b1197e3dcfc2",
+                "/root/nfs/emmy/research/assembly-cache/d3291367f9c6939c3fec9744b39f370243fa87ab322bfccc29d2b1197e3dcfc2"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "89d56c168a0b04373ef8d50096c48534c70019b8d2f87371b79aee2289922b44",
+      "case_dir": "/root/nfs/emmy/research/suites/cases-7d98069b826d772d9210327b78269b674abf6ef2d7b01a21c06c8e09489ddb38/f02_row_softmax",
+      "modules": [
+        {
+          "ir": "k_softmax_05263d.ir.json",
+          "ptx_identical": true,
+          "targets": {
+            "sm_89": {
+              "sass_identical": true,
+              "registers": [
+                [
+                  22
+                ],
+                [
+                  22
+                ]
+              ],
+              "spills": [
+                [
+                  [
+                    "0",
+                    "0"
+                  ]
+                ],
+                [
+                  [
+                    "0",
+                    "0"
+                  ]
+                ]
+              ],
+              "resources_identical": true,
+              "instruction_mix_delta": {},
+              "artifact_folders": [
+                "/root/nfs/emmy/research/assembly-cache/7fd9c5376165be2060f1148a41542a67536538604d11128859f995f2038a07f4",
+                "/root/nfs/emmy/research/assembly-cache/7fd9c5376165be2060f1148a41542a67536538604d11128859f995f2038a07f4"
+              ]
+            },
+            "sm_120": {
+              "sass_identical": true,
+              "registers": [
+                [
+                  26
+                ],
+                [
+                  26
+                ]
+              ],
+              "spills": [
+                [
+                  [
+                    "0",
+                    "0"
+                  ]
+                ],
+                [
+                  [
+                    "0",
+                    "0"
+                  ]
+                ]
+              ],
+              "resources_identical": true,
+              "instruction_mix_delta": {},
+              "artifact_folders": [
+                "/root/nfs/emmy/research/assembly-cache/2520d7374052bd528a17c14f5857a56d76ab5ab04d84af77c5b7844d3e703fc2",
+                "/root/nfs/emmy/research/assembly-cache/2520d7374052bd528a17c14f5857a56d76ab5ab04d84af77c5b7844d3e703fc2"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "1e82d7e58a53e8795ea9d05e3759dfe201e42308efd08dd2a51e79c769dc2fbc",
+      "case_dir": "/root/nfs/emmy/research/suites/cases-7d98069b826d772d9210327b78269b674abf6ef2d7b01a21c06c8e09489ddb38/f03_l2norm",
+      "modules": [
+        {
+          "ir": "k_div_reduce.ir.json",
+          "ptx_identical": true,
+          "targets": {
+            "sm_89": {
+              "sass_identical": true,
+              "registers": [
+                [
+                  17
+                ],
+                [
+                  17
+                ]
+              ],
+              "spills": [
+                [
+                  [
+                    "0",
+                    "0"
+                  ]
+                ],
+                [
+                  [
+                    "0",
+                    "0"
+                  ]
+                ]
+              ],
+              "resources_identical": true,
+              "instruction_mix_delta": {},
+              "artifact_folders": [
+                "/root/nfs/emmy/research/assembly-cache/aa78cff507c6f09c742a008c198186cf2295fb1601105da745b791856aefde55",
+                "/root/nfs/emmy/research/assembly-cache/aa78cff507c6f09c742a008c198186cf2295fb1601105da745b791856aefde55"
+              ]
+            },
+            "sm_120": {
+              "sass_identical": true,
+              "registers": [
+                [
+                  22
+                ],
+                [
+                  22
+                ]
+              ],
+              "spills": [
+                [
+                  [
+                    "0",
+                    "0"
+                  ]
+                ],
+                [
+                  [
+                    "0",
+                    "0"
+                  ]
+                ]
+              ],
+              "resources_identical": true,
+              "instruction_mix_delta": {},
+              "artifact_folders": [
+                "/root/nfs/emmy/research/assembly-cache/9c7cedb5cb9305f351e27a70fdbed4c476567994b29c32b37dd95a17b725948b",
+                "/root/nfs/emmy/research/assembly-cache/9c7cedb5cb9305f351e27a70fdbed4c476567994b29c32b37dd95a17b725948b"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "cd9a29496fccd9e421c1cfbe14347cb45003f38681e3b4b2e703f5dbbfdd6c5d",
+      "case_dir": "/root/nfs/emmy/research/suites/cases-7d98069b826d772d9210327b78269b674abf6ef2d7b01a21c06c8e09489ddb38/m01_matmul_512",
+      "modules": [
+        {
+          "ir": "k_matmul_2967be.ir.json",
+          "ptx_identical": true,
+          "targets": {
+            "sm_89": {
+              "sass_identical": true,
+              "registers": [
+                [
+                  40
+                ],
+                [
+                  40
+                ]
+              ],
+              "spills": [
+                [
+                  [
+                    "0",
+                    "0"
+                  ]
+                ],
+                [
+                  [
+                    "0",
+                    "0"
+                  ]
+                ]
+              ],
+              "resources_identical": true,
+              "instruction_mix_delta": {},
+              "artifact_folders": [
+                "/root/nfs/emmy/research/assembly-cache/989adc23f6dd27c6a1021545724504781af7f421212d71ec6c84f8cb41d87ece",
+                "/root/nfs/emmy/research/assembly-cache/989adc23f6dd27c6a1021545724504781af7f421212d71ec6c84f8cb41d87ece"
+              ]
+            },
+            "sm_120": {
+              "sass_identical": true,
+              "registers": [
+                [
+                  40
+                ],
+                [
+                  40
+                ]
+              ],
+              "spills": [
+                [
+                  [
+                    "0",
+                    "0"
+                  ]
+                ],
+                [
+                  [
+                    "0",
+                    "0"
+                  ]
+                ]
+              ],
+              "resources_identical": true,
+              "instruction_mix_delta": {},
+              "artifact_folders": [
+                "/root/nfs/emmy/research/assembly-cache/376c0fd5b13f3c7385c9ebd81548068386efa089a39b919ee75308bc9af719c5",
+                "/root/nfs/emmy/research/assembly-cache/376c0fd5b13f3c7385c9ebd81548068386efa089a39b919ee75308bc9af719c5"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "aeb1568894b7afb50ea0b1b6c6fe94b57419452643ec87c5c6561f9ebfc58bbe",
+      "case_dir": "/root/nfs/emmy/research/suites/cases-7d98069b826d772d9210327b78269b674abf6ef2d7b01a21c06c8e09489ddb38/m02_matmul_rect",
+      "modules": [
+        {
+          "ir": "k_matmul.ir.json",
+          "ptx_identical": true,
+          "targets": {
+            "sm_89": {
+              "sass_identical": true,
+              "registers": [
+                [
+                  32
+                ],
+                [
+                  32
+                ]
+              ],
+              "spills": [
+                [
+                  [
+                    "0",
+                    "0"
+                  ]
+                ],
+                [
+                  [
+                    "0",
+                    "0"
+                  ]
+                ]
+              ],
+              "resources_identical": true,
+              "instruction_mix_delta": {},
+              "artifact_folders": [
+                "/root/nfs/emmy/research/assembly-cache/a92931c259c7439cd4210d4f21620aaa350915b4478852dbebcc74d6b0d7afa1",
+                "/root/nfs/emmy/research/assembly-cache/a92931c259c7439cd4210d4f21620aaa350915b4478852dbebcc74d6b0d7afa1"
+              ]
+            },
+            "sm_120": {
+              "sass_identical": true,
+              "registers": [
+                [
+                  31
+                ],
+                [
+                  31
+                ]
+              ],
+              "spills": [
+                [
+                  [
+                    "0",
+                    "0"
+                  ]
+                ],
+                [
+                  [
+                    "0",
+                    "0"
+                  ]
+                ]
+              ],
+              "resources_identical": true,
+              "instruction_mix_delta": {},
+              "artifact_folders": [
+                "/root/nfs/emmy/research/assembly-cache/e1b4e0eae99cc535b70e53e583798d598125e7069a205099c3b19bfcc4b87765",
+                "/root/nfs/emmy/research/assembly-cache/e1b4e0eae99cc535b70e53e583798d598125e7069a205099c3b19bfcc4b87765"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "4035b0c010105ed7be8aa1a889fe2754d498fc4a27c1719bf547ddad66e48403",
+      "case_dir": "/root/nfs/emmy/research/suites/cases-7d98069b826d772d9210327b78269b674abf6ef2d7b01a21c06c8e09489ddb38/p00_scalar_add",
+      "modules": [
+        {
+          "ir": "k_add_pointwise.ir.json",
+          "ptx_identical": true,
+          "targets": {
+            "sm_89": {
+              "sass_identical": true,
+              "registers": [
+                [
+                  20
+                ],
+                [
+                  20
+                ]
+              ],
+              "spills": [
+                [
+                  [
+                    "0",
+                    "0"
+                  ]
+                ],
+                [
+                  [
+                    "0",
+                    "0"
+                  ]
+                ]
+              ],
+              "resources_identical": true,
+              "instruction_mix_delta": {},
+              "artifact_folders": [
+                "/root/nfs/emmy/research/assembly-cache/a21c0871ef7660e516fd8ec1be42e6b4f2fa727bd31909b870e2b56cbf9b4d3a",
+                "/root/nfs/emmy/research/assembly-cache/a21c0871ef7660e516fd8ec1be42e6b4f2fa727bd31909b870e2b56cbf9b4d3a"
+              ]
+            },
+            "sm_120": {
+              "sass_identical": true,
+              "registers": [
+                [
+                  22
+                ],
+                [
+                  22
+                ]
+              ],
+              "spills": [
+                [
+                  [
+                    "0",
+                    "0"
+                  ]
+                ],
+                [
+                  [
+                    "0",
+                    "0"
+                  ]
+                ]
+              ],
+              "resources_identical": true,
+              "instruction_mix_delta": {},
+              "artifact_folders": [
+                "/root/nfs/emmy/research/assembly-cache/837785fb7cac915df8232f2463d654d4c28a307f27ed38e52a3015e65a57cd04",
+                "/root/nfs/emmy/research/assembly-cache/837785fb7cac915df8232f2463d654d4c28a307f27ed38e52a3015e65a57cd04"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "5e973341ada3e33f701293be5a3e6195badb7290a5471f4c6cefa86634d1b168",
+      "case_dir": "/root/nfs/emmy/research/suites/cases-7d98069b826d772d9210327b78269b674abf6ef2d7b01a21c06c8e09489ddb38/p01_vector_add",
+      "modules": [
+        {
+          "ir": "k_add_pointwise.ir.json",
+          "ptx_identical": true,
+          "targets": {
+            "sm_89": {
+              "sass_identical": true,
+              "registers": [
+                [
+                  20
+                ],
+                [
+                  20
+                ]
+              ],
+              "spills": [
+                [
+                  [
+                    "0",
+                    "0"
+                  ]
+                ],
+                [
+                  [
+                    "0",
+                    "0"
+                  ]
+                ]
+              ],
+              "resources_identical": true,
+              "instruction_mix_delta": {},
+              "artifact_folders": [
+                "/root/nfs/emmy/research/assembly-cache/ce54c58a71ca53e2d55c3fdfc01851666ed1ad8eaa04948277a4b48f92dc9f86",
+                "/root/nfs/emmy/research/assembly-cache/ce54c58a71ca53e2d55c3fdfc01851666ed1ad8eaa04948277a4b48f92dc9f86"
+              ]
+            },
+            "sm_120": {
+              "sass_identical": true,
+              "registers": [
+                [
+                  22
+                ],
+                [
+                  22
+                ]
+              ],
+              "spills": [
+                [
+                  [
+                    "0",
+                    "0"
+                  ]
+                ],
+                [
+                  [
+                    "0",
+                    "0"
+                  ]
+                ]
+              ],
+              "resources_identical": true,
+              "instruction_mix_delta": {},
+              "artifact_folders": [
+                "/root/nfs/emmy/research/assembly-cache/2b7f30c7081f15bb4d598e46f7938238aaf25abf84578ec73e07134beb8a6920",
+                "/root/nfs/emmy/research/assembly-cache/2b7f30c7081f15bb4d598e46f7938238aaf25abf84578ec73e07134beb8a6920"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "3145aa57f753f64551cd4b83c3d430e6e2375a9feb4819accbfd5e55c39da560",
+      "case_dir": "/root/nfs/emmy/research/suites/cases-7d98069b826d772d9210327b78269b674abf6ef2d7b01a21c06c8e09489ddb38/p02_scale_shift",
+      "modules": [
+        {
+          "ir": "k_add_pointwise.ir.json",
+          "ptx_identical": true,
+          "targets": {
+            "sm_89": {
+              "sass_identical": true,
+              "registers": [
+                [
+                  28
+                ],
+                [
+                  28
+                ]
+              ],
+              "spills": [
+                [
+                  [
+                    "0",
+                    "0"
+                  ]
+                ],
+                [
+                  [
+                    "0",
+                    "0"
+                  ]
+                ]
+              ],
+              "resources_identical": true,
+              "instruction_mix_delta": {},
+              "artifact_folders": [
+                "/root/nfs/emmy/research/assembly-cache/7412eca2552f615ec4649289ab5be60c65705e3454649f9e14f934cb3ba28af6",
+                "/root/nfs/emmy/research/assembly-cache/7412eca2552f615ec4649289ab5be60c65705e3454649f9e14f934cb3ba28af6"
+              ]
+            },
+            "sm_120": {
+              "sass_identical": true,
+              "registers": [
+                [
+                  34
+                ],
+                [
+                  34
+                ]
+              ],
+              "spills": [
+                [
+                  [
+                    "0",
+                    "0"
+                  ]
+                ],
+                [
+                  [
+                    "0",
+                    "0"
+                  ]
+                ]
+              ],
+              "resources_identical": true,
+              "instruction_mix_delta": {},
+              "artifact_folders": [
+                "/root/nfs/emmy/research/assembly-cache/06713867f6ad4bb98bfde683dcd0e6d90549308fdb7aaf2ec187b9b6ffeb7d26",
+                "/root/nfs/emmy/research/assembly-cache/06713867f6ad4bb98bfde683dcd0e6d90549308fdb7aaf2ec187b9b6ffeb7d26"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "aeeffce3a36b8cf1b27173b8c1644fc517a24d992173e06bb1664784b009b6ba",
+      "case_dir": "/root/nfs/emmy/research/suites/cases-7d98069b826d772d9210327b78269b674abf6ef2d7b01a21c06c8e09489ddb38/p03_relu_mul",
+      "modules": [
+        {
+          "ir": "k_mul_pointwise.ir.json",
+          "ptx_identical": true,
+          "targets": {
+            "sm_89": {
+              "sass_identical": true,
+              "registers": [
+                [
+                  28
+                ],
+                [
+                  28
+                ]
+              ],
+              "spills": [
+                [
+                  [
+                    "0",
+                    "0"
+                  ]
+                ],
+                [
+                  [
+                    "0",
+                    "0"
+                  ]
+                ]
+              ],
+              "resources_identical": true,
+              "instruction_mix_delta": {},
+              "artifact_folders": [
+                "/root/nfs/emmy/research/assembly-cache/44da461a439526e01f3c219e883900288e856e6be87aca65bea6a74514bf57e2",
+                "/root/nfs/emmy/research/assembly-cache/44da461a439526e01f3c219e883900288e856e6be87aca65bea6a74514bf57e2"
+              ]
+            },
+            "sm_120": {
+              "sass_identical": true,
+              "registers": [
+                [
+                  24
+                ],
+                [
+                  24
+                ]
+              ],
+              "spills": [
+                [
+                  [
+                    "0",
+                    "0"
+                  ]
+                ],
+                [
+                  [
+                    "0",
+                    "0"
+                  ]
+                ]
+              ],
+              "resources_identical": true,
+              "instruction_mix_delta": {},
+              "artifact_folders": [
+                "/root/nfs/emmy/research/assembly-cache/957e282c064f4e4cc863f5910113cb001981164601b2d375f5eec187c46954fe",
+                "/root/nfs/emmy/research/assembly-cache/957e282c064f4e4cc863f5910113cb001981164601b2d375f5eec187c46954fe"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "2ffefe7fee88d864b3ac97cd70fe9711643f3551fba367299df52f329649154d",
+      "case_dir": "/root/nfs/emmy/research/suites/cases-7d98069b826d772d9210327b78269b674abf6ef2d7b01a21c06c8e09489ddb38/r01_array_sum",
+      "modules": [
+        {
+          "ir": "k_sum_1_reduce.ir.json",
+          "ptx_identical": true,
+          "targets": {
+            "sm_89": {
+              "sass_identical": true,
+              "registers": [
+                [
+                  16
+                ],
+                [
+                  16
+                ]
+              ],
+              "spills": [
+                [
+                  [
+                    "0",
+                    "0"
+                  ]
+                ],
+                [
+                  [
+                    "0",
+                    "0"
+                  ]
+                ]
+              ],
+              "resources_identical": true,
+              "instruction_mix_delta": {},
+              "artifact_folders": [
+                "/root/nfs/emmy/research/assembly-cache/905d37d8173f420e6da32fefb5a3073e2d8706efeae3fc30e0d3a0d342b4c440",
+                "/root/nfs/emmy/research/assembly-cache/905d37d8173f420e6da32fefb5a3073e2d8706efeae3fc30e0d3a0d342b4c440"
+              ]
+            },
+            "sm_120": {
+              "sass_identical": true,
+              "registers": [
+                [
+                  18
+                ],
+                [
+                  18
+                ]
+              ],
+              "spills": [
+                [
+                  [
+                    "0",
+                    "0"
+                  ]
+                ],
+                [
+                  [
+                    "0",
+                    "0"
+                  ]
+                ]
+              ],
+              "resources_identical": true,
+              "instruction_mix_delta": {},
+              "artifact_folders": [
+                "/root/nfs/emmy/research/assembly-cache/023aefd4f73e20d99cae59d35cb995888e0111bfd97433b3281c176fac123c08",
+                "/root/nfs/emmy/research/assembly-cache/023aefd4f73e20d99cae59d35cb995888e0111bfd97433b3281c176fac123c08"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "a56bdb784a46a763c2b633ebb5d16ee1ffd4287cb0984168b4f80909c323ce22",
+      "case_dir": "/root/nfs/emmy/research/suites/cases-7d98069b826d772d9210327b78269b674abf6ef2d7b01a21c06c8e09489ddb38/r02_big_sum",
+      "modules": [
+        {
+          "ir": "k_sum_1_reduce.ir.json",
+          "ptx_identical": true,
+          "targets": {
+            "sm_89": {
+              "sass_identical": true,
+              "registers": [
+                [
+                  16
+                ],
+                [
+                  16
+                ]
+              ],
+              "spills": [
+                [
+                  [
+                    "0",
+                    "0"
+                  ]
+                ],
+                [
+                  [
+                    "0",
+                    "0"
+                  ]
+                ]
+              ],
+              "resources_identical": true,
+              "instruction_mix_delta": {},
+              "artifact_folders": [
+                "/root/nfs/emmy/research/assembly-cache/2e1b5fdf4974ea5fe58cf0c3fc54b9728bffc585d908bf064cfef0e046043621",
+                "/root/nfs/emmy/research/assembly-cache/2e1b5fdf4974ea5fe58cf0c3fc54b9728bffc585d908bf064cfef0e046043621"
+              ]
+            },
+            "sm_120": {
+              "sass_identical": true,
+              "registers": [
+                [
+                  18
+                ],
+                [
+                  18
+                ]
+              ],
+              "spills": [
+                [
+                  [
+                    "0",
+                    "0"
+                  ]
+                ],
+                [
+                  [
+                    "0",
+                    "0"
+                  ]
+                ]
+              ],
+              "resources_identical": true,
+              "instruction_mix_delta": {},
+              "artifact_folders": [
+                "/root/nfs/emmy/research/assembly-cache/4c5898a849fa11a6359a5887d86f866894dc9e93e5faaca24ce745cad96a1f5a",
+                "/root/nfs/emmy/research/assembly-cache/4c5898a849fa11a6359a5887d86f866894dc9e93e5faaca24ce745cad96a1f5a"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "6dfbe2bc925e2b31ceb8eb84bb5016cca8af143ca55cf93078d09decc26a0fd3",
+      "case_dir": "/root/nfs/emmy/research/suites/cases-7d98069b826d772d9210327b78269b674abf6ef2d7b01a21c06c8e09489ddb38/r03_mean",
+      "modules": [
+        {
+          "ir": "k_mean_ffcca3.ir.json",
+          "ptx_identical": true,
+          "targets": {
+            "sm_89": {
+              "sass_identical": true,
+              "registers": [
+                [
+                  16
+                ],
+                [
+                  16
+                ]
+              ],
+              "spills": [
+                [
+                  [
+                    "0",
+                    "0"
+                  ]
+                ],
+                [
+                  [
+                    "0",
+                    "0"
+                  ]
+                ]
+              ],
+              "resources_identical": true,
+              "instruction_mix_delta": {},
+              "artifact_folders": [
+                "/root/nfs/emmy/research/assembly-cache/27be5e958725946a74c2fd272ae897326b8df58af30d3f4abea5d5d5ee7af660",
+                "/root/nfs/emmy/research/assembly-cache/27be5e958725946a74c2fd272ae897326b8df58af30d3f4abea5d5d5ee7af660"
+              ]
+            },
+            "sm_120": {
+              "sass_identical": true,
+              "registers": [
+                [
+                  18
+                ],
+                [
+                  18
+                ]
+              ],
+              "spills": [
+                [
+                  [
+                    "0",
+                    "0"
+                  ]
+                ],
+                [
+                  [
+                    "0",
+                    "0"
+                  ]
+                ]
+              ],
+              "resources_identical": true,
+              "instruction_mix_delta": {},
+              "artifact_folders": [
+                "/root/nfs/emmy/research/assembly-cache/e77291f99f5dda538ff54b1de7587c24ddbb0117b1736536736a5e47a4bc7968",
+                "/root/nfs/emmy/research/assembly-cache/e77291f99f5dda538ff54b1de7587c24ddbb0117b1736536736a5e47a4bc7968"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "5c2ba872d36e6526a79b9799c059e237f65a34019cd94f1c85da4f0b9f930d3f",
+      "case_dir": "/root/nfs/emmy/research/suites/cases-7d98069b826d772d9210327b78269b674abf6ef2d7b01a21c06c8e09489ddb38/r04_row_sum",
+      "modules": [
+        {
+          "ir": "k_sum_1_reduce.ir.json",
+          "ptx_identical": true,
+          "targets": {
+            "sm_89": {
+              "sass_identical": true,
+              "registers": [
+                [
+                  17
+                ],
+                [
+                  17
+                ]
+              ],
+              "spills": [
+                [
+                  [
+                    "0",
+                    "0"
+                  ]
+                ],
+                [
+                  [
+                    "0",
+                    "0"
+                  ]
+                ]
+              ],
+              "resources_identical": true,
+              "instruction_mix_delta": {},
+              "artifact_folders": [
+                "/root/nfs/emmy/research/assembly-cache/6d0926a0603b4780f87c3db14a5b4e4afe9d1953d10601d0e002731b64d048c8",
+                "/root/nfs/emmy/research/assembly-cache/6d0926a0603b4780f87c3db14a5b4e4afe9d1953d10601d0e002731b64d048c8"
+              ]
+            },
+            "sm_120": {
+              "sass_identical": true,
+              "registers": [
+                [
+                  22
+                ],
+                [
+                  22
+                ]
+              ],
+              "spills": [
+                [
+                  [
+                    "0",
+                    "0"
+                  ]
+                ],
+                [
+                  [
+                    "0",
+                    "0"
+                  ]
+                ]
+              ],
+              "resources_identical": true,
+              "instruction_mix_delta": {},
+              "artifact_folders": [
+                "/root/nfs/emmy/research/assembly-cache/5179102e91bb67a996d8ff1f2bf831f9d812081bb6cc108d175e6f0958d73641",
+                "/root/nfs/emmy/research/assembly-cache/5179102e91bb67a996d8ff1f2bf831f9d812081bb6cc108d175e6f0958d73641"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "elapsed_seconds": 12.358125925064087,
+  "GPU_run": false,
+  "source_frozen": false,
+  "resource_note": "Static resource equality is not a latency measurement."
+}

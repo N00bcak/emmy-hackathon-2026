@@ -1,0 +1,44 @@
+{
+  "status": "approved_for_qualification_no_semantic_blocker_found",
+  "source_sha256": "3acaaf37709c7926a1c4cbbf8b16f34d8c86d0df4ed68384909bb01f2e023f28",
+  "scope": "Independent source/method CPU review, no assembly/GPU/source/oracle edits/case draws",
+  "checks": [
+    {
+      "name": "padding-step0",
+      "typed_validate": true,
+      "supported": false,
+      "error": "Partial collective Tile has an unproven barrier"
+    },
+    {
+      "name": "fixed-step1",
+      "typed_validate": true,
+      "supported": true,
+      "error": null
+    },
+    {
+      "name": "same_cached_statement_divergent_ancestry",
+      "declined": true
+    }
+  ],
+  "complexity": [
+    {
+      "depth": 12,
+      "counts": {
+        "uniform_loop": 78,
+        "prove_uniform_loop": 12
+      }
+    },
+    {
+      "depth": 40,
+      "counts": {
+        "uniform_loop": 820,
+        "prove_uniform_loop": 40
+      }
+    }
+  ],
+  "outside_validator_AST_identical_to_5feed": true,
+  "proof": "Each admitted Loop/StridedLoop and every descendant loop has literal uniform finite nonwrapping induction. All loop induction rebindings remain rejected through all nested statements. Conditional ancestors still propagate uniform=False independently from cached pure loop proof; nested shuffle/tree remain direct=False. Cache keyed statement identity is local to one validation call over immutable typed statements; no ancestry/emitter state cached. Descendant axis-preservation traversal remains conservative polynomial work.",
+  "limits": "Queued compiler coverage extension has no GPU qualification yet; unchanged source-specific all15 static/GPU and independent generated partial-CTA cases still required before retention. Existing23 CPU controls inspected; zero new active testcase types.",
+  "new_active_types": 0,
+  "live_jobs": []
+}

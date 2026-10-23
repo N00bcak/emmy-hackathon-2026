@@ -9,6 +9,10 @@ by being read. For ordinary bug repair, follow AGENTS.md and run relevant tests;
 resume discovery only when the user asks.
 
 
+For cross-device lowering, validation, submissions or performance claims, read
+[compute-capability and submission guidance](../../../docs/compute-capability.md).
+Keep RTX 4090/SM8.9 and RTX 5090/SM12.0 execution evidence separate.
+
 Read root AGENTS.md and [the research guide](../../../docs/research-loop.md).
 Use an isolated evaluation workspace derived from a verified baseline, in the
 user-configured runtime. Shared instructions prescribe neither Docker nor NFS;

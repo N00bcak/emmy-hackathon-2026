@@ -1,0 +1,1024 @@
+{
+  "status": "PASS_ALL73_STATIC_PREPARATIONS_EXACT_SOURCE_CASE_IDENTITIES",
+  "experiment": "pair-phase-tree-vector-independent-v2",
+  "source_id": "212e052936722ec76f1c5c4c6b2243e9ff87fc79168f99284193d46b36eb15e4",
+  "compile_sha256": "4ff5a7f903ce477ed88a06cdd9bbbfd68c25141c1835edbc97b60c7b9dc8b040",
+  "plan": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/pair-phase-tree-vector-independent-v2-supplement-plan.json",
+  "plan_sha256": "6870157f9b179ad997cacadf94e7ba9b88107dcbce82ef8810d2790c20476010",
+  "lists": 73,
+  "old70_exact_keypaths_preserved": true,
+  "unique_known_cases": 246,
+  "expected_union_with_core47": 278,
+  "core_union_pending_parent_artifact": true,
+  "completed_prepared": [
+    {
+      "label": "async-oracle-validation-112233",
+      "case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/async-oracle-validation-112233/case-list.json",
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/pair-phase-tree-vector-independent-v2/async-oracle-validation-112233/preparation/prepared.json",
+      "sha256": "93313a488cc18b23764cdfabddb0d38604ef4c6cdcb38725bea6f87ffcc64856",
+      "case_ids": [
+        "c37693f91a7210ccc513e699de5a289e2f2f909f83a7059ed6e386a2a263a25d",
+        "7bb9d9c27732924a02ca9869601a7af55fd6276ae6894ed00c3dbc7be5d84228",
+        "21171f5ca6c366ded10c9865a3160437b8985dd0a89d83770c473c30f8b3e195",
+        "a083ac93290653c119bae4512c057058495a50fa9d0528dc7ce6e3caff5c6065"
+      ],
+      "gate": "pass"
+    },
+    {
+      "label": "async-screen",
+      "case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/async-screen/case-list.json",
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/pair-phase-tree-vector-independent-v2/async-screen/preparation/prepared.json",
+      "sha256": "9eceb96cd9e3168222c6864e107aada143fde0c550c020e05b1d10e880b148a9",
+      "case_ids": [
+        "1575656197e94c0eaf8603489abcab2416259e541c06c80ebcb11d75d2f81b4e",
+        "53c4ee4e49567dde97d563245964e2a93c1bc365186ce07da6840bf38b98db61",
+        "e80480098b9a4d5619b69b5deaefee5fe0eff10e2ffc35d7699d8e29a34af638",
+        "be73fec91603b6810925f6480349d6399e117e9a51a7aaf5f652ed66a32eaa61"
+      ],
+      "gate": "pass"
+    },
+    {
+      "label": "attention-bounded-independent",
+      "case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/attention-bounded-independent/case-list.json",
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/pair-phase-tree-vector-independent-v2/attention-bounded-independent/preparation/prepared.json",
+      "sha256": "d0cac21a7caf133741bfea9b484c6986ac95d03b8080d8fc5d1255ac0dd4d6e0",
+      "case_ids": [
+        "8996904203776bc61d7da020bfba25d6b8df989336f7641ac753c3f80556a25e",
+        "7bfe3e8fd6dd18024fb08430b427e687b38faf560d1397e9b210561fb21fc63c",
+        "bdd094ff243fd119a72e2e675ee682294887bced491b5131041c7f8ac744fdc3"
+      ],
+      "gate": "pass"
+    },
+    {
+      "label": "attention-bounded-screen",
+      "case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/attention-bounded-screen/case-list.json",
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/pair-phase-tree-vector-independent-v2/attention-bounded-screen/preparation/prepared.json",
+      "sha256": "0362db0a4c7d217658ec965a96bd9d526440e53945474333a6946ec98ae56cae",
+      "case_ids": [
+        "e35aeaf4242506aad5305a9183d67ba836273df2e954ca93b8e8f65e3e9a7b46",
+        "7ad3e910941f6bf0e71f664f4c48ac24c4425df7c642fb1bb8cbd04d1edec37d",
+        "8e5b840f53eb525072ff57abd9035966a586dbfa4f323003e82644895eab04fe"
+      ],
+      "gate": "pass"
+    },
+    {
+      "label": "attention-full-tail-independent",
+      "case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/attention-full-tail-independent/case-list.json",
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/pair-phase-tree-vector-independent-v2/attention-full-tail-independent/preparation/prepared.json",
+      "sha256": "0b108a01f38152b3672b4c17c4ea302f84aacc980c83dbb67ad6d39286f54c51",
+      "case_ids": [
+        "dd375967ea3896ace9e00ecb875af9b42a8cc2e0f22ca8525b29b556bbe04389",
+        "69fdea2216c56996b712ccaacacfef660588f54d5b6b08e51e34009f47f07448"
+      ],
+      "gate": "pass"
+    },
+    {
+      "label": "attention-order-independent",
+      "case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/attention-order-independent/case-list.json",
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/pair-phase-tree-vector-independent-v2/attention-order-independent/preparation/prepared.json",
+      "sha256": "26bab1dcf5d3e8a6e051b9178462598585b4d783985e87e72c566219348dd614",
+      "case_ids": [
+        "44c6e344374056121b8a007268039a7d7823bf44aed0149ed4d96ddf9164d0c2",
+        "e4180db22f79b911561e72b2ebf63e8552c6c390a1fb0b8aac1b22ddd1d94c7a",
+        "bebbb5fd2f3862042cf1cbae34550467b7ee077c2347be5ed5ca756422f2932c"
+      ],
+      "gate": "pass"
+    },
+    {
+      "label": "attention-order-screen",
+      "case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/attention-order-screen/case-list.json",
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/pair-phase-tree-vector-independent-v2/attention-order-screen/preparation/prepared.json",
+      "sha256": "fedf87c0cdc34231d0d52c4a99f236ddd4d632e1edca7d474b4f2e9a7f3e7e1d",
+      "case_ids": [
+        "01e2458a05700443b8644949c123585a5129a9bcee19fe82ec68ea6f95807eed",
+        "fed237f6219251ed922b726d78a7a07aeb8290abd7ff967036ed5bc23e59b90e",
+        "6ebeed85adf3b8c7acbd61f10f37da15ba491432b4ec9a09e28c7e9156d6c69d"
+      ],
+      "gate": "pass"
+    },
+    {
+      "label": "attention-selected-independent-fresh-bounded",
+      "case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/attention-selected-erf-independent-v1-bounded/case-list.json",
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/pair-phase-tree-vector-independent-v2/attention-selected-erf-independent-v1-bounded/preparation/prepared.json",
+      "sha256": "5b02ee279eb1b5e2324e1ad36be269a1171f1c11829b453b2982223bb7fb1d0f",
+      "case_ids": [
+        "9cf1676e95dbfe4794bf8358d49d532b04fe39f92db5c909bcba9ee7d46598d9",
+        "c99263904986dd31c5dd7e8a38489cd12ea9ab9c5bc80674f20aa2597f5d68d7",
+        "b2ba82b45d470f88237b50a5c75ed7f230fcc91c1f7331b118018ea4f78718be"
+      ],
+      "gate": "pass"
+    },
+    {
+      "label": "attention-selected-independent-fresh-order",
+      "case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/attention-selected-erf-independent-v1-order/case-list.json",
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/pair-phase-tree-vector-independent-v2/attention-selected-erf-independent-v1-order/preparation/prepared.json",
+      "sha256": "f522a88ae0c061356b250a6d5813b62ea4840d2d3d9980977cfb45425055ce91",
+      "case_ids": [
+        "02d4159571da7f0cc142693dc65e3c36f177e1f5cb619fb7833f0c42bd10df8e",
+        "f8257ec740c225609dc5e08babff4d4708d6c349f7f1d0ef3dc631d2460c7eb5",
+        "1e0918cfe4c0b80ff304f231d5f71e319bbad05c3b3ee53992f423f8605001a5"
+      ],
+      "gate": "pass"
+    },
+    {
+      "label": "attention-selected-independent-fresh-partition",
+      "case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/attention-selected-erf-independent-v1-partition/case-list.json",
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/pair-phase-tree-vector-independent-v2/attention-selected-erf-independent-v1-partition/preparation/prepared.json",
+      "sha256": "66b720bc721a32adb43e9023c59c802b2d12658cda43f70cd65487cc609674df",
+      "case_ids": [
+        "c974ec730c3e361d5a62608aa954478a6cea10d6f9183d7f03bd9f45a6a125c8",
+        "e42462914470b170c8821353f22256bf989c43c7b7312374f56169d5574e72d4"
+      ],
+      "gate": "pass"
+    },
+    {
+      "label": "bug-independent",
+      "case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/bug-independent/case-list.json",
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/pair-phase-tree-vector-independent-v2/bug-independent/preparation/prepared.json",
+      "sha256": "649d609f0f00fa5a1d3cb8d80bad3b730bceafe449448d84839430145b660b5a",
+      "case_ids": [
+        "0ae55875282f68e45972d28c44d9c31c0b3499e2227776855effb0b9b6595d4f",
+        "9e0d1ed8b86484a33e105bd752def7eb9afd8a43b5df5c1b5fcc94febb44df7b",
+        "7f86048eb7814d46ed97a1952e39716a6d5c03755faa1f977d954565686342dd",
+        "cd76e69248753128806ede69cd08da03329d51a9db2948a7b0cf07cb01217721",
+        "8ca73cffb2863a7a82d7871f5463eb230e430e5d35ce03067b9d8b08d23e77a3",
+        "fa9b0ad7ccab9729789dc2103a3a39fe3ae2bdc350973a226494e563fcfc7b8b"
+      ],
+      "gate": "pass"
+    },
+    {
+      "label": "bug-screen",
+      "case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/bug-screen/case-list.json",
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/pair-phase-tree-vector-independent-v2/bug-screen/preparation/prepared.json",
+      "sha256": "979a3db74625bd2a4e51ff6df17465698b54c82b2dba3dcbd954f359d8126d2d",
+      "case_ids": [
+        "ef34e536dab09fd4c0bcd85ea0c1e9a2171ffef5f27a64981ea6343aab1cd75a",
+        "57e82125a796bb9080bee679a08f137d78367aa66643aca4080c92adc9932dfe",
+        "fb10c3c2c52755ec1dc8ef21efa8ef3a2f268584505b9272815c8d6d54d2f3b1",
+        "b8406f757a784302d3adc6e35bfca634acaf1899b7012fb83ee12f59f1d276e7",
+        "fa41b5e778718c3209536b85787001a3fce87f9cbc7f4b8288e18ffa0777fcc6",
+        "8a7db526571189e3b67c95f11a3294d910c6e10a53d58c33f0c9a97031e3a9b8"
+      ],
+      "gate": "pass"
+    },
+    {
+      "label": "carrier-screen",
+      "case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/carrier-screen/case-list.json",
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/pair-phase-tree-vector-independent-v2/carrier-screen/preparation/prepared.json",
+      "sha256": "15e0bf7a2f1ca2866f6fc1281d67b45e779ff156a4e480807016d3771656e65b",
+      "case_ids": [
+        "e49e6ed42d01b423c44d16456ce62177ec5302f9f4eced7c391d16ebdd999a08"
+      ],
+      "gate": "pass"
+    },
+    {
+      "label": "carrier-v2-independent",
+      "case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/carrier-v2-independent/case-list.json",
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/pair-phase-tree-vector-independent-v2/carrier-v2-independent/preparation/prepared.json",
+      "sha256": "6e832a3a50e21b1299703091dc8ecb9041ce79f986778fdeb545c98cd8f6124c",
+      "case_ids": [
+        "15f3948cd30500b916a474e412a543acc19a0ca24e8a9240aff3d59d531af016"
+      ],
+      "gate": "pass"
+    },
+    {
+      "label": "carrier-v2-screen",
+      "case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/carrier-v2-screen/case-list.json",
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/pair-phase-tree-vector-independent-v2/carrier-v2-screen/preparation/prepared.json",
+      "sha256": "614ba8bac71b0b06e1481c0ca4d6165786274249ff102e9833bc1d2ba3127ea1",
+      "case_ids": [
+        "81efd984435c63b55d728746a2e821c6fa0fd097b2ad92c5870170832f7f3034"
+      ],
+      "gate": "pass"
+    },
+    {
+      "label": "compact-v2",
+      "case_list": "/root/nfs/emmy/research/regression-suites/compact-v2/case-list.json",
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/pair-phase-tree-vector-independent-v2/compact-v2/preparation/prepared.json",
+      "sha256": "26eaa9470dfc175ac1b5ae57ad811d6de3fbf4b0f1facada24459cfc32409635",
+      "case_ids": [
+        "c10866af73f820553331b01c52e042e5d724c275a6f5fedd9348170ba75d382c",
+        "69db4e7f597c41b0684fb30c3204e197cf56c8647d9a63dc0adb77f2a8a0d867",
+        "6ab09ab4acc384ee252370a564a13965ece1ad21a3e64d6615f0de1a39b8c665",
+        "89d56c168a0b04373ef8d50096c48534c70019b8d2f87371b79aee2289922b44",
+        "1e82d7e58a53e8795ea9d05e3759dfe201e42308efd08dd2a51e79c769dc2fbc",
+        "cd9a29496fccd9e421c1cfbe14347cb45003f38681e3b4b2e703f5dbbfdd6c5d",
+        "aeb1568894b7afb50ea0b1b6c6fe94b57419452643ec87c5c6561f9ebfc58bbe",
+        "4035b0c010105ed7be8aa1a889fe2754d498fc4a27c1719bf547ddad66e48403",
+        "5e973341ada3e33f701293be5a3e6195badb7290a5471f4c6cefa86634d1b168",
+        "3145aa57f753f64551cd4b83c3d430e6e2375a9feb4819accbfd5e55c39da560",
+        "aeeffce3a36b8cf1b27173b8c1644fc517a24d992173e06bb1664784b009b6ba",
+        "2ffefe7fee88d864b3ac97cd70fe9711643f3551fba367299df52f329649154d",
+        "a56bdb784a46a763c2b633ebb5d16ee1ffd4287cb0984168b4f80909c323ce22",
+        "6dfbe2bc925e2b31ceb8eb84bb5016cca8af143ca55cf93078d09decc26a0fd3",
+        "5c2ba872d36e6526a79b9799c059e237f65a34019cd94f1c85da4f0b9f930d3f",
+        "7be68f4ef7d32de1bde415d3c96e21c0aee23c0c175d1339a81abb77eaff8083",
+        "ed37ac4d2801d41d13b5fd2ce98731e8e717f9651e92193bc9146c008b87aeba",
+        "605ee03dc09345cfed01434531ed73588a820eb19fd1eaf1327f5e67889756d6",
+        "4f496d88d4a5739947380eac36ae5592d18e0e980e1038721c926960643b9660",
+        "babe59769149f7131c83c276e58558a1cc49ab73d0e6d7112b70d4d946be6fc3",
+        "07247b475413b2486a6138901e9a05e886b2993ef6d21c963b2cc7bce52c3e0d",
+        "c5940d93d7e94754b865cde5571eb2e6e91067518afb569e4f871284d5d3985f",
+        "6cbcd2d465379c7f0d61cf88e1074f31e8296caefc4a85394212978d907873d5",
+        "61098ba0cc34ea091b2a821816dec4f8743aa37dc010ee6b20a8c46722a48c4f",
+        "3403dbd465d8a05049feb992ea67d9ecf4de0fb1ef106c2bd71146e312b437fb",
+        "61376e724851b5c2da0888a4dd999d755ce44ae5e591390537922d6fe3d4220f",
+        "fae06ecf5a68131f772531ea344d7a9c6e1f07075d191720cf5c330930af9f96",
+        "dc8cc0e8d88e7d60dcdf702bacc8d91e2e1761c18e9040ffd9b34c90477315c5",
+        "d42770018f494d678181aa0171c67225bae91861383c3d0149483e02559f14a3",
+        "31e66c227e064fdcdfdbd607624fae8c845d5a1c7f07668e40759e9961c1435f",
+        "b3b9d4ccd080adb9d5a05ae938aec6089818bc50230ec5093d25c135097c90a1",
+        "b24c76efd4ba9fd8763e69cfd1e0926f876281a2a06fd64c8dc9e882b9a33aed",
+        "f188ef762959e2f777587b9dbfb60421c6765cfd5412b37516c4b7113e7ff42a",
+        "0e80b09925f0f9637cdef513d58020e8dbd3fe023ee87c0372fbc01393d37f7e",
+        "bd8a59fd719b12c89bb2bef8b221fb1c007d5ade73a552c1d35f9a055886d363",
+        "3e9203274f6927cb955cf2e8d0af2e7e870ace628d9a26e6b356409a4e032631",
+        "068fb6cb67fb91185ea4063ac15b15ae1ea8b0ebeb9a05d6fef2e777f31f2348",
+        "1f9428cef0a7750c55fec497401857955bd037aed43ab72a1abf26627ef390af",
+        "807f6dfcde812fedd65efdbd0428a3f07108c21131ef242269c5fa5df0fec1c2",
+        "fff293a2235c2158ffc525f848ce136c020fdfa506b79c147ccadd0a39931751",
+        "061d7084b7298d83ba14950823669b4734ed6cc3f9f51bd5ee830f10e18ee56a",
+        "da018f96fc2e54583814b7dc39cce909d332add031820662839c2706fccdc91d",
+        "b5cc80a79e59c19edb2f07d14c0afe088a9c440310666187b50e20cd69c4397c",
+        "943cbd88c1f4ca66ae34098886c73543341807db35df0d3289820b2be0ab4a74",
+        "57aac69012ac3b0ee2cf4110e977c7429c12037a02aab06a73beebaa6c090fa1",
+        "70100ed805e7de6600d6952fc9318bce139883a55c5c3918e7bef7c0729baa81",
+        "0eeb170d22182ed9875fc86336fcbc090c2dcc2db2e2234cd704d8bf6614cc63",
+        "2623ef7bdace949bb90f19ab8499a43d44db719441a3583870dbdf14d0c08172",
+        "48189071240806b192fd70230a1d4af9b7fce13e389c91f4c88a93a35c9388a9",
+        "5224818b2d26d5b73af6c783a756518a271351ca1a5529cbc0686f7e181387fa",
+        "669f6890c8882493e5571cfcd0f2a0172bc9b729375ab98513331ac0d089e3a4",
+        "83fb961f7fc2aee057d579cd6309ef1cce9d1c66a0521d78c4c6978d50b289e5",
+        "8e6693eaac063e733279668d2476edb7ac5fad6f11b9a493541574512c7552b7",
+        "cc0b21f91dca260efa45b680481e1ba9f39dcee329f149f6db678c8c8b9f97be",
+        "72f1deeac451a01002043dead776384004b887cdcec9089a0bdfcc02923c022d",
+        "9e1f76b1c9291d28133d85a85ae619cdd4d7ca52d54f649c3e7e9d925e54e0e8",
+        "0a50249d1218b576c10e21a7020336fa287d4d5d6bd7a39511aa2219aa070556",
+        "e4ac354528a2ab697578716e36b5ac607df309f75252462e861b435ad2f5d7c5"
+      ],
+      "gate": "pass"
+    },
+    {
+      "label": "dot-common-guard-retained-v1-screen-bounded",
+      "case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/dot-common-guard-retained-v1-screen-bounded/case-list.json",
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/pair-phase-tree-vector-independent-v2/dot-common-guard-retained-v1-screen-bounded/preparation/prepared.json",
+      "sha256": "c0ca694b723a6e9298d468755241e6a9e3b337e35e1a25610a604a058f6ff096",
+      "case_ids": [
+        "fd72ad46fcf0df45f254a6f394abd0b7a89e5826e987cb399ace7e2be3c165df",
+        "0194979eb58fcb2c5494ec6fb0d95f3b05e2317bd7b515d8256a668342246437",
+        "23b1bc8e96633d50b412dd7bd7f7ca97eec5a1ddf3049136e2ed9e9cebf76acd"
+      ],
+      "gate": "pass"
+    },
+    {
+      "label": "dot-common-guard-retained-v1-screen-order",
+      "case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/dot-common-guard-retained-v1-screen-order/case-list.json",
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/pair-phase-tree-vector-independent-v2/dot-common-guard-retained-v1-screen-order/preparation/prepared.json",
+      "sha256": "ccc1036b673654fbbbecb88ca85e9b8ddb605f9c4eda0489ca8c05d2acf171f7",
+      "case_ids": [
+        "49410fed727473eb2a41559b34b0250a48a21297699eec595d6b09533935a897",
+        "b94b7bd68716df3dd03821761da26b791e4631b2e8d72297cf3bb3e28b2f7c44",
+        "5f2447a3ba0fef1cbd9b0c531dd22950b0cd2fbb7cd9e9c279bfe31b2a29c643"
+      ],
+      "gate": "pass"
+    },
+    {
+      "label": "dot-common-guard-retained-v1-screen-partition",
+      "case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/dot-common-guard-retained-v1-screen-partition/case-list.json",
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/pair-phase-tree-vector-independent-v2/dot-common-guard-retained-v1-screen-partition/preparation/prepared.json",
+      "sha256": "cee55ee69b823ffad344f7a9eaec1d552b576d351e097ae57399286b2629965b",
+      "case_ids": [
+        "dd4290101ad24d3a9bd745f0d56613bf337b611cef9d91db062d92403c4a55d7",
+        "1fe7f658cea777c6d6247df02acc55d578b271215364dc5760bde8c72d34c043"
+      ],
+      "gate": "pass"
+    },
+    {
+      "label": "dot-vector4-retained-v2-screen-bounded",
+      "case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/dot-vector4-retained-v2-screen-bounded/case-list.json",
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/pair-phase-tree-vector-independent-v2/dot-vector4-retained-v2-screen-bounded/preparation/prepared.json",
+      "sha256": "88af60bcc55aa750425f1e0cc55a88ded80d88f25ea433872138906fa9978aae",
+      "case_ids": [
+        "3e614b648c65f9a3b883df6cb5ef78cc98f0d68417b6cd1fe2e0c1ae558d7ab2",
+        "0e82232fd090f13e0bdfe988af65496ee4cf5872abbf143c3e0b768c721f2a79",
+        "32c781a1829dfc7920463ea01b5842f60ba8981fdfd3f5e9cbecc939c1a3d709"
+      ],
+      "gate": "pass"
+    },
+    {
+      "label": "dot-vector4-retained-v2-screen-order",
+      "case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/dot-vector4-retained-v2-screen-order/case-list.json",
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/pair-phase-tree-vector-independent-v2/dot-vector4-retained-v2-screen-order/preparation/prepared.json",
+      "sha256": "e7f6671e9be05b88509356ebc65dd995529fce539e4dc7bddeb815aee255c356",
+      "case_ids": [
+        "e366fa10997d44eacacd8ada02b87df2e638ccdb3ed4664669d6b69c1f3ce795",
+        "2ced9a7eb8ddb13dac6b3ced5f45a0c44d51be6e2d1936a85f7060a98bad9323",
+        "4a2d36df746dd497c51a2cae4aa4aa7dd60324e64ed40a7c9b51064695efa70f"
+      ],
+      "gate": "pass"
+    },
+    {
+      "label": "dot-vector4-retained-v2-screen-partition",
+      "case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/dot-vector4-retained-v2-screen-partition/case-list.json",
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/pair-phase-tree-vector-independent-v2/dot-vector4-retained-v2-screen-partition/preparation/prepared.json",
+      "sha256": "71d492586f9eee261dfbe19233c327c4face2ab4392612673b8f22a4f9ebcfaa",
+      "case_ids": [
+        "f13fd877d0990c645e039d9d183b05c5d76ba9b583fe59df37a7a84cf63b8db1",
+        "eb697a3330e4ca06ed0c2de76fa9f0f65da9c1c1d796a9d6a930ef4e5b8b92e7"
+      ],
+      "gate": "pass"
+    },
+    {
+      "label": "erf-development",
+      "case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/erf-small-oracle-validation-884271/case-list.json",
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/pair-phase-tree-vector-independent-v2/erf-small-oracle-validation-884271/preparation/prepared.json",
+      "sha256": "fa5b4a1611560e8c71ec6a3671d50c0aae7ce96ec8e8ebbea5ad81cc6511205f",
+      "case_ids": [
+        "63558c3da344eded31db3ba070fd5b9bfed72c764d052019d37b715732205e2c"
+      ],
+      "gate": "pass"
+    },
+    {
+      "label": "erf-fresh",
+      "case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/erf-small-independent-v1/case-list.json",
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/pair-phase-tree-vector-independent-v2/erf-small-independent-v1/preparation/prepared.json",
+      "sha256": "53502b15b48fd5bb676ad2ea0b7d29c62a5b5f09967b4ba4ee0444af42851758",
+      "case_ids": [
+        "fa291508d3c418c4302fb88a276f9070f1bc5faf4adb19bbd77344e6cf89b99f"
+      ],
+      "gate": "pass"
+    },
+    {
+      "label": "erf-vector-screen-fresh-bounded",
+      "case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/dot-vector4-erf-scope-screen-v1-bounded/case-list.json",
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/pair-phase-tree-vector-independent-v2/dot-vector4-erf-scope-screen-v1-bounded/preparation/prepared.json",
+      "sha256": "8b2c97b803f3353d3266be45e1c1e3fdbaa42e53cb326c09842102509833ea97",
+      "case_ids": [
+        "10563f9e4d082d58d052d58a39d9e76ccd142cf93584e8e070b73ee18e7b0901",
+        "6c0bf28a2067d4532e9afdfd9450c9319cba15f8540bc802e345144b7a286776",
+        "43667ac10d9b27ae4d95bdf9429458254f1a42fa01af4bfb008f5428ee16f6f5"
+      ],
+      "gate": "pass"
+    },
+    {
+      "label": "erf-vector-screen-fresh-order",
+      "case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/dot-vector4-erf-scope-screen-v1-order/case-list.json",
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/pair-phase-tree-vector-independent-v2/dot-vector4-erf-scope-screen-v1-order/preparation/prepared.json",
+      "sha256": "8f738490803d39ca813bda6db50555acba6d05da37004fe5f1eb5313e52e545c",
+      "case_ids": [
+        "b547de5d0122b21045d35088e36758e96a507f95bf36e007e9d6dadba40e6f15",
+        "4dc2a09805000510b7d47fd143d7d8fd46e547f240bee33b06bc59bb866458c9",
+        "5643cc3ca72ced4196fe1bc52ee23b62e921ecc8fb3a76a95304cb493e1abaed"
+      ],
+      "gate": "pass"
+    },
+    {
+      "label": "erf-vector-screen-fresh-partition",
+      "case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/dot-vector4-erf-scope-screen-v1-partition/case-list.json",
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/pair-phase-tree-vector-independent-v2/dot-vector4-erf-scope-screen-v1-partition/preparation/prepared.json",
+      "sha256": "7b62c7c075c1303f77b6dd1bd006fa817fdb2c9e4400bfda85b7b935ea4a0c80",
+      "case_ids": [
+        "b8deddd49a5b7514019154f160af8e05cf0081df512fe3683304d3c9edecd77b",
+        "eacea7109851674eebe549629464045868e88ec72fd98c049ed85b5731ae90c8"
+      ],
+      "gate": "pass"
+    },
+    {
+      "label": "exact-tree-validation",
+      "case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/exact-tree-oracle-validation-557733/case-list.json",
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/pair-phase-tree-vector-independent-v2/exact-tree-oracle-validation-557733/preparation/prepared.json",
+      "sha256": "f3d48ffc413bb671da2ef65fcbf84ffc3214e207dacdea6ea02c46ab55667c6b",
+      "case_ids": [
+        "24e447a29f7665e75242d1ca946836b2f542d9cc71953cb5578797962bd97165",
+        "70ad0f32f8f071770e3dffdcf510ff9fcb64022e08c93f8e775a24ca173596a3",
+        "59075bf4598eee47a9e806eeebf1a01e2c41d531ea5486a1842431411355f6ca",
+        "6890db887e9ddeaf5f0a49d1111ec35c0ac97c590f7720d2112e53c5a25b6e1a"
+      ],
+      "gate": "pass"
+    },
+    {
+      "label": "fresh-bounded",
+      "case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/dot-vector4-retained-independent-v1-bounded/case-list.json",
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/pair-phase-tree-vector-independent-v2/dot-vector4-retained-independent-v1-bounded/preparation/prepared.json",
+      "sha256": "a658efcfa90383197c904e014263b412e5cc440e8c3ed65294e4fd2bc17ad87d",
+      "case_ids": [
+        "1650fdade129dbaf11cf429696bcb50edf8b87b2b5ef144ac3462db6d685b1e1",
+        "66be28919cf0ef0efd3260e820006f8c760fc3443949ca653fc1de4b8877050f",
+        "c811573f64c56c05108d123641f72feda6101f6f85bcef12aebf31e619ca4a7d"
+      ],
+      "gate": "pass"
+    },
+    {
+      "label": "fresh-order",
+      "case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/dot-vector4-retained-independent-v1-order/case-list.json",
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/pair-phase-tree-vector-independent-v2/dot-vector4-retained-independent-v1-order/preparation/prepared.json",
+      "sha256": "432082d716358c6f5e694c3ea6752f0c1f91a75ca7b95ebaa14dc2de9b5debd3",
+      "case_ids": [
+        "0129a89f059c90878701ac458a9689ef2a26028bb880c0b14749893e7721a6fd",
+        "addd8ced2c0c9ab53ffd88afd9593108afbd6053c0f21a3a94359a7b63633c25",
+        "51af4ba7d4c9c3af6e667460b7ca05ff165a3c096162c60c6e0d8c1e0f96a2fd"
+      ],
+      "gate": "pass"
+    },
+    {
+      "label": "fresh-pair-phase-tree-async",
+      "case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/pair-phase-tree-vector-screen-v1-async/case-list.json",
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/pair-phase-tree-vector-independent-v2/pair-phase-tree-vector-screen-v1-async/preparation/prepared.json",
+      "sha256": "1f7a1309b7992eb96e25d3d620c4a1899285b376c81338c0bebbeafcc1e85baf",
+      "case_ids": [
+        "f6f138ba32345046defbadd0465b54a43dab3b1564fca8f551b3fd0de25fe695",
+        "b8c0079b7d4413a1880f4f91f7c435e2281f9b5c92861c7980388a4bd2882555",
+        "ca68560f3accf2de5f06ef38209e097d3a28a3665aeb671fd8c03f13183c5940",
+        "5301d8c715407530c35afa3121203a258abf636e942ab316fb7cdf809919b9d8"
+      ],
+      "gate": "pass"
+    },
+    {
+      "label": "fresh-pair-phase-tree-pair",
+      "case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/pair-phase-tree-vector-screen-v1-pair/case-list.json",
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/pair-phase-tree-vector-independent-v2/pair-phase-tree-vector-screen-v1-pair/preparation/prepared.json",
+      "sha256": "4557bc69903f2a2baa83396f3b7547b4c2d1aa2b24378194b41526780c64d575",
+      "case_ids": [
+        "bfc4b7ce74bafe017db5d345724a8ab527509641a581e2a9906b74a5a3a73c0f",
+        "0192aa8028246287221f7448e6c9dfec47cc2cfdfa3ec825d1c7ee28cec28c6a",
+        "6ac8c7773141710aafc9375e2ac493eada0dd20901b152f729d6255f79336317",
+        "55256bcbea1510499cff61c4f643eb7de10964fca4a7d43dc9cb8eca5a323236"
+      ],
+      "gate": "pass"
+    },
+    {
+      "label": "fresh-pair-phase-tree-tree",
+      "case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/pair-phase-tree-vector-screen-v1-tree/case-list.json",
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/pair-phase-tree-vector-independent-v2/pair-phase-tree-vector-screen-v1-tree/preparation/prepared.json",
+      "sha256": "f0f5b6e4690ec0a826e6029a80b7d77f3216904f525521956079abb1aabc8365",
+      "case_ids": [
+        "ebf9b88621f1c188d773c0b498e0b13ff433555fb67e4ba5c1edc661bb50de04",
+        "d5eafb7f8b3aa5c88f659d66bafac8d7da8275bcdcadbb7607b30378c0ed0494",
+        "a9dc1a319bf2b88be8c060e497d3ce346b15805a0482e8d0dcb98998f553f271",
+        "cc86ddb101d602d02e683291f71b7b5ab2dda24a4d477cd0c2263a1b21ce47b5"
+      ],
+      "gate": "pass"
+    },
+    {
+      "label": "fresh-partition",
+      "case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/dot-vector4-retained-independent-v1-partition/case-list.json",
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/pair-phase-tree-vector-independent-v2/dot-vector4-retained-independent-v1-partition/preparation/prepared.json",
+      "sha256": "59b0ce69f84e8c1a7ae765c02f0dda0ed5714d3b10a542d3004e476d400354b5",
+      "case_ids": [
+        "2219eefa7f8ccb77e242e7e569b78f318b15c8fff75a08061551c944d9065b6e",
+        "97abc829e63e7c3432400aa2ddda4a5ab5f3d758b406533c1bfb084a8673bc03"
+      ],
+      "gate": "pass"
+    },
+    {
+      "label": "fresh-selected-final-independent-async",
+      "case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/pair-phase-tree-vector-independent-v2-async/case-list.json",
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/pair-phase-tree-vector-independent-v2/pair-phase-tree-vector-independent-v2-async/preparation/prepared.json",
+      "sha256": "c2a4693448d7faef3f2b11fc09211e4dfa4983765621c485cac20f10e78a4054",
+      "case_ids": [
+        "bec67be84425e619948e02747350c723d07e6c59540a1dec381da36d3b7c455a",
+        "f0401a9aa139c60c0e5f85e0253a5854eb58b9e5a733c1d06db0747b53ca6af8",
+        "a9e51dacaefed9c53bac777e1ff4dce3b49731316da7595a414f49e540724a1a",
+        "beed3837cbafcf16552b76dc0c7a7f988d191eb19f673aeb177ccb47374bd954"
+      ],
+      "gate": "pass"
+    },
+    {
+      "label": "fresh-selected-final-independent-pair",
+      "case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/pair-phase-tree-vector-independent-v2-pair/case-list.json",
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/pair-phase-tree-vector-independent-v2/pair-phase-tree-vector-independent-v2-pair/preparation/prepared.json",
+      "sha256": "ed8c809c5eed9fdb157cd8b716c4030812fc9bdb3d84431ebb9cdff7d7aa56f2",
+      "case_ids": [
+        "e859ad9acfc8c53d851ca8de4fd5d373f9e13961df5cdc3f6743eaf734aa607f",
+        "a3fe8084f34745a8656cd7d427de197bf583ad104365655b9fb79a94a5dd690c",
+        "fcfc951bf1498941b3c41429eaa2b2bf6266d4e6ce5663eee40707aa75e5923e",
+        "dd6dcf6102d28bb83743b0b72333fee4f5be654245bf2322f4ae664c3558e341"
+      ],
+      "gate": "pass"
+    },
+    {
+      "label": "fresh-selected-final-independent-tree",
+      "case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/pair-phase-tree-vector-independent-v2-tree/case-list.json",
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/pair-phase-tree-vector-independent-v2/pair-phase-tree-vector-independent-v2-tree/preparation/prepared.json",
+      "sha256": "55c53f70198bc0c4e897fc58c6159a2672b9ec6ddaebe889eac7776092707a18",
+      "case_ids": [
+        "fe30cac314b951b0e3b768174c51f64e4934766178e49e9467c859e9ea956846",
+        "6c8ff36183c0dd80c16c2f52b6e873f8e53e4e14a585e80d6a25f7abbb450efa",
+        "ef95f2d825df2013d3bed973037a922f1fc184f849d47ce02b917fa492e0454e",
+        "6d95385ab52abd5acf9e58eb9a2779f25a9aac4c5c24ff4f2ce3ae95e8f99aaa"
+      ],
+      "gate": "pass"
+    },
+    {
+      "label": "mixed-f16-development-control",
+      "case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/mixed-f16-oracle-validation-773941/case-list.json",
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/pair-phase-tree-vector-independent-v2/mixed-f16-oracle-validation-773941/preparation/prepared.json",
+      "sha256": "7121294deb63b107dd1faf6ef7556df679a8541a014186d75e953f24e2aea3bd",
+      "case_ids": [
+        "6f6357065acf5b24d4be3132257111f2e40e8cc0cba48570e067276205551d25"
+      ],
+      "gate": "pass"
+    },
+    {
+      "label": "nested-KEY-development",
+      "case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/nested-key-scope-oracle-validation-710331/case-list.json",
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/pair-phase-tree-vector-independent-v2/nested-key-scope-oracle-validation-710331/preparation/prepared.json",
+      "sha256": "92041b0c428b645ec75ed46da2933fa8daafccb4e71ef22ebc8fc6d4054bec8f",
+      "case_ids": [
+        "d7be87bc0caabbc560a024cd044944f15da13f4085819fc40ebcba4940f64200"
+      ],
+      "gate": "pass"
+    },
+    {
+      "label": "nested-KEY-fresh-v2",
+      "case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/nested-key-scope-independent-v2/case-list.json",
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/pair-phase-tree-vector-independent-v2/nested-key-scope-independent-v2/preparation/prepared.json",
+      "sha256": "35b713d30984b8aadf80c5462fcb57d0efb1c4a99c4b902f435eaef97de9cd83",
+      "case_ids": [
+        "4c6c88581fe20f1735d190ca1889f979dc7f5341908067e2e8355062d25e8d74"
+      ],
+      "gate": "pass"
+    },
+    {
+      "label": "nested-fold-development",
+      "case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/nested-seeded-fold-oracle-validation-901127/case-list.json",
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/pair-phase-tree-vector-independent-v2/nested-seeded-fold-oracle-validation-901127/preparation/prepared.json",
+      "sha256": "19948c9afe0dc8b46382be9886b58da929b0433f0318cb1c1c3109e2b81c666b",
+      "case_ids": [
+        "ab23254f6a6f908d16e15b06fec69272c6c69cc93e0c56d70b1e4e44c11aa807"
+      ],
+      "gate": "pass"
+    },
+    {
+      "label": "nested-fold-fresh-v2",
+      "case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/nested-seeded-fold-independent-v2/case-list.json",
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/pair-phase-tree-vector-independent-v2/nested-seeded-fold-independent-v2/preparation/prepared.json",
+      "sha256": "d69a68bbcd27755fbcfd4e4c358d1f360de2925f1cb534c96d7a6178dfe0710a",
+      "case_ids": [
+        "8353f18038868b04151cfa02ef3f2f3ebbdd42760760035c0462d6490151d98a"
+      ],
+      "gate": "pass"
+    },
+    {
+      "label": "nested-fold-superseded-v1-known",
+      "case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/nested-seeded-fold-independent-v1/case-list.json",
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/pair-phase-tree-vector-independent-v2/nested-seeded-fold-independent-v1/preparation/prepared.json",
+      "sha256": "01f3d092d3d531224dff550872eccfcfd8d3c9ad0ef949d5c51a71e526f8fb83",
+      "case_ids": [
+        "b412a7cb07b9335138462db316ccd81aa36c6f8dfbfa84ca9bdd2edd95793212"
+      ],
+      "gate": "pass"
+    },
+    {
+      "label": "opaque-independent",
+      "case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/opaque-independent/case-list.json",
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/pair-phase-tree-vector-independent-v2/opaque-independent/preparation/prepared.json",
+      "sha256": "ba9b1f0f4f27cae29210275dd560245dd8df591e3a570b8d7f5bc02c357f9eff",
+      "case_ids": [
+        "dfc17cb14cc101c3e47ce1e09dcc44ec96b172d35e76e5cf8794a03078098564",
+        "763465e0de7581afe0062df5160952313a8ec7d0a37a64b7fedc50d5aef5e715"
+      ],
+      "gate": "pass"
+    },
+    {
+      "label": "opaque-screen",
+      "case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/opaque-screen/case-list.json",
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/pair-phase-tree-vector-independent-v2/opaque-screen/preparation/prepared.json",
+      "sha256": "d97534325db3da7043db39ef7b6227ca9e0edd5e253622582834769010e8dd31",
+      "case_ids": [
+        "2c15db2e5679909cef087ecdd13de5ce6fb7cf56ae54b090f7a966d6dcb6a30e",
+        "7d586595132adb5191192231cef884f5daa56077f115b310c20d34f5b65b7c95"
+      ],
+      "gate": "pass"
+    },
+    {
+      "label": "partial-uniform-independent-v3",
+      "case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/partial-uniform-independent-v3/case-list.json",
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/pair-phase-tree-vector-independent-v2/partial-uniform-independent-v3/preparation/prepared.json",
+      "sha256": "fa805f91074a3e7a449da63e9c81f58da03569a25e1309d57b18dc94dbf3fa9e",
+      "case_ids": [
+        "cb0368cb52f2f0f055040645a451637f4b7972d40f5736d761c02b858258f8ca",
+        "3a98fb0a1f2dcbd4db7d38b9edaa56c58b65cc7dcefe24c9e27ebf371d77e5ff"
+      ],
+      "gate": "pass"
+    },
+    {
+      "label": "partial-uniform-oracle-validation-667788",
+      "case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/partial-uniform-oracle-validation-667788/case-list.json",
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/pair-phase-tree-vector-independent-v2/partial-uniform-oracle-validation-667788/preparation/prepared.json",
+      "sha256": "4b698ef2fc5da259461e31b29d898e76b4f00a635b77e3b47d5b6075dab1eb40",
+      "case_ids": [
+        "bd0cba1f7d07098c0d584b79d80458a57edfee77e685ab2c2eea3d847f1f4414",
+        "fb08b0884f3532cd8a601414cd6f2434f05b99602b99dfee396c8b73fc9643f4"
+      ],
+      "gate": "pass"
+    },
+    {
+      "label": "prefetch8-independent-v1",
+      "case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/prefetch8-independent-v1/case-list.json",
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/pair-phase-tree-vector-independent-v2/prefetch8-independent-v1/preparation/prepared.json",
+      "sha256": "d17d80e2fe20de201bce896ccaf1d0eec00b4f91fe29b117d7d264ef7b19d874",
+      "case_ids": [
+        "5ac01e040156b424b17a99e962e9b0bc098682db271cb5e10181003c87d1cf58",
+        "fb17edb5eaf08fe018ae09f7a909ed7f241e60fdbb719d81f0ff0562f3848fd9",
+        "eb0abf6ffa45c0ad6e2c8ec229da4c1c59fa51e17f9485865063b43bd897f9bb",
+        "d90cc1c289bd34b9da0a3d72e23f10626cdae1c90a3cf015c4ae737ae8d1c41b"
+      ],
+      "gate": "pass"
+    },
+    {
+      "label": "prefetch8-screen-v1",
+      "case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/prefetch8-screen-v1/case-list.json",
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/pair-phase-tree-vector-independent-v2/prefetch8-screen-v1/preparation/prepared.json",
+      "sha256": "c0dfe64bcf87ac85eb57891aad6b1fb915caa4a8223748e02cb6ba24a6978b2a",
+      "case_ids": [
+        "54abab94e9d372d60df6a845f5a3c484ea8be351ac4fe8efc6ca96843b8071bb",
+        "53d30bb3fc2c8cef8ddf87b7e0842949757ccfeeca654935f5827463ec7c7618",
+        "3cc4f72e1ab355feeb81e65555c726ba7fa62f79c830d6549e9bf36f24b87e1f",
+        "2f75673c8e710aa79a4311cba9ada4e1d5256533aa5f327f0cf963a334d491ff"
+      ],
+      "gate": "pass"
+    },
+    {
+      "label": "prefix-coeff-screen-fresh-seeded",
+      "case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/key-prefix-exp-phase-tree-pair-screen-v2-seeded/case-list.json",
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/pair-phase-tree-vector-independent-v2/key-prefix-exp-phase-tree-pair-screen-v2-seeded/preparation/prepared.json",
+      "sha256": "8b734854fe9edc1174853e40fe14ac07f9f064fd98c8eb23d54aafe08267d386",
+      "case_ids": [
+        "e71bc833bb43b88ba5b175be89e9125189e28c257e54572c5173b5fac998944d",
+        "aa23bbd00f94abe9dbc6694c46de82eb9301c84a543e450bb885fbd04814cfc9",
+        "de25e54114aafebfaba9eafe00ae8d6e99c0c9899d8da73bdf1bf36b358a40db",
+        "ef3488d3d03c4f7f3620186ff7372cca28aa9e0571f7b99093be9ef08570f98c"
+      ],
+      "gate": "pass"
+    },
+    {
+      "label": "q32-vector-screen-fresh-bounded",
+      "case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/key-private-q32-erf-vector-screen-v1-bounded/case-list.json",
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/pair-phase-tree-vector-independent-v2/key-private-q32-erf-vector-screen-v1-bounded/preparation/prepared.json",
+      "sha256": "d115e222eb4388c2dcf9af0b41f0c55803562962bb31d64192f554f3da7f51a1",
+      "case_ids": [
+        "dce9ff4673309a41bd2e177910d0984b23030b3bb2faec353dd1e428d13aec11",
+        "27e6bd8a3e4ee78d0b9d4975208151e6ae53ca79739ff5b9f916d49a3da2fda8",
+        "6e2578296ac685a8531cd6a67cfc416037bfe638cc70718c3873fac5d34312d1"
+      ],
+      "gate": "pass"
+    },
+    {
+      "label": "q32-vector-screen-fresh-order",
+      "case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/key-private-q32-erf-vector-screen-v1-order/case-list.json",
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/pair-phase-tree-vector-independent-v2/key-private-q32-erf-vector-screen-v1-order/preparation/prepared.json",
+      "sha256": "831375711eefe1d33f9e96a0905688d94e3ce94dc7d80d552ae173e2c57e1c2b",
+      "case_ids": [
+        "0721c3c2dd01afc07fbb30e86a5e1ad19f0998e415300ba4a19a394bce4da858",
+        "1c87d3927d5c573575b754fb65fd355e67a6c3e96dbc12cfc03be201f85942e7",
+        "6bf2ce417fe2c67da88cf25254388ba26c10079d80b6902a87f778d468485227"
+      ],
+      "gate": "pass"
+    },
+    {
+      "label": "q32-vector-screen-fresh-partition",
+      "case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/key-private-q32-erf-vector-screen-v1-partition/case-list.json",
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/pair-phase-tree-vector-independent-v2/key-private-q32-erf-vector-screen-v1-partition/preparation/prepared.json",
+      "sha256": "402f8f967840f290c3bcd34ba497de4c22026c22192526da402b38a1a9b90712",
+      "case_ids": [
+        "8c1495afba671c713926ece0ac138721414e9344e0113ee97f487de4d9966f0a",
+        "720332f6e50a61c0643c3e5c6ae232140a8639fb4d630f21170b680f5bad43b9"
+      ],
+      "gate": "pass"
+    },
+    {
+      "label": "recurrence-oracle-validation-314159",
+      "case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/recurrence-oracle-validation-314159/case-list.json",
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/pair-phase-tree-vector-independent-v2/recurrence-oracle-validation-314159/preparation/prepared.json",
+      "sha256": "0b575898868de4f595da3236ded6a1e2ab5b446b7cd00894a292d10961d1b213",
+      "case_ids": [
+        "274cb67281df56837bc7b9c4acf1ab1f3c08fcdfc957790eb7e64d6140c8e2f4",
+        "975fbe287e906539c99da3be01277702a07ce646bd22e7b6703e0bae07851058"
+      ],
+      "gate": "pass"
+    },
+    {
+      "label": "recurrence-partition-oracle-validation-271828",
+      "case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/recurrence-partition-oracle-validation-271828/case-list.json",
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/pair-phase-tree-vector-independent-v2/recurrence-partition-oracle-validation-271828/preparation/prepared.json",
+      "sha256": "39ed113caf664d71c8fbf2a0f113c69b49efc46c2d570df0513d2a0e7a64ec50",
+      "case_ids": [
+        "c2506f791df9ea8ed9d823dbb3a3aa71e033f57b15928533c1c643e8dea1b6d2",
+        "24e1710bcc5692c488c7b8c779d09c6efbdb3a8c0cb773e4277b7a8413edf145"
+      ],
+      "gate": "pass"
+    },
+    {
+      "label": "recurrence-partition-screen",
+      "case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/recurrence-partition-screen/case-list.json",
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/pair-phase-tree-vector-independent-v2/recurrence-partition-screen/preparation/prepared.json",
+      "sha256": "e959448862fc1daca1c3e5b0a8895691c3fc3fb372859638e0905a600b31e7ac",
+      "case_ids": [
+        "c205cd536be8e4bf87892df731b9b8c0216e00cc0d2f78b92d4e9c5af80932fb",
+        "899077ecb47b0bc0aec5af7b628d766ab3972cbfe210c606a649a5f9944f901f"
+      ],
+      "gate": "pass"
+    },
+    {
+      "label": "scalar-bool-oracle-validation-778899",
+      "case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/scalar-bool-oracle-validation-778899/case-list.json",
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/pair-phase-tree-vector-independent-v2/scalar-bool-oracle-validation-778899/preparation/prepared.json",
+      "sha256": "71982a26073f280dc602a401ed5181157725bcc787074312798d4ab518acf388",
+      "case_ids": [
+        "be140c82922d2fa4655d623f3b48e2f16769aadc10ec988a2a5ee7f6f5d77f07",
+        "9161cbcda8db695976f76193a9c2ef7f4e8cf561997f3e25df7e647bbd0e7703",
+        "37d1c24c4d7b100c6997be59505bc014afd90aed44cb0ca7672ef71858f74643"
+      ],
+      "gate": "pass"
+    },
+    {
+      "label": "scalar-bool-v2-independent-v1",
+      "case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/scalar-bool-v2-independent-v1/case-list.json",
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/pair-phase-tree-vector-independent-v2/scalar-bool-v2-independent-v1/preparation/prepared.json",
+      "sha256": "2b69fa14f5fa547905aa23020875b093c78f90ac86aed883d80147be08915bc5",
+      "case_ids": [
+        "55e079ba0209eba308837bd6710878b441902d0a3c6cb2404a6d2d3b74927a97",
+        "c979c0b2d2ce63b7a96fd1493dbc65806b5f507b9f4680bbd092e362cb34bf3f",
+        "5c3cfbf83939421c745913a84788f75ec06fb5d00bb7c32c10c7285e25b18fb1"
+      ],
+      "gate": "pass"
+    },
+    {
+      "label": "scalar-bool-v2-oracle-validation-884411",
+      "case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/scalar-bool-v2-oracle-validation-884411/case-list.json",
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/pair-phase-tree-vector-independent-v2/scalar-bool-v2-oracle-validation-884411/preparation/prepared.json",
+      "sha256": "263efbc4b0b8db9dab1697c8b9f7a2a137674f84088639b944711e95ef64b73f",
+      "case_ids": [
+        "69140f84c467e7ecc7554726a235297a4efa74f14f5df59755712fc45f9e77ee",
+        "69485ec5d44cd743f835257815304f26ac57e3f1e6b0dbc0873de1a9348c948b",
+        "2b8820d230c11f97c77937c68ffd5b79888f0d9316fcb6945ec05a0d862d3a96"
+      ],
+      "gate": "pass"
+    },
+    {
+      "label": "seeded-attention-v8-development",
+      "case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/seeded-attention-v8-oracle-validation-645882/case-list.json",
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/pair-phase-tree-vector-independent-v2/seeded-attention-v8-oracle-validation-645882/preparation/prepared.json",
+      "sha256": "c08edfe42241f7516f88811291094b8b45399e2a1f28db08eb5315bf2275e53a",
+      "case_ids": [
+        "ef2c779d25ffd234b9ebac2624da6bf4dbd77e1f122e6b3c6b5482815dc64758",
+        "eb2e86373e9981add190bced43e891adf1d780d27d474e6ee08434829334fea8",
+        "fc5d9274fbe55637c3fcf4da331fd752135a3135b3d01ba66151b5b3eb404daa",
+        "1447f343ce4964ac35f4b47cd71ef76fcde518949f23d90bc9643bd2762cb8d5"
+      ],
+      "gate": "pass"
+    },
+    {
+      "label": "select-independent",
+      "case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/select-independent/case-list.json",
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/pair-phase-tree-vector-independent-v2/select-independent/preparation/prepared.json",
+      "sha256": "391bddf5ac6ff157b40fdf5d49f753aa181c29b665a8a234ec6d866a99eac110",
+      "case_ids": [
+        "cead3ab19f8377da377a355448dad32c51c0866edc7e29bfd67d80101e0c4695"
+      ],
+      "gate": "pass"
+    },
+    {
+      "label": "select-oracle-validation-13579",
+      "case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/select-oracle-validation-13579/case-list.json",
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/pair-phase-tree-vector-independent-v2/select-oracle-validation-13579/preparation/prepared.json",
+      "sha256": "d85385d9173670c3901426eda1099bca447d55c1bea89ac2885cfe701e0b2e7e",
+      "case_ids": [
+        "a3637b82238835d8027901de0aee04a9d7df15e69ac12d965e1c9f490c209ef5"
+      ],
+      "gate": "pass"
+    },
+    {
+      "label": "shared-pair-oracle-validation-560123",
+      "case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/shared-pair-oracle-validation-560123/case-list.json",
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/pair-phase-tree-vector-independent-v2/shared-pair-oracle-validation-560123/preparation/prepared.json",
+      "sha256": "ce184da6209f8e8443acdef9229bb3a4d7d9778fc18f633491c298e20318db3b",
+      "case_ids": [
+        "de705c16257905e2418c7764648606c103b725e60751bcc582ebc6c87f4ee562",
+        "4878a2a692c321ffadbdc850aeb63ac9db94d8c632202d57dcae3a9385af5746",
+        "bc5ccc6e97f4938742737fd282d71e57d5104160666d518ddd99ef244ecea5be",
+        "defad12053f4721f06c34f9f354339b1f5c09e147406c864cea2288dfb25ecb1"
+      ],
+      "gate": "pass"
+    },
+    {
+      "label": "softplus-development",
+      "case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/softplus-tail-oracle-validation-665541/case-list.json",
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/pair-phase-tree-vector-independent-v2/softplus-tail-oracle-validation-665541/preparation/prepared.json",
+      "sha256": "d71a104717a107b53b3c48f9659e4b3666442b01604350977bee424c4a9b448f",
+      "case_ids": [
+        "2e5ef73f93e297caf646bf20a032c9c8d7a0060713dd4ced4c5b558097777bc8"
+      ],
+      "gate": "pass"
+    },
+    {
+      "label": "softplus-fresh",
+      "case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/softplus-tail-independent-v1/case-list.json",
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/pair-phase-tree-vector-independent-v2/softplus-tail-independent-v1/preparation/prepared.json",
+      "sha256": "643091011ebe31a47d90494c4e1cef13c980f9a7aa49f8f225422e87826d3dd7",
+      "case_ids": [
+        "2749fdfd9a91ddf505d7aa253b8fd1a6c4061bdc3daae61bac2b19072c6fc156"
+      ],
+      "gate": "pass"
+    },
+    {
+      "label": "softplus-vector-screen-fresh-bounded",
+      "case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/dot-vector4-softplus-scope-screen-v1-bounded/case-list.json",
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/pair-phase-tree-vector-independent-v2/dot-vector4-softplus-scope-screen-v1-bounded/preparation/prepared.json",
+      "sha256": "d21741b69383fd926e357bf7d099e803a5276f33afe97119f3e12b78feee27ca",
+      "case_ids": [
+        "e9d2273287f011cecd98b17f648b791967ff52dcb1a14542e2a0c51e4c0bb415",
+        "5ff522403bb2f9edea01d9ddb729f9f931150e235ff792adf9e9ab783b2401c8",
+        "4eb5876577cbb03d53290db52e99bb217ec3d9936dba3039e21d36559883c257"
+      ],
+      "gate": "pass"
+    },
+    {
+      "label": "softplus-vector-screen-fresh-order",
+      "case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/dot-vector4-softplus-scope-screen-v1-order/case-list.json",
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/pair-phase-tree-vector-independent-v2/dot-vector4-softplus-scope-screen-v1-order/preparation/prepared.json",
+      "sha256": "8a281695ea6e7525755c49b37e1ba152cb8804f8081fde4fa71e557f7b832cb7",
+      "case_ids": [
+        "96d14627b27d1bd98efcdeaa0f030822a39666a6c79aa3c06cb329f1e4955abc",
+        "70011da60d98494f3b91cb5274e206e54c740503299f4af86116f925ecdf2e27",
+        "fbd71262eb3e85145c3c0069992de6497116d5d53bc8c0e992f0edfa77f8cef3"
+      ],
+      "gate": "pass"
+    },
+    {
+      "label": "softplus-vector-screen-fresh-partition",
+      "case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/dot-vector4-softplus-scope-screen-v1-partition/case-list.json",
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/pair-phase-tree-vector-independent-v2/dot-vector4-softplus-scope-screen-v1-partition/preparation/prepared.json",
+      "sha256": "2e9d697d98e66bb7006f395a37eb815eefd214c784e3af4d7c3d62918079b0dc",
+      "case_ids": [
+        "a428df6feaf876a3de765a98ee33255f7c5562021b4c5fa4af49a1d97a6acff8",
+        "ad35cdcf52125e2b790ed6b259618e12e73e1454a25d146a5d93f9544c4769cf"
+      ],
+      "gate": "pass"
+    },
+    {
+      "label": "strided-per-lane-oracle-validation-445566",
+      "case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/strided-per-lane-oracle-validation-445566/case-list.json",
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/pair-phase-tree-vector-independent-v2/strided-per-lane-oracle-validation-445566/preparation/prepared.json",
+      "sha256": "b6012ff729077cc9aeab068b0c6d60e579a5f77d89a076b19ff4938e4e558b7d",
+      "case_ids": [
+        "6bb6d5d2dd35f70c3032e8d0b8873cc5e2a62c3925d9ed3d8cb6970111b95f2e",
+        "300f7a96ecca5dfb8306f97f93a1ce449b40df696b60ff9e974bf1218c142b72",
+        "b3b24603d754ef84e88a6c07ac9e4a54a2fa15285ecef6533dd4b80615708754",
+        "c35a644b4610c815459688793971739ba6c88a2ca6873b905cc627afcaacffa7"
+      ],
+      "gate": "pass"
+    },
+    {
+      "label": "tile-init-independent",
+      "case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/tile-init-independent/case-list.json",
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/pair-phase-tree-vector-independent-v2/tile-init-independent/preparation/prepared.json",
+      "sha256": "af6381f93922bee913f577286fe074d70c539ae4a1170bda4e3903da99ad4b19",
+      "case_ids": [
+        "c719289f3813c4abeee827743ffe9e1f1608f150a779ce548ea771ff38eb9ded"
+      ],
+      "gate": "pass"
+    },
+    {
+      "label": "tile-init-rebased-screen",
+      "case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/tile-init-rebased-screen/case-list.json",
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/pair-phase-tree-vector-independent-v2/tile-init-rebased-screen/preparation/prepared.json",
+      "sha256": "049703e1af8a4e64284ae04fd9aba330f651442acbfff6db734e69f51ae9e859",
+      "case_ids": [
+        "ee167cb896bcfad085da910c9c0eb88a93bf186403b908a2524fca7e8a4c5378"
+      ],
+      "gate": "pass"
+    },
+    {
+      "label": "vector4-bounded-screen-v1",
+      "case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/vector4-bounded-screen-v1/case-list.json",
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/pair-phase-tree-vector-independent-v2/vector4-bounded-screen-v1/preparation/prepared.json",
+      "sha256": "f5df41a964fd2d223c384c05b149cf0ec670e909cc560428b6e09c77ff872763",
+      "case_ids": [
+        "fcf841c1ef043f153a54b7390f4b801c1b2ba2c7d77d0eebd14beeee5238933b",
+        "7aee98cdc0339a1b742bc16258d758eda54bd470f67e345244659edf755d8e4e",
+        "253fbfcbc7038a4349147b452d81655cf3fd49541f95ff23e2be66092e983bb0"
+      ],
+      "gate": "pass"
+    },
+    {
+      "label": "vector4-order-screen-v1",
+      "case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/vector4-order-screen-v1/case-list.json",
+      "prepared": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/pair-phase-tree-vector-independent-v2/vector4-order-screen-v1/preparation/prepared.json",
+      "sha256": "ceb072f3b68888443af9b23dff7eece745135e6e5ec6c4076156a506544c38af",
+      "case_ids": [
+        "095ed1b8249baea8a917688e4770bfbf0856a3d0980a057c5a40a2d632c1a456",
+        "ffb6d92111cfa333c702dfff09f3ce4023456b572ce96bbac4dfa6933f62ad1a",
+        "497dd85878704f3021502f23fac6f5bf007cdac65ece2936b3551e055f1fa739"
+      ],
+      "gate": "pass"
+    }
+  ],
+  "fresh12_review": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/bugs-types/pair-phase-tree-selected-twelve-independent-review-v2/review.json",
+  "fresh12_expected_words": 2144,
+  "numeric_duplicates_reported": [
+    {
+      "case_id": "fe30cac314b951b0e3b768174c51f64e4934766178e49e9467c859e9ea956846",
+      "same_numeric_input_as": [
+        "24e447a29f7665e75242d1ca946836b2f542d9cc71953cb5578797962bd97165"
+      ]
+    },
+    {
+      "case_id": "6d95385ab52abd5acf9e58eb9a2779f25a9aac4c5c24ff4f2ce3ae95e8f99aaa",
+      "same_numeric_input_as": [
+        "6890db887e9ddeaf5f0a49d1111ec35c0ac97c590f7720d2112e53c5a25b6e1a"
+      ]
+    }
+  ],
+  "spills_warnings": [
+    {
+      "case_id": "e42462914470b170c8821353f22256bf989c43c7b7312374f56169d5574e72d4",
+      "arch": "sm_120",
+      "spills": [
+        [
+          "32",
+          "16"
+        ]
+      ]
+    },
+    {
+      "case_id": "e42462914470b170c8821353f22256bf989c43c7b7312374f56169d5574e72d4",
+      "arch": "sm_89",
+      "spills": [
+        [
+          "24",
+          "12"
+        ]
+      ]
+    },
+    {
+      "case_id": "97abc829e63e7c3432400aa2ddda4a5ab5f3d758b406533c1bfb084a8673bc03",
+      "arch": "sm_120",
+      "spills": [
+        [
+          "32",
+          "16"
+        ]
+      ]
+    },
+    {
+      "case_id": "97abc829e63e7c3432400aa2ddda4a5ab5f3d758b406533c1bfb084a8673bc03",
+      "arch": "sm_89",
+      "spills": [
+        [
+          "24",
+          "12"
+        ]
+      ]
+    },
+    {
+      "case_id": "720332f6e50a61c0643c3e5c6ae232140a8639fb4d630f21170b680f5bad43b9",
+      "arch": "sm_120",
+      "spills": [
+        [
+          "32",
+          "16"
+        ]
+      ]
+    },
+    {
+      "case_id": "720332f6e50a61c0643c3e5c6ae232140a8639fb4d630f21170b680f5bad43b9",
+      "arch": "sm_89",
+      "spills": [
+        [
+          "24",
+          "12"
+        ]
+      ]
+    }
+  ],
+  "inventory_total": 83,
+  "new_types": 0,
+  "handles": [
+    {
+      "session": 62442,
+      "job": "20261023T034903Z-research-cpu-o1qKNo",
+      "exit": 0,
+      "lists": 35
+    },
+    {
+      "session": 45992,
+      "job": "20261023T035225Z-research-cpu-aW2k59",
+      "exit": 0,
+      "lists": 38
+    }
+  ],
+  "no_preparation_repeated": true,
+  "owned_jobs": [],
+  "worker_slot_released": true,
+  "limits": [
+    "Static compile/both-target assembly only, no numerical GPU/timing result claimed.",
+    "Index owns detailed changed-set/native equivalence audit.",
+    "Parent owns core47 union, isolated GPU qualification and timing."
+  ],
+  "created_utc": "2026-10-23T03:55:13.613337+00:00",
+  "published15_exact_prior4ff_native": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/bugs-types/pair-phase-tree-final-independent-qualification-v2/published15-exact-screen-native.json",
+  "selection_artifact_id": "07b4626b8dee4ec3cacf1a72d7531e47da801089a192fafb10ae79ee971c7048",
+  "selection_before_source_freeze": true
+}

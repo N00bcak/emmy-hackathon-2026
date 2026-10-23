@@ -1,0 +1,79 @@
+{
+  "compiler_sha256": "131b511c018960c7d6857feff5ee1aff3fae7983b04e46d199fd917ab2afbe6e",
+  "pure_cpu_unit_tests_passed": 7,
+  "unit_test_names": [
+    "test_reject_tree_indexed_by_lane",
+    "test_reject_invalid_abi",
+    "test_m01_inner_loop_hoists_invariant_index_division",
+    "test_cond_definitions_participate_in_hoist_analysis",
+    "test_residue_rejects_non_multiple_product",
+    "test_unsupported_errors_do_not_emit_partial_ptx",
+    "test_unproved_pow_rejects_without_partial_ptx"
+  ],
+  "published_ir_modules_lowered": 15,
+  "published_cases_lowered": 15,
+  "modules": [
+    {
+      "ir": "emmy-hackathon-2026/problems/a01_attention/k_matmul_softmax_reduce_b55365.ir.json",
+      "ptx_sha256": "3f2978f5d066a6af08b8b2f794cc5d87ade4fa4687e9e41d114c9b00096555c4"
+    },
+    {
+      "ir": "emmy-hackathon-2026/problems/a02_attention_128/k_matmul_softmax_reduce_6f0029.ir.json",
+      "ptx_sha256": "d62289fce298d4440b7f0ac6e718377b225cb57e960a7660cfc5496ab87c46e6"
+    },
+    {
+      "ir": "emmy-hackathon-2026/problems/f01_rmsnorm/k_mean_cbd1de.ir.json",
+      "ptx_sha256": "86ab7b1eb280674e757d4417cf9fa26c6a2a9848440296457031a47ec2b62f7f"
+    },
+    {
+      "ir": "emmy-hackathon-2026/problems/f02_row_softmax/k_softmax_05263d.ir.json",
+      "ptx_sha256": "ef97e76eb397f9bc8680565b09c1dda6c811ffce68abce51d9cff8b6c90e34bf"
+    },
+    {
+      "ir": "emmy-hackathon-2026/problems/f03_l2norm/k_div_reduce.ir.json",
+      "ptx_sha256": "db589c594449cff8e7a1c648f10b0dd93ceaf833f7b3e473808f7a89fafd6757"
+    },
+    {
+      "ir": "emmy-hackathon-2026/problems/m01_matmul_512/k_matmul_2967be.ir.json",
+      "ptx_sha256": "e57f2f98e429bf7651e3324b7fe498a387d246fa7560fcd49a925e23a121f4ce"
+    },
+    {
+      "ir": "emmy-hackathon-2026/problems/m02_matmul_rect/k_matmul.ir.json",
+      "ptx_sha256": "a9a6ee3802af2d1cecd42f52aafd602b905030e711ec4af04fe44b2c14962630"
+    },
+    {
+      "ir": "emmy-hackathon-2026/problems/p00_scalar_add/k_add_pointwise.ir.json",
+      "ptx_sha256": "4fe5e4f510f9f27909d83cafc8753b65e7c60ff06da5bfdbbe60a335f9ff21aa"
+    },
+    {
+      "ir": "emmy-hackathon-2026/problems/p01_vector_add/k_add_pointwise.ir.json",
+      "ptx_sha256": "798c490d6c7b8573d2770ebfdc5c8cfc210be34e572e7a4bd072214cf4f99b80"
+    },
+    {
+      "ir": "emmy-hackathon-2026/problems/p02_scale_shift/k_add_pointwise.ir.json",
+      "ptx_sha256": "89964595036b3ba80f3356cb797e54c8f7a200162117ee8742f9a2405028d4c1"
+    },
+    {
+      "ir": "emmy-hackathon-2026/problems/p03_relu_mul/k_mul_pointwise.ir.json",
+      "ptx_sha256": "99def62a57a5729a1c1be893e47845589ac3c0d452ff16a25aa41643d03f8e4c"
+    },
+    {
+      "ir": "emmy-hackathon-2026/problems/r01_array_sum/k_sum_1_reduce.ir.json",
+      "ptx_sha256": "4bbde60df75a6649d591996f48d5eed6d8e70d374d75d11ce910561e4198976b"
+    },
+    {
+      "ir": "emmy-hackathon-2026/problems/r02_big_sum/k_sum_1_reduce.ir.json",
+      "ptx_sha256": "8d11f811fe472d87f177ac37f72982383b5e8d9bff663994fc917819a259f931"
+    },
+    {
+      "ir": "emmy-hackathon-2026/problems/r03_mean/k_mean_ffcca3.ir.json",
+      "ptx_sha256": "35c71aec28f562c72d1ec7286d88b6054bb311fc55018cceab1bebdc5700fd8f"
+    },
+    {
+      "ir": "emmy-hackathon-2026/problems/r04_row_sum/k_sum_1_reduce.ir.json",
+      "ptx_sha256": "ed88fe654f75c6b942bf4a69a08d97aba9292a8a578da68f483fa87cbad932ad"
+    }
+  ],
+  "local_assembly": "ptxas unavailable on macOS; exact source passed remote sm89/sm120 assembly and isolated4090 correctness. Earlier full local unit invocation failed with39 missing-ptxas errors and is not claimed passed.",
+  "remote_evidence_id": "6bec6ff1fb577e116c307b43efe4afb054d9d41166a09ace9272866324829d66"
+}

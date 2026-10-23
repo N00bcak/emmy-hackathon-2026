@@ -1,0 +1,48 @@
+{
+  "purpose": "Selective subnormal preservation via exponent range renormalization",
+  "sources": {
+    "compile.py": "12202ea108f615fffd9ab00b5dce985edb3cbe11ffad55042d3d9625b6a49354",
+    "tf32_emitter.py": "fc460b050b8c9ad97104869df5390571940ce57299b2115be7e12bb2a28b505d",
+    "tensor_core.py": "ca5af9c9f41826f9e2000de7a8537745c0393007d8eaaaf9fd212b3bfd3364a6"
+  },
+  "source_gate": {
+    "source_id": "bb4a3a3e6477681afe6852121e52f0f43b217b7107b1927c5f0c3f17baa8531e",
+    "gate_id": "175977b60a79a1db316a1e70c33a2ef5a1aae7b3cd750dcec4e32b704c63254d",
+    "sources": {
+      "compile.py": "12202ea108f615fffd9ab00b5dce985edb3cbe11ffad55042d3d9625b6a49354",
+      "tf32_emitter.py": "fc460b050b8c9ad97104869df5390571940ce57299b2115be7e12bb2a28b505d",
+      "tensor_core.py": "ca5af9c9f41826f9e2000de7a8537745c0393007d8eaaaf9fd212b3bfd3364a6"
+    }
+  },
+  "suite_id": "362d7f9351d1038e492fc4023b6606fa13bc69ddabec5bb34be86bde87e44c96",
+  "policy_sha256": "7725d2f98cde89aa451686c050b458c35ded18c551a32764a61629b5261d3393",
+  "default_case_count": 93,
+  "additional_cases": "Two previously existing underflow witnesses; no new cases, inputs, references or tolerance changes.",
+  "cpu_tests": 51,
+  "default_sanitizer_checks": 20,
+  "execution_arch": "sm_89",
+  "assembly_targets": [
+    "sm_89",
+    "sm_120"
+  ],
+  "durable_key": "sync-powenn-20261023/cold-exp-v1",
+  "files": {
+    "timing-summary.json": "2bbf7330a0aafa5ec247a7eb3e36b571fa69912b0e038841eda7fce16ba61649",
+    "paired-samples.csv": "5c222e22504e383c57fa21ac0fe722434d8a9a0d62946391e12fae8dd099c4f6",
+    "cpu-tests.log": "3f9a52eae04467f1dfade7deac14e5389684a46d966bd5979213dca02ba939ed",
+    "softmax-confirmation-summary.json": "eb46330607cac405757eba90240590afe5a31ab16ed4ef32abe28c95f7fc2c01",
+    "gates.json": "d9f59fe4e5bed18b9353a28e57df2e94afd764c81b32b4f5c983eac22535ba6e",
+    "sass-summary.json": "0c52d7307dc44e566cf6783a59cb4535412ad9418206164837a879169b0bad14",
+    "plan.json": "2effe6cc50199c2aaa7a1f1d5be1996cf31827b6ea009963d133aa65dbf675ab",
+    "unchanged-kernels.json": "fb69842b955552fc746627bbf4c635cf74d4c712bff41c40856c7409656b5f58",
+    "noise.json": "6b94fd4686f5a329b86dbf8a8b303add8f6d880ae12d961d4ea137f70147c4f0",
+    "correctness.json": "11939099a162ef12b43bd13a939f6979d1b4346ad468784b00e19cfa11610a68",
+    "host-observations.json": "a2f8d711edcd3606bfcbd6ff65a2dd2674b298a40a3408ec774ef66d87bb58fe",
+    "softmax-summary.json": "39cd4626ea65d0fce3ea024740d73361dc989be309205affbbcabd2dd4f21c3c",
+    "confirmation-summary.json": "3c8c5d8ba6ef31e6f6c862869c4455bdf1525ff48209dda2ef6bf731bc90ae1a",
+    "sass/renorm/a02_attention_128/sm_120.txt": "94b5c685f5124f5de09a774e615db8d93ad63e4daa5a4923f402169d8ce1f7e7",
+    "sass/renorm/a02_attention_128/sm_89.txt": "90227c5daa663d9d05fc01e03e2b8897c82c312cbec4d0bf2fdf7ae5128d47e9",
+    "sass/renorm/a01_attention/sm_120.txt": "922f4cb07476c510399bcd302346d3646b3fe58f414903e20df6a3f79d629bc7",
+    "sass/renorm/a01_attention/sm_89.txt": "5e1e499df8112f61f2192cfab2bdce7bc20334d825d22bccd68d9f01344dff14"
+  }
+}

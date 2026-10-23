@@ -1,0 +1,22 @@
+{
+  "attempt": 1,
+  "method": "GET",
+  "path": "/health",
+  "request": null,
+  "status": "received",
+  "wall": 1792741150.2511606,
+  "monotonic": 2562425.558147109,
+  "boot_id": "47ca91a8-7256-4f12-81c0-900ffee0811a",
+  "http_status": 200,
+  "response": {
+    "ok": true,
+    "arch_ok": true,
+    "ptxas": "/usr/local/cuda/bin/ptxas",
+    "default_arch": "sm_120",
+    "cache_dir": "/home/riftuser/.cache/ptxserver",
+    "can_compile": true,
+    "can_run": true,
+    "gpu": "NVIDIA GeForce RTX 5090 (compute capability 12.0, sm_120)"
+  },
+  "completed_wall": 1792741150.4516952
+}

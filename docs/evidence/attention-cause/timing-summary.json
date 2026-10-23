@@ -1,0 +1,184 @@
+[
+  {
+    "problem": "a01_attention",
+    "baseline": "merged",
+    "candidate": "merged",
+    "baseline_us": 11.264000087976456,
+    "candidate_us": 11.264000087976456,
+    "ratio": 1.0,
+    "block_ratios": [
+      1.0,
+      1.0
+    ],
+    "pairs": 64
+  },
+  {
+    "problem": "a01_attention",
+    "baseline": "theirs",
+    "candidate": "theirs",
+    "baseline_us": 9.216000325977802,
+    "candidate_us": 9.216000325977802,
+    "ratio": 1.0,
+    "block_ratios": [
+      1.0,
+      1.0
+    ],
+    "pairs": 64
+  },
+  {
+    "problem": "a01_attention",
+    "baseline": "theirs",
+    "candidate": "merged",
+    "baseline_us": 9.216000325977802,
+    "candidate_us": 11.264000087976456,
+    "ratio": 1.2222221885372344,
+    "block_ratios": [
+      1.2222221885372344,
+      1.2222221885372344
+    ],
+    "pairs": 64
+  },
+  {
+    "problem": "a01_attention",
+    "baseline": "merged",
+    "candidate": "merged_ftz",
+    "baseline_us": 11.264000087976456,
+    "candidate_us": 9.216000325977802,
+    "ratio": 0.8181818407312734,
+    "block_ratios": [
+      0.8181818407312734,
+      0.7840909203656368
+    ],
+    "pairs": 64
+  },
+  {
+    "problem": "a01_attention",
+    "baseline": "merged",
+    "candidate": "merged_plain",
+    "baseline_us": 11.264000087976456,
+    "candidate_us": 10.239999741315842,
+    "ratio": 0.9090908790249688,
+    "block_ratios": [
+      0.9090908790249688,
+      0.9090908790249688
+    ],
+    "pairs": 64
+  },
+  {
+    "problem": "a01_attention",
+    "baseline": "theirs",
+    "candidate": "powenn_guard",
+    "baseline_us": 9.216000325977802,
+    "candidate_us": 11.264000087976456,
+    "ratio": 1.2222221885372344,
+    "block_ratios": [
+      1.2222221885372344,
+      1.2222221885372344
+    ],
+    "pairs": 64
+  },
+  {
+    "problem": "a01_attention",
+    "baseline": "theirs",
+    "candidate": "merged_ftz",
+    "baseline_us": 9.216000325977802,
+    "candidate_us": 9.216000325977802,
+    "ratio": 1.0,
+    "block_ratios": [
+      1.0,
+      1.0
+    ],
+    "pairs": 64
+  },
+  {
+    "problem": "a02_attention_128",
+    "baseline": "merged",
+    "candidate": "merged",
+    "baseline_us": 9.231999982148409,
+    "candidate_us": 9.216000325977802,
+    "ratio": 0.9031250329691838,
+    "block_ratios": [
+      0.9000000545696835,
+      0.9114582685949975
+    ],
+    "pairs": 64
+  },
+  {
+    "problem": "a02_attention_128",
+    "baseline": "theirs",
+    "candidate": "theirs",
+    "baseline_us": 6.144000217318535,
+    "candidate_us": 6.144000217318535,
+    "ratio": 1.0,
+    "block_ratios": [
+      1.0,
+      1.0
+    ],
+    "pairs": 64
+  },
+  {
+    "problem": "a02_attention_128",
+    "baseline": "theirs",
+    "candidate": "merged",
+    "baseline_us": 6.144000217318535,
+    "candidate_us": 9.216000325977802,
+    "ratio": 1.5,
+    "block_ratios": [
+      1.5,
+      1.5
+    ],
+    "pairs": 64
+  },
+  {
+    "problem": "a02_attention_128",
+    "baseline": "merged",
+    "candidate": "merged_ftz",
+    "baseline_us": 9.312000125646591,
+    "candidate_us": 6.144000217318535,
+    "ratio": 0.6666666666666666,
+    "block_ratios": [
+      0.6666666666666666,
+      0.6666666666666666
+    ],
+    "pairs": 64
+  },
+  {
+    "problem": "a02_attention_128",
+    "baseline": "merged",
+    "candidate": "merged_plain",
+    "baseline_us": 9.40799992531538,
+    "candidate_us": 7.168000098317862,
+    "ratio": 0.7000000272848418,
+    "block_ratios": [
+      0.7000000272848418,
+      0.7000000272848418
+    ],
+    "pairs": 64
+  },
+  {
+    "problem": "a02_attention_128",
+    "baseline": "theirs",
+    "candidate": "powenn_guard",
+    "baseline_us": 6.144000217318535,
+    "candidate_us": 9.216000325977802,
+    "ratio": 1.5,
+    "block_ratios": [
+      1.5,
+      1.5
+    ],
+    "pairs": 64
+  },
+  {
+    "problem": "a02_attention_128",
+    "baseline": "theirs",
+    "candidate": "merged_ftz",
+    "baseline_us": 6.144000217318535,
+    "candidate_us": 6.207999773323536,
+    "ratio": 1.0,
+    "block_ratios": [
+      1.0,
+      1.0
+    ],
+    "pairs": 64
+  }
+]

@@ -433,6 +433,20 @@ class ResearchCaseTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "changed"):
             self.cases.validate_case(directory)
 
+    def test_argument_declarations_may_differ_from_positional_order(self):
+        directory = self.generate('pointwise')
+        meta_path = directory / 'meta.json'
+        meta = json.loads(meta_path.read_text())
+        meta['kernels'][0]['args'].reverse()
+        meta_path.write_text(json.dumps(meta))
+        # Create a new frozen record; changing an existing record remains invalid.
+        record_path = directory / 'case.json'
+        record = json.loads(record_path.read_text())
+        record['files']['meta.json'] = self.cases.digest(meta_path.read_bytes())
+        record['id'] = self.cases.digest(self.cases.canonical(record['files']))
+        record_path.write_text(json.dumps(record))
+        self.assertTrue(self.cases.validate_case(directory)['valid'])
+
 
 if __name__ == "__main__":
     unittest.main()

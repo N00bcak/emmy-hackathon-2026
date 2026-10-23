@@ -1,0 +1,150 @@
+{
+  "compile_sha256": "3acaaf37709c7926a1c4cbbf8b16f34d8c86d0df4ed68384909bb01f2e023f28",
+  "parent_compile_sha256": "b355e4d4be8c8bf1f54857e93c70131ca719b0a93274fc20a2a65edc8d96f6dc",
+  "controls": [
+    {
+      "label": "direct-sync",
+      "typed_valid": true,
+      "supported": true,
+      "parent_identity_if_previously_supported": true
+    },
+    {
+      "label": "literal-uniform",
+      "typed_valid": true,
+      "supported": true,
+      "parent_identity_if_previously_supported": null
+    },
+    {
+      "label": "nonuniform-start",
+      "typed_valid": true,
+      "supported": false,
+      "parent_identity_if_previously_supported": null
+    },
+    {
+      "label": "nonuniform-step",
+      "typed_valid": true,
+      "supported": false,
+      "parent_identity_if_previously_supported": null
+    },
+    {
+      "label": "nonuniform-end",
+      "typed_valid": true,
+      "supported": false,
+      "parent_identity_if_previously_supported": null
+    },
+    {
+      "label": "ordinary-uniform-loop",
+      "typed_valid": true,
+      "supported": true,
+      "expected": true
+    },
+    {
+      "label": "nested-uniform-loops",
+      "typed_valid": true,
+      "supported": true,
+      "expected": true
+    },
+    {
+      "label": "explicit-uniform-end",
+      "typed_valid": true,
+      "supported": true,
+      "expected": true
+    },
+    {
+      "label": "signed-update-overflow",
+      "typed_valid": true,
+      "supported": false,
+      "expected": false
+    },
+    {
+      "label": "negative-step",
+      "typed_valid": true,
+      "supported": false,
+      "expected": false
+    },
+    {
+      "label": "unsigned-header",
+      "typed_valid": true,
+      "supported": false,
+      "expected": false
+    },
+    {
+      "label": "zero-step",
+      "typed_valid": true,
+      "supported": false,
+      "expected": false
+    },
+    {
+      "label": "axis-rebinding-let",
+      "typed_valid": true,
+      "supported": false,
+      "expected": false
+    },
+    {
+      "label": "divergent-parent",
+      "typed_valid": true,
+      "supported": false,
+      "expected": false
+    },
+    {
+      "label": "divergent-child",
+      "typed_valid": true,
+      "supported": false,
+      "expected": false
+    },
+    {
+      "label": "counted-barrier",
+      "typed_valid": true,
+      "supported": false,
+      "expected": false
+    },
+    {
+      "label": "warp-barrier",
+      "typed_valid": true,
+      "supported": false,
+      "expected": false
+    },
+    {
+      "label": "uniform-loop-still-does-not-admit-nested-shuffle",
+      "declined": true,
+      "method_only": true
+    },
+    {
+      "label": "memory-padding-step0",
+      "typed_valid": true,
+      "supported": false,
+      "expected": false
+    },
+    {
+      "label": "same-inner-fixed-step1",
+      "typed_valid": true,
+      "supported": true,
+      "expected": true
+    },
+    {
+      "label": "unproved-inner-through-Cond",
+      "typed_valid": true,
+      "supported": false,
+      "expected": false
+    },
+    {
+      "label": "unproved-inner-end",
+      "typed_valid": true,
+      "supported": false,
+      "expected": false
+    },
+    {
+      "label": "inner-axis-rebinding",
+      "typed_valid": true,
+      "supported": false,
+      "expected": false
+    }
+  ],
+  "count": 23,
+  "outside_validator_AST_identical": true,
+  "status": "23cheaptyped/methodcontrols pass; noassembly/GPU/freeze; pendingindependentmemoryreview",
+  "new_active_types": 0,
+  "old482e_counter_admits_but_revision_declines": true,
+  "memory_counter_original_SHA256": "51b36b2750502b91cbce181be80a6ca0edd8eb3f2124675616d18b433b5bb9cd",
+  "counter_launch_smem_bytes_corrected_for_static_contract": 128
+}

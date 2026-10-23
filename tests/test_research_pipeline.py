@@ -167,6 +167,16 @@ class Pipeline(unittest.TestCase):
         self.assertEqual([s['schedule'] for s in specs[:2]],['cooperative-online-softmax']*2)
         self.assertTrue(all(s['schedule']=='serial-per-cell' for s in specs[2:]))
 
+    def test_compact_protocol_uses_one_fresh_draw_without_changing_legacy_suites(self):
+        suite=pipeline.register_protocol(self.store,families=['pointwise'])
+        contract=self.store.verify_object(suite,'suite')['payload']
+        self.assertEqual(contract['exploration_cases_per_family'],1)
+        self.assertEqual(contract['confirmation_cases_per_family'],1)
+        cases=pipeline.make_cases(self.store,suite,42,'compact-policy',published=False)
+        self.assertEqual(len(cases),1)
+        legacy=self.store.register_suite('legacy-count',{'families':['pointwise']})
+        self.assertEqual(len(pipeline.make_cases(self.store,legacy,42,'legacy-policy',published=False)),4)
+
     def test_prepared_cubin_and_case_tampering_rejected(self):
         case=self.case(); prepared=self.prepared([case],self.root/'prepared')
         pipeline._module_specs(prepared,'x')

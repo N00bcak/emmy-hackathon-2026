@@ -1,0 +1,78 @@
+.version 8.0
+.target sm_89
+.address_size 64
+
+.visible .entry k_add_pointwise(
+    .param .u64 param_0,
+    .param .u64 param_1,
+    .param .u64 param_2
+)
+{
+    .reg .b32 %r<31>;
+    .reg .b16 %rh<1>;
+    .reg .b64 %rd<16>;
+    .reg .f32 %f<7>;
+    .reg .f64 %fd<1>;
+    .reg .pred %p<2>;
+    ld.param.u64 %rd1, [param_0];
+    cvta.to.global.u64 %rd1, %rd1;
+    ld.param.u64 %rd2, [param_1];
+    cvta.to.global.u64 %rd2, %rd2;
+    ld.param.u64 %rd3, [param_2];
+    cvta.to.global.u64 %rd3, %rd3;
+    mov.u32 %r1, %tid.x;
+    mov.u32 %r2, %ctaid.x;
+    mov.u32 %r3, %ntid.x;
+    mad.lo.u32 %r4, %r2, %r3, %r1;
+    and.b32 %r5, %r1, 31;
+    shr.u32 %r6, %r1, 5;
+    mov.b32 %r7, %r1;
+    mov.b32 %r8, %r2;
+    mov.b32 %r9, %r3;
+    mov.b32 %r10, %r4;
+    mov.b32 %r11, %r5;
+    mov.b32 %r12, %r6;
+    mov.b32 %r13, 0;
+    mov.b32 %r14, 0;
+    mov.b32 %r15, 0;
+    mov.b32 %r16, 0;
+    setp.ge.u32 %p1, %r4, 64;
+    @%p1 bra tile_done_1;
+    div.u32 %r17, %r4, 1;
+    mul.lo.s32 %r18, %r17, 2;
+    add.s32 %r19, %r18, 0;
+    mad.lo.s32 %r20, %r19, 1, 0;
+    mul.wide.s32 %rd4, %r20, 4;
+    add.u64 %rd5, %rd1, %rd4;
+    ld.global.f32 %f1, [%rd5];
+    mad.lo.s32 %r21, %r19, 1, 0;
+    mul.wide.s32 %rd6, %r21, 4;
+    add.u64 %rd7, %rd2, %rd6;
+    ld.global.f32 %f2, [%rd7];
+    add.f32 %f3, %f1, %f2;
+    mul.lo.s32 %r22, %r17, 2;
+    add.s32 %r23, %r22, 1;
+    mad.lo.s32 %r24, %r23, 1, 0;
+    mul.wide.s32 %rd8, %r24, 4;
+    add.u64 %rd9, %rd1, %rd8;
+    ld.global.f32 %f4, [%rd9];
+    mad.lo.s32 %r25, %r23, 1, 0;
+    mul.wide.s32 %rd10, %r25, 4;
+    add.u64 %rd11, %rd2, %rd10;
+    ld.global.f32 %f5, [%rd11];
+    add.f32 %f6, %f4, %f5;
+    mul.lo.s32 %r26, %r17, 2;
+    add.s32 %r27, %r26, 0;
+    mad.lo.s32 %r28, %r27, 1, 0;
+    mul.wide.s32 %rd12, %r28, 4;
+    add.u64 %rd13, %rd3, %rd12;
+    st.global.f32 [%rd13], %f3;
+    mad.lo.s32 %r29, %r27, 1, 0;
+    add.s32 %r30, %r29, 1;
+    mul.wide.s32 %rd14, %r30, 4;
+    add.u64 %rd15, %rd3, %rd14;
+    st.global.f32 [%rd15], %f6;
+tile_done_1:
+kernel_done:
+    ret;
+}

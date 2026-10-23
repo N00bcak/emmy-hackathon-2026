@@ -1,0 +1,1 @@
+[{"block":32,"ctas":3,"integer_reference_equal":true,"kind":"loop","n":81,"neighbor_bounds":true,"padding":15,"repeats":5},{"block":64,"ctas":3,"integer_reference_equal":true,"kind":"nested-strided-loop","n":191,"neighbor_bounds":true,"padding":1,"repeats":3}]

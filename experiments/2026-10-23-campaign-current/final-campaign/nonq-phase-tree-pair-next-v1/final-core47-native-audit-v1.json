@@ -1,0 +1,6069 @@
+{
+  "actual_changed_count": 11,
+  "all_candidate_spills_zero": true,
+  "baseline_id": "549b6047f91818ea876deb76adfc88cabc36f554c05ab2bc51b2c961aa9143f2",
+  "changed_case_ids": [
+    "1022abaead187cbd6b2dc1de18ffbcc1fc3ca561afbbcb26435001007971daa1",
+    "1e82d7e58a53e8795ea9d05e3759dfe201e42308efd08dd2a51e79c769dc2fbc",
+    "2ffefe7fee88d864b3ac97cd70fe9711643f3551fba367299df52f329649154d",
+    "5c2ba872d36e6526a79b9799c059e237f65a34019cd94f1c85da4f0b9f930d3f",
+    "6ab09ab4acc384ee252370a564a13965ece1ad21a3e64d6615f0de1a39b8c665",
+    "6dfbe2bc925e2b31ceb8eb84bb5016cca8af143ca55cf93078d09decc26a0fd3",
+    "900dc58b5f0f649c4ebf10cfce31e818704eb2391cd75e3ee6b5e26c4c8ad3a3",
+    "a56bdb784a46a763c2b633ebb5d16ee1ffd4287cb0984168b4f80909c323ce22",
+    "b90556dd5e1a9b5ce99eb90db4a83c8a97a007a7ec5df704533e1c599464f6ee",
+    "c82172015ba966650980c50754829dbe308c670efad7aee2f1c0e6be38f7fe80",
+    "cd9a29496fccd9e421c1cfbe14347cb45003f38681e3b4b2e703f5dbbfdd6c5d"
+  ],
+  "changed_published_problems": [
+    "f01_rmsnorm",
+    "f03_l2norm",
+    "m01_matmul_512",
+    "r01_array_sum",
+    "r02_big_sum",
+    "r03_mean",
+    "r04_row_sum"
+  ],
+  "exact_frozen_focused_static_key": true,
+  "experiment": "pair-phase-tree-vector-independent-v2",
+  "fresh12_activation": [],
+  "full47_independent_timing_required": true,
+  "limits": [
+    "Metadata/static comparison only. No GPU correctness/timing/latency claim.",
+    "Prior bounded native proofs transfer only through exact published PTX/SASS/resource identities; their normal-path/CFG/alias limitations remain.",
+    "No compiler or emitter imported; fresh12 activation below is native/transport evidence, not a new semantic proof."
+  ],
+  "native": [
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_89",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 2,
+        "FFMA": 0,
+        "IMAD": 9,
+        "LDG": 4,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 2,
+        "STS": 0
+      },
+      "baseline_registers": [
+        20
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_205337:\n  REG:20 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:376 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "53fedd64202a0e22ff22bfe3a8febd1e029520915fb369f449f0209e983f203a",
+      "case_id": "1b04a47f25f65c32e6db4604295978504bc23f13892a5a8662acd95b598f7f7e",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 2,
+        "FFMA": 0,
+        "IMAD": 9,
+        "LDG": 4,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 2,
+        "STS": 0
+      },
+      "kernel": 0,
+      "problem": null,
+      "registers": [
+        20
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_205337:\n  REG:20 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:376 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "53fedd64202a0e22ff22bfe3a8febd1e029520915fb369f449f0209e983f203a",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_120",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 2,
+        "FFMA": 0,
+        "IMAD": 9,
+        "LDG": 4,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 2,
+        "STS": 0
+      },
+      "baseline_registers": [
+        22
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_205337:\n  REG:22 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:920 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "b7472180f75c8de6f113cc19fbadc65419280c664db244e39115e56727c27847",
+      "case_id": "1b04a47f25f65c32e6db4604295978504bc23f13892a5a8662acd95b598f7f7e",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 2,
+        "FFMA": 0,
+        "IMAD": 9,
+        "LDG": 4,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 2,
+        "STS": 0
+      },
+      "kernel": 0,
+      "problem": null,
+      "registers": [
+        22
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_205337:\n  REG:22 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:920 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "b7472180f75c8de6f113cc19fbadc65419280c664db244e39115e56727c27847",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_89",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 1,
+        "FFMA": 0,
+        "IMAD": 8,
+        "LDG": 2,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "baseline_registers": [
+        12
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_657111:\n  REG:12 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:376 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "b46010d7f10d05c64435cdcd56f01abcfa6dc8c1c313096a38535ff465444e83",
+      "case_id": "6908ada377cf2129634dcd13c845531f9174ddf9817427337788621d09e84eda",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 1,
+        "FFMA": 0,
+        "IMAD": 8,
+        "LDG": 2,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "kernel": 0,
+      "problem": null,
+      "registers": [
+        12
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_657111:\n  REG:12 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:376 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "b46010d7f10d05c64435cdcd56f01abcfa6dc8c1c313096a38535ff465444e83",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_120",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 1,
+        "FFMA": 0,
+        "IMAD": 6,
+        "LDG": 2,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "baseline_registers": [
+        12
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_657111:\n  REG:12 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:920 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "29b748e68a2d01787656aef1a612088da6fe144c90f1bd996f2110bd0ac58817",
+      "case_id": "6908ada377cf2129634dcd13c845531f9174ddf9817427337788621d09e84eda",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 1,
+        "FFMA": 0,
+        "IMAD": 6,
+        "LDG": 2,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "kernel": 0,
+      "problem": null,
+      "registers": [
+        12
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_657111:\n  REG:12 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:920 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "29b748e68a2d01787656aef1a612088da6fe144c90f1bd996f2110bd0ac58817",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_89",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 1,
+        "FFMA": 0,
+        "IMAD": 8,
+        "LDG": 2,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "baseline_registers": [
+        12
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_644140:\n  REG:12 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:376 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "9c6f036ce14b6c6bf87a106e696e3ba4e664962f42f55aa99ed6115bba8f65e2",
+      "case_id": "e65d4aa23ca649a8ae7d6ef06f8e246e6967fa85a2b1a98368ea652509c4c4dd",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 1,
+        "FFMA": 0,
+        "IMAD": 8,
+        "LDG": 2,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "kernel": 0,
+      "problem": null,
+      "registers": [
+        12
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_644140:\n  REG:12 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:376 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "9c6f036ce14b6c6bf87a106e696e3ba4e664962f42f55aa99ed6115bba8f65e2",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_120",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 1,
+        "FFMA": 0,
+        "IMAD": 6,
+        "LDG": 2,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "baseline_registers": [
+        12
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_644140:\n  REG:12 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:920 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "e595daa479c828932cb453e3d3a39d193b016afc3c7c9a07f5f506000281a430",
+      "case_id": "e65d4aa23ca649a8ae7d6ef06f8e246e6967fa85a2b1a98368ea652509c4c4dd",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 1,
+        "FFMA": 0,
+        "IMAD": 6,
+        "LDG": 2,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "kernel": 0,
+      "problem": null,
+      "registers": [
+        12
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_644140:\n  REG:12 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:920 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "e595daa479c828932cb453e3d3a39d193b016afc3c7c9a07f5f506000281a430",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_89",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 4,
+        "FFMA": 0,
+        "IMAD": 17,
+        "LDG": 8,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 4,
+        "STS": 0
+      },
+      "baseline_registers": [
+        18
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_735930:\n  REG:18 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:376 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "1cc39000008672fd3fae0f77d5106b442ba4e93a6c5fd0549140ce1e2b722f81",
+      "case_id": "0d77e376a2df53559dbf42acb96b0e4d457a72d3aae21a783385a175e1d8225a",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 4,
+        "FFMA": 0,
+        "IMAD": 17,
+        "LDG": 8,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 4,
+        "STS": 0
+      },
+      "kernel": 0,
+      "problem": null,
+      "registers": [
+        18
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_735930:\n  REG:18 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:376 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "1cc39000008672fd3fae0f77d5106b442ba4e93a6c5fd0549140ce1e2b722f81",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_120",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 4,
+        "FFMA": 0,
+        "IMAD": 15,
+        "LDG": 8,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 4,
+        "STS": 0
+      },
+      "baseline_registers": [
+        22
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_735930:\n  REG:22 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:920 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "a9b20e6df543f106bf88bba3cf7bb6ff68cc857d835a13c9068c210db4425e96",
+      "case_id": "0d77e376a2df53559dbf42acb96b0e4d457a72d3aae21a783385a175e1d8225a",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 4,
+        "FFMA": 0,
+        "IMAD": 15,
+        "LDG": 8,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 4,
+        "STS": 0
+      },
+      "kernel": 0,
+      "problem": null,
+      "registers": [
+        22
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_735930:\n  REG:22 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:920 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "a9b20e6df543f106bf88bba3cf7bb6ff68cc857d835a13c9068c210db4425e96",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_89",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 3,
+        "FADD": 14,
+        "FFMA": 0,
+        "IMAD": 27,
+        "LDG": 7,
+        "LDS": 5,
+        "RED": 0,
+        "SHFL": 5,
+        "STG": 1,
+        "STS": 3
+      },
+      "baseline_registers": [
+        16
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_sum_1_reduce:\n  REG:16 STACK:0 SHARED:16 LOCAL:0 CONSTANT[0]:368 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "549d9e1e514392161f3a7080ab76674975bd8f3b6398301eb299a948a7033f5d",
+      "case_id": "b90556dd5e1a9b5ce99eb90db4a83c8a97a007a7ec5df704533e1c599464f6ee",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 1,
+        "FADD": 14,
+        "FFMA": 0,
+        "IMAD": 23,
+        "LDG": 7,
+        "LDS": 1,
+        "RED": 0,
+        "SHFL": 8,
+        "STG": 1,
+        "STS": 1
+      },
+      "kernel": 0,
+      "problem": null,
+      "registers": [
+        16
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_sum_1_reduce:\n  REG:16 STACK:0 SHARED:16 LOCAL:0 CONSTANT[0]:368 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "62e00400a6b4c781db8ccdcfed784ea896e19fbeb3983af19aad737675269e1e",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_120",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 3,
+        "FADD": 14,
+        "FFMA": 0,
+        "IMAD": 11,
+        "LDG": 7,
+        "LDS": 5,
+        "RED": 0,
+        "SHFL": 5,
+        "STG": 1,
+        "STS": 3
+      },
+      "baseline_registers": [
+        18
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_sum_1_reduce:\n  REG:18 STACK:0 SHARED:1040 LOCAL:0 CONSTANT[0]:912 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "cb6f4694bb2da68b6e4025b5819c592e69891636ddd26314eec9125cb4146ea5",
+      "case_id": "b90556dd5e1a9b5ce99eb90db4a83c8a97a007a7ec5df704533e1c599464f6ee",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 1,
+        "FADD": 14,
+        "FFMA": 0,
+        "IMAD": 10,
+        "LDG": 7,
+        "LDS": 1,
+        "RED": 0,
+        "SHFL": 8,
+        "STG": 1,
+        "STS": 1
+      },
+      "kernel": 0,
+      "problem": null,
+      "registers": [
+        18
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_sum_1_reduce:\n  REG:18 STACK:0 SHARED:1040 LOCAL:0 CONSTANT[0]:912 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "c850fb49f3162c71056701a8c4860bc8b11eb6a8c7da08e30dcfdc70ba96f4a9",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_89",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 3,
+        "FADD": 14,
+        "FFMA": 0,
+        "IMAD": 27,
+        "LDG": 7,
+        "LDS": 5,
+        "RED": 0,
+        "SHFL": 5,
+        "STG": 1,
+        "STS": 3
+      },
+      "baseline_registers": [
+        16
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_sum_1_reduce:\n  REG:16 STACK:0 SHARED:16 LOCAL:0 CONSTANT[0]:368 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "b390a7e1d2b006229d733e2887ce36a1c0db725c8cb7a853d064e216612c09cf",
+      "case_id": "900dc58b5f0f649c4ebf10cfce31e818704eb2391cd75e3ee6b5e26c4c8ad3a3",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 1,
+        "FADD": 14,
+        "FFMA": 0,
+        "IMAD": 23,
+        "LDG": 7,
+        "LDS": 1,
+        "RED": 0,
+        "SHFL": 8,
+        "STG": 1,
+        "STS": 1
+      },
+      "kernel": 0,
+      "problem": null,
+      "registers": [
+        16
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_sum_1_reduce:\n  REG:16 STACK:0 SHARED:16 LOCAL:0 CONSTANT[0]:368 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "5d53e52ccc60544e79ebd42bbdb530eec37dc0d7fc09ac660ff645bd0f5a619f",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_120",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 3,
+        "FADD": 14,
+        "FFMA": 0,
+        "IMAD": 11,
+        "LDG": 7,
+        "LDS": 5,
+        "RED": 0,
+        "SHFL": 5,
+        "STG": 1,
+        "STS": 3
+      },
+      "baseline_registers": [
+        18
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_sum_1_reduce:\n  REG:18 STACK:0 SHARED:1040 LOCAL:0 CONSTANT[0]:912 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "f1e1cbbc3ff42ad28f9c60d01e80cab20af00492cbd1f282148c7cc7aac17b17",
+      "case_id": "900dc58b5f0f649c4ebf10cfce31e818704eb2391cd75e3ee6b5e26c4c8ad3a3",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 1,
+        "FADD": 14,
+        "FFMA": 0,
+        "IMAD": 10,
+        "LDG": 7,
+        "LDS": 1,
+        "RED": 0,
+        "SHFL": 8,
+        "STG": 1,
+        "STS": 1
+      },
+      "kernel": 0,
+      "problem": null,
+      "registers": [
+        18
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_sum_1_reduce:\n  REG:18 STACK:0 SHARED:1040 LOCAL:0 CONSTANT[0]:912 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "0803ba80bc5dd4caac1db0b565ab2a3d88b7990dc64983383b7e6d12fe72ea5e",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_89",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 3,
+        "FADD": 14,
+        "FFMA": 0,
+        "IMAD": 27,
+        "LDG": 7,
+        "LDS": 5,
+        "RED": 0,
+        "SHFL": 5,
+        "STG": 1,
+        "STS": 3
+      },
+      "baseline_registers": [
+        16
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_sum_1_reduce:\n  REG:16 STACK:0 SHARED:16 LOCAL:0 CONSTANT[0]:368 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "7f5811924aa4041ac8fcb8481cd352fdf7661e3b89a75bc9da628619c3c561ef",
+      "case_id": "c82172015ba966650980c50754829dbe308c670efad7aee2f1c0e6be38f7fe80",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 1,
+        "FADD": 14,
+        "FFMA": 0,
+        "IMAD": 23,
+        "LDG": 7,
+        "LDS": 1,
+        "RED": 0,
+        "SHFL": 8,
+        "STG": 1,
+        "STS": 1
+      },
+      "kernel": 0,
+      "problem": null,
+      "registers": [
+        16
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_sum_1_reduce:\n  REG:16 STACK:0 SHARED:16 LOCAL:0 CONSTANT[0]:368 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "041d2539f1e36902b9b9561f9b904cb22468ec862c3562725662f5070fc785cf",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_120",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 3,
+        "FADD": 14,
+        "FFMA": 0,
+        "IMAD": 11,
+        "LDG": 7,
+        "LDS": 5,
+        "RED": 0,
+        "SHFL": 5,
+        "STG": 1,
+        "STS": 3
+      },
+      "baseline_registers": [
+        18
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_sum_1_reduce:\n  REG:18 STACK:0 SHARED:1040 LOCAL:0 CONSTANT[0]:912 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "fbc2b19238e897209b1395509e5a16a3dc6d8f0de14be30745d213089d81fb71",
+      "case_id": "c82172015ba966650980c50754829dbe308c670efad7aee2f1c0e6be38f7fe80",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 1,
+        "FADD": 14,
+        "FFMA": 0,
+        "IMAD": 10,
+        "LDG": 7,
+        "LDS": 1,
+        "RED": 0,
+        "SHFL": 8,
+        "STG": 1,
+        "STS": 1
+      },
+      "kernel": 0,
+      "problem": null,
+      "registers": [
+        18
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_sum_1_reduce:\n  REG:18 STACK:0 SHARED:1040 LOCAL:0 CONSTANT[0]:912 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "781521d3042b55edcbd58ae8dcbe782bc39e0e03a0288a8a2854a7603a748d25",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_89",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 3,
+        "FADD": 14,
+        "FFMA": 0,
+        "IMAD": 27,
+        "LDG": 7,
+        "LDS": 5,
+        "RED": 0,
+        "SHFL": 5,
+        "STG": 1,
+        "STS": 3
+      },
+      "baseline_registers": [
+        16
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_sum_1_reduce:\n  REG:16 STACK:0 SHARED:16 LOCAL:0 CONSTANT[0]:368 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "cfb64a3702c638f274d483a6c3734e7fefeadb2a145e035e855a047dedee6af7",
+      "case_id": "1022abaead187cbd6b2dc1de18ffbcc1fc3ca561afbbcb26435001007971daa1",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 1,
+        "FADD": 14,
+        "FFMA": 0,
+        "IMAD": 23,
+        "LDG": 7,
+        "LDS": 1,
+        "RED": 0,
+        "SHFL": 8,
+        "STG": 1,
+        "STS": 1
+      },
+      "kernel": 0,
+      "problem": null,
+      "registers": [
+        16
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_sum_1_reduce:\n  REG:16 STACK:0 SHARED:16 LOCAL:0 CONSTANT[0]:368 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "36bed4f40f94ddf2119d0161aeb6c95ace1efaa4da66ec075b3677ecdc9584c6",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_120",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 3,
+        "FADD": 14,
+        "FFMA": 0,
+        "IMAD": 11,
+        "LDG": 7,
+        "LDS": 5,
+        "RED": 0,
+        "SHFL": 5,
+        "STG": 1,
+        "STS": 3
+      },
+      "baseline_registers": [
+        18
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_sum_1_reduce:\n  REG:18 STACK:0 SHARED:1040 LOCAL:0 CONSTANT[0]:912 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "1c9680daa5c8abbd9edd2663566af8d01b5e0e01471c8672338dbbcd32589ec3",
+      "case_id": "1022abaead187cbd6b2dc1de18ffbcc1fc3ca561afbbcb26435001007971daa1",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 1,
+        "FADD": 14,
+        "FFMA": 0,
+        "IMAD": 10,
+        "LDG": 7,
+        "LDS": 1,
+        "RED": 0,
+        "SHFL": 8,
+        "STG": 1,
+        "STS": 1
+      },
+      "kernel": 0,
+      "problem": null,
+      "registers": [
+        18
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_sum_1_reduce:\n  REG:18 STACK:0 SHARED:1040 LOCAL:0 CONSTANT[0]:912 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "2214a6845593b0d36a76ae54b1f470e0609a86bc719214e9210e1ef675850227",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_89",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 5,
+        "FFMA": 30,
+        "IMAD": 36,
+        "LDG": 4,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "baseline_registers": [
+        17
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_380307:\n  REG:17 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:368 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "3c0979111e1d4b19b4ff20445c7f2e6a999e15a79a1dd4c69c077d450f33a11e",
+      "case_id": "c12482e011097872f572e672a0a03eeaaa3e75e3799730a38d43efe1a5c3f6a9",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 5,
+        "FFMA": 30,
+        "IMAD": 36,
+        "LDG": 4,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "kernel": 0,
+      "problem": null,
+      "registers": [
+        17
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_380307:\n  REG:17 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:368 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "3c0979111e1d4b19b4ff20445c7f2e6a999e15a79a1dd4c69c077d450f33a11e",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_120",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 5,
+        "FFMA": 28,
+        "IMAD": 13,
+        "LDG": 4,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "baseline_registers": [
+        21
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_380307:\n  REG:21 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:912 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "a8354cc46d83ce62157fd50a905f2418678824878b1f5dad9c9924d5ec60f8c7",
+      "case_id": "c12482e011097872f572e672a0a03eeaaa3e75e3799730a38d43efe1a5c3f6a9",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 5,
+        "FFMA": 28,
+        "IMAD": 13,
+        "LDG": 4,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "kernel": 0,
+      "problem": null,
+      "registers": [
+        21
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_380307:\n  REG:21 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:912 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "a8354cc46d83ce62157fd50a905f2418678824878b1f5dad9c9924d5ec60f8c7",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_89",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 5,
+        "FFMA": 30,
+        "IMAD": 36,
+        "LDG": 4,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "baseline_registers": [
+        17
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_433608:\n  REG:17 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:368 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "743ea91b9219e4b26c77b8071de51ae45022c37fa1a0734605d981ae724ba4ff",
+      "case_id": "05664eecbd55f70b009e209a5d5688e778c2561a24de818415667d5f66a365df",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 5,
+        "FFMA": 30,
+        "IMAD": 36,
+        "LDG": 4,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "kernel": 0,
+      "problem": null,
+      "registers": [
+        17
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_433608:\n  REG:17 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:368 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "743ea91b9219e4b26c77b8071de51ae45022c37fa1a0734605d981ae724ba4ff",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_120",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 5,
+        "FFMA": 28,
+        "IMAD": 13,
+        "LDG": 4,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "baseline_registers": [
+        21
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_433608:\n  REG:21 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:912 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "751dc3594c2e264029a0780c2126a829cfb7991e1a53ba0aa7470b54a5cf71d3",
+      "case_id": "05664eecbd55f70b009e209a5d5688e778c2561a24de818415667d5f66a365df",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 5,
+        "FFMA": 28,
+        "IMAD": 13,
+        "LDG": 4,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "kernel": 0,
+      "problem": null,
+      "registers": [
+        21
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_433608:\n  REG:21 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:912 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "751dc3594c2e264029a0780c2126a829cfb7991e1a53ba0aa7470b54a5cf71d3",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_89",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 5,
+        "FFMA": 59,
+        "IMAD": 53,
+        "LDG": 33,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "baseline_registers": [
+        40
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_770067:\n  REG:40 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:368 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "e72742c7b1f06a547baf00a41a830a78a5e193bd3326ba944c4176ce7021539f",
+      "case_id": "6ec4bf582c52af155249d8c965ba88619f2f58bb3cfbfd939b4e3b0a30ff348a",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 5,
+        "FFMA": 59,
+        "IMAD": 53,
+        "LDG": 33,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "kernel": 0,
+      "problem": null,
+      "registers": [
+        40
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_770067:\n  REG:40 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:368 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "e72742c7b1f06a547baf00a41a830a78a5e193bd3326ba944c4176ce7021539f",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_120",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 5,
+        "FFMA": 57,
+        "IMAD": 40,
+        "LDG": 33,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "baseline_registers": [
+        40
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_770067:\n  REG:40 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:912 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "3f97e55cb369199caa0755a5040813e6ed382607be70204b6f1153187ef59436",
+      "case_id": "6ec4bf582c52af155249d8c965ba88619f2f58bb3cfbfd939b4e3b0a30ff348a",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 5,
+        "FFMA": 57,
+        "IMAD": 40,
+        "LDG": 33,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "kernel": 0,
+      "problem": null,
+      "registers": [
+        40
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_770067:\n  REG:40 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:912 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "3f97e55cb369199caa0755a5040813e6ed382607be70204b6f1153187ef59436",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_89",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 5,
+        "FFMA": 59,
+        "IMAD": 53,
+        "LDG": 33,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "baseline_registers": [
+        40
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_922323:\n  REG:40 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:368 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "293a6982a8f5544ebeb8ce64a208ab83fa4bcbba5ac15a81ce3a47b031d51482",
+      "case_id": "815b47b26cd728dd3fa77c1346962b7f87de52e8f3a53b61aee6d9c131ce409e",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 5,
+        "FFMA": 59,
+        "IMAD": 53,
+        "LDG": 33,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "kernel": 0,
+      "problem": null,
+      "registers": [
+        40
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_922323:\n  REG:40 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:368 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "293a6982a8f5544ebeb8ce64a208ab83fa4bcbba5ac15a81ce3a47b031d51482",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_120",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 5,
+        "FFMA": 57,
+        "IMAD": 40,
+        "LDG": 33,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "baseline_registers": [
+        40
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_922323:\n  REG:40 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:912 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "737a31a95384a8f5160f1d1b789666d44094bdab5d0a6f536bf6717a9977f7a6",
+      "case_id": "815b47b26cd728dd3fa77c1346962b7f87de52e8f3a53b61aee6d9c131ce409e",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 5,
+        "FFMA": 57,
+        "IMAD": 40,
+        "LDG": 33,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "kernel": 0,
+      "problem": null,
+      "registers": [
+        40
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_922323:\n  REG:40 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:912 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "737a31a95384a8f5160f1d1b789666d44094bdab5d0a6f536bf6717a9977f7a6",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_89",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 5,
+        "FFMA": 38,
+        "IMAD": 45,
+        "LDG": 17,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "baseline_registers": [
+        31
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_796710:\n  REG:31 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:368 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "443053fd72f973688672e2cfe73e4efbeff2c45055fd5def98e902b1b07f5ab0",
+      "case_id": "5b404768d8b4a8719d5ba025d5f3e3512c2464569cf7df5d7344727716bfdd6b",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 5,
+        "FFMA": 38,
+        "IMAD": 45,
+        "LDG": 17,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "kernel": 0,
+      "problem": null,
+      "registers": [
+        31
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_796710:\n  REG:31 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:368 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "443053fd72f973688672e2cfe73e4efbeff2c45055fd5def98e902b1b07f5ab0",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_120",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 5,
+        "FFMA": 38,
+        "IMAD": 24,
+        "LDG": 17,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "baseline_registers": [
+        32
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_796710:\n  REG:32 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:912 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "8fff9a9ee7ed76165c409647e09b3d74404315f6dba4835bf3b7f29eb3037280",
+      "case_id": "5b404768d8b4a8719d5ba025d5f3e3512c2464569cf7df5d7344727716bfdd6b",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 5,
+        "FFMA": 38,
+        "IMAD": 24,
+        "LDG": 17,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "kernel": 0,
+      "problem": null,
+      "registers": [
+        32
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_796710:\n  REG:32 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:912 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "8fff9a9ee7ed76165c409647e09b3d74404315f6dba4835bf3b7f29eb3037280",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_89",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 5,
+        "FFMA": 38,
+        "IMAD": 45,
+        "LDG": 17,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "baseline_registers": [
+        31
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_267120:\n  REG:31 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:368 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "c86777102fd28771573aa04584ba8e7e433ba1b8e0b82e5a33607a5c0675ae3d",
+      "case_id": "a69ae6a08f8387ce33663368b6fd69f6cfa39eb812bb08eebe9f36bf08722481",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 5,
+        "FFMA": 38,
+        "IMAD": 45,
+        "LDG": 17,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "kernel": 0,
+      "problem": null,
+      "registers": [
+        31
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_267120:\n  REG:31 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:368 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "c86777102fd28771573aa04584ba8e7e433ba1b8e0b82e5a33607a5c0675ae3d",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_120",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 5,
+        "FFMA": 38,
+        "IMAD": 24,
+        "LDG": 17,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "baseline_registers": [
+        32
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_267120:\n  REG:32 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:912 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "54c6f3bf9801c555e7104577b13adc82a19323a85a7ba273248673a30d500673",
+      "case_id": "a69ae6a08f8387ce33663368b6fd69f6cfa39eb812bb08eebe9f36bf08722481",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 5,
+        "FFMA": 38,
+        "IMAD": 24,
+        "LDG": 17,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "kernel": 0,
+      "problem": null,
+      "registers": [
+        32
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_267120:\n  REG:32 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:912 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "54c6f3bf9801c555e7104577b13adc82a19323a85a7ba273248673a30d500673",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_89",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 5,
+        "FFMA": 54,
+        "IMAD": 54,
+        "LDG": 33,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "baseline_registers": [
+        40
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_721391:\n  REG:40 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:368 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "61a444cfa73aa7a934903420ea4873fd087cc59272007d6691c4c41d1f69d7a3",
+      "case_id": "574e0e17c4228d9b9af4de09347d88873ff379c4925a84ce4ac295078af2851d",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 5,
+        "FFMA": 54,
+        "IMAD": 54,
+        "LDG": 33,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "kernel": 0,
+      "problem": null,
+      "registers": [
+        40
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_721391:\n  REG:40 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:368 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "61a444cfa73aa7a934903420ea4873fd087cc59272007d6691c4c41d1f69d7a3",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_120",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 5,
+        "FFMA": 54,
+        "IMAD": 40,
+        "LDG": 33,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "baseline_registers": [
+        40
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_721391:\n  REG:40 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:912 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "a642c874e9a575eb54d8f350bec77e3054379fc6c080a5ef4d26af1622040068",
+      "case_id": "574e0e17c4228d9b9af4de09347d88873ff379c4925a84ce4ac295078af2851d",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 5,
+        "FFMA": 54,
+        "IMAD": 40,
+        "LDG": 33,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "kernel": 0,
+      "problem": null,
+      "registers": [
+        40
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_721391:\n  REG:40 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:912 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "a642c874e9a575eb54d8f350bec77e3054379fc6c080a5ef4d26af1622040068",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_89",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 5,
+        "FFMA": 53,
+        "IMAD": 52,
+        "LDG": 32,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "baseline_registers": [
+        40
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_887917:\n  REG:40 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:368 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "3b9984d2256964da0f4d39eada90eb4b249aa29e0b7a6cfce3299cdbe0b95680",
+      "case_id": "03c00ab1787facda118672163e1b9316fc886bdd08ee08b2055f75cc923a7505",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 5,
+        "FFMA": 53,
+        "IMAD": 52,
+        "LDG": 32,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "kernel": 0,
+      "problem": null,
+      "registers": [
+        40
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_887917:\n  REG:40 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:368 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "3b9984d2256964da0f4d39eada90eb4b249aa29e0b7a6cfce3299cdbe0b95680",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_120",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 5,
+        "FFMA": 53,
+        "IMAD": 41,
+        "LDG": 32,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "baseline_registers": [
+        40
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_887917:\n  REG:40 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:912 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "51df11dab61775464077b1742f8340869dc47916de04b9363c79e8e0077d3159",
+      "case_id": "03c00ab1787facda118672163e1b9316fc886bdd08ee08b2055f75cc923a7505",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 5,
+        "FFMA": 53,
+        "IMAD": 41,
+        "LDG": 32,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "kernel": 0,
+      "problem": null,
+      "registers": [
+        40
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_887917:\n  REG:40 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:912 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "51df11dab61775464077b1742f8340869dc47916de04b9363c79e8e0077d3159",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_89",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 0,
+        "FFMA": 31,
+        "IMAD": 73,
+        "LDG": 62,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "baseline_registers": [
+        40
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_105306:\n  REG:40 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:376 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "3e5a52f0b3598e99970d2e6c2a8d45e685ffdb8dd1330716da7b6be7d55305f0",
+      "case_id": "9473c95d36fc2236697a45ef59b6098638dd26172d62d7d021ecf61dabb2046e",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 0,
+        "FFMA": 31,
+        "IMAD": 73,
+        "LDG": 62,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "kernel": 0,
+      "problem": null,
+      "registers": [
+        40
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_105306:\n  REG:40 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:376 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "3e5a52f0b3598e99970d2e6c2a8d45e685ffdb8dd1330716da7b6be7d55305f0",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_120",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 0,
+        "FFMA": 31,
+        "IMAD": 73,
+        "LDG": 62,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "baseline_registers": [
+        48
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_105306:\n  REG:48 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:920 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "8a5e587b9023c3f82d55badb3a0c86f0048936bfa8661e7ddc58addae61990ab",
+      "case_id": "9473c95d36fc2236697a45ef59b6098638dd26172d62d7d021ecf61dabb2046e",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 0,
+        "FFMA": 31,
+        "IMAD": 73,
+        "LDG": 62,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "kernel": 0,
+      "problem": null,
+      "registers": [
+        48
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_105306:\n  REG:48 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:920 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "8a5e587b9023c3f82d55badb3a0c86f0048936bfa8661e7ddc58addae61990ab",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_89",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 0,
+        "FFMA": 31,
+        "IMAD": 73,
+        "LDG": 62,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "baseline_registers": [
+        40
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_255685:\n  REG:40 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:376 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "8c86c28c22c2fdd094f4984e19e43c853a32e29bff93c491de21bc1f8cba67c0",
+      "case_id": "a80ed698bc451d6aa88bc5b6ba208282f5d9de3ccd2d4c76c3122a764c3c6231",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 0,
+        "FFMA": 31,
+        "IMAD": 73,
+        "LDG": 62,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "kernel": 0,
+      "problem": null,
+      "registers": [
+        40
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_255685:\n  REG:40 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:376 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "8c86c28c22c2fdd094f4984e19e43c853a32e29bff93c491de21bc1f8cba67c0",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_120",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 0,
+        "FFMA": 31,
+        "IMAD": 73,
+        "LDG": 62,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "baseline_registers": [
+        48
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_255685:\n  REG:48 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:920 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "d5478f3dbeca3aa0e269c71bf6d75182e2fb366ddca6cd0e0c76d7152f1f7d44",
+      "case_id": "a80ed698bc451d6aa88bc5b6ba208282f5d9de3ccd2d4c76c3122a764c3c6231",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 0,
+        "FFMA": 31,
+        "IMAD": 73,
+        "LDG": 62,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "kernel": 0,
+      "problem": null,
+      "registers": [
+        48
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_255685:\n  REG:48 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:920 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "d5478f3dbeca3aa0e269c71bf6d75182e2fb366ddca6cd0e0c76d7152f1f7d44",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_89",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 0,
+        "FFMA": 16,
+        "IMAD": 43,
+        "LDG": 32,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "baseline_registers": [
+        40
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_944477:\n  REG:40 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:376 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "4684b433f8086513715af33a2bb60092a632aadc0afe09ed1a81632c2f68cfff",
+      "case_id": "37dc67b2c5a7411a83dbff8e54a6f184f563d3d0d15105bd64d6cea26196edff",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 0,
+        "FFMA": 16,
+        "IMAD": 43,
+        "LDG": 32,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "kernel": 0,
+      "problem": null,
+      "registers": [
+        40
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_944477:\n  REG:40 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:376 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "4684b433f8086513715af33a2bb60092a632aadc0afe09ed1a81632c2f68cfff",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_120",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 0,
+        "FFMA": 16,
+        "IMAD": 43,
+        "LDG": 32,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "baseline_registers": [
+        40
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_944477:\n  REG:40 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:920 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "ee3be8c09c4e3a1804606ad4c7de8f3c5000f9001b2aee3d0241bf76f9bacce8",
+      "case_id": "37dc67b2c5a7411a83dbff8e54a6f184f563d3d0d15105bd64d6cea26196edff",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 0,
+        "FFMA": 16,
+        "IMAD": 43,
+        "LDG": 32,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "kernel": 0,
+      "problem": null,
+      "registers": [
+        40
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_944477:\n  REG:40 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:920 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "ee3be8c09c4e3a1804606ad4c7de8f3c5000f9001b2aee3d0241bf76f9bacce8",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_89",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 0,
+        "FFMA": 32,
+        "IMAD": 75,
+        "LDG": 64,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "baseline_registers": [
+        40
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_716510:\n  REG:40 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:376 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "5a7a0a7808f6af109b76ff5d0639a8bfe1a528a6d14b1d79b39a8f740625431b",
+      "case_id": "d0db8622a3aaf96799aaf339ec425a1b86d34ad71610a90a8a2d02619bffe057",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 0,
+        "FFMA": 32,
+        "IMAD": 75,
+        "LDG": 64,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "kernel": 0,
+      "problem": null,
+      "registers": [
+        40
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_716510:\n  REG:40 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:376 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "5a7a0a7808f6af109b76ff5d0639a8bfe1a528a6d14b1d79b39a8f740625431b",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_120",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 0,
+        "FFMA": 32,
+        "IMAD": 75,
+        "LDG": 64,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "baseline_registers": [
+        48
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_716510:\n  REG:48 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:920 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "7baa60d7872ae06114fb3832b458cb073001659b6550a8a2309d881e1488cb4e",
+      "case_id": "d0db8622a3aaf96799aaf339ec425a1b86d34ad71610a90a8a2d02619bffe057",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 0,
+        "FFMA": 32,
+        "IMAD": 75,
+        "LDG": 64,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "kernel": 0,
+      "problem": null,
+      "registers": [
+        48
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_716510:\n  REG:48 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:920 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "7baa60d7872ae06114fb3832b458cb073001659b6550a8a2309d881e1488cb4e",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_89",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 0,
+        "FFMA": 16,
+        "IMAD": 67,
+        "LDG": 32,
+        "LDS": 0,
+        "RED": 1,
+        "SHFL": 0,
+        "STG": 0,
+        "STS": 0
+      },
+      "baseline_registers": [
+        33
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_369060:\n  REG:33 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:376 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "baa10a1747ab1721f024e9c15679f9335a50c64e4711ac781e647aace762bc1d",
+      "case_id": "f1a310d558132f68baabc92758c6e40872282556ba663c5ef74f8987898ad451",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 0,
+        "FFMA": 16,
+        "IMAD": 67,
+        "LDG": 32,
+        "LDS": 0,
+        "RED": 1,
+        "SHFL": 0,
+        "STG": 0,
+        "STS": 0
+      },
+      "kernel": 0,
+      "problem": null,
+      "registers": [
+        33
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_369060:\n  REG:33 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:376 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "baa10a1747ab1721f024e9c15679f9335a50c64e4711ac781e647aace762bc1d",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_120",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 0,
+        "FFMA": 16,
+        "IMAD": 66,
+        "LDG": 32,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 0,
+        "STS": 0
+      },
+      "baseline_registers": [
+        40
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_369060:\n  REG:40 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:920 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "b20f7bb0879b6ce41d3df0d5c340763e1b20e6bcd6b8ca45b77dbc4ad82ce7c8",
+      "case_id": "f1a310d558132f68baabc92758c6e40872282556ba663c5ef74f8987898ad451",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 0,
+        "FFMA": 16,
+        "IMAD": 66,
+        "LDG": 32,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 0,
+        "STS": 0
+      },
+      "kernel": 0,
+      "problem": null,
+      "registers": [
+        40
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_369060:\n  REG:40 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:920 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "b20f7bb0879b6ce41d3df0d5c340763e1b20e6bcd6b8ca45b77dbc4ad82ce7c8",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_89",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 0,
+        "FFMA": 1,
+        "IMAD": 28,
+        "LDG": 2,
+        "LDS": 0,
+        "RED": 1,
+        "SHFL": 0,
+        "STG": 0,
+        "STS": 0
+      },
+      "baseline_registers": [
+        14
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_586023:\n  REG:14 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:376 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "0e599bf898678c8f2b92a8370a8399cbf152b6762eae950e398c58d08c7a1727",
+      "case_id": "f3d0df26c89d73b11f5a4c4f626934e7ba13479e67858843debc0e6bc3e7ba0a",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 0,
+        "FFMA": 1,
+        "IMAD": 28,
+        "LDG": 2,
+        "LDS": 0,
+        "RED": 1,
+        "SHFL": 0,
+        "STG": 0,
+        "STS": 0
+      },
+      "kernel": 0,
+      "problem": null,
+      "registers": [
+        14
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_586023:\n  REG:14 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:376 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "0e599bf898678c8f2b92a8370a8399cbf152b6762eae950e398c58d08c7a1727",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_120",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 0,
+        "FFMA": 1,
+        "IMAD": 22,
+        "LDG": 2,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 0,
+        "STS": 0
+      },
+      "baseline_registers": [
+        14
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_586023:\n  REG:14 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:920 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "d5d73231ca8c88e343ec6e14775fbc6a52ea17b6433ae22a355dee171da3df68",
+      "case_id": "f3d0df26c89d73b11f5a4c4f626934e7ba13479e67858843debc0e6bc3e7ba0a",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 0,
+        "FFMA": 1,
+        "IMAD": 22,
+        "LDG": 2,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 0,
+        "STS": 0
+      },
+      "kernel": 0,
+      "problem": null,
+      "registers": [
+        14
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_586023:\n  REG:14 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:920 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "d5d73231ca8c88e343ec6e14775fbc6a52ea17b6433ae22a355dee171da3df68",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_89",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 0,
+        "FFMA": 17,
+        "IMAD": 86,
+        "LDG": 34,
+        "LDS": 0,
+        "RED": 1,
+        "SHFL": 0,
+        "STG": 0,
+        "STS": 0
+      },
+      "baseline_registers": [
+        34
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_533808:\n  REG:34 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:376 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "2d8d45022b0900eeb92eeb53f6db7d206c25d2b9392063419a9f514f783ea4e3",
+      "case_id": "5110e2bd57a0a5b98ffe7b811c86fab481f64d95049bf4e4a8233776a5f26d51",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 0,
+        "FFMA": 17,
+        "IMAD": 86,
+        "LDG": 34,
+        "LDS": 0,
+        "RED": 1,
+        "SHFL": 0,
+        "STG": 0,
+        "STS": 0
+      },
+      "kernel": 0,
+      "problem": null,
+      "registers": [
+        34
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_533808:\n  REG:34 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:376 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "2d8d45022b0900eeb92eeb53f6db7d206c25d2b9392063419a9f514f783ea4e3",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_120",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 0,
+        "FFMA": 17,
+        "IMAD": 86,
+        "LDG": 34,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 0,
+        "STS": 0
+      },
+      "baseline_registers": [
+        40
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_533808:\n  REG:40 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:920 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "be5cdc1cde9d317b8fcd6c135f18a4db22e40b910c27a718dded4a899ced7a95",
+      "case_id": "5110e2bd57a0a5b98ffe7b811c86fab481f64d95049bf4e4a8233776a5f26d51",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 0,
+        "FFMA": 17,
+        "IMAD": 86,
+        "LDG": 34,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 0,
+        "STS": 0
+      },
+      "kernel": 0,
+      "problem": null,
+      "registers": [
+        40
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_533808:\n  REG:40 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:920 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "be5cdc1cde9d317b8fcd6c135f18a4db22e40b910c27a718dded4a899ced7a95",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_89",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 0,
+        "FFMA": 16,
+        "IMAD": 67,
+        "LDG": 32,
+        "LDS": 0,
+        "RED": 1,
+        "SHFL": 0,
+        "STG": 0,
+        "STS": 0
+      },
+      "baseline_registers": [
+        32
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_147754:\n  REG:32 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:376 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "b8a29e3978319792ec69ffb146735a15e307591f3c8f7983f28b8406b83f62f6",
+      "case_id": "b3cb67fb443e3ab50caeed8f8564da9b085c491aeba1f3891a46e8361f413af6",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 0,
+        "FFMA": 16,
+        "IMAD": 67,
+        "LDG": 32,
+        "LDS": 0,
+        "RED": 1,
+        "SHFL": 0,
+        "STG": 0,
+        "STS": 0
+      },
+      "kernel": 0,
+      "problem": null,
+      "registers": [
+        32
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_147754:\n  REG:32 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:376 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "b8a29e3978319792ec69ffb146735a15e307591f3c8f7983f28b8406b83f62f6",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_120",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 0,
+        "FFMA": 16,
+        "IMAD": 66,
+        "LDG": 32,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 0,
+        "STS": 0
+      },
+      "baseline_registers": [
+        40
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_147754:\n  REG:40 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:920 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "a2da15f12d9119e871d1e142837dd38bb0f7a92e9616969e4a8d7f69381ece26",
+      "case_id": "b3cb67fb443e3ab50caeed8f8564da9b085c491aeba1f3891a46e8361f413af6",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 0,
+        "FFMA": 16,
+        "IMAD": 66,
+        "LDG": 32,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 0,
+        "STS": 0
+      },
+      "kernel": 0,
+      "problem": null,
+      "registers": [
+        40
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_147754:\n  REG:40 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:920 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "a2da15f12d9119e871d1e142837dd38bb0f7a92e9616969e4a8d7f69381ece26",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_89",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 3,
+        "FADD": 32,
+        "FFMA": 23,
+        "IMAD": 21,
+        "LDG": 8,
+        "LDS": 10,
+        "RED": 0,
+        "SHFL": 10,
+        "STG": 1,
+        "STS": 6
+      },
+      "baseline_registers": [
+        22
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_softmax_05263d_72a8da87edae5eb9:\n  REG:22 STACK:0 SHARED:32 LOCAL:0 CONSTANT[0]:368 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "9c056c705ebe5ca839f060259506a9f3ee2080733a73bbf9f0b35a730674debe",
+      "case_id": "8bad4497eb5b8f4cb4743ac86d2fda10f533151b7f8e467e5779ac3b24d98292",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 3,
+        "FADD": 32,
+        "FFMA": 23,
+        "IMAD": 21,
+        "LDG": 8,
+        "LDS": 10,
+        "RED": 0,
+        "SHFL": 10,
+        "STG": 1,
+        "STS": 6
+      },
+      "kernel": 0,
+      "problem": null,
+      "registers": [
+        22
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_softmax_05263d_72a8da87edae5eb9:\n  REG:22 STACK:0 SHARED:32 LOCAL:0 CONSTANT[0]:368 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "9c056c705ebe5ca839f060259506a9f3ee2080733a73bbf9f0b35a730674debe",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_120",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 3,
+        "FADD": 32,
+        "FFMA": 23,
+        "IMAD": 21,
+        "LDG": 8,
+        "LDS": 10,
+        "RED": 0,
+        "SHFL": 10,
+        "STG": 1,
+        "STS": 6
+      },
+      "baseline_registers": [
+        26
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_softmax_05263d_72a8da87edae5eb9:\n  REG:26 STACK:0 SHARED:1056 LOCAL:0 CONSTANT[0]:912 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "8155ddf2004a054d6855c3e6fe4f8cc3f64fa758ffb558214aac527d5c25cc17",
+      "case_id": "8bad4497eb5b8f4cb4743ac86d2fda10f533151b7f8e467e5779ac3b24d98292",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 3,
+        "FADD": 32,
+        "FFMA": 23,
+        "IMAD": 21,
+        "LDG": 8,
+        "LDS": 10,
+        "RED": 0,
+        "SHFL": 10,
+        "STG": 1,
+        "STS": 6
+      },
+      "kernel": 0,
+      "problem": null,
+      "registers": [
+        26
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_softmax_05263d_72a8da87edae5eb9:\n  REG:26 STACK:0 SHARED:1056 LOCAL:0 CONSTANT[0]:912 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "8155ddf2004a054d6855c3e6fe4f8cc3f64fa758ffb558214aac527d5c25cc17",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_89",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 3,
+        "FADD": 32,
+        "FFMA": 23,
+        "IMAD": 21,
+        "LDG": 8,
+        "LDS": 10,
+        "RED": 0,
+        "SHFL": 10,
+        "STG": 1,
+        "STS": 6
+      },
+      "baseline_registers": [
+        22
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_softmax_05263d_1db5b70340253331:\n  REG:22 STACK:0 SHARED:32 LOCAL:0 CONSTANT[0]:368 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "42d4e1b8bdcd3b57e7b75cbae8dd3569eb276216c6d189f8ee5eeb8d90d28e86",
+      "case_id": "c1bdc3390fc81f38ec582c1d9eddefa367798509f84912db56fa384db4e4c013",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 3,
+        "FADD": 32,
+        "FFMA": 23,
+        "IMAD": 21,
+        "LDG": 8,
+        "LDS": 10,
+        "RED": 0,
+        "SHFL": 10,
+        "STG": 1,
+        "STS": 6
+      },
+      "kernel": 0,
+      "problem": null,
+      "registers": [
+        22
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_softmax_05263d_1db5b70340253331:\n  REG:22 STACK:0 SHARED:32 LOCAL:0 CONSTANT[0]:368 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "42d4e1b8bdcd3b57e7b75cbae8dd3569eb276216c6d189f8ee5eeb8d90d28e86",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_120",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 3,
+        "FADD": 32,
+        "FFMA": 23,
+        "IMAD": 21,
+        "LDG": 8,
+        "LDS": 10,
+        "RED": 0,
+        "SHFL": 10,
+        "STG": 1,
+        "STS": 6
+      },
+      "baseline_registers": [
+        26
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_softmax_05263d_1db5b70340253331:\n  REG:26 STACK:0 SHARED:1056 LOCAL:0 CONSTANT[0]:912 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "25f639d45ff6d784dbf104573549633956f9ba294d7b9cb886afd6d039eae561",
+      "case_id": "c1bdc3390fc81f38ec582c1d9eddefa367798509f84912db56fa384db4e4c013",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 3,
+        "FADD": 32,
+        "FFMA": 23,
+        "IMAD": 21,
+        "LDG": 8,
+        "LDS": 10,
+        "RED": 0,
+        "SHFL": 10,
+        "STG": 1,
+        "STS": 6
+      },
+      "kernel": 0,
+      "problem": null,
+      "registers": [
+        26
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_softmax_05263d_1db5b70340253331:\n  REG:26 STACK:0 SHARED:1056 LOCAL:0 CONSTANT[0]:912 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "25f639d45ff6d784dbf104573549633956f9ba294d7b9cb886afd6d039eae561",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_89",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 67,
+        "FFMA": 17,
+        "IMAD": 38,
+        "LDG": 33,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "baseline_registers": [
+        40
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_872620:\n  REG:40 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:368 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "1ba13d41b659f95f036e01d89be6cb2d84108f4ad0e54fd360d655e436641f90",
+      "case_id": "ebff5b980db94c4f2920b2ae118b063325756e6a1796f40e5bf35c1dffa13a4d",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 67,
+        "FFMA": 17,
+        "IMAD": 38,
+        "LDG": 33,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "kernel": 0,
+      "problem": null,
+      "registers": [
+        40
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_872620:\n  REG:40 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:368 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "1ba13d41b659f95f036e01d89be6cb2d84108f4ad0e54fd360d655e436641f90",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_120",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 67,
+        "FFMA": 17,
+        "IMAD": 38,
+        "LDG": 33,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "baseline_registers": [
+        40
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_872620:\n  REG:40 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:912 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "c92884b5cbe05ec8e3ed0a465225bf4477ce923490101000d30c1b1a40cca944",
+      "case_id": "ebff5b980db94c4f2920b2ae118b063325756e6a1796f40e5bf35c1dffa13a4d",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 67,
+        "FFMA": 17,
+        "IMAD": 38,
+        "LDG": 33,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "kernel": 0,
+      "problem": null,
+      "registers": [
+        40
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_872620:\n  REG:40 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:912 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "c92884b5cbe05ec8e3ed0a465225bf4477ce923490101000d30c1b1a40cca944",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_89",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 9,
+        "FFMA": 17,
+        "IMAD": 35,
+        "LDG": 4,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "baseline_registers": [
+        18
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_772975:\n  REG:18 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:368 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "6724f76f849febc2613443a722fdcf2d553507e18f8407e946b33f5aee645861",
+      "case_id": "5c7b8169a67dc6af41fee6f71aa8121f6b47e4b5b1ace53860dfafcfa02627c5",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 9,
+        "FFMA": 17,
+        "IMAD": 35,
+        "LDG": 4,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "kernel": 0,
+      "problem": null,
+      "registers": [
+        18
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_772975:\n  REG:18 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:368 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "6724f76f849febc2613443a722fdcf2d553507e18f8407e946b33f5aee645861",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_120",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 9,
+        "FFMA": 17,
+        "IMAD": 13,
+        "LDG": 4,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "baseline_registers": [
+        22
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_772975:\n  REG:22 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:912 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "a723d589b69b84454243d07c008cbbfc2a98ce2530103bf5ca180448d4a2c68d",
+      "case_id": "5c7b8169a67dc6af41fee6f71aa8121f6b47e4b5b1ace53860dfafcfa02627c5",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 9,
+        "FFMA": 17,
+        "IMAD": 13,
+        "LDG": 4,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "kernel": 0,
+      "problem": null,
+      "registers": [
+        22
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_772975:\n  REG:22 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:912 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "a723d589b69b84454243d07c008cbbfc2a98ce2530103bf5ca180448d4a2c68d",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_89",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 2,
+        "FFMA": 49,
+        "IMAD": 90,
+        "LDG": 65,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "baseline_registers": [
+        40
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_scores_547503:\n  REG:40 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:384 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "784c219ae2aaa48a7b34e4dde78e1290135078cd8cf3bb7ec731280b5bcd8a8a",
+      "case_id": "e87beb3a775fd95a6b6939ffdc654c3bc53874d734c7028bb548bde7c3a7503e",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 2,
+        "FFMA": 49,
+        "IMAD": 90,
+        "LDG": 65,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "kernel": 0,
+      "problem": null,
+      "registers": [
+        40
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_scores_547503:\n  REG:40 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:384 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "784c219ae2aaa48a7b34e4dde78e1290135078cd8cf3bb7ec731280b5bcd8a8a",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_120",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 2,
+        "FFMA": 49,
+        "IMAD": 78,
+        "LDG": 65,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "baseline_registers": [
+        48
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_scores_547503:\n  REG:48 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:928 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "2f471e4fd164873542cd5b992a9144660a8fd4eee01b363cca666462e238e993",
+      "case_id": "e87beb3a775fd95a6b6939ffdc654c3bc53874d734c7028bb548bde7c3a7503e",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 2,
+        "FFMA": 49,
+        "IMAD": 78,
+        "LDG": 65,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "kernel": 0,
+      "problem": null,
+      "registers": [
+        48
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_scores_547503:\n  REG:48 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:928 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "2f471e4fd164873542cd5b992a9144660a8fd4eee01b363cca666462e238e993",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_89",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 65,
+        "FFMA": 17,
+        "IMAD": 39,
+        "LDG": 32,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "baseline_registers": [
+        40
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_probs_982647:\n  REG:40 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:368 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "bc9c9aab844fa0720bc3aaebf4439a28e30b9b67bdc24abc731ab57faf2bd20d",
+      "case_id": "e87beb3a775fd95a6b6939ffdc654c3bc53874d734c7028bb548bde7c3a7503e",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 65,
+        "FFMA": 17,
+        "IMAD": 39,
+        "LDG": 32,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "kernel": 1,
+      "problem": null,
+      "registers": [
+        40
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_probs_982647:\n  REG:40 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:368 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "bc9c9aab844fa0720bc3aaebf4439a28e30b9b67bdc24abc731ab57faf2bd20d",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_120",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 65,
+        "FFMA": 17,
+        "IMAD": 39,
+        "LDG": 32,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "baseline_registers": [
+        40
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_probs_982647:\n  REG:40 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:912 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "a8711b99cde193fcf4bc7fbbe6b8d7f4785557436e7f553a071524d0766600b4",
+      "case_id": "e87beb3a775fd95a6b6939ffdc654c3bc53874d734c7028bb548bde7c3a7503e",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 65,
+        "FFMA": 17,
+        "IMAD": 39,
+        "LDG": 32,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "kernel": 1,
+      "problem": null,
+      "registers": [
+        40
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_probs_982647:\n  REG:40 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:912 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "a8711b99cde193fcf4bc7fbbe6b8d7f4785557436e7f553a071524d0766600b4",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_89",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 0,
+        "FFMA": 31,
+        "IMAD": 67,
+        "LDG": 62,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "baseline_registers": [
+        40
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_751139:\n  REG:40 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:376 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "e3600a42b8d8440eecd237ff639e88e43bf88bed5e54d01f5b7ece95056b3b49",
+      "case_id": "e87beb3a775fd95a6b6939ffdc654c3bc53874d734c7028bb548bde7c3a7503e",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 0,
+        "FFMA": 31,
+        "IMAD": 67,
+        "LDG": 62,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "kernel": 2,
+      "problem": null,
+      "registers": [
+        40
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_751139:\n  REG:40 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:376 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "e3600a42b8d8440eecd237ff639e88e43bf88bed5e54d01f5b7ece95056b3b49",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_120",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 0,
+        "FFMA": 31,
+        "IMAD": 67,
+        "LDG": 62,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "baseline_registers": [
+        48
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_751139:\n  REG:48 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:920 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "7b10eb834adc30223202d0c43ce61b3b2ec56e2a31be29da68152070615cca19",
+      "case_id": "e87beb3a775fd95a6b6939ffdc654c3bc53874d734c7028bb548bde7c3a7503e",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 0,
+        "FFMA": 31,
+        "IMAD": 67,
+        "LDG": 62,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "kernel": 2,
+      "problem": null,
+      "registers": [
+        48
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_751139:\n  REG:48 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:920 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "7b10eb834adc30223202d0c43ce61b3b2ec56e2a31be29da68152070615cca19",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_89",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 2,
+        "FFMA": 48,
+        "IMAD": 83,
+        "LDG": 63,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "baseline_registers": [
+        40
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_scores_107385:\n  REG:40 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:384 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "5a0c4415fbc108f111b4ffbbe70cdb187fdaebd69c2598e427675aed86eb1614",
+      "case_id": "f49a4a64ce26269a6b785126fb17b553402ada53cc29693213eab3f9b598dd3c",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 2,
+        "FFMA": 48,
+        "IMAD": 83,
+        "LDG": 63,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "kernel": 0,
+      "problem": null,
+      "registers": [
+        40
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_scores_107385:\n  REG:40 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:384 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "5a0c4415fbc108f111b4ffbbe70cdb187fdaebd69c2598e427675aed86eb1614",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_120",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 2,
+        "FFMA": 48,
+        "IMAD": 70,
+        "LDG": 63,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "baseline_registers": [
+        48
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_scores_107385:\n  REG:48 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:928 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "3a80bdd57b0940e8d8706319dc2f7e37cdc7853c7893627bd1f20ef9afb03e94",
+      "case_id": "f49a4a64ce26269a6b785126fb17b553402ada53cc29693213eab3f9b598dd3c",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 2,
+        "FFMA": 48,
+        "IMAD": 70,
+        "LDG": 63,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "kernel": 0,
+      "problem": null,
+      "registers": [
+        48
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_scores_107385:\n  REG:48 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:928 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "3a80bdd57b0940e8d8706319dc2f7e37cdc7853c7893627bd1f20ef9afb03e94",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_89",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 5,
+        "FFMA": 17,
+        "IMAD": 32,
+        "LDG": 2,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "baseline_registers": [
+        18
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_probs_896733:\n  REG:18 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:368 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "8c4caab1b5514d9f08a61d7e60315f27647414eb6e05af0674c7bdabc7ae3285",
+      "case_id": "f49a4a64ce26269a6b785126fb17b553402ada53cc29693213eab3f9b598dd3c",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 5,
+        "FFMA": 17,
+        "IMAD": 32,
+        "LDG": 2,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "kernel": 1,
+      "problem": null,
+      "registers": [
+        18
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_probs_896733:\n  REG:18 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:368 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "8c4caab1b5514d9f08a61d7e60315f27647414eb6e05af0674c7bdabc7ae3285",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_120",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 5,
+        "FFMA": 17,
+        "IMAD": 8,
+        "LDG": 2,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "baseline_registers": [
+        22
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_probs_896733:\n  REG:22 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:912 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "11a524f656ede88ce953b1e947907f6f303db604966d691a143e1e95d0a971aa",
+      "case_id": "f49a4a64ce26269a6b785126fb17b553402ada53cc29693213eab3f9b598dd3c",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 5,
+        "FFMA": 17,
+        "IMAD": 8,
+        "LDG": 2,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "kernel": 1,
+      "problem": null,
+      "registers": [
+        22
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_probs_896733:\n  REG:22 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:912 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "11a524f656ede88ce953b1e947907f6f303db604966d691a143e1e95d0a971aa",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_89",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 0,
+        "FFMA": 1,
+        "IMAD": 17,
+        "LDG": 2,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "baseline_registers": [
+        12
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_571314:\n  REG:12 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:376 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "a6d5bf57d5823e598e51b19bcbdcddef2a115411c213f4509b02271fd60d30c2",
+      "case_id": "f49a4a64ce26269a6b785126fb17b553402ada53cc29693213eab3f9b598dd3c",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 0,
+        "FFMA": 1,
+        "IMAD": 17,
+        "LDG": 2,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "kernel": 2,
+      "problem": null,
+      "registers": [
+        12
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_571314:\n  REG:12 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:376 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "a6d5bf57d5823e598e51b19bcbdcddef2a115411c213f4509b02271fd60d30c2",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_120",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 0,
+        "FFMA": 1,
+        "IMAD": 13,
+        "LDG": 2,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "baseline_registers": [
+        12
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_571314:\n  REG:12 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:920 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "13b05168164b909c0adff076a6ac89f92f6b45c727687728a5ee864c1610e617",
+      "case_id": "f49a4a64ce26269a6b785126fb17b553402ada53cc29693213eab3f9b598dd3c",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 0,
+        "FFMA": 1,
+        "IMAD": 13,
+        "LDG": 2,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "kernel": 2,
+      "problem": null,
+      "registers": [
+        12
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_571314:\n  REG:12 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:920 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "13b05168164b909c0adff076a6ac89f92f6b45c727687728a5ee864c1610e617",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_89",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 2,
+        "FFMA": 24,
+        "IMAD": 50,
+        "LDG": 15,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "baseline_registers": [
+        34
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_scores_948386:\n  REG:34 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:384 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "4bf607d65f3d5146529e749c4a7003b7734a448a74ae6b9e5f4a8d3f2ef59426",
+      "case_id": "b6ccef89c943c730849be6f42e7e6792a4bf7e78a3c0d32e61572cf859fa01c9",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 2,
+        "FFMA": 24,
+        "IMAD": 50,
+        "LDG": 15,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "kernel": 0,
+      "problem": null,
+      "registers": [
+        34
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_scores_948386:\n  REG:34 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:384 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "4bf607d65f3d5146529e749c4a7003b7734a448a74ae6b9e5f4a8d3f2ef59426",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_120",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 2,
+        "FFMA": 24,
+        "IMAD": 28,
+        "LDG": 15,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "baseline_registers": [
+        36
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_scores_948386:\n  REG:36 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:928 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "66efdb020891f99995c909157633d3111089020a8cd6803be60f5c5904e9fbdb",
+      "case_id": "b6ccef89c943c730849be6f42e7e6792a4bf7e78a3c0d32e61572cf859fa01c9",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 2,
+        "FFMA": 24,
+        "IMAD": 28,
+        "LDG": 15,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "kernel": 0,
+      "problem": null,
+      "registers": [
+        36
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_scores_948386:\n  REG:36 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:928 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "66efdb020891f99995c909157633d3111089020a8cd6803be60f5c5904e9fbdb",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_89",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 17,
+        "FFMA": 17,
+        "IMAD": 32,
+        "LDG": 8,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "baseline_registers": [
+        20
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_probs_613684:\n  REG:20 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:368 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "79faabc5ab115ca24c67f6a9d457dce443202505d971aea69984ce2b46bc5701",
+      "case_id": "b6ccef89c943c730849be6f42e7e6792a4bf7e78a3c0d32e61572cf859fa01c9",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 17,
+        "FFMA": 17,
+        "IMAD": 32,
+        "LDG": 8,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "kernel": 1,
+      "problem": null,
+      "registers": [
+        20
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_probs_613684:\n  REG:20 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:368 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "79faabc5ab115ca24c67f6a9d457dce443202505d971aea69984ce2b46bc5701",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_120",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 17,
+        "FFMA": 17,
+        "IMAD": 17,
+        "LDG": 8,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "baseline_registers": [
+        22
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_probs_613684:\n  REG:22 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:912 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "15349b691d1026cf3c68099698ddd5c9c38bb7f9ab1798462432cbd0d6caf453",
+      "case_id": "b6ccef89c943c730849be6f42e7e6792a4bf7e78a3c0d32e61572cf859fa01c9",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 17,
+        "FFMA": 17,
+        "IMAD": 17,
+        "LDG": 8,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "kernel": 1,
+      "problem": null,
+      "registers": [
+        22
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_probs_613684:\n  REG:22 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:912 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "15349b691d1026cf3c68099698ddd5c9c38bb7f9ab1798462432cbd0d6caf453",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_89",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 0,
+        "FFMA": 7,
+        "IMAD": 26,
+        "LDG": 14,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "baseline_registers": [
+        30
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_552693:\n  REG:30 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:376 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "247dbd1a18cd8166d92094e9619747d692aa901681a058335b405bcce6d3f973",
+      "case_id": "b6ccef89c943c730849be6f42e7e6792a4bf7e78a3c0d32e61572cf859fa01c9",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 0,
+        "FFMA": 7,
+        "IMAD": 26,
+        "LDG": 14,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "kernel": 2,
+      "problem": null,
+      "registers": [
+        30
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_552693:\n  REG:30 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:376 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "247dbd1a18cd8166d92094e9619747d692aa901681a058335b405bcce6d3f973",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_120",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 0,
+        "FFMA": 7,
+        "IMAD": 26,
+        "LDG": 14,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "baseline_registers": [
+        36
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_552693:\n  REG:36 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:920 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "90803786e3536ec292f3173a34fe02c8ce4339ece6220db5f3ec72c1fcd6727a",
+      "case_id": "b6ccef89c943c730849be6f42e7e6792a4bf7e78a3c0d32e61572cf859fa01c9",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 0,
+        "FFMA": 7,
+        "IMAD": 26,
+        "LDG": 14,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "kernel": 2,
+      "problem": null,
+      "registers": [
+        36
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_552693:\n  REG:36 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:920 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "90803786e3536ec292f3173a34fe02c8ce4339ece6220db5f3ec72c1fcd6727a",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_89",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 2,
+        "FFMA": 18,
+        "IMAD": 37,
+        "LDG": 3,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "baseline_registers": [
+        16
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_scores_298811:\n  REG:16 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:384 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "d54879efb080fe8f820e3caf56056dd5a092384bbbc4e7052f06359d4313ef4a",
+      "case_id": "125813c1eb540ca142016b397a36fc1a51d6fa3aacc2545b2be8c2d89c83e6c6",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 2,
+        "FFMA": 18,
+        "IMAD": 37,
+        "LDG": 3,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "kernel": 0,
+      "problem": null,
+      "registers": [
+        16
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_scores_298811:\n  REG:16 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:384 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "d54879efb080fe8f820e3caf56056dd5a092384bbbc4e7052f06359d4313ef4a",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_120",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 2,
+        "FFMA": 18,
+        "IMAD": 15,
+        "LDG": 3,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "baseline_registers": [
+        16
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_scores_298811:\n  REG:16 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:928 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "2810e0012b13abe549ded6e3889a4c6acc883eba63fd6d678c2f5ed07cee1cc1",
+      "case_id": "125813c1eb540ca142016b397a36fc1a51d6fa3aacc2545b2be8c2d89c83e6c6",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 2,
+        "FFMA": 18,
+        "IMAD": 15,
+        "LDG": 3,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "kernel": 0,
+      "problem": null,
+      "registers": [
+        16
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_scores_298811:\n  REG:16 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:928 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "2810e0012b13abe549ded6e3889a4c6acc883eba63fd6d678c2f5ed07cee1cc1",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_89",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 35,
+        "FFMA": 17,
+        "IMAD": 28,
+        "LDG": 17,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "baseline_registers": [
+        38
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_probs_116407:\n  REG:38 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:368 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "586a1d70dbf6cc04728554a358b15ae73c2461e23c1b4b787e721528455559ef",
+      "case_id": "125813c1eb540ca142016b397a36fc1a51d6fa3aacc2545b2be8c2d89c83e6c6",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 35,
+        "FFMA": 17,
+        "IMAD": 28,
+        "LDG": 17,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "kernel": 1,
+      "problem": null,
+      "registers": [
+        38
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_probs_116407:\n  REG:38 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:368 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "586a1d70dbf6cc04728554a358b15ae73c2461e23c1b4b787e721528455559ef",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_120",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 35,
+        "FFMA": 17,
+        "IMAD": 24,
+        "LDG": 17,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "baseline_registers": [
+        40
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_probs_116407:\n  REG:40 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:912 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "c8bb6f376fc06210f4fcadae09d94df1fa9f95fb3d6533babd608c643d049af4",
+      "case_id": "125813c1eb540ca142016b397a36fc1a51d6fa3aacc2545b2be8c2d89c83e6c6",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 35,
+        "FFMA": 17,
+        "IMAD": 24,
+        "LDG": 17,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "kernel": 1,
+      "problem": null,
+      "registers": [
+        40
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_probs_116407:\n  REG:40 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:912 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "c8bb6f376fc06210f4fcadae09d94df1fa9f95fb3d6533babd608c643d049af4",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_89",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 0,
+        "FFMA": 16,
+        "IMAD": 43,
+        "LDG": 32,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "baseline_registers": [
+        40
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_940071:\n  REG:40 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:376 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "83602e3ab253a0f15d3992bc63c9f87ff009d66b07e3310825e8998f87683d5a",
+      "case_id": "125813c1eb540ca142016b397a36fc1a51d6fa3aacc2545b2be8c2d89c83e6c6",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 0,
+        "FFMA": 16,
+        "IMAD": 43,
+        "LDG": 32,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "kernel": 2,
+      "problem": null,
+      "registers": [
+        40
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_940071:\n  REG:40 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:376 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "83602e3ab253a0f15d3992bc63c9f87ff009d66b07e3310825e8998f87683d5a",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_120",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 0,
+        "FFMA": 16,
+        "IMAD": 43,
+        "LDG": 32,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "baseline_registers": [
+        40
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_940071:\n  REG:40 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:920 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "d7e3c6716246f24c0a19f4f7b6303ba46c8595ed67a3f5bcba0b8fde42c09a75",
+      "case_id": "125813c1eb540ca142016b397a36fc1a51d6fa3aacc2545b2be8c2d89c83e6c6",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 0,
+        "FFMA": 16,
+        "IMAD": 43,
+        "LDG": 32,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 1,
+        "STS": 0
+      },
+      "kernel": 2,
+      "problem": null,
+      "registers": [
+        40
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_out_940071:\n  REG:40 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:920 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "d7e3c6716246f24c0a19f4f7b6303ba46c8595ed67a3f5bcba0b8fde42c09a75",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_89",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 2,
+        "FFMA": 0,
+        "IMAD": 9,
+        "LDG": 4,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 2,
+        "STS": 0
+      },
+      "baseline_registers": [
+        20
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_add_pointwise:\n  REG:20 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:376 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "cb7d26a7cce82b4fde5ab869c1db8a0b33bdbc576b923ce92acabe8f67cda401",
+      "case_id": "4035b0c010105ed7be8aa1a889fe2754d498fc4a27c1719bf547ddad66e48403",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 2,
+        "FFMA": 0,
+        "IMAD": 9,
+        "LDG": 4,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 2,
+        "STS": 0
+      },
+      "kernel": 0,
+      "problem": "p00_scalar_add",
+      "registers": [
+        20
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_add_pointwise:\n  REG:20 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:376 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "cb7d26a7cce82b4fde5ab869c1db8a0b33bdbc576b923ce92acabe8f67cda401",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_120",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 2,
+        "FFMA": 0,
+        "IMAD": 9,
+        "LDG": 4,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 2,
+        "STS": 0
+      },
+      "baseline_registers": [
+        22
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_add_pointwise:\n  REG:22 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:920 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "049742142d52cda0570eafd2983390d9fc1d212b56197588085b104bde7c4389",
+      "case_id": "4035b0c010105ed7be8aa1a889fe2754d498fc4a27c1719bf547ddad66e48403",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 2,
+        "FFMA": 0,
+        "IMAD": 9,
+        "LDG": 4,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 2,
+        "STS": 0
+      },
+      "kernel": 0,
+      "problem": "p00_scalar_add",
+      "registers": [
+        22
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_add_pointwise:\n  REG:22 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:920 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "049742142d52cda0570eafd2983390d9fc1d212b56197588085b104bde7c4389",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_89",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 2,
+        "FFMA": 0,
+        "IMAD": 9,
+        "LDG": 4,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 2,
+        "STS": 0
+      },
+      "baseline_registers": [
+        20
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_add_pointwise:\n  REG:20 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:376 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "53fedd64202a0e22ff22bfe3a8febd1e029520915fb369f449f0209e983f203a",
+      "case_id": "5e973341ada3e33f701293be5a3e6195badb7290a5471f4c6cefa86634d1b168",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 2,
+        "FFMA": 0,
+        "IMAD": 9,
+        "LDG": 4,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 2,
+        "STS": 0
+      },
+      "kernel": 0,
+      "problem": "p01_vector_add",
+      "registers": [
+        20
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_add_pointwise:\n  REG:20 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:376 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "53fedd64202a0e22ff22bfe3a8febd1e029520915fb369f449f0209e983f203a",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_120",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 2,
+        "FFMA": 0,
+        "IMAD": 9,
+        "LDG": 4,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 2,
+        "STS": 0
+      },
+      "baseline_registers": [
+        22
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_add_pointwise:\n  REG:22 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:920 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "b7472180f75c8de6f113cc19fbadc65419280c664db244e39115e56727c27847",
+      "case_id": "5e973341ada3e33f701293be5a3e6195badb7290a5471f4c6cefa86634d1b168",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 2,
+        "FFMA": 0,
+        "IMAD": 9,
+        "LDG": 4,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 2,
+        "STS": 0
+      },
+      "kernel": 0,
+      "problem": "p01_vector_add",
+      "registers": [
+        22
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_add_pointwise:\n  REG:22 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:920 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "b7472180f75c8de6f113cc19fbadc65419280c664db244e39115e56727c27847",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_89",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 0,
+        "FFMA": 4,
+        "IMAD": 13,
+        "LDG": 6,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 4,
+        "STS": 0
+      },
+      "baseline_registers": [
+        28
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_add_pointwise:\n  REG:28 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:384 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "19e649a3141c91691abc90662fffb9e17e41fdf23c8d03e1a632fcddcfe0383b",
+      "case_id": "3145aa57f753f64551cd4b83c3d430e6e2375a9feb4819accbfd5e55c39da560",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 0,
+        "FFMA": 4,
+        "IMAD": 13,
+        "LDG": 6,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 4,
+        "STS": 0
+      },
+      "kernel": 0,
+      "problem": "p02_scale_shift",
+      "registers": [
+        28
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_add_pointwise:\n  REG:28 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:384 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "19e649a3141c91691abc90662fffb9e17e41fdf23c8d03e1a632fcddcfe0383b",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_120",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 0,
+        "FFMA": 4,
+        "IMAD": 11,
+        "LDG": 6,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 4,
+        "STS": 0
+      },
+      "baseline_registers": [
+        34
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_add_pointwise:\n  REG:34 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:928 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "f8f50ae48ba79328f0224587591ddbe86091d1ab23370037166100ceed41feb7",
+      "case_id": "3145aa57f753f64551cd4b83c3d430e6e2375a9feb4819accbfd5e55c39da560",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 0,
+        "FFMA": 4,
+        "IMAD": 11,
+        "LDG": 6,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 4,
+        "STS": 0
+      },
+      "kernel": 0,
+      "problem": "p02_scale_shift",
+      "registers": [
+        34
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_add_pointwise:\n  REG:34 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:928 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "f8f50ae48ba79328f0224587591ddbe86091d1ab23370037166100ceed41feb7",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_89",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 0,
+        "FFMA": 0,
+        "IMAD": 15,
+        "LDG": 8,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 4,
+        "STS": 0
+      },
+      "baseline_registers": [
+        28
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_mul_pointwise:\n  REG:28 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:376 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "2d56b9e215dc00e51a04044eaf5f52128823289e5976526ea1da81f14a150d30",
+      "case_id": "aeeffce3a36b8cf1b27173b8c1644fc517a24d992173e06bb1664784b009b6ba",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 0,
+        "FFMA": 0,
+        "IMAD": 15,
+        "LDG": 8,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 4,
+        "STS": 0
+      },
+      "kernel": 0,
+      "problem": "p03_relu_mul",
+      "registers": [
+        28
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_mul_pointwise:\n  REG:28 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:376 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "2d56b9e215dc00e51a04044eaf5f52128823289e5976526ea1da81f14a150d30",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_120",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 0,
+        "FFMA": 0,
+        "IMAD": 15,
+        "LDG": 8,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 4,
+        "STS": 0
+      },
+      "baseline_registers": [
+        24
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_mul_pointwise:\n  REG:24 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:920 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "5bfceaddcaa860b9b7c51c3414feec95dda1c1ef09114141093d716ddd288574",
+      "case_id": "aeeffce3a36b8cf1b27173b8c1644fc517a24d992173e06bb1664784b009b6ba",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 0,
+        "FFMA": 0,
+        "IMAD": 15,
+        "LDG": 8,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 4,
+        "STS": 0
+      },
+      "kernel": 0,
+      "problem": "p03_relu_mul",
+      "registers": [
+        24
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_mul_pointwise:\n  REG:24 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:920 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "5bfceaddcaa860b9b7c51c3414feec95dda1c1ef09114141093d716ddd288574",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_89",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 3,
+        "FADD": 15,
+        "FFMA": 0,
+        "IMAD": 21,
+        "LDG": 8,
+        "LDS": 5,
+        "RED": 0,
+        "SHFL": 5,
+        "STG": 1,
+        "STS": 3
+      },
+      "baseline_registers": [
+        20
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_sum_1_reduce:\n  REG:20 STACK:0 SHARED:16 LOCAL:0 CONSTANT[0]:368 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "5b4ab29ba080f3045e869d8929761b44f56b8d998aabb6077c260ee283ab5d6c",
+      "case_id": "2ffefe7fee88d864b3ac97cd70fe9711643f3551fba367299df52f329649154d",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 1,
+        "FADD": 15,
+        "FFMA": 0,
+        "IMAD": 18,
+        "LDG": 8,
+        "LDS": 1,
+        "RED": 0,
+        "SHFL": 8,
+        "STG": 1,
+        "STS": 1
+      },
+      "kernel": 0,
+      "problem": "r01_array_sum",
+      "registers": [
+        20
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_sum_1_reduce:\n  REG:20 STACK:0 SHARED:16 LOCAL:0 CONSTANT[0]:368 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "83bc23d6bda84df0f14b78ab3e791e3abf6e100dbbecc8833005cf489d222317",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_120",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 3,
+        "FADD": 15,
+        "FFMA": 0,
+        "IMAD": 12,
+        "LDG": 8,
+        "LDS": 5,
+        "RED": 0,
+        "SHFL": 5,
+        "STG": 1,
+        "STS": 3
+      },
+      "baseline_registers": [
+        22
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_sum_1_reduce:\n  REG:22 STACK:0 SHARED:1040 LOCAL:0 CONSTANT[0]:912 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "6a39ab5d1735caf119085104af67f1dafd67d9b40fdccc82b4950160f5f2099c",
+      "case_id": "2ffefe7fee88d864b3ac97cd70fe9711643f3551fba367299df52f329649154d",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 1,
+        "FADD": 15,
+        "FFMA": 0,
+        "IMAD": 11,
+        "LDG": 8,
+        "LDS": 1,
+        "RED": 0,
+        "SHFL": 8,
+        "STG": 1,
+        "STS": 1
+      },
+      "kernel": 0,
+      "problem": "r01_array_sum",
+      "registers": [
+        22
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_sum_1_reduce:\n  REG:22 STACK:0 SHARED:1040 LOCAL:0 CONSTANT[0]:912 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "b2b9c2c19d11dee8829da989aa14b26f29a29d1f2c01aa464eec1c90ee145c82",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_89",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 3,
+        "FADD": 71,
+        "FFMA": 0,
+        "IMAD": 67,
+        "LDG": 64,
+        "LDS": 5,
+        "RED": 0,
+        "SHFL": 5,
+        "STG": 1,
+        "STS": 3
+      },
+      "baseline_registers": [
+        40
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_sum_1_reduce:\n  REG:40 STACK:0 SHARED:16 LOCAL:0 CONSTANT[0]:368 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "fbbf481f1e5c4f8945377ee1a6723f88e9aec74177e44a3ed203502c887dfcdf",
+      "case_id": "a56bdb784a46a763c2b633ebb5d16ee1ffd4287cb0984168b4f80909c323ce22",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 1,
+        "FADD": 71,
+        "FFMA": 0,
+        "IMAD": 67,
+        "LDG": 64,
+        "LDS": 1,
+        "RED": 0,
+        "SHFL": 8,
+        "STG": 1,
+        "STS": 1
+      },
+      "kernel": 0,
+      "problem": "r02_big_sum",
+      "registers": [
+        40
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_sum_1_reduce:\n  REG:40 STACK:0 SHARED:16 LOCAL:0 CONSTANT[0]:368 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "9894deb19f7356425a8646608572792524f616b480c841a423b722ebcb8bd62f",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_120",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 3,
+        "FADD": 71,
+        "FFMA": 0,
+        "IMAD": 67,
+        "LDG": 64,
+        "LDS": 5,
+        "RED": 0,
+        "SHFL": 5,
+        "STG": 1,
+        "STS": 3
+      },
+      "baseline_registers": [
+        40
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_sum_1_reduce:\n  REG:40 STACK:0 SHARED:1040 LOCAL:0 CONSTANT[0]:912 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "5ac784a972cdc6d4b80c4710109d594bdbba47e825d205d6c102267688cf9422",
+      "case_id": "a56bdb784a46a763c2b633ebb5d16ee1ffd4287cb0984168b4f80909c323ce22",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 1,
+        "FADD": 71,
+        "FFMA": 0,
+        "IMAD": 67,
+        "LDG": 64,
+        "LDS": 1,
+        "RED": 0,
+        "SHFL": 8,
+        "STG": 1,
+        "STS": 1
+      },
+      "kernel": 0,
+      "problem": "r02_big_sum",
+      "registers": [
+        40
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_sum_1_reduce:\n  REG:40 STACK:0 SHARED:1040 LOCAL:0 CONSTANT[0]:912 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "19c77e625b24ce9bdbb25e1ef025184b1c3d77fdc3b7da8d3ef53a6addc2cd4e",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_89",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 3,
+        "FADD": 73,
+        "FFMA": 17,
+        "IMAD": 78,
+        "LDG": 65,
+        "LDS": 5,
+        "RED": 0,
+        "SHFL": 5,
+        "STG": 1,
+        "STS": 3
+      },
+      "baseline_registers": [
+        40
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_mean_ffcca3:\n  REG:40 STACK:0 SHARED:16 LOCAL:0 CONSTANT[0]:376 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "cd9240a0c7d2bd91d6d5d7090255901e34175a8d79a620213ff3a1622b1cac7c",
+      "case_id": "6dfbe2bc925e2b31ceb8eb84bb5016cca8af143ca55cf93078d09decc26a0fd3",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 1,
+        "FADD": 73,
+        "FFMA": 17,
+        "IMAD": 75,
+        "LDG": 65,
+        "LDS": 1,
+        "RED": 0,
+        "SHFL": 8,
+        "STG": 1,
+        "STS": 1
+      },
+      "kernel": 0,
+      "problem": "r03_mean",
+      "registers": [
+        40
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_mean_ffcca3:\n  REG:40 STACK:0 SHARED:16 LOCAL:0 CONSTANT[0]:376 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "fbc50005c0dcf05a392afbcd05eb82c66195b09e864dc1d8f18733e415a7f13e",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_120",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 3,
+        "FADD": 73,
+        "FFMA": 17,
+        "IMAD": 70,
+        "LDG": 65,
+        "LDS": 5,
+        "RED": 0,
+        "SHFL": 5,
+        "STG": 1,
+        "STS": 3
+      },
+      "baseline_registers": [
+        40
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_mean_ffcca3:\n  REG:40 STACK:0 SHARED:1040 LOCAL:0 CONSTANT[0]:920 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "40a8d7aa9ea71d23360bd74ac04ca5766349f216ff891de28ff5938082fb581f",
+      "case_id": "6dfbe2bc925e2b31ceb8eb84bb5016cca8af143ca55cf93078d09decc26a0fd3",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 1,
+        "FADD": 73,
+        "FFMA": 17,
+        "IMAD": 69,
+        "LDG": 65,
+        "LDS": 1,
+        "RED": 0,
+        "SHFL": 8,
+        "STG": 1,
+        "STS": 1
+      },
+      "kernel": 0,
+      "problem": "r03_mean",
+      "registers": [
+        40
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_mean_ffcca3:\n  REG:40 STACK:0 SHARED:1040 LOCAL:0 CONSTANT[0]:920 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "9406e1b9a2efd1bcdea6cadb6802dde1ad58d2418a7a658dc5646c64053a8edc",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_89",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 3,
+        "FADD": 14,
+        "FFMA": 0,
+        "IMAD": 37,
+        "LDG": 7,
+        "LDS": 5,
+        "RED": 0,
+        "SHFL": 5,
+        "STG": 1,
+        "STS": 3
+      },
+      "baseline_registers": [
+        17
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_sum_1_reduce:\n  REG:17 STACK:0 SHARED:16 LOCAL:0 CONSTANT[0]:368 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "3d74a02b6464ec1529f033e175cf7644c8a6c3ab467f5b5d48975c7f193833fe",
+      "case_id": "5c2ba872d36e6526a79b9799c059e237f65a34019cd94f1c85da4f0b9f930d3f",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 1,
+        "FADD": 14,
+        "FFMA": 0,
+        "IMAD": 34,
+        "LDG": 7,
+        "LDS": 1,
+        "RED": 0,
+        "SHFL": 8,
+        "STG": 1,
+        "STS": 1
+      },
+      "kernel": 0,
+      "problem": "r04_row_sum",
+      "registers": [
+        18
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_sum_1_reduce:\n  REG:18 STACK:0 SHARED:16 LOCAL:0 CONSTANT[0]:368 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "fe3ca9819e2307b63f02ebb01265d2431e75482f1a72c7186c5fd545d294a598",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_120",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 3,
+        "FADD": 14,
+        "FFMA": 0,
+        "IMAD": 21,
+        "LDG": 7,
+        "LDS": 5,
+        "RED": 0,
+        "SHFL": 5,
+        "STG": 1,
+        "STS": 3
+      },
+      "baseline_registers": [
+        22
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_sum_1_reduce:\n  REG:22 STACK:0 SHARED:1040 LOCAL:0 CONSTANT[0]:912 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "88955feeb7c82d871d9908bc99b891ff6422efbcfb674ca735adceefcb305278",
+      "case_id": "5c2ba872d36e6526a79b9799c059e237f65a34019cd94f1c85da4f0b9f930d3f",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 1,
+        "FADD": 14,
+        "FFMA": 0,
+        "IMAD": 20,
+        "LDG": 7,
+        "LDS": 1,
+        "RED": 0,
+        "SHFL": 8,
+        "STG": 1,
+        "STS": 1
+      },
+      "kernel": 0,
+      "problem": "r04_row_sum",
+      "registers": [
+        22
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_sum_1_reduce:\n  REG:22 STACK:0 SHARED:1040 LOCAL:0 CONSTANT[0]:912 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "f5b910c95febfea2ecdd3aae1e194d0ddb996a57d92a7ec663b0b685d74583a9",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 8,
+      "arch": "sm_89",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 2,
+        "FADD": 0,
+        "FFMA": 32,
+        "IMAD": 161,
+        "LDG": 0,
+        "LDS": 23,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 4,
+        "STS": 0
+      },
+      "baseline_registers": [
+        40
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_matmul_2967be:\n  REG:40 STACK:0 SHARED:0 LOCAL:0 CONSTANT[2]:8 CONSTANT[0]:376 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "e6176038db4db8519d8fc6123d17fbef0323a1e58f9a681a61377796440eb0a6",
+      "case_id": "cd9a29496fccd9e421c1cfbe14347cb45003f38681e3b4b2e703f5dbbfdd6c5d",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 2,
+        "FADD": 0,
+        "FFMA": 32,
+        "IMAD": 152,
+        "LDG": 0,
+        "LDS": 15,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 4,
+        "STS": 0
+      },
+      "kernel": 0,
+      "problem": "m01_matmul_512",
+      "registers": [
+        40
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_matmul_2967be:\n  REG:40 STACK:0 SHARED:0 LOCAL:0 CONSTANT[2]:8 CONSTANT[0]:376 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "cd2c27a2ba66213566f8f24a315a8b8c5c6dee699d054776ad7891e6de32d2eb",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 8,
+      "arch": "sm_120",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 2,
+        "FADD": 0,
+        "FFMA": 32,
+        "IMAD": 177,
+        "LDG": 0,
+        "LDS": 26,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 4,
+        "STS": 0
+      },
+      "baseline_registers": [
+        40
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_matmul_2967be:\n  REG:40 STACK:0 SHARED:1024 LOCAL:0 CONSTANT[0]:920 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "8f018804454254ae1a28e631441872e398d2303573868bb750b99b97e8e7601d",
+      "case_id": "cd9a29496fccd9e421c1cfbe14347cb45003f38681e3b4b2e703f5dbbfdd6c5d",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 2,
+        "FADD": 0,
+        "FFMA": 32,
+        "IMAD": 161,
+        "LDG": 0,
+        "LDS": 18,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 4,
+        "STS": 0
+      },
+      "kernel": 0,
+      "problem": "m01_matmul_512",
+      "registers": [
+        40
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_matmul_2967be:\n  REG:40 STACK:0 SHARED:1024 LOCAL:0 CONSTANT[0]:920 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "9e1b517b02f800740b20a4b78bebddb6dca0d2840ccd92c28fe477295f2f8303",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_89",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 2,
+        "FADD": 0,
+        "FFMA": 16,
+        "IMAD": 79,
+        "LDG": 0,
+        "LDS": 18,
+        "RED": 2,
+        "SHFL": 0,
+        "STG": 0,
+        "STS": 0
+      },
+      "baseline_registers": [
+        32
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_matmul:\n  REG:32 STACK:0 SHARED:1536 LOCAL:0 CONSTANT[2]:8 CONSTANT[0]:376 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "36ca82c03b1229d014e7216ea48e11ab631681c4e86b5e9ab1eb388b150783a9",
+      "case_id": "aeb1568894b7afb50ea0b1b6c6fe94b57419452643ec87c5c6561f9ebfc58bbe",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 2,
+        "FADD": 0,
+        "FFMA": 16,
+        "IMAD": 79,
+        "LDG": 0,
+        "LDS": 18,
+        "RED": 2,
+        "SHFL": 0,
+        "STG": 0,
+        "STS": 0
+      },
+      "kernel": 0,
+      "problem": "m02_matmul_rect",
+      "registers": [
+        32
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_matmul:\n  REG:32 STACK:0 SHARED:1536 LOCAL:0 CONSTANT[2]:8 CONSTANT[0]:376 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "36ca82c03b1229d014e7216ea48e11ab631681c4e86b5e9ab1eb388b150783a9",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_120",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 2,
+        "FADD": 0,
+        "FFMA": 16,
+        "IMAD": 66,
+        "LDG": 0,
+        "LDS": 21,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 0,
+        "STS": 0
+      },
+      "baseline_registers": [
+        31
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_matmul:\n  REG:31 STACK:0 SHARED:2560 LOCAL:0 CONSTANT[0]:920 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "db0660a88768b4f40ffda93a5e882b79718d50392dbd1a7e6baf1aeb7f3533fd",
+      "case_id": "aeb1568894b7afb50ea0b1b6c6fe94b57419452643ec87c5c6561f9ebfc58bbe",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 2,
+        "FADD": 0,
+        "FFMA": 16,
+        "IMAD": 66,
+        "LDG": 0,
+        "LDS": 21,
+        "RED": 0,
+        "SHFL": 0,
+        "STG": 0,
+        "STS": 0
+      },
+      "kernel": 0,
+      "problem": "m02_matmul_rect",
+      "registers": [
+        31
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_matmul:\n  REG:31 STACK:0 SHARED:2560 LOCAL:0 CONSTANT[0]:920 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "db0660a88768b4f40ffda93a5e882b79718d50392dbd1a7e6baf1aeb7f3533fd",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_89",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 3,
+        "FADD": 13,
+        "FFMA": 24,
+        "IMAD": 56,
+        "LDG": 11,
+        "LDS": 5,
+        "RED": 0,
+        "SHFL": 5,
+        "STG": 1,
+        "STS": 3
+      },
+      "baseline_registers": [
+        17
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_mean_cbd1de:\n  REG:17 STACK:0 SHARED:16 LOCAL:0 CONSTANT[0]:392 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "49055e52955a6136c4575329b18d15871e3729e1cf0998a38ce5303849b55809",
+      "case_id": "6ab09ab4acc384ee252370a564a13965ece1ad21a3e64d6615f0de1a39b8c665",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 1,
+        "FADD": 13,
+        "FFMA": 24,
+        "IMAD": 53,
+        "LDG": 11,
+        "LDS": 1,
+        "RED": 0,
+        "SHFL": 8,
+        "STG": 1,
+        "STS": 1
+      },
+      "kernel": 0,
+      "problem": "f01_rmsnorm",
+      "registers": [
+        18
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_mean_cbd1de:\n  REG:18 STACK:0 SHARED:16 LOCAL:0 CONSTANT[0]:392 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "33d9a98efb843958cdc743c327ea2637aa239195dce1ec4996a14f5277a7c165",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_120",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 3,
+        "FADD": 13,
+        "FFMA": 24,
+        "IMAD": 27,
+        "LDG": 11,
+        "LDS": 5,
+        "RED": 0,
+        "SHFL": 5,
+        "STG": 1,
+        "STS": 3
+      },
+      "baseline_registers": [
+        22
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_mean_cbd1de:\n  REG:22 STACK:0 SHARED:1040 LOCAL:0 CONSTANT[0]:936 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "f574e46b3d63d9fd79971acdcea84917381716a77a287d715a31e492a9f55800",
+      "case_id": "6ab09ab4acc384ee252370a564a13965ece1ad21a3e64d6615f0de1a39b8c665",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 1,
+        "FADD": 13,
+        "FFMA": 24,
+        "IMAD": 26,
+        "LDG": 11,
+        "LDS": 1,
+        "RED": 0,
+        "SHFL": 8,
+        "STG": 1,
+        "STS": 1
+      },
+      "kernel": 0,
+      "problem": "f01_rmsnorm",
+      "registers": [
+        22
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_mean_cbd1de:\n  REG:22 STACK:0 SHARED:1040 LOCAL:0 CONSTANT[0]:936 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "7c324ca581af6cd9ae4c346b10de89f00beb289253e4d319312979156440c234",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_89",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 3,
+        "FADD": 32,
+        "FFMA": 23,
+        "IMAD": 17,
+        "LDG": 8,
+        "LDS": 10,
+        "RED": 0,
+        "SHFL": 10,
+        "STG": 1,
+        "STS": 6
+      },
+      "baseline_registers": [
+        22
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_softmax_05263d:\n  REG:22 STACK:0 SHARED:32 LOCAL:0 CONSTANT[0]:368 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "31c372e83ecdd39cfb21d178277e7421c56459968de5991f4ced3309d70a44d5",
+      "case_id": "89d56c168a0b04373ef8d50096c48534c70019b8d2f87371b79aee2289922b44",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 3,
+        "FADD": 32,
+        "FFMA": 23,
+        "IMAD": 17,
+        "LDG": 8,
+        "LDS": 10,
+        "RED": 0,
+        "SHFL": 10,
+        "STG": 1,
+        "STS": 6
+      },
+      "kernel": 0,
+      "problem": "f02_row_softmax",
+      "registers": [
+        22
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_softmax_05263d:\n  REG:22 STACK:0 SHARED:32 LOCAL:0 CONSTANT[0]:368 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "31c372e83ecdd39cfb21d178277e7421c56459968de5991f4ced3309d70a44d5",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_120",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 3,
+        "FADD": 32,
+        "FFMA": 23,
+        "IMAD": 17,
+        "LDG": 8,
+        "LDS": 10,
+        "RED": 0,
+        "SHFL": 10,
+        "STG": 1,
+        "STS": 6
+      },
+      "baseline_registers": [
+        26
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_softmax_05263d:\n  REG:26 STACK:0 SHARED:1056 LOCAL:0 CONSTANT[0]:912 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "e1f8634e44d7d2c21dc18c468c22bbc4355f40755a34f081751e6f2d3e2919c3",
+      "case_id": "89d56c168a0b04373ef8d50096c48534c70019b8d2f87371b79aee2289922b44",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 3,
+        "FADD": 32,
+        "FFMA": 23,
+        "IMAD": 17,
+        "LDG": 8,
+        "LDS": 10,
+        "RED": 0,
+        "SHFL": 10,
+        "STG": 1,
+        "STS": 6
+      },
+      "kernel": 0,
+      "problem": "f02_row_softmax",
+      "registers": [
+        26
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_softmax_05263d:\n  REG:26 STACK:0 SHARED:1056 LOCAL:0 CONSTANT[0]:912 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "e1f8634e44d7d2c21dc18c468c22bbc4355f40755a34f081751e6f2d3e2919c3",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_89",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 3,
+        "FADD": 12,
+        "FFMA": 21,
+        "IMAD": 54,
+        "LDG": 8,
+        "LDS": 5,
+        "RED": 0,
+        "SHFL": 5,
+        "STG": 1,
+        "STS": 3
+      },
+      "baseline_registers": [
+        17
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_div_reduce:\n  REG:17 STACK:0 SHARED:16 LOCAL:0 CONSTANT[0]:368 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "13401b11a9a64ff8aaf9f41aa4d23befb594d5770ff4c6d8566f824cb2c6713c",
+      "case_id": "1e82d7e58a53e8795ea9d05e3759dfe201e42308efd08dd2a51e79c769dc2fbc",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 1,
+        "FADD": 12,
+        "FFMA": 21,
+        "IMAD": 51,
+        "LDG": 8,
+        "LDS": 1,
+        "RED": 0,
+        "SHFL": 8,
+        "STG": 1,
+        "STS": 1
+      },
+      "kernel": 0,
+      "problem": "f03_l2norm",
+      "registers": [
+        18
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_div_reduce:\n  REG:18 STACK:0 SHARED:16 LOCAL:0 CONSTANT[0]:368 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "4a78de3a5281a302fc4dac5098611b9b5082686b9bf4ee8da0524de0f6b56101",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_120",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 3,
+        "FADD": 12,
+        "FFMA": 21,
+        "IMAD": 26,
+        "LDG": 8,
+        "LDS": 5,
+        "RED": 0,
+        "SHFL": 5,
+        "STG": 1,
+        "STS": 3
+      },
+      "baseline_registers": [
+        22
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_div_reduce:\n  REG:22 STACK:0 SHARED:1040 LOCAL:0 CONSTANT[0]:912 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "14b78b797892ae2a9c906948291502efb3a5a78a3c77c15486256e464484d285",
+      "case_id": "1e82d7e58a53e8795ea9d05e3759dfe201e42308efd08dd2a51e79c769dc2fbc",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 1,
+        "FADD": 12,
+        "FFMA": 21,
+        "IMAD": 25,
+        "LDG": 8,
+        "LDS": 1,
+        "RED": 0,
+        "SHFL": 8,
+        "STG": 1,
+        "STS": 1
+      },
+      "kernel": 0,
+      "problem": "f03_l2norm",
+      "registers": [
+        22
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_div_reduce:\n  REG:22 STACK:0 SHARED:1040 LOCAL:0 CONSTANT[0]:912 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "1fd662d872a26682a1d46c08f0abfffa452a13c2248f7884fb7ba4727b7c79d4",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_89",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 27,
+        "FFMA": 553,
+        "IMAD": 478,
+        "LDG": 451,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 4,
+        "STG": 8,
+        "STS": 0
+      },
+      "baseline_registers": [
+        148
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_matmul_softmax_reduce_b55365:\n  REG:148 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:392 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "409e3bd9f46b4adefdfbeb53a973e6b20e18be18232db507b875fd9b2b7f449c",
+      "case_id": "c10866af73f820553331b01c52e042e5d724c275a6f5fedd9348170ba75d382c",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 27,
+        "FFMA": 553,
+        "IMAD": 478,
+        "LDG": 451,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 4,
+        "STG": 8,
+        "STS": 0
+      },
+      "kernel": 0,
+      "problem": "a01_attention",
+      "registers": [
+        148
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_matmul_softmax_reduce_b55365:\n  REG:148 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:392 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "409e3bd9f46b4adefdfbeb53a973e6b20e18be18232db507b875fd9b2b7f449c",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_120",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 27,
+        "FFMA": 553,
+        "IMAD": 478,
+        "LDG": 451,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 4,
+        "STG": 8,
+        "STS": 0
+      },
+      "baseline_registers": [
+        144
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_matmul_softmax_reduce_b55365:\n  REG:144 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:936 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "aa0feb36cfbce39030368434ec7fe60e7dc410a35068c66e8925178c7d9b66f9",
+      "case_id": "c10866af73f820553331b01c52e042e5d724c275a6f5fedd9348170ba75d382c",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 27,
+        "FFMA": 553,
+        "IMAD": 478,
+        "LDG": 451,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 4,
+        "STG": 8,
+        "STS": 0
+      },
+      "kernel": 0,
+      "problem": "a01_attention",
+      "registers": [
+        144
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_matmul_softmax_reduce_b55365:\n  REG:144 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:936 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "aa0feb36cfbce39030368434ec7fe60e7dc410a35068c66e8925178c7d9b66f9",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_89",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 6,
+        "FFMA": 77,
+        "IMAD": 115,
+        "LDG": 106,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 1,
+        "STG": 1,
+        "STS": 0
+      },
+      "baseline_registers": [
+        40
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_matmul_softmax_reduce_6f0029:\n  REG:40 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:392 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "758dbaafd8be9b97efe43fab8992e38789be07e2cb3854665562bf53e1965e0a",
+      "case_id": "69db4e7f597c41b0684fb30c3204e197cf56c8647d9a63dc0adb77f2a8a0d867",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 6,
+        "FFMA": 77,
+        "IMAD": 115,
+        "LDG": 106,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 1,
+        "STG": 1,
+        "STS": 0
+      },
+      "kernel": 0,
+      "problem": "a02_attention_128",
+      "registers": [
+        40
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_matmul_softmax_reduce_6f0029:\n  REG:40 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:392 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "758dbaafd8be9b97efe43fab8992e38789be07e2cb3854665562bf53e1965e0a",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "LDS64_sites": 0,
+      "arch": "sm_120",
+      "baseline_instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 6,
+        "FFMA": 77,
+        "IMAD": 115,
+        "LDG": 106,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 1,
+        "STG": 1,
+        "STS": 0
+      },
+      "baseline_registers": [
+        56
+      ],
+      "baseline_resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_matmul_softmax_reduce_6f0029:\n  REG:56 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:936 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "baseline_sass": "798d894d47e2739b3fc0dd1cce56efddbe818617ff9c50449e77e027abce0b33",
+      "case_id": "69db4e7f597c41b0684fb30c3204e197cf56c8647d9a63dc0adb77f2a8a0d867",
+      "instruction_mix": {
+        "ATOM": 0,
+        "BAR": 0,
+        "FADD": 6,
+        "FFMA": 77,
+        "IMAD": 115,
+        "LDG": 106,
+        "LDS": 0,
+        "RED": 0,
+        "SHFL": 1,
+        "STG": 1,
+        "STS": 0
+      },
+      "kernel": 0,
+      "problem": "a02_attention_128",
+      "registers": [
+        56
+      ],
+      "resources": "\nResource usage:\n Common:\n  GLOBAL:0\n Function k_matmul_softmax_reduce_6f0029:\n  REG:56 STACK:0 SHARED:0 LOCAL:0 CONSTANT[0]:936 TEXTURE:0 SURFACE:0 SAMPLER:0\n",
+      "sass": "798d894d47e2739b3fc0dd1cce56efddbe818617ff9c50449e77e027abce0b33",
+      "set": "core47",
+      "spills": [
+        [
+          "0",
+          "0"
+        ]
+      ]
+    }
+  ],
+  "prepared_id": "71d40c4c2420f218d9e9fbc33c35e3437aae0131d1f0a58c137268907a5aa79a",
+  "prior_native_proof_identity_links": {
+    "Tree4_limit": "Actual3positiveTree plans and1scratchliveout decline checked; nativeBAR1 activation onpositive cases. NewTree4 native root/address DAG not independently decoded here; independent references + source/provenTree emitter + futureGPU still required.",
+    "links": [
+      {
+        "PTX_SASS_regs_spills_resources_exact": true,
+        "case": "f01_rmsnorm",
+        "case_id": "6ab09ab4acc384ee252370a564a13965ece1ad21a3e64d6615f0de1a39b8c665",
+        "reference": "tree97-published"
+      },
+      {
+        "PTX_SASS_regs_spills_resources_exact": true,
+        "case": "f03_l2norm",
+        "case_id": "1e82d7e58a53e8795ea9d05e3759dfe201e42308efd08dd2a51e79c769dc2fbc",
+        "reference": "tree97-published"
+      },
+      {
+        "PTX_SASS_regs_spills_resources_exact": true,
+        "case": "m01_matmul_512",
+        "case_id": "cd9a29496fccd9e421c1cfbe14347cb45003f38681e3b4b2e703f5dbbfdd6c5d",
+        "reference": "phasebe3-published"
+      },
+      {
+        "PTX_SASS_regs_spills_resources_exact": true,
+        "case": "r01_array_sum",
+        "case_id": "2ffefe7fee88d864b3ac97cd70fe9711643f3551fba367299df52f329649154d",
+        "reference": "tree97-published"
+      },
+      {
+        "PTX_SASS_regs_spills_resources_exact": true,
+        "case": "r02_big_sum",
+        "case_id": "a56bdb784a46a763c2b633ebb5d16ee1ffd4287cb0984168b4f80909c323ce22",
+        "reference": "tree97-published"
+      },
+      {
+        "PTX_SASS_regs_spills_resources_exact": true,
+        "case": "r03_mean",
+        "case_id": "6dfbe2bc925e2b31ceb8eb84bb5016cca8af143ca55cf93078d09decc26a0fd3",
+        "reference": "tree97-published"
+      },
+      {
+        "PTX_SASS_regs_spills_resources_exact": true,
+        "case": "r04_row_sum",
+        "case_id": "5c2ba872d36e6526a79b9799c059e237f65a34019cd94f1c85da4f0b9f930d3f",
+        "reference": "tree97-published"
+      },
+      {
+        "PTX_SASS_regs_spills_resources_exact": true,
+        "case": "case-0",
+        "case_id": "de705c16257905e2418c7764648606c103b725e60751bcc582ebc6c87f4ee562",
+        "reference": "pair45df-pair4"
+      },
+      {
+        "PTX_SASS_regs_spills_resources_exact": true,
+        "case": "case-1",
+        "case_id": "4878a2a692c321ffadbdc850aeb63ac9db94d8c632202d57dcae3a9385af5746",
+        "reference": "pair45df-pair4"
+      },
+      {
+        "PTX_SASS_regs_spills_resources_exact": true,
+        "case": "case-2",
+        "case_id": "bc5ccc6e97f4938742737fd282d71e57d5104160666d518ddd99ef244ecea5be",
+        "reference": "pair45df-pair4"
+      },
+      {
+        "PTX_SASS_regs_spills_resources_exact": true,
+        "case": "case-3",
+        "case_id": "defad12053f4721f06c34f9f354339b1f5c09e147406c864cea2288dfb25ecb1",
+        "reference": "pair45df-pair4"
+      },
+      {
+        "PTX_SASS_regs_spills_resources_exact": true,
+        "case": "canonical-tail",
+        "case_id": "c37693f91a7210ccc513e699de5a289e2f2f909f83a7059ed6e386a2a263a25d",
+        "reference": "phasebe3-async8"
+      },
+      {
+        "PTX_SASS_regs_spills_resources_exact": true,
+        "case": "short-ring",
+        "case_id": "7bb9d9c27732924a02ca9869601a7af55fd6276ae6894ed00c3dbc7be5d84228",
+        "reference": "phasebe3-async8"
+      },
+      {
+        "PTX_SASS_regs_spills_resources_exact": true,
+        "case": "nondivisible-counter",
+        "case_id": "21171f5ca6c366ded10c9865a3160437b8985dd0a89d83770c473c30f8b3e195",
+        "reference": "phasebe3-async8"
+      },
+      {
+        "PTX_SASS_regs_spills_resources_exact": true,
+        "case": "observable-padding",
+        "case_id": "a083ac93290653c119bae4512c057058495a50fa9d0528dc7ce6e3caff5c6065",
+        "reference": "phasebe3-async8"
+      },
+      {
+        "PTX_SASS_regs_spills_resources_exact": true,
+        "case": "canonical-tail",
+        "case_id": "1575656197e94c0eaf8603489abcab2416259e541c06c80ebcb11d75d2f81b4e",
+        "reference": "phasebe3-async8"
+      },
+      {
+        "PTX_SASS_regs_spills_resources_exact": true,
+        "case": "short-ring",
+        "case_id": "53c4ee4e49567dde97d563245964e2a93c1bc365186ce07da6840bf38b98db61",
+        "reference": "phasebe3-async8"
+      },
+      {
+        "PTX_SASS_regs_spills_resources_exact": true,
+        "case": "nondivisible-counter",
+        "case_id": "e80480098b9a4d5619b69b5deaefee5fe0eff10e2ffc35d7699d8e29a34af638",
+        "reference": "phasebe3-async8"
+      },
+      {
+        "PTX_SASS_regs_spills_resources_exact": true,
+        "case": "observable-padding",
+        "case_id": "be73fec91603b6810925f6480349d6399e117e9a51a7aaf5f652ed66a32eaa61",
+        "reference": "phasebe3-async8"
+      }
+    ],
+    "matching_case_count": 19,
+    "referenced_proofs": [
+      {
+        "path": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/latency-index/tree-native-final-audit-v1.json",
+        "sha256": "4d20f2bd10ab64bd75e368321911c34056bec274883949e6608cb1bc962f62e9"
+      },
+      {
+        "path": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/latency-index/async-shared-phase-v1/backend-native-chain-v1.json",
+        "sha256": "1a2f1409e40ed882ccda758498371f2d5d97e79a335d84e8cdc4e809b3d52e61"
+      },
+      {
+        "path": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/latency-index/async-shared-phase-v1/backend-native-copy-v2.json",
+        "sha256": "f4bbd5e203589254fe6248848525ce57b363d3e380fcd2da126bb47f4bc993cc"
+      },
+      {
+        "path": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/latency-index/shared-pair-coalescing-v1/backend-final-audit-v1.json",
+        "sha256": "bb3583415ea3763552060a8850ad93656b9a03b8f3600e2135bd90c23a29e4eb"
+      }
+    ],
+    "scope": "Exact wholePTX+normalizedSASS+resources identity establishes old bounded orderednative audit transfer for published6Tree and m01Phase/Pair. SamebytePair4/Async8 activate/decline unchanged. It does not extend old native proof scope to arbitrary newCFG/address domains."
+  },
+  "prior_proof_report": "/mnt/nfs/bcy/emmy/research/campaigns/campaign-20261023-12h-v2/latency-index/phase-tree-nonq4ff-static-v1/report.json",
+  "prior_proof_report_sha256": "a4803ddc4d1912722745dff10288a93e70299e8bc6138561759a8a9b368f3070",
+  "published_native_PTX_resources_exact_prior4ff": true,
+  "reservation_id": "dc6e42c250746ebde8363a3c7d452e97f00864e6e319b231f001a8081e584766",
+  "rows": [
+    {
+      "PTX_native_resources_exact_parent": true,
+      "case_dir": "/root/nfs/emmy/research/suites/cases-dc6e42c250746ebde8363a3c7d452e97f00864e6e319b231f001a8081e584766/pointwise-0",
+      "case_id": "1b04a47f25f65c32e6db4604295978504bc23f13892a5a8662acd95b598f7f7e",
+      "focused_key_changed": false,
+      "problem": null,
+      "set": "core47"
+    },
+    {
+      "PTX_native_resources_exact_parent": true,
+      "case_dir": "/root/nfs/emmy/research/suites/cases-dc6e42c250746ebde8363a3c7d452e97f00864e6e319b231f001a8081e584766/pointwise-1",
+      "case_id": "6908ada377cf2129634dcd13c845531f9174ddf9817427337788621d09e84eda",
+      "focused_key_changed": false,
+      "problem": null,
+      "set": "core47"
+    },
+    {
+      "PTX_native_resources_exact_parent": true,
+      "case_dir": "/root/nfs/emmy/research/suites/cases-dc6e42c250746ebde8363a3c7d452e97f00864e6e319b231f001a8081e584766/pointwise-2",
+      "case_id": "e65d4aa23ca649a8ae7d6ef06f8e246e6967fa85a2b1a98368ea652509c4c4dd",
+      "focused_key_changed": false,
+      "problem": null,
+      "set": "core47"
+    },
+    {
+      "PTX_native_resources_exact_parent": true,
+      "case_dir": "/root/nfs/emmy/research/suites/cases-dc6e42c250746ebde8363a3c7d452e97f00864e6e319b231f001a8081e584766/pointwise-3",
+      "case_id": "0d77e376a2df53559dbf42acb96b0e4d457a72d3aae21a783385a175e1d8225a",
+      "focused_key_changed": false,
+      "problem": null,
+      "set": "core47"
+    },
+    {
+      "PTX_native_resources_exact_parent": false,
+      "case_dir": "/root/nfs/emmy/research/suites/cases-dc6e42c250746ebde8363a3c7d452e97f00864e6e319b231f001a8081e584766/reduction-0",
+      "case_id": "b90556dd5e1a9b5ce99eb90db4a83c8a97a007a7ec5df704533e1c599464f6ee",
+      "focused_key_changed": true,
+      "problem": null,
+      "set": "core47"
+    },
+    {
+      "PTX_native_resources_exact_parent": false,
+      "case_dir": "/root/nfs/emmy/research/suites/cases-dc6e42c250746ebde8363a3c7d452e97f00864e6e319b231f001a8081e584766/reduction-1",
+      "case_id": "900dc58b5f0f649c4ebf10cfce31e818704eb2391cd75e3ee6b5e26c4c8ad3a3",
+      "focused_key_changed": true,
+      "problem": null,
+      "set": "core47"
+    },
+    {
+      "PTX_native_resources_exact_parent": false,
+      "case_dir": "/root/nfs/emmy/research/suites/cases-dc6e42c250746ebde8363a3c7d452e97f00864e6e319b231f001a8081e584766/reduction-2",
+      "case_id": "c82172015ba966650980c50754829dbe308c670efad7aee2f1c0e6be38f7fe80",
+      "focused_key_changed": true,
+      "problem": null,
+      "set": "core47"
+    },
+    {
+      "PTX_native_resources_exact_parent": false,
+      "case_dir": "/root/nfs/emmy/research/suites/cases-dc6e42c250746ebde8363a3c7d452e97f00864e6e319b231f001a8081e584766/reduction-3",
+      "case_id": "1022abaead187cbd6b2dc1de18ffbcc1fc3ca561afbbcb26435001007971daa1",
+      "focused_key_changed": true,
+      "problem": null,
+      "set": "core47"
+    },
+    {
+      "PTX_native_resources_exact_parent": true,
+      "case_dir": "/root/nfs/emmy/research/suites/cases-dc6e42c250746ebde8363a3c7d452e97f00864e6e319b231f001a8081e584766/rmsnorm-0",
+      "case_id": "c12482e011097872f572e672a0a03eeaaa3e75e3799730a38d43efe1a5c3f6a9",
+      "focused_key_changed": false,
+      "problem": null,
+      "set": "core47"
+    },
+    {
+      "PTX_native_resources_exact_parent": true,
+      "case_dir": "/root/nfs/emmy/research/suites/cases-dc6e42c250746ebde8363a3c7d452e97f00864e6e319b231f001a8081e584766/rmsnorm-1",
+      "case_id": "05664eecbd55f70b009e209a5d5688e778c2561a24de818415667d5f66a365df",
+      "focused_key_changed": false,
+      "problem": null,
+      "set": "core47"
+    },
+    {
+      "PTX_native_resources_exact_parent": true,
+      "case_dir": "/root/nfs/emmy/research/suites/cases-dc6e42c250746ebde8363a3c7d452e97f00864e6e319b231f001a8081e584766/rmsnorm-2",
+      "case_id": "6ec4bf582c52af155249d8c965ba88619f2f58bb3cfbfd939b4e3b0a30ff348a",
+      "focused_key_changed": false,
+      "problem": null,
+      "set": "core47"
+    },
+    {
+      "PTX_native_resources_exact_parent": true,
+      "case_dir": "/root/nfs/emmy/research/suites/cases-dc6e42c250746ebde8363a3c7d452e97f00864e6e319b231f001a8081e584766/rmsnorm-3",
+      "case_id": "815b47b26cd728dd3fa77c1346962b7f87de52e8f3a53b61aee6d9c131ce409e",
+      "focused_key_changed": false,
+      "problem": null,
+      "set": "core47"
+    },
+    {
+      "PTX_native_resources_exact_parent": true,
+      "case_dir": "/root/nfs/emmy/research/suites/cases-dc6e42c250746ebde8363a3c7d452e97f00864e6e319b231f001a8081e584766/l2norm-0",
+      "case_id": "5b404768d8b4a8719d5ba025d5f3e3512c2464569cf7df5d7344727716bfdd6b",
+      "focused_key_changed": false,
+      "problem": null,
+      "set": "core47"
+    },
+    {
+      "PTX_native_resources_exact_parent": true,
+      "case_dir": "/root/nfs/emmy/research/suites/cases-dc6e42c250746ebde8363a3c7d452e97f00864e6e319b231f001a8081e584766/l2norm-1",
+      "case_id": "a69ae6a08f8387ce33663368b6fd69f6cfa39eb812bb08eebe9f36bf08722481",
+      "focused_key_changed": false,
+      "problem": null,
+      "set": "core47"
+    },
+    {
+      "PTX_native_resources_exact_parent": true,
+      "case_dir": "/root/nfs/emmy/research/suites/cases-dc6e42c250746ebde8363a3c7d452e97f00864e6e319b231f001a8081e584766/l2norm-2",
+      "case_id": "574e0e17c4228d9b9af4de09347d88873ff379c4925a84ce4ac295078af2851d",
+      "focused_key_changed": false,
+      "problem": null,
+      "set": "core47"
+    },
+    {
+      "PTX_native_resources_exact_parent": true,
+      "case_dir": "/root/nfs/emmy/research/suites/cases-dc6e42c250746ebde8363a3c7d452e97f00864e6e319b231f001a8081e584766/l2norm-3",
+      "case_id": "03c00ab1787facda118672163e1b9316fc886bdd08ee08b2055f75cc923a7505",
+      "focused_key_changed": false,
+      "problem": null,
+      "set": "core47"
+    },
+    {
+      "PTX_native_resources_exact_parent": true,
+      "case_dir": "/root/nfs/emmy/research/suites/cases-dc6e42c250746ebde8363a3c7d452e97f00864e6e319b231f001a8081e584766/matmul-0",
+      "case_id": "9473c95d36fc2236697a45ef59b6098638dd26172d62d7d021ecf61dabb2046e",
+      "focused_key_changed": false,
+      "problem": null,
+      "set": "core47"
+    },
+    {
+      "PTX_native_resources_exact_parent": true,
+      "case_dir": "/root/nfs/emmy/research/suites/cases-dc6e42c250746ebde8363a3c7d452e97f00864e6e319b231f001a8081e584766/matmul-1",
+      "case_id": "a80ed698bc451d6aa88bc5b6ba208282f5d9de3ccd2d4c76c3122a764c3c6231",
+      "focused_key_changed": false,
+      "problem": null,
+      "set": "core47"
+    },
+    {
+      "PTX_native_resources_exact_parent": true,
+      "case_dir": "/root/nfs/emmy/research/suites/cases-dc6e42c250746ebde8363a3c7d452e97f00864e6e319b231f001a8081e584766/matmul-2",
+      "case_id": "37dc67b2c5a7411a83dbff8e54a6f184f563d3d0d15105bd64d6cea26196edff",
+      "focused_key_changed": false,
+      "problem": null,
+      "set": "core47"
+    },
+    {
+      "PTX_native_resources_exact_parent": true,
+      "case_dir": "/root/nfs/emmy/research/suites/cases-dc6e42c250746ebde8363a3c7d452e97f00864e6e319b231f001a8081e584766/matmul-3",
+      "case_id": "d0db8622a3aaf96799aaf339ec425a1b86d34ad71610a90a8a2d02619bffe057",
+      "focused_key_changed": false,
+      "problem": null,
+      "set": "core47"
+    },
+    {
+      "PTX_native_resources_exact_parent": true,
+      "case_dir": "/root/nfs/emmy/research/suites/cases-dc6e42c250746ebde8363a3c7d452e97f00864e6e319b231f001a8081e584766/atomic_matmul-0",
+      "case_id": "f1a310d558132f68baabc92758c6e40872282556ba663c5ef74f8987898ad451",
+      "focused_key_changed": false,
+      "problem": null,
+      "set": "core47"
+    },
+    {
+      "PTX_native_resources_exact_parent": true,
+      "case_dir": "/root/nfs/emmy/research/suites/cases-dc6e42c250746ebde8363a3c7d452e97f00864e6e319b231f001a8081e584766/atomic_matmul-1",
+      "case_id": "f3d0df26c89d73b11f5a4c4f626934e7ba13479e67858843debc0e6bc3e7ba0a",
+      "focused_key_changed": false,
+      "problem": null,
+      "set": "core47"
+    },
+    {
+      "PTX_native_resources_exact_parent": true,
+      "case_dir": "/root/nfs/emmy/research/suites/cases-dc6e42c250746ebde8363a3c7d452e97f00864e6e319b231f001a8081e584766/atomic_matmul-2",
+      "case_id": "5110e2bd57a0a5b98ffe7b811c86fab481f64d95049bf4e4a8233776a5f26d51",
+      "focused_key_changed": false,
+      "problem": null,
+      "set": "core47"
+    },
+    {
+      "PTX_native_resources_exact_parent": true,
+      "case_dir": "/root/nfs/emmy/research/suites/cases-dc6e42c250746ebde8363a3c7d452e97f00864e6e319b231f001a8081e584766/atomic_matmul-3",
+      "case_id": "b3cb67fb443e3ab50caeed8f8564da9b085c491aeba1f3891a46e8361f413af6",
+      "focused_key_changed": false,
+      "problem": null,
+      "set": "core47"
+    },
+    {
+      "PTX_native_resources_exact_parent": true,
+      "case_dir": "/root/nfs/emmy/research/suites/cases-dc6e42c250746ebde8363a3c7d452e97f00864e6e319b231f001a8081e584766/softmax-0",
+      "case_id": "8bad4497eb5b8f4cb4743ac86d2fda10f533151b7f8e467e5779ac3b24d98292",
+      "focused_key_changed": false,
+      "problem": null,
+      "set": "core47"
+    },
+    {
+      "PTX_native_resources_exact_parent": true,
+      "case_dir": "/root/nfs/emmy/research/suites/cases-dc6e42c250746ebde8363a3c7d452e97f00864e6e319b231f001a8081e584766/softmax-1",
+      "case_id": "c1bdc3390fc81f38ec582c1d9eddefa367798509f84912db56fa384db4e4c013",
+      "focused_key_changed": false,
+      "problem": null,
+      "set": "core47"
+    },
+    {
+      "PTX_native_resources_exact_parent": true,
+      "case_dir": "/root/nfs/emmy/research/suites/cases-dc6e42c250746ebde8363a3c7d452e97f00864e6e319b231f001a8081e584766/softmax-2",
+      "case_id": "ebff5b980db94c4f2920b2ae118b063325756e6a1796f40e5bf35c1dffa13a4d",
+      "focused_key_changed": false,
+      "problem": null,
+      "set": "core47"
+    },
+    {
+      "PTX_native_resources_exact_parent": true,
+      "case_dir": "/root/nfs/emmy/research/suites/cases-dc6e42c250746ebde8363a3c7d452e97f00864e6e319b231f001a8081e584766/softmax-3",
+      "case_id": "5c7b8169a67dc6af41fee6f71aa8121f6b47e4b5b1ace53860dfafcfa02627c5",
+      "focused_key_changed": false,
+      "problem": null,
+      "set": "core47"
+    },
+    {
+      "PTX_native_resources_exact_parent": true,
+      "case_dir": "/root/nfs/emmy/research/suites/cases-dc6e42c250746ebde8363a3c7d452e97f00864e6e319b231f001a8081e584766/attention-0",
+      "case_id": "e87beb3a775fd95a6b6939ffdc654c3bc53874d734c7028bb548bde7c3a7503e",
+      "focused_key_changed": false,
+      "problem": null,
+      "set": "core47"
+    },
+    {
+      "PTX_native_resources_exact_parent": true,
+      "case_dir": "/root/nfs/emmy/research/suites/cases-dc6e42c250746ebde8363a3c7d452e97f00864e6e319b231f001a8081e584766/attention-1",
+      "case_id": "f49a4a64ce26269a6b785126fb17b553402ada53cc29693213eab3f9b598dd3c",
+      "focused_key_changed": false,
+      "problem": null,
+      "set": "core47"
+    },
+    {
+      "PTX_native_resources_exact_parent": true,
+      "case_dir": "/root/nfs/emmy/research/suites/cases-dc6e42c250746ebde8363a3c7d452e97f00864e6e319b231f001a8081e584766/attention-2",
+      "case_id": "b6ccef89c943c730849be6f42e7e6792a4bf7e78a3c0d32e61572cf859fa01c9",
+      "focused_key_changed": false,
+      "problem": null,
+      "set": "core47"
+    },
+    {
+      "PTX_native_resources_exact_parent": true,
+      "case_dir": "/root/nfs/emmy/research/suites/cases-dc6e42c250746ebde8363a3c7d452e97f00864e6e319b231f001a8081e584766/attention-3",
+      "case_id": "125813c1eb540ca142016b397a36fc1a51d6fa3aacc2545b2be8c2d89c83e6c6",
+      "focused_key_changed": false,
+      "problem": null,
+      "set": "core47"
+    },
+    {
+      "PTX_native_resources_exact_parent": true,
+      "case_dir": "/root/nfs/emmy/research/suites/cases-dc6e42c250746ebde8363a3c7d452e97f00864e6e319b231f001a8081e584766/p00_scalar_add",
+      "case_id": "4035b0c010105ed7be8aa1a889fe2754d498fc4a27c1719bf547ddad66e48403",
+      "focused_key_changed": false,
+      "problem": "p00_scalar_add",
+      "set": "core47"
+    },
+    {
+      "PTX_native_resources_exact_parent": true,
+      "case_dir": "/root/nfs/emmy/research/suites/cases-dc6e42c250746ebde8363a3c7d452e97f00864e6e319b231f001a8081e584766/p01_vector_add",
+      "case_id": "5e973341ada3e33f701293be5a3e6195badb7290a5471f4c6cefa86634d1b168",
+      "focused_key_changed": false,
+      "problem": "p01_vector_add",
+      "set": "core47"
+    },
+    {
+      "PTX_native_resources_exact_parent": true,
+      "case_dir": "/root/nfs/emmy/research/suites/cases-dc6e42c250746ebde8363a3c7d452e97f00864e6e319b231f001a8081e584766/p02_scale_shift",
+      "case_id": "3145aa57f753f64551cd4b83c3d430e6e2375a9feb4819accbfd5e55c39da560",
+      "focused_key_changed": false,
+      "problem": "p02_scale_shift",
+      "set": "core47"
+    },
+    {
+      "PTX_native_resources_exact_parent": true,
+      "case_dir": "/root/nfs/emmy/research/suites/cases-dc6e42c250746ebde8363a3c7d452e97f00864e6e319b231f001a8081e584766/p03_relu_mul",
+      "case_id": "aeeffce3a36b8cf1b27173b8c1644fc517a24d992173e06bb1664784b009b6ba",
+      "focused_key_changed": false,
+      "problem": "p03_relu_mul",
+      "set": "core47"
+    },
+    {
+      "PTX_native_resources_exact_parent": false,
+      "case_dir": "/root/nfs/emmy/research/suites/cases-dc6e42c250746ebde8363a3c7d452e97f00864e6e319b231f001a8081e584766/r01_array_sum",
+      "case_id": "2ffefe7fee88d864b3ac97cd70fe9711643f3551fba367299df52f329649154d",
+      "focused_key_changed": true,
+      "problem": "r01_array_sum",
+      "set": "core47"
+    },
+    {
+      "PTX_native_resources_exact_parent": false,
+      "case_dir": "/root/nfs/emmy/research/suites/cases-dc6e42c250746ebde8363a3c7d452e97f00864e6e319b231f001a8081e584766/r02_big_sum",
+      "case_id": "a56bdb784a46a763c2b633ebb5d16ee1ffd4287cb0984168b4f80909c323ce22",
+      "focused_key_changed": true,
+      "problem": "r02_big_sum",
+      "set": "core47"
+    },
+    {
+      "PTX_native_resources_exact_parent": false,
+      "case_dir": "/root/nfs/emmy/research/suites/cases-dc6e42c250746ebde8363a3c7d452e97f00864e6e319b231f001a8081e584766/r03_mean",
+      "case_id": "6dfbe2bc925e2b31ceb8eb84bb5016cca8af143ca55cf93078d09decc26a0fd3",
+      "focused_key_changed": true,
+      "problem": "r03_mean",
+      "set": "core47"
+    },
+    {
+      "PTX_native_resources_exact_parent": false,
+      "case_dir": "/root/nfs/emmy/research/suites/cases-dc6e42c250746ebde8363a3c7d452e97f00864e6e319b231f001a8081e584766/r04_row_sum",
+      "case_id": "5c2ba872d36e6526a79b9799c059e237f65a34019cd94f1c85da4f0b9f930d3f",
+      "focused_key_changed": true,
+      "problem": "r04_row_sum",
+      "set": "core47"
+    },
+    {
+      "PTX_native_resources_exact_parent": false,
+      "case_dir": "/root/nfs/emmy/research/suites/cases-dc6e42c250746ebde8363a3c7d452e97f00864e6e319b231f001a8081e584766/m01_matmul_512",
+      "case_id": "cd9a29496fccd9e421c1cfbe14347cb45003f38681e3b4b2e703f5dbbfdd6c5d",
+      "focused_key_changed": true,
+      "problem": "m01_matmul_512",
+      "set": "core47"
+    },
+    {
+      "PTX_native_resources_exact_parent": true,
+      "case_dir": "/root/nfs/emmy/research/suites/cases-dc6e42c250746ebde8363a3c7d452e97f00864e6e319b231f001a8081e584766/m02_matmul_rect",
+      "case_id": "aeb1568894b7afb50ea0b1b6c6fe94b57419452643ec87c5c6561f9ebfc58bbe",
+      "focused_key_changed": false,
+      "problem": "m02_matmul_rect",
+      "set": "core47"
+    },
+    {
+      "PTX_native_resources_exact_parent": false,
+      "case_dir": "/root/nfs/emmy/research/suites/cases-dc6e42c250746ebde8363a3c7d452e97f00864e6e319b231f001a8081e584766/f01_rmsnorm",
+      "case_id": "6ab09ab4acc384ee252370a564a13965ece1ad21a3e64d6615f0de1a39b8c665",
+      "focused_key_changed": true,
+      "problem": "f01_rmsnorm",
+      "set": "core47"
+    },
+    {
+      "PTX_native_resources_exact_parent": true,
+      "case_dir": "/root/nfs/emmy/research/suites/cases-dc6e42c250746ebde8363a3c7d452e97f00864e6e319b231f001a8081e584766/f02_row_softmax",
+      "case_id": "89d56c168a0b04373ef8d50096c48534c70019b8d2f87371b79aee2289922b44",
+      "focused_key_changed": false,
+      "problem": "f02_row_softmax",
+      "set": "core47"
+    },
+    {
+      "PTX_native_resources_exact_parent": false,
+      "case_dir": "/root/nfs/emmy/research/suites/cases-dc6e42c250746ebde8363a3c7d452e97f00864e6e319b231f001a8081e584766/f03_l2norm",
+      "case_id": "1e82d7e58a53e8795ea9d05e3759dfe201e42308efd08dd2a51e79c769dc2fbc",
+      "focused_key_changed": true,
+      "problem": "f03_l2norm",
+      "set": "core47"
+    },
+    {
+      "PTX_native_resources_exact_parent": true,
+      "case_dir": "/root/nfs/emmy/research/suites/cases-dc6e42c250746ebde8363a3c7d452e97f00864e6e319b231f001a8081e584766/a01_attention",
+      "case_id": "c10866af73f820553331b01c52e042e5d724c275a6f5fedd9348170ba75d382c",
+      "focused_key_changed": false,
+      "problem": "a01_attention",
+      "set": "core47"
+    },
+    {
+      "PTX_native_resources_exact_parent": true,
+      "case_dir": "/root/nfs/emmy/research/suites/cases-dc6e42c250746ebde8363a3c7d452e97f00864e6e319b231f001a8081e584766/a02_attention_128",
+      "case_id": "69db4e7f597c41b0684fb30c3204e197cf56c8647d9a63dc0adb77f2a8a0d867",
+      "focused_key_changed": false,
+      "problem": "a02_attention_128",
+      "set": "core47"
+    }
+  ],
+  "source_id": "212e052936722ec76f1c5c4c6b2243e9ff87fc79168f99284193d46b36eb15e4",
+  "status": "PASS_FINAL_INDEPENDENT_CORE47_METADATA_WITH_ACTUAL_CHANGED_SET",
+  "timing_selection_authorized_by_this_audit": false,
+  "unexpected_generated_changed_case_ids": [
+    "1022abaead187cbd6b2dc1de18ffbcc1fc3ca561afbbcb26435001007971daa1",
+    "900dc58b5f0f649c4ebf10cfce31e818704eb2391cd75e3ee6b5e26c4c8ad3a3",
+    "b90556dd5e1a9b5ce99eb90db4a83c8a97a007a7ec5df704533e1c599464f6ee",
+    "c82172015ba966650980c50754829dbe308c670efad7aee2f1c0e6be38f7fe80"
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "version": "powenn-merge-continuation-v1",
+  "sources": {
+    "compile.py": "7d5d4d2d0984aaa61c713c5cba2550628f08cb2331c194e781188332333cd2d0",
+    "tf32_emitter.py": "fc460b050b8c9ad97104869df5390571940ce57299b2115be7e12bb2a28b505d",
+    "tensor_core.py": "ca5af9c9f41826f9e2000de7a8537745c0393007d8eaaaf9fd212b3bfd3364a6"
+  },
+  "policy_sha256": "7725d2f98cde89aa451686c050b458c35ded18c551a32764a61629b5261d3393",
+  "selected_cases": 93,
+  "published_cases": 15,
+  "sanitizer_required_cases": 20,
+  "assembly_targets": [
+    "sm_89",
+    "sm_120"
+  ],
+  "no_new_test_cases": true,
+  "numerical_evidence": "Unchanged subset of the existing source-bound 122-case isolated correctness run; no new GPU correctness draw.",
+  "performance_evidence": "Existing two-block paired published comparison plus completed independent 32-pair confirmation; sm89 only.",
+  "cpu_checks": 51,
+  "files": {
+    "performance.csv": "2710b1e968141be6c4f5ae70ddee91990ed55951db5e7ca81fa061df4a73d444",
+    "scope-audit.json": "1b818d20a9fa5cfc7e83c48817d62fa52a2ea0070708f32af87c390f84332c54",
+    "tensor-core-results.json": "9033824175e55e9b4ce425edfa58bd3d592c3105f9cc1e56f43c4b8f958291a7",
+    "correctness.json": "0efc1f11d82af0b757c1c754a5f2cd9dc5fc1991db58520fa585d68a7746f71b",
+    "selected-v5-receipts.json": "efac3536b56f7f068566f22a6e09a50c4230b6ea07d957fb192a8a98194ebf16",
+    "confirmation-attestation.json": "fd1ad39ed360b99ce7d1055db80403f609c76321708f78a96fd445e3a7592aa9",
+    "cpu-tests.log": "451babac3405f543229cb9894d1cdf07f9f051f73c135ab734247eb94c69a15c",
+    "counterexamples.json": "1cb36fcdbb45fbe5d10de466d1f1acbf345739914f79a91249984c8e11f4211f",
+    "performance.json": "f47c29c4751275dc97b7c2b38527054f12202745f4facc1ed0627c0e3ae91110",
+    "manifest.json": "99b414a6917cd5c28693f003acf31b500d52426daf472b0a4fa2738ff56bcb3d",
+    "gates.json": "9993e74de61d6bb2430cddabfbc3a5d45eb7eba6e9e39e9a5f1f2b44d6a005fe",
+    "condensed-cpu-tests.log": "34043afd490ec8bb3a7ad5f81a566c93b8fea8ee2cf5a16326c4c659bdeb878c",
+    "timing-blocks.json": "df73481cf7b201d20246b0d14d991008736d913e07fc1e92df1c69174dc870cb",
+    "paired-samples.csv": "68a68b796c8ab35c1b0841f70f97ca03462486a027d8bb6cf7b9793b2f6fa95a"
+  }
+}
