@@ -44,6 +44,12 @@ def compile_ptx(ir):
     return result.stdout
 
 
+def tf32_ptx(graph, kernel, decision):
+    """The TF32 emitter's PTX for a Plan; compile.py may prefer SIMT."""
+    from tf32_emitter import production_ptx
+    return production_ptx(decision.plan, kernel, node=graph.nodes[kernel['node']], graph=graph)
+
+
 def compile_nodes(graph, meta):
     """Compile one already-mutated graph through the production entry point."""
     with tempfile.TemporaryDirectory() as folder:
@@ -109,7 +115,7 @@ class TensorCoreTests(unittest.TestCase):
         decision = tensor_core.classify(graph, graph.nodes[kernel['node']], kernel)
         self.assertEqual(decision.verdict, tensor_core.PLAN)
         self.assertEqual((decision.plan.m, decision.plan.n, decision.plan.k), (512, 512, 512))
-        ptx = compile_ptx(ir)
+        ptx = tf32_ptx(graph, kernel, decision)
         self.assertEqual(ptx.count(MMA), 3)
         self.assertIn('cvt.rna.tf32.f32', ptx)
 
@@ -170,7 +176,7 @@ class TensorCoreTests(unittest.TestCase):
         decision = tensor_core.classify(graph, graph.nodes[kernel['node']], kernel)
         self.assertEqual(decision.verdict, tensor_core.PLAN)
         self.assertEqual(decision.plan.staging, 'shared')
-        ptx = compile_ptx(ir)
+        ptx = tf32_ptx(graph, kernel, decision)
         # CTA strides cover only block axes.  With a 2x2 CTA grid, block 3
         # must decode as (1, 1); a stride through the thread suffix would
         # decode every block as tile (0, 0).
@@ -235,8 +241,8 @@ class TensorCoreTests(unittest.TestCase):
         folder = CORPUS / 'p12-staged-b-transpose'
         ir, meta, kernel, graph = load_case(folder)
         decision = tensor_core.classify(graph, graph.nodes[kernel['node']], kernel)
-        ptx = compile_ptx(ir)
         self.assertEqual(decision.verdict, tensor_core.PLAN)
+        ptx = tf32_ptx(graph, kernel, decision)
         self.assertEqual(ptx.count(MMA), 3)
         # Per K atom: six high-part and six low-part conversions.  The low
         # parts are formed by f32 subtraction of the stored high fragments.

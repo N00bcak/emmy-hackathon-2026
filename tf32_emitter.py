@@ -12,6 +12,10 @@ import struct
 
 import numpy as np
 
+# Every emitted module targets the runner's GPU (RTX 5090). sm_120 needs
+# PTX ISA 8.7 or later.
+PTX_HEADER = ('.version 8.7', '.target sm_120', '.address_size 64')
+
 
 MMA = 'mma.sync.aligned.m16n8k8.row.col.f32.tf32.tf32.f32'
 
@@ -127,7 +131,7 @@ def synthetic_ptx(a, b, entry='synthetic_mma'):
     if a.shape != (16, 8) or b.shape != (8, 8):
         raise ValueError('one atom expects A=(16,8), B=(8,8)')
     lines = [
-        '.version 8.0', '.target sm_89', '.address_size 64', '',
+        *PTX_HEADER, '',
         f'.visible .entry {entry}(',
         '    .param .u64 param_A,', '    .param .u64 param_B,',
         '    .param .u64 param_C', ')', '{',
@@ -697,7 +701,8 @@ def production_ptx(plan, meta, *, node=None, graph=None):
             f'    .reg .b64 %rd<{regs.count["rd"]+1}>;',
             f'    .reg .f32 %f<{regs.count["f"]+1}>;',
             f'    .reg .pred %p<{regs.count["p"]+1}>;']
-    return '\n'.join(['.version 8.0', '.target sm_89', '.address_size 64', '',
+    return '\n'.join([*PTX_HEADER, '',
                       *externals,
-                      f'.visible .entry {plan.entry}(', ',\n'.join(params), ')', '{',
+                      f'.visible .entry {plan.entry}(', ',\n'.join(params), ')',
+                      '.maxntid ' + ', '.join(str(int(x)) for x in meta['block']), '{',
                       *decl, *lines, '    ret;', '}', ''])
