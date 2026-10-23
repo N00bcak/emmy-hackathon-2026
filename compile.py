@@ -1631,9 +1631,25 @@ class Emitter:
             self.emit(f'abs.f32 {absolute}, {operands[0]};')
             self.emit(f'mul.f32 {absolute}, {absolute}, {f32(-math.log2(math.e))};')
             self.emit(f'ex2.approx.f32 {exponent}, {absolute};')
+            # log(1+y) must not first round tiny y away in the addition to1.
+            # For0<=y<=1/8 the alternating degree6 series has relative
+            # truncation error <=(1+y)*y**6/7, below6.14e-7. The threshold
+            # is an analytic approximation interval, independent of inputs.
+            small = self.reg('p')
+            large, joined = self.label('softplus_log'), self.label('softplus_ready')
+            self.emit(f'setp.le.f32 {small}, {exponent}, {f32(0.125)};')
+            self.emit(f'@!{small} bra {large};')
+            polynomial = self.reg('f')
+            self.emit(f'fma.rn.f32 {polynomial}, {exponent}, {f32(-1.0 / 6.0)}, {f32(1.0 / 5.0)};')
+            for coefficient in (-1.0 / 4.0, 1.0 / 3.0, -1.0 / 2.0, 1.0):
+                self.emit(f'fma.rn.f32 {polynomial}, {exponent}, {polynomial}, {f32(coefficient)};')
+            self.emit(f'mul.rn.f32 {logarithm}, {exponent}, {polynomial};')
+            self.emit(f'bra {joined};')
+            self.mark(large)
             self.emit(f'add.f32 {shifted}, {exponent}, {f32(1.0)};')
             self.emit(f'lg2.approx.f32 {logarithm}, {shifted};')
             self.emit(f'mul.f32 {logarithm}, {logarithm}, {f32(math.log(2.0))};')
+            self.mark(joined)
             self.emit(f'max.f32 {maximum}, {operands[0]}, {f32(0.0)};')
             self.emit(f'add.f32 {reg}, {maximum}, {logarithm};')
         elif op == 'square' and len(operands) == 1:
