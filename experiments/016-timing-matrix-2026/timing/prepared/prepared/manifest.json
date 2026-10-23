@@ -1,0 +1,120 @@
+{
+  "candidate_source": "/home/ada/Projects/emmy-hackathon-2026/compile.py",
+  "candidate_sha256": "2d35bf97358e9f8fe9243a4a7b436145662cb543f3a5f35370aecb1146f5a3d0",
+  "baseline_source": "/home/ada/.codex/worktrees/2a33/emmy-hackathon-2026/compile.py",
+  "baseline_sha256": "6436b729336c7e5e1cbeab6e104745adb8d1b0f68a36906e496c1d08b51abed9",
+  "arch": "sm_89",
+  "protocol": "cuda-graph-paired-v2",
+  "cases": {
+    "m01_matmul_512": {
+      "case_dir": "/home/ada/Projects/emmy-hackathon-2026/experiments/016-timing-matrix-2026/timing/prepared/prepared/m01_matmul_512",
+      "kernels": [
+        {
+          "entry": "k_matmul_2967be",
+          "ir": "/home/ada/Projects/emmy-hackathon-2026/experiments/016-timing-matrix-2026/timing/prepared/prepared/m01_matmul_512/k_matmul_2967be.ir.json",
+          "ir_sha256": "ed9ab32776ce0de8b0d1f0367da54c586bf993c964efc01482666247a976dc02",
+          "candidate": {
+            "ptx": "/home/ada/Projects/emmy-hackathon-2026/experiments/016-timing-matrix-2026/timing/prepared/prepared/m01_matmul_512/candidate-k_matmul_2967be.ptx",
+            "ptx_sha256": "84e26af55cd3c696a891d583a04e13b20d48a2f349223f8140311e3de9f14b9b",
+            "cubin": "/home/ada/Projects/emmy-hackathon-2026/experiments/016-timing-matrix-2026/timing/prepared/prepared/m01_matmul_512/candidate-k_matmul_2967be.cubin",
+            "cubin_sha256": "602fd58acbb5e6d621f519a4e449083de2b5acb8305b68a6b3013c062eae0f0b"
+          },
+          "baseline": {
+            "ptx": "/home/ada/Projects/emmy-hackathon-2026/experiments/016-timing-matrix-2026/timing/prepared/prepared/m01_matmul_512/baseline-k_matmul_2967be.ptx",
+            "ptx_sha256": "52251b6560aadaf3e1143193af4d61b44943769f51a8f74701864c67d23803ff",
+            "cubin": "/home/ada/Projects/emmy-hackathon-2026/experiments/016-timing-matrix-2026/timing/prepared/prepared/m01_matmul_512/baseline-k_matmul_2967be.cubin",
+            "cubin_sha256": "33b4b311af532bf31dadf3f359ed44d1f09d8c67495696500ed300b17d777a2c"
+          }
+        }
+      ]
+    },
+    "m02_matmul_rect": {
+      "case_dir": "/home/ada/Projects/emmy-hackathon-2026/experiments/016-timing-matrix-2026/timing/prepared/prepared/m02_matmul_rect",
+      "kernels": [
+        {
+          "entry": "k_matmul",
+          "ir": "/home/ada/Projects/emmy-hackathon-2026/experiments/016-timing-matrix-2026/timing/prepared/prepared/m02_matmul_rect/k_matmul.ir.json",
+          "ir_sha256": "c47bb47c529e7362c9272784ac21a31f2a5d79546cc11b19beff891278d22206",
+          "candidate": {
+            "ptx": "/home/ada/Projects/emmy-hackathon-2026/experiments/016-timing-matrix-2026/timing/prepared/prepared/m02_matmul_rect/candidate-k_matmul.ptx",
+            "ptx_sha256": "3fabbf1e81c3f4ca83574876721d851910b8337a6cbd98d7f38bda9d2e7f5071",
+            "cubin": "/home/ada/Projects/emmy-hackathon-2026/experiments/016-timing-matrix-2026/timing/prepared/prepared/m02_matmul_rect/candidate-k_matmul.cubin",
+            "cubin_sha256": "71b39b407c9b96a8a5356cb9c38b48a4743c57e3c248e7b7da1ef3cb4c776872"
+          },
+          "baseline": {
+            "ptx": "/home/ada/Projects/emmy-hackathon-2026/experiments/016-timing-matrix-2026/timing/prepared/prepared/m02_matmul_rect/baseline-k_matmul.ptx",
+            "ptx_sha256": "3fabbf1e81c3f4ca83574876721d851910b8337a6cbd98d7f38bda9d2e7f5071",
+            "cubin": "/home/ada/Projects/emmy-hackathon-2026/experiments/016-timing-matrix-2026/timing/prepared/prepared/m02_matmul_rect/baseline-k_matmul.cubin",
+            "cubin_sha256": "71b39b407c9b96a8a5356cb9c38b48a4743c57e3c248e7b7da1ef3cb4c776872"
+          }
+        }
+      ]
+    },
+    "f02_row_softmax": {
+      "case_dir": "/home/ada/Projects/emmy-hackathon-2026/experiments/016-timing-matrix-2026/timing/prepared/prepared/f02_row_softmax",
+      "kernels": [
+        {
+          "entry": "k_softmax_05263d",
+          "ir": "/home/ada/Projects/emmy-hackathon-2026/experiments/016-timing-matrix-2026/timing/prepared/prepared/f02_row_softmax/k_softmax_05263d.ir.json",
+          "ir_sha256": "d48b030e9d9a765aa631287f72935bc59f20926f3ccb09dc7f7932106770af03",
+          "candidate": {
+            "ptx": "/home/ada/Projects/emmy-hackathon-2026/experiments/016-timing-matrix-2026/timing/prepared/prepared/f02_row_softmax/candidate-k_softmax_05263d.ptx",
+            "ptx_sha256": "0923e49549fcd9e2f00541ca3569bd0f41e8084f2369a8b43df98a46cf60e527",
+            "cubin": "/home/ada/Projects/emmy-hackathon-2026/experiments/016-timing-matrix-2026/timing/prepared/prepared/f02_row_softmax/candidate-k_softmax_05263d.cubin",
+            "cubin_sha256": "648ae6f6b23af94abbbcae9409104c26ee14f3eb7f0b4e74bceffcb77984520f"
+          },
+          "baseline": {
+            "ptx": "/home/ada/Projects/emmy-hackathon-2026/experiments/016-timing-matrix-2026/timing/prepared/prepared/f02_row_softmax/baseline-k_softmax_05263d.ptx",
+            "ptx_sha256": "0923e49549fcd9e2f00541ca3569bd0f41e8084f2369a8b43df98a46cf60e527",
+            "cubin": "/home/ada/Projects/emmy-hackathon-2026/experiments/016-timing-matrix-2026/timing/prepared/prepared/f02_row_softmax/baseline-k_softmax_05263d.cubin",
+            "cubin_sha256": "648ae6f6b23af94abbbcae9409104c26ee14f3eb7f0b4e74bceffcb77984520f"
+          }
+        }
+      ]
+    },
+    "a01_attention": {
+      "case_dir": "/home/ada/Projects/emmy-hackathon-2026/experiments/016-timing-matrix-2026/timing/prepared/prepared/a01_attention",
+      "kernels": [
+        {
+          "entry": "k_matmul_softmax_reduce_b55365",
+          "ir": "/home/ada/Projects/emmy-hackathon-2026/experiments/016-timing-matrix-2026/timing/prepared/prepared/a01_attention/k_matmul_softmax_reduce_b55365.ir.json",
+          "ir_sha256": "0a6925795c1b8e108befbdc3300c722ea5a7fb19d2337597eca860e9c36eff9a",
+          "candidate": {
+            "ptx": "/home/ada/Projects/emmy-hackathon-2026/experiments/016-timing-matrix-2026/timing/prepared/prepared/a01_attention/candidate-k_matmul_softmax_reduce_b55365.ptx",
+            "ptx_sha256": "5e4fbadbda45c407618aa6d9c3c5eb083bd5b8c21528d3480b28b78060a32696",
+            "cubin": "/home/ada/Projects/emmy-hackathon-2026/experiments/016-timing-matrix-2026/timing/prepared/prepared/a01_attention/candidate-k_matmul_softmax_reduce_b55365.cubin",
+            "cubin_sha256": "e2541f55b05bc158be2aa32b9d6d39e05a6f256d1207dc8ec43bdf4a9c73c0bb"
+          },
+          "baseline": {
+            "ptx": "/home/ada/Projects/emmy-hackathon-2026/experiments/016-timing-matrix-2026/timing/prepared/prepared/a01_attention/baseline-k_matmul_softmax_reduce_b55365.ptx",
+            "ptx_sha256": "5e4fbadbda45c407618aa6d9c3c5eb083bd5b8c21528d3480b28b78060a32696",
+            "cubin": "/home/ada/Projects/emmy-hackathon-2026/experiments/016-timing-matrix-2026/timing/prepared/prepared/a01_attention/baseline-k_matmul_softmax_reduce_b55365.cubin",
+            "cubin_sha256": "e2541f55b05bc158be2aa32b9d6d39e05a6f256d1207dc8ec43bdf4a9c73c0bb"
+          }
+        }
+      ]
+    },
+    "a02_attention_128": {
+      "case_dir": "/home/ada/Projects/emmy-hackathon-2026/experiments/016-timing-matrix-2026/timing/prepared/prepared/a02_attention_128",
+      "kernels": [
+        {
+          "entry": "k_matmul_softmax_reduce_6f0029",
+          "ir": "/home/ada/Projects/emmy-hackathon-2026/experiments/016-timing-matrix-2026/timing/prepared/prepared/a02_attention_128/k_matmul_softmax_reduce_6f0029.ir.json",
+          "ir_sha256": "a51792c9e4d920a493054fb2a6986d87766cc1b3717078f8e631a45d1b0bf1dd",
+          "candidate": {
+            "ptx": "/home/ada/Projects/emmy-hackathon-2026/experiments/016-timing-matrix-2026/timing/prepared/prepared/a02_attention_128/candidate-k_matmul_softmax_reduce_6f0029.ptx",
+            "ptx_sha256": "9570daac941a6cb092542c4ebf4d16d983b5a891df557c186758678bfa5ccf30",
+            "cubin": "/home/ada/Projects/emmy-hackathon-2026/experiments/016-timing-matrix-2026/timing/prepared/prepared/a02_attention_128/candidate-k_matmul_softmax_reduce_6f0029.cubin",
+            "cubin_sha256": "8ace7bf8b89b882a811d6c22963cb7dd99bb05c7d3e98a28c496d513e40545c0"
+          },
+          "baseline": {
+            "ptx": "/home/ada/Projects/emmy-hackathon-2026/experiments/016-timing-matrix-2026/timing/prepared/prepared/a02_attention_128/baseline-k_matmul_softmax_reduce_6f0029.ptx",
+            "ptx_sha256": "9570daac941a6cb092542c4ebf4d16d983b5a891df557c186758678bfa5ccf30",
+            "cubin": "/home/ada/Projects/emmy-hackathon-2026/experiments/016-timing-matrix-2026/timing/prepared/prepared/a02_attention_128/baseline-k_matmul_softmax_reduce_6f0029.cubin",
+            "cubin_sha256": "8ace7bf8b89b882a811d6c22963cb7dd99bb05c7d3e98a28c496d513e40545c0"
+          }
+        }
+      ]
+    }
+  }
+}

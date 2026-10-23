@@ -1,0 +1,19 @@
+{
+  "mode": "timing",
+  "case": {
+    "id": "a02_attention_128",
+    "variant": "published",
+    "case_dir": "/home/ada/Projects/emmy-hackathon-2026/experiments/016-timing-matrix-2026/timing/prepared-all15/prepared/a02_attention_128",
+    "cubins": [
+      "/home/ada/Projects/emmy-hackathon-2026/experiments/016-timing-matrix-2026/timing/prepared-all15/prepared/a02_attention_128/baseline-k_matmul_softmax_reduce_6f0029.cubin"
+    ],
+    "baseline_cubins": [
+      "/home/ada/Projects/emmy-hackathon-2026/experiments/016-timing-matrix-2026/timing/prepared-all15/prepared/a02_attention_128/baseline-k_matmul_softmax_reduce_6f0029.cubin"
+    ]
+  },
+  "pairs": 32,
+  "warmup": 5,
+  "seed": 66001,
+  "burst_id": "016-confirm-aa-a02_attention_128",
+  "out": "/home/ada/Projects/emmy-hackathon-2026/experiments/016-timing-matrix-2026/timing/aa-a02_attention_128-confirm.json"
+}

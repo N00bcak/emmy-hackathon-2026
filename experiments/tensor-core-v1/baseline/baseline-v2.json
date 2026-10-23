@@ -38,8 +38,8 @@
       "group": "corpus-v2",
       "ir": "experiments/tensor-core-v1/corpus-v2/n05-partial-collective/case.ir.json",
       "ir_sha256": "338c3a14f43a53ed61061a4b0af9d22a4181d26df344e94b57846c6a0a4af784",
-      "ptx_sha256": "cee44da235455e11bf5861644a6bbd1e4e0d018193a7d928414be9d05d882a4c",
-      "ptx_bytes": 5779
+      "ptx_sha256": "5a60001e65367cdcb148dc9ac87ef4e725580b3aa089c60dd596f909a1d73ab9",
+      "ptx_bytes": 5690
     },
     {
       "case": "n06-split-without-atomics",

@@ -1,0 +1,16 @@
+problem,final,winner
+a01_attention,8.864000,final
+a02_attention_128,6.816000,final
+f01_rmsnorm,4.768000,final
+f02_row_softmax,3.104000,final
+f03_l2norm,3.104000,final
+m01_matmul_512,17.088000,final
+m02_matmul_rect,5.040000,final
+p00_scalar_add,3.040000,final
+p01_vector_add,3.040000,final
+p02_scale_shift,3.072000,final
+p03_relu_mul,3.008000,final
+r01_array_sum,3.008000,final
+r02_big_sum,6.816000,final
+r03_mean,4.912000,final
+r04_row_sum,2.976000,final

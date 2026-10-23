@@ -1,0 +1,19 @@
+{
+  "mode": "timing",
+  "case": {
+    "id": "p00_scalar_add",
+    "variant": "published",
+    "case_dir": "/home/ada/Projects/emmy-hackathon-2026/experiments/016-timing-matrix-2026/timing/prepared-all15/prepared/p00_scalar_add",
+    "cubins": [
+      "/home/ada/Projects/emmy-hackathon-2026/experiments/016-timing-matrix-2026/timing/prepared-all15/prepared/p00_scalar_add/baseline-k_add_pointwise.cubin"
+    ],
+    "baseline_cubins": [
+      "/home/ada/Projects/emmy-hackathon-2026/experiments/016-timing-matrix-2026/timing/prepared-all15/prepared/p00_scalar_add/baseline-k_add_pointwise.cubin"
+    ]
+  },
+  "pairs": 16,
+  "warmup": 5,
+  "seed": 66001,
+  "burst_id": "016-all15-aa-p00_scalar_add",
+  "out": "/home/ada/Projects/emmy-hackathon-2026/experiments/016-timing-matrix-2026/timing/aa-p00_scalar_add.json"
+}

@@ -1,0 +1,2 @@
+[k_add_pointwise] 20 registers
+[k_add_pointwise] PASS  add: max abs err 0.000e+00  (17.664000391960144 us)

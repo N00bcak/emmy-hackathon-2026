@@ -1,0 +1,834 @@
+{
+  "schema": 1,
+  "url": "http://runner.riftstack.ai:48701",
+  "status": "started",
+  "repetitions": 0,
+  "gap": 0.35,
+  "arms": {
+    "main": {
+      "source": "/tmp/emmy-5090-main/compile.py",
+      "source_sha256": "6436b729336c7e5e1cbeab6e104745adb8d1b0f68a36906e496c1d08b51abed9",
+      "snapshot": {
+        "source": "/tmp/emmy-5090-main/compile.py",
+        "source_sha256": "6436b729336c7e5e1cbeab6e104745adb8d1b0f68a36906e496c1d08b51abed9",
+        "compiler_unchanged": true,
+        "cases": {
+          "a01_attention": {
+            "meta_sha256": "c280c572744016ecf6ca2971312ad2ce8a10b28c0f3e38561c1a096c2ea7352f",
+            "expected_sha256": "ccc0ad1a70f679781c8aff8064ae73368e04bc35018a537dc15ef8610262ed51",
+            "kernels": [
+              {
+                "entry": "k_matmul_softmax_reduce_b55365",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/a01_attention/k_matmul_softmax_reduce_b55365.ir.json",
+                "ir_sha256": "0a6925795c1b8e108befbdc3300c722ea5a7fb19d2337597eca860e9c36eff9a",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate/ptx/main/6436b729336c/a01_attention/k_matmul_softmax_reduce_b55365.ptx",
+                "ptx_sha256": "5e4fbadbda45c407618aa6d9c3c5eb083bd5b8c21528d3480b28b78060a32696"
+              }
+            ]
+          },
+          "a02_attention_128": {
+            "meta_sha256": "adcc08994786076e7cb9835ab3bab19b0dc9c0d00a999adea124380f8300de18",
+            "expected_sha256": "ebd7c000d75e52707f2e65304e05fbf963b4799919f814f685490c76c89e7080",
+            "kernels": [
+              {
+                "entry": "k_matmul_softmax_reduce_6f0029",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/a02_attention_128/k_matmul_softmax_reduce_6f0029.ir.json",
+                "ir_sha256": "a51792c9e4d920a493054fb2a6986d87766cc1b3717078f8e631a45d1b0bf1dd",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate/ptx/main/6436b729336c/a02_attention_128/k_matmul_softmax_reduce_6f0029.ptx",
+                "ptx_sha256": "9570daac941a6cb092542c4ebf4d16d983b5a891df557c186758678bfa5ccf30"
+              }
+            ]
+          },
+          "f01_rmsnorm": {
+            "meta_sha256": "f45014c6b0963ec9727fc0f1c9bb585319c4ac94292260bc8f7c10557c1b8e1d",
+            "expected_sha256": "197016500cfca3ee3a1952273d50655e5bbf60093c28ad801e28eb3ccb76a6fb",
+            "kernels": [
+              {
+                "entry": "k_mean_cbd1de",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/f01_rmsnorm/k_mean_cbd1de.ir.json",
+                "ir_sha256": "a8e6819e3144b942d8983b52b6865fa692868105b20de30f6ba4df424a07862a",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate/ptx/main/6436b729336c/f01_rmsnorm/k_mean_cbd1de.ptx",
+                "ptx_sha256": "2ead5e7dbf99dbc9c59e022eb88906851c68c7d9f0f298d8a6816ece7bc992a9"
+              }
+            ]
+          },
+          "f02_row_softmax": {
+            "meta_sha256": "ddbe97ea42c7b077d30d140b751f8062caf47b5620cb423a02c1dd848cd61900",
+            "expected_sha256": "7e38d188cdc0bbb7afda1e6007318b0174bcdf82eb3855775967e49d4b8ee8ce",
+            "kernels": [
+              {
+                "entry": "k_softmax_05263d",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/f02_row_softmax/k_softmax_05263d.ir.json",
+                "ir_sha256": "d48b030e9d9a765aa631287f72935bc59f20926f3ccb09dc7f7932106770af03",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate/ptx/main/6436b729336c/f02_row_softmax/k_softmax_05263d.ptx",
+                "ptx_sha256": "0923e49549fcd9e2f00541ca3569bd0f41e8084f2369a8b43df98a46cf60e527"
+              }
+            ]
+          },
+          "f03_l2norm": {
+            "meta_sha256": "cbf67c2d198f4fea1bb140083ec65c4bf14202090daaa4aac77f1514ecc60b95",
+            "expected_sha256": "fb2e242cbfe9834c6d45f27f29acc750a5b4ea8ad6ab509baa7a5b4c53586380",
+            "kernels": [
+              {
+                "entry": "k_div_reduce",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/f03_l2norm/k_div_reduce.ir.json",
+                "ir_sha256": "34abdb33fe950100029930242777d0b22a12e523117de21bc9d78b43310c567d",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate/ptx/main/6436b729336c/f03_l2norm/k_div_reduce.ptx",
+                "ptx_sha256": "d2ea088bb29b534edbdd5e727cd369a1ef753d7caa092031919896e80a1be347"
+              }
+            ]
+          },
+          "m01_matmul_512": {
+            "meta_sha256": "3324370a2d29614c6c7ff7cf549563f9afb22bab0ed31ed62d8ffd27c59dcd57",
+            "expected_sha256": "6396bececa75b2adee8c83bb0c090f9a68e7297d7de492f5a2f0cd3e67f24c36",
+            "kernels": [
+              {
+                "entry": "k_matmul_2967be",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/m01_matmul_512/k_matmul_2967be.ir.json",
+                "ir_sha256": "ed9ab32776ce0de8b0d1f0367da54c586bf993c964efc01482666247a976dc02",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate/ptx/main/6436b729336c/m01_matmul_512/k_matmul_2967be.ptx",
+                "ptx_sha256": "52251b6560aadaf3e1143193af4d61b44943769f51a8f74701864c67d23803ff"
+              }
+            ]
+          },
+          "m02_matmul_rect": {
+            "meta_sha256": "a82fd8d7f5933749868035254537b962d3d0140c8bf3e22f7f8a54a289a9c365",
+            "expected_sha256": "b0a5f6719c01fdc55054d983e7d75f880577e4741c63ae39c9fa704507e58134",
+            "kernels": [
+              {
+                "entry": "k_matmul",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/m02_matmul_rect/k_matmul.ir.json",
+                "ir_sha256": "c47bb47c529e7362c9272784ac21a31f2a5d79546cc11b19beff891278d22206",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate/ptx/main/6436b729336c/m02_matmul_rect/k_matmul.ptx",
+                "ptx_sha256": "3fabbf1e81c3f4ca83574876721d851910b8337a6cbd98d7f38bda9d2e7f5071"
+              }
+            ]
+          },
+          "p00_scalar_add": {
+            "meta_sha256": "67f4c80a5c78c9fa571f4088633acc56cae0a758d2a65e7c89c07a96e665709c",
+            "expected_sha256": "69e4a749183c5402f03c28a957cb1f523186d16f9b9974c75cd0ebbbfd925478",
+            "kernels": [
+              {
+                "entry": "k_add_pointwise",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/p00_scalar_add/k_add_pointwise.ir.json",
+                "ir_sha256": "d93c0b232c48f7161c88f0276ea8a69481b06608a24b6e8ed2d5025bd17f4e32",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate/ptx/main/6436b729336c/p00_scalar_add/k_add_pointwise.ptx",
+                "ptx_sha256": "e7ac79c593a23077245e4247bf890dac7edd40ce96a93d814932d919f669457a"
+              }
+            ]
+          },
+          "p01_vector_add": {
+            "meta_sha256": "4607a6a14553ec256b2073ff8fef18a850e315033f4fdace21f26fdcc2a867c6",
+            "expected_sha256": "1a72f87aa3afd4e84746d2c0bfcfde9d024f573ce863322f72d2c6b3bb133086",
+            "kernels": [
+              {
+                "entry": "k_add_pointwise",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/p01_vector_add/k_add_pointwise.ir.json",
+                "ir_sha256": "90088bc4c7346b9a5916205fdb96926f52cc0f5e3c5c08527d7b0796b0c47fc5",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate/ptx/main/6436b729336c/p01_vector_add/k_add_pointwise.ptx",
+                "ptx_sha256": "508930f6d148b693328a84371271282f8a0f38e013f6ffdc83b68c5be2b62ccc"
+              }
+            ]
+          },
+          "p02_scale_shift": {
+            "meta_sha256": "7c1c3ea69e4d61128d72fbaf3a82a76125a5273c3ced6197ac2f150d03d121e1",
+            "expected_sha256": "515539ace84b0cb38ab3e5e6ed20894b774ab428a86be180529d54fd8ad63dd6",
+            "kernels": [
+              {
+                "entry": "k_add_pointwise",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/p02_scale_shift/k_add_pointwise.ir.json",
+                "ir_sha256": "2bae0a54cbcd037d6c13e70b5c4f5728f2f94af163a53ebe35b88ab8f68ec021",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate/ptx/main/6436b729336c/p02_scale_shift/k_add_pointwise.ptx",
+                "ptx_sha256": "bf3d49a50b066a4d9a2ac97cd811807837bfc624f7728b95b7bf6e30d906aaf0"
+              }
+            ]
+          },
+          "p03_relu_mul": {
+            "meta_sha256": "a2dbbe3a3cec7c45fcdde2c08f0d3276647c2a4b56ede3345be16404d1ded8c9",
+            "expected_sha256": "a0fc97901b28331b29bb5f01cf104944c3376c633dd4cce65d551ad61035e52f",
+            "kernels": [
+              {
+                "entry": "k_mul_pointwise",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/p03_relu_mul/k_mul_pointwise.ir.json",
+                "ir_sha256": "b2429e790dac9fd0db9fafadaa3624cafaeff85c834851a9034a730a1620a892",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate/ptx/main/6436b729336c/p03_relu_mul/k_mul_pointwise.ptx",
+                "ptx_sha256": "7ff38bfd27d03c32078539450b09e0ea29118fd16131bcf90530e1d5f9fb0fba"
+              }
+            ]
+          },
+          "r01_array_sum": {
+            "meta_sha256": "46cf07073f4e612e811decbc2ca900ea210811194a1e336053a6f179ecb4b00e",
+            "expected_sha256": "899c8058da70456bc3714d71ffc2814dd9777e37d39be7379b359e452924cb5c",
+            "kernels": [
+              {
+                "entry": "k_sum_1_reduce",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/r01_array_sum/k_sum_1_reduce.ir.json",
+                "ir_sha256": "a5ad6af023562e1632e929afb8cd6387603c2edcd4d4b1590b1a3b2ee962675f",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate/ptx/main/6436b729336c/r01_array_sum/k_sum_1_reduce.ptx",
+                "ptx_sha256": "c7438c781f4552f066b9d261e18c7627c810647ea43dc918e64a3f5bb2591450"
+              }
+            ]
+          },
+          "r02_big_sum": {
+            "meta_sha256": "db364be00e35402a3d6f10fcd55562115c7604dea94f8126a02179a80476d19e",
+            "expected_sha256": "0109852644d0785b770fa38d996b063b156f01e8bfccb303ea0581e42696eec1",
+            "kernels": [
+              {
+                "entry": "k_sum_1_reduce",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/r02_big_sum/k_sum_1_reduce.ir.json",
+                "ir_sha256": "777e3f2dd170849133e19d303cdb3d273c135c9a9896786ee40fbc6a2ff4ec7c",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate/ptx/main/6436b729336c/r02_big_sum/k_sum_1_reduce.ptx",
+                "ptx_sha256": "5b63db7de4a6ffcc7ac9064be89a8cf5deb19b109240f495468c178d1f602cbb"
+              }
+            ]
+          },
+          "r03_mean": {
+            "meta_sha256": "d7ab661c388ad447f5661a3b36cba448cf5142402756f1e1c35d110db06c84fe",
+            "expected_sha256": "9c53fd65aebbc9b6ca477653643273195149be2d93ab472a135883a0a128c5f7",
+            "kernels": [
+              {
+                "entry": "k_mean_ffcca3",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/r03_mean/k_mean_ffcca3.ir.json",
+                "ir_sha256": "7eeca2c7869ab2ddf880a0ac7fb689d3ab814d7523eab472ec80ad2458100b86",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate/ptx/main/6436b729336c/r03_mean/k_mean_ffcca3.ptx",
+                "ptx_sha256": "b23f5f4a19b4f940eae4e3fc68254a57aed4eaefdb5d16bd30b002850f717dea"
+              }
+            ]
+          },
+          "r04_row_sum": {
+            "meta_sha256": "803cb710590156ad319eb44b2d2aa6c1ee9b0e3a666ebc09de259e50d83a3ba1",
+            "expected_sha256": "cb724cbe21276b1438add7263e418f52c0eb90c4501954a245678dcc793c895d",
+            "kernels": [
+              {
+                "entry": "k_sum_1_reduce",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/r04_row_sum/k_sum_1_reduce.ir.json",
+                "ir_sha256": "4c7befc76b72c6c69be4675d69ccd14e336b9139fe22aaec1b94230858c8ab03",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate/ptx/main/6436b729336c/r04_row_sum/k_sum_1_reduce.ptx",
+                "ptx_sha256": "c6f7179c6c40a04f7408162a2aec0c8fdd71d44f8884c065be1a2f411fadacf7"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "tcl": {
+      "source": "/tmp/emmy-5090-tcl/compile.py",
+      "source_sha256": "2d35bf97358e9f8fe9243a4a7b436145662cb543f3a5f35370aecb1146f5a3d0",
+      "snapshot": {
+        "source": "/tmp/emmy-5090-tcl/compile.py",
+        "source_sha256": "2d35bf97358e9f8fe9243a4a7b436145662cb543f3a5f35370aecb1146f5a3d0",
+        "compiler_unchanged": true,
+        "cases": {
+          "a01_attention": {
+            "meta_sha256": "c280c572744016ecf6ca2971312ad2ce8a10b28c0f3e38561c1a096c2ea7352f",
+            "expected_sha256": "ccc0ad1a70f679781c8aff8064ae73368e04bc35018a537dc15ef8610262ed51",
+            "kernels": [
+              {
+                "entry": "k_matmul_softmax_reduce_b55365",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/a01_attention/k_matmul_softmax_reduce_b55365.ir.json",
+                "ir_sha256": "0a6925795c1b8e108befbdc3300c722ea5a7fb19d2337597eca860e9c36eff9a",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate/ptx/tcl/2d35bf97358e/a01_attention/k_matmul_softmax_reduce_b55365.ptx",
+                "ptx_sha256": "5e4fbadbda45c407618aa6d9c3c5eb083bd5b8c21528d3480b28b78060a32696"
+              }
+            ]
+          },
+          "a02_attention_128": {
+            "meta_sha256": "adcc08994786076e7cb9835ab3bab19b0dc9c0d00a999adea124380f8300de18",
+            "expected_sha256": "ebd7c000d75e52707f2e65304e05fbf963b4799919f814f685490c76c89e7080",
+            "kernels": [
+              {
+                "entry": "k_matmul_softmax_reduce_6f0029",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/a02_attention_128/k_matmul_softmax_reduce_6f0029.ir.json",
+                "ir_sha256": "a51792c9e4d920a493054fb2a6986d87766cc1b3717078f8e631a45d1b0bf1dd",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate/ptx/tcl/2d35bf97358e/a02_attention_128/k_matmul_softmax_reduce_6f0029.ptx",
+                "ptx_sha256": "9570daac941a6cb092542c4ebf4d16d983b5a891df557c186758678bfa5ccf30"
+              }
+            ]
+          },
+          "f01_rmsnorm": {
+            "meta_sha256": "f45014c6b0963ec9727fc0f1c9bb585319c4ac94292260bc8f7c10557c1b8e1d",
+            "expected_sha256": "197016500cfca3ee3a1952273d50655e5bbf60093c28ad801e28eb3ccb76a6fb",
+            "kernels": [
+              {
+                "entry": "k_mean_cbd1de",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/f01_rmsnorm/k_mean_cbd1de.ir.json",
+                "ir_sha256": "a8e6819e3144b942d8983b52b6865fa692868105b20de30f6ba4df424a07862a",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate/ptx/tcl/2d35bf97358e/f01_rmsnorm/k_mean_cbd1de.ptx",
+                "ptx_sha256": "2ead5e7dbf99dbc9c59e022eb88906851c68c7d9f0f298d8a6816ece7bc992a9"
+              }
+            ]
+          },
+          "f02_row_softmax": {
+            "meta_sha256": "ddbe97ea42c7b077d30d140b751f8062caf47b5620cb423a02c1dd848cd61900",
+            "expected_sha256": "7e38d188cdc0bbb7afda1e6007318b0174bcdf82eb3855775967e49d4b8ee8ce",
+            "kernels": [
+              {
+                "entry": "k_softmax_05263d",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/f02_row_softmax/k_softmax_05263d.ir.json",
+                "ir_sha256": "d48b030e9d9a765aa631287f72935bc59f20926f3ccb09dc7f7932106770af03",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate/ptx/tcl/2d35bf97358e/f02_row_softmax/k_softmax_05263d.ptx",
+                "ptx_sha256": "0923e49549fcd9e2f00541ca3569bd0f41e8084f2369a8b43df98a46cf60e527"
+              }
+            ]
+          },
+          "f03_l2norm": {
+            "meta_sha256": "cbf67c2d198f4fea1bb140083ec65c4bf14202090daaa4aac77f1514ecc60b95",
+            "expected_sha256": "fb2e242cbfe9834c6d45f27f29acc750a5b4ea8ad6ab509baa7a5b4c53586380",
+            "kernels": [
+              {
+                "entry": "k_div_reduce",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/f03_l2norm/k_div_reduce.ir.json",
+                "ir_sha256": "34abdb33fe950100029930242777d0b22a12e523117de21bc9d78b43310c567d",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate/ptx/tcl/2d35bf97358e/f03_l2norm/k_div_reduce.ptx",
+                "ptx_sha256": "d2ea088bb29b534edbdd5e727cd369a1ef753d7caa092031919896e80a1be347"
+              }
+            ]
+          },
+          "m01_matmul_512": {
+            "meta_sha256": "3324370a2d29614c6c7ff7cf549563f9afb22bab0ed31ed62d8ffd27c59dcd57",
+            "expected_sha256": "6396bececa75b2adee8c83bb0c090f9a68e7297d7de492f5a2f0cd3e67f24c36",
+            "kernels": [
+              {
+                "entry": "k_matmul_2967be",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/m01_matmul_512/k_matmul_2967be.ir.json",
+                "ir_sha256": "ed9ab32776ce0de8b0d1f0367da54c586bf993c964efc01482666247a976dc02",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate/ptx/tcl/2d35bf97358e/m01_matmul_512/k_matmul_2967be.ptx",
+                "ptx_sha256": "84e26af55cd3c696a891d583a04e13b20d48a2f349223f8140311e3de9f14b9b"
+              }
+            ]
+          },
+          "m02_matmul_rect": {
+            "meta_sha256": "a82fd8d7f5933749868035254537b962d3d0140c8bf3e22f7f8a54a289a9c365",
+            "expected_sha256": "b0a5f6719c01fdc55054d983e7d75f880577e4741c63ae39c9fa704507e58134",
+            "kernels": [
+              {
+                "entry": "k_matmul",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/m02_matmul_rect/k_matmul.ir.json",
+                "ir_sha256": "c47bb47c529e7362c9272784ac21a31f2a5d79546cc11b19beff891278d22206",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate/ptx/tcl/2d35bf97358e/m02_matmul_rect/k_matmul.ptx",
+                "ptx_sha256": "3fabbf1e81c3f4ca83574876721d851910b8337a6cbd98d7f38bda9d2e7f5071"
+              }
+            ]
+          },
+          "p00_scalar_add": {
+            "meta_sha256": "67f4c80a5c78c9fa571f4088633acc56cae0a758d2a65e7c89c07a96e665709c",
+            "expected_sha256": "69e4a749183c5402f03c28a957cb1f523186d16f9b9974c75cd0ebbbfd925478",
+            "kernels": [
+              {
+                "entry": "k_add_pointwise",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/p00_scalar_add/k_add_pointwise.ir.json",
+                "ir_sha256": "d93c0b232c48f7161c88f0276ea8a69481b06608a24b6e8ed2d5025bd17f4e32",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate/ptx/tcl/2d35bf97358e/p00_scalar_add/k_add_pointwise.ptx",
+                "ptx_sha256": "e7ac79c593a23077245e4247bf890dac7edd40ce96a93d814932d919f669457a"
+              }
+            ]
+          },
+          "p01_vector_add": {
+            "meta_sha256": "4607a6a14553ec256b2073ff8fef18a850e315033f4fdace21f26fdcc2a867c6",
+            "expected_sha256": "1a72f87aa3afd4e84746d2c0bfcfde9d024f573ce863322f72d2c6b3bb133086",
+            "kernels": [
+              {
+                "entry": "k_add_pointwise",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/p01_vector_add/k_add_pointwise.ir.json",
+                "ir_sha256": "90088bc4c7346b9a5916205fdb96926f52cc0f5e3c5c08527d7b0796b0c47fc5",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate/ptx/tcl/2d35bf97358e/p01_vector_add/k_add_pointwise.ptx",
+                "ptx_sha256": "508930f6d148b693328a84371271282f8a0f38e013f6ffdc83b68c5be2b62ccc"
+              }
+            ]
+          },
+          "p02_scale_shift": {
+            "meta_sha256": "7c1c3ea69e4d61128d72fbaf3a82a76125a5273c3ced6197ac2f150d03d121e1",
+            "expected_sha256": "515539ace84b0cb38ab3e5e6ed20894b774ab428a86be180529d54fd8ad63dd6",
+            "kernels": [
+              {
+                "entry": "k_add_pointwise",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/p02_scale_shift/k_add_pointwise.ir.json",
+                "ir_sha256": "2bae0a54cbcd037d6c13e70b5c4f5728f2f94af163a53ebe35b88ab8f68ec021",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate/ptx/tcl/2d35bf97358e/p02_scale_shift/k_add_pointwise.ptx",
+                "ptx_sha256": "bf3d49a50b066a4d9a2ac97cd811807837bfc624f7728b95b7bf6e30d906aaf0"
+              }
+            ]
+          },
+          "p03_relu_mul": {
+            "meta_sha256": "a2dbbe3a3cec7c45fcdde2c08f0d3276647c2a4b56ede3345be16404d1ded8c9",
+            "expected_sha256": "a0fc97901b28331b29bb5f01cf104944c3376c633dd4cce65d551ad61035e52f",
+            "kernels": [
+              {
+                "entry": "k_mul_pointwise",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/p03_relu_mul/k_mul_pointwise.ir.json",
+                "ir_sha256": "b2429e790dac9fd0db9fafadaa3624cafaeff85c834851a9034a730a1620a892",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate/ptx/tcl/2d35bf97358e/p03_relu_mul/k_mul_pointwise.ptx",
+                "ptx_sha256": "7ff38bfd27d03c32078539450b09e0ea29118fd16131bcf90530e1d5f9fb0fba"
+              }
+            ]
+          },
+          "r01_array_sum": {
+            "meta_sha256": "46cf07073f4e612e811decbc2ca900ea210811194a1e336053a6f179ecb4b00e",
+            "expected_sha256": "899c8058da70456bc3714d71ffc2814dd9777e37d39be7379b359e452924cb5c",
+            "kernels": [
+              {
+                "entry": "k_sum_1_reduce",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/r01_array_sum/k_sum_1_reduce.ir.json",
+                "ir_sha256": "a5ad6af023562e1632e929afb8cd6387603c2edcd4d4b1590b1a3b2ee962675f",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate/ptx/tcl/2d35bf97358e/r01_array_sum/k_sum_1_reduce.ptx",
+                "ptx_sha256": "c7438c781f4552f066b9d261e18c7627c810647ea43dc918e64a3f5bb2591450"
+              }
+            ]
+          },
+          "r02_big_sum": {
+            "meta_sha256": "db364be00e35402a3d6f10fcd55562115c7604dea94f8126a02179a80476d19e",
+            "expected_sha256": "0109852644d0785b770fa38d996b063b156f01e8bfccb303ea0581e42696eec1",
+            "kernels": [
+              {
+                "entry": "k_sum_1_reduce",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/r02_big_sum/k_sum_1_reduce.ir.json",
+                "ir_sha256": "777e3f2dd170849133e19d303cdb3d273c135c9a9896786ee40fbc6a2ff4ec7c",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate/ptx/tcl/2d35bf97358e/r02_big_sum/k_sum_1_reduce.ptx",
+                "ptx_sha256": "5b63db7de4a6ffcc7ac9064be89a8cf5deb19b109240f495468c178d1f602cbb"
+              }
+            ]
+          },
+          "r03_mean": {
+            "meta_sha256": "d7ab661c388ad447f5661a3b36cba448cf5142402756f1e1c35d110db06c84fe",
+            "expected_sha256": "9c53fd65aebbc9b6ca477653643273195149be2d93ab472a135883a0a128c5f7",
+            "kernels": [
+              {
+                "entry": "k_mean_ffcca3",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/r03_mean/k_mean_ffcca3.ir.json",
+                "ir_sha256": "7eeca2c7869ab2ddf880a0ac7fb689d3ab814d7523eab472ec80ad2458100b86",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate/ptx/tcl/2d35bf97358e/r03_mean/k_mean_ffcca3.ptx",
+                "ptx_sha256": "b23f5f4a19b4f940eae4e3fc68254a57aed4eaefdb5d16bd30b002850f717dea"
+              }
+            ]
+          },
+          "r04_row_sum": {
+            "meta_sha256": "803cb710590156ad319eb44b2d2aa6c1ee9b0e3a666ebc09de259e50d83a3ba1",
+            "expected_sha256": "cb724cbe21276b1438add7263e418f52c0eb90c4501954a245678dcc793c895d",
+            "kernels": [
+              {
+                "entry": "k_sum_1_reduce",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/r04_row_sum/k_sum_1_reduce.ir.json",
+                "ir_sha256": "4c7befc76b72c6c69be4675d69ccd14e336b9139fe22aaec1b94230858c8ab03",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate/ptx/tcl/2d35bf97358e/r04_row_sum/k_sum_1_reduce.ptx",
+                "ptx_sha256": "c6f7179c6c40a04f7408162a2aec0c8fdd71d44f8884c065be1a2f411fadacf7"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "powenn": {
+      "source": "/tmp/emmy-5090-powenn/compile.py",
+      "source_sha256": "4439640e2152b005908752ebc7fba5ef47b0e7930409ce106d37fd43497f8688",
+      "snapshot": {
+        "source": "/tmp/emmy-5090-powenn/compile.py",
+        "source_sha256": "4439640e2152b005908752ebc7fba5ef47b0e7930409ce106d37fd43497f8688",
+        "compiler_unchanged": true,
+        "cases": {
+          "a01_attention": {
+            "meta_sha256": "c280c572744016ecf6ca2971312ad2ce8a10b28c0f3e38561c1a096c2ea7352f",
+            "expected_sha256": "ccc0ad1a70f679781c8aff8064ae73368e04bc35018a537dc15ef8610262ed51",
+            "kernels": [
+              {
+                "entry": "k_matmul_softmax_reduce_b55365",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/a01_attention/k_matmul_softmax_reduce_b55365.ir.json",
+                "ir_sha256": "0a6925795c1b8e108befbdc3300c722ea5a7fb19d2337597eca860e9c36eff9a",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate/ptx/powenn/4439640e2152/a01_attention/k_matmul_softmax_reduce_b55365.ptx",
+                "ptx_sha256": "56c67993c21d2fbf81b5036ee986ad26ced8569f0e8d0cdc0bd0dedda2286ffd"
+              }
+            ]
+          },
+          "a02_attention_128": {
+            "meta_sha256": "adcc08994786076e7cb9835ab3bab19b0dc9c0d00a999adea124380f8300de18",
+            "expected_sha256": "ebd7c000d75e52707f2e65304e05fbf963b4799919f814f685490c76c89e7080",
+            "kernels": [
+              {
+                "entry": "k_matmul_softmax_reduce_6f0029",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/a02_attention_128/k_matmul_softmax_reduce_6f0029.ir.json",
+                "ir_sha256": "a51792c9e4d920a493054fb2a6986d87766cc1b3717078f8e631a45d1b0bf1dd",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate/ptx/powenn/4439640e2152/a02_attention_128/k_matmul_softmax_reduce_6f0029.ptx",
+                "ptx_sha256": "20baf9e2d7bcef36ab2819c4de88dcec1b07774b28c8016b242f0c1d48fed9b7"
+              }
+            ]
+          },
+          "f01_rmsnorm": {
+            "meta_sha256": "f45014c6b0963ec9727fc0f1c9bb585319c4ac94292260bc8f7c10557c1b8e1d",
+            "expected_sha256": "197016500cfca3ee3a1952273d50655e5bbf60093c28ad801e28eb3ccb76a6fb",
+            "kernels": [
+              {
+                "entry": "k_mean_cbd1de",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/f01_rmsnorm/k_mean_cbd1de.ir.json",
+                "ir_sha256": "a8e6819e3144b942d8983b52b6865fa692868105b20de30f6ba4df424a07862a",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate/ptx/powenn/4439640e2152/f01_rmsnorm/k_mean_cbd1de.ptx",
+                "ptx_sha256": "017dd2ac5ea97660e0f10a7454fdd751cfc3631fec27b1fb2a4e65f60587dabc"
+              }
+            ]
+          },
+          "f02_row_softmax": {
+            "meta_sha256": "ddbe97ea42c7b077d30d140b751f8062caf47b5620cb423a02c1dd848cd61900",
+            "expected_sha256": "7e38d188cdc0bbb7afda1e6007318b0174bcdf82eb3855775967e49d4b8ee8ce",
+            "kernels": [
+              {
+                "entry": "k_softmax_05263d",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/f02_row_softmax/k_softmax_05263d.ir.json",
+                "ir_sha256": "d48b030e9d9a765aa631287f72935bc59f20926f3ccb09dc7f7932106770af03",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate/ptx/powenn/4439640e2152/f02_row_softmax/k_softmax_05263d.ptx",
+                "ptx_sha256": "fade83de75c1b61d964491ce8cdacd74ca9dbdb26b78caa716cafb65632a9da4"
+              }
+            ]
+          },
+          "f03_l2norm": {
+            "meta_sha256": "cbf67c2d198f4fea1bb140083ec65c4bf14202090daaa4aac77f1514ecc60b95",
+            "expected_sha256": "fb2e242cbfe9834c6d45f27f29acc750a5b4ea8ad6ab509baa7a5b4c53586380",
+            "kernels": [
+              {
+                "entry": "k_div_reduce",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/f03_l2norm/k_div_reduce.ir.json",
+                "ir_sha256": "34abdb33fe950100029930242777d0b22a12e523117de21bc9d78b43310c567d",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate/ptx/powenn/4439640e2152/f03_l2norm/k_div_reduce.ptx",
+                "ptx_sha256": "d118584af41e2d991b4f7b18d670a23b75d9bbd0d972c07822584fdd69236a41"
+              }
+            ]
+          },
+          "m01_matmul_512": {
+            "meta_sha256": "3324370a2d29614c6c7ff7cf549563f9afb22bab0ed31ed62d8ffd27c59dcd57",
+            "expected_sha256": "6396bececa75b2adee8c83bb0c090f9a68e7297d7de492f5a2f0cd3e67f24c36",
+            "kernels": [
+              {
+                "entry": "k_matmul_2967be",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/m01_matmul_512/k_matmul_2967be.ir.json",
+                "ir_sha256": "ed9ab32776ce0de8b0d1f0367da54c586bf993c964efc01482666247a976dc02",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate/ptx/powenn/4439640e2152/m01_matmul_512/k_matmul_2967be.ptx",
+                "ptx_sha256": "d86b257485577e93e6344002156e9800fdc46b8f223b32d467edbd15c30e2802"
+              }
+            ]
+          },
+          "m02_matmul_rect": {
+            "meta_sha256": "a82fd8d7f5933749868035254537b962d3d0140c8bf3e22f7f8a54a289a9c365",
+            "expected_sha256": "b0a5f6719c01fdc55054d983e7d75f880577e4741c63ae39c9fa704507e58134",
+            "kernels": [
+              {
+                "entry": "k_matmul",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/m02_matmul_rect/k_matmul.ir.json",
+                "ir_sha256": "c47bb47c529e7362c9272784ac21a31f2a5d79546cc11b19beff891278d22206",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate/ptx/powenn/4439640e2152/m02_matmul_rect/k_matmul.ptx",
+                "ptx_sha256": "048c66cd53085b7230c6e8ac6a1ac6328667385ccddafff9b170963f12d3c0a5"
+              }
+            ]
+          },
+          "p00_scalar_add": {
+            "meta_sha256": "67f4c80a5c78c9fa571f4088633acc56cae0a758d2a65e7c89c07a96e665709c",
+            "expected_sha256": "69e4a749183c5402f03c28a957cb1f523186d16f9b9974c75cd0ebbbfd925478",
+            "kernels": [
+              {
+                "entry": "k_add_pointwise",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/p00_scalar_add/k_add_pointwise.ir.json",
+                "ir_sha256": "d93c0b232c48f7161c88f0276ea8a69481b06608a24b6e8ed2d5025bd17f4e32",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate/ptx/powenn/4439640e2152/p00_scalar_add/k_add_pointwise.ptx",
+                "ptx_sha256": "bae7dcec67b777492aabb12026d2503b7426da49f0702e0f2cba4a3023d01534"
+              }
+            ]
+          },
+          "p01_vector_add": {
+            "meta_sha256": "4607a6a14553ec256b2073ff8fef18a850e315033f4fdace21f26fdcc2a867c6",
+            "expected_sha256": "1a72f87aa3afd4e84746d2c0bfcfde9d024f573ce863322f72d2c6b3bb133086",
+            "kernels": [
+              {
+                "entry": "k_add_pointwise",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/p01_vector_add/k_add_pointwise.ir.json",
+                "ir_sha256": "90088bc4c7346b9a5916205fdb96926f52cc0f5e3c5c08527d7b0796b0c47fc5",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate/ptx/powenn/4439640e2152/p01_vector_add/k_add_pointwise.ptx",
+                "ptx_sha256": "211cb0a517c28a4ea8d93fbedbd9e9aa711853d4f205f79fa9ec7e4d7b44c7d2"
+              }
+            ]
+          },
+          "p02_scale_shift": {
+            "meta_sha256": "7c1c3ea69e4d61128d72fbaf3a82a76125a5273c3ced6197ac2f150d03d121e1",
+            "expected_sha256": "515539ace84b0cb38ab3e5e6ed20894b774ab428a86be180529d54fd8ad63dd6",
+            "kernels": [
+              {
+                "entry": "k_add_pointwise",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/p02_scale_shift/k_add_pointwise.ir.json",
+                "ir_sha256": "2bae0a54cbcd037d6c13e70b5c4f5728f2f94af163a53ebe35b88ab8f68ec021",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate/ptx/powenn/4439640e2152/p02_scale_shift/k_add_pointwise.ptx",
+                "ptx_sha256": "ddd93f53f81e7d4ff34ed76d67dfcaa1613767a3a3783c4b79af7de0e49c2c1b"
+              }
+            ]
+          },
+          "p03_relu_mul": {
+            "meta_sha256": "a2dbbe3a3cec7c45fcdde2c08f0d3276647c2a4b56ede3345be16404d1ded8c9",
+            "expected_sha256": "a0fc97901b28331b29bb5f01cf104944c3376c633dd4cce65d551ad61035e52f",
+            "kernels": [
+              {
+                "entry": "k_mul_pointwise",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/p03_relu_mul/k_mul_pointwise.ir.json",
+                "ir_sha256": "b2429e790dac9fd0db9fafadaa3624cafaeff85c834851a9034a730a1620a892",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate/ptx/powenn/4439640e2152/p03_relu_mul/k_mul_pointwise.ptx",
+                "ptx_sha256": "4dc11c5e0bad7bbadf9f340b841b0e1731700102e4aaa0217a831f294275a7e6"
+              }
+            ]
+          },
+          "r01_array_sum": {
+            "meta_sha256": "46cf07073f4e612e811decbc2ca900ea210811194a1e336053a6f179ecb4b00e",
+            "expected_sha256": "899c8058da70456bc3714d71ffc2814dd9777e37d39be7379b359e452924cb5c",
+            "kernels": [
+              {
+                "entry": "k_sum_1_reduce",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/r01_array_sum/k_sum_1_reduce.ir.json",
+                "ir_sha256": "a5ad6af023562e1632e929afb8cd6387603c2edcd4d4b1590b1a3b2ee962675f",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate/ptx/powenn/4439640e2152/r01_array_sum/k_sum_1_reduce.ptx",
+                "ptx_sha256": "47e510d88456074dfb02b0f33f2be33d8b404afa73f49d92f4a2cf8de2532b0e"
+              }
+            ]
+          },
+          "r02_big_sum": {
+            "meta_sha256": "db364be00e35402a3d6f10fcd55562115c7604dea94f8126a02179a80476d19e",
+            "expected_sha256": "0109852644d0785b770fa38d996b063b156f01e8bfccb303ea0581e42696eec1",
+            "kernels": [
+              {
+                "entry": "k_sum_1_reduce",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/r02_big_sum/k_sum_1_reduce.ir.json",
+                "ir_sha256": "777e3f2dd170849133e19d303cdb3d273c135c9a9896786ee40fbc6a2ff4ec7c",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate/ptx/powenn/4439640e2152/r02_big_sum/k_sum_1_reduce.ptx",
+                "ptx_sha256": "045616404cbf255b14a090045f36ee6f9e9b346161e9ca44d58598b040cb88c2"
+              }
+            ]
+          },
+          "r03_mean": {
+            "meta_sha256": "d7ab661c388ad447f5661a3b36cba448cf5142402756f1e1c35d110db06c84fe",
+            "expected_sha256": "9c53fd65aebbc9b6ca477653643273195149be2d93ab472a135883a0a128c5f7",
+            "kernels": [
+              {
+                "entry": "k_mean_ffcca3",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/r03_mean/k_mean_ffcca3.ir.json",
+                "ir_sha256": "7eeca2c7869ab2ddf880a0ac7fb689d3ab814d7523eab472ec80ad2458100b86",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate/ptx/powenn/4439640e2152/r03_mean/k_mean_ffcca3.ptx",
+                "ptx_sha256": "dd304318e600884d2af3c3f05c8c0d79dc41093487532947455db61879f0ecff"
+              }
+            ]
+          },
+          "r04_row_sum": {
+            "meta_sha256": "803cb710590156ad319eb44b2d2aa6c1ee9b0e3a666ebc09de259e50d83a3ba1",
+            "expected_sha256": "cb724cbe21276b1438add7263e418f52c0eb90c4501954a245678dcc793c895d",
+            "kernels": [
+              {
+                "entry": "k_sum_1_reduce",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/r04_row_sum/k_sum_1_reduce.ir.json",
+                "ir_sha256": "4c7befc76b72c6c69be4675d69ccd14e336b9139fe22aaec1b94230858c8ab03",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate/ptx/powenn/4439640e2152/r04_row_sum/k_sum_1_reduce.ptx",
+                "ptx_sha256": "5c82bd93abeb6e29a67258d58fa0e96f10b522bc1b030536f2910e59dac43568"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "n00bcak": {
+      "source": "/tmp/emmy-5090-n00bcak/compile.py",
+      "source_sha256": "12202ea108f615fffd9ab00b5dce985edb3cbe11ffad55042d3d9625b6a49354",
+      "snapshot": {
+        "source": "/tmp/emmy-5090-n00bcak/compile.py",
+        "source_sha256": "12202ea108f615fffd9ab00b5dce985edb3cbe11ffad55042d3d9625b6a49354",
+        "compiler_unchanged": true,
+        "cases": {
+          "a01_attention": {
+            "meta_sha256": "c280c572744016ecf6ca2971312ad2ce8a10b28c0f3e38561c1a096c2ea7352f",
+            "expected_sha256": "ccc0ad1a70f679781c8aff8064ae73368e04bc35018a537dc15ef8610262ed51",
+            "kernels": [
+              {
+                "entry": "k_matmul_softmax_reduce_b55365",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/a01_attention/k_matmul_softmax_reduce_b55365.ir.json",
+                "ir_sha256": "0a6925795c1b8e108befbdc3300c722ea5a7fb19d2337597eca860e9c36eff9a",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate/ptx/n00bcak/12202ea108f6/a01_attention/k_matmul_softmax_reduce_b55365.ptx",
+                "ptx_sha256": "5bafec285d7f085f9b979d99d14732457d3042ec264b4fcd0a73c109bb47d9c1"
+              }
+            ]
+          },
+          "a02_attention_128": {
+            "meta_sha256": "adcc08994786076e7cb9835ab3bab19b0dc9c0d00a999adea124380f8300de18",
+            "expected_sha256": "ebd7c000d75e52707f2e65304e05fbf963b4799919f814f685490c76c89e7080",
+            "kernels": [
+              {
+                "entry": "k_matmul_softmax_reduce_6f0029",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/a02_attention_128/k_matmul_softmax_reduce_6f0029.ir.json",
+                "ir_sha256": "a51792c9e4d920a493054fb2a6986d87766cc1b3717078f8e631a45d1b0bf1dd",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate/ptx/n00bcak/12202ea108f6/a02_attention_128/k_matmul_softmax_reduce_6f0029.ptx",
+                "ptx_sha256": "d936d7eddd6b24d607571edcf2e582d1144c02ec3233d6ebd501a47b2906fa91"
+              }
+            ]
+          },
+          "f01_rmsnorm": {
+            "meta_sha256": "f45014c6b0963ec9727fc0f1c9bb585319c4ac94292260bc8f7c10557c1b8e1d",
+            "expected_sha256": "197016500cfca3ee3a1952273d50655e5bbf60093c28ad801e28eb3ccb76a6fb",
+            "kernels": [
+              {
+                "entry": "k_mean_cbd1de",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/f01_rmsnorm/k_mean_cbd1de.ir.json",
+                "ir_sha256": "a8e6819e3144b942d8983b52b6865fa692868105b20de30f6ba4df424a07862a",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate/ptx/n00bcak/12202ea108f6/f01_rmsnorm/k_mean_cbd1de.ptx",
+                "ptx_sha256": "cb25765f186d758010fa07d9aaf373836cfb4d0dbe10d713a50c1819c4f838eb"
+              }
+            ]
+          },
+          "f02_row_softmax": {
+            "meta_sha256": "ddbe97ea42c7b077d30d140b751f8062caf47b5620cb423a02c1dd848cd61900",
+            "expected_sha256": "7e38d188cdc0bbb7afda1e6007318b0174bcdf82eb3855775967e49d4b8ee8ce",
+            "kernels": [
+              {
+                "entry": "k_softmax_05263d",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/f02_row_softmax/k_softmax_05263d.ir.json",
+                "ir_sha256": "d48b030e9d9a765aa631287f72935bc59f20926f3ccb09dc7f7932106770af03",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate/ptx/n00bcak/12202ea108f6/f02_row_softmax/k_softmax_05263d.ptx",
+                "ptx_sha256": "0b496e2ce1040783ed5ac73db09d0cbff2063bfdfe6220f40b5c156709a78744"
+              }
+            ]
+          },
+          "f03_l2norm": {
+            "meta_sha256": "cbf67c2d198f4fea1bb140083ec65c4bf14202090daaa4aac77f1514ecc60b95",
+            "expected_sha256": "fb2e242cbfe9834c6d45f27f29acc750a5b4ea8ad6ab509baa7a5b4c53586380",
+            "kernels": [
+              {
+                "entry": "k_div_reduce",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/f03_l2norm/k_div_reduce.ir.json",
+                "ir_sha256": "34abdb33fe950100029930242777d0b22a12e523117de21bc9d78b43310c567d",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate/ptx/n00bcak/12202ea108f6/f03_l2norm/k_div_reduce.ptx",
+                "ptx_sha256": "190904ca92fdbe372a6a496fcf0a96ab1baf606baf0f24ff619c5f98c6397ea7"
+              }
+            ]
+          },
+          "m01_matmul_512": {
+            "meta_sha256": "3324370a2d29614c6c7ff7cf549563f9afb22bab0ed31ed62d8ffd27c59dcd57",
+            "expected_sha256": "6396bececa75b2adee8c83bb0c090f9a68e7297d7de492f5a2f0cd3e67f24c36",
+            "kernels": [
+              {
+                "entry": "k_matmul_2967be",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/m01_matmul_512/k_matmul_2967be.ir.json",
+                "ir_sha256": "ed9ab32776ce0de8b0d1f0367da54c586bf993c964efc01482666247a976dc02",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate/ptx/n00bcak/12202ea108f6/m01_matmul_512/k_matmul_2967be.ptx",
+                "ptx_sha256": "8a60396afd69d1ae8e39e2c2e056b7b4a1b9190ce7c9ec3be9f919dfd3dbb3da"
+              }
+            ]
+          },
+          "m02_matmul_rect": {
+            "meta_sha256": "a82fd8d7f5933749868035254537b962d3d0140c8bf3e22f7f8a54a289a9c365",
+            "expected_sha256": "b0a5f6719c01fdc55054d983e7d75f880577e4741c63ae39c9fa704507e58134",
+            "kernels": [
+              {
+                "entry": "k_matmul",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/m02_matmul_rect/k_matmul.ir.json",
+                "ir_sha256": "c47bb47c529e7362c9272784ac21a31f2a5d79546cc11b19beff891278d22206",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate/ptx/n00bcak/12202ea108f6/m02_matmul_rect/k_matmul.ptx",
+                "ptx_sha256": "1fe94877f65f1b479f0c79fff97881d8487248552e9fd68ef09d14dd65eefed4"
+              }
+            ]
+          },
+          "p00_scalar_add": {
+            "meta_sha256": "67f4c80a5c78c9fa571f4088633acc56cae0a758d2a65e7c89c07a96e665709c",
+            "expected_sha256": "69e4a749183c5402f03c28a957cb1f523186d16f9b9974c75cd0ebbbfd925478",
+            "kernels": [
+              {
+                "entry": "k_add_pointwise",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/p00_scalar_add/k_add_pointwise.ir.json",
+                "ir_sha256": "d93c0b232c48f7161c88f0276ea8a69481b06608a24b6e8ed2d5025bd17f4e32",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate/ptx/n00bcak/12202ea108f6/p00_scalar_add/k_add_pointwise.ptx",
+                "ptx_sha256": "42fbb7884d0c777e5ac27ba878122a24eb245ed1ba40b48143fe12eb274a3a46"
+              }
+            ]
+          },
+          "p01_vector_add": {
+            "meta_sha256": "4607a6a14553ec256b2073ff8fef18a850e315033f4fdace21f26fdcc2a867c6",
+            "expected_sha256": "1a72f87aa3afd4e84746d2c0bfcfde9d024f573ce863322f72d2c6b3bb133086",
+            "kernels": [
+              {
+                "entry": "k_add_pointwise",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/p01_vector_add/k_add_pointwise.ir.json",
+                "ir_sha256": "90088bc4c7346b9a5916205fdb96926f52cc0f5e3c5c08527d7b0796b0c47fc5",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate/ptx/n00bcak/12202ea108f6/p01_vector_add/k_add_pointwise.ptx",
+                "ptx_sha256": "894110b4a376dd777e363f72d21607e8432d6a01ab19823fb79eaed87658a7e5"
+              }
+            ]
+          },
+          "p02_scale_shift": {
+            "meta_sha256": "7c1c3ea69e4d61128d72fbaf3a82a76125a5273c3ced6197ac2f150d03d121e1",
+            "expected_sha256": "515539ace84b0cb38ab3e5e6ed20894b774ab428a86be180529d54fd8ad63dd6",
+            "kernels": [
+              {
+                "entry": "k_add_pointwise",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/p02_scale_shift/k_add_pointwise.ir.json",
+                "ir_sha256": "2bae0a54cbcd037d6c13e70b5c4f5728f2f94af163a53ebe35b88ab8f68ec021",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate/ptx/n00bcak/12202ea108f6/p02_scale_shift/k_add_pointwise.ptx",
+                "ptx_sha256": "9b5295a9675b3d8efe47a34d94485ec9b161f2cdb504931b69fdca963d37c0d9"
+              }
+            ]
+          },
+          "p03_relu_mul": {
+            "meta_sha256": "a2dbbe3a3cec7c45fcdde2c08f0d3276647c2a4b56ede3345be16404d1ded8c9",
+            "expected_sha256": "a0fc97901b28331b29bb5f01cf104944c3376c633dd4cce65d551ad61035e52f",
+            "kernels": [
+              {
+                "entry": "k_mul_pointwise",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/p03_relu_mul/k_mul_pointwise.ir.json",
+                "ir_sha256": "b2429e790dac9fd0db9fafadaa3624cafaeff85c834851a9034a730a1620a892",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate/ptx/n00bcak/12202ea108f6/p03_relu_mul/k_mul_pointwise.ptx",
+                "ptx_sha256": "70e41f592322de2cefe45b096479ab6b6fc7e31804dab936d777888f775f0949"
+              }
+            ]
+          },
+          "r01_array_sum": {
+            "meta_sha256": "46cf07073f4e612e811decbc2ca900ea210811194a1e336053a6f179ecb4b00e",
+            "expected_sha256": "899c8058da70456bc3714d71ffc2814dd9777e37d39be7379b359e452924cb5c",
+            "kernels": [
+              {
+                "entry": "k_sum_1_reduce",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/r01_array_sum/k_sum_1_reduce.ir.json",
+                "ir_sha256": "a5ad6af023562e1632e929afb8cd6387603c2edcd4d4b1590b1a3b2ee962675f",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate/ptx/n00bcak/12202ea108f6/r01_array_sum/k_sum_1_reduce.ptx",
+                "ptx_sha256": "7061a1ae50073fa5a48e55e81dbec40fe5478a48ff8def2a0819e0f7e5aedd4d"
+              }
+            ]
+          },
+          "r02_big_sum": {
+            "meta_sha256": "db364be00e35402a3d6f10fcd55562115c7604dea94f8126a02179a80476d19e",
+            "expected_sha256": "0109852644d0785b770fa38d996b063b156f01e8bfccb303ea0581e42696eec1",
+            "kernels": [
+              {
+                "entry": "k_sum_1_reduce",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/r02_big_sum/k_sum_1_reduce.ir.json",
+                "ir_sha256": "777e3f2dd170849133e19d303cdb3d273c135c9a9896786ee40fbc6a2ff4ec7c",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate/ptx/n00bcak/12202ea108f6/r02_big_sum/k_sum_1_reduce.ptx",
+                "ptx_sha256": "9f0d0eb7832b20837250a69e4a4027dd271a1dd213d3c9c1f84a0ccc4588300a"
+              }
+            ]
+          },
+          "r03_mean": {
+            "meta_sha256": "d7ab661c388ad447f5661a3b36cba448cf5142402756f1e1c35d110db06c84fe",
+            "expected_sha256": "9c53fd65aebbc9b6ca477653643273195149be2d93ab472a135883a0a128c5f7",
+            "kernels": [
+              {
+                "entry": "k_mean_ffcca3",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/r03_mean/k_mean_ffcca3.ir.json",
+                "ir_sha256": "7eeca2c7869ab2ddf880a0ac7fb689d3ab814d7523eab472ec80ad2458100b86",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate/ptx/n00bcak/12202ea108f6/r03_mean/k_mean_ffcca3.ptx",
+                "ptx_sha256": "e64d52049c4b34256233b7d7a4ec4e98126f69dfd0c3e44d9e74fda94f8b26a2"
+              }
+            ]
+          },
+          "r04_row_sum": {
+            "meta_sha256": "803cb710590156ad319eb44b2d2aa6c1ee9b0e3a666ebc09de259e50d83a3ba1",
+            "expected_sha256": "cb724cbe21276b1438add7263e418f52c0eb90c4501954a245678dcc793c895d",
+            "kernels": [
+              {
+                "entry": "k_sum_1_reduce",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/r04_row_sum/k_sum_1_reduce.ir.json",
+                "ir_sha256": "4c7befc76b72c6c69be4675d69ccd14e336b9139fe22aaec1b94230858c8ab03",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate/ptx/n00bcak/12202ea108f6/r04_row_sum/k_sum_1_reduce.ptx",
+                "ptx_sha256": "59b43a3db5400c1bcb891e248f9d3eb07bbf1e2a04fbce9bca6db1770bdb2d2f"
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+  "cases": {}
+}

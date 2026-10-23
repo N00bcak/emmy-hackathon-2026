@@ -1,0 +1,19 @@
+{
+  "mode": "timing",
+  "case": {
+    "id": "m02_matmul_rect",
+    "variant": "published",
+    "case_dir": "/home/ada/Projects/emmy-hackathon-2026/experiments/016-timing-matrix-2026/timing/prepared-all15/prepared/m02_matmul_rect",
+    "cubins": [
+      "/home/ada/Projects/emmy-hackathon-2026/experiments/016-timing-matrix-2026/timing/prepared-all15/prepared/m02_matmul_rect/candidate-k_matmul.cubin"
+    ],
+    "baseline_cubins": [
+      "/home/ada/Projects/emmy-hackathon-2026/experiments/016-timing-matrix-2026/timing/prepared-all15/prepared/m02_matmul_rect/baseline-k_matmul.cubin"
+    ]
+  },
+  "pairs": 32,
+  "warmup": 5,
+  "seed": 66001,
+  "burst_id": "016-confirm-pair-m02_matmul_rect",
+  "out": "/home/ada/Projects/emmy-hackathon-2026/experiments/016-timing-matrix-2026/timing/pair-m02_matmul_rect-confirm.json"
+}

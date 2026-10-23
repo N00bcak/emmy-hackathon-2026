@@ -1,0 +1,19 @@
+{
+  "mode": "timing",
+  "case": {
+    "id": "r02_big_sum",
+    "variant": "published",
+    "case_dir": "/home/ada/Projects/emmy-hackathon-2026/experiments/016-timing-matrix-2026/timing/prepared-all15/prepared/r02_big_sum",
+    "cubins": [
+      "/home/ada/Projects/emmy-hackathon-2026/experiments/016-timing-matrix-2026/timing/prepared-all15/prepared/r02_big_sum/baseline-k_sum_1_reduce.cubin"
+    ],
+    "baseline_cubins": [
+      "/home/ada/Projects/emmy-hackathon-2026/experiments/016-timing-matrix-2026/timing/prepared-all15/prepared/r02_big_sum/baseline-k_sum_1_reduce.cubin"
+    ]
+  },
+  "pairs": 32,
+  "warmup": 5,
+  "seed": 66001,
+  "burst_id": "016-confirm-aa-r02_big_sum",
+  "out": "/home/ada/Projects/emmy-hackathon-2026/experiments/016-timing-matrix-2026/timing/aa-r02_big_sum-confirm.json"
+}

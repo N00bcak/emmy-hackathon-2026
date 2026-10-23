@@ -1,0 +1,824 @@
+{
+  "ok": true,
+  "pairs": [
+    {
+      "pair_index": 0,
+      "burst_id": "016-all15-aa-m02_matmul_rect",
+      "order": [
+        "candidate",
+        "baseline"
+      ],
+      "samples_us": {
+        "candidate": 9.02399979531765,
+        "baseline": 8.191999979317188
+      },
+      "kernel_samples_us": {
+        "candidate": [
+          9.02399979531765
+        ],
+        "baseline": [
+          8.191999979317188
+        ]
+      },
+      "complete": true,
+      "candidate_over_baseline": 1.1015624777955395
+    },
+    {
+      "pair_index": 1,
+      "burst_id": "016-all15-aa-m02_matmul_rect",
+      "order": [
+        "baseline",
+        "candidate"
+      ],
+      "samples_us": {
+        "baseline": 8.191999979317188,
+        "candidate": 8.191999979317188
+      },
+      "kernel_samples_us": {
+        "baseline": [
+          8.191999979317188
+        ],
+        "candidate": [
+          8.191999979317188
+        ]
+      },
+      "complete": true,
+      "candidate_over_baseline": 1.0
+    },
+    {
+      "pair_index": 2,
+      "burst_id": "016-all15-aa-m02_matmul_rect",
+      "order": [
+        "candidate",
+        "baseline"
+      ],
+      "samples_us": {
+        "candidate": 8.608000352978706,
+        "baseline": 9.216000325977802
+      },
+      "kernel_samples_us": {
+        "candidate": [
+          8.608000352978706
+        ],
+        "baseline": [
+          9.216000325977802
+        ]
+      },
+      "complete": true,
+      "candidate_over_baseline": 0.9340277830410572
+    },
+    {
+      "pair_index": 3,
+      "burst_id": "016-all15-aa-m02_matmul_rect",
+      "order": [
+        "candidate",
+        "baseline"
+      ],
+      "samples_us": {
+        "candidate": 9.216000325977802,
+        "baseline": 9.216000325977802
+      },
+      "kernel_samples_us": {
+        "candidate": [
+          9.216000325977802
+        ],
+        "baseline": [
+          9.216000325977802
+        ]
+      },
+      "complete": true,
+      "candidate_over_baseline": 1.0
+    },
+    {
+      "pair_index": 4,
+      "burst_id": "016-all15-aa-m02_matmul_rect",
+      "order": [
+        "baseline",
+        "candidate"
+      ],
+      "samples_us": {
+        "baseline": 8.86400043964386,
+        "candidate": 8.832000195980072
+      },
+      "kernel_samples_us": {
+        "baseline": [
+          8.86400043964386
+        ],
+        "candidate": [
+          8.832000195980072
+        ]
+      },
+      "complete": true,
+      "candidate_over_baseline": 0.9963898643866635
+    },
+    {
+      "pair_index": 5,
+      "burst_id": "016-all15-aa-m02_matmul_rect",
+      "order": [
+        "baseline",
+        "candidate"
+      ],
+      "samples_us": {
+        "baseline": 8.25599953532219,
+        "candidate": 8.191999979317188
+      },
+      "kernel_samples_us": {
+        "baseline": [
+          8.25599953532219
+        ],
+        "candidate": [
+          8.191999979317188
+        ]
+      },
+      "complete": true,
+      "candidate_over_baseline": 0.9922481153576636
+    },
+    {
+      "pair_index": 6,
+      "burst_id": "016-all15-aa-m02_matmul_rect",
+      "order": [
+        "candidate",
+        "baseline"
+      ],
+      "samples_us": {
+        "candidate": 9.216000325977802,
+        "baseline": 9.216000325977802
+      },
+      "kernel_samples_us": {
+        "candidate": [
+          9.216000325977802
+        ],
+        "baseline": [
+          9.216000325977802
+        ]
+      },
+      "complete": true,
+      "candidate_over_baseline": 1.0
+    },
+    {
+      "pair_index": 7,
+      "burst_id": "016-all15-aa-m02_matmul_rect",
+      "order": [
+        "candidate",
+        "baseline"
+      ],
+      "samples_us": {
+        "candidate": 8.191999979317188,
+        "baseline": 8.191999979317188
+      },
+      "kernel_samples_us": {
+        "candidate": [
+          8.191999979317188
+        ],
+        "baseline": [
+          8.191999979317188
+        ]
+      },
+      "complete": true,
+      "candidate_over_baseline": 1.0
+    },
+    {
+      "pair_index": 8,
+      "burst_id": "016-all15-aa-m02_matmul_rect",
+      "order": [
+        "candidate",
+        "baseline"
+      ],
+      "samples_us": {
+        "candidate": 8.191999979317188,
+        "baseline": 8.191999979317188
+      },
+      "kernel_samples_us": {
+        "candidate": [
+          8.191999979317188
+        ],
+        "baseline": [
+          8.191999979317188
+        ]
+      },
+      "complete": true,
+      "candidate_over_baseline": 1.0
+    },
+    {
+      "pair_index": 9,
+      "burst_id": "016-all15-aa-m02_matmul_rect",
+      "order": [
+        "candidate",
+        "baseline"
+      ],
+      "samples_us": {
+        "candidate": 8.191999979317188,
+        "baseline": 8.191999979317188
+      },
+      "kernel_samples_us": {
+        "candidate": [
+          8.191999979317188
+        ],
+        "baseline": [
+          8.191999979317188
+        ]
+      },
+      "complete": true,
+      "candidate_over_baseline": 1.0
+    },
+    {
+      "pair_index": 10,
+      "burst_id": "016-all15-aa-m02_matmul_rect",
+      "order": [
+        "baseline",
+        "candidate"
+      ],
+      "samples_us": {
+        "baseline": 8.191999979317188,
+        "candidate": 8.191999979317188
+      },
+      "kernel_samples_us": {
+        "baseline": [
+          8.191999979317188
+        ],
+        "candidate": [
+          8.191999979317188
+        ]
+      },
+      "complete": true,
+      "candidate_over_baseline": 1.0
+    },
+    {
+      "pair_index": 11,
+      "burst_id": "016-all15-aa-m02_matmul_rect",
+      "order": [
+        "candidate",
+        "baseline"
+      ],
+      "samples_us": {
+        "candidate": 8.191999979317188,
+        "baseline": 9.216000325977802
+      },
+      "kernel_samples_us": {
+        "candidate": [
+          8.191999979317188
+        ],
+        "baseline": [
+          9.216000325977802
+        ]
+      },
+      "complete": true,
+      "candidate_over_baseline": 0.8888888552039012
+    },
+    {
+      "pair_index": 12,
+      "burst_id": "016-all15-aa-m02_matmul_rect",
+      "order": [
+        "baseline",
+        "candidate"
+      ],
+      "samples_us": {
+        "baseline": 9.216000325977802,
+        "candidate": 8.191999979317188
+      },
+      "kernel_samples_us": {
+        "baseline": [
+          9.216000325977802
+        ],
+        "candidate": [
+          8.191999979317188
+        ]
+      },
+      "complete": true,
+      "candidate_over_baseline": 0.8888888552039012
+    },
+    {
+      "pair_index": 13,
+      "burst_id": "016-all15-aa-m02_matmul_rect",
+      "order": [
+        "candidate",
+        "baseline"
+      ],
+      "samples_us": {
+        "candidate": 8.191999979317188,
+        "baseline": 8.191999979317188
+      },
+      "kernel_samples_us": {
+        "candidate": [
+          8.191999979317188
+        ],
+        "baseline": [
+          8.191999979317188
+        ]
+      },
+      "complete": true,
+      "candidate_over_baseline": 1.0
+    },
+    {
+      "pair_index": 14,
+      "burst_id": "016-all15-aa-m02_matmul_rect",
+      "order": [
+        "baseline",
+        "candidate"
+      ],
+      "samples_us": {
+        "baseline": 8.191999979317188,
+        "candidate": 8.54399986565113
+      },
+      "kernel_samples_us": {
+        "baseline": [
+          8.191999979317188
+        ],
+        "candidate": [
+          8.54399986565113
+        ]
+      },
+      "complete": true,
+      "candidate_over_baseline": 1.0429687362332345
+    },
+    {
+      "pair_index": 15,
+      "burst_id": "016-all15-aa-m02_matmul_rect",
+      "order": [
+        "candidate",
+        "baseline"
+      ],
+      "samples_us": {
+        "candidate": 8.191999979317188,
+        "baseline": 8.191999979317188
+      },
+      "kernel_samples_us": {
+        "candidate": [
+          8.191999979317188
+        ],
+        "baseline": [
+          8.191999979317188
+        ]
+      },
+      "complete": true,
+      "candidate_over_baseline": 1.0
+    }
+  ],
+  "checks": [
+    {
+      "phase": "warmup",
+      "repetition": 0,
+      "arm": "baseline",
+      "ok": true,
+      "buffers": {
+        "x1": {
+          "prefix_ok": true,
+          "suffix_ok": true,
+          "input_ok": true
+        },
+        "x0": {
+          "prefix_ok": true,
+          "suffix_ok": true,
+          "input_ok": true
+        },
+        "matmul": {
+          "prefix_ok": true,
+          "suffix_ok": true,
+          "input_ok": true
+        }
+      },
+      "outputs": {
+        "matmul": {
+          "ok": true,
+          "elements": 8192,
+          "mismatched": 0,
+          "max_abs_error": 1.1444091796875e-05,
+          "rtol": 0.001,
+          "atol": 0.001
+        }
+      }
+    },
+    {
+      "phase": "warmup",
+      "repetition": 0,
+      "arm": "candidate",
+      "ok": true,
+      "buffers": {
+        "x1": {
+          "prefix_ok": true,
+          "suffix_ok": true,
+          "input_ok": true
+        },
+        "x0": {
+          "prefix_ok": true,
+          "suffix_ok": true,
+          "input_ok": true
+        },
+        "matmul": {
+          "prefix_ok": true,
+          "suffix_ok": true,
+          "input_ok": true
+        }
+      },
+      "outputs": {
+        "matmul": {
+          "ok": true,
+          "elements": 8192,
+          "mismatched": 0,
+          "max_abs_error": 1.1444091796875e-05,
+          "rtol": 0.001,
+          "atol": 0.001
+        }
+      }
+    },
+    {
+      "phase": "warmup",
+      "repetition": 1,
+      "arm": "baseline",
+      "ok": true,
+      "buffers": {
+        "x1": {
+          "prefix_ok": true,
+          "suffix_ok": true,
+          "input_ok": true
+        },
+        "x0": {
+          "prefix_ok": true,
+          "suffix_ok": true,
+          "input_ok": true
+        },
+        "matmul": {
+          "prefix_ok": true,
+          "suffix_ok": true,
+          "input_ok": true
+        }
+      },
+      "outputs": {
+        "matmul": {
+          "ok": true,
+          "elements": 8192,
+          "mismatched": 0,
+          "max_abs_error": 1.1444091796875e-05,
+          "rtol": 0.001,
+          "atol": 0.001
+        }
+      }
+    },
+    {
+      "phase": "warmup",
+      "repetition": 1,
+      "arm": "candidate",
+      "ok": true,
+      "buffers": {
+        "x1": {
+          "prefix_ok": true,
+          "suffix_ok": true,
+          "input_ok": true
+        },
+        "x0": {
+          "prefix_ok": true,
+          "suffix_ok": true,
+          "input_ok": true
+        },
+        "matmul": {
+          "prefix_ok": true,
+          "suffix_ok": true,
+          "input_ok": true
+        }
+      },
+      "outputs": {
+        "matmul": {
+          "ok": true,
+          "elements": 8192,
+          "mismatched": 0,
+          "max_abs_error": 1.1444091796875e-05,
+          "rtol": 0.001,
+          "atol": 0.001
+        }
+      }
+    },
+    {
+      "phase": "warmup",
+      "repetition": 2,
+      "arm": "baseline",
+      "ok": true,
+      "buffers": {
+        "x1": {
+          "prefix_ok": true,
+          "suffix_ok": true,
+          "input_ok": true
+        },
+        "x0": {
+          "prefix_ok": true,
+          "suffix_ok": true,
+          "input_ok": true
+        },
+        "matmul": {
+          "prefix_ok": true,
+          "suffix_ok": true,
+          "input_ok": true
+        }
+      },
+      "outputs": {
+        "matmul": {
+          "ok": true,
+          "elements": 8192,
+          "mismatched": 0,
+          "max_abs_error": 1.52587890625e-05,
+          "rtol": 0.001,
+          "atol": 0.001
+        }
+      }
+    },
+    {
+      "phase": "warmup",
+      "repetition": 2,
+      "arm": "candidate",
+      "ok": true,
+      "buffers": {
+        "x1": {
+          "prefix_ok": true,
+          "suffix_ok": true,
+          "input_ok": true
+        },
+        "x0": {
+          "prefix_ok": true,
+          "suffix_ok": true,
+          "input_ok": true
+        },
+        "matmul": {
+          "prefix_ok": true,
+          "suffix_ok": true,
+          "input_ok": true
+        }
+      },
+      "outputs": {
+        "matmul": {
+          "ok": true,
+          "elements": 8192,
+          "mismatched": 0,
+          "max_abs_error": 1.52587890625e-05,
+          "rtol": 0.001,
+          "atol": 0.001
+        }
+      }
+    },
+    {
+      "phase": "warmup",
+      "repetition": 3,
+      "arm": "baseline",
+      "ok": true,
+      "buffers": {
+        "x1": {
+          "prefix_ok": true,
+          "suffix_ok": true,
+          "input_ok": true
+        },
+        "x0": {
+          "prefix_ok": true,
+          "suffix_ok": true,
+          "input_ok": true
+        },
+        "matmul": {
+          "prefix_ok": true,
+          "suffix_ok": true,
+          "input_ok": true
+        }
+      },
+      "outputs": {
+        "matmul": {
+          "ok": true,
+          "elements": 8192,
+          "mismatched": 0,
+          "max_abs_error": 1.1444091796875e-05,
+          "rtol": 0.001,
+          "atol": 0.001
+        }
+      }
+    },
+    {
+      "phase": "warmup",
+      "repetition": 3,
+      "arm": "candidate",
+      "ok": true,
+      "buffers": {
+        "x1": {
+          "prefix_ok": true,
+          "suffix_ok": true,
+          "input_ok": true
+        },
+        "x0": {
+          "prefix_ok": true,
+          "suffix_ok": true,
+          "input_ok": true
+        },
+        "matmul": {
+          "prefix_ok": true,
+          "suffix_ok": true,
+          "input_ok": true
+        }
+      },
+      "outputs": {
+        "matmul": {
+          "ok": true,
+          "elements": 8192,
+          "mismatched": 0,
+          "max_abs_error": 1.1444091796875e-05,
+          "rtol": 0.001,
+          "atol": 0.001
+        }
+      }
+    },
+    {
+      "phase": "warmup",
+      "repetition": 4,
+      "arm": "baseline",
+      "ok": true,
+      "buffers": {
+        "x1": {
+          "prefix_ok": true,
+          "suffix_ok": true,
+          "input_ok": true
+        },
+        "x0": {
+          "prefix_ok": true,
+          "suffix_ok": true,
+          "input_ok": true
+        },
+        "matmul": {
+          "prefix_ok": true,
+          "suffix_ok": true,
+          "input_ok": true
+        }
+      },
+      "outputs": {
+        "matmul": {
+          "ok": true,
+          "elements": 8192,
+          "mismatched": 0,
+          "max_abs_error": 1.1444091796875e-05,
+          "rtol": 0.001,
+          "atol": 0.001
+        }
+      }
+    },
+    {
+      "phase": "warmup",
+      "repetition": 4,
+      "arm": "candidate",
+      "ok": true,
+      "buffers": {
+        "x1": {
+          "prefix_ok": true,
+          "suffix_ok": true,
+          "input_ok": true
+        },
+        "x0": {
+          "prefix_ok": true,
+          "suffix_ok": true,
+          "input_ok": true
+        },
+        "matmul": {
+          "prefix_ok": true,
+          "suffix_ok": true,
+          "input_ok": true
+        }
+      },
+      "outputs": {
+        "matmul": {
+          "ok": true,
+          "elements": 8192,
+          "mismatched": 0,
+          "max_abs_error": 1.52587890625e-05,
+          "rtol": 0.001,
+          "atol": 0.001
+        }
+      }
+    },
+    {
+      "phase": "after-paired-block",
+      "arm": "candidate",
+      "ok": true,
+      "buffers": {
+        "x1": {
+          "prefix_ok": true,
+          "suffix_ok": true,
+          "input_ok": true
+        },
+        "x0": {
+          "prefix_ok": true,
+          "suffix_ok": true,
+          "input_ok": true
+        },
+        "matmul": {
+          "prefix_ok": true,
+          "suffix_ok": true,
+          "input_ok": true
+        }
+      },
+      "outputs": {
+        "matmul": {
+          "ok": true,
+          "elements": 8192,
+          "mismatched": 0,
+          "max_abs_error": 1.52587890625e-05,
+          "rtol": 0.001,
+          "atol": 0.001
+        }
+      }
+    },
+    {
+      "phase": "after-paired-block",
+      "arm": "baseline",
+      "ok": true,
+      "buffers": {
+        "x1": {
+          "prefix_ok": true,
+          "suffix_ok": true,
+          "input_ok": true
+        },
+        "x0": {
+          "prefix_ok": true,
+          "suffix_ok": true,
+          "input_ok": true
+        },
+        "matmul": {
+          "prefix_ok": true,
+          "suffix_ok": true,
+          "input_ok": true
+        }
+      },
+      "outputs": {
+        "matmul": {
+          "ok": true,
+          "elements": 8192,
+          "mismatched": 0,
+          "max_abs_error": 1.1444091796875e-05,
+          "rtol": 0.001,
+          "atol": 0.001
+        }
+      }
+    }
+  ],
+  "burst_id": "016-all15-aa-m02_matmul_rect",
+  "pair_offset": 0,
+  "completed_pairs": 16,
+  "launch_count": 42,
+  "physical_timed_launches": 32,
+  "timing_protocol": "cuda-graph-paired-v2",
+  "resources": {
+    "candidate": [
+      {
+        "entry": "k_matmul",
+        "dynamic_shared_bytes": 0,
+        "block_threads": 256,
+        "max_threads_per_block": 1024,
+        "static_shared_bytes": 1536,
+        "local_bytes": 0,
+        "registers": 40,
+        "max_active_blocks_per_sm": 6,
+        "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+      }
+    ],
+    "baseline": [
+      {
+        "entry": "k_matmul",
+        "dynamic_shared_bytes": 0,
+        "block_threads": 256,
+        "max_threads_per_block": 1024,
+        "static_shared_bytes": 1536,
+        "local_bytes": 0,
+        "registers": 40,
+        "max_active_blocks_per_sm": 6,
+        "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+      }
+    ]
+  },
+  "timing_method": "Explicit captured CUDA event nodes around each kernel; paired block replayed once; resets/copies excluded.",
+  "validation_scope": "Every warmup and after the complete paired block; use independent repeated correctness checks before timing.",
+  "cache_mode": "warm: same allocations reused; no streaming-throughput claim",
+  "mode": "timing",
+  "device": {
+    "name": "NVIDIA GeForce RTX 4060 Laptop GPU",
+    "worker_pid": 394338,
+    "context_identity": "394338:94715472931248",
+    "driver_version": 13040,
+    "clock_rate_khz": 1890000,
+    "multiprocessors": 24,
+    "memory_clock_khz": 8001000,
+    "compute_major": 8,
+    "compute_minor": 9,
+    "uuid": "GPU-01c8f1da-9f9f-fa3e-bbe2-0771199ab74a",
+    "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry."
+  },
+  "benchmark_qualified": false,
+  "qualification_note": "Raw diagnostics; benchmark validity requires evaluator-issued source/suite all-15 gates.",
+  "phase_seconds": {
+    "case_loading": 0.007847055996535346,
+    "cuda_initialization": 0.15042505199380685,
+    "execution_and_checks": 0.027673071002936922,
+    "total": 0.18594755399681162
+  },
+  "identities": [
+    {
+      "/home/ada/Projects/emmy-hackathon-2026/experiments/016-timing-matrix-2026/timing/prepared-all15/prepared/m02_matmul_rect/meta.json": "a82fd8d7f5933749868035254537b962d3d0140c8bf3e22f7f8a54a289a9c365",
+      "/home/ada/Projects/emmy-hackathon-2026/experiments/016-timing-matrix-2026/timing/prepared-all15/prepared/m02_matmul_rect/expected.npz": "b0a5f6719c01fdc55054d983e7d75f880577e4741c63ae39c9fa704507e58134",
+      "/home/ada/Projects/emmy-hackathon-2026/experiments/016-timing-matrix-2026/timing/prepared-all15/prepared/m02_matmul_rect/baseline-k_matmul.cubin": "71b39b407c9b96a8a5356cb9c38b48a4743c57e3c248e7b7da1ef3cb4c776872"
+    },
+    {
+      "/home/ada/Projects/emmy-hackathon-2026/experiments/016-timing-matrix-2026/timing/prepared-all15/prepared/m02_matmul_rect/meta.json": "a82fd8d7f5933749868035254537b962d3d0140c8bf3e22f7f8a54a289a9c365",
+      "/home/ada/Projects/emmy-hackathon-2026/experiments/016-timing-matrix-2026/timing/prepared-all15/prepared/m02_matmul_rect/expected.npz": "b0a5f6719c01fdc55054d983e7d75f880577e4741c63ae39c9fa704507e58134",
+      "/home/ada/Projects/emmy-hackathon-2026/experiments/016-timing-matrix-2026/timing/prepared-all15/prepared/m02_matmul_rect/baseline-k_matmul.cubin": "71b39b407c9b96a8a5356cb9c38b48a4743c57e3c248e7b7da1ef3cb4c776872"
+    }
+  ]
+}

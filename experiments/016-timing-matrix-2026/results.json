@@ -1,0 +1,243 @@
+{
+  "schema": 1,
+  "local_device": "NVIDIA GeForce RTX 4060 Laptop GPU, sm_89",
+  "hosted_device": "NVIDIA GeForce RTX 5090, sm_120",
+  "baseline_sha256": "6436b729336c7e5e1cbeab6e104745adb8d1b0f68a36906e496c1d08b51abed9",
+  "candidate_sha256": "2d35bf97358e9f8fe9243a4a7b436145662cb543f3a5f35370aecb1146f5a3d0",
+  "published_correctness_all15_both_branches": true,
+  "timing_semantics": {
+    "local_4060": "CUDA-event kernel intervals, resets/copies excluded; median of per-arm samples in one paired block",
+    "hosted_5090": "runner-reported median_us; warmup 10, iters 50, 7 interleaved samples; excludes compile/HTTP/copy overhead; clocks not locked"
+  },
+  "local_protocol": "cuda-graph-paired-v2; 32 pairs for non-m01 confirmation, 16 for m01",
+  "hosted_protocol": "runner median_us; warmup 10, iters 50, 7 interleaved repetitions",
+  "hosted_requests": 271,
+  "hosted_backoff_count": 0,
+  "rows": [
+    {
+      "case": "p00_scalar_add",
+      "local_4060": {
+        "main_us": 3.0720001086592674,
+        "tensor_us": 3.0720001086592674,
+        "ratio": 1.0,
+        "pairs": 32
+      },
+      "hosted_5090": {
+        "main_us": 2.976,
+        "tensor_us": 2.976,
+        "ratio": 1.0,
+        "samples": 7
+      }
+    },
+    {
+      "case": "p01_vector_add",
+      "local_4060": {
+        "main_us": 3.0720001086592674,
+        "tensor_us": 3.0720001086592674,
+        "ratio": 1.0,
+        "pairs": 32
+      },
+      "hosted_5090": {
+        "main_us": 2.976,
+        "tensor_us": 3.008,
+        "ratio": 1.010752688172043,
+        "samples": 7
+      }
+    },
+    {
+      "case": "p02_scale_shift",
+      "local_4060": {
+        "main_us": 3.0720001086592674,
+        "tensor_us": 3.0720001086592674,
+        "ratio": 1.0,
+        "pairs": 32
+      },
+      "hosted_5090": {
+        "main_us": 3.04,
+        "tensor_us": 3.04,
+        "ratio": 1.0,
+        "samples": 7
+      }
+    },
+    {
+      "case": "p03_relu_mul",
+      "local_4060": {
+        "main_us": 3.0720001086592674,
+        "tensor_us": 3.0720001086592674,
+        "ratio": 1.0,
+        "pairs": 32
+      },
+      "hosted_5090": {
+        "main_us": 2.976,
+        "tensor_us": 3.024,
+        "ratio": 1.0161290322580645,
+        "samples": 7
+      }
+    },
+    {
+      "case": "r01_array_sum",
+      "local_4060": {
+        "main_us": 3.0720001086592674,
+        "tensor_us": 3.0720001086592674,
+        "ratio": 1.0,
+        "pairs": 32
+      },
+      "hosted_5090": {
+        "main_us": 3.008,
+        "tensor_us": 3.008,
+        "ratio": 1.0,
+        "samples": 7
+      }
+    },
+    {
+      "case": "r02_big_sum",
+      "local_4060": {
+        "main_us": 23.552000522613525,
+        "tensor_us": 23.552000522613525,
+        "ratio": 1.0,
+        "pairs": 32
+      },
+      "hosted_5090": {
+        "main_us": 21.088,
+        "tensor_us": 21.088,
+        "ratio": 1.0,
+        "samples": 7
+      }
+    },
+    {
+      "case": "r03_mean",
+      "local_4060": {
+        "main_us": 13.472000136971474,
+        "tensor_us": 13.391999993473291,
+        "ratio": 0.9940617471285027,
+        "pairs": 32
+      },
+      "hosted_5090": {
+        "main_us": 12.896,
+        "tensor_us": 12.896,
+        "ratio": 1.0,
+        "samples": 7
+      }
+    },
+    {
+      "case": "r04_row_sum",
+      "local_4060": {
+        "main_us": 3.0720001086592674,
+        "tensor_us": 3.2319999299943447,
+        "ratio": 1.052083273331949,
+        "pairs": 32
+      },
+      "hosted_5090": {
+        "main_us": 2.976,
+        "tensor_us": 2.944,
+        "ratio": 0.989247311827957,
+        "samples": 7
+      }
+    },
+    {
+      "case": "m01_matmul_512",
+      "local_4060": {
+        "main_us": 479.2320132255554,
+        "tensor_us": 134.14399325847626,
+        "ratio": 0.2799145081222694,
+        "pairs": 16
+      },
+      "hosted_5090": {
+        "main_us": 60.064,
+        "tensor_us": 21.136,
+        "ratio": 0.351891315929675,
+        "samples": 7
+      }
+    },
+    {
+      "case": "m02_matmul_rect",
+      "local_4060": {
+        "main_us": 10.239999741315842,
+        "tensor_us": 10.239999741315842,
+        "ratio": 1.0,
+        "pairs": 32
+      },
+      "hosted_5090": {
+        "main_us": 5.024,
+        "tensor_us": 5.04,
+        "ratio": 1.0031847133757963,
+        "samples": 7
+      }
+    },
+    {
+      "case": "f01_rmsnorm",
+      "local_4060": {
+        "main_us": 5.119999870657921,
+        "tensor_us": 5.119999870657921,
+        "ratio": 1.0,
+        "pairs": 32
+      },
+      "hosted_5090": {
+        "main_us": 4.768,
+        "tensor_us": 4.784,
+        "ratio": 1.0033557046979866,
+        "samples": 7
+      }
+    },
+    {
+      "case": "f02_row_softmax",
+      "local_4060": {
+        "main_us": 4.095999989658594,
+        "tensor_us": 4.095999989658594,
+        "ratio": 1.0,
+        "pairs": 32
+      },
+      "hosted_5090": {
+        "main_us": 3.008,
+        "tensor_us": 3.008,
+        "ratio": 1.0,
+        "samples": 7
+      }
+    },
+    {
+      "case": "f03_l2norm",
+      "local_4060": {
+        "main_us": 4.095999989658594,
+        "tensor_us": 4.095999989658594,
+        "ratio": 1.0,
+        "pairs": 32
+      },
+      "hosted_5090": {
+        "main_us": 2.976,
+        "tensor_us": 2.976,
+        "ratio": 1.0,
+        "samples": 7
+      }
+    },
+    {
+      "case": "a01_attention",
+      "local_4060": {
+        "main_us": 243.71199309825897,
+        "tensor_us": 244.9280023574829,
+        "ratio": 1.0049895339321018,
+        "pairs": 32
+      },
+      "hosted_5090": {
+        "main_us": 96.88,
+        "tensor_us": 96.896,
+        "ratio": 1.000165152766309,
+        "samples": 7
+      }
+    },
+    {
+      "case": "a02_attention_128",
+      "local_4060": {
+        "main_us": 116.94400012493134,
+        "tensor_us": 116.7840026319027,
+        "ratio": 0.9986318452177306,
+        "pairs": 32
+      },
+      "hosted_5090": {
+        "main_us": 55.968,
+        "tensor_us": 55.968,
+        "ratio": 1.0,
+        "samples": 7
+      }
+    }
+  ]
+}

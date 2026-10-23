@@ -1,0 +1,19 @@
+{
+  "mode": "timing",
+  "case": {
+    "id": "f02_row_softmax",
+    "variant": "published",
+    "case_dir": "/home/ada/Projects/emmy-hackathon-2026/experiments/016-timing-matrix-2026/timing/prepared-all15/prepared/f02_row_softmax",
+    "cubins": [
+      "/home/ada/Projects/emmy-hackathon-2026/experiments/016-timing-matrix-2026/timing/prepared-all15/prepared/f02_row_softmax/baseline-k_softmax_05263d.cubin"
+    ],
+    "baseline_cubins": [
+      "/home/ada/Projects/emmy-hackathon-2026/experiments/016-timing-matrix-2026/timing/prepared-all15/prepared/f02_row_softmax/baseline-k_softmax_05263d.cubin"
+    ]
+  },
+  "pairs": 32,
+  "warmup": 5,
+  "seed": 66001,
+  "burst_id": "016-confirm-aa-f02_row_softmax",
+  "out": "/home/ada/Projects/emmy-hackathon-2026/experiments/016-timing-matrix-2026/timing/aa-f02_row_softmax-confirm.json"
+}

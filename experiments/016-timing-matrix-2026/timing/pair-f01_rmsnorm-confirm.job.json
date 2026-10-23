@@ -1,0 +1,19 @@
+{
+  "mode": "timing",
+  "case": {
+    "id": "f01_rmsnorm",
+    "variant": "published",
+    "case_dir": "/home/ada/Projects/emmy-hackathon-2026/experiments/016-timing-matrix-2026/timing/prepared-all15/prepared/f01_rmsnorm",
+    "cubins": [
+      "/home/ada/Projects/emmy-hackathon-2026/experiments/016-timing-matrix-2026/timing/prepared-all15/prepared/f01_rmsnorm/candidate-k_mean_cbd1de.cubin"
+    ],
+    "baseline_cubins": [
+      "/home/ada/Projects/emmy-hackathon-2026/experiments/016-timing-matrix-2026/timing/prepared-all15/prepared/f01_rmsnorm/baseline-k_mean_cbd1de.cubin"
+    ]
+  },
+  "pairs": 32,
+  "warmup": 5,
+  "seed": 66001,
+  "burst_id": "016-confirm-pair-f01_rmsnorm",
+  "out": "/home/ada/Projects/emmy-hackathon-2026/experiments/016-timing-matrix-2026/timing/pair-f01_rmsnorm-confirm.json"
+}

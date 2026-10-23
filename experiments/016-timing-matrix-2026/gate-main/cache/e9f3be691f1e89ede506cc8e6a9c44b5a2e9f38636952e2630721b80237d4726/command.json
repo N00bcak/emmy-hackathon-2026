@@ -1,0 +1,1 @@
+["/opt/cuda/bin/ptxas", "-arch=sm_89", "-v", "experiments/016-timing-matrix-2026/gate-main/cache/e9f3be691f1e89ede506cc8e6a9c44b5a2e9f38636952e2630721b80237d4726/source.ptx", "-o", "experiments/016-timing-matrix-2026/gate-main/cache/e9f3be691f1e89ede506cc8e6a9c44b5a2e9f38636952e2630721b80237d4726/module.cubin"]

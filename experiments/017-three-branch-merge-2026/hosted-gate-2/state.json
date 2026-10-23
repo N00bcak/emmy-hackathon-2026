@@ -1,0 +1,2259 @@
+{
+  "schema": 1,
+  "url": "http://runner.riftstack.ai:48701",
+  "status": "gate-complete",
+  "repetitions": 0,
+  "gap": 0.35,
+  "arms": {
+    "main": {
+      "source": "/tmp/emmy-5090-main/compile.py",
+      "source_sha256": "6436b729336c7e5e1cbeab6e104745adb8d1b0f68a36906e496c1d08b51abed9",
+      "snapshot": {
+        "source": "/tmp/emmy-5090-main/compile.py",
+        "source_sha256": "6436b729336c7e5e1cbeab6e104745adb8d1b0f68a36906e496c1d08b51abed9",
+        "compiler_unchanged": true,
+        "cases": {
+          "a01_attention": {
+            "meta_sha256": "c280c572744016ecf6ca2971312ad2ce8a10b28c0f3e38561c1a096c2ea7352f",
+            "expected_sha256": "ccc0ad1a70f679781c8aff8064ae73368e04bc35018a537dc15ef8610262ed51",
+            "kernels": [
+              {
+                "entry": "k_matmul_softmax_reduce_b55365",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/a01_attention/k_matmul_softmax_reduce_b55365.ir.json",
+                "ir_sha256": "0a6925795c1b8e108befbdc3300c722ea5a7fb19d2337597eca860e9c36eff9a",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate-2/ptx/main/6436b729336c/a01_attention/k_matmul_softmax_reduce_b55365.ptx",
+                "ptx_sha256": "5e4fbadbda45c407618aa6d9c3c5eb083bd5b8c21528d3480b28b78060a32696"
+              }
+            ]
+          },
+          "a02_attention_128": {
+            "meta_sha256": "adcc08994786076e7cb9835ab3bab19b0dc9c0d00a999adea124380f8300de18",
+            "expected_sha256": "ebd7c000d75e52707f2e65304e05fbf963b4799919f814f685490c76c89e7080",
+            "kernels": [
+              {
+                "entry": "k_matmul_softmax_reduce_6f0029",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/a02_attention_128/k_matmul_softmax_reduce_6f0029.ir.json",
+                "ir_sha256": "a51792c9e4d920a493054fb2a6986d87766cc1b3717078f8e631a45d1b0bf1dd",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate-2/ptx/main/6436b729336c/a02_attention_128/k_matmul_softmax_reduce_6f0029.ptx",
+                "ptx_sha256": "9570daac941a6cb092542c4ebf4d16d983b5a891df557c186758678bfa5ccf30"
+              }
+            ]
+          },
+          "f01_rmsnorm": {
+            "meta_sha256": "f45014c6b0963ec9727fc0f1c9bb585319c4ac94292260bc8f7c10557c1b8e1d",
+            "expected_sha256": "197016500cfca3ee3a1952273d50655e5bbf60093c28ad801e28eb3ccb76a6fb",
+            "kernels": [
+              {
+                "entry": "k_mean_cbd1de",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/f01_rmsnorm/k_mean_cbd1de.ir.json",
+                "ir_sha256": "a8e6819e3144b942d8983b52b6865fa692868105b20de30f6ba4df424a07862a",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate-2/ptx/main/6436b729336c/f01_rmsnorm/k_mean_cbd1de.ptx",
+                "ptx_sha256": "2ead5e7dbf99dbc9c59e022eb88906851c68c7d9f0f298d8a6816ece7bc992a9"
+              }
+            ]
+          },
+          "f02_row_softmax": {
+            "meta_sha256": "ddbe97ea42c7b077d30d140b751f8062caf47b5620cb423a02c1dd848cd61900",
+            "expected_sha256": "7e38d188cdc0bbb7afda1e6007318b0174bcdf82eb3855775967e49d4b8ee8ce",
+            "kernels": [
+              {
+                "entry": "k_softmax_05263d",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/f02_row_softmax/k_softmax_05263d.ir.json",
+                "ir_sha256": "d48b030e9d9a765aa631287f72935bc59f20926f3ccb09dc7f7932106770af03",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate-2/ptx/main/6436b729336c/f02_row_softmax/k_softmax_05263d.ptx",
+                "ptx_sha256": "0923e49549fcd9e2f00541ca3569bd0f41e8084f2369a8b43df98a46cf60e527"
+              }
+            ]
+          },
+          "f03_l2norm": {
+            "meta_sha256": "cbf67c2d198f4fea1bb140083ec65c4bf14202090daaa4aac77f1514ecc60b95",
+            "expected_sha256": "fb2e242cbfe9834c6d45f27f29acc750a5b4ea8ad6ab509baa7a5b4c53586380",
+            "kernels": [
+              {
+                "entry": "k_div_reduce",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/f03_l2norm/k_div_reduce.ir.json",
+                "ir_sha256": "34abdb33fe950100029930242777d0b22a12e523117de21bc9d78b43310c567d",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate-2/ptx/main/6436b729336c/f03_l2norm/k_div_reduce.ptx",
+                "ptx_sha256": "d2ea088bb29b534edbdd5e727cd369a1ef753d7caa092031919896e80a1be347"
+              }
+            ]
+          },
+          "m01_matmul_512": {
+            "meta_sha256": "3324370a2d29614c6c7ff7cf549563f9afb22bab0ed31ed62d8ffd27c59dcd57",
+            "expected_sha256": "6396bececa75b2adee8c83bb0c090f9a68e7297d7de492f5a2f0cd3e67f24c36",
+            "kernels": [
+              {
+                "entry": "k_matmul_2967be",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/m01_matmul_512/k_matmul_2967be.ir.json",
+                "ir_sha256": "ed9ab32776ce0de8b0d1f0367da54c586bf993c964efc01482666247a976dc02",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate-2/ptx/main/6436b729336c/m01_matmul_512/k_matmul_2967be.ptx",
+                "ptx_sha256": "52251b6560aadaf3e1143193af4d61b44943769f51a8f74701864c67d23803ff"
+              }
+            ]
+          },
+          "m02_matmul_rect": {
+            "meta_sha256": "a82fd8d7f5933749868035254537b962d3d0140c8bf3e22f7f8a54a289a9c365",
+            "expected_sha256": "b0a5f6719c01fdc55054d983e7d75f880577e4741c63ae39c9fa704507e58134",
+            "kernels": [
+              {
+                "entry": "k_matmul",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/m02_matmul_rect/k_matmul.ir.json",
+                "ir_sha256": "c47bb47c529e7362c9272784ac21a31f2a5d79546cc11b19beff891278d22206",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate-2/ptx/main/6436b729336c/m02_matmul_rect/k_matmul.ptx",
+                "ptx_sha256": "3fabbf1e81c3f4ca83574876721d851910b8337a6cbd98d7f38bda9d2e7f5071"
+              }
+            ]
+          },
+          "p00_scalar_add": {
+            "meta_sha256": "67f4c80a5c78c9fa571f4088633acc56cae0a758d2a65e7c89c07a96e665709c",
+            "expected_sha256": "69e4a749183c5402f03c28a957cb1f523186d16f9b9974c75cd0ebbbfd925478",
+            "kernels": [
+              {
+                "entry": "k_add_pointwise",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/p00_scalar_add/k_add_pointwise.ir.json",
+                "ir_sha256": "d93c0b232c48f7161c88f0276ea8a69481b06608a24b6e8ed2d5025bd17f4e32",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate-2/ptx/main/6436b729336c/p00_scalar_add/k_add_pointwise.ptx",
+                "ptx_sha256": "e7ac79c593a23077245e4247bf890dac7edd40ce96a93d814932d919f669457a"
+              }
+            ]
+          },
+          "p01_vector_add": {
+            "meta_sha256": "4607a6a14553ec256b2073ff8fef18a850e315033f4fdace21f26fdcc2a867c6",
+            "expected_sha256": "1a72f87aa3afd4e84746d2c0bfcfde9d024f573ce863322f72d2c6b3bb133086",
+            "kernels": [
+              {
+                "entry": "k_add_pointwise",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/p01_vector_add/k_add_pointwise.ir.json",
+                "ir_sha256": "90088bc4c7346b9a5916205fdb96926f52cc0f5e3c5c08527d7b0796b0c47fc5",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate-2/ptx/main/6436b729336c/p01_vector_add/k_add_pointwise.ptx",
+                "ptx_sha256": "508930f6d148b693328a84371271282f8a0f38e013f6ffdc83b68c5be2b62ccc"
+              }
+            ]
+          },
+          "p02_scale_shift": {
+            "meta_sha256": "7c1c3ea69e4d61128d72fbaf3a82a76125a5273c3ced6197ac2f150d03d121e1",
+            "expected_sha256": "515539ace84b0cb38ab3e5e6ed20894b774ab428a86be180529d54fd8ad63dd6",
+            "kernels": [
+              {
+                "entry": "k_add_pointwise",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/p02_scale_shift/k_add_pointwise.ir.json",
+                "ir_sha256": "2bae0a54cbcd037d6c13e70b5c4f5728f2f94af163a53ebe35b88ab8f68ec021",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate-2/ptx/main/6436b729336c/p02_scale_shift/k_add_pointwise.ptx",
+                "ptx_sha256": "bf3d49a50b066a4d9a2ac97cd811807837bfc624f7728b95b7bf6e30d906aaf0"
+              }
+            ]
+          },
+          "p03_relu_mul": {
+            "meta_sha256": "a2dbbe3a3cec7c45fcdde2c08f0d3276647c2a4b56ede3345be16404d1ded8c9",
+            "expected_sha256": "a0fc97901b28331b29bb5f01cf104944c3376c633dd4cce65d551ad61035e52f",
+            "kernels": [
+              {
+                "entry": "k_mul_pointwise",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/p03_relu_mul/k_mul_pointwise.ir.json",
+                "ir_sha256": "b2429e790dac9fd0db9fafadaa3624cafaeff85c834851a9034a730a1620a892",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate-2/ptx/main/6436b729336c/p03_relu_mul/k_mul_pointwise.ptx",
+                "ptx_sha256": "7ff38bfd27d03c32078539450b09e0ea29118fd16131bcf90530e1d5f9fb0fba"
+              }
+            ]
+          },
+          "r01_array_sum": {
+            "meta_sha256": "46cf07073f4e612e811decbc2ca900ea210811194a1e336053a6f179ecb4b00e",
+            "expected_sha256": "899c8058da70456bc3714d71ffc2814dd9777e37d39be7379b359e452924cb5c",
+            "kernels": [
+              {
+                "entry": "k_sum_1_reduce",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/r01_array_sum/k_sum_1_reduce.ir.json",
+                "ir_sha256": "a5ad6af023562e1632e929afb8cd6387603c2edcd4d4b1590b1a3b2ee962675f",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate-2/ptx/main/6436b729336c/r01_array_sum/k_sum_1_reduce.ptx",
+                "ptx_sha256": "c7438c781f4552f066b9d261e18c7627c810647ea43dc918e64a3f5bb2591450"
+              }
+            ]
+          },
+          "r02_big_sum": {
+            "meta_sha256": "db364be00e35402a3d6f10fcd55562115c7604dea94f8126a02179a80476d19e",
+            "expected_sha256": "0109852644d0785b770fa38d996b063b156f01e8bfccb303ea0581e42696eec1",
+            "kernels": [
+              {
+                "entry": "k_sum_1_reduce",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/r02_big_sum/k_sum_1_reduce.ir.json",
+                "ir_sha256": "777e3f2dd170849133e19d303cdb3d273c135c9a9896786ee40fbc6a2ff4ec7c",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate-2/ptx/main/6436b729336c/r02_big_sum/k_sum_1_reduce.ptx",
+                "ptx_sha256": "5b63db7de4a6ffcc7ac9064be89a8cf5deb19b109240f495468c178d1f602cbb"
+              }
+            ]
+          },
+          "r03_mean": {
+            "meta_sha256": "d7ab661c388ad447f5661a3b36cba448cf5142402756f1e1c35d110db06c84fe",
+            "expected_sha256": "9c53fd65aebbc9b6ca477653643273195149be2d93ab472a135883a0a128c5f7",
+            "kernels": [
+              {
+                "entry": "k_mean_ffcca3",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/r03_mean/k_mean_ffcca3.ir.json",
+                "ir_sha256": "7eeca2c7869ab2ddf880a0ac7fb689d3ab814d7523eab472ec80ad2458100b86",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate-2/ptx/main/6436b729336c/r03_mean/k_mean_ffcca3.ptx",
+                "ptx_sha256": "b23f5f4a19b4f940eae4e3fc68254a57aed4eaefdb5d16bd30b002850f717dea"
+              }
+            ]
+          },
+          "r04_row_sum": {
+            "meta_sha256": "803cb710590156ad319eb44b2d2aa6c1ee9b0e3a666ebc09de259e50d83a3ba1",
+            "expected_sha256": "cb724cbe21276b1438add7263e418f52c0eb90c4501954a245678dcc793c895d",
+            "kernels": [
+              {
+                "entry": "k_sum_1_reduce",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/r04_row_sum/k_sum_1_reduce.ir.json",
+                "ir_sha256": "4c7befc76b72c6c69be4675d69ccd14e336b9139fe22aaec1b94230858c8ab03",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate-2/ptx/main/6436b729336c/r04_row_sum/k_sum_1_reduce.ptx",
+                "ptx_sha256": "c6f7179c6c40a04f7408162a2aec0c8fdd71d44f8884c065be1a2f411fadacf7"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "tcl": {
+      "source": "/tmp/emmy-5090-tcl/compile.py",
+      "source_sha256": "2d35bf97358e9f8fe9243a4a7b436145662cb543f3a5f35370aecb1146f5a3d0",
+      "snapshot": {
+        "source": "/tmp/emmy-5090-tcl/compile.py",
+        "source_sha256": "2d35bf97358e9f8fe9243a4a7b436145662cb543f3a5f35370aecb1146f5a3d0",
+        "compiler_unchanged": true,
+        "cases": {
+          "a01_attention": {
+            "meta_sha256": "c280c572744016ecf6ca2971312ad2ce8a10b28c0f3e38561c1a096c2ea7352f",
+            "expected_sha256": "ccc0ad1a70f679781c8aff8064ae73368e04bc35018a537dc15ef8610262ed51",
+            "kernels": [
+              {
+                "entry": "k_matmul_softmax_reduce_b55365",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/a01_attention/k_matmul_softmax_reduce_b55365.ir.json",
+                "ir_sha256": "0a6925795c1b8e108befbdc3300c722ea5a7fb19d2337597eca860e9c36eff9a",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate-2/ptx/tcl/2d35bf97358e/a01_attention/k_matmul_softmax_reduce_b55365.ptx",
+                "ptx_sha256": "5e4fbadbda45c407618aa6d9c3c5eb083bd5b8c21528d3480b28b78060a32696"
+              }
+            ]
+          },
+          "a02_attention_128": {
+            "meta_sha256": "adcc08994786076e7cb9835ab3bab19b0dc9c0d00a999adea124380f8300de18",
+            "expected_sha256": "ebd7c000d75e52707f2e65304e05fbf963b4799919f814f685490c76c89e7080",
+            "kernels": [
+              {
+                "entry": "k_matmul_softmax_reduce_6f0029",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/a02_attention_128/k_matmul_softmax_reduce_6f0029.ir.json",
+                "ir_sha256": "a51792c9e4d920a493054fb2a6986d87766cc1b3717078f8e631a45d1b0bf1dd",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate-2/ptx/tcl/2d35bf97358e/a02_attention_128/k_matmul_softmax_reduce_6f0029.ptx",
+                "ptx_sha256": "9570daac941a6cb092542c4ebf4d16d983b5a891df557c186758678bfa5ccf30"
+              }
+            ]
+          },
+          "f01_rmsnorm": {
+            "meta_sha256": "f45014c6b0963ec9727fc0f1c9bb585319c4ac94292260bc8f7c10557c1b8e1d",
+            "expected_sha256": "197016500cfca3ee3a1952273d50655e5bbf60093c28ad801e28eb3ccb76a6fb",
+            "kernels": [
+              {
+                "entry": "k_mean_cbd1de",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/f01_rmsnorm/k_mean_cbd1de.ir.json",
+                "ir_sha256": "a8e6819e3144b942d8983b52b6865fa692868105b20de30f6ba4df424a07862a",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate-2/ptx/tcl/2d35bf97358e/f01_rmsnorm/k_mean_cbd1de.ptx",
+                "ptx_sha256": "2ead5e7dbf99dbc9c59e022eb88906851c68c7d9f0f298d8a6816ece7bc992a9"
+              }
+            ]
+          },
+          "f02_row_softmax": {
+            "meta_sha256": "ddbe97ea42c7b077d30d140b751f8062caf47b5620cb423a02c1dd848cd61900",
+            "expected_sha256": "7e38d188cdc0bbb7afda1e6007318b0174bcdf82eb3855775967e49d4b8ee8ce",
+            "kernels": [
+              {
+                "entry": "k_softmax_05263d",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/f02_row_softmax/k_softmax_05263d.ir.json",
+                "ir_sha256": "d48b030e9d9a765aa631287f72935bc59f20926f3ccb09dc7f7932106770af03",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate-2/ptx/tcl/2d35bf97358e/f02_row_softmax/k_softmax_05263d.ptx",
+                "ptx_sha256": "0923e49549fcd9e2f00541ca3569bd0f41e8084f2369a8b43df98a46cf60e527"
+              }
+            ]
+          },
+          "f03_l2norm": {
+            "meta_sha256": "cbf67c2d198f4fea1bb140083ec65c4bf14202090daaa4aac77f1514ecc60b95",
+            "expected_sha256": "fb2e242cbfe9834c6d45f27f29acc750a5b4ea8ad6ab509baa7a5b4c53586380",
+            "kernels": [
+              {
+                "entry": "k_div_reduce",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/f03_l2norm/k_div_reduce.ir.json",
+                "ir_sha256": "34abdb33fe950100029930242777d0b22a12e523117de21bc9d78b43310c567d",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate-2/ptx/tcl/2d35bf97358e/f03_l2norm/k_div_reduce.ptx",
+                "ptx_sha256": "d2ea088bb29b534edbdd5e727cd369a1ef753d7caa092031919896e80a1be347"
+              }
+            ]
+          },
+          "m01_matmul_512": {
+            "meta_sha256": "3324370a2d29614c6c7ff7cf549563f9afb22bab0ed31ed62d8ffd27c59dcd57",
+            "expected_sha256": "6396bececa75b2adee8c83bb0c090f9a68e7297d7de492f5a2f0cd3e67f24c36",
+            "kernels": [
+              {
+                "entry": "k_matmul_2967be",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/m01_matmul_512/k_matmul_2967be.ir.json",
+                "ir_sha256": "ed9ab32776ce0de8b0d1f0367da54c586bf993c964efc01482666247a976dc02",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate-2/ptx/tcl/2d35bf97358e/m01_matmul_512/k_matmul_2967be.ptx",
+                "ptx_sha256": "84e26af55cd3c696a891d583a04e13b20d48a2f349223f8140311e3de9f14b9b"
+              }
+            ]
+          },
+          "m02_matmul_rect": {
+            "meta_sha256": "a82fd8d7f5933749868035254537b962d3d0140c8bf3e22f7f8a54a289a9c365",
+            "expected_sha256": "b0a5f6719c01fdc55054d983e7d75f880577e4741c63ae39c9fa704507e58134",
+            "kernels": [
+              {
+                "entry": "k_matmul",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/m02_matmul_rect/k_matmul.ir.json",
+                "ir_sha256": "c47bb47c529e7362c9272784ac21a31f2a5d79546cc11b19beff891278d22206",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate-2/ptx/tcl/2d35bf97358e/m02_matmul_rect/k_matmul.ptx",
+                "ptx_sha256": "3fabbf1e81c3f4ca83574876721d851910b8337a6cbd98d7f38bda9d2e7f5071"
+              }
+            ]
+          },
+          "p00_scalar_add": {
+            "meta_sha256": "67f4c80a5c78c9fa571f4088633acc56cae0a758d2a65e7c89c07a96e665709c",
+            "expected_sha256": "69e4a749183c5402f03c28a957cb1f523186d16f9b9974c75cd0ebbbfd925478",
+            "kernels": [
+              {
+                "entry": "k_add_pointwise",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/p00_scalar_add/k_add_pointwise.ir.json",
+                "ir_sha256": "d93c0b232c48f7161c88f0276ea8a69481b06608a24b6e8ed2d5025bd17f4e32",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate-2/ptx/tcl/2d35bf97358e/p00_scalar_add/k_add_pointwise.ptx",
+                "ptx_sha256": "e7ac79c593a23077245e4247bf890dac7edd40ce96a93d814932d919f669457a"
+              }
+            ]
+          },
+          "p01_vector_add": {
+            "meta_sha256": "4607a6a14553ec256b2073ff8fef18a850e315033f4fdace21f26fdcc2a867c6",
+            "expected_sha256": "1a72f87aa3afd4e84746d2c0bfcfde9d024f573ce863322f72d2c6b3bb133086",
+            "kernels": [
+              {
+                "entry": "k_add_pointwise",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/p01_vector_add/k_add_pointwise.ir.json",
+                "ir_sha256": "90088bc4c7346b9a5916205fdb96926f52cc0f5e3c5c08527d7b0796b0c47fc5",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate-2/ptx/tcl/2d35bf97358e/p01_vector_add/k_add_pointwise.ptx",
+                "ptx_sha256": "508930f6d148b693328a84371271282f8a0f38e013f6ffdc83b68c5be2b62ccc"
+              }
+            ]
+          },
+          "p02_scale_shift": {
+            "meta_sha256": "7c1c3ea69e4d61128d72fbaf3a82a76125a5273c3ced6197ac2f150d03d121e1",
+            "expected_sha256": "515539ace84b0cb38ab3e5e6ed20894b774ab428a86be180529d54fd8ad63dd6",
+            "kernels": [
+              {
+                "entry": "k_add_pointwise",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/p02_scale_shift/k_add_pointwise.ir.json",
+                "ir_sha256": "2bae0a54cbcd037d6c13e70b5c4f5728f2f94af163a53ebe35b88ab8f68ec021",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate-2/ptx/tcl/2d35bf97358e/p02_scale_shift/k_add_pointwise.ptx",
+                "ptx_sha256": "bf3d49a50b066a4d9a2ac97cd811807837bfc624f7728b95b7bf6e30d906aaf0"
+              }
+            ]
+          },
+          "p03_relu_mul": {
+            "meta_sha256": "a2dbbe3a3cec7c45fcdde2c08f0d3276647c2a4b56ede3345be16404d1ded8c9",
+            "expected_sha256": "a0fc97901b28331b29bb5f01cf104944c3376c633dd4cce65d551ad61035e52f",
+            "kernels": [
+              {
+                "entry": "k_mul_pointwise",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/p03_relu_mul/k_mul_pointwise.ir.json",
+                "ir_sha256": "b2429e790dac9fd0db9fafadaa3624cafaeff85c834851a9034a730a1620a892",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate-2/ptx/tcl/2d35bf97358e/p03_relu_mul/k_mul_pointwise.ptx",
+                "ptx_sha256": "7ff38bfd27d03c32078539450b09e0ea29118fd16131bcf90530e1d5f9fb0fba"
+              }
+            ]
+          },
+          "r01_array_sum": {
+            "meta_sha256": "46cf07073f4e612e811decbc2ca900ea210811194a1e336053a6f179ecb4b00e",
+            "expected_sha256": "899c8058da70456bc3714d71ffc2814dd9777e37d39be7379b359e452924cb5c",
+            "kernels": [
+              {
+                "entry": "k_sum_1_reduce",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/r01_array_sum/k_sum_1_reduce.ir.json",
+                "ir_sha256": "a5ad6af023562e1632e929afb8cd6387603c2edcd4d4b1590b1a3b2ee962675f",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate-2/ptx/tcl/2d35bf97358e/r01_array_sum/k_sum_1_reduce.ptx",
+                "ptx_sha256": "c7438c781f4552f066b9d261e18c7627c810647ea43dc918e64a3f5bb2591450"
+              }
+            ]
+          },
+          "r02_big_sum": {
+            "meta_sha256": "db364be00e35402a3d6f10fcd55562115c7604dea94f8126a02179a80476d19e",
+            "expected_sha256": "0109852644d0785b770fa38d996b063b156f01e8bfccb303ea0581e42696eec1",
+            "kernels": [
+              {
+                "entry": "k_sum_1_reduce",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/r02_big_sum/k_sum_1_reduce.ir.json",
+                "ir_sha256": "777e3f2dd170849133e19d303cdb3d273c135c9a9896786ee40fbc6a2ff4ec7c",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate-2/ptx/tcl/2d35bf97358e/r02_big_sum/k_sum_1_reduce.ptx",
+                "ptx_sha256": "5b63db7de4a6ffcc7ac9064be89a8cf5deb19b109240f495468c178d1f602cbb"
+              }
+            ]
+          },
+          "r03_mean": {
+            "meta_sha256": "d7ab661c388ad447f5661a3b36cba448cf5142402756f1e1c35d110db06c84fe",
+            "expected_sha256": "9c53fd65aebbc9b6ca477653643273195149be2d93ab472a135883a0a128c5f7",
+            "kernels": [
+              {
+                "entry": "k_mean_ffcca3",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/r03_mean/k_mean_ffcca3.ir.json",
+                "ir_sha256": "7eeca2c7869ab2ddf880a0ac7fb689d3ab814d7523eab472ec80ad2458100b86",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate-2/ptx/tcl/2d35bf97358e/r03_mean/k_mean_ffcca3.ptx",
+                "ptx_sha256": "b23f5f4a19b4f940eae4e3fc68254a57aed4eaefdb5d16bd30b002850f717dea"
+              }
+            ]
+          },
+          "r04_row_sum": {
+            "meta_sha256": "803cb710590156ad319eb44b2d2aa6c1ee9b0e3a666ebc09de259e50d83a3ba1",
+            "expected_sha256": "cb724cbe21276b1438add7263e418f52c0eb90c4501954a245678dcc793c895d",
+            "kernels": [
+              {
+                "entry": "k_sum_1_reduce",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/r04_row_sum/k_sum_1_reduce.ir.json",
+                "ir_sha256": "4c7befc76b72c6c69be4675d69ccd14e336b9139fe22aaec1b94230858c8ab03",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate-2/ptx/tcl/2d35bf97358e/r04_row_sum/k_sum_1_reduce.ptx",
+                "ptx_sha256": "c6f7179c6c40a04f7408162a2aec0c8fdd71d44f8884c065be1a2f411fadacf7"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "powenn": {
+      "source": "/tmp/emmy-5090-powenn/compile.py",
+      "source_sha256": "4439640e2152b005908752ebc7fba5ef47b0e7930409ce106d37fd43497f8688",
+      "snapshot": {
+        "source": "/tmp/emmy-5090-powenn/compile.py",
+        "source_sha256": "4439640e2152b005908752ebc7fba5ef47b0e7930409ce106d37fd43497f8688",
+        "compiler_unchanged": true,
+        "cases": {
+          "a01_attention": {
+            "meta_sha256": "c280c572744016ecf6ca2971312ad2ce8a10b28c0f3e38561c1a096c2ea7352f",
+            "expected_sha256": "ccc0ad1a70f679781c8aff8064ae73368e04bc35018a537dc15ef8610262ed51",
+            "kernels": [
+              {
+                "entry": "k_matmul_softmax_reduce_b55365",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/a01_attention/k_matmul_softmax_reduce_b55365.ir.json",
+                "ir_sha256": "0a6925795c1b8e108befbdc3300c722ea5a7fb19d2337597eca860e9c36eff9a",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate-2/ptx/powenn/4439640e2152/a01_attention/k_matmul_softmax_reduce_b55365.ptx",
+                "ptx_sha256": "56c67993c21d2fbf81b5036ee986ad26ced8569f0e8d0cdc0bd0dedda2286ffd"
+              }
+            ]
+          },
+          "a02_attention_128": {
+            "meta_sha256": "adcc08994786076e7cb9835ab3bab19b0dc9c0d00a999adea124380f8300de18",
+            "expected_sha256": "ebd7c000d75e52707f2e65304e05fbf963b4799919f814f685490c76c89e7080",
+            "kernels": [
+              {
+                "entry": "k_matmul_softmax_reduce_6f0029",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/a02_attention_128/k_matmul_softmax_reduce_6f0029.ir.json",
+                "ir_sha256": "a51792c9e4d920a493054fb2a6986d87766cc1b3717078f8e631a45d1b0bf1dd",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate-2/ptx/powenn/4439640e2152/a02_attention_128/k_matmul_softmax_reduce_6f0029.ptx",
+                "ptx_sha256": "20baf9e2d7bcef36ab2819c4de88dcec1b07774b28c8016b242f0c1d48fed9b7"
+              }
+            ]
+          },
+          "f01_rmsnorm": {
+            "meta_sha256": "f45014c6b0963ec9727fc0f1c9bb585319c4ac94292260bc8f7c10557c1b8e1d",
+            "expected_sha256": "197016500cfca3ee3a1952273d50655e5bbf60093c28ad801e28eb3ccb76a6fb",
+            "kernels": [
+              {
+                "entry": "k_mean_cbd1de",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/f01_rmsnorm/k_mean_cbd1de.ir.json",
+                "ir_sha256": "a8e6819e3144b942d8983b52b6865fa692868105b20de30f6ba4df424a07862a",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate-2/ptx/powenn/4439640e2152/f01_rmsnorm/k_mean_cbd1de.ptx",
+                "ptx_sha256": "017dd2ac5ea97660e0f10a7454fdd751cfc3631fec27b1fb2a4e65f60587dabc"
+              }
+            ]
+          },
+          "f02_row_softmax": {
+            "meta_sha256": "ddbe97ea42c7b077d30d140b751f8062caf47b5620cb423a02c1dd848cd61900",
+            "expected_sha256": "7e38d188cdc0bbb7afda1e6007318b0174bcdf82eb3855775967e49d4b8ee8ce",
+            "kernels": [
+              {
+                "entry": "k_softmax_05263d",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/f02_row_softmax/k_softmax_05263d.ir.json",
+                "ir_sha256": "d48b030e9d9a765aa631287f72935bc59f20926f3ccb09dc7f7932106770af03",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate-2/ptx/powenn/4439640e2152/f02_row_softmax/k_softmax_05263d.ptx",
+                "ptx_sha256": "fade83de75c1b61d964491ce8cdacd74ca9dbdb26b78caa716cafb65632a9da4"
+              }
+            ]
+          },
+          "f03_l2norm": {
+            "meta_sha256": "cbf67c2d198f4fea1bb140083ec65c4bf14202090daaa4aac77f1514ecc60b95",
+            "expected_sha256": "fb2e242cbfe9834c6d45f27f29acc750a5b4ea8ad6ab509baa7a5b4c53586380",
+            "kernels": [
+              {
+                "entry": "k_div_reduce",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/f03_l2norm/k_div_reduce.ir.json",
+                "ir_sha256": "34abdb33fe950100029930242777d0b22a12e523117de21bc9d78b43310c567d",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate-2/ptx/powenn/4439640e2152/f03_l2norm/k_div_reduce.ptx",
+                "ptx_sha256": "d118584af41e2d991b4f7b18d670a23b75d9bbd0d972c07822584fdd69236a41"
+              }
+            ]
+          },
+          "m01_matmul_512": {
+            "meta_sha256": "3324370a2d29614c6c7ff7cf549563f9afb22bab0ed31ed62d8ffd27c59dcd57",
+            "expected_sha256": "6396bececa75b2adee8c83bb0c090f9a68e7297d7de492f5a2f0cd3e67f24c36",
+            "kernels": [
+              {
+                "entry": "k_matmul_2967be",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/m01_matmul_512/k_matmul_2967be.ir.json",
+                "ir_sha256": "ed9ab32776ce0de8b0d1f0367da54c586bf993c964efc01482666247a976dc02",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate-2/ptx/powenn/4439640e2152/m01_matmul_512/k_matmul_2967be.ptx",
+                "ptx_sha256": "d86b257485577e93e6344002156e9800fdc46b8f223b32d467edbd15c30e2802"
+              }
+            ]
+          },
+          "m02_matmul_rect": {
+            "meta_sha256": "a82fd8d7f5933749868035254537b962d3d0140c8bf3e22f7f8a54a289a9c365",
+            "expected_sha256": "b0a5f6719c01fdc55054d983e7d75f880577e4741c63ae39c9fa704507e58134",
+            "kernels": [
+              {
+                "entry": "k_matmul",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/m02_matmul_rect/k_matmul.ir.json",
+                "ir_sha256": "c47bb47c529e7362c9272784ac21a31f2a5d79546cc11b19beff891278d22206",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate-2/ptx/powenn/4439640e2152/m02_matmul_rect/k_matmul.ptx",
+                "ptx_sha256": "048c66cd53085b7230c6e8ac6a1ac6328667385ccddafff9b170963f12d3c0a5"
+              }
+            ]
+          },
+          "p00_scalar_add": {
+            "meta_sha256": "67f4c80a5c78c9fa571f4088633acc56cae0a758d2a65e7c89c07a96e665709c",
+            "expected_sha256": "69e4a749183c5402f03c28a957cb1f523186d16f9b9974c75cd0ebbbfd925478",
+            "kernels": [
+              {
+                "entry": "k_add_pointwise",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/p00_scalar_add/k_add_pointwise.ir.json",
+                "ir_sha256": "d93c0b232c48f7161c88f0276ea8a69481b06608a24b6e8ed2d5025bd17f4e32",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate-2/ptx/powenn/4439640e2152/p00_scalar_add/k_add_pointwise.ptx",
+                "ptx_sha256": "bae7dcec67b777492aabb12026d2503b7426da49f0702e0f2cba4a3023d01534"
+              }
+            ]
+          },
+          "p01_vector_add": {
+            "meta_sha256": "4607a6a14553ec256b2073ff8fef18a850e315033f4fdace21f26fdcc2a867c6",
+            "expected_sha256": "1a72f87aa3afd4e84746d2c0bfcfde9d024f573ce863322f72d2c6b3bb133086",
+            "kernels": [
+              {
+                "entry": "k_add_pointwise",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/p01_vector_add/k_add_pointwise.ir.json",
+                "ir_sha256": "90088bc4c7346b9a5916205fdb96926f52cc0f5e3c5c08527d7b0796b0c47fc5",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate-2/ptx/powenn/4439640e2152/p01_vector_add/k_add_pointwise.ptx",
+                "ptx_sha256": "211cb0a517c28a4ea8d93fbedbd9e9aa711853d4f205f79fa9ec7e4d7b44c7d2"
+              }
+            ]
+          },
+          "p02_scale_shift": {
+            "meta_sha256": "7c1c3ea69e4d61128d72fbaf3a82a76125a5273c3ced6197ac2f150d03d121e1",
+            "expected_sha256": "515539ace84b0cb38ab3e5e6ed20894b774ab428a86be180529d54fd8ad63dd6",
+            "kernels": [
+              {
+                "entry": "k_add_pointwise",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/p02_scale_shift/k_add_pointwise.ir.json",
+                "ir_sha256": "2bae0a54cbcd037d6c13e70b5c4f5728f2f94af163a53ebe35b88ab8f68ec021",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate-2/ptx/powenn/4439640e2152/p02_scale_shift/k_add_pointwise.ptx",
+                "ptx_sha256": "ddd93f53f81e7d4ff34ed76d67dfcaa1613767a3a3783c4b79af7de0e49c2c1b"
+              }
+            ]
+          },
+          "p03_relu_mul": {
+            "meta_sha256": "a2dbbe3a3cec7c45fcdde2c08f0d3276647c2a4b56ede3345be16404d1ded8c9",
+            "expected_sha256": "a0fc97901b28331b29bb5f01cf104944c3376c633dd4cce65d551ad61035e52f",
+            "kernels": [
+              {
+                "entry": "k_mul_pointwise",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/p03_relu_mul/k_mul_pointwise.ir.json",
+                "ir_sha256": "b2429e790dac9fd0db9fafadaa3624cafaeff85c834851a9034a730a1620a892",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate-2/ptx/powenn/4439640e2152/p03_relu_mul/k_mul_pointwise.ptx",
+                "ptx_sha256": "4dc11c5e0bad7bbadf9f340b841b0e1731700102e4aaa0217a831f294275a7e6"
+              }
+            ]
+          },
+          "r01_array_sum": {
+            "meta_sha256": "46cf07073f4e612e811decbc2ca900ea210811194a1e336053a6f179ecb4b00e",
+            "expected_sha256": "899c8058da70456bc3714d71ffc2814dd9777e37d39be7379b359e452924cb5c",
+            "kernels": [
+              {
+                "entry": "k_sum_1_reduce",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/r01_array_sum/k_sum_1_reduce.ir.json",
+                "ir_sha256": "a5ad6af023562e1632e929afb8cd6387603c2edcd4d4b1590b1a3b2ee962675f",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate-2/ptx/powenn/4439640e2152/r01_array_sum/k_sum_1_reduce.ptx",
+                "ptx_sha256": "47e510d88456074dfb02b0f33f2be33d8b404afa73f49d92f4a2cf8de2532b0e"
+              }
+            ]
+          },
+          "r02_big_sum": {
+            "meta_sha256": "db364be00e35402a3d6f10fcd55562115c7604dea94f8126a02179a80476d19e",
+            "expected_sha256": "0109852644d0785b770fa38d996b063b156f01e8bfccb303ea0581e42696eec1",
+            "kernels": [
+              {
+                "entry": "k_sum_1_reduce",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/r02_big_sum/k_sum_1_reduce.ir.json",
+                "ir_sha256": "777e3f2dd170849133e19d303cdb3d273c135c9a9896786ee40fbc6a2ff4ec7c",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate-2/ptx/powenn/4439640e2152/r02_big_sum/k_sum_1_reduce.ptx",
+                "ptx_sha256": "045616404cbf255b14a090045f36ee6f9e9b346161e9ca44d58598b040cb88c2"
+              }
+            ]
+          },
+          "r03_mean": {
+            "meta_sha256": "d7ab661c388ad447f5661a3b36cba448cf5142402756f1e1c35d110db06c84fe",
+            "expected_sha256": "9c53fd65aebbc9b6ca477653643273195149be2d93ab472a135883a0a128c5f7",
+            "kernels": [
+              {
+                "entry": "k_mean_ffcca3",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/r03_mean/k_mean_ffcca3.ir.json",
+                "ir_sha256": "7eeca2c7869ab2ddf880a0ac7fb689d3ab814d7523eab472ec80ad2458100b86",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate-2/ptx/powenn/4439640e2152/r03_mean/k_mean_ffcca3.ptx",
+                "ptx_sha256": "dd304318e600884d2af3c3f05c8c0d79dc41093487532947455db61879f0ecff"
+              }
+            ]
+          },
+          "r04_row_sum": {
+            "meta_sha256": "803cb710590156ad319eb44b2d2aa6c1ee9b0e3a666ebc09de259e50d83a3ba1",
+            "expected_sha256": "cb724cbe21276b1438add7263e418f52c0eb90c4501954a245678dcc793c895d",
+            "kernels": [
+              {
+                "entry": "k_sum_1_reduce",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/r04_row_sum/k_sum_1_reduce.ir.json",
+                "ir_sha256": "4c7befc76b72c6c69be4675d69ccd14e336b9139fe22aaec1b94230858c8ab03",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate-2/ptx/powenn/4439640e2152/r04_row_sum/k_sum_1_reduce.ptx",
+                "ptx_sha256": "5c82bd93abeb6e29a67258d58fa0e96f10b522bc1b030536f2910e59dac43568"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "n00bcak": {
+      "source": "/tmp/emmy-5090-n00bcak/compile.py",
+      "source_sha256": "12202ea108f615fffd9ab00b5dce985edb3cbe11ffad55042d3d9625b6a49354",
+      "snapshot": {
+        "source": "/tmp/emmy-5090-n00bcak/compile.py",
+        "source_sha256": "12202ea108f615fffd9ab00b5dce985edb3cbe11ffad55042d3d9625b6a49354",
+        "compiler_unchanged": true,
+        "cases": {
+          "a01_attention": {
+            "meta_sha256": "c280c572744016ecf6ca2971312ad2ce8a10b28c0f3e38561c1a096c2ea7352f",
+            "expected_sha256": "ccc0ad1a70f679781c8aff8064ae73368e04bc35018a537dc15ef8610262ed51",
+            "kernels": [
+              {
+                "entry": "k_matmul_softmax_reduce_b55365",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/a01_attention/k_matmul_softmax_reduce_b55365.ir.json",
+                "ir_sha256": "0a6925795c1b8e108befbdc3300c722ea5a7fb19d2337597eca860e9c36eff9a",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate-2/ptx/n00bcak/12202ea108f6/a01_attention/k_matmul_softmax_reduce_b55365.ptx",
+                "ptx_sha256": "5bafec285d7f085f9b979d99d14732457d3042ec264b4fcd0a73c109bb47d9c1"
+              }
+            ]
+          },
+          "a02_attention_128": {
+            "meta_sha256": "adcc08994786076e7cb9835ab3bab19b0dc9c0d00a999adea124380f8300de18",
+            "expected_sha256": "ebd7c000d75e52707f2e65304e05fbf963b4799919f814f685490c76c89e7080",
+            "kernels": [
+              {
+                "entry": "k_matmul_softmax_reduce_6f0029",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/a02_attention_128/k_matmul_softmax_reduce_6f0029.ir.json",
+                "ir_sha256": "a51792c9e4d920a493054fb2a6986d87766cc1b3717078f8e631a45d1b0bf1dd",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate-2/ptx/n00bcak/12202ea108f6/a02_attention_128/k_matmul_softmax_reduce_6f0029.ptx",
+                "ptx_sha256": "d936d7eddd6b24d607571edcf2e582d1144c02ec3233d6ebd501a47b2906fa91"
+              }
+            ]
+          },
+          "f01_rmsnorm": {
+            "meta_sha256": "f45014c6b0963ec9727fc0f1c9bb585319c4ac94292260bc8f7c10557c1b8e1d",
+            "expected_sha256": "197016500cfca3ee3a1952273d50655e5bbf60093c28ad801e28eb3ccb76a6fb",
+            "kernels": [
+              {
+                "entry": "k_mean_cbd1de",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/f01_rmsnorm/k_mean_cbd1de.ir.json",
+                "ir_sha256": "a8e6819e3144b942d8983b52b6865fa692868105b20de30f6ba4df424a07862a",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate-2/ptx/n00bcak/12202ea108f6/f01_rmsnorm/k_mean_cbd1de.ptx",
+                "ptx_sha256": "cb25765f186d758010fa07d9aaf373836cfb4d0dbe10d713a50c1819c4f838eb"
+              }
+            ]
+          },
+          "f02_row_softmax": {
+            "meta_sha256": "ddbe97ea42c7b077d30d140b751f8062caf47b5620cb423a02c1dd848cd61900",
+            "expected_sha256": "7e38d188cdc0bbb7afda1e6007318b0174bcdf82eb3855775967e49d4b8ee8ce",
+            "kernels": [
+              {
+                "entry": "k_softmax_05263d",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/f02_row_softmax/k_softmax_05263d.ir.json",
+                "ir_sha256": "d48b030e9d9a765aa631287f72935bc59f20926f3ccb09dc7f7932106770af03",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate-2/ptx/n00bcak/12202ea108f6/f02_row_softmax/k_softmax_05263d.ptx",
+                "ptx_sha256": "0b496e2ce1040783ed5ac73db09d0cbff2063bfdfe6220f40b5c156709a78744"
+              }
+            ]
+          },
+          "f03_l2norm": {
+            "meta_sha256": "cbf67c2d198f4fea1bb140083ec65c4bf14202090daaa4aac77f1514ecc60b95",
+            "expected_sha256": "fb2e242cbfe9834c6d45f27f29acc750a5b4ea8ad6ab509baa7a5b4c53586380",
+            "kernels": [
+              {
+                "entry": "k_div_reduce",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/f03_l2norm/k_div_reduce.ir.json",
+                "ir_sha256": "34abdb33fe950100029930242777d0b22a12e523117de21bc9d78b43310c567d",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate-2/ptx/n00bcak/12202ea108f6/f03_l2norm/k_div_reduce.ptx",
+                "ptx_sha256": "190904ca92fdbe372a6a496fcf0a96ab1baf606baf0f24ff619c5f98c6397ea7"
+              }
+            ]
+          },
+          "m01_matmul_512": {
+            "meta_sha256": "3324370a2d29614c6c7ff7cf549563f9afb22bab0ed31ed62d8ffd27c59dcd57",
+            "expected_sha256": "6396bececa75b2adee8c83bb0c090f9a68e7297d7de492f5a2f0cd3e67f24c36",
+            "kernels": [
+              {
+                "entry": "k_matmul_2967be",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/m01_matmul_512/k_matmul_2967be.ir.json",
+                "ir_sha256": "ed9ab32776ce0de8b0d1f0367da54c586bf993c964efc01482666247a976dc02",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate-2/ptx/n00bcak/12202ea108f6/m01_matmul_512/k_matmul_2967be.ptx",
+                "ptx_sha256": "8a60396afd69d1ae8e39e2c2e056b7b4a1b9190ce7c9ec3be9f919dfd3dbb3da"
+              }
+            ]
+          },
+          "m02_matmul_rect": {
+            "meta_sha256": "a82fd8d7f5933749868035254537b962d3d0140c8bf3e22f7f8a54a289a9c365",
+            "expected_sha256": "b0a5f6719c01fdc55054d983e7d75f880577e4741c63ae39c9fa704507e58134",
+            "kernels": [
+              {
+                "entry": "k_matmul",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/m02_matmul_rect/k_matmul.ir.json",
+                "ir_sha256": "c47bb47c529e7362c9272784ac21a31f2a5d79546cc11b19beff891278d22206",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate-2/ptx/n00bcak/12202ea108f6/m02_matmul_rect/k_matmul.ptx",
+                "ptx_sha256": "1fe94877f65f1b479f0c79fff97881d8487248552e9fd68ef09d14dd65eefed4"
+              }
+            ]
+          },
+          "p00_scalar_add": {
+            "meta_sha256": "67f4c80a5c78c9fa571f4088633acc56cae0a758d2a65e7c89c07a96e665709c",
+            "expected_sha256": "69e4a749183c5402f03c28a957cb1f523186d16f9b9974c75cd0ebbbfd925478",
+            "kernels": [
+              {
+                "entry": "k_add_pointwise",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/p00_scalar_add/k_add_pointwise.ir.json",
+                "ir_sha256": "d93c0b232c48f7161c88f0276ea8a69481b06608a24b6e8ed2d5025bd17f4e32",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate-2/ptx/n00bcak/12202ea108f6/p00_scalar_add/k_add_pointwise.ptx",
+                "ptx_sha256": "42fbb7884d0c777e5ac27ba878122a24eb245ed1ba40b48143fe12eb274a3a46"
+              }
+            ]
+          },
+          "p01_vector_add": {
+            "meta_sha256": "4607a6a14553ec256b2073ff8fef18a850e315033f4fdace21f26fdcc2a867c6",
+            "expected_sha256": "1a72f87aa3afd4e84746d2c0bfcfde9d024f573ce863322f72d2c6b3bb133086",
+            "kernels": [
+              {
+                "entry": "k_add_pointwise",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/p01_vector_add/k_add_pointwise.ir.json",
+                "ir_sha256": "90088bc4c7346b9a5916205fdb96926f52cc0f5e3c5c08527d7b0796b0c47fc5",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate-2/ptx/n00bcak/12202ea108f6/p01_vector_add/k_add_pointwise.ptx",
+                "ptx_sha256": "894110b4a376dd777e363f72d21607e8432d6a01ab19823fb79eaed87658a7e5"
+              }
+            ]
+          },
+          "p02_scale_shift": {
+            "meta_sha256": "7c1c3ea69e4d61128d72fbaf3a82a76125a5273c3ced6197ac2f150d03d121e1",
+            "expected_sha256": "515539ace84b0cb38ab3e5e6ed20894b774ab428a86be180529d54fd8ad63dd6",
+            "kernels": [
+              {
+                "entry": "k_add_pointwise",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/p02_scale_shift/k_add_pointwise.ir.json",
+                "ir_sha256": "2bae0a54cbcd037d6c13e70b5c4f5728f2f94af163a53ebe35b88ab8f68ec021",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate-2/ptx/n00bcak/12202ea108f6/p02_scale_shift/k_add_pointwise.ptx",
+                "ptx_sha256": "9b5295a9675b3d8efe47a34d94485ec9b161f2cdb504931b69fdca963d37c0d9"
+              }
+            ]
+          },
+          "p03_relu_mul": {
+            "meta_sha256": "a2dbbe3a3cec7c45fcdde2c08f0d3276647c2a4b56ede3345be16404d1ded8c9",
+            "expected_sha256": "a0fc97901b28331b29bb5f01cf104944c3376c633dd4cce65d551ad61035e52f",
+            "kernels": [
+              {
+                "entry": "k_mul_pointwise",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/p03_relu_mul/k_mul_pointwise.ir.json",
+                "ir_sha256": "b2429e790dac9fd0db9fafadaa3624cafaeff85c834851a9034a730a1620a892",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate-2/ptx/n00bcak/12202ea108f6/p03_relu_mul/k_mul_pointwise.ptx",
+                "ptx_sha256": "70e41f592322de2cefe45b096479ab6b6fc7e31804dab936d777888f775f0949"
+              }
+            ]
+          },
+          "r01_array_sum": {
+            "meta_sha256": "46cf07073f4e612e811decbc2ca900ea210811194a1e336053a6f179ecb4b00e",
+            "expected_sha256": "899c8058da70456bc3714d71ffc2814dd9777e37d39be7379b359e452924cb5c",
+            "kernels": [
+              {
+                "entry": "k_sum_1_reduce",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/r01_array_sum/k_sum_1_reduce.ir.json",
+                "ir_sha256": "a5ad6af023562e1632e929afb8cd6387603c2edcd4d4b1590b1a3b2ee962675f",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate-2/ptx/n00bcak/12202ea108f6/r01_array_sum/k_sum_1_reduce.ptx",
+                "ptx_sha256": "7061a1ae50073fa5a48e55e81dbec40fe5478a48ff8def2a0819e0f7e5aedd4d"
+              }
+            ]
+          },
+          "r02_big_sum": {
+            "meta_sha256": "db364be00e35402a3d6f10fcd55562115c7604dea94f8126a02179a80476d19e",
+            "expected_sha256": "0109852644d0785b770fa38d996b063b156f01e8bfccb303ea0581e42696eec1",
+            "kernels": [
+              {
+                "entry": "k_sum_1_reduce",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/r02_big_sum/k_sum_1_reduce.ir.json",
+                "ir_sha256": "777e3f2dd170849133e19d303cdb3d273c135c9a9896786ee40fbc6a2ff4ec7c",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate-2/ptx/n00bcak/12202ea108f6/r02_big_sum/k_sum_1_reduce.ptx",
+                "ptx_sha256": "9f0d0eb7832b20837250a69e4a4027dd271a1dd213d3c9c1f84a0ccc4588300a"
+              }
+            ]
+          },
+          "r03_mean": {
+            "meta_sha256": "d7ab661c388ad447f5661a3b36cba448cf5142402756f1e1c35d110db06c84fe",
+            "expected_sha256": "9c53fd65aebbc9b6ca477653643273195149be2d93ab472a135883a0a128c5f7",
+            "kernels": [
+              {
+                "entry": "k_mean_ffcca3",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/r03_mean/k_mean_ffcca3.ir.json",
+                "ir_sha256": "7eeca2c7869ab2ddf880a0ac7fb689d3ab814d7523eab472ec80ad2458100b86",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate-2/ptx/n00bcak/12202ea108f6/r03_mean/k_mean_ffcca3.ptx",
+                "ptx_sha256": "e64d52049c4b34256233b7d7a4ec4e98126f69dfd0c3e44d9e74fda94f8b26a2"
+              }
+            ]
+          },
+          "r04_row_sum": {
+            "meta_sha256": "803cb710590156ad319eb44b2d2aa6c1ee9b0e3a666ebc09de259e50d83a3ba1",
+            "expected_sha256": "cb724cbe21276b1438add7263e418f52c0eb90c4501954a245678dcc793c895d",
+            "kernels": [
+              {
+                "entry": "k_sum_1_reduce",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/r04_row_sum/k_sum_1_reduce.ir.json",
+                "ir_sha256": "4c7befc76b72c6c69be4675d69ccd14e336b9139fe22aaec1b94230858c8ab03",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-gate-2/ptx/n00bcak/12202ea108f6/r04_row_sum/k_sum_1_reduce.ptx",
+                "ptx_sha256": "59b43a3db5400c1bcb891e248f9d3eb07bbf1e2a04fbce9bca6db1770bdb2d2f"
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+  "cases": {
+    "a01_attention": {
+      "meta_sha256": "c280c572744016ecf6ca2971312ad2ce8a10b28c0f3e38561c1a096c2ea7352f",
+      "expected_sha256": "ccc0ad1a70f679781c8aff8064ae73368e04bc35018a537dc15ef8610262ed51",
+      "rtol": 0.001,
+      "atol": 0.0001,
+      "entry": "k_matmul_softmax_reduce_b55365",
+      "need": 4096,
+      "arms": {
+        "main": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "7d7c174783cf86cbb403ec87293c1b0e919c63531c397eeda8ea96741fbfb984",
+            "registers": {
+              "k_matmul_softmax_reduce_b55365": 128
+            },
+            "ptx_sha256": "5e4fbadbda45c407618aa6d9c3c5eb083bd5b8c21528d3480b28b78060a32696"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "matmul_1",
+                "ok": true,
+                "max_abs_error": 6.556510925292969e-07
+              }
+            ],
+            "median_us": 107.04
+          }
+        },
+        "tcl": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "7d7c174783cf86cbb403ec87293c1b0e919c63531c397eeda8ea96741fbfb984",
+            "registers": {
+              "k_matmul_softmax_reduce_b55365": 128
+            },
+            "ptx_sha256": "5e4fbadbda45c407618aa6d9c3c5eb083bd5b8c21528d3480b28b78060a32696"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "matmul_1",
+                "ok": true,
+                "max_abs_error": 6.556510925292969e-07
+              }
+            ],
+            "median_us": 108.448
+          }
+        },
+        "powenn": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "6d0b3f276b64fbd08972d5f25f185f5093caa41ae1e861e3f2ec9674afb5383e",
+            "registers": {
+              "k_matmul_softmax_reduce_b55365": 178
+            },
+            "ptx_sha256": "56c67993c21d2fbf81b5036ee986ad26ced8569f0e8d0cdc0bd0dedda2286ffd"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "matmul_1",
+                "ok": true,
+                "max_abs_error": 6.556510925292969e-07
+              }
+            ],
+            "median_us": 19.68
+          }
+        },
+        "n00bcak": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "9915ad46a48f4e770f23869abcdbeb888eafef476bcd037f10bb257210ae8544",
+            "registers": {
+              "k_matmul_softmax_reduce_b55365": 178
+            },
+            "ptx_sha256": "5bafec285d7f085f9b979d99d14732457d3042ec264b4fcd0a73c109bb47d9c1"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "matmul_1",
+                "ok": true,
+                "max_abs_error": 6.556510925292969e-07
+              }
+            ],
+            "median_us": 19.52
+          }
+        }
+      }
+    },
+    "a02_attention_128": {
+      "meta_sha256": "adcc08994786076e7cb9835ab3bab19b0dc9c0d00a999adea124380f8300de18",
+      "expected_sha256": "ebd7c000d75e52707f2e65304e05fbf963b4799919f814f685490c76c89e7080",
+      "rtol": 0.001,
+      "atol": 0.0001,
+      "entry": "k_matmul_softmax_reduce_6f0029",
+      "need": 4096,
+      "arms": {
+        "main": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "e9ab31620c77ad00bd2ef1836393f532b7b3ce475aa5ea687f62df48ccc04915",
+            "registers": {
+              "k_matmul_softmax_reduce_6f0029": 56
+            },
+            "ptx_sha256": "9570daac941a6cb092542c4ebf4d16d983b5a891df557c186758678bfa5ccf30"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "matmul_1",
+                "ok": true,
+                "max_abs_error": 4.470348358154297e-07
+              }
+            ],
+            "median_us": 65.408
+          }
+        },
+        "tcl": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "e9ab31620c77ad00bd2ef1836393f532b7b3ce475aa5ea687f62df48ccc04915",
+            "registers": {
+              "k_matmul_softmax_reduce_6f0029": 56
+            },
+            "ptx_sha256": "9570daac941a6cb092542c4ebf4d16d983b5a891df557c186758678bfa5ccf30"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "matmul_1",
+                "ok": true,
+                "max_abs_error": 4.470348358154297e-07
+              }
+            ],
+            "median_us": 68.864
+          }
+        },
+        "powenn": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "0b31f969bd56bee5ea5f5ec4dbadc44cacb67367ab34430f1ffb8f25c2e4a571",
+            "registers": {
+              "k_matmul_softmax_reduce_6f0029": 96
+            },
+            "ptx_sha256": "20baf9e2d7bcef36ab2819c4de88dcec1b07774b28c8016b242f0c1d48fed9b7"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "matmul_1",
+                "ok": true,
+                "max_abs_error": 4.172325134277344e-07
+              }
+            ],
+            "median_us": 16.928
+          }
+        },
+        "n00bcak": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "673fe39d836251a65c3e2ede4d0d2d94ff1615bcc90aa46816046b59e32b0535",
+            "registers": {
+              "k_matmul_softmax_reduce_6f0029": 86
+            },
+            "ptx_sha256": "d936d7eddd6b24d607571edcf2e582d1144c02ec3233d6ebd501a47b2906fa91"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "matmul_1",
+                "ok": true,
+                "max_abs_error": 4.172325134277344e-07
+              }
+            ],
+            "median_us": 17.184
+          }
+        }
+      }
+    },
+    "f01_rmsnorm": {
+      "meta_sha256": "f45014c6b0963ec9727fc0f1c9bb585319c4ac94292260bc8f7c10557c1b8e1d",
+      "expected_sha256": "197016500cfca3ee3a1952273d50655e5bbf60093c28ad801e28eb3ccb76a6fb",
+      "rtol": 0.001,
+      "atol": 0.0001,
+      "entry": "k_mean_cbd1de",
+      "need": 65536,
+      "arms": {
+        "main": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "b1df6108fac91e48dcfea8f2c7edb020c21a7bca4b86b98ab1b46327ceaf312a",
+            "registers": {
+              "k_mean_cbd1de": 20
+            },
+            "ptx_sha256": "2ead5e7dbf99dbc9c59e022eb88906851c68c7d9f0f298d8a6816ece7bc992a9"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "mul_1",
+                "ok": true,
+                "max_abs_error": 1.9073486328125e-06
+              }
+            ],
+            "median_us": 15.584
+          }
+        },
+        "tcl": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "b1df6108fac91e48dcfea8f2c7edb020c21a7bca4b86b98ab1b46327ceaf312a",
+            "registers": {
+              "k_mean_cbd1de": 20
+            },
+            "ptx_sha256": "2ead5e7dbf99dbc9c59e022eb88906851c68c7d9f0f298d8a6816ece7bc992a9"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "mul_1",
+                "ok": true,
+                "max_abs_error": 1.9073486328125e-06
+              }
+            ],
+            "median_us": 17.024
+          }
+        },
+        "powenn": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "4164d0fef5f747e34e2850f6c965459a349753548cc6b0b2e72902620176c2fe",
+            "registers": {
+              "k_mean_cbd1de": 40
+            },
+            "ptx_sha256": "017dd2ac5ea97660e0f10a7454fdd751cfc3631fec27b1fb2a4e65f60587dabc"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "mul_1",
+                "ok": true,
+                "max_abs_error": 1.9073486328125e-06
+              }
+            ],
+            "median_us": 15.552
+          }
+        },
+        "n00bcak": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "27f761d7e970abff13cd020d34e553138f1f1e1638505ef70346fffda6808ca0",
+            "registers": {
+              "k_mean_cbd1de": 40
+            },
+            "ptx_sha256": "cb25765f186d758010fa07d9aaf373836cfb4d0dbe10d713a50c1819c4f838eb"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "mul_1",
+                "ok": true,
+                "max_abs_error": 1.9073486328125e-06
+              }
+            ],
+            "median_us": 15.296
+          }
+        }
+      }
+    },
+    "f02_row_softmax": {
+      "meta_sha256": "ddbe97ea42c7b077d30d140b751f8062caf47b5620cb423a02c1dd848cd61900",
+      "expected_sha256": "7e38d188cdc0bbb7afda1e6007318b0174bcdf82eb3855775967e49d4b8ee8ce",
+      "rtol": 0.001,
+      "atol": 1e-05,
+      "entry": "k_softmax_05263d",
+      "need": 16384,
+      "arms": {
+        "main": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "1572d8caf919b4c2a68117b4b70cb375270e79ba7ce47e8e11b0e23794ee7c0f",
+            "registers": {
+              "k_softmax_05263d": 26
+            },
+            "ptx_sha256": "0923e49549fcd9e2f00541ca3569bd0f41e8084f2369a8b43df98a46cf60e527"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "softmax",
+                "ok": true,
+                "max_abs_error": 7.450580596923828e-09
+              }
+            ],
+            "median_us": 15.168
+          }
+        },
+        "tcl": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "1572d8caf919b4c2a68117b4b70cb375270e79ba7ce47e8e11b0e23794ee7c0f",
+            "registers": {
+              "k_softmax_05263d": 26
+            },
+            "ptx_sha256": "0923e49549fcd9e2f00541ca3569bd0f41e8084f2369a8b43df98a46cf60e527"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "softmax",
+                "ok": true,
+                "max_abs_error": 7.450580596923828e-09
+              }
+            ],
+            "median_us": 17.024
+          }
+        },
+        "powenn": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "f3266d2a93bcef15c4771aad276c644e46e2430515c9c18d707e22cf4cd6caea",
+            "registers": {
+              "k_softmax_05263d": 30
+            },
+            "ptx_sha256": "fade83de75c1b61d964491ce8cdacd74ca9dbdb26b78caa716cafb65632a9da4"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "softmax",
+                "ok": true,
+                "max_abs_error": 7.450580596923828e-09
+              }
+            ],
+            "median_us": 14.752
+          }
+        },
+        "n00bcak": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "b859ccc840e81a7ac31d4b65d5976b988facf6792fbc067b46252e86c4811bd8",
+            "registers": {
+              "k_softmax_05263d": 40
+            },
+            "ptx_sha256": "0b496e2ce1040783ed5ac73db09d0cbff2063bfdfe6220f40b5c156709a78744"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "softmax",
+                "ok": true,
+                "max_abs_error": 7.450580596923828e-09
+              }
+            ],
+            "median_us": 15.104
+          }
+        }
+      }
+    },
+    "f03_l2norm": {
+      "meta_sha256": "cbf67c2d198f4fea1bb140083ec65c4bf14202090daaa4aac77f1514ecc60b95",
+      "expected_sha256": "fb2e242cbfe9834c6d45f27f29acc750a5b4ea8ad6ab509baa7a5b4c53586380",
+      "rtol": 0.001,
+      "atol": 0.0001,
+      "entry": "k_div_reduce",
+      "need": 32768,
+      "arms": {
+        "main": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "a8424107cd09aa61bc82745085ab8f8eb3b2caeadf96d372a39fa66007410425",
+            "registers": {
+              "k_div_reduce": 20
+            },
+            "ptx_sha256": "d2ea088bb29b534edbdd5e727cd369a1ef753d7caa092031919896e80a1be347"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "div",
+                "ok": true,
+                "max_abs_error": 1.4901161193847656e-08
+              }
+            ],
+            "median_us": 15.008
+          }
+        },
+        "tcl": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "a8424107cd09aa61bc82745085ab8f8eb3b2caeadf96d372a39fa66007410425",
+            "registers": {
+              "k_div_reduce": 20
+            },
+            "ptx_sha256": "d2ea088bb29b534edbdd5e727cd369a1ef753d7caa092031919896e80a1be347"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "div",
+                "ok": true,
+                "max_abs_error": 1.4901161193847656e-08
+              }
+            ],
+            "median_us": 16.384
+          }
+        },
+        "powenn": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "66810de08736b8a7be5b85c84f470f76e5092a231c3587fc83b2f45872c05915",
+            "registers": {
+              "k_div_reduce": 40
+            },
+            "ptx_sha256": "d118584af41e2d991b4f7b18d670a23b75d9bbd0d972c07822584fdd69236a41"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "div",
+                "ok": true,
+                "max_abs_error": 1.4901161193847656e-08
+              }
+            ],
+            "median_us": 15.04
+          }
+        },
+        "n00bcak": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "c0600177ae42cde7ee3f39a801f86037140e02f71626308a58896ab096a45003",
+            "registers": {
+              "k_div_reduce": 40
+            },
+            "ptx_sha256": "190904ca92fdbe372a6a496fcf0a96ab1baf606baf0f24ff619c5f98c6397ea7"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "div",
+                "ok": true,
+                "max_abs_error": 1.4901161193847656e-08
+              }
+            ],
+            "median_us": 15.264
+          }
+        }
+      }
+    },
+    "m01_matmul_512": {
+      "meta_sha256": "3324370a2d29614c6c7ff7cf549563f9afb22bab0ed31ed62d8ffd27c59dcd57",
+      "expected_sha256": "6396bececa75b2adee8c83bb0c090f9a68e7297d7de492f5a2f0cd3e67f24c36",
+      "rtol": 0.001,
+      "atol": 0.001,
+      "entry": "k_matmul_2967be",
+      "need": 262144,
+      "arms": {
+        "main": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "650a614a8e9ed9f82ffdd65c15500e16f5a50025c57d072a83dda96367fd472e",
+            "registers": {
+              "k_matmul_2967be": 40
+            },
+            "ptx_sha256": "52251b6560aadaf3e1143193af4d61b44943769f51a8f74701864c67d23803ff"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "matmul",
+                "ok": true,
+                "max_abs_error": 8.392333984375e-05
+              }
+            ],
+            "median_us": 73.152
+          }
+        },
+        "tcl": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "c967cb52ccaebcf9ceedfbcc483aea07f047fdfdeecdc892bdbd31dfdbf33966",
+            "registers": {
+              "k_matmul_2967be": 36
+            },
+            "ptx_sha256": "84e26af55cd3c696a891d583a04e13b20d48a2f349223f8140311e3de9f14b9b"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "matmul",
+                "ok": true,
+                "max_abs_error": 0.00017547607421875
+              }
+            ],
+            "median_us": 35.584
+          }
+        },
+        "powenn": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "f32078724efe268737cbc364872058f5757eff34a96da32b2938c47c174228df",
+            "registers": {
+              "k_matmul_2967be": 40
+            },
+            "ptx_sha256": "d86b257485577e93e6344002156e9800fdc46b8f223b32d467edbd15c30e2802"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "matmul",
+                "ok": true,
+                "max_abs_error": 8.392333984375e-05
+              }
+            ],
+            "median_us": 28.64
+          }
+        },
+        "n00bcak": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "69546eb39d8b72f507fd9dfb2a48bbae61fd720784df8bd10610ec1af38e57cd",
+            "registers": {
+              "k_matmul_2967be": 40
+            },
+            "ptx_sha256": "8a60396afd69d1ae8e39e2c2e056b7b4a1b9190ce7c9ec3be9f919dfd3dbb3da"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "matmul",
+                "ok": true,
+                "max_abs_error": 8.392333984375e-05
+              }
+            ],
+            "median_us": 30.72
+          }
+        }
+      }
+    },
+    "m02_matmul_rect": {
+      "meta_sha256": "a82fd8d7f5933749868035254537b962d3d0140c8bf3e22f7f8a54a289a9c365",
+      "expected_sha256": "b0a5f6719c01fdc55054d983e7d75f880577e4741c63ae39c9fa704507e58134",
+      "rtol": 0.001,
+      "atol": 0.001,
+      "entry": "k_matmul",
+      "need": 8192,
+      "arms": {
+        "main": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "bceddb6d37a3403def382e181527da16ffd522066c1d6ed7f89e1ab6fc706e6f",
+            "registers": {
+              "k_matmul": 38
+            },
+            "ptx_sha256": "3fabbf1e81c3f4ca83574876721d851910b8337a6cbd98d7f38bda9d2e7f5071"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "matmul",
+                "ok": true,
+                "max_abs_error": 1.52587890625e-05
+              }
+            ],
+            "median_us": 14.88
+          }
+        },
+        "tcl": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "bceddb6d37a3403def382e181527da16ffd522066c1d6ed7f89e1ab6fc706e6f",
+            "registers": {
+              "k_matmul": 38
+            },
+            "ptx_sha256": "3fabbf1e81c3f4ca83574876721d851910b8337a6cbd98d7f38bda9d2e7f5071"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "matmul",
+                "ok": true,
+                "max_abs_error": 1.1444091796875e-05
+              }
+            ],
+            "median_us": 16.352
+          }
+        },
+        "powenn": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "f702af538813b3233250fae2e6436ccc9127ffd15c344e460f997d8f1b2c69a8",
+            "registers": {
+              "k_matmul": 32
+            },
+            "ptx_sha256": "048c66cd53085b7230c6e8ac6a1ac6328667385ccddafff9b170963f12d3c0a5"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "matmul",
+                "ok": true,
+                "max_abs_error": 1.1444091796875e-05
+              }
+            ],
+            "median_us": 14.624
+          }
+        },
+        "n00bcak": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "2166fd7647ce9057c3e4ee45d4fd8664c4ea0bf2feea39f6a69e888c94bbb172",
+            "registers": {
+              "k_matmul": 32
+            },
+            "ptx_sha256": "1fe94877f65f1b479f0c79fff97881d8487248552e9fd68ef09d14dd65eefed4"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "matmul",
+                "ok": true,
+                "max_abs_error": 1.52587890625e-05
+              }
+            ],
+            "median_us": 14.816
+          }
+        }
+      }
+    },
+    "p00_scalar_add": {
+      "meta_sha256": "67f4c80a5c78c9fa571f4088633acc56cae0a758d2a65e7c89c07a96e665709c",
+      "expected_sha256": "69e4a749183c5402f03c28a957cb1f523186d16f9b9974c75cd0ebbbfd925478",
+      "rtol": 0,
+      "atol": 0,
+      "entry": "k_add_pointwise",
+      "need": 128,
+      "arms": {
+        "main": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "e1473ffefd2736d7d9866f62fe0bdf61ba6b7937b9d212279b3d71e17adbbc52",
+            "registers": {
+              "k_add_pointwise": 22
+            },
+            "ptx_sha256": "e7ac79c593a23077245e4247bf890dac7edd40ce96a93d814932d919f669457a"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            "median_us": 20.512
+          }
+        },
+        "tcl": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "e1473ffefd2736d7d9866f62fe0bdf61ba6b7937b9d212279b3d71e17adbbc52",
+            "registers": {
+              "k_add_pointwise": 22
+            },
+            "ptx_sha256": "e7ac79c593a23077245e4247bf890dac7edd40ce96a93d814932d919f669457a"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            "median_us": 23.392
+          }
+        },
+        "powenn": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "c4dcfdcc9de2d5309fa976d99e4c0a1c84b16bc2fdf13cefe105a171e2a972f8",
+            "registers": {
+              "k_add_pointwise": 22
+            },
+            "ptx_sha256": "bae7dcec67b777492aabb12026d2503b7426da49f0702e0f2cba4a3023d01534"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            "median_us": 20.512
+          }
+        },
+        "n00bcak": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "ff6abb6074367ee57428bbc043d0f0ef579ec4950e48f881ca2f3b9580e7169f",
+            "registers": {
+              "k_add_pointwise": 22
+            },
+            "ptx_sha256": "42fbb7884d0c777e5ac27ba878122a24eb245ed1ba40b48143fe12eb274a3a46"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            "median_us": 20.544
+          }
+        }
+      }
+    },
+    "p01_vector_add": {
+      "meta_sha256": "4607a6a14553ec256b2073ff8fef18a850e315033f4fdace21f26fdcc2a867c6",
+      "expected_sha256": "1a72f87aa3afd4e84746d2c0bfcfde9d024f573ce863322f72d2c6b3bb133086",
+      "rtol": 0,
+      "atol": 0,
+      "entry": "k_add_pointwise",
+      "need": 1024,
+      "arms": {
+        "main": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "9871ce32f040a98a2c90870883e64d7ad67c4180dcacf5ae4c239d098c6f7f1a",
+            "registers": {
+              "k_add_pointwise": 22
+            },
+            "ptx_sha256": "508930f6d148b693328a84371271282f8a0f38e013f6ffdc83b68c5be2b62ccc"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            "median_us": 20.576
+          }
+        },
+        "tcl": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "9871ce32f040a98a2c90870883e64d7ad67c4180dcacf5ae4c239d098c6f7f1a",
+            "registers": {
+              "k_add_pointwise": 22
+            },
+            "ptx_sha256": "508930f6d148b693328a84371271282f8a0f38e013f6ffdc83b68c5be2b62ccc"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            "median_us": 22.56
+          }
+        },
+        "powenn": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "964efd863c53c4070ad7fa3acc67e26430e588e9bb9d145314f5eb8db8d774b9",
+            "registers": {
+              "k_add_pointwise": 22
+            },
+            "ptx_sha256": "211cb0a517c28a4ea8d93fbedbd9e9aa711853d4f205f79fa9ec7e4d7b44c7d2"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            "median_us": 20.064
+          }
+        },
+        "n00bcak": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "d27a10bc3ae8d8660c8070908c7a9bdb5181517a6b3b248fb58a3930d93426ab",
+            "registers": {
+              "k_add_pointwise": 22
+            },
+            "ptx_sha256": "894110b4a376dd777e363f72d21607e8432d6a01ab19823fb79eaed87658a7e5"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            "median_us": 19.776
+          }
+        }
+      }
+    },
+    "p02_scale_shift": {
+      "meta_sha256": "7c1c3ea69e4d61128d72fbaf3a82a76125a5273c3ced6197ac2f150d03d121e1",
+      "expected_sha256": "515539ace84b0cb38ab3e5e6ed20894b774ab428a86be180529d54fd8ad63dd6",
+      "rtol": 1e-06,
+      "atol": 1e-06,
+      "entry": "k_add_pointwise",
+      "need": 4096,
+      "arms": {
+        "main": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "d1561d1c2ba0f6343a18a38d5f66a138bce5c1f29576f4fe48aeaf713017cc2e",
+            "registers": {
+              "k_add_pointwise": 34
+            },
+            "ptx_sha256": "bf3d49a50b066a4d9a2ac97cd811807837bfc624f7728b95b7bf6e30d906aaf0"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            "median_us": 28.768
+          }
+        },
+        "tcl": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "d1561d1c2ba0f6343a18a38d5f66a138bce5c1f29576f4fe48aeaf713017cc2e",
+            "registers": {
+              "k_add_pointwise": 34
+            },
+            "ptx_sha256": "bf3d49a50b066a4d9a2ac97cd811807837bfc624f7728b95b7bf6e30d906aaf0"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            "median_us": 16.576
+          }
+        },
+        "powenn": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "7b2a18a90928cdd3541e0ea84728ecbf27316dc647c961ff660682e3dc1e70fe",
+            "registers": {
+              "k_add_pointwise": 34
+            },
+            "ptx_sha256": "ddd93f53f81e7d4ff34ed76d67dfcaa1613767a3a3783c4b79af7de0e49c2c1b"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            "median_us": 14.88
+          }
+        },
+        "n00bcak": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "70d91ea1525cf80742fbcad00ce6f24cc9688307778b461f19bf3aa21b12b920",
+            "registers": {
+              "k_add_pointwise": 34
+            },
+            "ptx_sha256": "9b5295a9675b3d8efe47a34d94485ec9b161f2cdb504931b69fdca963d37c0d9"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            "median_us": 14.944
+          }
+        }
+      }
+    },
+    "p03_relu_mul": {
+      "meta_sha256": "a2dbbe3a3cec7c45fcdde2c08f0d3276647c2a4b56ede3345be16404d1ded8c9",
+      "expected_sha256": "a0fc97901b28331b29bb5f01cf104944c3376c633dd4cce65d551ad61035e52f",
+      "rtol": 0,
+      "atol": 0,
+      "entry": "k_mul_pointwise",
+      "need": 2048,
+      "arms": {
+        "main": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "070bbd89129737c92e3d9498ef088fb742b0304ab7c364b493dbb828035f6f2f",
+            "registers": {
+              "k_mul_pointwise": 24
+            },
+            "ptx_sha256": "7ff38bfd27d03c32078539450b09e0ea29118fd16131bcf90530e1d5f9fb0fba"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "mul",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            "median_us": 14.72
+          }
+        },
+        "tcl": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "070bbd89129737c92e3d9498ef088fb742b0304ab7c364b493dbb828035f6f2f",
+            "registers": {
+              "k_mul_pointwise": 24
+            },
+            "ptx_sha256": "7ff38bfd27d03c32078539450b09e0ea29118fd16131bcf90530e1d5f9fb0fba"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "mul",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            "median_us": 16.384
+          }
+        },
+        "powenn": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "cd9022418c5069c111d13df86e7b69faa20aa86b135d3b2887006d955c9f0014",
+            "registers": {
+              "k_mul_pointwise": 24
+            },
+            "ptx_sha256": "4dc11c5e0bad7bbadf9f340b841b0e1731700102e4aaa0217a831f294275a7e6"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "mul",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            "median_us": 15.04
+          }
+        },
+        "n00bcak": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "f61b9f9d36418b07338beef08766960dd823d3da42927568a0fe660af2134e70",
+            "registers": {
+              "k_mul_pointwise": 24
+            },
+            "ptx_sha256": "70e41f592322de2cefe45b096479ab6b6fc7e31804dab936d777888f775f0949"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "mul",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            "median_us": 15.232
+          }
+        }
+      }
+    },
+    "r01_array_sum": {
+      "meta_sha256": "46cf07073f4e612e811decbc2ca900ea210811194a1e336053a6f179ecb4b00e",
+      "expected_sha256": "899c8058da70456bc3714d71ffc2814dd9777e37d39be7379b359e452924cb5c",
+      "rtol": 0.0001,
+      "atol": 0.0001,
+      "entry": "k_sum_1_reduce",
+      "need": 1,
+      "arms": {
+        "main": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "dd52b377ca3ad4cfce6b09fc54208f84e28b359498de6a605c149bb30d01e1c0",
+            "registers": {
+              "k_sum_1_reduce": 18
+            },
+            "ptx_sha256": "c7438c781f4552f066b9d261e18c7627c810647ea43dc918e64a3f5bb2591450"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 3.814697265625e-06
+              }
+            ],
+            "median_us": 20.288
+          }
+        },
+        "tcl": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "dd52b377ca3ad4cfce6b09fc54208f84e28b359498de6a605c149bb30d01e1c0",
+            "registers": {
+              "k_sum_1_reduce": 18
+            },
+            "ptx_sha256": "c7438c781f4552f066b9d261e18c7627c810647ea43dc918e64a3f5bb2591450"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 3.814697265625e-06
+              }
+            ],
+            "median_us": 23.168
+          }
+        },
+        "powenn": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "c95fad00dd3bb036f7deae09764018796335be332e54bd33cd6fcec572bb2e95",
+            "registers": {
+              "k_sum_1_reduce": 40
+            },
+            "ptx_sha256": "47e510d88456074dfb02b0f33f2be33d8b404afa73f49d92f4a2cf8de2532b0e"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 3.814697265625e-06
+              }
+            ],
+            "median_us": 20.544
+          }
+        },
+        "n00bcak": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "c54699ba7c0732bdb6f81ca170026b1e4e2295e553dfb88d60ae0580151c1f75",
+            "registers": {
+              "k_sum_1_reduce": 22
+            },
+            "ptx_sha256": "7061a1ae50073fa5a48e55e81dbec40fe5478a48ff8def2a0819e0f7e5aedd4d"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 3.814697265625e-06
+              }
+            ],
+            "median_us": 20.288
+          }
+        }
+      }
+    },
+    "r02_big_sum": {
+      "meta_sha256": "db364be00e35402a3d6f10fcd55562115c7604dea94f8126a02179a80476d19e",
+      "expected_sha256": "0109852644d0785b770fa38d996b063b156f01e8bfccb303ea0581e42696eec1",
+      "rtol": 0.001,
+      "atol": 0.001,
+      "entry": "k_sum_1_reduce",
+      "need": 1,
+      "arms": {
+        "main": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "dfe050f7bbc9df95378b5f313268f7ce45139effbe3ae563de2802b6bb61c163",
+            "registers": {
+              "k_sum_1_reduce": 18
+            },
+            "ptx_sha256": "5b63db7de4a6ffcc7ac9064be89a8cf5deb19b109240f495468c178d1f602cbb"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 1.52587890625e-05
+              }
+            ],
+            "median_us": 38.656
+          }
+        },
+        "tcl": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "dfe050f7bbc9df95378b5f313268f7ce45139effbe3ae563de2802b6bb61c163",
+            "registers": {
+              "k_sum_1_reduce": 18
+            },
+            "ptx_sha256": "5b63db7de4a6ffcc7ac9064be89a8cf5deb19b109240f495468c178d1f602cbb"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 1.52587890625e-05
+              }
+            ],
+            "median_us": 40.64
+          }
+        },
+        "powenn": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "8554bfd7835b5e719fc557017e17a2ece85379d62f0fc3ca36e0a8866b2d0280",
+            "registers": {
+              "k_sum_1_reduce": 40
+            },
+            "ptx_sha256": "045616404cbf255b14a090045f36ee6f9e9b346161e9ca44d58598b040cb88c2"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 9.1552734375e-05
+              }
+            ],
+            "median_us": 22.592
+          }
+        },
+        "n00bcak": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "e30bf909b8055ff3d8d0c4adff8460d8b7ab514ad74015ecaa3f5dd4d176f103",
+            "registers": {
+              "k_sum_1_reduce": 40
+            },
+            "ptx_sha256": "9f0d0eb7832b20837250a69e4a4027dd271a1dd213d3c9c1f84a0ccc4588300a"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 1.52587890625e-05
+              }
+            ],
+            "median_us": 25.28
+          }
+        }
+      }
+    },
+    "r03_mean": {
+      "meta_sha256": "d7ab661c388ad447f5661a3b36cba448cf5142402756f1e1c35d110db06c84fe",
+      "expected_sha256": "9c53fd65aebbc9b6ca477653643273195149be2d93ab472a135883a0a128c5f7",
+      "rtol": 0.0001,
+      "atol": 0.0001,
+      "entry": "k_mean_ffcca3",
+      "need": 1,
+      "arms": {
+        "main": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "6038c6494d894699d1fa5248f11cb78202837d69c48fcf8b98d7611e7d1c1b75",
+            "registers": {
+              "k_mean_ffcca3": 18
+            },
+            "ptx_sha256": "b23f5f4a19b4f940eae4e3fc68254a57aed4eaefdb5d16bd30b002850f717dea"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "mean",
+                "ok": true,
+                "max_abs_error": 9.313225746154785e-10
+              }
+            ],
+            "median_us": 28.192
+          }
+        },
+        "tcl": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "6038c6494d894699d1fa5248f11cb78202837d69c48fcf8b98d7611e7d1c1b75",
+            "registers": {
+              "k_mean_ffcca3": 18
+            },
+            "ptx_sha256": "b23f5f4a19b4f940eae4e3fc68254a57aed4eaefdb5d16bd30b002850f717dea"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "mean",
+                "ok": true,
+                "max_abs_error": 9.313225746154785e-10
+              }
+            ],
+            "median_us": 31.872
+          }
+        },
+        "powenn": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "8145231efea696c42571f3f8215b6e98acb6bc711b4cc5584a0086b49fe85b11",
+            "registers": {
+              "k_mean_ffcca3": 40
+            },
+            "ptx_sha256": "dd304318e600884d2af3c3f05c8c0d79dc41093487532947455db61879f0ecff"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "mean",
+                "ok": true,
+                "max_abs_error": 2.7939677238464355e-09
+              }
+            ],
+            "median_us": 20.864
+          }
+        },
+        "n00bcak": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "6107875b2c85c71a6a0140eadc5acc5f361b93132b7ced5e5f402fdb538385bd",
+            "registers": {
+              "k_mean_ffcca3": 40
+            },
+            "ptx_sha256": "e64d52049c4b34256233b7d7a4ec4e98126f69dfd0c3e44d9e74fda94f8b26a2"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "mean",
+                "ok": true,
+                "max_abs_error": 9.313225746154785e-10
+              }
+            ],
+            "median_us": 22.112
+          }
+        }
+      }
+    },
+    "r04_row_sum": {
+      "meta_sha256": "803cb710590156ad319eb44b2d2aa6c1ee9b0e3a666ebc09de259e50d83a3ba1",
+      "expected_sha256": "cb724cbe21276b1438add7263e418f52c0eb90c4501954a245678dcc793c895d",
+      "rtol": 0.0001,
+      "atol": 0.0001,
+      "entry": "k_sum_1_reduce",
+      "need": 64,
+      "arms": {
+        "main": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "87f60ba7030c5e63d3c0b8331e7373e1b99a7b2fff8da1b5c7ab5a023b0afbf0",
+            "registers": {
+              "k_sum_1_reduce": 20
+            },
+            "ptx_sha256": "c6f7179c6c40a04f7408162a2aec0c8fdd71d44f8884c065be1a2f411fadacf7"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 5.7220458984375e-06
+              }
+            ],
+            "median_us": 20.128
+          }
+        },
+        "tcl": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "87f60ba7030c5e63d3c0b8331e7373e1b99a7b2fff8da1b5c7ab5a023b0afbf0",
+            "registers": {
+              "k_sum_1_reduce": 20
+            },
+            "ptx_sha256": "c6f7179c6c40a04f7408162a2aec0c8fdd71d44f8884c065be1a2f411fadacf7"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 5.7220458984375e-06
+              }
+            ],
+            "median_us": 24.32
+          }
+        },
+        "powenn": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "3c947bfda1d929c7ab75633d6bd759a7561f5d4fc248fe493f722d223ac532a5",
+            "registers": {
+              "k_sum_1_reduce": 40
+            },
+            "ptx_sha256": "5c82bd93abeb6e29a67258d58fa0e96f10b522bc1b030536f2910e59dac43568"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 4.76837158203125e-06
+              }
+            ],
+            "median_us": 20.288
+          }
+        },
+        "n00bcak": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "81d72a68e011bb3bc4c2cdf66b719f4a4ad87e30301ea8bbe92ef61bcccfdbc6",
+            "registers": {
+              "k_sum_1_reduce": 40
+            },
+            "ptx_sha256": "59b43a3db5400c1bcb891e248f9d3eb07bbf1e2a04fbce9bca6db1770bdb2d2f"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 5.7220458984375e-06
+              }
+            ],
+            "median_us": 20.832
+          }
+        }
+      }
+    }
+  },
+  "health": {
+    "ok": true,
+    "arch_ok": true,
+    "ptxas": "/usr/local/cuda/bin/ptxas",
+    "default_arch": "sm_120",
+    "cache_dir": "/home/riftuser/.cache/ptxserver",
+    "can_compile": true,
+    "can_run": true,
+    "gpu": "NVIDIA GeForce RTX 5090 (compute capability 12.0, sm_120)"
+  },
+  "published_correctness": {
+    "all15_passed": true,
+    "scope": "Published cases on hosted RTX 5090; hidden set unverified"
+  }
+}

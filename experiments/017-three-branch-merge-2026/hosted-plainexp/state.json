@@ -1,0 +1,4604 @@
+{
+  "schema": 1,
+  "url": "http://runner.riftstack.ai:48701",
+  "status": "completed",
+  "repetitions": 7,
+  "gap": 0.35,
+  "arms": {
+    "merged": {
+      "source": "/tmp/emmy-5090-n00bcak/compile.py",
+      "source_sha256": "858f5f275ac455423ab197f5932a637ca263137de52b5038ceb5d2f836123685",
+      "snapshot": {
+        "source": "/tmp/emmy-5090-n00bcak/compile.py",
+        "source_sha256": "858f5f275ac455423ab197f5932a637ca263137de52b5038ceb5d2f836123685",
+        "compiler_unchanged": true,
+        "cases": {
+          "a01_attention": {
+            "meta_sha256": "c280c572744016ecf6ca2971312ad2ce8a10b28c0f3e38561c1a096c2ea7352f",
+            "expected_sha256": "ccc0ad1a70f679781c8aff8064ae73368e04bc35018a537dc15ef8610262ed51",
+            "kernels": [
+              {
+                "entry": "k_matmul_softmax_reduce_b55365",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/a01_attention/k_matmul_softmax_reduce_b55365.ir.json",
+                "ir_sha256": "0a6925795c1b8e108befbdc3300c722ea5a7fb19d2337597eca860e9c36eff9a",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-plainexp/ptx/merged/858f5f275ac4/a01_attention/k_matmul_softmax_reduce_b55365.ptx",
+                "ptx_sha256": "5bafec285d7f085f9b979d99d14732457d3042ec264b4fcd0a73c109bb47d9c1"
+              }
+            ]
+          },
+          "a02_attention_128": {
+            "meta_sha256": "adcc08994786076e7cb9835ab3bab19b0dc9c0d00a999adea124380f8300de18",
+            "expected_sha256": "ebd7c000d75e52707f2e65304e05fbf963b4799919f814f685490c76c89e7080",
+            "kernels": [
+              {
+                "entry": "k_matmul_softmax_reduce_6f0029",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/a02_attention_128/k_matmul_softmax_reduce_6f0029.ir.json",
+                "ir_sha256": "a51792c9e4d920a493054fb2a6986d87766cc1b3717078f8e631a45d1b0bf1dd",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-plainexp/ptx/merged/858f5f275ac4/a02_attention_128/k_matmul_softmax_reduce_6f0029.ptx",
+                "ptx_sha256": "d936d7eddd6b24d607571edcf2e582d1144c02ec3233d6ebd501a47b2906fa91"
+              }
+            ]
+          },
+          "f01_rmsnorm": {
+            "meta_sha256": "f45014c6b0963ec9727fc0f1c9bb585319c4ac94292260bc8f7c10557c1b8e1d",
+            "expected_sha256": "197016500cfca3ee3a1952273d50655e5bbf60093c28ad801e28eb3ccb76a6fb",
+            "kernels": [
+              {
+                "entry": "k_mean_cbd1de",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/f01_rmsnorm/k_mean_cbd1de.ir.json",
+                "ir_sha256": "a8e6819e3144b942d8983b52b6865fa692868105b20de30f6ba4df424a07862a",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-plainexp/ptx/merged/858f5f275ac4/f01_rmsnorm/k_mean_cbd1de.ptx",
+                "ptx_sha256": "873bf474d1566dac4ee496474c8a2e502312178f964e52732d17b7c1e03817cf"
+              }
+            ]
+          },
+          "f02_row_softmax": {
+            "meta_sha256": "ddbe97ea42c7b077d30d140b751f8062caf47b5620cb423a02c1dd848cd61900",
+            "expected_sha256": "7e38d188cdc0bbb7afda1e6007318b0174bcdf82eb3855775967e49d4b8ee8ce",
+            "kernels": [
+              {
+                "entry": "k_softmax_05263d",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/f02_row_softmax/k_softmax_05263d.ir.json",
+                "ir_sha256": "d48b030e9d9a765aa631287f72935bc59f20926f3ccb09dc7f7932106770af03",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-plainexp/ptx/merged/858f5f275ac4/f02_row_softmax/k_softmax_05263d.ptx",
+                "ptx_sha256": "0b496e2ce1040783ed5ac73db09d0cbff2063bfdfe6220f40b5c156709a78744"
+              }
+            ]
+          },
+          "f03_l2norm": {
+            "meta_sha256": "cbf67c2d198f4fea1bb140083ec65c4bf14202090daaa4aac77f1514ecc60b95",
+            "expected_sha256": "fb2e242cbfe9834c6d45f27f29acc750a5b4ea8ad6ab509baa7a5b4c53586380",
+            "kernels": [
+              {
+                "entry": "k_div_reduce",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/f03_l2norm/k_div_reduce.ir.json",
+                "ir_sha256": "34abdb33fe950100029930242777d0b22a12e523117de21bc9d78b43310c567d",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-plainexp/ptx/merged/858f5f275ac4/f03_l2norm/k_div_reduce.ptx",
+                "ptx_sha256": "32e1fcdbb2806a6e34c238d77520b7a270f2576e187dace27d5d8870bb6c32d4"
+              }
+            ]
+          },
+          "m01_matmul_512": {
+            "meta_sha256": "3324370a2d29614c6c7ff7cf549563f9afb22bab0ed31ed62d8ffd27c59dcd57",
+            "expected_sha256": "6396bececa75b2adee8c83bb0c090f9a68e7297d7de492f5a2f0cd3e67f24c36",
+            "kernels": [
+              {
+                "entry": "k_matmul_2967be",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/m01_matmul_512/k_matmul_2967be.ir.json",
+                "ir_sha256": "ed9ab32776ce0de8b0d1f0367da54c586bf993c964efc01482666247a976dc02",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-plainexp/ptx/merged/858f5f275ac4/m01_matmul_512/k_matmul_2967be.ptx",
+                "ptx_sha256": "8a60396afd69d1ae8e39e2c2e056b7b4a1b9190ce7c9ec3be9f919dfd3dbb3da"
+              }
+            ]
+          },
+          "m02_matmul_rect": {
+            "meta_sha256": "a82fd8d7f5933749868035254537b962d3d0140c8bf3e22f7f8a54a289a9c365",
+            "expected_sha256": "b0a5f6719c01fdc55054d983e7d75f880577e4741c63ae39c9fa704507e58134",
+            "kernels": [
+              {
+                "entry": "k_matmul",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/m02_matmul_rect/k_matmul.ir.json",
+                "ir_sha256": "c47bb47c529e7362c9272784ac21a31f2a5d79546cc11b19beff891278d22206",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-plainexp/ptx/merged/858f5f275ac4/m02_matmul_rect/k_matmul.ptx",
+                "ptx_sha256": "1fe94877f65f1b479f0c79fff97881d8487248552e9fd68ef09d14dd65eefed4"
+              }
+            ]
+          },
+          "p00_scalar_add": {
+            "meta_sha256": "67f4c80a5c78c9fa571f4088633acc56cae0a758d2a65e7c89c07a96e665709c",
+            "expected_sha256": "69e4a749183c5402f03c28a957cb1f523186d16f9b9974c75cd0ebbbfd925478",
+            "kernels": [
+              {
+                "entry": "k_add_pointwise",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/p00_scalar_add/k_add_pointwise.ir.json",
+                "ir_sha256": "d93c0b232c48f7161c88f0276ea8a69481b06608a24b6e8ed2d5025bd17f4e32",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-plainexp/ptx/merged/858f5f275ac4/p00_scalar_add/k_add_pointwise.ptx",
+                "ptx_sha256": "42fbb7884d0c777e5ac27ba878122a24eb245ed1ba40b48143fe12eb274a3a46"
+              }
+            ]
+          },
+          "p01_vector_add": {
+            "meta_sha256": "4607a6a14553ec256b2073ff8fef18a850e315033f4fdace21f26fdcc2a867c6",
+            "expected_sha256": "1a72f87aa3afd4e84746d2c0bfcfde9d024f573ce863322f72d2c6b3bb133086",
+            "kernels": [
+              {
+                "entry": "k_add_pointwise",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/p01_vector_add/k_add_pointwise.ir.json",
+                "ir_sha256": "90088bc4c7346b9a5916205fdb96926f52cc0f5e3c5c08527d7b0796b0c47fc5",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-plainexp/ptx/merged/858f5f275ac4/p01_vector_add/k_add_pointwise.ptx",
+                "ptx_sha256": "894110b4a376dd777e363f72d21607e8432d6a01ab19823fb79eaed87658a7e5"
+              }
+            ]
+          },
+          "p02_scale_shift": {
+            "meta_sha256": "7c1c3ea69e4d61128d72fbaf3a82a76125a5273c3ced6197ac2f150d03d121e1",
+            "expected_sha256": "515539ace84b0cb38ab3e5e6ed20894b774ab428a86be180529d54fd8ad63dd6",
+            "kernels": [
+              {
+                "entry": "k_add_pointwise",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/p02_scale_shift/k_add_pointwise.ir.json",
+                "ir_sha256": "2bae0a54cbcd037d6c13e70b5c4f5728f2f94af163a53ebe35b88ab8f68ec021",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-plainexp/ptx/merged/858f5f275ac4/p02_scale_shift/k_add_pointwise.ptx",
+                "ptx_sha256": "9b5295a9675b3d8efe47a34d94485ec9b161f2cdb504931b69fdca963d37c0d9"
+              }
+            ]
+          },
+          "p03_relu_mul": {
+            "meta_sha256": "a2dbbe3a3cec7c45fcdde2c08f0d3276647c2a4b56ede3345be16404d1ded8c9",
+            "expected_sha256": "a0fc97901b28331b29bb5f01cf104944c3376c633dd4cce65d551ad61035e52f",
+            "kernels": [
+              {
+                "entry": "k_mul_pointwise",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/p03_relu_mul/k_mul_pointwise.ir.json",
+                "ir_sha256": "b2429e790dac9fd0db9fafadaa3624cafaeff85c834851a9034a730a1620a892",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-plainexp/ptx/merged/858f5f275ac4/p03_relu_mul/k_mul_pointwise.ptx",
+                "ptx_sha256": "70e41f592322de2cefe45b096479ab6b6fc7e31804dab936d777888f775f0949"
+              }
+            ]
+          },
+          "r01_array_sum": {
+            "meta_sha256": "46cf07073f4e612e811decbc2ca900ea210811194a1e336053a6f179ecb4b00e",
+            "expected_sha256": "899c8058da70456bc3714d71ffc2814dd9777e37d39be7379b359e452924cb5c",
+            "kernels": [
+              {
+                "entry": "k_sum_1_reduce",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/r01_array_sum/k_sum_1_reduce.ir.json",
+                "ir_sha256": "a5ad6af023562e1632e929afb8cd6387603c2edcd4d4b1590b1a3b2ee962675f",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-plainexp/ptx/merged/858f5f275ac4/r01_array_sum/k_sum_1_reduce.ptx",
+                "ptx_sha256": "4e55d569b6717527424737b513303d9dc58cdd4c82e493a2d01f45bc04befa25"
+              }
+            ]
+          },
+          "r02_big_sum": {
+            "meta_sha256": "db364be00e35402a3d6f10fcd55562115c7604dea94f8126a02179a80476d19e",
+            "expected_sha256": "0109852644d0785b770fa38d996b063b156f01e8bfccb303ea0581e42696eec1",
+            "kernels": [
+              {
+                "entry": "k_sum_1_reduce",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/r02_big_sum/k_sum_1_reduce.ir.json",
+                "ir_sha256": "777e3f2dd170849133e19d303cdb3d273c135c9a9896786ee40fbc6a2ff4ec7c",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-plainexp/ptx/merged/858f5f275ac4/r02_big_sum/k_sum_1_reduce.ptx",
+                "ptx_sha256": "a689dc444d7a1d9768f25276a03f1dd94a7d51729f0334155b38bdca4360e6a0"
+              }
+            ]
+          },
+          "r03_mean": {
+            "meta_sha256": "d7ab661c388ad447f5661a3b36cba448cf5142402756f1e1c35d110db06c84fe",
+            "expected_sha256": "9c53fd65aebbc9b6ca477653643273195149be2d93ab472a135883a0a128c5f7",
+            "kernels": [
+              {
+                "entry": "k_mean_ffcca3",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/r03_mean/k_mean_ffcca3.ir.json",
+                "ir_sha256": "7eeca2c7869ab2ddf880a0ac7fb689d3ab814d7523eab472ec80ad2458100b86",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-plainexp/ptx/merged/858f5f275ac4/r03_mean/k_mean_ffcca3.ptx",
+                "ptx_sha256": "c2ae10517fae0c701099fdf3565786e70ced02ab98618f72f4c9f7e33aec758e"
+              }
+            ]
+          },
+          "r04_row_sum": {
+            "meta_sha256": "803cb710590156ad319eb44b2d2aa6c1ee9b0e3a666ebc09de259e50d83a3ba1",
+            "expected_sha256": "cb724cbe21276b1438add7263e418f52c0eb90c4501954a245678dcc793c895d",
+            "kernels": [
+              {
+                "entry": "k_sum_1_reduce",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/r04_row_sum/k_sum_1_reduce.ir.json",
+                "ir_sha256": "4c7befc76b72c6c69be4675d69ccd14e336b9139fe22aaec1b94230858c8ab03",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-plainexp/ptx/merged/858f5f275ac4/r04_row_sum/k_sum_1_reduce.ptx",
+                "ptx_sha256": "66cc70162150c106037c1640226911dea882a4916ce7c3ea0a3212ce82ebf550"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "plainexp": {
+      "source": "/tmp/emmy-5090-plainexp/compile.py",
+      "source_sha256": "efa038d1f182c99b2d7fce0d216fecda791c569b909612a74267aad0c942be28",
+      "snapshot": {
+        "source": "/tmp/emmy-5090-plainexp/compile.py",
+        "source_sha256": "efa038d1f182c99b2d7fce0d216fecda791c569b909612a74267aad0c942be28",
+        "compiler_unchanged": true,
+        "cases": {
+          "a01_attention": {
+            "meta_sha256": "c280c572744016ecf6ca2971312ad2ce8a10b28c0f3e38561c1a096c2ea7352f",
+            "expected_sha256": "ccc0ad1a70f679781c8aff8064ae73368e04bc35018a537dc15ef8610262ed51",
+            "kernels": [
+              {
+                "entry": "k_matmul_softmax_reduce_b55365",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/a01_attention/k_matmul_softmax_reduce_b55365.ir.json",
+                "ir_sha256": "0a6925795c1b8e108befbdc3300c722ea5a7fb19d2337597eca860e9c36eff9a",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-plainexp/ptx/plainexp/efa038d1f182/a01_attention/k_matmul_softmax_reduce_b55365.ptx",
+                "ptx_sha256": "84a0cf6d7c237a368601122238b72d558832b617fe50742690ee078c1e03266a"
+              }
+            ]
+          },
+          "a02_attention_128": {
+            "meta_sha256": "adcc08994786076e7cb9835ab3bab19b0dc9c0d00a999adea124380f8300de18",
+            "expected_sha256": "ebd7c000d75e52707f2e65304e05fbf963b4799919f814f685490c76c89e7080",
+            "kernels": [
+              {
+                "entry": "k_matmul_softmax_reduce_6f0029",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/a02_attention_128/k_matmul_softmax_reduce_6f0029.ir.json",
+                "ir_sha256": "a51792c9e4d920a493054fb2a6986d87766cc1b3717078f8e631a45d1b0bf1dd",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-plainexp/ptx/plainexp/efa038d1f182/a02_attention_128/k_matmul_softmax_reduce_6f0029.ptx",
+                "ptx_sha256": "c7fae1be4c1e58f73719442e3116ce0ffd038cf91a9a1457bc786cb87b4088a2"
+              }
+            ]
+          },
+          "f01_rmsnorm": {
+            "meta_sha256": "f45014c6b0963ec9727fc0f1c9bb585319c4ac94292260bc8f7c10557c1b8e1d",
+            "expected_sha256": "197016500cfca3ee3a1952273d50655e5bbf60093c28ad801e28eb3ccb76a6fb",
+            "kernels": [
+              {
+                "entry": "k_mean_cbd1de",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/f01_rmsnorm/k_mean_cbd1de.ir.json",
+                "ir_sha256": "a8e6819e3144b942d8983b52b6865fa692868105b20de30f6ba4df424a07862a",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-plainexp/ptx/plainexp/efa038d1f182/f01_rmsnorm/k_mean_cbd1de.ptx",
+                "ptx_sha256": "873bf474d1566dac4ee496474c8a2e502312178f964e52732d17b7c1e03817cf"
+              }
+            ]
+          },
+          "f02_row_softmax": {
+            "meta_sha256": "ddbe97ea42c7b077d30d140b751f8062caf47b5620cb423a02c1dd848cd61900",
+            "expected_sha256": "7e38d188cdc0bbb7afda1e6007318b0174bcdf82eb3855775967e49d4b8ee8ce",
+            "kernels": [
+              {
+                "entry": "k_softmax_05263d",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/f02_row_softmax/k_softmax_05263d.ir.json",
+                "ir_sha256": "d48b030e9d9a765aa631287f72935bc59f20926f3ccb09dc7f7932106770af03",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-plainexp/ptx/plainexp/efa038d1f182/f02_row_softmax/k_softmax_05263d.ptx",
+                "ptx_sha256": "1e84a5dd0794f2a3aaec4864fbb2c4624e096a5565f63525a0845b79761479e7"
+              }
+            ]
+          },
+          "f03_l2norm": {
+            "meta_sha256": "cbf67c2d198f4fea1bb140083ec65c4bf14202090daaa4aac77f1514ecc60b95",
+            "expected_sha256": "fb2e242cbfe9834c6d45f27f29acc750a5b4ea8ad6ab509baa7a5b4c53586380",
+            "kernels": [
+              {
+                "entry": "k_div_reduce",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/f03_l2norm/k_div_reduce.ir.json",
+                "ir_sha256": "34abdb33fe950100029930242777d0b22a12e523117de21bc9d78b43310c567d",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-plainexp/ptx/plainexp/efa038d1f182/f03_l2norm/k_div_reduce.ptx",
+                "ptx_sha256": "32e1fcdbb2806a6e34c238d77520b7a270f2576e187dace27d5d8870bb6c32d4"
+              }
+            ]
+          },
+          "m01_matmul_512": {
+            "meta_sha256": "3324370a2d29614c6c7ff7cf549563f9afb22bab0ed31ed62d8ffd27c59dcd57",
+            "expected_sha256": "6396bececa75b2adee8c83bb0c090f9a68e7297d7de492f5a2f0cd3e67f24c36",
+            "kernels": [
+              {
+                "entry": "k_matmul_2967be",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/m01_matmul_512/k_matmul_2967be.ir.json",
+                "ir_sha256": "ed9ab32776ce0de8b0d1f0367da54c586bf993c964efc01482666247a976dc02",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-plainexp/ptx/plainexp/efa038d1f182/m01_matmul_512/k_matmul_2967be.ptx",
+                "ptx_sha256": "8a60396afd69d1ae8e39e2c2e056b7b4a1b9190ce7c9ec3be9f919dfd3dbb3da"
+              }
+            ]
+          },
+          "m02_matmul_rect": {
+            "meta_sha256": "a82fd8d7f5933749868035254537b962d3d0140c8bf3e22f7f8a54a289a9c365",
+            "expected_sha256": "b0a5f6719c01fdc55054d983e7d75f880577e4741c63ae39c9fa704507e58134",
+            "kernels": [
+              {
+                "entry": "k_matmul",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/m02_matmul_rect/k_matmul.ir.json",
+                "ir_sha256": "c47bb47c529e7362c9272784ac21a31f2a5d79546cc11b19beff891278d22206",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-plainexp/ptx/plainexp/efa038d1f182/m02_matmul_rect/k_matmul.ptx",
+                "ptx_sha256": "1fe94877f65f1b479f0c79fff97881d8487248552e9fd68ef09d14dd65eefed4"
+              }
+            ]
+          },
+          "p00_scalar_add": {
+            "meta_sha256": "67f4c80a5c78c9fa571f4088633acc56cae0a758d2a65e7c89c07a96e665709c",
+            "expected_sha256": "69e4a749183c5402f03c28a957cb1f523186d16f9b9974c75cd0ebbbfd925478",
+            "kernels": [
+              {
+                "entry": "k_add_pointwise",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/p00_scalar_add/k_add_pointwise.ir.json",
+                "ir_sha256": "d93c0b232c48f7161c88f0276ea8a69481b06608a24b6e8ed2d5025bd17f4e32",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-plainexp/ptx/plainexp/efa038d1f182/p00_scalar_add/k_add_pointwise.ptx",
+                "ptx_sha256": "42fbb7884d0c777e5ac27ba878122a24eb245ed1ba40b48143fe12eb274a3a46"
+              }
+            ]
+          },
+          "p01_vector_add": {
+            "meta_sha256": "4607a6a14553ec256b2073ff8fef18a850e315033f4fdace21f26fdcc2a867c6",
+            "expected_sha256": "1a72f87aa3afd4e84746d2c0bfcfde9d024f573ce863322f72d2c6b3bb133086",
+            "kernels": [
+              {
+                "entry": "k_add_pointwise",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/p01_vector_add/k_add_pointwise.ir.json",
+                "ir_sha256": "90088bc4c7346b9a5916205fdb96926f52cc0f5e3c5c08527d7b0796b0c47fc5",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-plainexp/ptx/plainexp/efa038d1f182/p01_vector_add/k_add_pointwise.ptx",
+                "ptx_sha256": "894110b4a376dd777e363f72d21607e8432d6a01ab19823fb79eaed87658a7e5"
+              }
+            ]
+          },
+          "p02_scale_shift": {
+            "meta_sha256": "7c1c3ea69e4d61128d72fbaf3a82a76125a5273c3ced6197ac2f150d03d121e1",
+            "expected_sha256": "515539ace84b0cb38ab3e5e6ed20894b774ab428a86be180529d54fd8ad63dd6",
+            "kernels": [
+              {
+                "entry": "k_add_pointwise",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/p02_scale_shift/k_add_pointwise.ir.json",
+                "ir_sha256": "2bae0a54cbcd037d6c13e70b5c4f5728f2f94af163a53ebe35b88ab8f68ec021",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-plainexp/ptx/plainexp/efa038d1f182/p02_scale_shift/k_add_pointwise.ptx",
+                "ptx_sha256": "9b5295a9675b3d8efe47a34d94485ec9b161f2cdb504931b69fdca963d37c0d9"
+              }
+            ]
+          },
+          "p03_relu_mul": {
+            "meta_sha256": "a2dbbe3a3cec7c45fcdde2c08f0d3276647c2a4b56ede3345be16404d1ded8c9",
+            "expected_sha256": "a0fc97901b28331b29bb5f01cf104944c3376c633dd4cce65d551ad61035e52f",
+            "kernels": [
+              {
+                "entry": "k_mul_pointwise",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/p03_relu_mul/k_mul_pointwise.ir.json",
+                "ir_sha256": "b2429e790dac9fd0db9fafadaa3624cafaeff85c834851a9034a730a1620a892",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-plainexp/ptx/plainexp/efa038d1f182/p03_relu_mul/k_mul_pointwise.ptx",
+                "ptx_sha256": "70e41f592322de2cefe45b096479ab6b6fc7e31804dab936d777888f775f0949"
+              }
+            ]
+          },
+          "r01_array_sum": {
+            "meta_sha256": "46cf07073f4e612e811decbc2ca900ea210811194a1e336053a6f179ecb4b00e",
+            "expected_sha256": "899c8058da70456bc3714d71ffc2814dd9777e37d39be7379b359e452924cb5c",
+            "kernels": [
+              {
+                "entry": "k_sum_1_reduce",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/r01_array_sum/k_sum_1_reduce.ir.json",
+                "ir_sha256": "a5ad6af023562e1632e929afb8cd6387603c2edcd4d4b1590b1a3b2ee962675f",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-plainexp/ptx/plainexp/efa038d1f182/r01_array_sum/k_sum_1_reduce.ptx",
+                "ptx_sha256": "4e55d569b6717527424737b513303d9dc58cdd4c82e493a2d01f45bc04befa25"
+              }
+            ]
+          },
+          "r02_big_sum": {
+            "meta_sha256": "db364be00e35402a3d6f10fcd55562115c7604dea94f8126a02179a80476d19e",
+            "expected_sha256": "0109852644d0785b770fa38d996b063b156f01e8bfccb303ea0581e42696eec1",
+            "kernels": [
+              {
+                "entry": "k_sum_1_reduce",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/r02_big_sum/k_sum_1_reduce.ir.json",
+                "ir_sha256": "777e3f2dd170849133e19d303cdb3d273c135c9a9896786ee40fbc6a2ff4ec7c",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-plainexp/ptx/plainexp/efa038d1f182/r02_big_sum/k_sum_1_reduce.ptx",
+                "ptx_sha256": "a689dc444d7a1d9768f25276a03f1dd94a7d51729f0334155b38bdca4360e6a0"
+              }
+            ]
+          },
+          "r03_mean": {
+            "meta_sha256": "d7ab661c388ad447f5661a3b36cba448cf5142402756f1e1c35d110db06c84fe",
+            "expected_sha256": "9c53fd65aebbc9b6ca477653643273195149be2d93ab472a135883a0a128c5f7",
+            "kernels": [
+              {
+                "entry": "k_mean_ffcca3",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/r03_mean/k_mean_ffcca3.ir.json",
+                "ir_sha256": "7eeca2c7869ab2ddf880a0ac7fb689d3ab814d7523eab472ec80ad2458100b86",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-plainexp/ptx/plainexp/efa038d1f182/r03_mean/k_mean_ffcca3.ptx",
+                "ptx_sha256": "c2ae10517fae0c701099fdf3565786e70ced02ab98618f72f4c9f7e33aec758e"
+              }
+            ]
+          },
+          "r04_row_sum": {
+            "meta_sha256": "803cb710590156ad319eb44b2d2aa6c1ee9b0e3a666ebc09de259e50d83a3ba1",
+            "expected_sha256": "cb724cbe21276b1438add7263e418f52c0eb90c4501954a245678dcc793c895d",
+            "kernels": [
+              {
+                "entry": "k_sum_1_reduce",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/r04_row_sum/k_sum_1_reduce.ir.json",
+                "ir_sha256": "4c7befc76b72c6c69be4675d69ccd14e336b9139fe22aaec1b94230858c8ab03",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-plainexp/ptx/plainexp/efa038d1f182/r04_row_sum/k_sum_1_reduce.ptx",
+                "ptx_sha256": "66cc70162150c106037c1640226911dea882a4916ce7c3ea0a3212ce82ebf550"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "powenn": {
+      "source": "/tmp/emmy-5090-powenn/compile.py",
+      "source_sha256": "4439640e2152b005908752ebc7fba5ef47b0e7930409ce106d37fd43497f8688",
+      "snapshot": {
+        "source": "/tmp/emmy-5090-powenn/compile.py",
+        "source_sha256": "4439640e2152b005908752ebc7fba5ef47b0e7930409ce106d37fd43497f8688",
+        "compiler_unchanged": true,
+        "cases": {
+          "a01_attention": {
+            "meta_sha256": "c280c572744016ecf6ca2971312ad2ce8a10b28c0f3e38561c1a096c2ea7352f",
+            "expected_sha256": "ccc0ad1a70f679781c8aff8064ae73368e04bc35018a537dc15ef8610262ed51",
+            "kernels": [
+              {
+                "entry": "k_matmul_softmax_reduce_b55365",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/a01_attention/k_matmul_softmax_reduce_b55365.ir.json",
+                "ir_sha256": "0a6925795c1b8e108befbdc3300c722ea5a7fb19d2337597eca860e9c36eff9a",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-plainexp/ptx/powenn/4439640e2152/a01_attention/k_matmul_softmax_reduce_b55365.ptx",
+                "ptx_sha256": "56c67993c21d2fbf81b5036ee986ad26ced8569f0e8d0cdc0bd0dedda2286ffd"
+              }
+            ]
+          },
+          "a02_attention_128": {
+            "meta_sha256": "adcc08994786076e7cb9835ab3bab19b0dc9c0d00a999adea124380f8300de18",
+            "expected_sha256": "ebd7c000d75e52707f2e65304e05fbf963b4799919f814f685490c76c89e7080",
+            "kernels": [
+              {
+                "entry": "k_matmul_softmax_reduce_6f0029",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/a02_attention_128/k_matmul_softmax_reduce_6f0029.ir.json",
+                "ir_sha256": "a51792c9e4d920a493054fb2a6986d87766cc1b3717078f8e631a45d1b0bf1dd",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-plainexp/ptx/powenn/4439640e2152/a02_attention_128/k_matmul_softmax_reduce_6f0029.ptx",
+                "ptx_sha256": "20baf9e2d7bcef36ab2819c4de88dcec1b07774b28c8016b242f0c1d48fed9b7"
+              }
+            ]
+          },
+          "f01_rmsnorm": {
+            "meta_sha256": "f45014c6b0963ec9727fc0f1c9bb585319c4ac94292260bc8f7c10557c1b8e1d",
+            "expected_sha256": "197016500cfca3ee3a1952273d50655e5bbf60093c28ad801e28eb3ccb76a6fb",
+            "kernels": [
+              {
+                "entry": "k_mean_cbd1de",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/f01_rmsnorm/k_mean_cbd1de.ir.json",
+                "ir_sha256": "a8e6819e3144b942d8983b52b6865fa692868105b20de30f6ba4df424a07862a",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-plainexp/ptx/powenn/4439640e2152/f01_rmsnorm/k_mean_cbd1de.ptx",
+                "ptx_sha256": "017dd2ac5ea97660e0f10a7454fdd751cfc3631fec27b1fb2a4e65f60587dabc"
+              }
+            ]
+          },
+          "f02_row_softmax": {
+            "meta_sha256": "ddbe97ea42c7b077d30d140b751f8062caf47b5620cb423a02c1dd848cd61900",
+            "expected_sha256": "7e38d188cdc0bbb7afda1e6007318b0174bcdf82eb3855775967e49d4b8ee8ce",
+            "kernels": [
+              {
+                "entry": "k_softmax_05263d",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/f02_row_softmax/k_softmax_05263d.ir.json",
+                "ir_sha256": "d48b030e9d9a765aa631287f72935bc59f20926f3ccb09dc7f7932106770af03",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-plainexp/ptx/powenn/4439640e2152/f02_row_softmax/k_softmax_05263d.ptx",
+                "ptx_sha256": "fade83de75c1b61d964491ce8cdacd74ca9dbdb26b78caa716cafb65632a9da4"
+              }
+            ]
+          },
+          "f03_l2norm": {
+            "meta_sha256": "cbf67c2d198f4fea1bb140083ec65c4bf14202090daaa4aac77f1514ecc60b95",
+            "expected_sha256": "fb2e242cbfe9834c6d45f27f29acc750a5b4ea8ad6ab509baa7a5b4c53586380",
+            "kernels": [
+              {
+                "entry": "k_div_reduce",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/f03_l2norm/k_div_reduce.ir.json",
+                "ir_sha256": "34abdb33fe950100029930242777d0b22a12e523117de21bc9d78b43310c567d",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-plainexp/ptx/powenn/4439640e2152/f03_l2norm/k_div_reduce.ptx",
+                "ptx_sha256": "d118584af41e2d991b4f7b18d670a23b75d9bbd0d972c07822584fdd69236a41"
+              }
+            ]
+          },
+          "m01_matmul_512": {
+            "meta_sha256": "3324370a2d29614c6c7ff7cf549563f9afb22bab0ed31ed62d8ffd27c59dcd57",
+            "expected_sha256": "6396bececa75b2adee8c83bb0c090f9a68e7297d7de492f5a2f0cd3e67f24c36",
+            "kernels": [
+              {
+                "entry": "k_matmul_2967be",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/m01_matmul_512/k_matmul_2967be.ir.json",
+                "ir_sha256": "ed9ab32776ce0de8b0d1f0367da54c586bf993c964efc01482666247a976dc02",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-plainexp/ptx/powenn/4439640e2152/m01_matmul_512/k_matmul_2967be.ptx",
+                "ptx_sha256": "d86b257485577e93e6344002156e9800fdc46b8f223b32d467edbd15c30e2802"
+              }
+            ]
+          },
+          "m02_matmul_rect": {
+            "meta_sha256": "a82fd8d7f5933749868035254537b962d3d0140c8bf3e22f7f8a54a289a9c365",
+            "expected_sha256": "b0a5f6719c01fdc55054d983e7d75f880577e4741c63ae39c9fa704507e58134",
+            "kernels": [
+              {
+                "entry": "k_matmul",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/m02_matmul_rect/k_matmul.ir.json",
+                "ir_sha256": "c47bb47c529e7362c9272784ac21a31f2a5d79546cc11b19beff891278d22206",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-plainexp/ptx/powenn/4439640e2152/m02_matmul_rect/k_matmul.ptx",
+                "ptx_sha256": "048c66cd53085b7230c6e8ac6a1ac6328667385ccddafff9b170963f12d3c0a5"
+              }
+            ]
+          },
+          "p00_scalar_add": {
+            "meta_sha256": "67f4c80a5c78c9fa571f4088633acc56cae0a758d2a65e7c89c07a96e665709c",
+            "expected_sha256": "69e4a749183c5402f03c28a957cb1f523186d16f9b9974c75cd0ebbbfd925478",
+            "kernels": [
+              {
+                "entry": "k_add_pointwise",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/p00_scalar_add/k_add_pointwise.ir.json",
+                "ir_sha256": "d93c0b232c48f7161c88f0276ea8a69481b06608a24b6e8ed2d5025bd17f4e32",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-plainexp/ptx/powenn/4439640e2152/p00_scalar_add/k_add_pointwise.ptx",
+                "ptx_sha256": "bae7dcec67b777492aabb12026d2503b7426da49f0702e0f2cba4a3023d01534"
+              }
+            ]
+          },
+          "p01_vector_add": {
+            "meta_sha256": "4607a6a14553ec256b2073ff8fef18a850e315033f4fdace21f26fdcc2a867c6",
+            "expected_sha256": "1a72f87aa3afd4e84746d2c0bfcfde9d024f573ce863322f72d2c6b3bb133086",
+            "kernels": [
+              {
+                "entry": "k_add_pointwise",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/p01_vector_add/k_add_pointwise.ir.json",
+                "ir_sha256": "90088bc4c7346b9a5916205fdb96926f52cc0f5e3c5c08527d7b0796b0c47fc5",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-plainexp/ptx/powenn/4439640e2152/p01_vector_add/k_add_pointwise.ptx",
+                "ptx_sha256": "211cb0a517c28a4ea8d93fbedbd9e9aa711853d4f205f79fa9ec7e4d7b44c7d2"
+              }
+            ]
+          },
+          "p02_scale_shift": {
+            "meta_sha256": "7c1c3ea69e4d61128d72fbaf3a82a76125a5273c3ced6197ac2f150d03d121e1",
+            "expected_sha256": "515539ace84b0cb38ab3e5e6ed20894b774ab428a86be180529d54fd8ad63dd6",
+            "kernels": [
+              {
+                "entry": "k_add_pointwise",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/p02_scale_shift/k_add_pointwise.ir.json",
+                "ir_sha256": "2bae0a54cbcd037d6c13e70b5c4f5728f2f94af163a53ebe35b88ab8f68ec021",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-plainexp/ptx/powenn/4439640e2152/p02_scale_shift/k_add_pointwise.ptx",
+                "ptx_sha256": "ddd93f53f81e7d4ff34ed76d67dfcaa1613767a3a3783c4b79af7de0e49c2c1b"
+              }
+            ]
+          },
+          "p03_relu_mul": {
+            "meta_sha256": "a2dbbe3a3cec7c45fcdde2c08f0d3276647c2a4b56ede3345be16404d1ded8c9",
+            "expected_sha256": "a0fc97901b28331b29bb5f01cf104944c3376c633dd4cce65d551ad61035e52f",
+            "kernels": [
+              {
+                "entry": "k_mul_pointwise",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/p03_relu_mul/k_mul_pointwise.ir.json",
+                "ir_sha256": "b2429e790dac9fd0db9fafadaa3624cafaeff85c834851a9034a730a1620a892",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-plainexp/ptx/powenn/4439640e2152/p03_relu_mul/k_mul_pointwise.ptx",
+                "ptx_sha256": "4dc11c5e0bad7bbadf9f340b841b0e1731700102e4aaa0217a831f294275a7e6"
+              }
+            ]
+          },
+          "r01_array_sum": {
+            "meta_sha256": "46cf07073f4e612e811decbc2ca900ea210811194a1e336053a6f179ecb4b00e",
+            "expected_sha256": "899c8058da70456bc3714d71ffc2814dd9777e37d39be7379b359e452924cb5c",
+            "kernels": [
+              {
+                "entry": "k_sum_1_reduce",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/r01_array_sum/k_sum_1_reduce.ir.json",
+                "ir_sha256": "a5ad6af023562e1632e929afb8cd6387603c2edcd4d4b1590b1a3b2ee962675f",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-plainexp/ptx/powenn/4439640e2152/r01_array_sum/k_sum_1_reduce.ptx",
+                "ptx_sha256": "47e510d88456074dfb02b0f33f2be33d8b404afa73f49d92f4a2cf8de2532b0e"
+              }
+            ]
+          },
+          "r02_big_sum": {
+            "meta_sha256": "db364be00e35402a3d6f10fcd55562115c7604dea94f8126a02179a80476d19e",
+            "expected_sha256": "0109852644d0785b770fa38d996b063b156f01e8bfccb303ea0581e42696eec1",
+            "kernels": [
+              {
+                "entry": "k_sum_1_reduce",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/r02_big_sum/k_sum_1_reduce.ir.json",
+                "ir_sha256": "777e3f2dd170849133e19d303cdb3d273c135c9a9896786ee40fbc6a2ff4ec7c",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-plainexp/ptx/powenn/4439640e2152/r02_big_sum/k_sum_1_reduce.ptx",
+                "ptx_sha256": "045616404cbf255b14a090045f36ee6f9e9b346161e9ca44d58598b040cb88c2"
+              }
+            ]
+          },
+          "r03_mean": {
+            "meta_sha256": "d7ab661c388ad447f5661a3b36cba448cf5142402756f1e1c35d110db06c84fe",
+            "expected_sha256": "9c53fd65aebbc9b6ca477653643273195149be2d93ab472a135883a0a128c5f7",
+            "kernels": [
+              {
+                "entry": "k_mean_ffcca3",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/r03_mean/k_mean_ffcca3.ir.json",
+                "ir_sha256": "7eeca2c7869ab2ddf880a0ac7fb689d3ab814d7523eab472ec80ad2458100b86",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-plainexp/ptx/powenn/4439640e2152/r03_mean/k_mean_ffcca3.ptx",
+                "ptx_sha256": "dd304318e600884d2af3c3f05c8c0d79dc41093487532947455db61879f0ecff"
+              }
+            ]
+          },
+          "r04_row_sum": {
+            "meta_sha256": "803cb710590156ad319eb44b2d2aa6c1ee9b0e3a666ebc09de259e50d83a3ba1",
+            "expected_sha256": "cb724cbe21276b1438add7263e418f52c0eb90c4501954a245678dcc793c895d",
+            "kernels": [
+              {
+                "entry": "k_sum_1_reduce",
+                "ir": "/home/ada/Projects/emmy-hackathon-2026/emmy-hackathon-2026/problems/r04_row_sum/k_sum_1_reduce.ir.json",
+                "ir_sha256": "4c7befc76b72c6c69be4675d69ccd14e336b9139fe22aaec1b94230858c8ab03",
+                "ptx": "experiments/017-three-branch-merge-2026/hosted-plainexp/ptx/powenn/4439640e2152/r04_row_sum/k_sum_1_reduce.ptx",
+                "ptx_sha256": "5c82bd93abeb6e29a67258d58fa0e96f10b522bc1b030536f2910e59dac43568"
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+  "cases": {
+    "a01_attention": {
+      "meta_sha256": "c280c572744016ecf6ca2971312ad2ce8a10b28c0f3e38561c1a096c2ea7352f",
+      "expected_sha256": "ccc0ad1a70f679781c8aff8064ae73368e04bc35018a537dc15ef8610262ed51",
+      "rtol": 0.001,
+      "atol": 0.0001,
+      "entry": "k_matmul_softmax_reduce_b55365",
+      "need": 4096,
+      "arms": {
+        "merged": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "9915ad46a48f4e770f23869abcdbeb888eafef476bcd037f10bb257210ae8544",
+            "registers": {
+              "k_matmul_softmax_reduce_b55365": 178
+            },
+            "ptx_sha256": "5bafec285d7f085f9b979d99d14732457d3042ec264b4fcd0a73c109bb47d9c1"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "matmul_1",
+                "ok": true,
+                "max_abs_error": 6.556510925292969e-07
+              }
+            ],
+            "median_us": 21.568
+          },
+          "timing_us": [
+            8.848,
+            8.848,
+            8.864,
+            8.864,
+            8.864,
+            8.864,
+            8.864
+          ],
+          "timing_checks": [
+            [
+              {
+                "name": "matmul_1",
+                "ok": true,
+                "max_abs_error": 6.556510925292969e-07
+              }
+            ],
+            [
+              {
+                "name": "matmul_1",
+                "ok": true,
+                "max_abs_error": 6.556510925292969e-07
+              }
+            ],
+            [
+              {
+                "name": "matmul_1",
+                "ok": true,
+                "max_abs_error": 6.556510925292969e-07
+              }
+            ],
+            [
+              {
+                "name": "matmul_1",
+                "ok": true,
+                "max_abs_error": 6.556510925292969e-07
+              }
+            ],
+            [
+              {
+                "name": "matmul_1",
+                "ok": true,
+                "max_abs_error": 6.556510925292969e-07
+              }
+            ],
+            [
+              {
+                "name": "matmul_1",
+                "ok": true,
+                "max_abs_error": 6.556510925292969e-07
+              }
+            ],
+            [
+              {
+                "name": "matmul_1",
+                "ok": true,
+                "max_abs_error": 6.556510925292969e-07
+              }
+            ]
+          ]
+        },
+        "plainexp": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "6da8beb71d385a3d08f54ef629da29fc5618c14c815b14a75d86cb0252cf3f01",
+            "registers": {
+              "k_matmul_softmax_reduce_b55365": 178
+            },
+            "ptx_sha256": "84a0cf6d7c237a368601122238b72d558832b617fe50742690ee078c1e03266a"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "matmul_1",
+                "ok": true,
+                "max_abs_error": 6.556510925292969e-07
+              }
+            ],
+            "median_us": 15.36
+          },
+          "timing_us": [
+            8.848,
+            8.864,
+            8.864,
+            8.864,
+            8.864,
+            8.864,
+            8.848
+          ],
+          "timing_checks": [
+            [
+              {
+                "name": "matmul_1",
+                "ok": true,
+                "max_abs_error": 6.556510925292969e-07
+              }
+            ],
+            [
+              {
+                "name": "matmul_1",
+                "ok": true,
+                "max_abs_error": 6.556510925292969e-07
+              }
+            ],
+            [
+              {
+                "name": "matmul_1",
+                "ok": true,
+                "max_abs_error": 6.556510925292969e-07
+              }
+            ],
+            [
+              {
+                "name": "matmul_1",
+                "ok": true,
+                "max_abs_error": 6.556510925292969e-07
+              }
+            ],
+            [
+              {
+                "name": "matmul_1",
+                "ok": true,
+                "max_abs_error": 6.556510925292969e-07
+              }
+            ],
+            [
+              {
+                "name": "matmul_1",
+                "ok": true,
+                "max_abs_error": 6.556510925292969e-07
+              }
+            ],
+            [
+              {
+                "name": "matmul_1",
+                "ok": true,
+                "max_abs_error": 6.556510925292969e-07
+              }
+            ]
+          ]
+        },
+        "powenn": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "6d0b3f276b64fbd08972d5f25f185f5093caa41ae1e861e3f2ec9674afb5383e",
+            "registers": {
+              "k_matmul_softmax_reduce_b55365": 178
+            },
+            "ptx_sha256": "56c67993c21d2fbf81b5036ee986ad26ced8569f0e8d0cdc0bd0dedda2286ffd"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "matmul_1",
+                "ok": true,
+                "max_abs_error": 6.556510925292969e-07
+              }
+            ],
+            "median_us": 19.648
+          },
+          "timing_us": [
+            8.768,
+            8.864,
+            8.832,
+            8.832,
+            8.832,
+            8.864,
+            8.864
+          ],
+          "timing_checks": [
+            [
+              {
+                "name": "matmul_1",
+                "ok": true,
+                "max_abs_error": 6.556510925292969e-07
+              }
+            ],
+            [
+              {
+                "name": "matmul_1",
+                "ok": true,
+                "max_abs_error": 6.556510925292969e-07
+              }
+            ],
+            [
+              {
+                "name": "matmul_1",
+                "ok": true,
+                "max_abs_error": 6.556510925292969e-07
+              }
+            ],
+            [
+              {
+                "name": "matmul_1",
+                "ok": true,
+                "max_abs_error": 6.556510925292969e-07
+              }
+            ],
+            [
+              {
+                "name": "matmul_1",
+                "ok": true,
+                "max_abs_error": 6.556510925292969e-07
+              }
+            ],
+            [
+              {
+                "name": "matmul_1",
+                "ok": true,
+                "max_abs_error": 6.556510925292969e-07
+              }
+            ],
+            [
+              {
+                "name": "matmul_1",
+                "ok": true,
+                "max_abs_error": 6.556510925292969e-07
+              }
+            ]
+          ]
+        }
+      },
+      "medians": {
+        "merged": 8.864,
+        "plainexp": 8.864,
+        "powenn": 8.832
+      },
+      "winner": "powenn",
+      "ratios": {
+        "merged": 1.0036231884057971,
+        "plainexp": 1.0036231884057971,
+        "powenn": 1.0
+      }
+    },
+    "a02_attention_128": {
+      "meta_sha256": "adcc08994786076e7cb9835ab3bab19b0dc9c0d00a999adea124380f8300de18",
+      "expected_sha256": "ebd7c000d75e52707f2e65304e05fbf963b4799919f814f685490c76c89e7080",
+      "rtol": 0.001,
+      "atol": 0.0001,
+      "entry": "k_matmul_softmax_reduce_6f0029",
+      "need": 4096,
+      "arms": {
+        "merged": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "673fe39d836251a65c3e2ede4d0d2d94ff1615bcc90aa46816046b59e32b0535",
+            "registers": {
+              "k_matmul_softmax_reduce_6f0029": 86
+            },
+            "ptx_sha256": "d936d7eddd6b24d607571edcf2e582d1144c02ec3233d6ebd501a47b2906fa91"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "matmul_1",
+                "ok": true,
+                "max_abs_error": 4.172325134277344e-07
+              }
+            ],
+            "median_us": 17.312
+          },
+          "timing_us": [
+            6.784,
+            6.848,
+            6.816,
+            6.784,
+            6.816,
+            6.816,
+            6.848
+          ],
+          "timing_checks": [
+            [
+              {
+                "name": "matmul_1",
+                "ok": true,
+                "max_abs_error": 4.172325134277344e-07
+              }
+            ],
+            [
+              {
+                "name": "matmul_1",
+                "ok": true,
+                "max_abs_error": 4.172325134277344e-07
+              }
+            ],
+            [
+              {
+                "name": "matmul_1",
+                "ok": true,
+                "max_abs_error": 4.172325134277344e-07
+              }
+            ],
+            [
+              {
+                "name": "matmul_1",
+                "ok": true,
+                "max_abs_error": 4.172325134277344e-07
+              }
+            ],
+            [
+              {
+                "name": "matmul_1",
+                "ok": true,
+                "max_abs_error": 4.172325134277344e-07
+              }
+            ],
+            [
+              {
+                "name": "matmul_1",
+                "ok": true,
+                "max_abs_error": 4.172325134277344e-07
+              }
+            ],
+            [
+              {
+                "name": "matmul_1",
+                "ok": true,
+                "max_abs_error": 4.172325134277344e-07
+              }
+            ]
+          ]
+        },
+        "plainexp": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "44bbf448f47c200a4cd8dff8f2b213794a28a3aa6233edb708829747898fe974",
+            "registers": {
+              "k_matmul_softmax_reduce_6f0029": 86
+            },
+            "ptx_sha256": "c7fae1be4c1e58f73719442e3116ce0ffd038cf91a9a1457bc786cb87b4088a2"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "matmul_1",
+                "ok": true,
+                "max_abs_error": 4.172325134277344e-07
+              }
+            ],
+            "median_us": 17.44
+          },
+          "timing_us": [
+            6.816,
+            6.768,
+            6.784,
+            7.6,
+            6.816,
+            6.8,
+            6.816
+          ],
+          "timing_checks": [
+            [
+              {
+                "name": "matmul_1",
+                "ok": true,
+                "max_abs_error": 4.172325134277344e-07
+              }
+            ],
+            [
+              {
+                "name": "matmul_1",
+                "ok": true,
+                "max_abs_error": 4.172325134277344e-07
+              }
+            ],
+            [
+              {
+                "name": "matmul_1",
+                "ok": true,
+                "max_abs_error": 4.172325134277344e-07
+              }
+            ],
+            [
+              {
+                "name": "matmul_1",
+                "ok": true,
+                "max_abs_error": 4.172325134277344e-07
+              }
+            ],
+            [
+              {
+                "name": "matmul_1",
+                "ok": true,
+                "max_abs_error": 4.172325134277344e-07
+              }
+            ],
+            [
+              {
+                "name": "matmul_1",
+                "ok": true,
+                "max_abs_error": 4.172325134277344e-07
+              }
+            ],
+            [
+              {
+                "name": "matmul_1",
+                "ok": true,
+                "max_abs_error": 4.172325134277344e-07
+              }
+            ]
+          ]
+        },
+        "powenn": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "0b31f969bd56bee5ea5f5ec4dbadc44cacb67367ab34430f1ffb8f25c2e4a571",
+            "registers": {
+              "k_matmul_softmax_reduce_6f0029": 96
+            },
+            "ptx_sha256": "20baf9e2d7bcef36ab2819c4de88dcec1b07774b28c8016b242f0c1d48fed9b7"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "matmul_1",
+                "ok": true,
+                "max_abs_error": 4.172325134277344e-07
+              }
+            ],
+            "median_us": 16.48
+          },
+          "timing_us": [
+            6.816,
+            6.752,
+            6.816,
+            6.816,
+            6.816,
+            6.816,
+            6.784
+          ],
+          "timing_checks": [
+            [
+              {
+                "name": "matmul_1",
+                "ok": true,
+                "max_abs_error": 4.172325134277344e-07
+              }
+            ],
+            [
+              {
+                "name": "matmul_1",
+                "ok": true,
+                "max_abs_error": 4.172325134277344e-07
+              }
+            ],
+            [
+              {
+                "name": "matmul_1",
+                "ok": true,
+                "max_abs_error": 4.172325134277344e-07
+              }
+            ],
+            [
+              {
+                "name": "matmul_1",
+                "ok": true,
+                "max_abs_error": 4.172325134277344e-07
+              }
+            ],
+            [
+              {
+                "name": "matmul_1",
+                "ok": true,
+                "max_abs_error": 4.172325134277344e-07
+              }
+            ],
+            [
+              {
+                "name": "matmul_1",
+                "ok": true,
+                "max_abs_error": 4.172325134277344e-07
+              }
+            ],
+            [
+              {
+                "name": "matmul_1",
+                "ok": true,
+                "max_abs_error": 4.172325134277344e-07
+              }
+            ]
+          ]
+        }
+      },
+      "medians": {
+        "merged": 6.816,
+        "plainexp": 6.816,
+        "powenn": 6.816
+      },
+      "winner": "merged",
+      "ratios": {
+        "merged": 1.0,
+        "plainexp": 1.0,
+        "powenn": 1.0
+      }
+    },
+    "f01_rmsnorm": {
+      "meta_sha256": "f45014c6b0963ec9727fc0f1c9bb585319c4ac94292260bc8f7c10557c1b8e1d",
+      "expected_sha256": "197016500cfca3ee3a1952273d50655e5bbf60093c28ad801e28eb3ccb76a6fb",
+      "rtol": 0.001,
+      "atol": 0.0001,
+      "entry": "k_mean_cbd1de",
+      "need": 65536,
+      "arms": {
+        "merged": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "79e842826d7ea2395398e03f9a95e0b80e836746c9199bf93b70f91d8535d2e5",
+            "registers": {
+              "k_mean_cbd1de": 40
+            },
+            "ptx_sha256": "873bf474d1566dac4ee496474c8a2e502312178f964e52732d17b7c1e03817cf"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "mul_1",
+                "ok": true,
+                "max_abs_error": 1.9073486328125e-06
+              }
+            ],
+            "median_us": 15.872
+          },
+          "timing_us": [
+            4.768,
+            6.544,
+            4.768,
+            4.768,
+            4.768,
+            4.8,
+            4.784
+          ],
+          "timing_checks": [
+            [
+              {
+                "name": "mul_1",
+                "ok": true,
+                "max_abs_error": 1.9073486328125e-06
+              }
+            ],
+            [
+              {
+                "name": "mul_1",
+                "ok": true,
+                "max_abs_error": 1.9073486328125e-06
+              }
+            ],
+            [
+              {
+                "name": "mul_1",
+                "ok": true,
+                "max_abs_error": 1.9073486328125e-06
+              }
+            ],
+            [
+              {
+                "name": "mul_1",
+                "ok": true,
+                "max_abs_error": 1.9073486328125e-06
+              }
+            ],
+            [
+              {
+                "name": "mul_1",
+                "ok": true,
+                "max_abs_error": 1.9073486328125e-06
+              }
+            ],
+            [
+              {
+                "name": "mul_1",
+                "ok": true,
+                "max_abs_error": 1.9073486328125e-06
+              }
+            ],
+            [
+              {
+                "name": "mul_1",
+                "ok": true,
+                "max_abs_error": 1.9073486328125e-06
+              }
+            ]
+          ]
+        },
+        "plainexp": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "79e842826d7ea2395398e03f9a95e0b80e836746c9199bf93b70f91d8535d2e5",
+            "registers": {
+              "k_mean_cbd1de": 40
+            },
+            "ptx_sha256": "873bf474d1566dac4ee496474c8a2e502312178f964e52732d17b7c1e03817cf"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "mul_1",
+                "ok": true,
+                "max_abs_error": 1.9073486328125e-06
+              }
+            ],
+            "median_us": 16.48
+          },
+          "timing_us": [
+            4.736,
+            5.536,
+            4.768,
+            4.784,
+            4.768,
+            4.768,
+            4.768
+          ],
+          "timing_checks": [
+            [
+              {
+                "name": "mul_1",
+                "ok": true,
+                "max_abs_error": 1.9073486328125e-06
+              }
+            ],
+            [
+              {
+                "name": "mul_1",
+                "ok": true,
+                "max_abs_error": 1.9073486328125e-06
+              }
+            ],
+            [
+              {
+                "name": "mul_1",
+                "ok": true,
+                "max_abs_error": 1.9073486328125e-06
+              }
+            ],
+            [
+              {
+                "name": "mul_1",
+                "ok": true,
+                "max_abs_error": 1.9073486328125e-06
+              }
+            ],
+            [
+              {
+                "name": "mul_1",
+                "ok": true,
+                "max_abs_error": 1.9073486328125e-06
+              }
+            ],
+            [
+              {
+                "name": "mul_1",
+                "ok": true,
+                "max_abs_error": 1.9073486328125e-06
+              }
+            ],
+            [
+              {
+                "name": "mul_1",
+                "ok": true,
+                "max_abs_error": 1.9073486328125e-06
+              }
+            ]
+          ]
+        },
+        "powenn": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "4164d0fef5f747e34e2850f6c965459a349753548cc6b0b2e72902620176c2fe",
+            "registers": {
+              "k_mean_cbd1de": 40
+            },
+            "ptx_sha256": "017dd2ac5ea97660e0f10a7454fdd751cfc3631fec27b1fb2a4e65f60587dabc"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "mul_1",
+                "ok": true,
+                "max_abs_error": 1.9073486328125e-06
+              }
+            ],
+            "median_us": 15.904
+          },
+          "timing_us": [
+            4.752,
+            4.832,
+            4.768,
+            4.768,
+            4.768,
+            4.768,
+            4.768
+          ],
+          "timing_checks": [
+            [
+              {
+                "name": "mul_1",
+                "ok": true,
+                "max_abs_error": 1.9073486328125e-06
+              }
+            ],
+            [
+              {
+                "name": "mul_1",
+                "ok": true,
+                "max_abs_error": 1.9073486328125e-06
+              }
+            ],
+            [
+              {
+                "name": "mul_1",
+                "ok": true,
+                "max_abs_error": 1.9073486328125e-06
+              }
+            ],
+            [
+              {
+                "name": "mul_1",
+                "ok": true,
+                "max_abs_error": 1.9073486328125e-06
+              }
+            ],
+            [
+              {
+                "name": "mul_1",
+                "ok": true,
+                "max_abs_error": 1.9073486328125e-06
+              }
+            ],
+            [
+              {
+                "name": "mul_1",
+                "ok": true,
+                "max_abs_error": 1.9073486328125e-06
+              }
+            ],
+            [
+              {
+                "name": "mul_1",
+                "ok": true,
+                "max_abs_error": 1.9073486328125e-06
+              }
+            ]
+          ]
+        }
+      },
+      "medians": {
+        "merged": 4.768,
+        "plainexp": 4.768,
+        "powenn": 4.768
+      },
+      "winner": "merged",
+      "ratios": {
+        "merged": 1.0,
+        "plainexp": 1.0,
+        "powenn": 1.0
+      }
+    },
+    "f02_row_softmax": {
+      "meta_sha256": "ddbe97ea42c7b077d30d140b751f8062caf47b5620cb423a02c1dd848cd61900",
+      "expected_sha256": "7e38d188cdc0bbb7afda1e6007318b0174bcdf82eb3855775967e49d4b8ee8ce",
+      "rtol": 0.001,
+      "atol": 1e-05,
+      "entry": "k_softmax_05263d",
+      "need": 16384,
+      "arms": {
+        "merged": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "b859ccc840e81a7ac31d4b65d5976b988facf6792fbc067b46252e86c4811bd8",
+            "registers": {
+              "k_softmax_05263d": 40
+            },
+            "ptx_sha256": "0b496e2ce1040783ed5ac73db09d0cbff2063bfdfe6220f40b5c156709a78744"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "softmax",
+                "ok": true,
+                "max_abs_error": 7.450580596923828e-09
+              }
+            ],
+            "median_us": 15.264
+          },
+          "timing_us": [
+            3.072,
+            3.104,
+            3.104,
+            3.104,
+            3.104,
+            3.104,
+            3.088
+          ],
+          "timing_checks": [
+            [
+              {
+                "name": "softmax",
+                "ok": true,
+                "max_abs_error": 7.450580596923828e-09
+              }
+            ],
+            [
+              {
+                "name": "softmax",
+                "ok": true,
+                "max_abs_error": 7.450580596923828e-09
+              }
+            ],
+            [
+              {
+                "name": "softmax",
+                "ok": true,
+                "max_abs_error": 7.450580596923828e-09
+              }
+            ],
+            [
+              {
+                "name": "softmax",
+                "ok": true,
+                "max_abs_error": 7.450580596923828e-09
+              }
+            ],
+            [
+              {
+                "name": "softmax",
+                "ok": true,
+                "max_abs_error": 7.450580596923828e-09
+              }
+            ],
+            [
+              {
+                "name": "softmax",
+                "ok": true,
+                "max_abs_error": 7.450580596923828e-09
+              }
+            ],
+            [
+              {
+                "name": "softmax",
+                "ok": true,
+                "max_abs_error": 7.450580596923828e-09
+              }
+            ]
+          ]
+        },
+        "plainexp": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "7ac4e6fa2991dcd0592c536f792f379d08d3edcb9f18456c287f6b4ee24b76e0",
+            "registers": {
+              "k_softmax_05263d": 40
+            },
+            "ptx_sha256": "1e84a5dd0794f2a3aaec4864fbb2c4624e096a5565f63525a0845b79761479e7"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "softmax",
+                "ok": true,
+                "max_abs_error": 7.450580596923828e-09
+              }
+            ],
+            "median_us": 15.328
+          },
+          "timing_us": [
+            3.072,
+            3.392,
+            3.104,
+            3.136,
+            3.136,
+            3.104,
+            3.072
+          ],
+          "timing_checks": [
+            [
+              {
+                "name": "softmax",
+                "ok": true,
+                "max_abs_error": 7.450580596923828e-09
+              }
+            ],
+            [
+              {
+                "name": "softmax",
+                "ok": true,
+                "max_abs_error": 7.450580596923828e-09
+              }
+            ],
+            [
+              {
+                "name": "softmax",
+                "ok": true,
+                "max_abs_error": 7.450580596923828e-09
+              }
+            ],
+            [
+              {
+                "name": "softmax",
+                "ok": true,
+                "max_abs_error": 7.450580596923828e-09
+              }
+            ],
+            [
+              {
+                "name": "softmax",
+                "ok": true,
+                "max_abs_error": 7.450580596923828e-09
+              }
+            ],
+            [
+              {
+                "name": "softmax",
+                "ok": true,
+                "max_abs_error": 7.450580596923828e-09
+              }
+            ],
+            [
+              {
+                "name": "softmax",
+                "ok": true,
+                "max_abs_error": 7.450580596923828e-09
+              }
+            ]
+          ]
+        },
+        "powenn": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "f3266d2a93bcef15c4771aad276c644e46e2430515c9c18d707e22cf4cd6caea",
+            "registers": {
+              "k_softmax_05263d": 30
+            },
+            "ptx_sha256": "fade83de75c1b61d964491ce8cdacd74ca9dbdb26b78caa716cafb65632a9da4"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "softmax",
+                "ok": true,
+                "max_abs_error": 7.450580596923828e-09
+              }
+            ],
+            "median_us": 14.848
+          },
+          "timing_us": [
+            3.04,
+            3.2,
+            2.976,
+            3.008,
+            3.024,
+            2.976,
+            2.976
+          ],
+          "timing_checks": [
+            [
+              {
+                "name": "softmax",
+                "ok": true,
+                "max_abs_error": 7.450580596923828e-09
+              }
+            ],
+            [
+              {
+                "name": "softmax",
+                "ok": true,
+                "max_abs_error": 7.450580596923828e-09
+              }
+            ],
+            [
+              {
+                "name": "softmax",
+                "ok": true,
+                "max_abs_error": 7.450580596923828e-09
+              }
+            ],
+            [
+              {
+                "name": "softmax",
+                "ok": true,
+                "max_abs_error": 7.450580596923828e-09
+              }
+            ],
+            [
+              {
+                "name": "softmax",
+                "ok": true,
+                "max_abs_error": 7.450580596923828e-09
+              }
+            ],
+            [
+              {
+                "name": "softmax",
+                "ok": true,
+                "max_abs_error": 7.450580596923828e-09
+              }
+            ],
+            [
+              {
+                "name": "softmax",
+                "ok": true,
+                "max_abs_error": 7.450580596923828e-09
+              }
+            ]
+          ]
+        }
+      },
+      "medians": {
+        "merged": 3.104,
+        "plainexp": 3.104,
+        "powenn": 3.008
+      },
+      "winner": "powenn",
+      "ratios": {
+        "merged": 1.0319148936170213,
+        "plainexp": 1.0319148936170213,
+        "powenn": 1.0
+      }
+    },
+    "f03_l2norm": {
+      "meta_sha256": "cbf67c2d198f4fea1bb140083ec65c4bf14202090daaa4aac77f1514ecc60b95",
+      "expected_sha256": "fb2e242cbfe9834c6d45f27f29acc750a5b4ea8ad6ab509baa7a5b4c53586380",
+      "rtol": 0.001,
+      "atol": 0.0001,
+      "entry": "k_div_reduce",
+      "need": 32768,
+      "arms": {
+        "merged": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "2f707cf8805de021755f886ce9bfe8f72cd7979bde360b2135ace3b3a0bc5ab1",
+            "registers": {
+              "k_div_reduce": 40
+            },
+            "ptx_sha256": "32e1fcdbb2806a6e34c238d77520b7a270f2576e187dace27d5d8870bb6c32d4"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "div",
+                "ok": true,
+                "max_abs_error": 1.4901161193847656e-08
+              }
+            ],
+            "median_us": 14.72
+          },
+          "timing_us": [
+            3.28,
+            3.104,
+            3.136,
+            3.104,
+            3.072,
+            3.12,
+            3.104
+          ],
+          "timing_checks": [
+            [
+              {
+                "name": "div",
+                "ok": true,
+                "max_abs_error": 1.4901161193847656e-08
+              }
+            ],
+            [
+              {
+                "name": "div",
+                "ok": true,
+                "max_abs_error": 1.4901161193847656e-08
+              }
+            ],
+            [
+              {
+                "name": "div",
+                "ok": true,
+                "max_abs_error": 1.4901161193847656e-08
+              }
+            ],
+            [
+              {
+                "name": "div",
+                "ok": true,
+                "max_abs_error": 1.4901161193847656e-08
+              }
+            ],
+            [
+              {
+                "name": "div",
+                "ok": true,
+                "max_abs_error": 1.4901161193847656e-08
+              }
+            ],
+            [
+              {
+                "name": "div",
+                "ok": true,
+                "max_abs_error": 1.4901161193847656e-08
+              }
+            ],
+            [
+              {
+                "name": "div",
+                "ok": true,
+                "max_abs_error": 1.4901161193847656e-08
+              }
+            ]
+          ]
+        },
+        "plainexp": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "2f707cf8805de021755f886ce9bfe8f72cd7979bde360b2135ace3b3a0bc5ab1",
+            "registers": {
+              "k_div_reduce": 40
+            },
+            "ptx_sha256": "32e1fcdbb2806a6e34c238d77520b7a270f2576e187dace27d5d8870bb6c32d4"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "div",
+                "ok": true,
+                "max_abs_error": 1.4901161193847656e-08
+              }
+            ],
+            "median_us": 17.472
+          },
+          "timing_us": [
+            3.232,
+            3.088,
+            3.104,
+            3.104,
+            3.072,
+            3.136,
+            3.12
+          ],
+          "timing_checks": [
+            [
+              {
+                "name": "div",
+                "ok": true,
+                "max_abs_error": 1.4901161193847656e-08
+              }
+            ],
+            [
+              {
+                "name": "div",
+                "ok": true,
+                "max_abs_error": 1.4901161193847656e-08
+              }
+            ],
+            [
+              {
+                "name": "div",
+                "ok": true,
+                "max_abs_error": 1.4901161193847656e-08
+              }
+            ],
+            [
+              {
+                "name": "div",
+                "ok": true,
+                "max_abs_error": 1.4901161193847656e-08
+              }
+            ],
+            [
+              {
+                "name": "div",
+                "ok": true,
+                "max_abs_error": 1.4901161193847656e-08
+              }
+            ],
+            [
+              {
+                "name": "div",
+                "ok": true,
+                "max_abs_error": 1.4901161193847656e-08
+              }
+            ],
+            [
+              {
+                "name": "div",
+                "ok": true,
+                "max_abs_error": 1.4901161193847656e-08
+              }
+            ]
+          ]
+        },
+        "powenn": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "66810de08736b8a7be5b85c84f470f76e5092a231c3587fc83b2f45872c05915",
+            "registers": {
+              "k_div_reduce": 40
+            },
+            "ptx_sha256": "d118584af41e2d991b4f7b18d670a23b75d9bbd0d972c07822584fdd69236a41"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "div",
+                "ok": true,
+                "max_abs_error": 1.4901161193847656e-08
+              }
+            ],
+            "median_us": 14.976
+          },
+          "timing_us": [
+            3.216,
+            3.04,
+            3.04,
+            3.04,
+            3.04,
+            3.008,
+            3.008
+          ],
+          "timing_checks": [
+            [
+              {
+                "name": "div",
+                "ok": true,
+                "max_abs_error": 1.4901161193847656e-08
+              }
+            ],
+            [
+              {
+                "name": "div",
+                "ok": true,
+                "max_abs_error": 1.4901161193847656e-08
+              }
+            ],
+            [
+              {
+                "name": "div",
+                "ok": true,
+                "max_abs_error": 1.4901161193847656e-08
+              }
+            ],
+            [
+              {
+                "name": "div",
+                "ok": true,
+                "max_abs_error": 1.4901161193847656e-08
+              }
+            ],
+            [
+              {
+                "name": "div",
+                "ok": true,
+                "max_abs_error": 1.4901161193847656e-08
+              }
+            ],
+            [
+              {
+                "name": "div",
+                "ok": true,
+                "max_abs_error": 1.4901161193847656e-08
+              }
+            ],
+            [
+              {
+                "name": "div",
+                "ok": true,
+                "max_abs_error": 1.4901161193847656e-08
+              }
+            ]
+          ]
+        }
+      },
+      "medians": {
+        "merged": 3.104,
+        "plainexp": 3.104,
+        "powenn": 3.04
+      },
+      "winner": "powenn",
+      "ratios": {
+        "merged": 1.0210526315789474,
+        "plainexp": 1.0210526315789474,
+        "powenn": 1.0
+      }
+    },
+    "m01_matmul_512": {
+      "meta_sha256": "3324370a2d29614c6c7ff7cf549563f9afb22bab0ed31ed62d8ffd27c59dcd57",
+      "expected_sha256": "6396bececa75b2adee8c83bb0c090f9a68e7297d7de492f5a2f0cd3e67f24c36",
+      "rtol": 0.001,
+      "atol": 0.001,
+      "entry": "k_matmul_2967be",
+      "need": 262144,
+      "arms": {
+        "merged": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "69546eb39d8b72f507fd9dfb2a48bbae61fd720784df8bd10610ec1af38e57cd",
+            "registers": {
+              "k_matmul_2967be": 40
+            },
+            "ptx_sha256": "8a60396afd69d1ae8e39e2c2e056b7b4a1b9190ce7c9ec3be9f919dfd3dbb3da"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "matmul",
+                "ok": true,
+                "max_abs_error": 8.392333984375e-05
+              }
+            ],
+            "median_us": 29.024
+          },
+          "timing_us": [
+            17.056,
+            17.056,
+            17.024,
+            17.04,
+            17.024,
+            17.056,
+            17.056
+          ],
+          "timing_checks": [
+            [
+              {
+                "name": "matmul",
+                "ok": true,
+                "max_abs_error": 8.392333984375e-05
+              }
+            ],
+            [
+              {
+                "name": "matmul",
+                "ok": true,
+                "max_abs_error": 8.392333984375e-05
+              }
+            ],
+            [
+              {
+                "name": "matmul",
+                "ok": true,
+                "max_abs_error": 8.392333984375e-05
+              }
+            ],
+            [
+              {
+                "name": "matmul",
+                "ok": true,
+                "max_abs_error": 8.392333984375e-05
+              }
+            ],
+            [
+              {
+                "name": "matmul",
+                "ok": true,
+                "max_abs_error": 8.392333984375e-05
+              }
+            ],
+            [
+              {
+                "name": "matmul",
+                "ok": true,
+                "max_abs_error": 8.392333984375e-05
+              }
+            ],
+            [
+              {
+                "name": "matmul",
+                "ok": true,
+                "max_abs_error": 8.392333984375e-05
+              }
+            ]
+          ]
+        },
+        "plainexp": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "69546eb39d8b72f507fd9dfb2a48bbae61fd720784df8bd10610ec1af38e57cd",
+            "registers": {
+              "k_matmul_2967be": 40
+            },
+            "ptx_sha256": "8a60396afd69d1ae8e39e2c2e056b7b4a1b9190ce7c9ec3be9f919dfd3dbb3da"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "matmul",
+                "ok": true,
+                "max_abs_error": 8.392333984375e-05
+              }
+            ],
+            "median_us": 31.072
+          },
+          "timing_us": [
+            17.04,
+            17.088,
+            17.024,
+            17.056,
+            17.056,
+            17.04,
+            17.024
+          ],
+          "timing_checks": [
+            [
+              {
+                "name": "matmul",
+                "ok": true,
+                "max_abs_error": 8.392333984375e-05
+              }
+            ],
+            [
+              {
+                "name": "matmul",
+                "ok": true,
+                "max_abs_error": 8.392333984375e-05
+              }
+            ],
+            [
+              {
+                "name": "matmul",
+                "ok": true,
+                "max_abs_error": 8.392333984375e-05
+              }
+            ],
+            [
+              {
+                "name": "matmul",
+                "ok": true,
+                "max_abs_error": 8.392333984375e-05
+              }
+            ],
+            [
+              {
+                "name": "matmul",
+                "ok": true,
+                "max_abs_error": 8.392333984375e-05
+              }
+            ],
+            [
+              {
+                "name": "matmul",
+                "ok": true,
+                "max_abs_error": 8.392333984375e-05
+              }
+            ],
+            [
+              {
+                "name": "matmul",
+                "ok": true,
+                "max_abs_error": 8.392333984375e-05
+              }
+            ]
+          ]
+        },
+        "powenn": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "f32078724efe268737cbc364872058f5757eff34a96da32b2938c47c174228df",
+            "registers": {
+              "k_matmul_2967be": 40
+            },
+            "ptx_sha256": "d86b257485577e93e6344002156e9800fdc46b8f223b32d467edbd15c30e2802"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "matmul",
+                "ok": true,
+                "max_abs_error": 8.392333984375e-05
+              }
+            ],
+            "median_us": 30.656
+          },
+          "timing_us": [
+            17.056,
+            17.056,
+            17.056,
+            17.024,
+            17.056,
+            17.056,
+            17.056
+          ],
+          "timing_checks": [
+            [
+              {
+                "name": "matmul",
+                "ok": true,
+                "max_abs_error": 8.392333984375e-05
+              }
+            ],
+            [
+              {
+                "name": "matmul",
+                "ok": true,
+                "max_abs_error": 8.392333984375e-05
+              }
+            ],
+            [
+              {
+                "name": "matmul",
+                "ok": true,
+                "max_abs_error": 8.392333984375e-05
+              }
+            ],
+            [
+              {
+                "name": "matmul",
+                "ok": true,
+                "max_abs_error": 8.392333984375e-05
+              }
+            ],
+            [
+              {
+                "name": "matmul",
+                "ok": true,
+                "max_abs_error": 8.392333984375e-05
+              }
+            ],
+            [
+              {
+                "name": "matmul",
+                "ok": true,
+                "max_abs_error": 8.392333984375e-05
+              }
+            ],
+            [
+              {
+                "name": "matmul",
+                "ok": true,
+                "max_abs_error": 8.392333984375e-05
+              }
+            ]
+          ]
+        }
+      },
+      "medians": {
+        "merged": 17.056,
+        "plainexp": 17.04,
+        "powenn": 17.056
+      },
+      "winner": "plainexp",
+      "ratios": {
+        "merged": 1.0009389671361504,
+        "plainexp": 1.0,
+        "powenn": 1.0009389671361504
+      }
+    },
+    "m02_matmul_rect": {
+      "meta_sha256": "a82fd8d7f5933749868035254537b962d3d0140c8bf3e22f7f8a54a289a9c365",
+      "expected_sha256": "b0a5f6719c01fdc55054d983e7d75f880577e4741c63ae39c9fa704507e58134",
+      "rtol": 0.001,
+      "atol": 0.001,
+      "entry": "k_matmul",
+      "need": 8192,
+      "arms": {
+        "merged": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "2166fd7647ce9057c3e4ee45d4fd8664c4ea0bf2feea39f6a69e888c94bbb172",
+            "registers": {
+              "k_matmul": 32
+            },
+            "ptx_sha256": "1fe94877f65f1b479f0c79fff97881d8487248552e9fd68ef09d14dd65eefed4"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "matmul",
+                "ok": true,
+                "max_abs_error": 1.1444091796875e-05
+              }
+            ],
+            "median_us": 14.464
+          },
+          "timing_us": [
+            4.864,
+            4.992,
+            4.992,
+            5.024,
+            5.024,
+            5.024,
+            5.008
+          ],
+          "timing_checks": [
+            [
+              {
+                "name": "matmul",
+                "ok": true,
+                "max_abs_error": 1.1444091796875e-05
+              }
+            ],
+            [
+              {
+                "name": "matmul",
+                "ok": true,
+                "max_abs_error": 1.1444091796875e-05
+              }
+            ],
+            [
+              {
+                "name": "matmul",
+                "ok": true,
+                "max_abs_error": 1.1444091796875e-05
+              }
+            ],
+            [
+              {
+                "name": "matmul",
+                "ok": true,
+                "max_abs_error": 1.1444091796875e-05
+              }
+            ],
+            [
+              {
+                "name": "matmul",
+                "ok": true,
+                "max_abs_error": 1.52587890625e-05
+              }
+            ],
+            [
+              {
+                "name": "matmul",
+                "ok": true,
+                "max_abs_error": 1.33514404296875e-05
+              }
+            ],
+            [
+              {
+                "name": "matmul",
+                "ok": true,
+                "max_abs_error": 1.1444091796875e-05
+              }
+            ]
+          ]
+        },
+        "plainexp": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "2166fd7647ce9057c3e4ee45d4fd8664c4ea0bf2feea39f6a69e888c94bbb172",
+            "registers": {
+              "k_matmul": 32
+            },
+            "ptx_sha256": "1fe94877f65f1b479f0c79fff97881d8487248552e9fd68ef09d14dd65eefed4"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "matmul",
+                "ok": true,
+                "max_abs_error": 1.1444091796875e-05
+              }
+            ],
+            "median_us": 16.512
+          },
+          "timing_us": [
+            4.832,
+            5.024,
+            5.008,
+            5.056,
+            4.96,
+            5.024,
+            4.992
+          ],
+          "timing_checks": [
+            [
+              {
+                "name": "matmul",
+                "ok": true,
+                "max_abs_error": 1.1444091796875e-05
+              }
+            ],
+            [
+              {
+                "name": "matmul",
+                "ok": true,
+                "max_abs_error": 1.1444091796875e-05
+              }
+            ],
+            [
+              {
+                "name": "matmul",
+                "ok": true,
+                "max_abs_error": 1.52587890625e-05
+              }
+            ],
+            [
+              {
+                "name": "matmul",
+                "ok": true,
+                "max_abs_error": 1.1444091796875e-05
+              }
+            ],
+            [
+              {
+                "name": "matmul",
+                "ok": true,
+                "max_abs_error": 1.52587890625e-05
+              }
+            ],
+            [
+              {
+                "name": "matmul",
+                "ok": true,
+                "max_abs_error": 1.1444091796875e-05
+              }
+            ],
+            [
+              {
+                "name": "matmul",
+                "ok": true,
+                "max_abs_error": 1.1444091796875e-05
+              }
+            ]
+          ]
+        },
+        "powenn": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "f702af538813b3233250fae2e6436ccc9127ffd15c344e460f997d8f1b2c69a8",
+            "registers": {
+              "k_matmul": 32
+            },
+            "ptx_sha256": "048c66cd53085b7230c6e8ac6a1ac6328667385ccddafff9b170963f12d3c0a5"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "matmul",
+                "ok": true,
+                "max_abs_error": 1.1444091796875e-05
+              }
+            ],
+            "median_us": 15.424
+          },
+          "timing_us": [
+            4.896,
+            4.96,
+            5.024,
+            5.024,
+            5.024,
+            5.056,
+            5.024
+          ],
+          "timing_checks": [
+            [
+              {
+                "name": "matmul",
+                "ok": true,
+                "max_abs_error": 1.1444091796875e-05
+              }
+            ],
+            [
+              {
+                "name": "matmul",
+                "ok": true,
+                "max_abs_error": 1.1444091796875e-05
+              }
+            ],
+            [
+              {
+                "name": "matmul",
+                "ok": true,
+                "max_abs_error": 1.1444091796875e-05
+              }
+            ],
+            [
+              {
+                "name": "matmul",
+                "ok": true,
+                "max_abs_error": 1.1444091796875e-05
+              }
+            ],
+            [
+              {
+                "name": "matmul",
+                "ok": true,
+                "max_abs_error": 1.1444091796875e-05
+              }
+            ],
+            [
+              {
+                "name": "matmul",
+                "ok": true,
+                "max_abs_error": 1.1444091796875e-05
+              }
+            ],
+            [
+              {
+                "name": "matmul",
+                "ok": true,
+                "max_abs_error": 1.52587890625e-05
+              }
+            ]
+          ]
+        }
+      },
+      "medians": {
+        "merged": 5.008,
+        "plainexp": 5.008,
+        "powenn": 5.024
+      },
+      "winner": "merged",
+      "ratios": {
+        "merged": 1.0,
+        "plainexp": 1.0,
+        "powenn": 1.0031948881789137
+      }
+    },
+    "p00_scalar_add": {
+      "meta_sha256": "67f4c80a5c78c9fa571f4088633acc56cae0a758d2a65e7c89c07a96e665709c",
+      "expected_sha256": "69e4a749183c5402f03c28a957cb1f523186d16f9b9974c75cd0ebbbfd925478",
+      "rtol": 0,
+      "atol": 0,
+      "entry": "k_add_pointwise",
+      "need": 128,
+      "arms": {
+        "merged": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "ff6abb6074367ee57428bbc043d0f0ef579ec4950e48f881ca2f3b9580e7169f",
+            "registers": {
+              "k_add_pointwise": 22
+            },
+            "ptx_sha256": "42fbb7884d0c777e5ac27ba878122a24eb245ed1ba40b48143fe12eb274a3a46"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            "median_us": 20.448
+          },
+          "timing_us": [
+            2.976,
+            3.168,
+            2.976,
+            2.976,
+            3.008,
+            2.992,
+            3.008
+          ],
+          "timing_checks": [
+            [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ]
+          ]
+        },
+        "plainexp": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "ff6abb6074367ee57428bbc043d0f0ef579ec4950e48f881ca2f3b9580e7169f",
+            "registers": {
+              "k_add_pointwise": 22
+            },
+            "ptx_sha256": "42fbb7884d0c777e5ac27ba878122a24eb245ed1ba40b48143fe12eb274a3a46"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            "median_us": 24.0
+          },
+          "timing_us": [
+            3.04,
+            3.136,
+            3.04,
+            3.04,
+            3.04,
+            3.04,
+            3.008
+          ],
+          "timing_checks": [
+            [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ]
+          ]
+        },
+        "powenn": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "c4dcfdcc9de2d5309fa976d99e4c0a1c84b16bc2fdf13cefe105a171e2a972f8",
+            "registers": {
+              "k_add_pointwise": 22
+            },
+            "ptx_sha256": "bae7dcec67b777492aabb12026d2503b7426da49f0702e0f2cba4a3023d01534"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            "median_us": 20.32
+          },
+          "timing_us": [
+            3.008,
+            3.136,
+            3.072,
+            2.944,
+            3.008,
+            3.008,
+            3.04
+          ],
+          "timing_checks": [
+            [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ]
+          ]
+        }
+      },
+      "medians": {
+        "merged": 2.992,
+        "plainexp": 3.04,
+        "powenn": 3.008
+      },
+      "winner": "merged",
+      "ratios": {
+        "merged": 1.0,
+        "plainexp": 1.0160427807486632,
+        "powenn": 1.0053475935828877
+      }
+    },
+    "p01_vector_add": {
+      "meta_sha256": "4607a6a14553ec256b2073ff8fef18a850e315033f4fdace21f26fdcc2a867c6",
+      "expected_sha256": "1a72f87aa3afd4e84746d2c0bfcfde9d024f573ce863322f72d2c6b3bb133086",
+      "rtol": 0,
+      "atol": 0,
+      "entry": "k_add_pointwise",
+      "need": 1024,
+      "arms": {
+        "merged": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "d27a10bc3ae8d8660c8070908c7a9bdb5181517a6b3b248fb58a3930d93426ab",
+            "registers": {
+              "k_add_pointwise": 22
+            },
+            "ptx_sha256": "894110b4a376dd777e363f72d21607e8432d6a01ab19823fb79eaed87658a7e5"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            "median_us": 20.608
+          },
+          "timing_us": [
+            3.008,
+            3.12,
+            3.04,
+            3.04,
+            3.024,
+            3.072,
+            3.04
+          ],
+          "timing_checks": [
+            [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ]
+          ]
+        },
+        "plainexp": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "d27a10bc3ae8d8660c8070908c7a9bdb5181517a6b3b248fb58a3930d93426ab",
+            "registers": {
+              "k_add_pointwise": 22
+            },
+            "ptx_sha256": "894110b4a376dd777e363f72d21607e8432d6a01ab19823fb79eaed87658a7e5"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            "median_us": 24.0
+          },
+          "timing_us": [
+            3.04,
+            3.104,
+            3.008,
+            3.04,
+            3.008,
+            2.976,
+            3.04
+          ],
+          "timing_checks": [
+            [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ]
+          ]
+        },
+        "powenn": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "964efd863c53c4070ad7fa3acc67e26430e588e9bb9d145314f5eb8db8d774b9",
+            "registers": {
+              "k_add_pointwise": 22
+            },
+            "ptx_sha256": "211cb0a517c28a4ea8d93fbedbd9e9aa711853d4f205f79fa9ec7e4d7b44c7d2"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            "median_us": 20.512
+          },
+          "timing_us": [
+            3.04,
+            3.136,
+            3.008,
+            3.008,
+            3.008,
+            3.04,
+            3.04
+          ],
+          "timing_checks": [
+            [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ]
+          ]
+        }
+      },
+      "medians": {
+        "merged": 3.04,
+        "plainexp": 3.04,
+        "powenn": 3.04
+      },
+      "winner": "merged",
+      "ratios": {
+        "merged": 1.0,
+        "plainexp": 1.0,
+        "powenn": 1.0
+      }
+    },
+    "p02_scale_shift": {
+      "meta_sha256": "7c1c3ea69e4d61128d72fbaf3a82a76125a5273c3ced6197ac2f150d03d121e1",
+      "expected_sha256": "515539ace84b0cb38ab3e5e6ed20894b774ab428a86be180529d54fd8ad63dd6",
+      "rtol": 1e-06,
+      "atol": 1e-06,
+      "entry": "k_add_pointwise",
+      "need": 4096,
+      "arms": {
+        "merged": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "70d91ea1525cf80742fbcad00ce6f24cc9688307778b461f19bf3aa21b12b920",
+            "registers": {
+              "k_add_pointwise": 34
+            },
+            "ptx_sha256": "9b5295a9675b3d8efe47a34d94485ec9b161f2cdb504931b69fdca963d37c0d9"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            "median_us": 15.68
+          },
+          "timing_us": [
+            3.072,
+            3.168,
+            3.088,
+            3.104,
+            3.104,
+            3.104,
+            3.072
+          ],
+          "timing_checks": [
+            [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ]
+          ]
+        },
+        "plainexp": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "70d91ea1525cf80742fbcad00ce6f24cc9688307778b461f19bf3aa21b12b920",
+            "registers": {
+              "k_add_pointwise": 34
+            },
+            "ptx_sha256": "9b5295a9675b3d8efe47a34d94485ec9b161f2cdb504931b69fdca963d37c0d9"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            "median_us": 16.608
+          },
+          "timing_us": [
+            3.04,
+            3.136,
+            5.968,
+            3.104,
+            3.04,
+            3.072,
+            3.072
+          ],
+          "timing_checks": [
+            [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ]
+          ]
+        },
+        "powenn": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "7b2a18a90928cdd3541e0ea84728ecbf27316dc647c961ff660682e3dc1e70fe",
+            "registers": {
+              "k_add_pointwise": 34
+            },
+            "ptx_sha256": "ddd93f53f81e7d4ff34ed76d67dfcaa1613767a3a3783c4b79af7de0e49c2c1b"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            "median_us": 15.52
+          },
+          "timing_us": [
+            3.056,
+            3.152,
+            3.072,
+            3.04,
+            3.072,
+            3.088,
+            3.072
+          ],
+          "timing_checks": [
+            [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            [
+              {
+                "name": "add",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ]
+          ]
+        }
+      },
+      "medians": {
+        "merged": 3.104,
+        "plainexp": 3.072,
+        "powenn": 3.072
+      },
+      "winner": "plainexp",
+      "ratios": {
+        "merged": 1.0104166666666667,
+        "plainexp": 1.0,
+        "powenn": 1.0
+      }
+    },
+    "p03_relu_mul": {
+      "meta_sha256": "a2dbbe3a3cec7c45fcdde2c08f0d3276647c2a4b56ede3345be16404d1ded8c9",
+      "expected_sha256": "a0fc97901b28331b29bb5f01cf104944c3376c633dd4cce65d551ad61035e52f",
+      "rtol": 0,
+      "atol": 0,
+      "entry": "k_mul_pointwise",
+      "need": 2048,
+      "arms": {
+        "merged": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "f61b9f9d36418b07338beef08766960dd823d3da42927568a0fe660af2134e70",
+            "registers": {
+              "k_mul_pointwise": 24
+            },
+            "ptx_sha256": "70e41f592322de2cefe45b096479ab6b6fc7e31804dab936d777888f775f0949"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "mul",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            "median_us": 9.408
+          },
+          "timing_us": [
+            3.008,
+            3.136,
+            2.976,
+            3.04,
+            2.976,
+            3.008,
+            3.04
+          ],
+          "timing_checks": [
+            [
+              {
+                "name": "mul",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            [
+              {
+                "name": "mul",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            [
+              {
+                "name": "mul",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            [
+              {
+                "name": "mul",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            [
+              {
+                "name": "mul",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            [
+              {
+                "name": "mul",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            [
+              {
+                "name": "mul",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ]
+          ]
+        },
+        "plainexp": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "f61b9f9d36418b07338beef08766960dd823d3da42927568a0fe660af2134e70",
+            "registers": {
+              "k_mul_pointwise": 24
+            },
+            "ptx_sha256": "70e41f592322de2cefe45b096479ab6b6fc7e31804dab936d777888f775f0949"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "mul",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            "median_us": 16.256
+          },
+          "timing_us": [
+            3.072,
+            3.04,
+            3.008,
+            3.008,
+            3.008,
+            3.024,
+            3.008
+          ],
+          "timing_checks": [
+            [
+              {
+                "name": "mul",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            [
+              {
+                "name": "mul",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            [
+              {
+                "name": "mul",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            [
+              {
+                "name": "mul",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            [
+              {
+                "name": "mul",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            [
+              {
+                "name": "mul",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            [
+              {
+                "name": "mul",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ]
+          ]
+        },
+        "powenn": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "cd9022418c5069c111d13df86e7b69faa20aa86b135d3b2887006d955c9f0014",
+            "registers": {
+              "k_mul_pointwise": 24
+            },
+            "ptx_sha256": "4dc11c5e0bad7bbadf9f340b841b0e1731700102e4aaa0217a831f294275a7e6"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "mul",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            "median_us": 15.168
+          },
+          "timing_us": [
+            3.008,
+            3.008,
+            3.04,
+            2.976,
+            3.008,
+            3.072,
+            3.072
+          ],
+          "timing_checks": [
+            [
+              {
+                "name": "mul",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            [
+              {
+                "name": "mul",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            [
+              {
+                "name": "mul",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            [
+              {
+                "name": "mul",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            [
+              {
+                "name": "mul",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            [
+              {
+                "name": "mul",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ],
+            [
+              {
+                "name": "mul",
+                "ok": true,
+                "max_abs_error": 0.0
+              }
+            ]
+          ]
+        }
+      },
+      "medians": {
+        "merged": 3.008,
+        "plainexp": 3.008,
+        "powenn": 3.008
+      },
+      "winner": "merged",
+      "ratios": {
+        "merged": 1.0,
+        "plainexp": 1.0,
+        "powenn": 1.0
+      }
+    },
+    "r01_array_sum": {
+      "meta_sha256": "46cf07073f4e612e811decbc2ca900ea210811194a1e336053a6f179ecb4b00e",
+      "expected_sha256": "899c8058da70456bc3714d71ffc2814dd9777e37d39be7379b359e452924cb5c",
+      "rtol": 0.0001,
+      "atol": 0.0001,
+      "entry": "k_sum_1_reduce",
+      "need": 1,
+      "arms": {
+        "merged": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "bfa3d4e138e0ae0378a75d1ca3c8226d05fa1df9c149d1bb15aa27d474a23148",
+            "registers": {
+              "k_sum_1_reduce": 40
+            },
+            "ptx_sha256": "4e55d569b6717527424737b513303d9dc58cdd4c82e493a2d01f45bc04befa25"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 3.814697265625e-06
+              }
+            ],
+            "median_us": 33.024
+          },
+          "timing_us": [
+            2.976,
+            3.104,
+            2.976,
+            3.04,
+            3.04,
+            3.008,
+            3.008
+          ],
+          "timing_checks": [
+            [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 3.814697265625e-06
+              }
+            ],
+            [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 3.814697265625e-06
+              }
+            ],
+            [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 3.814697265625e-06
+              }
+            ],
+            [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 3.814697265625e-06
+              }
+            ],
+            [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 3.814697265625e-06
+              }
+            ],
+            [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 3.814697265625e-06
+              }
+            ],
+            [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 3.814697265625e-06
+              }
+            ]
+          ]
+        },
+        "plainexp": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "bfa3d4e138e0ae0378a75d1ca3c8226d05fa1df9c149d1bb15aa27d474a23148",
+            "registers": {
+              "k_sum_1_reduce": 40
+            },
+            "ptx_sha256": "4e55d569b6717527424737b513303d9dc58cdd4c82e493a2d01f45bc04befa25"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 3.814697265625e-06
+              }
+            ],
+            "median_us": 23.808
+          },
+          "timing_us": [
+            3.04,
+            3.072,
+            2.976,
+            3.072,
+            3.04,
+            3.008,
+            2.96
+          ],
+          "timing_checks": [
+            [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 3.814697265625e-06
+              }
+            ],
+            [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 3.814697265625e-06
+              }
+            ],
+            [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 3.814697265625e-06
+              }
+            ],
+            [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 3.814697265625e-06
+              }
+            ],
+            [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 3.814697265625e-06
+              }
+            ],
+            [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 3.814697265625e-06
+              }
+            ],
+            [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 3.814697265625e-06
+              }
+            ]
+          ]
+        },
+        "powenn": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "c95fad00dd3bb036f7deae09764018796335be332e54bd33cd6fcec572bb2e95",
+            "registers": {
+              "k_sum_1_reduce": 40
+            },
+            "ptx_sha256": "47e510d88456074dfb02b0f33f2be33d8b404afa73f49d92f4a2cf8de2532b0e"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 3.814697265625e-06
+              }
+            ],
+            "median_us": 20.512
+          },
+          "timing_us": [
+            3.008,
+            3.104,
+            2.976,
+            3.056,
+            2.992,
+            3.008,
+            3.008
+          ],
+          "timing_checks": [
+            [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 3.814697265625e-06
+              }
+            ],
+            [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 3.814697265625e-06
+              }
+            ],
+            [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 3.814697265625e-06
+              }
+            ],
+            [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 3.814697265625e-06
+              }
+            ],
+            [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 3.814697265625e-06
+              }
+            ],
+            [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 3.814697265625e-06
+              }
+            ],
+            [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 3.814697265625e-06
+              }
+            ]
+          ]
+        }
+      },
+      "medians": {
+        "merged": 3.008,
+        "plainexp": 3.04,
+        "powenn": 3.008
+      },
+      "winner": "merged",
+      "ratios": {
+        "merged": 1.0,
+        "plainexp": 1.0106382978723405,
+        "powenn": 1.0
+      }
+    },
+    "r02_big_sum": {
+      "meta_sha256": "db364be00e35402a3d6f10fcd55562115c7604dea94f8126a02179a80476d19e",
+      "expected_sha256": "0109852644d0785b770fa38d996b063b156f01e8bfccb303ea0581e42696eec1",
+      "rtol": 0.001,
+      "atol": 0.001,
+      "entry": "k_sum_1_reduce",
+      "need": 1,
+      "arms": {
+        "merged": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "77e644a62191c17d5a9c7fb50d3e5ce4dad455f70d81dd77b194dbc87ae23988",
+            "registers": {
+              "k_sum_1_reduce": 40
+            },
+            "ptx_sha256": "a689dc444d7a1d9768f25276a03f1dd94a7d51729f0334155b38bdca4360e6a0"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 9.1552734375e-05
+              }
+            ],
+            "median_us": 22.816
+          },
+          "timing_us": [
+            6.784,
+            6.816,
+            6.816,
+            6.816,
+            6.8,
+            6.816,
+            6.848
+          ],
+          "timing_checks": [
+            [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 9.1552734375e-05
+              }
+            ],
+            [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 9.1552734375e-05
+              }
+            ],
+            [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 9.1552734375e-05
+              }
+            ],
+            [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 9.1552734375e-05
+              }
+            ],
+            [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 9.1552734375e-05
+              }
+            ],
+            [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 9.1552734375e-05
+              }
+            ],
+            [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 9.1552734375e-05
+              }
+            ]
+          ]
+        },
+        "plainexp": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "77e644a62191c17d5a9c7fb50d3e5ce4dad455f70d81dd77b194dbc87ae23988",
+            "registers": {
+              "k_sum_1_reduce": 40
+            },
+            "ptx_sha256": "a689dc444d7a1d9768f25276a03f1dd94a7d51729f0334155b38bdca4360e6a0"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 9.1552734375e-05
+              }
+            ],
+            "median_us": 26.816
+          },
+          "timing_us": [
+            6.816,
+            6.816,
+            6.816,
+            6.816,
+            6.784,
+            6.816,
+            6.768
+          ],
+          "timing_checks": [
+            [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 9.1552734375e-05
+              }
+            ],
+            [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 9.1552734375e-05
+              }
+            ],
+            [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 9.1552734375e-05
+              }
+            ],
+            [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 9.1552734375e-05
+              }
+            ],
+            [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 9.1552734375e-05
+              }
+            ],
+            [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 9.1552734375e-05
+              }
+            ],
+            [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 9.1552734375e-05
+              }
+            ]
+          ]
+        },
+        "powenn": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "8554bfd7835b5e719fc557017e17a2ece85379d62f0fc3ca36e0a8866b2d0280",
+            "registers": {
+              "k_sum_1_reduce": 40
+            },
+            "ptx_sha256": "045616404cbf255b14a090045f36ee6f9e9b346161e9ca44d58598b040cb88c2"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 9.1552734375e-05
+              }
+            ],
+            "median_us": 23.104
+          },
+          "timing_us": [
+            6.816,
+            6.816,
+            6.8,
+            6.816,
+            6.816,
+            6.816,
+            6.848
+          ],
+          "timing_checks": [
+            [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 9.1552734375e-05
+              }
+            ],
+            [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 9.1552734375e-05
+              }
+            ],
+            [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 9.1552734375e-05
+              }
+            ],
+            [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 9.1552734375e-05
+              }
+            ],
+            [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 9.1552734375e-05
+              }
+            ],
+            [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 9.1552734375e-05
+              }
+            ],
+            [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 9.1552734375e-05
+              }
+            ]
+          ]
+        }
+      },
+      "medians": {
+        "merged": 6.816,
+        "plainexp": 6.816,
+        "powenn": 6.816
+      },
+      "winner": "merged",
+      "ratios": {
+        "merged": 1.0,
+        "plainexp": 1.0,
+        "powenn": 1.0
+      }
+    },
+    "r03_mean": {
+      "meta_sha256": "d7ab661c388ad447f5661a3b36cba448cf5142402756f1e1c35d110db06c84fe",
+      "expected_sha256": "9c53fd65aebbc9b6ca477653643273195149be2d93ab472a135883a0a128c5f7",
+      "rtol": 0.0001,
+      "atol": 0.0001,
+      "entry": "k_mean_ffcca3",
+      "need": 1,
+      "arms": {
+        "merged": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "d77d26217491cc5daf752d6257c1cf3ec943ab7045070ac6be560294c86e0ccc",
+            "registers": {
+              "k_mean_ffcca3": 40
+            },
+            "ptx_sha256": "c2ae10517fae0c701099fdf3565786e70ced02ab98618f72f4c9f7e33aec758e"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "mean",
+                "ok": true,
+                "max_abs_error": 2.7939677238464355e-09
+              }
+            ],
+            "median_us": 22.368
+          },
+          "timing_us": [
+            6.736,
+            5.856,
+            6.608,
+            4.832,
+            6.672,
+            6.56,
+            5.696
+          ],
+          "timing_checks": [
+            [
+              {
+                "name": "mean",
+                "ok": true,
+                "max_abs_error": 2.7939677238464355e-09
+              }
+            ],
+            [
+              {
+                "name": "mean",
+                "ok": true,
+                "max_abs_error": 2.7939677238464355e-09
+              }
+            ],
+            [
+              {
+                "name": "mean",
+                "ok": true,
+                "max_abs_error": 2.7939677238464355e-09
+              }
+            ],
+            [
+              {
+                "name": "mean",
+                "ok": true,
+                "max_abs_error": 2.7939677238464355e-09
+              }
+            ],
+            [
+              {
+                "name": "mean",
+                "ok": true,
+                "max_abs_error": 2.7939677238464355e-09
+              }
+            ],
+            [
+              {
+                "name": "mean",
+                "ok": true,
+                "max_abs_error": 2.7939677238464355e-09
+              }
+            ],
+            [
+              {
+                "name": "mean",
+                "ok": true,
+                "max_abs_error": 2.7939677238464355e-09
+              }
+            ]
+          ]
+        },
+        "plainexp": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "d77d26217491cc5daf752d6257c1cf3ec943ab7045070ac6be560294c86e0ccc",
+            "registers": {
+              "k_mean_ffcca3": 40
+            },
+            "ptx_sha256": "c2ae10517fae0c701099fdf3565786e70ced02ab98618f72f4c9f7e33aec758e"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "mean",
+                "ok": true,
+                "max_abs_error": 2.7939677238464355e-09
+              }
+            ],
+            "median_us": 23.488
+          },
+          "timing_us": [
+            6.736,
+            6.432,
+            4.8,
+            5.504,
+            4.8,
+            6.64,
+            6.656
+          ],
+          "timing_checks": [
+            [
+              {
+                "name": "mean",
+                "ok": true,
+                "max_abs_error": 2.7939677238464355e-09
+              }
+            ],
+            [
+              {
+                "name": "mean",
+                "ok": true,
+                "max_abs_error": 2.7939677238464355e-09
+              }
+            ],
+            [
+              {
+                "name": "mean",
+                "ok": true,
+                "max_abs_error": 2.7939677238464355e-09
+              }
+            ],
+            [
+              {
+                "name": "mean",
+                "ok": true,
+                "max_abs_error": 2.7939677238464355e-09
+              }
+            ],
+            [
+              {
+                "name": "mean",
+                "ok": true,
+                "max_abs_error": 2.7939677238464355e-09
+              }
+            ],
+            [
+              {
+                "name": "mean",
+                "ok": true,
+                "max_abs_error": 2.7939677238464355e-09
+              }
+            ],
+            [
+              {
+                "name": "mean",
+                "ok": true,
+                "max_abs_error": 2.7939677238464355e-09
+              }
+            ]
+          ]
+        },
+        "powenn": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "8145231efea696c42571f3f8215b6e98acb6bc711b4cc5584a0086b49fe85b11",
+            "registers": {
+              "k_mean_ffcca3": 40
+            },
+            "ptx_sha256": "dd304318e600884d2af3c3f05c8c0d79dc41093487532947455db61879f0ecff"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "mean",
+                "ok": true,
+                "max_abs_error": 2.7939677238464355e-09
+              }
+            ],
+            "median_us": 20.832
+          },
+          "timing_us": [
+            6.752,
+            6.528,
+            4.88,
+            4.8,
+            4.832,
+            6.576,
+            6.72
+          ],
+          "timing_checks": [
+            [
+              {
+                "name": "mean",
+                "ok": true,
+                "max_abs_error": 2.7939677238464355e-09
+              }
+            ],
+            [
+              {
+                "name": "mean",
+                "ok": true,
+                "max_abs_error": 2.7939677238464355e-09
+              }
+            ],
+            [
+              {
+                "name": "mean",
+                "ok": true,
+                "max_abs_error": 2.7939677238464355e-09
+              }
+            ],
+            [
+              {
+                "name": "mean",
+                "ok": true,
+                "max_abs_error": 2.7939677238464355e-09
+              }
+            ],
+            [
+              {
+                "name": "mean",
+                "ok": true,
+                "max_abs_error": 2.7939677238464355e-09
+              }
+            ],
+            [
+              {
+                "name": "mean",
+                "ok": true,
+                "max_abs_error": 2.7939677238464355e-09
+              }
+            ],
+            [
+              {
+                "name": "mean",
+                "ok": true,
+                "max_abs_error": 2.7939677238464355e-09
+              }
+            ]
+          ]
+        }
+      },
+      "medians": {
+        "merged": 6.56,
+        "plainexp": 6.432,
+        "powenn": 6.528
+      },
+      "winner": "plainexp",
+      "ratios": {
+        "merged": 1.0199004975124377,
+        "plainexp": 1.0,
+        "powenn": 1.0149253731343282
+      }
+    },
+    "r04_row_sum": {
+      "meta_sha256": "803cb710590156ad319eb44b2d2aa6c1ee9b0e3a666ebc09de259e50d83a3ba1",
+      "expected_sha256": "cb724cbe21276b1438add7263e418f52c0eb90c4501954a245678dcc793c895d",
+      "rtol": 0.0001,
+      "atol": 0.0001,
+      "entry": "k_sum_1_reduce",
+      "need": 64,
+      "arms": {
+        "merged": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "1c5b10e9cc04f97ac8dee6fd69f02757d7522933b0752f8e801808980241c116",
+            "registers": {
+              "k_sum_1_reduce": 40
+            },
+            "ptx_sha256": "66cc70162150c106037c1640226911dea882a4916ce7c3ea0a3212ce82ebf550"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 4.76837158203125e-06
+              }
+            ],
+            "median_us": 20.128
+          },
+          "timing_us": [
+            3.008,
+            2.976,
+            2.976,
+            2.976,
+            3.04,
+            2.976,
+            3.008
+          ],
+          "timing_checks": [
+            [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 4.76837158203125e-06
+              }
+            ],
+            [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 4.76837158203125e-06
+              }
+            ],
+            [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 4.76837158203125e-06
+              }
+            ],
+            [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 4.76837158203125e-06
+              }
+            ],
+            [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 4.76837158203125e-06
+              }
+            ],
+            [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 4.76837158203125e-06
+              }
+            ],
+            [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 4.76837158203125e-06
+              }
+            ]
+          ]
+        },
+        "plainexp": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "1c5b10e9cc04f97ac8dee6fd69f02757d7522933b0752f8e801808980241c116",
+            "registers": {
+              "k_sum_1_reduce": 40
+            },
+            "ptx_sha256": "66cc70162150c106037c1640226911dea882a4916ce7c3ea0a3212ce82ebf550"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 4.76837158203125e-06
+              }
+            ],
+            "median_us": 24.512
+          },
+          "timing_us": [
+            2.976,
+            3.008,
+            2.976,
+            2.976,
+            3.008,
+            2.976,
+            2.976
+          ],
+          "timing_checks": [
+            [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 4.76837158203125e-06
+              }
+            ],
+            [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 4.76837158203125e-06
+              }
+            ],
+            [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 4.76837158203125e-06
+              }
+            ],
+            [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 4.76837158203125e-06
+              }
+            ],
+            [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 4.76837158203125e-06
+              }
+            ],
+            [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 4.76837158203125e-06
+              }
+            ],
+            [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 4.76837158203125e-06
+              }
+            ]
+          ]
+        },
+        "powenn": {
+          "compile": {
+            "ok": true,
+            "cubin_id": "3c947bfda1d929c7ab75633d6bd759a7561f5d4fc248fe493f722d223ac532a5",
+            "registers": {
+              "k_sum_1_reduce": 40
+            },
+            "ptx_sha256": "5c82bd93abeb6e29a67258d58fa0e96f10b522bc1b030536f2910e59dac43568"
+          },
+          "gate": {
+            "ok": true,
+            "checks": [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 4.76837158203125e-06
+              }
+            ],
+            "median_us": 20.448
+          },
+          "timing_us": [
+            3.008,
+            2.976,
+            3.008,
+            2.976,
+            3.04,
+            2.976,
+            3.008
+          ],
+          "timing_checks": [
+            [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 4.76837158203125e-06
+              }
+            ],
+            [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 4.76837158203125e-06
+              }
+            ],
+            [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 4.76837158203125e-06
+              }
+            ],
+            [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 4.76837158203125e-06
+              }
+            ],
+            [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 4.76837158203125e-06
+              }
+            ],
+            [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 4.76837158203125e-06
+              }
+            ],
+            [
+              {
+                "name": "sum_1",
+                "ok": true,
+                "max_abs_error": 4.76837158203125e-06
+              }
+            ]
+          ]
+        }
+      },
+      "medians": {
+        "merged": 2.976,
+        "plainexp": 2.976,
+        "powenn": 3.008
+      },
+      "winner": "merged",
+      "ratios": {
+        "merged": 1.0,
+        "plainexp": 1.0,
+        "powenn": 1.010752688172043
+      }
+    }
+  },
+  "health": {
+    "ok": true,
+    "arch_ok": true,
+    "ptxas": "/usr/local/cuda/bin/ptxas",
+    "default_arch": "sm_120",
+    "cache_dir": "/home/riftuser/.cache/ptxserver",
+    "can_compile": true,
+    "can_run": true,
+    "gpu": "NVIDIA GeForce RTX 5090 (compute capability 12.0, sm_120)"
+  },
+  "published_correctness": {
+    "all15_passed": true,
+    "scope": "Published cases on hosted RTX 5090; hidden set unverified"
+  },
+  "requests": 406
+}

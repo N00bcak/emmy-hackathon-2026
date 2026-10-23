@@ -1,0 +1,247 @@
+.version 8.7
+.target sm_120
+.address_size 64
+
+.visible .entry k_matmul_softmax_reduce_6f0029(
+    .param .u64 param_0,
+    .param .u64 param_1,
+    .param .u64 param_2,
+    .param .u64 param_3,
+    .param .u64 param_4
+)
+.maxntid 32, 1, 1
+{
+    .reg .b32 %r<73>;
+    .reg .b16 %rh<1>;
+    .reg .b64 %rd<37>;
+    .reg .f32 %f<42>;
+    .reg .f64 %fd<1>;
+    .reg .pred %p<9>;
+    .shared .align 16 .b8 __hoist0[516];
+    ld.param.u64 %rd1, [param_0];
+    cvta.to.global.u64 %rd1, %rd1;
+    ld.param.u64 %rd2, [param_1];
+    cvta.to.global.u64 %rd2, %rd2;
+    ld.param.u64 %rd3, [param_2];
+    cvta.to.global.u64 %rd3, %rd3;
+    ld.param.u64 %rd4, [param_3];
+    cvta.to.global.u64 %rd4, %rd4;
+    ld.param.u64 %rd5, [param_4];
+    cvta.to.global.u64 %rd5, %rd5;
+    mov.u32 %r1, %tid.x;
+    mov.u32 %r2, %tid.y;
+    mov.u32 %r3, %tid.z;
+    mov.u32 %r4, %ctaid.x;
+    mov.u32 %r5, %ctaid.y;
+    mov.u32 %r6, %ctaid.z;
+    mad.lo.u32 %r7, %r1, 1, %r2;
+    mad.lo.u32 %r8, %r7, 1, %r3;
+    mad.lo.u32 %r9, %r4, 1, %r5;
+    mad.lo.u32 %r10, %r9, 1, %r6;
+    mov.u32 %r1, %r8;
+    mov.u32 %r4, %r10;
+    mov.u32 %r11, 32;
+    mad.lo.u32 %r12, %r10, %r11, %r8;
+    and.b32 %r13, %r8, 31;
+    shr.u32 %r14, %r8, 5;
+    setp.ge.u32 %p1, %r12, 4096;
+    @%p1 bra kernel_done;
+    shr.u32 %r15, %r12, 5;
+    shr.u32 %r16, %r12, 5;
+    and.b32 %r16, %r16, 0;
+    shr.u32 %r17, %r12, 5;
+    and.b32 %r17, %r17, 0;
+    shr.u32 %r18, %r12, 0;
+    and.b32 %r18, %r18, 31;
+    mad.lo.s32 %r19, 0, 1, 0;
+    mul.wide.s32 %rd6, %r19, 4;
+    add.u64 %rd7, %rd1, %rd6;
+    ld.global.f32 %f1, [%rd7];
+    rcp.rn.f32 %f2, %f1;
+    and.b64 %rd8, %rd3, 15;
+    setp.ne.u64 %p2, %rd8, 0;
+    @%p2 bra mm_scalar_2;
+    mov.u32 %r20, %r1;
+mm_3:
+    setp.ge.u32 %p3, %r20, 32;
+    @%p3 bra mm_items_done_4;
+    rem.u32 %r21, %r20, 32;
+    div.u32 %r22, %r20, 32;
+    mul.lo.u32 %r23, %r21, 4;
+    div.u32 %r24, %r22, 1;
+    mov.f32 %f3, 0f00000000;
+    mov.f32 %f4, 0f00000000;
+    mov.f32 %f5, 0f00000000;
+    mov.f32 %f6, 0f00000000;
+    mov.s32 %r25, 0;
+mm_k_5:
+    setp.ge.s32 %p4, %r25, 32;
+    @%p4 bra mm_k_done_6;
+    mad.lo.s32 %r26, %r25, 128, 0;
+    mad.lo.s32 %r27, %r23, 1, %r26;
+    mul.wide.s32 %rd9, %r27, 4;
+    add.u64 %rd10, %rd3, %rd9;
+    ld.global.v4.f32 {%f7, %f8, %f9, %f10}, [%rd10];
+    mul.lo.s32 %r28, %r15, 1;
+    mul.lo.s32 %r29, %r24, 1;
+    add.s32 %r30, %r28, %r29;
+    add.s32 %r31, %r30, 0;
+    mad.lo.s32 %r32, %r31, 32, 0;
+    mad.lo.s32 %r33, %r25, 1, %r32;
+    mul.wide.s32 %rd11, %r33, 4;
+    add.u64 %rd12, %rd2, %rd11;
+    ld.global.f32 %f11, [%rd12];
+    mul.f32 %f12, %f7, %f11;
+    add.f32 %f3, %f3, %f12;
+    mul.f32 %f13, %f8, %f11;
+    add.f32 %f4, %f4, %f13;
+    mul.f32 %f14, %f9, %f11;
+    add.f32 %f5, %f5, %f14;
+    mul.f32 %f15, %f10, %f11;
+    add.f32 %f6, %f6, %f15;
+    add.s32 %r25, %r25, 1;
+    bra mm_k_5;
+mm_k_done_6:
+    mad.lo.u32 %r34, %r22, 129, %r23;
+    mul.wide.u32 %rd13, %r34, 4;
+    mov.u64 %rd14, __hoist0;
+    add.u64 %rd13, %rd14, %rd13;
+    st.shared.f32 [%rd13], %f3;
+    mad.lo.u32 %r35, %r22, 129, %r23;
+    add.u32 %r35, %r35, 1;
+    mul.wide.u32 %rd15, %r35, 4;
+    mov.u64 %rd16, __hoist0;
+    add.u64 %rd15, %rd16, %rd15;
+    st.shared.f32 [%rd15], %f4;
+    mad.lo.u32 %r36, %r22, 129, %r23;
+    add.u32 %r36, %r36, 2;
+    mul.wide.u32 %rd17, %r36, 4;
+    mov.u64 %rd18, __hoist0;
+    add.u64 %rd17, %rd18, %rd17;
+    st.shared.f32 [%rd17], %f5;
+    mad.lo.u32 %r37, %r22, 129, %r23;
+    add.u32 %r37, %r37, 3;
+    mul.wide.u32 %rd19, %r37, 4;
+    mov.u64 %rd20, __hoist0;
+    add.u64 %rd19, %rd20, %rd19;
+    st.shared.f32 [%rd19], %f6;
+    add.u32 %r20, %r20, 32;
+    bra mm_3;
+mm_items_done_4:
+    bra mm_done_1;
+mm_scalar_2:
+    mov.u32 %r38, %r1;
+mm_7:
+    setp.ge.u32 %p5, %r38, 128;
+    @%p5 bra mm_items_done_8;
+    rem.u32 %r39, %r38, 128;
+    div.u32 %r40, %r38, 128;
+    mul.lo.u32 %r41, %r39, 1;
+    div.u32 %r42, %r40, 1;
+    mov.f32 %f16, 0f00000000;
+    mov.s32 %r43, 0;
+mm_k_9:
+    setp.ge.s32 %p6, %r43, 32;
+    @%p6 bra mm_k_done_10;
+    mad.lo.s32 %r44, %r43, 128, 0;
+    mad.lo.s32 %r45, %r41, 1, %r44;
+    mul.wide.s32 %rd21, %r45, 4;
+    add.u64 %rd22, %rd3, %rd21;
+    ld.global.f32 %f17, [%rd22];
+    mul.lo.s32 %r46, %r15, 1;
+    mul.lo.s32 %r47, %r42, 1;
+    add.s32 %r48, %r46, %r47;
+    add.s32 %r49, %r48, 0;
+    mad.lo.s32 %r50, %r49, 32, 0;
+    mad.lo.s32 %r51, %r43, 1, %r50;
+    mul.wide.s32 %rd23, %r51, 4;
+    add.u64 %rd24, %rd2, %rd23;
+    ld.global.f32 %f18, [%rd24];
+    mul.f32 %f19, %f17, %f18;
+    add.f32 %f16, %f16, %f19;
+    add.s32 %r43, %r43, 1;
+    bra mm_k_9;
+mm_k_done_10:
+    mad.lo.u32 %r52, %r40, 129, %r41;
+    mul.wide.u32 %rd25, %r52, 4;
+    mov.u64 %rd26, __hoist0;
+    add.u64 %rd25, %rd26, %rd25;
+    st.shared.f32 [%rd25], %f16;
+    add.u32 %r38, %r38, 32;
+    bra mm_7;
+mm_items_done_8:
+mm_done_1:
+    bar.sync 0;
+    mov.u32 %r53, 0;
+    mad.lo.u32 %r53, %r53, 1, %r17;
+    mad.lo.u32 %r54, %r53, 129, 0;
+    mul.wide.u32 %rd27, %r54, 4;
+    mov.u64 %rd28, __hoist0;
+    add.u64 %rd27, %rd28, %rd27;
+    mov.f32 %f20, 0f00000000;
+    mov.f32 %f21, 0f00000000;
+    mov.f32 %f22, 0ff149f2ca;
+    mov.f32 %f23, 0ff149f2ca;
+    mov.s32 %r55, 0;
+maxpass_11:
+    setp.ge.s32 %p7, %r55, 128;
+    @%p7 bra maxpass_done_12;
+    mul.wide.u32 %rd29, %r55, 4;
+    add.u64 %rd30, %rd27, %rd29;
+    ld.shared.f32 %f24, [%rd30];
+    mul.f32 %f25, %f24, %f2;
+    max.f32 %f23, %f23, %f25;
+    add.s32 %r55, %r55, 1;
+    bra maxpass_11;
+maxpass_done_12:
+    mov.f32 %f26, 0f00000000;
+    mov.f32 %f27, 0f3f800000;
+    mov.s32 %r56, 0;
+loop_13:
+    setp.ge.s32 %p8, %r56, 128;
+    @%p8 bra loop_done_14;
+    mul.wide.u32 %rd31, %r56, 4;
+    add.u64 %rd32, %rd27, %rd31;
+    ld.shared.f32 %f28, [%rd32];
+    mul.f32 %f29, %f28, %f2;
+    sub.f32 %f30, %f29, %f23;
+    mul.f32 %f32, %f30, 0f3fb8aa3b;
+    ex2.approx.ftz.f32 %f31, %f32;
+    mul.f32 %f33, %f20, %f27;
+    mul.f32 %f34, 0f3f800000, %f31;
+    add.f32 %f35, %f33, %f34;
+    mov.f32 %f20, %f35;
+    mul.f32 %f36, %f21, %f27;
+    mad.lo.s32 %r57, %r56, 32, 0;
+    mul.lo.s32 %r58, %r16, 32;
+    mul.lo.s32 %r59, %r18, 1;
+    add.s32 %r60, %r58, %r59;
+    add.s32 %r61, %r60, 0;
+    mad.lo.s32 %r62, %r61, 1, %r57;
+    mul.wide.s32 %rd33, %r62, 4;
+    add.u64 %rd34, %rd4, %rd33;
+    ld.global.f32 %f37, [%rd34];
+    mul.f32 %f38, %f37, %f31;
+    add.f32 %f39, %f36, %f38;
+    mov.f32 %f21, %f39;
+    add.s32 %r56, %r56, 1;
+    bra loop_13;
+loop_done_14:
+    rcp.rn.f32 %f40, %f20;
+    mul.f32 %f41, %f21, %f40;
+    mul.lo.s32 %r63, %r15, 1;
+    mul.lo.s32 %r64, %r17, 1;
+    add.s32 %r65, %r63, %r64;
+    add.s32 %r66, %r65, 0;
+    mad.lo.s32 %r67, %r66, 32, 0;
+    mul.lo.s32 %r68, %r16, 32;
+    mul.lo.s32 %r69, %r18, 1;
+    add.s32 %r70, %r68, %r69;
+    add.s32 %r71, %r70, 0;
+    mad.lo.s32 %r72, %r71, 1, %r67;
+    mul.wide.s32 %rd35, %r72, 4;
+    add.u64 %rd36, %rd5, %rd35;
+    st.global.f32 [%rd36], %f41;
+kernel_done:
+    ret;
+}
