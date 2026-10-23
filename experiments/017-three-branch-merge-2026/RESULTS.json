@@ -1,0 +1,1123 @@
+{
+  "schema": 1,
+  "requested": "Three-branch hosted RTX 5090 verification and merged all-case check",
+  "runner": {
+    "ok": true,
+    "arch_ok": true,
+    "ptxas": "/usr/local/cuda/bin/ptxas",
+    "default_arch": "sm_120",
+    "cache_dir": "/home/riftuser/.cache/ptxserver",
+    "can_compile": true,
+    "can_run": true,
+    "gpu": "NVIDIA GeForce RTX 5090 (compute capability 12.0, sm_120)"
+  },
+  "protocol": {
+    "warmup": 10,
+    "iters": 50,
+    "repetitions": 7,
+    "gap_seconds": 0.35,
+    "order": "arms in listed order, reversed on alternate repetitions"
+  },
+  "arms": {
+    "main": {
+      "path": "/tmp/emmy-5090-main/compile.py",
+      "sha256": "6436b729336c7e5e1cbeab6e104745adb8d1b0f68a36906e496c1d08b51abed9"
+    },
+    "tensor-core-lowering": {
+      "path": "/tmp/emmy-5090-tcl/compile.py",
+      "sha256": "2d35bf97358e9f8fe9243a4a7b436145662cb543f3a5f35370aecb1146f5a3d0"
+    },
+    "powenn": {
+      "path": "/tmp/emmy-5090-powenn/compile.py",
+      "sha256": "4439640e2152b005908752ebc7fba5ef47b0e7930409ce106d37fd43497f8688"
+    },
+    "n00bcak": {
+      "path": "/tmp/emmy-5090-n00bcak/compile.py",
+      "sha256": "858f5f275ac455423ab197f5932a637ca263137de52b5038ceb5d2f836123685"
+    }
+  },
+  "merged": {
+    "path": "/tmp/emmy-merge-best/compile.py",
+    "sha256": "858f5f275ac455423ab197f5932a637ca263137de52b5038ceb5d2f836123685"
+  },
+  "runs": {
+    "parents": {
+      "summary": "experiments/017-three-branch-merge-2026/hosted-timing/state.json",
+      "requests": 541,
+      "per_case_csv": "experiments/017-three-branch-merge-2026/hosted-timing/per-case.csv"
+    },
+    "merged": {
+      "summary": "experiments/017-three-branch-merge-2026/hosted-merged/state.json",
+      "requests": 541,
+      "per_case_csv": "experiments/017-three-branch-merge-2026/hosted-merged/per-case.csv"
+    }
+  },
+  "medians_us": [
+    {
+      "case": "a01_attention",
+      "medians_us": {
+        "main": [
+          96.896,
+          96.896,
+          96.864,
+          96.896,
+          96.944,
+          96.928,
+          96.928
+        ],
+        "tensor-core-lowering": [
+          96.928,
+          96.896,
+          96.928,
+          96.896,
+          96.928,
+          96.928,
+          96.944
+        ],
+        "powenn": [
+          8.864,
+          8.864,
+          8.864,
+          8.864,
+          8.864,
+          8.864,
+          8.832
+        ],
+        "n00bcak": [
+          8.848,
+          8.864,
+          8.864,
+          8.864,
+          8.864,
+          8.832,
+          8.848
+        ]
+      },
+      "correctness": {
+        "main": [
+          {
+            "name": "matmul_1",
+            "ok": true,
+            "max_abs_error": 6.556510925292969e-07
+          }
+        ],
+        "tcl": [
+          {
+            "name": "matmul_1",
+            "ok": true,
+            "max_abs_error": 6.556510925292969e-07
+          }
+        ],
+        "powenn": [
+          {
+            "name": "matmul_1",
+            "ok": true,
+            "max_abs_error": 6.556510925292969e-07
+          }
+        ],
+        "n00bcak": [
+          {
+            "name": "matmul_1",
+            "ok": true,
+            "max_abs_error": 6.556510925292969e-07
+          }
+        ]
+      }
+    },
+    {
+      "case": "a02_attention_128",
+      "medians_us": {
+        "main": [
+          55.968,
+          55.936,
+          55.952,
+          55.968,
+          55.968,
+          55.968,
+          55.936
+        ],
+        "tensor-core-lowering": [
+          55.968,
+          55.936,
+          55.952,
+          55.968,
+          55.968,
+          56.0,
+          55.936
+        ],
+        "powenn": [
+          6.784,
+          6.784,
+          6.816,
+          6.816,
+          6.816,
+          6.816,
+          6.784
+        ],
+        "n00bcak": [
+          6.864,
+          6.816,
+          6.816,
+          6.816,
+          6.832,
+          6.816,
+          6.816
+        ]
+      },
+      "correctness": {
+        "main": [
+          {
+            "name": "matmul_1",
+            "ok": true,
+            "max_abs_error": 4.470348358154297e-07
+          }
+        ],
+        "tcl": [
+          {
+            "name": "matmul_1",
+            "ok": true,
+            "max_abs_error": 4.470348358154297e-07
+          }
+        ],
+        "powenn": [
+          {
+            "name": "matmul_1",
+            "ok": true,
+            "max_abs_error": 4.172325134277344e-07
+          }
+        ],
+        "n00bcak": [
+          {
+            "name": "matmul_1",
+            "ok": true,
+            "max_abs_error": 4.172325134277344e-07
+          }
+        ]
+      }
+    },
+    {
+      "case": "f01_rmsnorm",
+      "medians_us": {
+        "main": [
+          4.784,
+          4.768,
+          4.768,
+          4.8,
+          4.768,
+          4.8,
+          4.768
+        ],
+        "tensor-core-lowering": [
+          4.768,
+          4.8,
+          4.8,
+          4.768,
+          4.768,
+          4.768,
+          4.8
+        ],
+        "powenn": [
+          4.8,
+          4.8,
+          4.784,
+          4.8,
+          5.568,
+          4.768,
+          4.8
+        ],
+        "n00bcak": [
+          4.736,
+          4.8,
+          4.768,
+          4.768,
+          4.8,
+          4.768,
+          4.768
+        ]
+      },
+      "correctness": {
+        "main": [
+          {
+            "name": "mul_1",
+            "ok": true,
+            "max_abs_error": 1.9073486328125e-06
+          }
+        ],
+        "tcl": [
+          {
+            "name": "mul_1",
+            "ok": true,
+            "max_abs_error": 1.9073486328125e-06
+          }
+        ],
+        "powenn": [
+          {
+            "name": "mul_1",
+            "ok": true,
+            "max_abs_error": 1.9073486328125e-06
+          }
+        ],
+        "n00bcak": [
+          {
+            "name": "mul_1",
+            "ok": true,
+            "max_abs_error": 1.9073486328125e-06
+          }
+        ]
+      }
+    },
+    {
+      "case": "f02_row_softmax",
+      "medians_us": {
+        "main": [
+          3.024,
+          2.976,
+          3.008,
+          3.008,
+          2.976,
+          3.008,
+          3.008
+        ],
+        "tensor-core-lowering": [
+          3.04,
+          3.008,
+          2.976,
+          2.992,
+          3.04,
+          3.008,
+          2.976
+        ],
+        "powenn": [
+          3.008,
+          3.008,
+          2.944,
+          2.976,
+          2.944,
+          2.96,
+          2.976
+        ],
+        "n00bcak": [
+          3.104,
+          3.12,
+          3.104,
+          3.104,
+          3.072,
+          3.104,
+          3.072
+        ]
+      },
+      "correctness": {
+        "main": [
+          {
+            "name": "softmax",
+            "ok": true,
+            "max_abs_error": 7.450580596923828e-09
+          }
+        ],
+        "tcl": [
+          {
+            "name": "softmax",
+            "ok": true,
+            "max_abs_error": 7.450580596923828e-09
+          }
+        ],
+        "powenn": [
+          {
+            "name": "softmax",
+            "ok": true,
+            "max_abs_error": 7.450580596923828e-09
+          }
+        ],
+        "n00bcak": [
+          {
+            "name": "softmax",
+            "ok": true,
+            "max_abs_error": 7.450580596923828e-09
+          }
+        ]
+      }
+    },
+    {
+      "case": "f03_l2norm",
+      "medians_us": {
+        "main": [
+          3.024,
+          3.008,
+          2.976,
+          3.008,
+          2.976,
+          2.992,
+          2.976
+        ],
+        "tensor-core-lowering": [
+          3.008,
+          3.008,
+          2.976,
+          3.504,
+          3.008,
+          2.976,
+          3.008
+        ],
+        "powenn": [
+          3.008,
+          3.04,
+          3.008,
+          3.04,
+          3.008,
+          3.04,
+          3.008
+        ],
+        "n00bcak": [
+          3.008,
+          2.976,
+          3.008,
+          3.008,
+          2.976,
+          2.976,
+          3.008
+        ]
+      },
+      "correctness": {
+        "main": [
+          {
+            "name": "div",
+            "ok": true,
+            "max_abs_error": 1.4901161193847656e-08
+          }
+        ],
+        "tcl": [
+          {
+            "name": "div",
+            "ok": true,
+            "max_abs_error": 1.4901161193847656e-08
+          }
+        ],
+        "powenn": [
+          {
+            "name": "div",
+            "ok": true,
+            "max_abs_error": 1.4901161193847656e-08
+          }
+        ],
+        "n00bcak": [
+          {
+            "name": "div",
+            "ok": true,
+            "max_abs_error": 1.4901161193847656e-08
+          }
+        ]
+      }
+    },
+    {
+      "case": "m01_matmul_512",
+      "medians_us": {
+        "main": [
+          60.064,
+          60.064,
+          60.08,
+          60.752,
+          60.128,
+          60.096,
+          60.144
+        ],
+        "tensor-core-lowering": [
+          21.12,
+          21.12,
+          21.12,
+          21.12,
+          21.088,
+          21.12,
+          21.12
+        ],
+        "powenn": [
+          17.056,
+          17.024,
+          17.024,
+          17.056,
+          17.024,
+          17.824,
+          17.056
+        ],
+        "n00bcak": [
+          17.024,
+          17.024,
+          17.024,
+          17.024,
+          17.04,
+          17.056,
+          17.056
+        ]
+      },
+      "correctness": {
+        "main": [
+          {
+            "name": "matmul",
+            "ok": true,
+            "max_abs_error": 8.392333984375e-05
+          }
+        ],
+        "tcl": [
+          {
+            "name": "matmul",
+            "ok": true,
+            "max_abs_error": 0.00017547607421875
+          }
+        ],
+        "powenn": [
+          {
+            "name": "matmul",
+            "ok": true,
+            "max_abs_error": 8.392333984375e-05
+          }
+        ],
+        "n00bcak": [
+          {
+            "name": "matmul",
+            "ok": true,
+            "max_abs_error": 8.392333984375e-05
+          }
+        ]
+      }
+    },
+    {
+      "case": "m02_matmul_rect",
+      "medians_us": {
+        "main": [
+          5.056,
+          5.056,
+          5.056,
+          5.024,
+          5.056,
+          5.088,
+          5.056
+        ],
+        "tensor-core-lowering": [
+          5.072,
+          5.088,
+          5.024,
+          5.056,
+          5.056,
+          5.056,
+          5.088
+        ],
+        "powenn": [
+          4.944,
+          5.088,
+          5.008,
+          4.896,
+          4.736,
+          5.024,
+          5.024
+        ],
+        "n00bcak": [
+          5.056,
+          5.056,
+          5.024,
+          5.088,
+          4.992,
+          5.056,
+          5.024
+        ]
+      },
+      "correctness": {
+        "main": [
+          {
+            "name": "matmul",
+            "ok": true,
+            "max_abs_error": 1.1444091796875e-05
+          }
+        ],
+        "tcl": [
+          {
+            "name": "matmul",
+            "ok": true,
+            "max_abs_error": 1.33514404296875e-05
+          }
+        ],
+        "powenn": [
+          {
+            "name": "matmul",
+            "ok": true,
+            "max_abs_error": 1.1444091796875e-05
+          }
+        ],
+        "n00bcak": [
+          {
+            "name": "matmul",
+            "ok": true,
+            "max_abs_error": 1.1444091796875e-05
+          }
+        ]
+      }
+    },
+    {
+      "case": "p00_scalar_add",
+      "medians_us": {
+        "main": [
+          3.008,
+          2.992,
+          3.04,
+          2.992,
+          3.008,
+          3.008,
+          2.992
+        ],
+        "tensor-core-lowering": [
+          3.008,
+          2.992,
+          3.04,
+          3.04,
+          3.008,
+          3.008,
+          3.008
+        ],
+        "powenn": [
+          3.008,
+          3.008,
+          3.072,
+          3.056,
+          3.04,
+          3.04,
+          3.024
+        ],
+        "n00bcak": [
+          3.008,
+          2.976,
+          3.072,
+          3.008,
+          2.992,
+          2.976,
+          2.976
+        ]
+      },
+      "correctness": {
+        "main": [
+          {
+            "name": "add",
+            "ok": true,
+            "max_abs_error": 0.0
+          }
+        ],
+        "tcl": [
+          {
+            "name": "add",
+            "ok": true,
+            "max_abs_error": 0.0
+          }
+        ],
+        "powenn": [
+          {
+            "name": "add",
+            "ok": true,
+            "max_abs_error": 0.0
+          }
+        ],
+        "n00bcak": [
+          {
+            "name": "add",
+            "ok": true,
+            "max_abs_error": 0.0
+          }
+        ]
+      }
+    },
+    {
+      "case": "p01_vector_add",
+      "medians_us": {
+        "main": [
+          3.04,
+          2.976,
+          3.04,
+          3.056,
+          3.072,
+          2.992,
+          2.976
+        ],
+        "tensor-core-lowering": [
+          2.992,
+          3.008,
+          3.04,
+          3.008,
+          2.992,
+          3.008,
+          2.976
+        ],
+        "powenn": [
+          2.944,
+          2.976,
+          2.976,
+          3.008,
+          2.976,
+          3.008,
+          3.008
+        ],
+        "n00bcak": [
+          2.976,
+          3.008,
+          3.04,
+          3.008,
+          3.04,
+          2.976,
+          3.008
+        ]
+      },
+      "correctness": {
+        "main": [
+          {
+            "name": "add",
+            "ok": true,
+            "max_abs_error": 0.0
+          }
+        ],
+        "tcl": [
+          {
+            "name": "add",
+            "ok": true,
+            "max_abs_error": 0.0
+          }
+        ],
+        "powenn": [
+          {
+            "name": "add",
+            "ok": true,
+            "max_abs_error": 0.0
+          }
+        ],
+        "n00bcak": [
+          {
+            "name": "add",
+            "ok": true,
+            "max_abs_error": 0.0
+          }
+        ]
+      }
+    },
+    {
+      "case": "p02_scale_shift",
+      "medians_us": {
+        "main": [
+          3.072,
+          3.072,
+          3.072,
+          3.104,
+          3.104,
+          3.104,
+          3.072
+        ],
+        "tensor-core-lowering": [
+          3.008,
+          3.104,
+          3.136,
+          3.072,
+          3.072,
+          3.072,
+          3.104
+        ],
+        "powenn": [
+          3.072,
+          3.04,
+          3.136,
+          3.104,
+          3.072,
+          3.104,
+          3.104
+        ],
+        "n00bcak": [
+          3.056,
+          3.072,
+          3.072,
+          3.104,
+          3.072,
+          3.072,
+          3.136
+        ]
+      },
+      "correctness": {
+        "main": [
+          {
+            "name": "add",
+            "ok": true,
+            "max_abs_error": 0.0
+          }
+        ],
+        "tcl": [
+          {
+            "name": "add",
+            "ok": true,
+            "max_abs_error": 0.0
+          }
+        ],
+        "powenn": [
+          {
+            "name": "add",
+            "ok": true,
+            "max_abs_error": 0.0
+          }
+        ],
+        "n00bcak": [
+          {
+            "name": "add",
+            "ok": true,
+            "max_abs_error": 0.0
+          }
+        ]
+      }
+    },
+    {
+      "case": "p03_relu_mul",
+      "medians_us": {
+        "main": [
+          3.008,
+          3.008,
+          2.96,
+          2.992,
+          3.04,
+          2.976,
+          3.04
+        ],
+        "tensor-core-lowering": [
+          2.976,
+          3.04,
+          2.976,
+          2.976,
+          3.008,
+          3.008,
+          3.04
+        ],
+        "powenn": [
+          3.008,
+          3.04,
+          2.976,
+          3.008,
+          3.04,
+          3.008,
+          3.008
+        ],
+        "n00bcak": [
+          2.944,
+          3.04,
+          2.976,
+          2.976,
+          2.976,
+          2.976,
+          2.976
+        ]
+      },
+      "correctness": {
+        "main": [
+          {
+            "name": "mul",
+            "ok": true,
+            "max_abs_error": 0.0
+          }
+        ],
+        "tcl": [
+          {
+            "name": "mul",
+            "ok": true,
+            "max_abs_error": 0.0
+          }
+        ],
+        "powenn": [
+          {
+            "name": "mul",
+            "ok": true,
+            "max_abs_error": 0.0
+          }
+        ],
+        "n00bcak": [
+          {
+            "name": "mul",
+            "ok": true,
+            "max_abs_error": 0.0
+          }
+        ]
+      }
+    },
+    {
+      "case": "r01_array_sum",
+      "medians_us": {
+        "main": [
+          3.008,
+          3.04,
+          3.008,
+          3.008,
+          3.072,
+          2.976,
+          2.976
+        ],
+        "tensor-core-lowering": [
+          2.976,
+          3.072,
+          2.976,
+          3.04,
+          2.976,
+          2.976,
+          3.008
+        ],
+        "powenn": [
+          3.008,
+          3.008,
+          2.976,
+          3.024,
+          3.04,
+          2.976,
+          2.976
+        ],
+        "n00bcak": [
+          3.008,
+          3.008,
+          2.992,
+          3.008,
+          3.024,
+          3.008,
+          3.008
+        ]
+      },
+      "correctness": {
+        "main": [
+          {
+            "name": "sum_1",
+            "ok": true,
+            "max_abs_error": 3.814697265625e-06
+          }
+        ],
+        "tcl": [
+          {
+            "name": "sum_1",
+            "ok": true,
+            "max_abs_error": 3.814697265625e-06
+          }
+        ],
+        "powenn": [
+          {
+            "name": "sum_1",
+            "ok": true,
+            "max_abs_error": 3.814697265625e-06
+          }
+        ],
+        "n00bcak": [
+          {
+            "name": "sum_1",
+            "ok": true,
+            "max_abs_error": 3.814697265625e-06
+          }
+        ]
+      }
+    },
+    {
+      "case": "r02_big_sum",
+      "medians_us": {
+        "main": [
+          21.136,
+          21.152,
+          21.12,
+          21.12,
+          21.088,
+          21.12,
+          21.104
+        ],
+        "tensor-core-lowering": [
+          21.152,
+          21.12,
+          21.12,
+          21.12,
+          21.104,
+          21.12,
+          21.12
+        ],
+        "powenn": [
+          6.816,
+          6.784,
+          6.768,
+          6.752,
+          6.784,
+          6.784,
+          6.768
+        ],
+        "n00bcak": [
+          8.848,
+          8.832,
+          8.832,
+          8.832,
+          8.832,
+          8.848,
+          8.832
+        ]
+      },
+      "correctness": {
+        "main": [
+          {
+            "name": "sum_1",
+            "ok": true,
+            "max_abs_error": 1.52587890625e-05
+          }
+        ],
+        "tcl": [
+          {
+            "name": "sum_1",
+            "ok": true,
+            "max_abs_error": 1.52587890625e-05
+          }
+        ],
+        "powenn": [
+          {
+            "name": "sum_1",
+            "ok": true,
+            "max_abs_error": 9.1552734375e-05
+          }
+        ],
+        "n00bcak": [
+          {
+            "name": "sum_1",
+            "ok": true,
+            "max_abs_error": 1.52587890625e-05
+          }
+        ]
+      }
+    },
+    {
+      "case": "r03_mean",
+      "medians_us": {
+        "main": [
+          12.928,
+          12.928,
+          12.896,
+          12.896,
+          12.896,
+          12.928,
+          12.896
+        ],
+        "tensor-core-lowering": [
+          12.928,
+          12.928,
+          12.928,
+          12.896,
+          12.928,
+          12.912,
+          12.896
+        ],
+        "powenn": [
+          6.592,
+          6.56,
+          6.688,
+          6.72,
+          6.704,
+          6.672,
+          6.704
+        ],
+        "n00bcak": [
+          6.768,
+          6.784,
+          6.752,
+          6.72,
+          6.8,
+          6.752,
+          6.752
+        ]
+      },
+      "correctness": {
+        "main": [
+          {
+            "name": "mean",
+            "ok": true,
+            "max_abs_error": 9.313225746154785e-10
+          }
+        ],
+        "tcl": [
+          {
+            "name": "mean",
+            "ok": true,
+            "max_abs_error": 9.313225746154785e-10
+          }
+        ],
+        "powenn": [
+          {
+            "name": "mean",
+            "ok": true,
+            "max_abs_error": 2.7939677238464355e-09
+          }
+        ],
+        "n00bcak": [
+          {
+            "name": "mean",
+            "ok": true,
+            "max_abs_error": 9.313225746154785e-10
+          }
+        ]
+      }
+    },
+    {
+      "case": "r04_row_sum",
+      "medians_us": {
+        "main": [
+          3.008,
+          2.976,
+          3.008,
+          3.008,
+          3.008,
+          2.976,
+          2.976
+        ],
+        "tensor-core-lowering": [
+          2.976,
+          2.976,
+          3.008,
+          3.008,
+          3.008,
+          2.976,
+          2.976
+        ],
+        "powenn": [
+          2.976,
+          2.976,
+          2.976,
+          2.96,
+          2.96,
+          3.008,
+          2.944
+        ],
+        "n00bcak": [
+          3.008,
+          3.008,
+          2.976,
+          3.008,
+          3.008,
+          2.976,
+          2.976
+        ]
+      },
+      "correctness": {
+        "main": [
+          {
+            "name": "sum_1",
+            "ok": true,
+            "max_abs_error": 5.7220458984375e-06
+          }
+        ],
+        "tcl": [
+          {
+            "name": "sum_1",
+            "ok": true,
+            "max_abs_error": 5.7220458984375e-06
+          }
+        ],
+        "powenn": [
+          {
+            "name": "sum_1",
+            "ok": true,
+            "max_abs_error": 4.76837158203125e-06
+          }
+        ],
+        "n00bcak": [
+          {
+            "name": "sum_1",
+            "ok": true,
+            "max_abs_error": 5.7220458984375e-06
+          }
+        ]
+      }
+    }
+  ],
+  "qualification": "Indicative organizer-runner latency; clocks not locked. Published cases only; hidden set unverified."
+}

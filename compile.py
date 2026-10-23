@@ -652,6 +652,7 @@ STRAIGHT_LINE_KINDS = frozenset(('Load', 'Let', 'Assign', 'Accum'))
 # Group sizes for thread-strided loops, largest first. On the RTX 5090, 32
 # halved r02's latency against 8; 64 measured the same as 32.
 STRIDED_UNROLL = (32, 8)
+STRIDED_VECTOR_BATCH = (32, 8, 1)
 
 
 def straight_line(statements):
@@ -3360,6 +3361,111 @@ class Emitter:
                 raise Unsupported('Partial CTA tree dtype/layout identity is unproved')
 
 
+    def strided_vector_plan(self, s, stride, bound):
+        """Loads a thread-strided reduction may fetch four elements at a time.
+
+        The loop folds f(x[..., a]) for a = t, t + stride, ... where t is a
+        Tile axis of extent ``stride``: together the threads cover every
+        element once. Reassigning elements so thread t folds 4t..4t+3,
+        4t + 4*stride.. keeps that exact cover, and is legal when every fold
+        is add/max/min of a value computed from the current element only
+        (not from carried state): the per-thread partial is then an
+        ordinary associative reduction, merged as before. Sums change only
+        by floating-point reassociation, as in any parallel reduction.
+        Requires 4*stride | bound and the axis only as the contiguous last
+        coordinate of f32 global loads whose other strides are multiples
+        of 4. Returns those loads, or None.
+        """
+        start = s.start
+        if (type(start).__name__ != 'Var' or self.tile_extents.get(start.name) != stride
+                or bound % (4 * stride) or bound + 4 * stride >= (1 << 31) or self.inactive):
+            return None
+        axis = s.axis.name
+        carried = {x.name for x in s.body if type(x).__name__ == 'Accum'}
+        tainted, loads = set(), []
+        for x in s.body:
+            kind = type(x).__name__
+            if kind == 'Load':
+                names = [expr_names(c) for c in x.index]
+                if any(n is None for n in names):
+                    return None
+                if axis in set().union(*names):
+                    shape, dtype = self.buffers[x.input]
+                    last = x.index[-1]
+                    if (len(x.names) != 1 or dtype_name(dtype) != 'f32' or x.input not in self.ptrs
+                            or x.input in self.shared
+                            or not (type(last).__name__ == 'Var' and last.name == axis)
+                            or any(axis in n for n in names[:-1])
+                            or any(math.prod(shape[i + 1:]) % 4 for i in range(len(shape) - 1))):
+                        return None
+                    loads.append(x)
+            elif kind in ('Assign', 'Let'):
+                deps = set(x.deps())
+                if axis in deps:
+                    return None
+                if deps & (carried | tainted):
+                    tainted.add(x.name)
+            elif kind == 'Accum':
+                if (reduce_canon(x.op.name) not in ('add', 'maximum', 'minimum')
+                        or x.base not in (None, x.name) or x.value in carried | tainted):
+                    return None
+            else:
+                return None
+        return loads or None
+
+    def strided_vector_path(self, s, r, stride, bound, end, loads):
+        """Fold the whole strided loop with 128-bit loads, then leave the
+        induction register at the bound so the ordered loops below run no
+        trips. A misaligned base pointer skips straight to those loops."""
+        skip = self.label('vec_skip')
+        misaligned = None
+        for load in dict.fromkeys(x.input for x in loads):
+            low, p = self.reg('rd'), self.reg('p')
+            self.emit(f'and.b64 {low}, {self.ptrs[load]}, 15;')
+            self.emit(f'setp.ne.u64 {p}, {low}, 0;')
+            if misaligned is not None:
+                self.emit(f'or.pred {p}, {p}, {misaligned};')
+            misaligned = p
+        self.emit(f'@{misaligned} bra {skip};')
+        va = self.reg('r')
+        self.emit(f'shl.b32 {va}, {r}, 2;')
+        vstep = 4 * stride
+        for group in STRIDED_VECTOR_BATCH:
+            begin, done = self.label('vec'), self.label('vec_done')
+            self.mark(begin)
+            last, p = self.reg('r'), self.reg('p')
+            self.emit(f'add.s32 {last}, {va}, {(group - 1) * vstep};')
+            self.emit(f'setp.ge.s32 {p}, {last}, {bound};')
+            self.emit(f'@{p} bra {done};')
+            fetched = []
+            for k in range(group):
+                ak = self.reg('r')
+                self.emit(f'add.s32 {ak}, {va}, {k * vstep};')
+                self.values[s.axis.name] = (ak, 'i32')
+                self.rebind(s.axis.name)
+                lanes = {}
+                for load in loads:
+                    addr, space = self.address(load.input, load.index)
+                    regs = [self.reg('f') for _ in range(4)]
+                    self.emit(f'ld.{space}.v4.f32 {{{", ".join(regs)}}}, [{addr}];')
+                    lanes[id(load)] = regs
+                fetched.append(lanes)
+            for lanes in fetched:
+                for j in range(4):
+                    for x in s.body:
+                        if id(x) in lanes:
+                            self.values[x.names[0]] = (lanes[id(x)][j], 'f32')
+                            self.rebind(x.names[0])
+                        else:
+                            self.statements([x])
+            self.emit(f'add.s32 {va}, {va}, {group * vstep};')
+            self.emit(f'bra {begin};')
+            self.mark(done)
+        self.emit(f'mov.s32 {r}, {end};')
+        self.mark(skip)
+        self.values[s.axis.name] = (r, 'i32')
+        self.rebind(s.axis.name)
+
     def strided_main_loop(self, s, r, step, end):
         """Run whole groups of iterations of a thread-strided loop back to
         back, largest STRIDED_UNROLL group first; the caller's loop then
@@ -3376,6 +3482,9 @@ class Emitter:
         if (not straight_line(s.body) or stride is None or stride <= 0 or bound is None
                 or s.axis.name in defined_names(s.body)):
             return
+        vector = self.strided_vector_plan(s, stride, bound)
+        if vector is not None:
+            self.strided_vector_path(s, r, stride, bound, end, vector)
         for group in STRIDED_UNROLL:
             if bound + (group - 1) * stride >= (1 << 31):
                 continue
@@ -4574,8 +4683,14 @@ class Emitter:
                             self.two_pass_softmax(s, online)
                     loop_init_frame = self.init_scope_frame(s.body)
                     extent = static(s.axis.extent)
-                    if kind == 'StridedLoop' and self.serial_read_pipeline(s):
-                        continue
+                    if kind == 'StridedLoop':
+                        _sv_stride = static_or_none(s.step)
+                        _sv_bound = static_or_none(s.end if s.end is not None else s.axis.extent)
+                        if (_sv_stride is not None and _sv_stride > 0 and _sv_bound is not None
+                                and self.strided_vector_plan(s, _sv_stride, _sv_bound) is not None):
+                            pass
+                        elif self.serial_read_pipeline(s):
+                            continue
                     if kind == 'Loop' and self.ordered_key_batch(s):
                         # KEY replays this loop body without the generic wrapper.
                         # Child dot seeds are body-local even on that route.
