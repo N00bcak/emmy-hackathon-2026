@@ -2372,7 +2372,7 @@ class Emitter:
                         self.emit(f'setp.lt.u32 {active}, {self.hardware_gid}, {n};')
                         self.inactive.append(active)
                     try:
-                        self.statements(s.body)
+                        self.statements_with_init_scope(s.body, self.init_scope_frame(s.body))
                     finally:
                         if inactive and collective:
                             self.inactive.pop()
