@@ -1925,6 +1925,7 @@ class Emitter:
         register, target_dtype = self.convert_operand(operand, source_dtype, target_dtype,
                                                      copy_same_type=True)
         self.values[statement.names[0]] = (register, target_dtype)
+        self.mutable.pop(statement.names[0], None)
         self.rebind(statement.names[0])
 
     def snapshot_operand(self, operand, source_dtype, dtype):
@@ -2393,6 +2394,7 @@ class Emitter:
             elif kind == 'Load':
                 if shared_prefetch is not None and position in shared_prefetch:
                     self.values[s.names[0]] = (shared_prefetch[position], 'f32')
+                    self.mutable.pop(s.names[0], None)
                     self.rebind(s.names[0])
                     continue
                 if s.input in self.scalar_parameters:
@@ -2421,6 +2423,7 @@ class Emitter:
                 # destination binding, including names that shadow an index.
                 for name, register, result_dtype in loaded_bindings:
                     self.values[name] = (register, result_dtype)
+                    self.mutable.pop(name, None)
                     self.rebind(name)
             elif kind == 'Write':
                 if s.swizzle not in ('NONE', None):
@@ -2457,6 +2460,7 @@ class Emitter:
             elif kind == 'Assign':
                 self.address_cache.clear()
                 self.expr_cache.clear()
+                self.mutable.pop(s.name, None)
                 start = len(self.lines)
                 self.assign(s.name, s.op, s.args, s.dtype)
                 if self.inactive and s.name in self.mutable:
@@ -2468,6 +2472,7 @@ class Emitter:
                 operand, source_dtype = self.expr(s.value)
                 target_dtype = source_dtype if s.dtype is None else s.dtype
                 self.values[s.name] = self.snapshot_operand(operand, source_dtype, target_dtype)
+                self.mutable.pop(s.name, None)
                 self.rebind(s.name)
             elif kind == 'Select':
                 self.address_cache.clear()
