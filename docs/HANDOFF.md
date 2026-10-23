@@ -12,6 +12,16 @@ and the rejected vector-reduction integration. These are historical evaluation
 receipts; adopting the 65-case selector does not create a fresh GPU receipt.
 The compiler fixes and supporting evidence are retained in the local repository.
 
+The local merge of fetched `origin/main` at `0914413` retains this compiler
+byte-for-byte. Its vector-reduction redistribution is excluded because the
+existing per-lane witness demonstrated changed output ownership; see the
+[legality review](evidence/main-merge-updated/vector-legality-review.json).
+The dynamic shared-memory addressing fix was already present. Incoming tests,
+documentation and historical hosted results are retained; their results describe
+their recorded source, not a new evaluation of this merge. Local merge checks:
+all 15 published IRs lower, 14 gate tests pass, and all 100 bundled cases verify
+with the expected 65 selected. No fresh assembly or GPU execution was performed.
+
 The synchronized handoff below describes an earlier source and is historical.
 Resolve current remote state from private runtime configuration and START.md
 before starting any further authorized research. No research is started by this
