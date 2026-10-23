@@ -2445,6 +2445,281 @@ class Emitter:
                 return None
         return loads
 
+    def global_dot_vector_plan(self, loop):
+        """Prove four existing readonly global dot reads form one vector group.
+
+        Forms use actual i32 operands rather than SSA spelling. Every expression
+        subtree and flattening intermediate is bounded in signed32 arithmetic.
+        This analysis emits no instructions and never changes range/value state.
+        """
+        body, axis_name = loop.body, loop.axis.name
+        if (id(loop) not in self.global_dot_candidates or self.inactive or not loop.seed
+                or not 4 <= static(loop.axis.extent) <= I32_MAX
+                or [type(s).__name__ for s in body] != ['Load', 'Load', 'Assign', 'Accum']):
+            return {}
+        first, second, product, update = body
+        if (len(first.names) != 1 or len(second.names) != 1
+                or product.op.name != 'multiply' or update.op.name != 'add'
+                or update.value != product.name or update.base is not None
+                or tuple(update.axes) != (axis_name,)
+                or any(s.dtype is None or ssa_dtype_name(s.dtype) != 'f32'
+                       for s in (product, update))):
+            return {}
+        loaded = (first.names[0], second.names[0])
+        if any(name in self.mutable for name in (*loaded, product.name)):
+            return {}
+        if (len(set((*loaded, product.name, update.name, axis_name))) != 5
+                or len(product.args) != 2 or set(product.args) != set(loaded)):
+            return {}
+        for load in (first, second):
+            if (load.input in self.scalar_parameters or load.input not in self.buffers
+                    or load.input in self.shared or load.input not in self.ptrs
+                    or dtype_name(self.buffers[load.input][1]) != 'f32'
+                    or (load.dtype is not None and ssa_dtype_name(load.dtype) != 'f32')):
+                return {}
+        defined = set()
+        for s in body:
+            defined.update(s.names if type(s).__name__ == 'Load' else (s.name,))
+        if axis_name in defined:
+            return {}
+        extent = static(loop.axis.extent)
+        axis_key = ('axis',)
+        atoms = {axis_key: checked_i32_interval(0, extent - 1)}
+
+        def finish(c, terms):
+            terms = {key: value for key, value in terms.items() if value}
+            low = high = c
+            for key, value in terms.items():
+                bounds = atoms[key]
+                if bounds is None:
+                    raise ValueError('Unknown atom range')
+                a, b = (value * bounds[0], value * bounds[1])
+                low += min(a, b)
+                high += max(a, b)
+            bounds = checked_i32_interval(low, high)
+            if bounds is None:
+                raise ValueError('Unbounded signed32 intermediate')
+            if low == high:
+                return low, {}, bounds
+            return c, terms, bounds
+
+        def scale(form, coefficient):
+            return finish(form[0] * coefficient,
+                          {k: v * coefficient for k, v in form[1].items()})
+
+        def add(left, right, sign=1):
+            terms = dict(left[1])
+            for key, value in right[1].items():
+                terms[key] = terms.get(key, 0) + sign * value
+            return finish(left[0] + sign * right[0], terms)
+
+        def key(form):
+            return form[0], tuple(sorted(form[1].items(), key=repr))
+
+        def parse(expr):
+            kind = type(expr).__name__
+            # Mirror expr(): Python floats and default/float-tagged literals
+            # lower to f32, even when their Python/JSON value is an integer.
+            if (kind == 'Literal' and isinstance(expr.value, (bool, int))
+                    and expr.dtype in ('int', 'bool', 'i32')):
+                return finish(int(expr.value), {})
+            if kind == 'Var':
+                if expr.name == axis_name:
+                    return finish(0, {axis_key: 1})
+                if expr.name in defined or expr.name not in self.values:
+                    raise ValueError('Modified or unknown address dependency')
+                operand, dtype = self.values[expr.name]
+                if dtype != 'i32':
+                    raise ValueError('Noninteger address dependency')
+                bounds = self.integer_range(operand)
+                if bounds is None:
+                    raise ValueError('Unknown address range')
+                if bounds[0] == bounds[1]:
+                    return finish(bounds[0], {})
+                atom = ('operand', operand)
+                atoms[atom] = bounds
+                return finish(0, {atom: 1})
+            if kind != 'BinaryExpr':
+                raise ValueError('Unsupported expression proof')
+            left, right = parse(expr.left), parse(expr.right)
+            if expr.op == '+':
+                return add(left, right)
+            if expr.op == '-':
+                return add(left, right, -1)
+            if expr.op == '*' and not left[1]:
+                return scale(right, left[0])
+            if expr.op == '*' and not right[1]:
+                return scale(left, right[0])
+            if axis_key in left[1] or axis_key in right[1]:
+                raise ValueError('Nonaffine axis dependency')
+            bounds = i32_binary_interval(expr.op, left[2], right[2])
+            if bounds is None:
+                raise ValueError('Unsupported opaque integer expression')
+            if bounds[0] == bounds[1]:
+                return finish(bounds[0], {})
+            atom = ('binary', expr.op, key(left), key(right))
+            atoms[atom] = bounds
+            return finish(0, {atom: 1})
+
+        result = {}
+        for position, statement in enumerate(body):
+            if type(statement).__name__ != 'Load' or len(statement.names) != 1:
+                continue
+            shape, dtype = self.buffers[statement.input]
+            if (not shape or shape[-1] % 4 or not statement.index
+                    or type(statement.index[-1]).__name__ != 'Var'
+                    or statement.index[-1].name != axis_name
+                    or any(axis_name in coordinate.free_vars()
+                           for coordinate in statement.index[:-1])):
+                continue
+            if (dtype_name(dtype) != 'f32' or len(statement.index) != len(shape)
+                    or math.prod(shape) > I32_MAX):
+                continue
+            try:
+                flat = finish(0, {})
+                for coordinate, dimension in zip(statement.index, shape, strict=True):
+                    form = parse(coordinate)
+                    if not 0 <= form[2][0] <= form[2][1] < static(dimension):
+                        raise ValueError('Coordinate outside global declaration')
+                    flat = add(scale(flat, static(dimension)), form)
+                if flat[1].get(axis_key) != 1 or flat[0] % 4:
+                    continue
+                if any(value % 4 for atom, value in flat[1].items()
+                       if atom != axis_key):
+                    continue
+                result[position] = statement
+            except ValueError:
+                continue
+        return result
+
+
+    def global_dot_alignment(self, name):
+        # Parameter low bits are immutable. Insert the test before all body
+        # control so a skipped first use can never leave a cached predicate unset.
+        if name not in self.global_dot_alignments:
+            low, pred = self.reg('rd'), self.reg('p')
+            lines = [f'    and.b64 {low}, {self.ptrs[name]}, 15;',
+                     f'    setp.eq.u64 {pred}, {low}, 0;']
+            anchor = self.global_dot_prologue_end
+            self.lines[anchor:anchor] = lines
+            self.global_dot_prologue_end += len(lines)
+            self.global_dot_alignments[name] = pred
+        return self.global_dot_alignments[name]
+
+    def global_dot_prefetch(self, plan):
+        result = {}
+        for position, statement in plan.items():
+            address, space = self.address(statement.input, statement.index)
+            assert space == 'global'
+            registers = tuple(self.reg('f') for _ in range(4))
+            self.emit('ld.global.v4.f32 {' + ', '.join(registers)
+                      + f'}}, [{address}];')
+            result[position] = registers
+        return result
+
+    def global_dot_vector_loop(self, loop, frame):
+        plan = self.global_dot_vector_plan(loop)
+        if not plan:
+            return False
+        extent = static(loop.axis.extent)
+        limit = extent - extent % 4
+        # KEY admission proves these dot temporaries are dead outside the dot.
+        # Both routes mutate the SAME already-seeded public accumulator register.
+        name = loop.body[-1].name
+        carrier = self.values[name]
+        if carrier[1] != 'f32' or self.mutable.get(name) != carrier[0]:
+            return False
+        saved_values = dict(self.values)
+        saved_mutable = dict(self.mutable)
+        saved_ranges = dict(self.int_ranges)
+        saved_ops = dict(self.accum_ops)
+        invariant_depth, expression_depth = len(self.loop_invariants), len(self.loop_expressions)
+
+        def restore_context():
+            self.values = dict(saved_values)
+            self.mutable = dict(saved_mutable)
+            self.int_ranges = dict(saved_ranges)
+            self.accum_ops = dict(saved_ops)
+            self.address_cache.clear()
+            self.expr_cache.clear()
+            del self.loop_invariants[invariant_depth:]
+            del self.loop_expressions[expression_depth:]
+
+        predicates = [self.global_dot_alignment(statement.input)
+                      for statement in plan.values()]
+        aligned = predicates[0]
+        for pred in predicates[1:]:
+            both = self.reg('p')
+            self.emit(f'and.pred {both}, {aligned}, {pred};')
+            aligned = both
+        scalar, joined = self.label('dot_scalar'), self.label('dot_complete')
+        self.emit(f'@!{aligned} bra {scalar};')
+        r = self.reg('r')
+        self.emit(f'mov.s32 {r}, 0;')
+        self.set_integer_range(r, checked_i32_interval(0, limit - 4))
+        self.values[loop.axis.name] = (r, 'i32')
+        self.rebind(loop.axis.name)
+        self.hoist_invariants(loop.body, defined_names(loop.body) | {loop.axis.name})
+        begin, tail = self.label('dot_vector4'), self.label('dot_vector4_tail')
+        self.mark(begin)
+        stop = self.reg('p')
+        self.emit(f'setp.ge.s32 {stop}, {r}, {limit};')
+        self.emit(f'@{stop} bra {tail};')
+        prefetched = self.global_dot_prefetch(plan)
+        for offset in range(4):
+            axis = r
+            if offset:
+                axis = self.reg('r')
+                self.emit(f'add.s32 {axis}, {r}, {offset};')
+                self.set_integer_range(axis, checked_i32_interval(offset, limit - 4 + offset))
+            self.values[loop.axis.name] = (axis, 'i32')
+            self.rebind(loop.axis.name)
+            bindings = {position: registers[offset]
+                        for position, registers in prefetched.items()}
+            self.statements_with_init_scope(loop.body, frame, bindings)
+        self.emit(f'add.s32 {r}, {r}, 4;')
+        self.rebind(loop.axis.name)
+        self.emit(f'bra {begin};')
+        self.mark(tail)
+        self.set_integer_range(r, checked_i32_interval(limit, limit))
+        for coordinate in range(limit, extent):
+            self.values[loop.axis.name] = (str(coordinate), 'i32')
+            self.rebind(loop.axis.name)
+            self.statements_with_init_scope(loop.body, frame)
+        assert self.values[name] == carrier and self.mutable[name] == carrier[0]
+        self.emit(f'bra {joined};')
+
+        # Exact inherited scalar iteration, with the same seed register and
+        # original per-iteration memory/arithmetic order. No second seed or FMA
+        # result capture is introduced.
+        restore_context()
+        self.mark(scalar)
+        scalar_axis = self.reg('r')
+        self.emit(f'mov.s32 {scalar_axis}, 0;')
+        self.set_integer_range(scalar_axis, checked_i32_interval(0, extent - 1))
+        self.values[loop.axis.name] = (scalar_axis, 'i32')
+        self.rebind(loop.axis.name)
+        self.hoist_invariants(loop.body, defined_names(loop.body) | {loop.axis.name})
+        begin, done = self.label('dot_scalar_loop'), self.label('dot_scalar_done')
+        self.mark(begin)
+        stop = self.reg('p')
+        self.emit(f'setp.ge.s32 {stop}, {scalar_axis}, {extent};')
+        self.emit(f'@{stop} bra {done};')
+        self.statements_with_init_scope(loop.body, frame)
+        self.emit(f'add.s32 {scalar_axis}, {scalar_axis}, 1;')
+        self.rebind(loop.axis.name)
+        self.emit(f'bra {begin};')
+        self.mark(done)
+        assert self.values[name] == carrier and self.mutable[name] == carrier[0]
+        self.mark(joined)
+        # All temporary definitions are local under the whole-KEY proof.
+        # Preserve only the shared carrier's runtime value and outer contexts.
+        restore_context()
+        self.rebind(name)
+        self.rebind(loop.axis.name)
+        return True
+
+
     def shared_vector_plan(self, loop):
         """Prove four existing scalar shared reads form one aligned vector.
 
@@ -3003,6 +3278,8 @@ class Emitter:
                         # Child dot seeds are body-local even on that route.
                         self.restore_init_scope(loop_init_frame)
                         continue
+                    if kind == 'Loop' and self.global_dot_vector_loop(s, loop_init_frame):
+                        continue
                     if kind == 'Loop' and 8 <= extent <= I32_MAX and self.shared_compute_body(s):
                         factor = 8
                         vector_plan = self.shared_vector_plan(s)
@@ -3394,7 +3671,11 @@ class Emitter:
 
     def render(self):
         self.serial_read_plans = self.find_serial_read_plans(self.node.op.body)
+        self.global_dot_alignments = {}
+        self.global_dot_prologue_end = len(self.lines)
         self.key_batches = self.find_key_batches(self.node.op.body)
+        self.global_dot_candidates = {id(dot) for plan in self.key_batches.values()
+                                      for dot in plan[1]}
         self.statements(self.node.op.body)
         by_name = {arg['name']: arg for arg in self.meta['args']}
         params = []
