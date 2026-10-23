@@ -2556,23 +2556,45 @@ class Emitter:
 
 
     def init_scope_frame(self, statements):
-        # Existing Init names are lexical shadows. Fresh names retain the
-        # enclosing construct's existing export/join policy.
-        return {s.name: (self.values[s.name], self.mutable.get(s.name))
-                for s in statements
-                if type(s).__name__ == 'Init' and s.name in self.values}
+        # A seeded child fold declares its carrier in THIS body, before its
+        # own loop. Its finalized value remains visible inside this body, but
+        # an ancestor binding must return when this body closes. seedFalse
+        # children declare nothing and keep updating their existing carrier.
+        def owned_seeds(items):
+            # Mirror init_accums ownership, without crossing a nested loop.
+            for statement in items:
+                kind = type(statement).__name__
+                if kind == 'Accum':
+                    yield statement.name
+                elif kind == 'Cond':
+                    yield from owned_seeds(statement.body)
+                    yield from owned_seeds(statement.else_body)
+
+        names = set()
+        for statement in statements:
+            kind = type(statement).__name__
+            if kind == 'Init':
+                names.add(statement.name)
+            elif kind in ('Loop', 'StridedLoop') and statement.seed:
+                names.update(owned_seeds(statement.body))
+        # Fresh names retain the enclosing construct's export/join policy.
+        return {name: (self.values[name], self.mutable.get(name))
+                for name in names if name in self.values}
+
+    def restore_init_scope(self, frame):
+        for name, (value, mutable) in frame.items():
+            self.values[name] = value
+            if mutable is None:
+                self.mutable.pop(name, None)
+            else:
+                self.mutable[name] = mutable
+            self.rebind(name)
 
     def statements_with_init_scope(self, statements, frame, shared_prefetch=None):
         try:
             self.statements(statements, shared_prefetch)
         finally:
-            for name, (value, mutable) in frame.items():
-                self.values[name] = value
-                if mutable is None:
-                    self.mutable.pop(name, None)
-                else:
-                    self.mutable[name] = mutable
-                self.rebind(name)
+            self.restore_init_scope(frame)
 
 
     def binding(self, name):
@@ -2945,6 +2967,9 @@ class Emitter:
                     if kind == 'StridedLoop' and self.serial_read_pipeline(s):
                         continue
                     if kind == 'Loop' and self.ordered_key_batch(s):
+                        # KEY replays this loop body without the generic wrapper.
+                        # Child dot seeds are body-local even on that route.
+                        self.restore_init_scope(loop_init_frame)
                         continue
                     if kind == 'Loop' and 8 <= extent <= I32_MAX and self.shared_compute_body(s):
                         factor = 8
