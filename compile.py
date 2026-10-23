@@ -175,7 +175,60 @@ def selected_constant_branches(statements):
 def validate_partial_tile_collectives(statements, emitter):
     """Prove direct full-physical-CTA collective participation."""
     tree_buffer_requirements = {}
-    def visit(items, direct):
+    uniform_cache = {}
+    def uniform_loop(statement):
+        # This predicate depends only on the immutable typed statement tree.
+        # Cache within this validation call; participation ancestry is separate.
+        key = id(statement)
+        if key not in uniform_cache:
+            uniform_cache[key] = prove_uniform_loop(statement)
+        return uniform_cache[key]
+    def prove_uniform_loop(statement):
+        kind = type(statement).__name__
+        if kind not in ('Loop', 'StridedLoop'):
+            return False
+        axis = statement.axis.name
+        known = frozenset(('Load', 'Write', 'Assign', 'Accum', 'Init', 'Let',
+                           'Select', 'Smem', 'CpAsyncCopy', 'CpAsyncCommit',
+                           'CpAsyncWait', 'Sync', 'Loop', 'StridedLoop',
+                           'Cond', 'WarpShuffle', 'TreeHalve'))
+        def preserves_axis(items):
+            for child in items:
+                child_kind = type(child).__name__
+                if child_kind not in known:
+                    return False
+                # Every descendant must terminate for padding physical lanes,
+                # even if its own body contains no barrier.
+                if child_kind in ('Loop', 'StridedLoop') and not uniform_loop(child):
+                    return False
+                if (getattr(child, 'name', None) == axis
+                        or axis in getattr(child, 'names', ())
+                        or axis in getattr(child, 'state', ())
+                        or axis in getattr(child, 'state_b', ())
+                        or getattr(getattr(child, 'axis', None), 'name', None) == axis):
+                    return False
+                if not all(preserves_axis(body) for body in statement_bodies(child)):
+                    return False
+            return True
+        if not preserves_axis(statement.body):
+            return False
+        extent = static(statement.axis.extent)
+        if not 0 < extent <= I32_MAX:
+            return False
+        if kind == 'Loop':
+            return True
+        def integer_literal(expr):
+            if (type(expr).__name__ == 'Literal' and type(expr.value) is int
+                    and expr.dtype in ('int', 'i32')
+                    and I32_MIN <= expr.value <= I32_MAX):
+                return expr.value
+            return None
+        start, step = integer_literal(statement.start), integer_literal(statement.step)
+        end = extent if statement.end is None else integer_literal(statement.end)
+        return (start is not None and step is not None and end is not None
+                and 0 <= start < end <= extent and step > 0
+                and end - 1 + step <= I32_MAX)
+    def visit(items, direct, uniform):
         for index, statement in enumerate(items):
             kind = type(statement).__name__
             if kind == 'Tile':
@@ -201,12 +254,12 @@ def validate_partial_tile_collectives(statements, emitter):
                     raise Unsupported('Partial CTA tree needs a direct publication barrier')
                 continue
             if kind == 'Sync':
-                if not direct or statement.warp or statement.count is not None:
+                if not uniform or statement.warp or statement.count is not None:
                     raise Unsupported('Partial collective Tile has an unproven barrier')
                 continue
             for body in statement_bodies(statement):
-                visit(body, False)
-    visit(statements, True)
+                visit(body, False, uniform and uniform_loop(statement))
+    visit(statements, True, True)
 
 class Unsupported(ValueError):
     pass
