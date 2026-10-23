@@ -1,0 +1,61 @@
+{
+  "status": "CORRECTION to prior static reporting only: a01 actual LDG.E.128 sites64 perarch, not66. a02 remains8. No compiler/nativehash/resource/measurement change.",
+  "cause": "Prior broad line predicate LDG in line AND128 in line also matched scalar LDG.E destination registerR128. Current parser checks the opcode token width before operands.",
+  "rows": [
+    {
+      "problem": "a01_attention",
+      "arch": "sm_89",
+      "native_SASS_sha256": "409e3bd9f46b4adefdfbeb53a973e6b20e18be18232db507b875fd9b2b7f449c",
+      "folder": "/root/nfs/emmy/research/assembly-cache/3dedf7bc8205c0c9fb58994b23f6047ed35eaf87955f94c43cd52be6585e0a72",
+      "old_broad_line_count": 66,
+      "actual_LDG_E_128_opcode_count": 64,
+      "false_positive_scalar_instructions": [
+        "LDG.E R128, [R20.64]",
+        "LDG.E R128, [R12.64]"
+      ]
+    },
+    {
+      "problem": "a01_attention",
+      "arch": "sm_120",
+      "native_SASS_sha256": "aa0feb36cfbce39030368434ec7fe60e7dc410a35068c66e8925178c7d9b66f9",
+      "folder": "/root/nfs/emmy/research/assembly-cache/1aa2fd7f6a251ceb65de00bd4695e9b94e262f320d56f3256ff457b64119d63a",
+      "old_broad_line_count": 66,
+      "actual_LDG_E_128_opcode_count": 64,
+      "false_positive_scalar_instructions": [
+        "LDG.E R128, desc[UR8][R20.64]",
+        "LDG.E R128, desc[UR8][R16.64]"
+      ]
+    },
+    {
+      "problem": "a02_attention_128",
+      "arch": "sm_89",
+      "native_SASS_sha256": "758dbaafd8be9b97efe43fab8992e38789be07e2cb3854665562bf53e1965e0a",
+      "folder": "/root/nfs/emmy/research/assembly-cache/815b2170e4bbca8f96020127dbf1b4c03ee0a809d72a35d73a8c5e48f9f47163",
+      "old_broad_line_count": 8,
+      "actual_LDG_E_128_opcode_count": 8,
+      "false_positive_scalar_instructions": []
+    },
+    {
+      "problem": "a02_attention_128",
+      "arch": "sm_120",
+      "native_SASS_sha256": "798d894d47e2739b3fc0dd1cce56efddbe818617ff9c50449e77e027abce0b33",
+      "folder": "/root/nfs/emmy/research/assembly-cache/871381d9efc9f7a0b5e829f8d5dc35dc98436c0814e0b372c9f0e4459912e001",
+      "old_broad_line_count": 8,
+      "actual_LDG_E_128_opcode_count": 8,
+      "false_positive_scalar_instructions": []
+    }
+  ],
+  "affected_prior_reports": [
+    "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/bugs-types/softplus-vector-source-composition-v1/published-attention-native-vector-activation.json",
+    "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/bugs-types/vector-erf-qualification-v1/published-attention-native-vector-activation.json",
+    "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/bugs-types/softplus-vector-source-composition-v1/handoff.json",
+    "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/bugs-types/vector-erf-qualification-v1/handoff.json"
+  ],
+  "original_report_bytes_preserved": {
+    "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/bugs-types/vector-erf-qualification-v1/published-attention-native-vector-activation.json": "e5efe040cbb67edb475561a0f6adda5821ec47e7a1e1108e254aa5369c68fa80",
+    "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/bugs-types/softplus-vector-source-composition-v1/published-attention-native-vector-activation.json": "7d0d23ce05cf6e5813446679c9907f7ab8f6e107e3a9efa5f502a5bc00c8447c"
+  },
+  "no_runtime_traffic_or_speed_inference": true,
+  "current_corrected_report": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/bugs-types/selected-vector-erf-independent-qualification-v1/known65-complete.json",
+  "created_utc": "2026-10-23T02:37:52.953584+00:00"
+}

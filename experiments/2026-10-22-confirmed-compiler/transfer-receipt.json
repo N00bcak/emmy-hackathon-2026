@@ -1,0 +1,16 @@
+{
+  "recorded_at_utc": "2026-10-22T07:16:53.228933+00:00",
+  "branch": "n00bcak",
+  "compile_sha256": "a8265ab9a78b0663d4daa2a5b16ac62e5a2d5dce6bfe03420306cdbcf893e8a2",
+  "source_id": "e02740fea768412b05c780b12f5d2c560ecce74561b02b66a14ca949615f50a2",
+  "transfer": "confirmed immutable source copied to owner compile.py after original source and clean worktree checks",
+  "verification": "Exact source SHA256 and git diff --check; no new research evaluation after cutoff",
+  "commit_or_publication": false,
+  "files": {
+    "HANDOFF.md": "0cda065263c8e2623f88c9a54049bcffcbab9c0c05be2043713bf1a15a12b671",
+    "REPORT.md": "1a1c6f5f6029801ebb0a8f074710f2c3e697e3d7b26de1bc56db9882bcefaba8",
+    "per-case-performance.csv": "c526161944ac9922b7080b94928ff105e2ec1e2473c9e6d33abf9084d25fee87",
+    "qualified-assessment.json": "5fafcce586fe5a7d94b8a991d48c37c93cdefc9a9f86e30bcdf197fcfc0b7e7d",
+    "qualified-case-ledger.json": "3c484867af6bbddc7f8f475d2d045d4846ff5811d9e3505d5c7d57502ddd9e3d"
+  }
+}

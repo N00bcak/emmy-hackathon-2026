@@ -1,0 +1,75 @@
+{
+  "source_sha256": "3acaaf37709c7926a1c4cbbf8b16f34d8c86d0df4ed68384909bb01f2e023f28",
+  "parent_source_id": "5feed7f75124ade357402f9ce9587ac3c827dc2d684eaa947ed1d8eef3bbf9e3",
+  "parent_compile_sha256": "b355e4d4be8c8bf1f54857e93c70131ca719b0a93274fc20a2a65edc8d96f6dc",
+  "AST_outside_validator_identical": true,
+  "evaluator_prepare_path": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/evaluation-v3/tools/research_prepare.py",
+  "evaluator_prepare_sha256": "56efc1a6bf770750867cc5180330db376c1342e9e46f49611639d9825c8aac6c",
+  "E3_suite_id": "0fa85c2e98ef65616058b558c1008d80f0f3530ae13cfdf276774050f8a2d5ce",
+  "oracle_artifact_id": "b8c9e14f8bb41dbded66edf84daf814e1cc3fb0a84eab84a4d55564b8c84f932",
+  "started_at": 1792707348.1946294,
+  "PID": 596568,
+  "stages": [
+    {
+      "label": "static-all15",
+      "prepared_json": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/bugs-types/partial-cta-uniform-loop-prototype-v3/static-all15/prepared.json",
+      "prepared_json_sha256": "aba7dfe2856ac69b6dd48d4ac812529cf6e55cd4dddb02a3b11b8200a98134da",
+      "cases": 15,
+      "gate": "pass",
+      "baseline_prepared_json": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/bugs-types/select-shadow-snapshot-prototype-v1/all15-candidate/prepared.json",
+      "baseline_prepared_json_sha256": "989b62050e8ff4856d33e3475456341a694aec01d9b27f71a3b29c4ce806af04",
+      "all_PTX_identical": true,
+      "all_SASS_identical": true,
+      "all_resources_identical": true
+    },
+    {
+      "label": "static-compact58",
+      "prepared_json": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/bugs-types/partial-cta-uniform-loop-prototype-v3/static-compact58/prepared.json",
+      "prepared_json_sha256": "379453487b19aea686dbfbd308e7330645d63473aba28333d0f3999b85796275",
+      "cases": 58,
+      "gate": "pass",
+      "baseline_prepared_json": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/diagnostics/correctness-select-shadow-snapshot-v1/compact-v2/preparation/prepared.json",
+      "baseline_prepared_json_sha256": "9a77723b3fd59f243623e3378a9bdf40f864253abddc09ba89061166ea4392e9",
+      "all_PTX_identical": true,
+      "all_SASS_identical": true,
+      "all_resources_identical": true
+    },
+    {
+      "label": "static-partial-validation2",
+      "prepared_json": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/bugs-types/partial-cta-uniform-loop-prototype-v3/static-partial-validation2/prepared.json",
+      "prepared_json_sha256": "16b45ef80a63554cacfa0c3cac4ba48b0df3df149ab0ede7d6a8b5e5c9db1c1c",
+      "cases": 2,
+      "gate": "pass"
+    }
+  ],
+  "no_GPU": true,
+  "source_frozen": false,
+  "baseline_partial_rejections": [
+    {
+      "case_id": "bd0cba1f7d07098c0d584b79d80458a57edfee77e685ab2c2eea3d847f1f4414",
+      "case_dir": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/partial-uniform-oracle-validation-667788/loop",
+      "compile_record": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/bugs-types/partial-cta-uniform-loop-prototype-v3/baseline-partial-rejections/loop/compile.json",
+      "stderr_sha256": "5009a171807bdf85fdfcaec000f9a1cab3d62f43d13a0ba53d88d68e788a5903",
+      "exit_code": 1,
+      "expected_reason": "Partial collective Tile has an unproven barrier",
+      "status": "unsupported diagnostic control; not correctness pass"
+    },
+    {
+      "case_id": "fb08b0884f3532cd8a601414cd6f2434f05b99602b99dfee396c8b73fc9643f4",
+      "case_dir": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/partial-uniform-oracle-validation-667788/nested-strided-loop",
+      "compile_record": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/bugs-types/partial-cta-uniform-loop-prototype-v3/baseline-partial-rejections/nested-strided-loop/compile.json",
+      "stderr_sha256": "5009a171807bdf85fdfcaec000f9a1cab3d62f43d13a0ba53d88d68e788a5903",
+      "exit_code": 1,
+      "expected_reason": "Partial collective Tile has an unproven barrier",
+      "status": "unsupported diagnostic control; not correctness pass"
+    }
+  ],
+  "completed_at": 1792707413.559409,
+  "status": "complete: published15/compact58 botharch static pass and exactbaselineidentity; partial2 candidate botharch pass,baseline2expectedunsupported",
+  "source_unchanged": true,
+  "jobs_joined": true,
+  "exec_session_id": 86567,
+  "exec_exit_code": 0,
+  "host_job_dir": "/mnt/nfs/bcy/emmy/measurements/20261022T221546Z-research-cpu-GGhy5M",
+  "CPU_worker_released": true
+}

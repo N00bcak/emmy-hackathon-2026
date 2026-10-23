@@ -1,0 +1,17 @@
+{
+  "status": "APPROVED narrow source repair; no code-level blocker",
+  "source": "/root/bcy/emmy/research-workspaces/scalar-bool-relational-prefetch-v2-prototype/compile.py",
+  "sha256": "e1915b7a868751d800dbc84932ae91b94f2e8b24fd017b57c66f2a785adba480",
+  "parent_compile_sha256": "7fcb3f87946c567c685056c28c10580d6704970a45ad836ec7d7034aa589b03c",
+  "exact_scope": "Deleting exact6line guard/conversion delta reconstructs byte-exact7fcb parent. Only Emitter.expr BOOL ordered-comparison path changes.",
+  "proof": [
+    "Bothpred operands only, four orderedoperators only; convert_register delegates to snapshot_operand pred-toi32 selp0/1, so signed32 comparison exactlyimplements publicBOOL0<1.",
+    "EQ/NE return earlier through existingxor/notpred. Mixedpred/numeric and all numeric types take identical originalpaths. Operand evaluation and resultpredicatepublication/cachebehavior unchanged.",
+    "Conversion allocates fresh privateI32 registers; no originalpredicate/SSAcarrier mutation; false/true maps0/1 with no rounding/overflow."
+  ],
+  "independent_oracle": "C/latency-index/review-scalar-bool-ssa-v2-actual884411.json: all809words independently bitwisechecked,7relationcolumns/allfourtruthpairs.",
+  "limits": [
+    "Source/AST review only, no own compiler invocation, assembly orGPU. Author controls/assembly are separate evidence; fullall15/frozen-source gates still required."
+  ],
+  "created_at": "2026-10-22T23:18:55.091176+00:00"
+}

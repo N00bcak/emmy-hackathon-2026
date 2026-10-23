@@ -1,0 +1,26 @@
+{
+  "version": "gpu-regression-compact-v2",
+  "prior_cases": 894,
+  "default_cases": 58,
+  "published_cases": 15,
+  "generated_witnesses": 43,
+  "kernels": 58,
+  "required_sanitizer_cases": 15,
+  "case_reduction_percent": 93.51230425055928,
+  "compiler_sha256": "ef5e7fe0092f95c86a4effa628c533c6c3ec2e4d16802035ed31073e27d88d6a",
+  "policy_sha256": "4507a82e0d59f918372c3e93252fd35acfde1fc15b6ed0d119aabb6337920ac4",
+  "gpu_evidence": "All58 selected cases verified as isolated, guarded, input-integrity-checked passes in the existing immutable full862 receipt; parent sanitizer gate passed. No compiler change.",
+  "fresh_gpu_replay": "Deferred by admission: foreign4090 process using3542MiB; no GPU worker started.",
+  "new_protocol": "Default one fresh draw per selected family under new version research-all15-compact-v2; frozen old evaluator and reservations unchanged. New protocol has CPU orchestration tests, no new GPU qualification.",
+  "cpu_verification": {
+    "command": ".venv/bin/python -m unittest tests.test_regression_suite tests.test_research_pipeline",
+    "tests": 32,
+    "passed": true
+  },
+  "branch": "n00bcak",
+  "commits": 0,
+  "publication": false,
+  "hosted_calibration": false,
+  "smoke_run": "compact-regression-smoke-v1 closed; discovery off; no active GPU/preparation jobs",
+  "performance_claim": false
+}

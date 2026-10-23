@@ -1,0 +1,28 @@
+{
+  "W16": {
+    "actual_SHFL_source_transport_checks": 640,
+    "cross_segment_sources": 0,
+    "limits": "Finite/nonzerofastpath andprecomputepriorpeakonly; W16publiccoefficientreplayandtail/partialwholeCFGnotmodeled.",
+    "native_arch_case_models": 4,
+    "physical_lane_models": 128,
+    "prior_peak_prefix_MAX_matches": true,
+    "source_guard": "ActualLOP3 lane&15, hardwarelane&31, comparisons against1/2/4/8 andSEL ownlane/previouslane are modeled; clamp31 alonewasnotassumedsegmented."
+  },
+  "first_strict_DAG_failure_preserved": "future-native-division-W16-v1.py assertion exposed parentalq0FFMAproductswap; allDAGsretained, v2 explicitlyreportsstrictfalse/finiteproduct-onlymatch ratherthanclaimingstrictidentity.",
+  "normal_division": {
+    "case_arch_rows": 12,
+    "limits": "Numerator/denominatorrole roots abstracted from actualFCHKarguments. FiveorderedFMAaddends/steps preserved; parent q0 productorder exchanges NUM and refinedRCP. Finiteproductcommutativity only; exceptionhelper/fullCFG/rawdotloadprovenancenotproved fornewdividecases.",
+    "parent_vs_new_equal_only_FFMA_product_commutation": 12,
+    "parent_vs_new_strict_equal": 0,
+    "private_vs_public_replay_5FFMA_RCP_DAG_strict_equal": 12
+  },
+  "owned_CPU_workers": 0,
+  "remaining_gaps": [
+    "NoGPU/freeze/timingthisrun; futureprototypeonly.",
+    "NativeEX2input/rootdivisioncouplingacrossKEYbackedges, genericW16publiccoefficientlifetimes, partialfullwarpguard/exceptionhelpersrequirefutureboundedproof/runtimegate.",
+    "ReusedV8eightarenowknownscreeningdata; futurerepeatedsourcetestmustnotclaimfreshpostselection."
+  ],
+  "source_review": "/mnt/nfs/bcy/emmy/research/campaigns/campaign-20261023-12h-v2/latency-index/key-prefix-exp-score-divide-source-review-v3/review.json",
+  "source_sha256": "c9b17dac338c3d0b34002bfdcbf0c624fb6dc3ffd9dfd40b32fd44cd609ef045",
+  "status": "BOUNDED_FUTURE_NATIVE_EVIDENCE_NO_GPU_QUALIFICATION"
+}

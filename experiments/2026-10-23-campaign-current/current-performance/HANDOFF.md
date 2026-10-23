@@ -1,0 +1,1 @@
+Current offline table: read manifest.json, REPORT.md and per-case.json. No owned GPU/CPU jobs or active campaign. Before any new performance work, preserve the recorded sm120 all15 failure and obtain authorization for diagnosis/implementation as appropriate. Exact next offline command: python3 experiments/2026-10-23-campaign-current/current-performance/table.py

@@ -1,0 +1,2627 @@
+{
+  "version": "campaign-20261023-behavior-inventory-v34",
+  "generated_type_cap": 100,
+  "generated_types": 82,
+  "published_anchors": 15,
+  "type_identity": "Compiler semantic behavior; random seed and a shape alone are not new types. Distinct dtype instruction classes, operations with different identities, control-flow/scope relations, transport alignments and collective participation boundaries may be distinct.",
+  "archived_cases_retained": 894,
+  "active_baseline_source_id": "ae7efd5ad535a05d39ac0567b07d118ced230c73dee13409744e83993289ff32",
+  "policy_sha256": "4507a82e0d59f918372c3e93252fd35acfde1fc15b6ed0d119aabb6337920ac4",
+  "types": [
+    {
+      "type_id": "abi-scalar-f16",
+      "representative_case_id": "7be68f4ef7d32de1bde415d3c96e21c0aee23c0c175d1339a81abb77eaff8083",
+      "representative_path": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/confirmations/corrected-baseline-v1/identity/case-1",
+      "family": "pointwise",
+      "selector_for_replay": {
+        "version": "scalar-abi-buffer-identity-v1",
+        "scalar_dtype": "f16"
+      },
+      "dedup_rule": "Additional seeds and dimensions do not add types unless they cross the stated semantic boundary.",
+      "previous_witness_label": "existing-001",
+      "semantic_contract": "By-value f16 ABI with independent tensor/buffer labels and reordered parameters",
+      "type_basis": "Distinct documented compiler contract or instruction/scope/collective path; representative ID is evidence only, not type identity"
+    },
+    {
+      "type_id": "abi-scalar-f64",
+      "representative_case_id": "ed37ac4d2801d41d13b5fd2ce98731e8e717f9651e92193bc9146c008b87aeba",
+      "representative_path": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/confirmations/corrected-baseline-v1/identity/case-10",
+      "family": "pointwise",
+      "selector_for_replay": {
+        "version": "scalar-abi-buffer-identity-v1",
+        "scalar_dtype": "f64"
+      },
+      "dedup_rule": "Additional seeds and dimensions do not add types unless they cross the stated semantic boundary.",
+      "previous_witness_label": "existing-002",
+      "semantic_contract": "By-value f64 ABI with independent tensor/buffer labels and reordered parameters",
+      "type_basis": "Distinct documented compiler contract or instruction/scope/collective path; representative ID is evidence only, not type identity"
+    },
+    {
+      "type_id": "abi-scalar-i32",
+      "representative_case_id": "605ee03dc09345cfed01434531ed73588a820eb19fd1eaf1327f5e67889756d6",
+      "representative_path": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/confirmations/corrected-baseline-v1/identity/case-15",
+      "family": "pointwise",
+      "selector_for_replay": {
+        "version": "scalar-abi-buffer-identity-v1",
+        "scalar_dtype": "i32"
+      },
+      "dedup_rule": "Additional seeds and dimensions do not add types unless they cross the stated semantic boundary.",
+      "previous_witness_label": "existing-003",
+      "semantic_contract": "By-value i32 ABI with independent tensor/buffer labels and reordered parameters",
+      "type_basis": "Distinct documented compiler contract or instruction/scope/collective path; representative ID is evidence only, not type identity"
+    },
+    {
+      "type_id": "abi-scalar-i64",
+      "representative_case_id": "4f496d88d4a5739947380eac36ae5592d18e0e980e1038721c926960643b9660",
+      "representative_path": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/confirmations/corrected-baseline-v1/identity/case-16",
+      "family": "pointwise",
+      "selector_for_replay": {
+        "version": "scalar-abi-buffer-identity-v1",
+        "scalar_dtype": "i64"
+      },
+      "dedup_rule": "Additional seeds and dimensions do not add types unless they cross the stated semantic boundary.",
+      "previous_witness_label": "existing-004",
+      "semantic_contract": "By-value i64 ABI with independent tensor/buffer labels and reordered parameters",
+      "type_basis": "Distinct documented compiler contract or instruction/scope/collective path; representative ID is evidence only, not type identity"
+    },
+    {
+      "type_id": "abi-unused-scalar-slot",
+      "representative_case_id": "babe59769149f7131c83c276e58558a1cc49ab73d0e6d7112b70d4d946be6fc3",
+      "representative_path": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/confirmations/corrected-baseline-v1/unused/case-0",
+      "family": "pointwise",
+      "selector_for_replay": {
+        "version": "unused-scalar-abi-v1",
+        "unused_scalar_dtype": "f16"
+      },
+      "dedup_rule": "Additional seeds and dimensions do not add types unless they cross the stated semantic boundary.",
+      "previous_witness_label": "existing-005",
+      "semantic_contract": "Unused scalar parameter preserves ABI slots; F32 scalar arithmetic",
+      "type_basis": "Distinct documented compiler contract or instruction/scope/collective path; representative ID is evidence only, not type identity"
+    },
+    {
+      "type_id": "geometry-scalar-math-interaction",
+      "representative_case_id": "07247b475413b2486a6138901e9a05e886b2993ef6d21c963b2cc7bce52c3e0d",
+      "representative_path": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/confirmations/corrected-baseline-v1/interactions/case-1",
+      "family": "pointwise",
+      "selector_for_replay": {
+        "version": "scalar-geometry-math-interactions-v1",
+        "scalar_dtype": "f32"
+      },
+      "dedup_rule": "Additional seeds and dimensions do not add types unless they cross the stated semantic boundary.",
+      "previous_witness_label": "existing-006",
+      "semantic_contract": "Full XYZ block/grid geometry combined with tail, scalar F32 ABI and math",
+      "type_basis": "Distinct documented compiler contract or instruction/scope/collective path; representative ID is evidence only, not type identity"
+    },
+    {
+      "type_id": "geometry-hardware-xyz",
+      "representative_case_id": "c5940d93d7e94754b865cde5571eb2e6e91067518afb569e4f871284d5d3985f",
+      "representative_path": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/confirmations/corrected-baseline-v1/geometry/case-5",
+      "family": "pointwise",
+      "selector_for_replay": {
+        "version": "geometry-cartesian-v1",
+        "mode": "builtin",
+        "physical_block": [
+          16,
+          2,
+          2
+        ]
+      },
+      "dedup_rule": "Additional seeds and dimensions do not add types unless they cross the stated semantic boundary.",
+      "previous_witness_label": "existing-007",
+      "semantic_contract": "Hardware Builtin values across full XYZ block/grid geometry",
+      "type_basis": "Distinct documented compiler contract or instruction/scope/collective path; representative ID is evidence only, not type identity"
+    },
+    {
+      "type_id": "typed-half-transport-arithmetic",
+      "representative_case_id": "6cbcd2d465379c7f0d61cf88e1074f31e8296caefc4a85394212978d907873d5",
+      "representative_path": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/integration-main-83a3944/replay-plan-v4-canonical/cases/case-02",
+      "family": "main-typed",
+      "selector_for_replay": {
+        "family": "main-typed",
+        "case": "f16_roundtrip"
+      },
+      "dedup_rule": "Additional seeds and dimensions do not add types unless they cross the stated semantic boundary.",
+      "previous_witness_label": "existing-008",
+      "semantic_contract": "Half global/shared transport and promoted arithmetic",
+      "type_basis": "Distinct documented compiler contract or instruction/scope/collective path; representative ID is evidence only, not type identity"
+    },
+    {
+      "type_id": "typed-native-f64-arithmetic",
+      "representative_case_id": "61098ba0cc34ea091b2a821816dec4f8743aa37dc010ee6b20a8c46722a48c4f",
+      "representative_path": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/integration-main-83a3944/replay-plan-v4-canonical/cases/case-03",
+      "family": "main-typed",
+      "selector_for_replay": {
+        "family": "main-typed",
+        "case": "f64_values"
+      },
+      "dedup_rule": "Additional seeds and dimensions do not add types unless they cross the stated semantic boundary.",
+      "previous_witness_label": "existing-009",
+      "semantic_contract": "Native F64 arithmetic and storage",
+      "type_basis": "Distinct documented compiler contract or instruction/scope/collective path; representative ID is evidence only, not type identity"
+    },
+    {
+      "type_id": "typed-bitcast-memory",
+      "representative_case_id": "3403dbd465d8a05049feb992ea67d9ecf4de0fb1ef106c2bd71146e312b437fb",
+      "representative_path": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/integration-main-83a3944/replay-plan-v4-canonical/cases/case-00",
+      "family": "main-typed",
+      "selector_for_replay": {
+        "family": "main-typed",
+        "case": "bitcast_roundtrip"
+      },
+      "dedup_rule": "Additional seeds and dimensions do not add types unless they cross the stated semantic boundary.",
+      "previous_witness_label": "existing-010",
+      "semantic_contract": "Bit-preserving reinterpretation through memory",
+      "type_basis": "Distinct documented compiler contract or instruction/scope/collective path; representative ID is evidence only, not type identity"
+    },
+    {
+      "type_id": "typed-native-i32-funcall-add",
+      "representative_case_id": "61376e724851b5c2da0888a4dd999d755ce44ae5e591390537922d6fe3d4220f",
+      "representative_path": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/reviews/funcall-i32-v1/draw-0/case-5",
+      "family": "pointwise",
+      "selector_for_replay": {
+        "version": "funcall-native-i32-v1",
+        "mode": "global",
+        "op": "add"
+      },
+      "dedup_rule": "Additional seeds and dimensions do not add types unless they cross the stated semantic boundary.",
+      "previous_witness_label": "existing-011",
+      "semantic_contract": "Native I32 FuncCall arithmetic preserves low bits above F32 exact range",
+      "type_basis": "Distinct documented compiler contract or instruction/scope/collective path; representative ID is evidence only, not type identity"
+    },
+    {
+      "type_id": "typed-mixed-group-write",
+      "representative_case_id": "fae06ecf5a68131f772531ea344d7a9c6e1f07075d191720cf5c330930af9f96",
+      "representative_path": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/supplement-6a7065784ebfd2f113b9acb0af7fbf1c95dfd543754f566142257c09a77291fa/typed-values/case-28",
+      "family": "pointwise",
+      "selector_for_replay": {
+        "version": "typed-values-f32-destination-v1",
+        "mode": "group_mixed4"
+      },
+      "dedup_rule": "Additional seeds and dimensions do not add types unless they cross the stated semantic boundary.",
+      "previous_witness_label": "existing-012",
+      "semantic_contract": "Grouped mixed integer/predicate writes convert to F32 destinations",
+      "type_basis": "Distinct documented compiler contract or instruction/scope/collective path; representative ID is evidence only, not type identity"
+    },
+    {
+      "type_id": "typed-f32-literal-rounding",
+      "representative_case_id": "dc8cc0e8d88e7d60dcdf702bacc8d91e2e1761c18e9040ffd9b34c90477315c5",
+      "representative_path": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/supplement-6a7065784ebfd2f113b9acb0af7fbf1c95dfd543754f566142257c09a77291fa/scalar/case-16",
+      "family": "pointwise",
+      "selector_for_replay": {
+        "version": "scalar-predicate-literal-v1",
+        "mode": "float_literal_rounding"
+      },
+      "dedup_rule": "Additional seeds and dimensions do not add types unless they cross the stated semantic boundary.",
+      "previous_witness_label": "existing-013",
+      "semantic_contract": "F32 literal rounding with integer-valued float payload",
+      "type_basis": "Distinct documented compiler contract or instruction/scope/collective path; representative ID is evidence only, not type identity"
+    },
+    {
+      "type_id": "typed-nan-truth",
+      "representative_case_id": "d42770018f494d678181aa0171c67225bae91861383c3d0149483e02559f14a3",
+      "representative_path": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/supplement-6a7065784ebfd2f113b9acb0af7fbf1c95dfd543754f566142257c09a77291fa/scalar/case-11",
+      "family": "pointwise",
+      "selector_for_replay": {
+        "version": "scalar-predicate-literal-v1",
+        "mode": "internal_nan_bool"
+      },
+      "dedup_rule": "Additional seeds and dimensions do not add types unless they cross the stated semantic boundary.",
+      "previous_witness_label": "existing-014",
+      "semantic_contract": "NaN truth conversion uses unordered comparison",
+      "type_basis": "Distinct documented compiler contract or instruction/scope/collective path; representative ID is evidence only, not type identity"
+    },
+    {
+      "type_id": "math-natural-log-funcall",
+      "representative_case_id": "31e66c227e064fdcdfdbd607624fae8c845d5a1c7f07668e40759e9961c1435f",
+      "representative_path": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/confirmations/corrected-baseline-v1/math/case-1",
+      "family": "pointwise",
+      "selector_for_replay": {
+        "version": "math-cast-flatindex-v1",
+        "mode": "log_call"
+      },
+      "dedup_rule": "Additional seeds and dimensions do not add types unless they cross the stated semantic boundary.",
+      "previous_witness_label": "existing-015",
+      "semantic_contract": "Natural logarithm in FuncCall expression",
+      "type_basis": "Distinct documented compiler contract or instruction/scope/collective path; representative ID is evidence only, not type identity"
+    },
+    {
+      "type_id": "index-signed-floor-remainder",
+      "representative_case_id": "b3b9d4ccd080adb9d5a05ae938aec6089818bc50230ec5093d25c135097c90a1",
+      "representative_path": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/supplement-6a7065784ebfd2f113b9acb0af7fbf1c95dfd543754f566142257c09a77291fa/signed/case-31",
+      "family": "pointwise",
+      "selector_for_replay": {
+        "version": "signed-index-fresh-v2",
+        "parameters": {
+          "divisor": -1,
+          "dynamic": true,
+          "multiplier": 1,
+          "n": 31,
+          "op": "//",
+          "seed": 7674677781671106564,
+          "shift": 11
+        }
+      },
+      "dedup_rule": "Additional seeds and dimensions do not add types unless they cross the stated semantic boundary.",
+      "previous_witness_label": "existing-016",
+      "semantic_contract": "Dynamic signed intermediate floor division/remainder addresses",
+      "type_basis": "Distinct documented compiler contract or instruction/scope/collective path; representative ID is evidence only, not type identity"
+    },
+    {
+      "type_id": "transport-unaligned-vector-tail",
+      "representative_case_id": "b24c76efd4ba9fd8763e69cfd1e0926f876281a2a06fd64c8dc9e882b9a33aed",
+      "representative_path": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/supplement-6a7065784ebfd2f113b9acb0af7fbf1c95dfd543754f566142257c09a77291fa/vector/case-4",
+      "family": "pointwise",
+      "selector_for_replay": {
+        "version": "vector-offset-v1",
+        "width": 4,
+        "x_offset": 1,
+        "y_offset": 2,
+        "shape": [
+          65,
+          4
+        ]
+      },
+      "dedup_rule": "Additional seeds and dimensions do not add types unless they cross the stated semantic boundary.",
+      "previous_witness_label": "existing-017",
+      "semantic_contract": "Unaligned vector-width-four transport and tail fallback",
+      "type_basis": "Distinct documented compiler contract or instruction/scope/collective path; representative ID is evidence only, not type identity"
+    },
+    {
+      "type_id": "expression-identity-cast",
+      "representative_case_id": "f188ef762959e2f777587b9dbfb60421c6765cfd5412b37516c4b7113e7ff42a",
+      "representative_path": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/integration-main-83a3944/replay-plan-v4-canonical/cases/case-14",
+      "family": "merge-expression-cse",
+      "selector_for_replay": {
+        "family": "merge-expression-cse",
+        "kind": "cast"
+      },
+      "dedup_rule": "Additional seeds and dimensions do not add types unless they cross the stated semantic boundary.",
+      "previous_witness_label": "existing-018",
+      "semantic_contract": "Expression cache distinguishes cast children",
+      "type_basis": "Distinct documented compiler contract or instruction/scope/collective path; representative ID is evidence only, not type identity",
+      "strengthening_pending": {
+        "mechanism": "Recursive opaque child composite address keys; consecutive two-Write Binary/Ternary forms",
+        "approved_oracle_sha256": "f29b64fe9670c377b325a68ee0fd986ccf4fc966900c3cb995124e888f9753a5",
+        "static_review": "opaque-key-static-independent-review-v1.json",
+        "type_count_effect": 2,
+        "explanation": "Coordinator allocated two separate composite Binary/Ternary key contracts. Earlier no-add recommendation was superseded; legacy cast-child witness retained."
+      }
+    },
+    {
+      "type_id": "expression-identity-funcall",
+      "representative_case_id": "0e80b09925f0f9637cdef513d58020e8dbd3fe023ee87c0372fbc01393d37f7e",
+      "representative_path": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/integration-main-83a3944/replay-plan-v4-canonical/cases/case-15",
+      "family": "merge-expression-cse",
+      "selector_for_replay": {
+        "family": "merge-expression-cse",
+        "kind": "funcall"
+      },
+      "dedup_rule": "Additional seeds and dimensions do not add types unless they cross the stated semantic boundary.",
+      "previous_witness_label": "existing-019",
+      "semantic_contract": "Expression cache distinguishes funcall children",
+      "type_basis": "Distinct documented compiler contract or instruction/scope/collective path; representative ID is evidence only, not type identity"
+    },
+    {
+      "type_id": "expression-identity-flatindex",
+      "representative_case_id": "bd8a59fd719b12c89bb2bef8b221fb1c007d5ade73a552c1d35f9a055886d363",
+      "representative_path": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/integration-main-83a3944/replay-plan-v4-canonical/cases/case-16",
+      "family": "merge-expression-cse",
+      "selector_for_replay": {
+        "family": "merge-expression-cse",
+        "kind": "flatindex"
+      },
+      "dedup_rule": "Additional seeds and dimensions do not add types unless they cross the stated semantic boundary.",
+      "previous_witness_label": "existing-020",
+      "semantic_contract": "Expression cache distinguishes flatindex children",
+      "type_basis": "Distinct documented compiler contract or instruction/scope/collective path; representative ID is evidence only, not type identity"
+    },
+    {
+      "type_id": "expression-identity-builtin",
+      "representative_case_id": "3e9203274f6927cb955cf2e8d0af2e7e870ace628d9a26e6b356409a4e032631",
+      "representative_path": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/integration-main-83a3944/replay-plan-v4-canonical/cases/case-17",
+      "family": "merge-expression-cse",
+      "selector_for_replay": {
+        "family": "merge-expression-cse",
+        "kind": "builtin"
+      },
+      "dedup_rule": "Additional seeds and dimensions do not add types unless they cross the stated semantic boundary.",
+      "previous_witness_label": "existing-021",
+      "semantic_contract": "Expression cache distinguishes builtin children",
+      "type_basis": "Distinct documented compiler contract or instruction/scope/collective path; representative ID is evidence only, not type identity"
+    },
+    {
+      "type_id": "scope-tile-nested-restore",
+      "representative_case_id": "068fb6cb67fb91185ea4063ac15b15ae1ea8b0ebeb9a05d6fef2e777f31f2348",
+      "representative_path": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/integration-main-83a3944/replay-plan-v7-full/fresh-tile-cases/04-nested-restore",
+      "family": "merge-tile-scope-cse",
+      "selector_for_replay": {
+        "family": "merge-tile-scope-cse",
+        "mode": "nested-restore"
+      },
+      "dedup_rule": "Additional seeds and dimensions do not add types unless they cross the stated semantic boundary.",
+      "previous_witness_label": "existing-022",
+      "semantic_contract": "Tile lexical scope: nested-restore",
+      "type_basis": "Distinct documented compiler contract or instruction/scope/collective path; representative ID is evidence only, not type identity"
+    },
+    {
+      "type_id": "scope-tile-loop-axis-shadow",
+      "representative_case_id": "1f9428cef0a7750c55fec497401857955bd037aed43ab72a1abf26627ef390af",
+      "representative_path": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/integration-main-83a3944/replay-plan-v7-full/fresh-tile-cases/07-loop-axis-shadow",
+      "family": "merge-tile-scope-cse",
+      "selector_for_replay": {
+        "family": "merge-tile-scope-cse",
+        "mode": "loop-axis-shadow"
+      },
+      "dedup_rule": "Additional seeds and dimensions do not add types unless they cross the stated semantic boundary.",
+      "previous_witness_label": "existing-023",
+      "semantic_contract": "Tile lexical scope: loop-axis-shadow",
+      "type_basis": "Distinct documented compiler contract or instruction/scope/collective path; representative ID is evidence only, not type identity"
+    },
+    {
+      "type_id": "scope-tile-unequal-guard",
+      "representative_case_id": "807f6dfcde812fedd65efdbd0428a3f07108c21131ef242269c5fa5df0fec1c2",
+      "representative_path": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/integration-main-83a3944/replay-plan-v7-full/fresh-tile-cases/09-nested-unequal-guard",
+      "family": "merge-tile-scope-cse",
+      "selector_for_replay": {
+        "family": "merge-tile-scope-cse",
+        "mode": "nested-unequal-guard"
+      },
+      "dedup_rule": "Additional seeds and dimensions do not add types unless they cross the stated semantic boundary.",
+      "previous_witness_label": "existing-024",
+      "semantic_contract": "Tile lexical scope: nested-unequal-guard",
+      "type_basis": "Distinct documented compiler contract or instruction/scope/collective path; representative ID is evidence only, not type identity"
+    },
+    {
+      "type_id": "collective-inactive-product-identity",
+      "representative_case_id": "fff293a2235c2158ffc525f848ce136c020fdfa506b79c147ccadd0a39931751",
+      "representative_path": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/confirmations/corrected-baseline-v1/partial/case-14",
+      "family": "reduction",
+      "selector_for_replay": {
+        "version": "partial-reductions-primary-identities-v1",
+        "operation": "multiply",
+        "explicit_seed": false,
+        "shape": [
+          127
+        ]
+      },
+      "dedup_rule": "Additional seeds and dimensions do not add types unless they cross the stated semantic boundary.",
+      "previous_witness_label": "existing-025",
+      "semantic_contract": "Inactive reduction lanes use multiply identity",
+      "type_basis": "Distinct documented compiler contract or instruction/scope/collective path; representative ID is evidence only, not type identity"
+    },
+    {
+      "type_id": "collective-inactive-min-identity",
+      "representative_case_id": "061d7084b7298d83ba14950823669b4734ed6cc3f9f51bd5ee830f10e18ee56a",
+      "representative_path": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/confirmations/corrected-baseline-v1/partial/case-30",
+      "family": "reduction",
+      "selector_for_replay": {
+        "version": "partial-reductions-primary-identities-v1",
+        "operation": "minimum",
+        "explicit_seed": false,
+        "shape": [
+          127
+        ]
+      },
+      "dedup_rule": "Additional seeds and dimensions do not add types unless they cross the stated semantic boundary.",
+      "previous_witness_label": "existing-026",
+      "semantic_contract": "Inactive reduction lanes use minimum identity",
+      "type_basis": "Distinct documented compiler contract or instruction/scope/collective path; representative ID is evidence only, not type identity"
+    },
+    {
+      "type_id": "collective-inactive-max-identity",
+      "representative_case_id": "da018f96fc2e54583814b7dc39cce909d332add031820662839c2706fccdc91d",
+      "representative_path": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/confirmations/corrected-baseline-v1/partial/case-22",
+      "family": "reduction",
+      "selector_for_replay": {
+        "version": "partial-reductions-primary-identities-v1",
+        "operation": "maximum",
+        "explicit_seed": false,
+        "shape": [
+          127
+        ]
+      },
+      "dedup_rule": "Additional seeds and dimensions do not add types unless they cross the stated semantic boundary.",
+      "previous_witness_label": "existing-027",
+      "semantic_contract": "Inactive reduction lanes use maximum identity",
+      "type_basis": "Distinct documented compiler contract or instruction/scope/collective path; representative ID is evidence only, not type identity"
+    },
+    {
+      "type_id": "collective-explicit-infinite-min-seed",
+      "representative_case_id": "b5cc80a79e59c19edb2f07d14c0afe088a9c440310666187b50e20cd69c4397c",
+      "representative_path": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/integration-main-83a3944/replay-plan-v4-canonical/cases/case-24",
+      "family": "merge-explicit-seed-extreme",
+      "selector_for_replay": {
+        "family": "merge-explicit-seed-extreme",
+        "operation": "minimum",
+        "active": 3
+      },
+      "dedup_rule": "Additional seeds and dimensions do not add types unless they cross the stated semantic boundary.",
+      "previous_witness_label": "existing-028",
+      "semantic_contract": "Explicit infinite minimum seed differs from finite default identity",
+      "type_basis": "Distinct documented compiler contract or instruction/scope/collective path; representative ID is evidence only, not type identity"
+    },
+    {
+      "type_id": "collective-explicit-infinite-max-seed",
+      "representative_case_id": "943cbd88c1f4ca66ae34098886c73543341807db35df0d3289820b2be0ab4a74",
+      "representative_path": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/integration-main-83a3944/replay-plan-v4-canonical/cases/case-22",
+      "family": "merge-explicit-seed-extreme",
+      "selector_for_replay": {
+        "family": "merge-explicit-seed-extreme",
+        "operation": "maximum",
+        "active": 3
+      },
+      "dedup_rule": "Additional seeds and dimensions do not add types unless they cross the stated semantic boundary.",
+      "previous_witness_label": "existing-029",
+      "semantic_contract": "Explicit infinite maximum seed differs from finite default identity",
+      "type_basis": "Distinct documented compiler contract or instruction/scope/collective path; representative ID is evidence only, not type identity"
+    },
+    {
+      "type_id": "collective-warp-min-nan",
+      "representative_case_id": "57aac69012ac3b0ee2cf4110e977c7429c12037a02aab06a73beebaa6c090fa1",
+      "representative_path": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/confirmations/corrected-baseline-v1/nan/case-22",
+      "family": "reduction",
+      "selector_for_replay": {
+        "version": "minmax-relu-internal-nan-v1",
+        "style": "warp",
+        "operation": "minimum",
+        "nan_position": "left"
+      },
+      "dedup_rule": "Additional seeds and dimensions do not add types unless they cross the stated semantic boundary.",
+      "previous_witness_label": "existing-030",
+      "semantic_contract": "Warp minimum preserves internal NaN semantics",
+      "type_basis": "Distinct documented compiler contract or instruction/scope/collective path; representative ID is evidence only, not type identity"
+    },
+    {
+      "type_id": "collective-tree-max-nan",
+      "representative_case_id": "70100ed805e7de6600d6952fc9318bce139883a55c5c3918e7bef7c0729baa81",
+      "representative_path": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/confirmations/bugfix-integration-pre-nan-v1/nan/case-20",
+      "family": "reduction",
+      "selector_for_replay": {
+        "version": "minmax-relu-internal-nan-v1",
+        "style": "tree",
+        "operation": "maximum",
+        "nan_position": "left"
+      },
+      "dedup_rule": "Additional seeds and dimensions do not add types unless they cross the stated semantic boundary.",
+      "previous_witness_label": "existing-031",
+      "semantic_contract": "Shared tree maximum preserves internal NaN semantics",
+      "type_basis": "Distinct documented compiler contract or instruction/scope/collective path; representative ID is evidence only, not type identity"
+    },
+    {
+      "type_id": "collective-tree-affine-live-state",
+      "representative_case_id": "0eeb170d22182ed9875fc86336fcbc090c2dcc2db2e2234cd704d8bf6614cc63",
+      "representative_path": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/tree-2fd6308c7237da72d5e340f09165e354c782cfcf30f67e6fa8724d8411d85fbc/tree/case-11",
+      "family": "reduction",
+      "selector_for_replay": {
+        "version": "tree-halve-live-shared-v1",
+        "mode": "affine",
+        "dynamic": true
+      },
+      "dedup_rule": "Additional seeds and dimensions do not add types unless they cross the stated semantic boundary.",
+      "previous_witness_label": "existing-032",
+      "semantic_contract": "Live shared TreeHalve multi-component noncommutative composition across loop iterations",
+      "type_basis": "Distinct documented compiler contract or instruction/scope/collective path; representative ID is evidence only, not type identity"
+    },
+    {
+      "type_id": "collective-tree-zero-trip-carrier",
+      "representative_case_id": "2623ef7bdace949bb90f19ab8499a43d44db719441a3583870dbdf14d0c08172",
+      "representative_path": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/confirmations/corrected-baseline-v1/collective/case-5",
+      "family": "reduction",
+      "selector_for_replay": {
+        "version": "collective-inplace-control-v1",
+        "kind": "tree",
+        "mode": "loop0"
+      },
+      "dedup_rule": "Additional seeds and dimensions do not add types unless they cross the stated semantic boundary.",
+      "previous_witness_label": "existing-033",
+      "semantic_contract": "Zero-trip loop preserves tree collective entry carrier",
+      "type_basis": "Distinct documented compiler contract or instruction/scope/collective path; representative ID is evidence only, not type identity"
+    },
+    {
+      "type_id": "collective-warp-zero-trip-carrier",
+      "representative_case_id": "48189071240806b192fd70230a1d4af9b7fce13e389c91f4c88a93a35c9388a9",
+      "representative_path": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/confirmations/corrected-baseline-v1/collective/case-13",
+      "family": "reduction",
+      "selector_for_replay": {
+        "version": "collective-inplace-control-v1",
+        "kind": "warp",
+        "mode": "loop0"
+      },
+      "dedup_rule": "Additional seeds and dimensions do not add types unless they cross the stated semantic boundary.",
+      "previous_witness_label": "existing-034",
+      "semantic_contract": "Zero-trip loop preserves warp collective entry carrier",
+      "type_basis": "Distinct documented compiler contract or instruction/scope/collective path; representative ID is evidence only, not type identity"
+    },
+    {
+      "type_id": "scope-init-nested-shadow",
+      "representative_case_id": "5224818b2d26d5b73af6c783a756518a271351ca1a5529cbc0686f7e181387fa",
+      "representative_path": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/scope-358714ba77d69c3f808b4831023f7c88c0b0e61064d06e5044513886735c4c5c/scope/case-8",
+      "family": "pointwise",
+      "selector_for_replay": {
+        "version": "raw-kernel-init-shadow-v1",
+        "mode": "nested"
+      },
+      "dedup_rule": "Additional seeds and dimensions do not add types unless they cross the stated semantic boundary.",
+      "previous_witness_label": "existing-035",
+      "semantic_contract": "Nested Init shadow restores enclosing carrier",
+      "type_basis": "Distinct documented compiler contract or instruction/scope/collective path; representative ID is evidence only, not type identity"
+    },
+    {
+      "type_id": "loop-strided-live-compound-step",
+      "representative_case_id": "669f6890c8882493e5571cfcd0f2a0172bc9b729375ab98513331ac0d089e3a4",
+      "representative_path": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/integration-main-83a3944/strided-live-step-v11-probe/00-compound",
+      "family": "strided-live-step",
+      "selector_for_replay": {
+        "family": "strided-live-step",
+        "mode": "compound",
+        "initial": 1
+      },
+      "dedup_rule": "Additional seeds and dimensions do not add types unless they cross the stated semantic boundary.",
+      "previous_witness_label": "existing-036",
+      "semantic_contract": "StridedLoop compound step re-evaluates live state after body",
+      "type_basis": "Distinct documented compiler contract or instruction/scope/collective path; representative ID is evidence only, not type identity",
+      "depth8_development_witnesses": [
+        {
+          "case_id": "b3b24603d754ef84e88a6c07ac9e4a54a2fa15285ecef6533dd4b80615708754",
+          "tail": 2,
+          "review": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/bugs-types/depth8-oracle-actual-review-v1/review.json",
+          "scope": "Existing semantic subcontracts, development445566 only, no source-bound compiler confirmation"
+        },
+        {
+          "case_id": "c35a644b4610c815459688793971739ba6c88a2ca6873b905cc627afcaacffa7",
+          "tail": 3,
+          "review": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/bugs-types/depth8-oracle-actual-review-v1/review.json",
+          "scope": "Existing semantic subcontracts, development445566 only, no source-bound compiler confirmation"
+        }
+      ]
+    },
+    {
+      "type_id": "loop-strided-header-shadow",
+      "representative_case_id": "83fb961f7fc2aee057d579cd6309ef1cce9d1c66a0521d78c4c6978d50b289e5",
+      "representative_path": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/integration-main-83a3944/strided-step-v12-fresh/05-shadow-control",
+      "family": "strided-live-step",
+      "selector_for_replay": {
+        "family": "strided-live-step",
+        "mode": "shadow-control",
+        "initial": 2
+      },
+      "dedup_rule": "Additional seeds and dimensions do not add types unless they cross the stated semantic boundary.",
+      "previous_witness_label": "existing-037",
+      "semantic_contract": "StridedLoop header binding survives body Init shadow",
+      "type_basis": "Distinct documented compiler contract or instruction/scope/collective path; representative ID is evidence only, not type identity"
+    },
+    {
+      "type_id": "loop-strided-end-snapshot",
+      "representative_case_id": "8e6693eaac063e733279668d2476edb7ac5fad6f11b9a493541574512c7552b7",
+      "representative_path": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/integration-main-83a3944/strided-end-v11-probe/00-live-end-width2",
+      "family": "strided-end-snapshot",
+      "selector_for_replay": {
+        "family": "strided-end-snapshot",
+        "mode": "live-end",
+        "subgroup_width": 2,
+        "n": 4
+      },
+      "dedup_rule": "Additional seeds and dimensions do not add types unless they cross the stated semantic boundary.",
+      "previous_witness_label": "existing-038",
+      "semantic_contract": "StridedLoop end snapshots live I32 subgroup carrier before iteration",
+      "type_basis": "Distinct documented compiler contract or instruction/scope/collective path; representative ID is evidence only, not type identity"
+    },
+    {
+      "type_id": "transport-masked-async16-commit-wait",
+      "representative_case_id": "cc0b21f91dca260efa45b680481e1ba9f39dcee329f149f6db678c8c8b9f97be",
+      "representative_path": "/root/nfs/emmy/research/campaigns/campaign-20261022-6h-v1/async-probes-v2/case-92006",
+      "family": "pointwise",
+      "selector_for_replay": {
+        "version": "async-transport-diagnostic-v2",
+        "dynamic": true,
+        "nbytes": 16
+      },
+      "dedup_rule": "Additional seeds and dimensions do not add types unless they cross the stated semantic boundary.",
+      "previous_witness_label": "existing-039",
+      "semantic_contract": "Dynamic masked 16-byte async copy, commit/wait and zero fill",
+      "type_basis": "Distinct documented compiler contract or instruction/scope/collective path; representative ID is evidence only, not type identity"
+    },
+    {
+      "type_id": "contraction-shared-conditional-tail",
+      "representative_case_id": "72f1deeac451a01002043dead776384004b887cdcec9089a0bdfcc02923c022d",
+      "representative_path": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/supplement-6a7065784ebfd2f113b9acb0af7fbf1c95dfd543754f566142257c09a77291fa/shared/case-7",
+      "family": "matmul",
+      "selector_for_replay": {
+        "version": "shared-explicit-init-aligned-v2",
+        "shape": [
+          64,
+          32,
+          65
+        ]
+      },
+      "dedup_rule": "Additional seeds and dimensions do not add types unless they cross the stated semantic boundary.",
+      "previous_witness_label": "existing-040",
+      "semantic_contract": "Shared contraction with conditional updates, vector alignment and tail",
+      "type_basis": "Distinct documented compiler contract or instruction/scope/collective path; representative ID is evidence only, not type identity"
+    },
+    {
+      "type_id": "attention-fused-online-key-tail",
+      "representative_case_id": "9e1f76b1c9291d28133d85a85ae619cdd4d7ca52d54f649c3e7e9d925e54e0e8",
+      "representative_path": "/root/nfs/emmy/research/campaigns/campaign-20261022-12h-v1/supplement-6a7065784ebfd2f113b9acb0af7fbf1c95dfd543754f566142257c09a77291fa/fused/case-644651300530683049",
+      "family": "attention",
+      "selector_for_replay": {
+        "family": "attention",
+        "schedule": "fused-online-chunked-key-tail"
+      },
+      "dedup_rule": "Additional seeds and dimensions do not add types unless they cross the stated semantic boundary.",
+      "previous_witness_label": "existing-041",
+      "semantic_contract": "Fused online attention chunked key tail",
+      "type_basis": "Distinct documented compiler contract or instruction/scope/collective path; representative ID is evidence only, not type identity"
+    },
+    {
+      "type_id": "softmax-cooperative-online-multislice",
+      "representative_case_id": "0a50249d1218b576c10e21a7020336fa287d4d5d6bd7a39511aa2219aa070556",
+      "representative_path": "/root/nfs/emmy/research/suites/cases-81555745e006dc3cf6ef9e35a2be7c6eb35c5ca27fe835bc5d5e79fc8242b851/softmax-1",
+      "family": "softmax",
+      "selector_for_replay": {
+        "family": "softmax",
+        "schedule": "cooperative-online-softmax",
+        "shape": [
+          5,
+          257
+        ]
+      },
+      "dedup_rule": "Additional seeds and dimensions do not add types unless they cross the stated semantic boundary.",
+      "previous_witness_label": "existing-042",
+      "semantic_contract": "Cooperative online softmax loop spans more than one CTA-width column slice",
+      "type_basis": "Distinct documented compiler contract or instruction/scope/collective path; representative ID is evidence only, not type identity",
+      "additional_fresh_witnesses": [
+        {
+          "case_id": "3c281b69affa24269769bb9001b750a642d3431f6e21e6f8ac04487bdab95b1c",
+          "path": "/root/nfs/emmy/research/suites/cases-d3c154846d9e6cb1ecce0f64dfa6506d914bf78d2717629eafb0836c6fbc9999/softmax-0"
+        },
+        {
+          "case_id": "bb1aabb25c2be4e407e1a916f1fc1d54b133ff40fe6c43a5b40e40daad3d5226",
+          "path": "/root/nfs/emmy/research/suites/cases-d3c154846d9e6cb1ecce0f64dfa6506d914bf78d2717629eafb0836c6fbc9999/softmax-1"
+        },
+        {
+          "case_id": "3cb5f4a62ce48c8d49d9bcf6f9bba55920b9108a04ebca803fdb80f7b2814a21",
+          "path": "/root/nfs/emmy/research/suites/cases-c1f61f75a9ea532b2cd39925b1e824eb10ea2bbc478b6609086a20c1f49c0ad8/softmax-0"
+        },
+        {
+          "case_id": "0124aea3593beaf7c2b2ef096f8e3982d9a6de0a8cce15f2f01d9135acd150db",
+          "path": "/root/nfs/emmy/research/suites/cases-c1f61f75a9ea532b2cd39925b1e824eb10ea2bbc478b6609086a20c1f49c0ad8/softmax-1"
+        }
+      ]
+    },
+    {
+      "type_id": "collective-private-gid-partial-subgroup",
+      "representative_case_id": "e4ac354528a2ab697578716e36b5ac607df309f75252462e861b435ad2f5d7c5",
+      "representative_path": "/root/nfs/emmy/research/campaigns/campaign-20261022-6h-v1/range-shared8-vector-v1-diagnostics-v1/subgroups/case-08",
+      "family": "reduction",
+      "selector_for_replay": {
+        "version": "post-freeze-subgroup-diagnostic-v1",
+        "axisname": "_gid",
+        "block": 80,
+        "shape": [
+          3,
+          4
+        ]
+      },
+      "dedup_rule": "Additional seeds and dimensions do not add types unless they cross the stated semantic boundary.",
+      "previous_witness_label": "existing-043",
+      "semantic_contract": "Private launch ID survives a Tile axis named _gid; aligned subgroup and partial physical warp",
+      "type_basis": "Distinct documented compiler contract or instruction/scope/collective path; representative ID is evidence only, not type identity"
+    },
+    {
+      "type_id": "native64-shift-i64-left",
+      "status": "active approved independent supplemental type",
+      "dedup_rule": "Seeds, dimensions and shiftamounts inside0..63 do not add types",
+      "representative_path": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/cases/native64-shift-screen-v1/i64-left_shift",
+      "representative_case_id": "ef34e536dab09fd4c0bcd85ea0c1e9a2171ffef5f27a64981ea6343aab1cd75a",
+      "semantic_contract": "I64 leftshift with dynamic64-bit count and modulo64-bit result",
+      "type_basis": "Distinct signedness/direction or lexical grouped/scalar semantic contract"
+    },
+    {
+      "type_id": "native64-shift-i64-right",
+      "status": "active approved independent supplemental type",
+      "dedup_rule": "Seeds, dimensions and shiftamounts inside0..63 do not add types",
+      "representative_path": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/cases/native64-shift-screen-v1/i64-right_shift",
+      "representative_case_id": "57e82125a796bb9080bee679a08f137d78367aa66643aca4080c92adc9932dfe",
+      "semantic_contract": "I64 arithmetic rightshift with dynamic64-bit count",
+      "type_basis": "Distinct signedness/direction or lexical grouped/scalar semantic contract"
+    },
+    {
+      "type_id": "native64-shift-u64-left",
+      "status": "active approved independent supplemental type",
+      "dedup_rule": "Seeds, dimensions and shiftamounts inside0..63 do not add types",
+      "representative_path": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/cases/native64-shift-screen-v1/u64-left_shift",
+      "representative_case_id": "fb10c3c2c52755ec1dc8ef21efa8ef3a2f268584505b9272815c8d6d54d2f3b1",
+      "semantic_contract": "U64 leftshift with dynamic64-bit count and rawbitpattern storage",
+      "type_basis": "Distinct signedness/direction or lexical grouped/scalar semantic contract"
+    },
+    {
+      "type_id": "native64-shift-u64-right",
+      "status": "active approved independent supplemental type",
+      "dedup_rule": "Seeds, dimensions and shiftamounts inside0..63 do not add types",
+      "representative_path": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/cases/native64-shift-screen-v1/u64-right_shift",
+      "representative_case_id": "b8406f757a784302d3adc6e35bfca634acaf1899b7012fb83ee12f59f1d276e7",
+      "semantic_contract": "U64 logical rightshift with dynamic64-bit count",
+      "type_basis": "Distinct signedness/direction or lexical grouped/scalar semantic contract"
+    },
+    {
+      "type_id": "load-shadow-scalar",
+      "status": "active approved independent supplemental type",
+      "dedup_rule": "Seeds, dimensions and shiftamounts inside0..63 do not add types",
+      "representative_path": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/cases/load-screen-v1/scalar-shadow",
+      "representative_case_id": "fa41b5e778718c3209536b85787001a3fce87f9cbc7f4b8288e18ffa0777fcc6",
+      "semantic_contract": "InnerCond scalar Load shadows outer index; dependentaddress invalidation",
+      "type_basis": "Distinct signedness/direction or lexical grouped/scalar semantic contract"
+    },
+    {
+      "type_id": "load-shadow-grouped",
+      "status": "active approved independent supplemental type",
+      "dedup_rule": "Seeds, dimensions and shiftamounts inside0..63 do not add types",
+      "representative_path": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/cases/load-screen-v1/grouped-simultaneous",
+      "representative_case_id": "8a7db526571189e3b67c95f11a3294d910c6e10a53d58c33f0c9a97031e3a9b8",
+      "semantic_contract": "Grouped Load destinations shadow sourceindex; simultaneous address capture",
+      "type_basis": "Distinct signedness/direction or lexical grouped/scalar semantic contract"
+    },
+    {
+      "type_id": "attention-ordered-three-kernel",
+      "semantic_contract": "Ordered score contraction, serial stable softmax and value contraction pipeline",
+      "distinguishing_difference": "Distinct from fused online attention; intermediate ABI and execution order matter",
+      "family": "attention",
+      "representative_case_id": "2c22d891d590c575be672e7b50b165c3fcfe4784ad61c23f5bbf55ed3157a595",
+      "representative_path": "/root/nfs/emmy/research/suites/cases-d3c154846d9e6cb1ecce0f64dfa6506d914bf78d2717629eafb0836c6fbc9999/attention-0",
+      "fresh_witnesses": [
+        {
+          "case_id": "2c22d891d590c575be672e7b50b165c3fcfe4784ad61c23f5bbf55ed3157a595",
+          "path": "/root/nfs/emmy/research/suites/cases-d3c154846d9e6cb1ecce0f64dfa6506d914bf78d2717629eafb0836c6fbc9999/attention-0"
+        },
+        {
+          "case_id": "54ffb605d38b4f5cebfc6f42b1d7dc355a641c8dc18903a5b5f31b2f8ae4ba7d",
+          "path": "/root/nfs/emmy/research/suites/cases-d3c154846d9e6cb1ecce0f64dfa6506d914bf78d2717629eafb0836c6fbc9999/attention-1"
+        },
+        {
+          "case_id": "951623014075ac86347abc9899e4f095574ca7488a453064f539c24fda063b0f",
+          "path": "/root/nfs/emmy/research/suites/cases-d3c154846d9e6cb1ecce0f64dfa6506d914bf78d2717629eafb0836c6fbc9999/attention-2"
+        },
+        {
+          "case_id": "42ecb5e23b950b84fced17870a9b18764e9f1b0c19d6b889c241c71379031bce",
+          "path": "/root/nfs/emmy/research/suites/cases-d3c154846d9e6cb1ecce0f64dfa6506d914bf78d2717629eafb0836c6fbc9999/attention-3"
+        },
+        {
+          "case_id": "261ad0eb505722f63396f92cd7e7347ef56b1469628587a1ea78e09278a2411c",
+          "path": "/root/nfs/emmy/research/suites/cases-c1f61f75a9ea532b2cd39925b1e824eb10ea2bbc478b6609086a20c1f49c0ad8/attention-0"
+        },
+        {
+          "case_id": "52dcb2c138385ad9600a8bc0aacb6b7fa3dd3ac0e9b9b4be2c1c543ecb243857",
+          "path": "/root/nfs/emmy/research/suites/cases-c1f61f75a9ea532b2cd39925b1e824eb10ea2bbc478b6609086a20c1f49c0ad8/attention-1"
+        },
+        {
+          "case_id": "ba91622632c142e1767ca94037bf4db369936d16a05e22e31413c234d729d352",
+          "path": "/root/nfs/emmy/research/suites/cases-c1f61f75a9ea532b2cd39925b1e824eb10ea2bbc478b6609086a20c1f49c0ad8/attention-2"
+        },
+        {
+          "case_id": "a26537618a0227ae4a4811d8e13802d68e4ffb9bf16aaf55ca6a612e29129c37",
+          "path": "/root/nfs/emmy/research/suites/cases-c1f61f75a9ea532b2cd39925b1e824eb10ea2bbc478b6609086a20c1f49c0ad8/attention-3"
+        }
+      ],
+      "dedup_rule": "Seed, random names, dimensions, input pattern and irrelevant generator operation/vector_width fields do not create new types. Pointwise transport full/scalar/masked-tail boundaries are distinct."
+    },
+    {
+      "type_id": "contraction-atomic-split-init-conditional",
+      "semantic_contract": "Split-K atomic F32 contraction with explicit Init, conditional tail/empty part, reset contract",
+      "distinguishing_difference": "Atomic reduction participation, explicit seed and reset/sanitizer differ from non-atomic contraction",
+      "family": "atomic_matmul",
+      "representative_case_id": "ef9b36277f0af7688584d3e2e904d825e045a4b5a3a52b17bbcace8a29efa67d",
+      "representative_path": "/root/nfs/emmy/research/suites/cases-d3c154846d9e6cb1ecce0f64dfa6506d914bf78d2717629eafb0836c6fbc9999/atomic_matmul-0",
+      "fresh_witnesses": [
+        {
+          "case_id": "ef9b36277f0af7688584d3e2e904d825e045a4b5a3a52b17bbcace8a29efa67d",
+          "path": "/root/nfs/emmy/research/suites/cases-d3c154846d9e6cb1ecce0f64dfa6506d914bf78d2717629eafb0836c6fbc9999/atomic_matmul-0"
+        },
+        {
+          "case_id": "73e98568c67fefce2160fef32589855fa7d584c2eb8ef88e9fd582830124f491",
+          "path": "/root/nfs/emmy/research/suites/cases-d3c154846d9e6cb1ecce0f64dfa6506d914bf78d2717629eafb0836c6fbc9999/atomic_matmul-1"
+        },
+        {
+          "case_id": "f83c1cc814cdd50696284a6d656bde268c1eca5a33459289ac547873b433c67d",
+          "path": "/root/nfs/emmy/research/suites/cases-d3c154846d9e6cb1ecce0f64dfa6506d914bf78d2717629eafb0836c6fbc9999/atomic_matmul-2"
+        },
+        {
+          "case_id": "3154cb2b7e9b009ccfc51eebd85d632b2f79a10d2123539d25318faea706d434",
+          "path": "/root/nfs/emmy/research/suites/cases-d3c154846d9e6cb1ecce0f64dfa6506d914bf78d2717629eafb0836c6fbc9999/atomic_matmul-3"
+        },
+        {
+          "case_id": "716b7e00a2df6df170ed31a65a7dfe819f210999fe3eac9be969e54ab2dac88e",
+          "path": "/root/nfs/emmy/research/suites/cases-c1f61f75a9ea532b2cd39925b1e824eb10ea2bbc478b6609086a20c1f49c0ad8/atomic_matmul-0"
+        },
+        {
+          "case_id": "c8848d9b9d58abd390a1813de9318bede3897c1fb86f1c27f3642f986648bde1",
+          "path": "/root/nfs/emmy/research/suites/cases-c1f61f75a9ea532b2cd39925b1e824eb10ea2bbc478b6609086a20c1f49c0ad8/atomic_matmul-1"
+        },
+        {
+          "case_id": "1331acc9f69d7240df7b651701207f4fec53db45977c9e3c4d975db381846ab0",
+          "path": "/root/nfs/emmy/research/suites/cases-c1f61f75a9ea532b2cd39925b1e824eb10ea2bbc478b6609086a20c1f49c0ad8/atomic_matmul-2"
+        },
+        {
+          "case_id": "ff77b056d4902fbcd75924417af9125c341221691f54f6f6cc8662ae5c6bf0a2",
+          "path": "/root/nfs/emmy/research/suites/cases-c1f61f75a9ea532b2cd39925b1e824eb10ea2bbc478b6609086a20c1f49c0ad8/atomic_matmul-3"
+        }
+      ],
+      "dedup_rule": "Seed, random names, dimensions, input pattern and irrelevant generator operation/vector_width fields do not create new types. Pointwise transport full/scalar/masked-tail boundaries are distinct."
+    },
+    {
+      "type_id": "contraction-global-serial",
+      "semantic_contract": "Global-memory serial per-output F32 contraction",
+      "distinguishing_difference": "Distinct from shared staged conditional contraction",
+      "family": "matmul",
+      "representative_case_id": "7028ef68997caf5315a56c71cec8cc7505584e820058a6a3834b2bd0461bbcd1",
+      "representative_path": "/root/nfs/emmy/research/suites/cases-d3c154846d9e6cb1ecce0f64dfa6506d914bf78d2717629eafb0836c6fbc9999/matmul-0",
+      "fresh_witnesses": [
+        {
+          "case_id": "7028ef68997caf5315a56c71cec8cc7505584e820058a6a3834b2bd0461bbcd1",
+          "path": "/root/nfs/emmy/research/suites/cases-d3c154846d9e6cb1ecce0f64dfa6506d914bf78d2717629eafb0836c6fbc9999/matmul-0"
+        },
+        {
+          "case_id": "79dcaa4b249894c8e9a9bdf5fe0b8e20d129ad2381e343a398e8996f7f78771d",
+          "path": "/root/nfs/emmy/research/suites/cases-d3c154846d9e6cb1ecce0f64dfa6506d914bf78d2717629eafb0836c6fbc9999/matmul-1"
+        },
+        {
+          "case_id": "71843a5657e8c458e7c28bc61d2f11f24e249b8feeaf0f87ca1fc39337b5d98c",
+          "path": "/root/nfs/emmy/research/suites/cases-d3c154846d9e6cb1ecce0f64dfa6506d914bf78d2717629eafb0836c6fbc9999/matmul-2"
+        },
+        {
+          "case_id": "d44b9e084604438415705325a7cda249ee73ef6be10b57094d5d264634304ea6",
+          "path": "/root/nfs/emmy/research/suites/cases-d3c154846d9e6cb1ecce0f64dfa6506d914bf78d2717629eafb0836c6fbc9999/matmul-3"
+        },
+        {
+          "case_id": "5b8c426f511a975f84e45da9b3236f174cc8a9936bf755ce1b0653dd1082ed2e",
+          "path": "/root/nfs/emmy/research/suites/cases-c1f61f75a9ea532b2cd39925b1e824eb10ea2bbc478b6609086a20c1f49c0ad8/matmul-0"
+        },
+        {
+          "case_id": "f9a24327578d03dad0145a6098b957da6e27a272433fd93c942dd93a72e07381",
+          "path": "/root/nfs/emmy/research/suites/cases-c1f61f75a9ea532b2cd39925b1e824eb10ea2bbc478b6609086a20c1f49c0ad8/matmul-1"
+        },
+        {
+          "case_id": "03353f14d58ba8d6d8c92c27d665e927ab8b957b5431317a5904714fd36cffcf",
+          "path": "/root/nfs/emmy/research/suites/cases-c1f61f75a9ea532b2cd39925b1e824eb10ea2bbc478b6609086a20c1f49c0ad8/matmul-2"
+        },
+        {
+          "case_id": "d9e0cf6a902bed5f8b32e6579a3904bb32d480269afd449312f035334418491c",
+          "path": "/root/nfs/emmy/research/suites/cases-c1f61f75a9ea532b2cd39925b1e824eb10ea2bbc478b6609086a20c1f49c0ad8/matmul-3"
+        }
+      ],
+      "dedup_rule": "Seed, random names, dimensions, input pattern and irrelevant generator operation/vector_width fields do not create new types. Pointwise transport full/scalar/masked-tail boundaries are distinct."
+    },
+    {
+      "type_id": "normalization-l2-serial",
+      "semantic_contract": "Serial row L2 normalization with sum-square and epsilon",
+      "distinguishing_difference": "Distinct normalization mathematics and serial loop schedule",
+      "family": "l2norm",
+      "representative_case_id": "75fdc6f54ad9e0fddf26f4837cc3a6176c216929c5b303f3f4ca35347c2f1259",
+      "representative_path": "/root/nfs/emmy/research/suites/cases-d3c154846d9e6cb1ecce0f64dfa6506d914bf78d2717629eafb0836c6fbc9999/l2norm-0",
+      "fresh_witnesses": [
+        {
+          "case_id": "75fdc6f54ad9e0fddf26f4837cc3a6176c216929c5b303f3f4ca35347c2f1259",
+          "path": "/root/nfs/emmy/research/suites/cases-d3c154846d9e6cb1ecce0f64dfa6506d914bf78d2717629eafb0836c6fbc9999/l2norm-0"
+        },
+        {
+          "case_id": "8e3902c070b7e745ac9adc7a80f9b5de7ea738115fc69211d8410a90cd837713",
+          "path": "/root/nfs/emmy/research/suites/cases-d3c154846d9e6cb1ecce0f64dfa6506d914bf78d2717629eafb0836c6fbc9999/l2norm-1"
+        },
+        {
+          "case_id": "66c1a7882e422603413f52ebf7a75d9a4bc55dd058e31a0fd1a2e62f147ef9c9",
+          "path": "/root/nfs/emmy/research/suites/cases-d3c154846d9e6cb1ecce0f64dfa6506d914bf78d2717629eafb0836c6fbc9999/l2norm-2"
+        },
+        {
+          "case_id": "eb4715fc2a5c8efd0e02ddb0fc3541f194e29a5721d8ad956d15f18b3c469b51",
+          "path": "/root/nfs/emmy/research/suites/cases-d3c154846d9e6cb1ecce0f64dfa6506d914bf78d2717629eafb0836c6fbc9999/l2norm-3"
+        },
+        {
+          "case_id": "1a6d4c82447595a0004632f21e09cf40b738f851960c92d003b5d18fa951c0ae",
+          "path": "/root/nfs/emmy/research/suites/cases-c1f61f75a9ea532b2cd39925b1e824eb10ea2bbc478b6609086a20c1f49c0ad8/l2norm-0"
+        },
+        {
+          "case_id": "5cff05e781ca7a13fb5418132c6edd8fb49f17bee8677a23908e3e7efdac4782",
+          "path": "/root/nfs/emmy/research/suites/cases-c1f61f75a9ea532b2cd39925b1e824eb10ea2bbc478b6609086a20c1f49c0ad8/l2norm-1"
+        },
+        {
+          "case_id": "3c9f49427d50dec958e3dfe8ddec87d0a09e9f913d625924dd880058429bae5f",
+          "path": "/root/nfs/emmy/research/suites/cases-c1f61f75a9ea532b2cd39925b1e824eb10ea2bbc478b6609086a20c1f49c0ad8/l2norm-2"
+        },
+        {
+          "case_id": "e74673de42afa4b0d1eb97b6edc10838766114250385e4bc512f9ff907c4b1ee",
+          "path": "/root/nfs/emmy/research/suites/cases-c1f61f75a9ea532b2cd39925b1e824eb10ea2bbc478b6609086a20c1f49c0ad8/l2norm-3"
+        }
+      ],
+      "dedup_rule": "Seed, random names, dimensions, input pattern and irrelevant generator operation/vector_width fields do not create new types. Pointwise transport full/scalar/masked-tail boundaries are distinct."
+    },
+    {
+      "type_id": "normalization-rms-serial",
+      "semantic_contract": "Serial row RMS normalization with mean-square and epsilon",
+      "distinguishing_difference": "Distinct normalization mathematics and serial loop schedule",
+      "family": "rmsnorm",
+      "representative_case_id": "d78679d84cba0a1d9ef13c165d0123dc67ded645409163e08fe5385c116e23a9",
+      "representative_path": "/root/nfs/emmy/research/suites/cases-d3c154846d9e6cb1ecce0f64dfa6506d914bf78d2717629eafb0836c6fbc9999/rmsnorm-0",
+      "fresh_witnesses": [
+        {
+          "case_id": "d78679d84cba0a1d9ef13c165d0123dc67ded645409163e08fe5385c116e23a9",
+          "path": "/root/nfs/emmy/research/suites/cases-d3c154846d9e6cb1ecce0f64dfa6506d914bf78d2717629eafb0836c6fbc9999/rmsnorm-0"
+        },
+        {
+          "case_id": "84df24cb54b92cddf75be06cfc50243b52acfda9d9f562b3c4ccf78c2c38b78a",
+          "path": "/root/nfs/emmy/research/suites/cases-d3c154846d9e6cb1ecce0f64dfa6506d914bf78d2717629eafb0836c6fbc9999/rmsnorm-1"
+        },
+        {
+          "case_id": "c2adc702c4b1d43dcdb5300d887b8a8470baf92655f356be8a101f4800a020c9",
+          "path": "/root/nfs/emmy/research/suites/cases-d3c154846d9e6cb1ecce0f64dfa6506d914bf78d2717629eafb0836c6fbc9999/rmsnorm-2"
+        },
+        {
+          "case_id": "9048334c46107b0279acb0aae1152a88ff02add3815183c9ceebcc94b565af29",
+          "path": "/root/nfs/emmy/research/suites/cases-d3c154846d9e6cb1ecce0f64dfa6506d914bf78d2717629eafb0836c6fbc9999/rmsnorm-3"
+        },
+        {
+          "case_id": "3d6335e19eba5e9dc4f21c58888b55b08ac99e3f869ace69ce8a3cca6b1051c3",
+          "path": "/root/nfs/emmy/research/suites/cases-c1f61f75a9ea532b2cd39925b1e824eb10ea2bbc478b6609086a20c1f49c0ad8/rmsnorm-0"
+        },
+        {
+          "case_id": "ec26aec2a68d6eccde65cd84cfc99c8d9522477d5268d0975dcf6886d88becef",
+          "path": "/root/nfs/emmy/research/suites/cases-c1f61f75a9ea532b2cd39925b1e824eb10ea2bbc478b6609086a20c1f49c0ad8/rmsnorm-1"
+        },
+        {
+          "case_id": "28fb022c614e1d5f617bb04c81114e3c3659c2a2b5fc810363380e84d3e3fd2e",
+          "path": "/root/nfs/emmy/research/suites/cases-c1f61f75a9ea532b2cd39925b1e824eb10ea2bbc478b6609086a20c1f49c0ad8/rmsnorm-2"
+        },
+        {
+          "case_id": "16295c28f3d0d9ea63770cc1058aec4526c1c5867338c61c678a7ed83486729f",
+          "path": "/root/nfs/emmy/research/suites/cases-c1f61f75a9ea532b2cd39925b1e824eb10ea2bbc478b6609086a20c1f49c0ad8/rmsnorm-3"
+        }
+      ],
+      "dedup_rule": "Seed, random names, dimensions, input pattern and irrelevant generator operation/vector_width fields do not create new types. Pointwise transport full/scalar/masked-tail boundaries are distinct."
+    },
+    {
+      "type_id": "pointwise-add-full-group",
+      "semantic_contract": "F32 pointwise add with complete grouped reads/writes",
+      "distinguishing_difference": "Complete grouped transport differs from per-lane masked tail",
+      "family": "pointwise",
+      "representative_case_id": "bc9ef3f77535282822ce79a4e2f74dfc58000193473069936942af36607c49b8",
+      "representative_path": "/root/nfs/emmy/research/suites/cases-d3c154846d9e6cb1ecce0f64dfa6506d914bf78d2717629eafb0836c6fbc9999/pointwise-0",
+      "fresh_witnesses": [
+        {
+          "case_id": "bc9ef3f77535282822ce79a4e2f74dfc58000193473069936942af36607c49b8",
+          "path": "/root/nfs/emmy/research/suites/cases-d3c154846d9e6cb1ecce0f64dfa6506d914bf78d2717629eafb0836c6fbc9999/pointwise-0"
+        }
+      ],
+      "dedup_rule": "Seed, random names, dimensions, input pattern and irrelevant generator operation/vector_width fields do not create new types. Pointwise transport full/scalar/masked-tail boundaries are distinct."
+    },
+    {
+      "type_id": "pointwise-add-masked-group-tail",
+      "semantic_contract": "F32 pointwise add with per-lane masked vector tail",
+      "distinguishing_difference": "Remainder lanes use conditional scalar stores; vector width is an internal parameter",
+      "family": "pointwise",
+      "representative_case_id": "aa9bd2538aff4367b086594499734b6e6a817be2a59c54d058341902cdf16509",
+      "representative_path": "/root/nfs/emmy/research/suites/cases-d3c154846d9e6cb1ecce0f64dfa6506d914bf78d2717629eafb0836c6fbc9999/pointwise-1",
+      "fresh_witnesses": [
+        {
+          "case_id": "aa9bd2538aff4367b086594499734b6e6a817be2a59c54d058341902cdf16509",
+          "path": "/root/nfs/emmy/research/suites/cases-d3c154846d9e6cb1ecce0f64dfa6506d914bf78d2717629eafb0836c6fbc9999/pointwise-1"
+        },
+        {
+          "case_id": "00f630fcfb1078a4c405164bc097908618f4f8090a29989ff4cf2ea177283039",
+          "path": "/root/nfs/emmy/research/suites/cases-d3c154846d9e6cb1ecce0f64dfa6506d914bf78d2717629eafb0836c6fbc9999/pointwise-2"
+        },
+        {
+          "case_id": "fd30a20fb6f6faba1f038f8aa8b67813eb1d8b46ebc3a4666b34f0970197fd64",
+          "path": "/root/nfs/emmy/research/suites/cases-c1f61f75a9ea532b2cd39925b1e824eb10ea2bbc478b6609086a20c1f49c0ad8/pointwise-1"
+        },
+        {
+          "case_id": "2ad4a1bbf6471b614cf7e1bed9221e76c048e2c42f4dce4a04725bb0345d3ad5",
+          "path": "/root/nfs/emmy/research/suites/cases-c1f61f75a9ea532b2cd39925b1e824eb10ea2bbc478b6609086a20c1f49c0ad8/pointwise-3"
+        }
+      ],
+      "dedup_rule": "Seed, random names, dimensions, input pattern and irrelevant generator operation/vector_width fields do not create new types. Pointwise transport full/scalar/masked-tail boundaries are distinct."
+    },
+    {
+      "type_id": "pointwise-add-scalar",
+      "semantic_contract": "F32 pointwise add with scalar transport and Tile tail guard",
+      "distinguishing_difference": "Fresh scalar add is a generated witness for a published pointwise mechanism",
+      "family": "pointwise",
+      "representative_case_id": "dbec631b752a7b7d8ba7a908a46d94d432abd9090a7879a5c2a2e7160eaa461b",
+      "representative_path": "/root/nfs/emmy/research/suites/cases-d3c154846d9e6cb1ecce0f64dfa6506d914bf78d2717629eafb0836c6fbc9999/pointwise-3",
+      "fresh_witnesses": [
+        {
+          "case_id": "dbec631b752a7b7d8ba7a908a46d94d432abd9090a7879a5c2a2e7160eaa461b",
+          "path": "/root/nfs/emmy/research/suites/cases-d3c154846d9e6cb1ecce0f64dfa6506d914bf78d2717629eafb0836c6fbc9999/pointwise-3"
+        },
+        {
+          "case_id": "4fa92c0643c4e22ebfba5eb40adb3292b7c943b3e68df763e92fe6a9bf3a4969",
+          "path": "/root/nfs/emmy/research/suites/cases-c1f61f75a9ea532b2cd39925b1e824eb10ea2bbc478b6609086a20c1f49c0ad8/pointwise-0"
+        },
+        {
+          "case_id": "d23e9e9fde531c7bb856bd5eda68a596754f13da9097bafa2d89405f7e0e3cd4",
+          "path": "/root/nfs/emmy/research/suites/cases-c1f61f75a9ea532b2cd39925b1e824eb10ea2bbc478b6609086a20c1f49c0ad8/pointwise-2"
+        }
+      ],
+      "dedup_rule": "Seed, random names, dimensions, input pattern and irrelevant generator operation/vector_width fields do not create new types. Pointwise transport full/scalar/masked-tail boundaries are distinct."
+    },
+    {
+      "type_id": "reduction-cooperative-full-participation-sum",
+      "semantic_contract": "F32 sum via full-CTA participation, strided input accumulation, warp and shared combine",
+      "distinguishing_difference": "Distinct from partial-CTA product/min/max identity witnesses",
+      "family": "reduction",
+      "representative_case_id": "d0bf3caa6569c79a920d25e437090789fbb3f7b89b815368ae881ff59a1df3ff",
+      "representative_path": "/root/nfs/emmy/research/suites/cases-d3c154846d9e6cb1ecce0f64dfa6506d914bf78d2717629eafb0836c6fbc9999/reduction-0",
+      "fresh_witnesses": [
+        {
+          "case_id": "d0bf3caa6569c79a920d25e437090789fbb3f7b89b815368ae881ff59a1df3ff",
+          "path": "/root/nfs/emmy/research/suites/cases-d3c154846d9e6cb1ecce0f64dfa6506d914bf78d2717629eafb0836c6fbc9999/reduction-0"
+        },
+        {
+          "case_id": "eecc74a89f1c7eea517ff81a15f0a75b7fa730f9a0a67cb993c6704a342ae06e",
+          "path": "/root/nfs/emmy/research/suites/cases-d3c154846d9e6cb1ecce0f64dfa6506d914bf78d2717629eafb0836c6fbc9999/reduction-1"
+        },
+        {
+          "case_id": "147902d82c67b9428deff7b8fc2692553e10739be5f00a2faa40477110582c12",
+          "path": "/root/nfs/emmy/research/suites/cases-d3c154846d9e6cb1ecce0f64dfa6506d914bf78d2717629eafb0836c6fbc9999/reduction-2"
+        },
+        {
+          "case_id": "c203275182baeb689f0bbf6b5cf2fe32fa9327094987dacbf91c8bd5ce5dfeee",
+          "path": "/root/nfs/emmy/research/suites/cases-d3c154846d9e6cb1ecce0f64dfa6506d914bf78d2717629eafb0836c6fbc9999/reduction-3"
+        },
+        {
+          "case_id": "7996e822eb2b97e7bb863182502811033a6747c295bcf43037f0f4e75307f59d",
+          "path": "/root/nfs/emmy/research/suites/cases-c1f61f75a9ea532b2cd39925b1e824eb10ea2bbc478b6609086a20c1f49c0ad8/reduction-0"
+        },
+        {
+          "case_id": "2cff8919df00d6fc8f4fb80e6aa694276e5a4b442ecd842341d394c6a8072440",
+          "path": "/root/nfs/emmy/research/suites/cases-c1f61f75a9ea532b2cd39925b1e824eb10ea2bbc478b6609086a20c1f49c0ad8/reduction-1"
+        },
+        {
+          "case_id": "f044c4c8222f1998f1bd6f137a8789aea72a40a160a1e053e345e93077765dc5",
+          "path": "/root/nfs/emmy/research/suites/cases-c1f61f75a9ea532b2cd39925b1e824eb10ea2bbc478b6609086a20c1f49c0ad8/reduction-2"
+        },
+        {
+          "case_id": "bff9982c9ae2c55e9c663ba51aac37f81732e498bbcc64a2888169d9fa9a3ea7",
+          "path": "/root/nfs/emmy/research/suites/cases-c1f61f75a9ea532b2cd39925b1e824eb10ea2bbc478b6609086a20c1f49c0ad8/reduction-3"
+        }
+      ],
+      "dedup_rule": "Seed, random names, dimensions, input pattern and irrelevant generator operation/vector_width fields do not create new types. Pointwise transport full/scalar/masked-tail boundaries are distinct.",
+      "depth8_development_witnesses": [
+        {
+          "case_id": "6bb6d5d2dd35f70c3032e8d0b8873cc5e2a62c3925d9ed3d8cb6970111b95f2e",
+          "tail": 0,
+          "review": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/bugs-types/depth8-oracle-actual-review-v1/review.json",
+          "scope": "Existing semantic subcontracts, development445566 only, no source-bound compiler confirmation"
+        },
+        {
+          "case_id": "300f7a96ecca5dfb8306f97f93a1ce449b40df696b60ff9e974bf1218c142b72",
+          "tail": 1,
+          "review": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/bugs-types/depth8-oracle-actual-review-v1/review.json",
+          "scope": "Existing semantic subcontracts, development445566 only, no source-bound compiler confirmation"
+        },
+        {
+          "case_id": "b3b24603d754ef84e88a6c07ac9e4a54a2fa15285ecef6533dd4b80615708754",
+          "tail": 2,
+          "review": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/bugs-types/depth8-oracle-actual-review-v1/review.json",
+          "scope": "Existing semantic subcontracts, development445566 only, no source-bound compiler confirmation"
+        },
+        {
+          "case_id": "c35a644b4610c815459688793971739ba6c88a2ca6873b905cc627afcaacffa7",
+          "tail": 3,
+          "review": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/bugs-types/depth8-oracle-actual-review-v1/review.json",
+          "scope": "Existing semantic subcontracts, development445566 only, no source-bound compiler confirmation"
+        }
+      ]
+    },
+    {
+      "type_id": "softmax-serial-three-pass",
+      "semantic_contract": "Serial row maximum, exp-sum and normalized-write passes",
+      "distinguishing_difference": "Distinct from cooperative online recurrence",
+      "family": "softmax",
+      "representative_case_id": "75ec16fa71883461a95d363098c210635875078cb804ce7207465e1e3cc89c87",
+      "representative_path": "/root/nfs/emmy/research/suites/cases-d3c154846d9e6cb1ecce0f64dfa6506d914bf78d2717629eafb0836c6fbc9999/softmax-2",
+      "fresh_witnesses": [
+        {
+          "case_id": "75ec16fa71883461a95d363098c210635875078cb804ce7207465e1e3cc89c87",
+          "path": "/root/nfs/emmy/research/suites/cases-d3c154846d9e6cb1ecce0f64dfa6506d914bf78d2717629eafb0836c6fbc9999/softmax-2"
+        },
+        {
+          "case_id": "ffd1f90cd56a38516f819b47fee3812e7186b98e7a9bea300703517ab03d6b35",
+          "path": "/root/nfs/emmy/research/suites/cases-d3c154846d9e6cb1ecce0f64dfa6506d914bf78d2717629eafb0836c6fbc9999/softmax-3"
+        },
+        {
+          "case_id": "c8297130210898c370902f9b776d08809cf01dfbd75e977e0855953e6bac9007",
+          "path": "/root/nfs/emmy/research/suites/cases-c1f61f75a9ea532b2cd39925b1e824eb10ea2bbc478b6609086a20c1f49c0ad8/softmax-2"
+        },
+        {
+          "case_id": "3081c31fa1dcbd0cf63b92e446f49cc9d5af483344bc34e430afa94102403948",
+          "path": "/root/nfs/emmy/research/suites/cases-c1f61f75a9ea532b2cd39925b1e824eb10ea2bbc478b6609086a20c1f49c0ad8/softmax-3"
+        }
+      ],
+      "dedup_rule": "Seed, random names, dimensions, input pattern and irrelevant generator operation/vector_width fields do not create new types. Pointwise transport full/scalar/masked-tail boundaries are distinct."
+    },
+    {
+      "type_id": "scope-nested-partial-tile-init-shadow",
+      "semantic_contract": "A nested partial Tile Init shadows an outer carried binding only inside the child; a later explicit Accum updates the restored outer carrier and persists across Tile exit.",
+      "status": "active approved independent oracle and actual retained case",
+      "distinguishing_difference": "Existing Init shadow witness covers Cond/Loop, and existing Tile scope witnesses cover axes; this contract combines Tile scope with carried Init shadow restoration.",
+      "dedup_rule": "Changing row count, seed, constants or update amount does not create a type.",
+      "representative_case_id": "ee167cb896bcfad085da910c9c0eb88a93bf186403b908a2524fca7e8a4c5378",
+      "representative_path": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/tile-init-screen/cases/nested-init-and-carried-update",
+      "independent_fresh_witness": {
+        "case_id": "c719289f3813c4abeee827743ffe9e1f1608f150a779ce548ea771ff38eb9ded",
+        "path": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/tile-init-independent/nested-init-and-carried-update",
+        "source_id": "f43a5e79984f4240bc2b135f3212290bc68cf679619cc5c236a06df0971555b2",
+        "selection_id": "0f1b14dd820458e3dca3d42e909eaf13428fd9b2982df655e67d3f0cd258500e"
+      }
+    },
+    {
+      "type_id": "expression-opaque-binary-address-key",
+      "semantic_contract": "Composite BinaryExpr address identity must not collapse distinct opaque CastExpr children to one cached address.",
+      "type_basis": "Conservative distinct composite-key branch, explicitly admitted by coordinator; different seeds do not add types",
+      "representative_case_id": "2c15db2e5679909cef087ecdd13de5ce6fb7cf56ae54b090f7a966d6dcb6a30e",
+      "representative_path": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/opaque-screen/binary",
+      "dedup_rule": "Binary/Ternary parent class is fixed; child values, names, seed and legal target indices are variations of the same contract.",
+      "status": "Active independently approved oracle and actual exploratory witness"
+    },
+    {
+      "type_id": "expression-opaque-ternary-address-key",
+      "semantic_contract": "Composite TernaryExpr address identity must propagate opaque child uncertainty through its parent, preserving distinct target addresses.",
+      "type_basis": "Conservative distinct composite-key branch, explicitly admitted by coordinator; different seeds do not add types",
+      "representative_case_id": "7d586595132adb5191192231cef884f5daa56077f115b310c20d34f5b65b7c95",
+      "representative_path": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/opaque-screen/ternary",
+      "dedup_rule": "Binary/Ternary parent class is fixed; child values, names, seed and legal target indices are variations of the same contract.",
+      "status": "Active independently approved oracle and actual exploratory witness"
+    },
+    {
+      "type_id": "scope-cond-let-local-carrier",
+      "semantic_contract": "A fresh Let in Cond shadows an outer Init carrier; explicit local Accum must not mutate outer storage.",
+      "status": "Actual parent-owned v2 screen independently validated; GPU evaluation pending",
+      "dedup_rule": "Seeds, dimensions, constants and random contents do not add types. Prefetch is an activation variant of buffer Load, not another semantic type.",
+      "actual_screen_review": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/bugs-types/carrier-actual-screen-independent-review-v2.json"
+    },
+    {
+      "type_id": "scope-cond-buffer-load-local-carrier",
+      "semantic_contract": "A fresh scalar Load from a buffer in Cond shadows an outer Init carrier; local Accum must not mutate outer storage.",
+      "status": "Actual parent-owned v2 screen independently validated; GPU evaluation pending",
+      "dedup_rule": "Seeds, dimensions, constants and random contents do not add types. Prefetch is an activation variant of buffer Load, not another semantic type.",
+      "actual_screen_review": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/bugs-types/carrier-actual-screen-independent-review-v2.json"
+    },
+    {
+      "type_id": "scope-cond-scalar-load-local-carrier",
+      "semantic_contract": "A by-value scalar parameter Load in Cond shadows an outer Init carrier; local Accum must not mutate outer storage.",
+      "status": "Actual parent-owned v2 screen independently validated; GPU evaluation pending",
+      "dedup_rule": "Seeds, dimensions, constants and random contents do not add types. Prefetch is an activation variant of buffer Load, not another semantic type.",
+      "actual_screen_review": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/bugs-types/carrier-actual-screen-independent-review-v2.json"
+    },
+    {
+      "type_id": "scope-cond-assign-local-carrier",
+      "semantic_contract": "Fresh typed Assign(state, add, a, b) with distinct already-bound RHS names shadows an outer Init; subsequent local Accum must not overwrite outer storage.",
+      "status": "Actual parent-owned v2 screen independently validated; GPU evaluation pending",
+      "dedup_rule": "Constants, seeds, shape and equivalent arithmetic draws do not add types; distinct pure Assign declaration binding path is counted once.",
+      "evidence": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/bugs-types/assign-shadow-static-v1/results.json",
+      "actual_screen_review": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/bugs-types/carrier-actual-screen-independent-review-v2.json"
+    },
+    {
+      "type_id": "attention-fused-serial-key-online",
+      "semantic_contract": "Fused F32 online attention with one keys Loop and a seeded serial dot Loop, preserving max/denominator/numerator recurrence. Distinct from prior unrolled chunked key loop with per-key Cond tails.",
+      "distinguishing_difference": "A distinct typed loop/control topology; bounded full16/full32/partial shapes are activation witnesses, not separate contracts.",
+      "family": "attention",
+      "representative_case_id": "e35aeaf4242506aad5305a9183d67ba836273df2e954ca93b8e8f65e3e9a7b46",
+      "representative_path": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/attention-bounded-screen/full-segment16",
+      "witnesses": [
+        {
+          "case_id": "e35aeaf4242506aad5305a9183d67ba836273df2e954ca93b8e8f65e3e9a7b46",
+          "path": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/attention-bounded-screen/full-segment16",
+          "semantic_type": "attention-fused-serial-key-online",
+          "version": "fused-online-cooperative-coverage-v3",
+          "pattern": "normal",
+          "shape": [
+            4,
+            19,
+            80,
+            16
+          ],
+          "activation_regime": "full-segment16",
+          "typed_graph_valid": true,
+          "file_hashes_checked": true
+        },
+        {
+          "case_id": "7ad3e910941f6bf0e71f664f4c48ac24c4425df7c642fb1bb8cbd04d1edec37d",
+          "path": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/attention-bounded-screen/full-segment32",
+          "semantic_type": "attention-fused-serial-key-online",
+          "version": "fused-online-cooperative-coverage-v3",
+          "pattern": "cancellation",
+          "shape": [
+            4,
+            7,
+            96,
+            32
+          ],
+          "activation_regime": "full-segment32",
+          "typed_graph_valid": true,
+          "file_hashes_checked": true
+        },
+        {
+          "case_id": "8e5b840f53eb525072ff57abd9035966a586dbfa4f323003e82644895eab04fe",
+          "path": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/attention-bounded-screen/partial-fallback",
+          "semantic_type": "attention-fused-serial-key-online",
+          "version": "fused-online-cooperative-coverage-v3",
+          "pattern": "bounded",
+          "shape": [
+            5,
+            7,
+            29,
+            7
+          ],
+          "activation_regime": "partial-fallback",
+          "typed_graph_valid": true,
+          "file_hashes_checked": true
+        },
+        {
+          "case_id": "6ebeed85adf3b8c7acbd61f10f37da15ba491432b4ec9a09e28c7e9156d6c69d",
+          "path": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/attention-order-screen/partial-fallback",
+          "semantic_type": "attention-fused-serial-key-online",
+          "version": "fused-online-cooperative-coverage-v4",
+          "pattern": "bounded",
+          "shape": [
+            3,
+            19,
+            29,
+            7
+          ],
+          "activation_regime": "partial-fallback",
+          "typed_graph_valid": true,
+          "file_hashes_checked": true
+        }
+      ],
+      "dedup_rule": "Seeds, tensor names, dimensions, width16/32 and full/partial tails do not add types. Bounded fallback in oraclev4 maps to serial-key-online, not wide-cancellation.",
+      "GPU_status": "Parent reports all6 cases passed on d9 baseline at fixed tolerances; worker catalog audit did not run GPU.",
+      "fresh_postselection_witnesses": [
+        {
+          "case_id": "8996904203776bc61d7da020bfba25d6b8df989336f7641ac753c3f80556a25e",
+          "path": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/attention-bounded-independent/full-segment16",
+          "review": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/bugs-types/attention-fresh-six-independent-review-v1/review.json",
+          "shape": [
+            12,
+            3,
+            48,
+            16
+          ]
+        },
+        {
+          "case_id": "7bfe3e8fd6dd18024fb08430b427e687b38faf560d1397e9b210561fb21fc63c",
+          "path": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/attention-bounded-independent/full-segment32",
+          "review": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/bugs-types/attention-fresh-six-independent-review-v1/review.json",
+          "shape": [
+            6,
+            3,
+            160,
+            32
+          ]
+        },
+        {
+          "case_id": "bdd094ff243fd119a72e2e675ee682294887bced491b5131041c7f8ac744fdc3",
+          "path": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/attention-bounded-independent/partial-fallback",
+          "review": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/bugs-types/attention-fresh-six-independent-review-v1/review.json",
+          "shape": [
+            9,
+            19,
+            19,
+            7
+          ]
+        },
+        {
+          "case_id": "bebbb5fd2f3862042cf1cbae34550467b7ee077c2347be5ed5ca756422f2932c",
+          "path": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/attention-order-independent/partial-fallback",
+          "review": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/bugs-types/attention-fresh-six-independent-review-v1/review.json",
+          "shape": [
+            3,
+            3,
+            13,
+            7
+          ]
+        }
+      ]
+    },
+    {
+      "type_id": "attention-fused-serial-key-wide-cancellation-order",
+      "semantic_contract": "Finite wide-cancellation dot inputs require preserving original per-dot FMA/fold order and serial online key order at fixed rtol=.001/atol=.0001.",
+      "distinguishing_difference": "Distinct nonassociative numerical contract exercised by deliberate [+large,-large,+small,+small] order. Width16/32 use the same numerical requirement and are witnesses.",
+      "family": "attention",
+      "representative_case_id": "01e2458a05700443b8644949c123585a5129a9bcee19fe82ec68ea6f95807eed",
+      "representative_path": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/attention-order-screen/full-segment16",
+      "witnesses": [
+        {
+          "case_id": "01e2458a05700443b8644949c123585a5129a9bcee19fe82ec68ea6f95807eed",
+          "path": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/attention-order-screen/full-segment16",
+          "semantic_type": "attention-fused-serial-key-wide-cancellation-order",
+          "version": "fused-online-cooperative-coverage-v4",
+          "pattern": "wide-cancellation-sequential-order",
+          "shape": [
+            4,
+            13,
+            80,
+            16
+          ],
+          "activation_regime": "full-segment16",
+          "typed_graph_valid": true,
+          "file_hashes_checked": true
+        },
+        {
+          "case_id": "fed237f6219251ed922b726d78a7a07aeb8290abd7ff967036ed5bc23e59b90e",
+          "path": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/attention-order-screen/full-segment32",
+          "semantic_type": "attention-fused-serial-key-wide-cancellation-order",
+          "version": "fused-online-cooperative-coverage-v4",
+          "pattern": "wide-cancellation-sequential-order",
+          "shape": [
+            4,
+            3,
+            160,
+            32
+          ],
+          "activation_regime": "full-segment32",
+          "typed_graph_valid": true,
+          "file_hashes_checked": true
+        }
+      ],
+      "dedup_rule": "Seeds, tensor names, dimensions, width16/32 and full/partial tails do not add types. Bounded fallback in oraclev4 maps to serial-key-online, not wide-cancellation.",
+      "GPU_status": "Parent reports all6 cases passed on d9 baseline at fixed tolerances; worker catalog audit did not run GPU.",
+      "fresh_postselection_witnesses": [
+        {
+          "case_id": "44c6e344374056121b8a007268039a7d7823bf44aed0149ed4d96ddf9164d0c2",
+          "path": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/attention-order-independent/full-segment16",
+          "review": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/bugs-types/attention-fresh-six-independent-review-v1/review.json",
+          "shape": [
+            8,
+            13,
+            80,
+            16
+          ]
+        },
+        {
+          "case_id": "e4180db22f79b911561e72b2ebf63e8552c6c390a1fb0b8aac1b22ddd1d94c7a",
+          "path": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/attention-order-independent/full-segment32",
+          "review": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/bugs-types/attention-fresh-six-independent-review-v1/review.json",
+          "shape": [
+            4,
+            19,
+            160,
+            32
+          ]
+        },
+        {
+          "case_id": "dd375967ea3896ace9e00ecb875af9b42a8cc2e0f22ca8525b29b556bbe04389",
+          "path": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/attention-full-tail-independent/full-segment16",
+          "review": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/bugs-types/attention-full-tail-independent-review-v1/review.json",
+          "shape": [
+            12,
+            33,
+            48,
+            16
+          ]
+        },
+        {
+          "case_id": "69fdea2216c56996b712ccaacacfef660588f54d5b6b08e51e34009f47f07448",
+          "path": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/attention-full-tail-independent/full-segment32",
+          "review": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/bugs-types/attention-full-tail-independent-review-v1/review.json",
+          "shape": [
+            6,
+            67,
+            96,
+            32
+          ]
+        }
+      ],
+      "depth8_development_witnesses": [
+        {
+          "case_id": "6bb6d5d2dd35f70c3032e8d0b8873cc5e2a62c3925d9ed3d8cb6970111b95f2e",
+          "tail": 0,
+          "review": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/bugs-types/depth8-oracle-actual-review-v1/review.json",
+          "scope": "Existing semantic subcontracts, development445566 only, no source-bound compiler confirmation"
+        },
+        {
+          "case_id": "300f7a96ecca5dfb8306f97f93a1ce449b40df696b60ff9e974bf1218c142b72",
+          "tail": 1,
+          "review": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/bugs-types/depth8-oracle-actual-review-v1/review.json",
+          "scope": "Existing semantic subcontracts, development445566 only, no source-bound compiler confirmation"
+        }
+      ]
+    },
+    {
+      "type_id": "scope-cond-select-local-carrier",
+      "semantic_contract": "Fresh F32 Select in a lexical child scope must detach inherited outer mutable association; explicit local Accum must not alter outer Init carrier.",
+      "distinguishing_difference": "Missing Select declaration site of the general fresh-binding mechanism; expected outer7, current static PTX outer14. Single Select source is immutable local11, separating this from source-update alias lifetime.",
+      "status": "Parent-owned frozen oracle actual fresh source5feed witness independently validated; parent GPU qualification underway",
+      "evidence": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/bugs-types/select-shadow-alias-static-v1/results.json",
+      "representative_static_IR": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/bugs-types/select-shadow-alias-static-v1/k_select_shadow_alias.ir.json",
+      "dedup_rule": "Constants, seeds and shapes do not add types. This is a Select statement-path contract, not a new type for every declaration fixture.",
+      "actual_review": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/bugs-types/select-fresh-independent-review-v1/review.json"
+    },
+    {
+      "type_id": "snapshot-select-source-carrier-lifetime",
+      "semantic_contract": "A fresh single-branch F32 Select captures its selected source value; later explicit Accum on that original source cannot change the snapshot.",
+      "distinguishing_difference": "Distinct from inherited mutable destination: snapshot has no mutable entry but aliases source register. Let and two-branch Select controls preserve7 while single-branch snapshot incorrectly becomes10.",
+      "status": "Parent-owned frozen oracle actual fresh source5feed witness independently validated; parent GPU qualification underway",
+      "evidence": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/bugs-types/select-shadow-alias-static-v1/results.json",
+      "representative_static_IR": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/bugs-types/select-shadow-alias-static-v1/k_select_shadow_alias.ir.json",
+      "dedup_rule": "Constants, seeds and shapes do not add types. This is a Select statement-path contract, not a new type for every declaration fixture.",
+      "actual_review": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/bugs-types/select-fresh-independent-review-v1/review.json"
+    },
+    {
+      "type_id": "transport-async-ring-stage-order",
+      "semantic_contract": "FullCTA shared ring with L committed warmup groups and one committed future group per iteration; wait_group L plus barriers exposes the intended consumed stage. Ring tail removal must adjust remaining group counts.",
+      "domains": [
+        "canonical-tail",
+        "short-ring",
+        "nondivisible-counter"
+      ],
+      "distinguishing_difference": "Existing masked async16 type is transport/zero-fill only; multi-group ring producer/consumer stage ordering is a new contract.",
+      "status": "Actual frozen-source async4screen independently validated; intendedcanonicaloptimizationactivation gap recorded, parentGPUpending",
+      "oracle_generator_sha256": "d8b861ad0cad3a9513a43e10c847f4ff7a3892aadd7dbe11ee589e293ca6da99",
+      "validation_case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/async-oracle-validation-112233/case-list.json",
+      "dedup_rule": "Short versus long tripcount, nondivisible stride boundary, L1/2/3, block32/64, CTAcounts, random contents and seeds are witnesses of these two contracts, not additional types.",
+      "actual_review": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/bugs-types/async-actual-screen-independent-review-v1/review.json"
+    },
+    {
+      "type_id": "transport-async-ring-postloop-padding-liveness",
+      "semantic_contract": "A final wait0/barrier and shared Load makes lookahead padding writes observable after the stage loop, requiring those writes to remain.",
+      "domains": [
+        "observable-padding"
+      ],
+      "distinguishing_difference": "Postloop shared-memory liveness differs from stage-sum ordering and is the semantic reason dead-lookahead elimination must decline.",
+      "status": "Actual frozen-source async4screen independently validated; intendedcanonicaloptimizationactivation gap recorded, parentGPUpending",
+      "oracle_generator_sha256": "d8b861ad0cad3a9513a43e10c847f4ff7a3892aadd7dbe11ee589e293ca6da99",
+      "validation_case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/async-oracle-validation-112233/case-list.json",
+      "dedup_rule": "Short versus long tripcount, nondivisible stride boundary, L1/2/3, block32/64, CTAcounts, random contents and seeds are witnesses of these two contracts, not additional types.",
+      "actual_review": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/bugs-types/async-actual-screen-independent-review-v1/review.json"
+    },
+    {
+      "type_id": "attention-distinct-query-normalization-partition",
+      "semantic_contract": "Two distinct query/score classes each contain two equivalent seeded normalization recurrences; reuse must stay within each class, and each query-class/Vhalf numerator must reach its own output quadrant.",
+      "distinguishing_difference": "V6 exercises one equivalence class; this contract discriminates unsound cross-class normalization sharing and store/class coupling.",
+      "status": "Actual frozen-source V7screen independently validated; parent GPUqualificationpending",
+      "oracle_generator_sha256": "6e97b1d71772f95a05241b47c42d87c19fa0492c22ca8cdb1600b8faf93095e8",
+      "review": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/bugs-types/recurrence-partition-oracle-independent-review-v7/review.json",
+      "dedup_rule": "Width16/32, tripcounts, shapes, seeds and paired opposite-query arrays are witnesses of one distinct-class partition contract, not additional types.",
+      "actual_review": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/bugs-types/recurrence-partition-actual-screen-independent-review-v1/review.json"
+    },
+    {
+      "type_id": "collective-partial-cta-uniform-loop-barrier",
+      "semantic_contract": "Inactive physical lanes must remain converged through a fixed literal uniform loop containing fullCTA barriers, while logical Tile memory effects stay masked. Nonuniform header or divergent ancestry cannot use this proof.",
+      "status": "Frozen sourced084/3aca fresh2actualcases independentlyreviewed; GPUqualificationpending, baselineunsupportedcontrolsretained",
+      "evidence": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/bugs-types/partial-cta-uniform-loop-audit-v1/findings.json",
+      "prototype": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/bugs-types/partial-cta-uniform-loop-prototype-v3/prototype.json",
+      "dedup_rule": "Ordinary versus strided syntax, static tripcounts and nested uniform depth are witnesses of one physical participation proof. Do not multiply type count by loop shape.",
+      "controls": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/bugs-types/partial-cta-uniform-loop-prototype-v3/static-controls.json",
+      "actual_review": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/bugs-types/partial-uniform-fresh-independent-review-v3/review.json"
+    },
+    {
+      "type_id": "typed-BOOL-Assign-result",
+      "semantic_contract": "Explicit public BOOL scalar Assign over all-BOOL arguments plus ordered BOOL BinaryExpr relations; fresh predicate results observed through existing BOOL-to-F32 Let snapshots. Expression versus statement syntax is a witness of this existing truth/result contract.",
+      "witnesses": [
+        "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/scalar-bool-oracle-validation-778899/assign-less"
+      ],
+      "representative_case_id": "be140c82922d2fa4655d623f3b48e2f16769aadc10ec988a2a5ee7f6f5d77f07",
+      "family": "pointwise",
+      "oracle_artifact": "cc0adf140953e58e53a81d53ab2704f944d566e4fb931dc685ad36a516efad53",
+      "generator_sha256": "0afa487d7a5d983f677adf8747df01db5493e365b67b61d7de502a50c1e1a954",
+      "status": "Frozen E191/6481 passed all172 isolated correctness cases, guards/inputs intact; parent owns promotion.",
+      "dedup_rule": "Operations sharing these explicit BOOL declaration/carrier contracts, seeds, dimensions, truth draws and empty/nonempty Loop witnesses do not add more types. Numeric store conversion, NaN truth and lexical shadows reuse existing inventory contracts.",
+      "qualified_source_id": "6481a0c89b849471a56f8b712d471551f039527b703fea1b24a678642076ec60",
+      "correctness_evidence_id": "3279d30a6374abdf2e9bc9d1eded4c44ae78474ec1351618a1a72a1fee19f0d3",
+      "oracle_v2_artifact": "f79800bfc2aa7779d27703455851b0371e876f5d85c740833117a7c616b4c1c6",
+      "fresh_case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/scalar-bool-v2-independent-v1/case-list.json"
+    },
+    {
+      "type_id": "typed-BOOL-carrier-seed-false",
+      "semantic_contract": "Explicit BOOL Init and seedFalse BOOL-valued fold carrier for add/multiply/maximum/minimum; nonempty ordered truth folds and empty-loop state preservation.",
+      "witnesses": [
+        "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/scalar-bool-oracle-validation-778899/four-folds-seed-false",
+        "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/scalar-bool-oracle-validation-778899/empty-folds-seed-false"
+      ],
+      "representative_case_id": "9161cbcda8db695976f76193a9c2ef7f4e8cf561997f3e25df7e647bbd0e7703",
+      "family": "reduction",
+      "oracle_artifact": "cc0adf140953e58e53a81d53ab2704f944d566e4fb931dc685ad36a516efad53",
+      "generator_sha256": "0afa487d7a5d983f677adf8747df01db5493e365b67b61d7de502a50c1e1a954",
+      "status": "Frozen E191/6481 passed all172 isolated correctness cases, guards/inputs intact; parent owns promotion.",
+      "dedup_rule": "Operations sharing these explicit BOOL declaration/carrier contracts, seeds, dimensions, truth draws and empty/nonempty Loop witnesses do not add more types. Numeric store conversion, NaN truth and lexical shadows reuse existing inventory contracts.",
+      "qualified_source_id": "6481a0c89b849471a56f8b712d471551f039527b703fea1b24a678642076ec60",
+      "correctness_evidence_id": "3279d30a6374abdf2e9bc9d1eded4c44ae78474ec1351618a1a72a1fee19f0d3",
+      "oracle_v2_artifact": "f79800bfc2aa7779d27703455851b0371e876f5d85c740833117a7c616b4c1c6",
+      "fresh_case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/scalar-bool-v2-independent-v1/case-list.json"
+    },
+    {
+      "type_id": "transport-adjacent-shared-separate-load-pair",
+      "semantic_contract": "Two adjacent readonly shared words are loaded at separate Load sites straddling an original F32 carrier update; paired transport preserves two independent serial dot carrier/update sequences.",
+      "representative_case_id": "de705c16257905e2418c7764648606c103b725e60751bcc582ebc6c87f4ee562",
+      "representative_path": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/shared-pair-oracle-validation-560123/case-0",
+      "witness_case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/shared-pair-oracle-validation-560123/case-list.json",
+      "family": "matmul",
+      "oracle_artifact": "906d27442d02cf3744ccb7cd68182dec7f2450fc44e06ecd93fe1ffd72be25a8",
+      "generator_sha256": "3aeab83833a917fc1a8cd019a41a6917853c3eb7580d80982ee04b952c1eea25",
+      "independent_source_review": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/bugs-types/shared-pair-oracle-source-review-v1/review.json",
+      "independent_actual_review": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/bugs-types/shared-pair-oracle-actual-review-v1/review.json",
+      "status": "Parent accepted/froze oracle after independent576word validation; source-specific new candidate GPU qualification remains separate.",
+      "dedup_rule": "E8/9/12/17, B32/64/128, rowpadding, seeds/tails and data draws are witnesses of one separate-load-pair contract, not extra types. Staging/barrier, exact cancellation, Init/tail and ABI behaviors reuse existing contracts.",
+      "explicit_coverage_limit": "No direct outer-bv1 snapshot/shadow coverage: bv1 is fresh and not used before its own Load."
+    },
+    {
+      "type_id": "implicit-seeded-fold-carrier-body-scope-restoration",
+      "semantic_contract": "A direct nested seeded fold declares its carrier at enclosing Loop/StridedLoop body scope; finalized local value is visible within body, ancestor binding returns at body exit including empty outer loops, while seedFalse ancestor updates and direct fresh exports persist.",
+      "oracle_artifact": "837eef82d2e8d94a1be75f3ade4d9a14d06d003cf6fada7cac78b2b2619a36ae",
+      "generator_sha256": "6b275a7b5f3453a3c2ca6a5bb7143b10a1dae24cfc9a9b2bba965414a1fee9e4",
+      "representative_case_id": "ab23254f6a6f908d16e15b06fec69272c6c69cc93e0c56d70b1e4e44c11aa807",
+      "representative_path": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/nested-seeded-fold-oracle-validation-901127/nested-seeded-fold-scopes",
+      "source_review": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/bugs-types/loop-child-SSA-shadow-triage-v1/oracle-source-independent-review-v1.json",
+      "actual_review": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/bugs-types/loop-child-SSA-shadow-triage-v1/oracle-actual-development-independent-review-v1.json",
+      "status": "Parent accepted/froze independently reviewed oracle; baseline diagnosis and compiler qualification pending.",
+      "dedup_rule": "Loop/StridedLoop, positive/empty iteration, seedFalse contrary control, small counts/seeds/shapes and partialTile are witnesses of this one ownership/body-exit contract. No arbitrary repeated pure SSA name claim."
+    },
+    {
+      "type_id": "collective-tree-f32-exact-order-snapshot",
+      "semantic_contract": "Full-CTA power-of-two shared F32 halving tree preserves its exact staged addition grouping and broadcasts the root in-place to every physical thread while retaining the incoming immutable snapshot. Observable scratch continuation retains exact intermediate tree contents.",
+      "type_basis": "F32 nonassociative staged-tree grouping is distinct from existing NaN maximum, affine multi-component noncommutative tree, and zero-trip carrier contracts; snapshot and live scratch are combined contrary controls, not additional types.",
+      "representative_case_id": "70ad0f32f8f071770e3dffdcf510ff9fcb64022e08c93f8e775a24ca173596a3",
+      "representative_path": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/exact-tree-oracle-validation-557733/tree-4-root-snapshot",
+      "family": "reduction",
+      "oracle_artifact": "ba19771c0672890371122975d83308c20a80e837b8227d7b0c06c197a7588ae7",
+      "generator_sha256": "aa789dd34609b037ab7d7f58eaf0138c52395dd34cf0f77b40850b960ae6ded8",
+      "source_review": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/latency-index/review-exact-shared-tree-order-v1-source.json",
+      "actual_review": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/latency-index/review-exact-tree-actual557733-v1.json",
+      "development_reference_words": 1280,
+      "witnesses": [
+        {
+          "case_id": "24e447a29f7665e75242d1ca946836b2f542d9cc71953cb5578797962bd97165",
+          "path": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/exact-tree-oracle-validation-557733/tree-2-root-snapshot",
+          "length": 2,
+          "block": 64,
+          "scratch_liveout": false
+        },
+        {
+          "case_id": "70ad0f32f8f071770e3dffdcf510ff9fcb64022e08c93f8e775a24ca173596a3",
+          "path": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/exact-tree-oracle-validation-557733/tree-4-root-snapshot",
+          "length": 4,
+          "block": 128,
+          "scratch_liveout": false
+        },
+        {
+          "case_id": "59075bf4598eee47a9e806eeebf1a01e2c41d531ea5486a1842431411355f6ca",
+          "path": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/exact-tree-oracle-validation-557733/tree-8-root-snapshot",
+          "length": 8,
+          "block": 256,
+          "scratch_liveout": false
+        },
+        {
+          "case_id": "6890db887e9ddeaf5f0a49d1111ec35c0ac97c590f7720d2112e53c5a25b6e1a",
+          "path": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/exact-tree-oracle-validation-557733/tree-4-scratch-liveout",
+          "length": 4,
+          "block": 128,
+          "scratch_liveout": true
+        }
+      ],
+      "status": "Parent accepted/froze oracle after independent index source and actual1280word review; compiler GPU qualification not implied by inventory mapping.",
+      "dedup_rule": "Tree lengths2/4/8, blocks64/128/256, cancellation magnitudes, increments, seeds, readonly snapshot values and scratch-liveout variant are witnesses/contrary controls of this one exact-order tree contract. No additional type for existing snapshot or scratch liveness mechanisms."
+    },
+    {
+      "type_id": "typed-softplus-negative-tail-composition",
+      "semantic_contract": "Supported F32 softplus retains the small positive log1p correction for negative finite inputs when consumed by a supported finite amplification/composition, so distinct negative tails cannot collapse through rounding1+exp(x) before the logarithm.",
+      "family": "pointwise",
+      "type_basis": "A nonlinear small-tail accuracy/conditioning contract not represented by the existing NaN/minmax, typed scalar, serial-order, shared transport or lexical-carrier types. This is one softplus-composition contract, not one type per input interval or amplifier.",
+      "oracle_artifact": "c9544d14214e0544da38cd95c9868d6476995de5c6b284427a225680a8bfb8f2",
+      "generator_sha256": "15f62f181a33a13f5e5184ec4ba6827fb40946b810d660a2fe335db5c2c436bd",
+      "representative_case_id": "2e5ef73f93e297caf646bf20a032c9c8d7a0060713dd4ced4c5b558097777bc8",
+      "source_proposal": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/bugs-types/softplus-negative-tail-triage-v1/proposal.json",
+      "status": "Parent accepted/froze complete oracle after independent Memory source and actual194word review; parent baseline numerical counterexample and candidate qualification pending.",
+      "dedup_rule": "Negative/zero/positive finite input controls across[-80,80], y-threshold neighbors, scalaramp1e9/1e30, positionalABI order, shape/partialTile/tails and random seeds are witnesses of the same contract. Do not add separate types for polynomial branches, softplus implementation method, or amplifier sizes.",
+      "limits": "No new promise for BOOL/mixed types, unsupported F64 softplus, subnormal-relative amplification outside the independently fixed parent oracle domain.",
+      "source_artifact": "9b0c0448f44dd8b576755a3bad5b1450b67a75299ad74cecea9a006eac62be34",
+      "representative_path": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/softplus-tail-oracle-validation-665541/softplus-and-amplified-tail",
+      "actual_validation_case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/softplus-tail-oracle-validation-665541/case-list.json",
+      "source_review": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/latency-memory/softplus-tail-oracle-source-independent-review-v1/review.json",
+      "actual_review": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/latency-memory/softplus-tail-oracle-actual-independent-review-v1/review.json",
+      "development_reference_words": 194,
+      "rtol": 1e-05,
+      "atol": 1e-07,
+      "review_boundary": "Inventory author maps accepted Memory reviews; does not claim to have authored or rerun oracle validation."
+    },
+    {
+      "type_id": "typed-erf-normal-small-composition",
+      "semantic_contract": "Supported F32 erf retains the odd linear dependence near zero for normal finite inputs when followed by an ordinary separate finite F32 amplification; an absolute approximation may not collapse distinct normal small values into an indistinguishable rounded residual.",
+      "family": "pointwise",
+      "type_basis": "One distinct erf-nearzero cancellation and composition contract; separate from softplus log1p negative-tail mechanism. Signed/zero/branch-boundary/large-path controls do not add types.",
+      "oracle_artifact": "3b99572361a756a1b7bae5f15587bdf354f87005acaf6b7a1781b31c5d01c018",
+      "generator_sha256": "945c561519f134b1183cfe275d2fae17b8a0f38e7fe170b226e5fbec5fc6bd24",
+      "source_artifact": "47fb0d9020c054acfc221d57b5046bbf612d858521e1f70293910e8e1fbab50b",
+      "representative_case_id": "63558c3da344eded31db3ba070fd5b9bfed72c764d052019d37b715732205e2c",
+      "representative_path": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/erf-small-oracle-validation-884271/erf-and-amplified-small-values",
+      "source_proposal": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/bugs-types/erf-nearzero-composition-triage-v1/proposal.json",
+      "source_review": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/latency-memory/erf-small-oracle-source-independent-review-v1/review.json",
+      "actual_review": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/latency-memory/erf-small-oracle-actual-independent-review-v1/review.json",
+      "development_reference_words": 70,
+      "rtol": 1e-05,
+      "atol": 1e-07,
+      "status": "Parent accepted/froze independently reviewed oracle; baseline native/GPU diagnosis pending, no failure claim from inventory.",
+      "dedup_rule": "Input signs, exact powers, finite amplifier values, +/-zero, analytic interval neighbors, larger-input controls, ABI rotation, partialTile sizes and random seeds are witnesses of this one erf-composition contract. Vector/pair composition adds no type.",
+      "limits": "No extension to unsupported F64 erf or arbitrary relative amplification of subnormal reference outputs; selected nonzero inputs and raw/scaled refs are normal finite.",
+      "review_boundary": "Inventory author maps accepted independent Memory source+70word actual reviews; does not claim to have authored or rerun oracle."
+    },
+    {
+      "type_id": "typed-Assign-mixed-F16-compute-boundary",
+      "semantic_contract": "Public F16-result Assign with wider/mixed operands computes the supported scalar operation in F32 and converts the result once to F16, while the all-F16 native path and copy/predicate handling remain distinct controls.",
+      "family": "pointwise",
+      "type_basis": "One Assign computation-stage conversion contract; distinct from half ABI/global/shared transport, same-type half arithmetic, F32 BinaryExpr support, and declared-Let conversion after expression evaluation. Thirteen operators/fourteen columns are witnesses of one boundary, not separate types.",
+      "oracle_artifact": "d7de8df5bddd8384d10d4a4b2443c1eb57216f5d9f1ee3ebbd7b1f2424e6fa7e",
+      "generator_sha256": "6471c9af3bbd10ddd31e163cfd12e0862886e2519570b44bfe17e804a305c2d6",
+      "source_artifact": "249e259e86990fbc7dd794d57091059316929f9ef3788771714aecbef53ae91a",
+      "representative_case_id": "6f6357065acf5b24d4be3132257111f2e40e8cc0cba48570e067276205551d25",
+      "representative_path": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/mixed-f16-oracle-validation-773941/mixed-f16-result-native-controls",
+      "actual_case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/mixed-f16-oracle-validation-773941/case-list.json",
+      "development_reference_words": 1358,
+      "fixed_tolerances": {
+        "atol": 1e-07,
+        "rtol": 1e-05
+      },
+      "source_review": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/latency-memory/mixed-f16-result-oracle-source-review-v1/review.json",
+      "actual_review": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/latency-memory/mixed-f16-actual-negative-control-review-v1/review.json",
+      "withdrawn_bug_correction": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/bugs-types/mixed-F16-result-demotion-triage-v1/callpath-correction-v1.json",
+      "status": "Parent accepted/froze independently reviewed negative-control oracle BEFORE compilation. No defect or repair established; existing assign wrapper already implements proposed witness. Parent baseline/Q control execution pending.",
+      "dedup_rule": "Thirteen operation variants, masks, native-vs-mixed comparison columns, values/seeds/shape/tail/ABI permutations are one mixed-F16 computation-boundary contract. Do not add per-op/seed types.",
+      "limits": [
+        "where condition always true; no false-branch coverage claimed.",
+        "No F64-destination or universal special-value claim.",
+        "Unnecessary prototype281 remains source-only preserved; never treated as a fix or promoted."
+      ],
+      "review_boundary": "Inventory author maps parent acceptance and Memory Fraction/Decimal1358word review; no oracle/reference generation or compiler/GPU execution by inventory author."
+    }
+  ],
+  "notes": [
+    "43 selected generated witnesses form43 conservative semantic types. Some witnesses combine several mechanisms; inventory keeps existing compact coverage intact.",
+    "Historical879 generated draws are archived evidence, not879 unique types. No generator/evaluator files changed.",
+    "E3 non-pointwise spec.operation/vector_width fields are unused by actual family construction and are intentionally excluded from semantic keys. Cooperative softmax fresh draws map to the existing cooperative online contract.",
+    "Merged core47 adds32 fresh draws; all map to existing named semantic contracts. Active59 plus one pending Tile contract remains60/100.",
+    "Old nested Assign control is quarantined: Assign is fresh SSA, so it did not establish carried updates. New v4 control uses explicit Accum; same frozen scope fix passes static binding check. This correction adds no type.",
+    "Let, buffer Load and scalar Load lexical carrier shadows are three conservative pending declaration-path contracts. No source patch applied by bug worker. Opaque Binary/Ternary cases strengthen existing cast identity contract, not duplicate types.",
+    "v13 correction: latest counts supersede historical notes59/60/65. Opaque Binary/Ternary each allocated one type by coordinator. Four-path prototype is implemented and frozen under correctness-mutable-shadow-v2; pending oracle/case admission does not mean GPU passed.",
+    "v14 maps all32 frozen E3 mutable-shadow confirmation draws into existing semantic contracts. No added type; generated pending-inclusive total stays66.",
+    "v16 coordinator approved two attention additions only. Actual typed single-key-loop schedule differs from old chunked-key Cond-tail representative. Deliberate wide cancellation is a separate numerical order requirement; four bounded cases map to the one serial-key topology, two wide cases to one order contract.",
+    "v17 parent retained d9 receipt6bec6ff1fb577e116c307b43efe4afb054d9d41166a09ace9272866324829d66 (117 distinct15+102generated, coordinator evidence). Two validated Select findings are pending only; no oracle/proposal/source change.",
+    "v18:8 additional attention confirmation witnesses reviewed,6 prior postselection and2 additive full-batch+tail. Same2 existing contracts; no type addition. Select2 remains pending despite isolated prototype authorization.",
+    "v31 adds exactly one parent-approved frozen exact shared F32 tree grouping contract (ba197...); KEYscore-shadow oracle adds zero types under existing implicit seeded-fold scope contract.",
+    "v32 adds exactly one typed-softplus-negative-tail-composition contract after parent accepted/froze oraclec9544d; raw/amplified columns and scalaramp sizes do not add more types. Vector sourcecomposition adds zero types.",
+    "v33 adds exactly one typed-erf-normal-small-composition contract after parent accepted/froze oracle3b9957 and independent70word review. Preserve previous80catalogued+1reserved; newtotal81catalogued+1reserved=82/100. No seed/shape/composition duplicate types.",
+    "v34 adds exactly ONE parent-accepted mixed-F16 Assign computation-boundary NEGATIVE CONTROL after oracle d7de8d freeze. Earlier bug prediction was withdrawn: assign wrapper already computes F32 then demotes. No defect/repair promotion implied. Prior81 catalogued+1reserved preserved; now82catalogued+1reserved=83/100."
+  ],
+  "reserved_pending_types": [
+    {
+      "type_id": "attention-equal-seeded-duplicate-normalization",
+      "semantic_contract": "Two independently carried equal-seeded normalization recurrences consume common readonly dot scores while their numerator/V-column states and output halves remain distinct. Equivalent SFU outputs can be shared without aliasing states or skipping updates.",
+      "status": "Parent-owned oracleV6 independently approved beforefreeze; validation314159 is development evidence, not confidence draw",
+      "oracle_generator_sha256": "b7b8b88421ba5623075934e8d966adade2132045090ef1b4fa7d2c56eb5cf92b",
+      "review": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/bugs-types/recurrence-oracle-independent-review-v6/review.json",
+      "dedup_rule": "Width16/32, dimensions, seeds and bounded random patterns are witnesses for one equal-seeded duplicate-normalization contract, not separate types."
+    }
+  ],
+  "generated_type_count_including_pending": 83,
+  "available_type_slots": 17,
+  "semantic_count_interpretation": "80 catalogued semantic contracts plus1 reserved pending=81/100. Seeds/shapes/amplifiers/threshold controls are witnesses, not new types. Accepted oracle catalogue does not imply candidate GPU correctness.",
+  "fresh_core_draws_mapped": 128,
+  "fresh_core_semantic_classes": 11,
+  "fresh_core_case_mapping": [
+    {
+      "case_id": "bc9ef3f77535282822ce79a4e2f74dfc58000193473069936942af36607c49b8",
+      "path": "/root/nfs/emmy/research/suites/cases-d3c154846d9e6cb1ecce0f64dfa6506d914bf78d2717629eafb0836c6fbc9999/pointwise-0",
+      "experiment": "index-pure-shared-cse-v1",
+      "semantic_type": "pointwise-add-full-group"
+    },
+    {
+      "case_id": "aa9bd2538aff4367b086594499734b6e6a817be2a59c54d058341902cdf16509",
+      "path": "/root/nfs/emmy/research/suites/cases-d3c154846d9e6cb1ecce0f64dfa6506d914bf78d2717629eafb0836c6fbc9999/pointwise-1",
+      "experiment": "index-pure-shared-cse-v1",
+      "semantic_type": "pointwise-add-masked-group-tail"
+    },
+    {
+      "case_id": "00f630fcfb1078a4c405164bc097908618f4f8090a29989ff4cf2ea177283039",
+      "path": "/root/nfs/emmy/research/suites/cases-d3c154846d9e6cb1ecce0f64dfa6506d914bf78d2717629eafb0836c6fbc9999/pointwise-2",
+      "experiment": "index-pure-shared-cse-v1",
+      "semantic_type": "pointwise-add-masked-group-tail"
+    },
+    {
+      "case_id": "dbec631b752a7b7d8ba7a908a46d94d432abd9090a7879a5c2a2e7160eaa461b",
+      "path": "/root/nfs/emmy/research/suites/cases-d3c154846d9e6cb1ecce0f64dfa6506d914bf78d2717629eafb0836c6fbc9999/pointwise-3",
+      "experiment": "index-pure-shared-cse-v1",
+      "semantic_type": "pointwise-add-scalar"
+    },
+    {
+      "case_id": "d0bf3caa6569c79a920d25e437090789fbb3f7b89b815368ae881ff59a1df3ff",
+      "path": "/root/nfs/emmy/research/suites/cases-d3c154846d9e6cb1ecce0f64dfa6506d914bf78d2717629eafb0836c6fbc9999/reduction-0",
+      "experiment": "index-pure-shared-cse-v1",
+      "semantic_type": "reduction-cooperative-full-participation-sum"
+    },
+    {
+      "case_id": "eecc74a89f1c7eea517ff81a15f0a75b7fa730f9a0a67cb993c6704a342ae06e",
+      "path": "/root/nfs/emmy/research/suites/cases-d3c154846d9e6cb1ecce0f64dfa6506d914bf78d2717629eafb0836c6fbc9999/reduction-1",
+      "experiment": "index-pure-shared-cse-v1",
+      "semantic_type": "reduction-cooperative-full-participation-sum"
+    },
+    {
+      "case_id": "147902d82c67b9428deff7b8fc2692553e10739be5f00a2faa40477110582c12",
+      "path": "/root/nfs/emmy/research/suites/cases-d3c154846d9e6cb1ecce0f64dfa6506d914bf78d2717629eafb0836c6fbc9999/reduction-2",
+      "experiment": "index-pure-shared-cse-v1",
+      "semantic_type": "reduction-cooperative-full-participation-sum"
+    },
+    {
+      "case_id": "c203275182baeb689f0bbf6b5cf2fe32fa9327094987dacbf91c8bd5ce5dfeee",
+      "path": "/root/nfs/emmy/research/suites/cases-d3c154846d9e6cb1ecce0f64dfa6506d914bf78d2717629eafb0836c6fbc9999/reduction-3",
+      "experiment": "index-pure-shared-cse-v1",
+      "semantic_type": "reduction-cooperative-full-participation-sum"
+    },
+    {
+      "case_id": "d78679d84cba0a1d9ef13c165d0123dc67ded645409163e08fe5385c116e23a9",
+      "path": "/root/nfs/emmy/research/suites/cases-d3c154846d9e6cb1ecce0f64dfa6506d914bf78d2717629eafb0836c6fbc9999/rmsnorm-0",
+      "experiment": "index-pure-shared-cse-v1",
+      "semantic_type": "normalization-rms-serial"
+    },
+    {
+      "case_id": "84df24cb54b92cddf75be06cfc50243b52acfda9d9f562b3c4ccf78c2c38b78a",
+      "path": "/root/nfs/emmy/research/suites/cases-d3c154846d9e6cb1ecce0f64dfa6506d914bf78d2717629eafb0836c6fbc9999/rmsnorm-1",
+      "experiment": "index-pure-shared-cse-v1",
+      "semantic_type": "normalization-rms-serial"
+    },
+    {
+      "case_id": "c2adc702c4b1d43dcdb5300d887b8a8470baf92655f356be8a101f4800a020c9",
+      "path": "/root/nfs/emmy/research/suites/cases-d3c154846d9e6cb1ecce0f64dfa6506d914bf78d2717629eafb0836c6fbc9999/rmsnorm-2",
+      "experiment": "index-pure-shared-cse-v1",
+      "semantic_type": "normalization-rms-serial"
+    },
+    {
+      "case_id": "9048334c46107b0279acb0aae1152a88ff02add3815183c9ceebcc94b565af29",
+      "path": "/root/nfs/emmy/research/suites/cases-d3c154846d9e6cb1ecce0f64dfa6506d914bf78d2717629eafb0836c6fbc9999/rmsnorm-3",
+      "experiment": "index-pure-shared-cse-v1",
+      "semantic_type": "normalization-rms-serial"
+    },
+    {
+      "case_id": "75fdc6f54ad9e0fddf26f4837cc3a6176c216929c5b303f3f4ca35347c2f1259",
+      "path": "/root/nfs/emmy/research/suites/cases-d3c154846d9e6cb1ecce0f64dfa6506d914bf78d2717629eafb0836c6fbc9999/l2norm-0",
+      "experiment": "index-pure-shared-cse-v1",
+      "semantic_type": "normalization-l2-serial"
+    },
+    {
+      "case_id": "8e3902c070b7e745ac9adc7a80f9b5de7ea738115fc69211d8410a90cd837713",
+      "path": "/root/nfs/emmy/research/suites/cases-d3c154846d9e6cb1ecce0f64dfa6506d914bf78d2717629eafb0836c6fbc9999/l2norm-1",
+      "experiment": "index-pure-shared-cse-v1",
+      "semantic_type": "normalization-l2-serial"
+    },
+    {
+      "case_id": "66c1a7882e422603413f52ebf7a75d9a4bc55dd058e31a0fd1a2e62f147ef9c9",
+      "path": "/root/nfs/emmy/research/suites/cases-d3c154846d9e6cb1ecce0f64dfa6506d914bf78d2717629eafb0836c6fbc9999/l2norm-2",
+      "experiment": "index-pure-shared-cse-v1",
+      "semantic_type": "normalization-l2-serial"
+    },
+    {
+      "case_id": "eb4715fc2a5c8efd0e02ddb0fc3541f194e29a5721d8ad956d15f18b3c469b51",
+      "path": "/root/nfs/emmy/research/suites/cases-d3c154846d9e6cb1ecce0f64dfa6506d914bf78d2717629eafb0836c6fbc9999/l2norm-3",
+      "experiment": "index-pure-shared-cse-v1",
+      "semantic_type": "normalization-l2-serial"
+    },
+    {
+      "case_id": "7028ef68997caf5315a56c71cec8cc7505584e820058a6a3834b2bd0461bbcd1",
+      "path": "/root/nfs/emmy/research/suites/cases-d3c154846d9e6cb1ecce0f64dfa6506d914bf78d2717629eafb0836c6fbc9999/matmul-0",
+      "experiment": "index-pure-shared-cse-v1",
+      "semantic_type": "contraction-global-serial"
+    },
+    {
+      "case_id": "79dcaa4b249894c8e9a9bdf5fe0b8e20d129ad2381e343a398e8996f7f78771d",
+      "path": "/root/nfs/emmy/research/suites/cases-d3c154846d9e6cb1ecce0f64dfa6506d914bf78d2717629eafb0836c6fbc9999/matmul-1",
+      "experiment": "index-pure-shared-cse-v1",
+      "semantic_type": "contraction-global-serial"
+    },
+    {
+      "case_id": "71843a5657e8c458e7c28bc61d2f11f24e249b8feeaf0f87ca1fc39337b5d98c",
+      "path": "/root/nfs/emmy/research/suites/cases-d3c154846d9e6cb1ecce0f64dfa6506d914bf78d2717629eafb0836c6fbc9999/matmul-2",
+      "experiment": "index-pure-shared-cse-v1",
+      "semantic_type": "contraction-global-serial"
+    },
+    {
+      "case_id": "d44b9e084604438415705325a7cda249ee73ef6be10b57094d5d264634304ea6",
+      "path": "/root/nfs/emmy/research/suites/cases-d3c154846d9e6cb1ecce0f64dfa6506d914bf78d2717629eafb0836c6fbc9999/matmul-3",
+      "experiment": "index-pure-shared-cse-v1",
+      "semantic_type": "contraction-global-serial"
+    },
+    {
+      "case_id": "ef9b36277f0af7688584d3e2e904d825e045a4b5a3a52b17bbcace8a29efa67d",
+      "path": "/root/nfs/emmy/research/suites/cases-d3c154846d9e6cb1ecce0f64dfa6506d914bf78d2717629eafb0836c6fbc9999/atomic_matmul-0",
+      "experiment": "index-pure-shared-cse-v1",
+      "semantic_type": "contraction-atomic-split-init-conditional"
+    },
+    {
+      "case_id": "73e98568c67fefce2160fef32589855fa7d584c2eb8ef88e9fd582830124f491",
+      "path": "/root/nfs/emmy/research/suites/cases-d3c154846d9e6cb1ecce0f64dfa6506d914bf78d2717629eafb0836c6fbc9999/atomic_matmul-1",
+      "experiment": "index-pure-shared-cse-v1",
+      "semantic_type": "contraction-atomic-split-init-conditional"
+    },
+    {
+      "case_id": "f83c1cc814cdd50696284a6d656bde268c1eca5a33459289ac547873b433c67d",
+      "path": "/root/nfs/emmy/research/suites/cases-d3c154846d9e6cb1ecce0f64dfa6506d914bf78d2717629eafb0836c6fbc9999/atomic_matmul-2",
+      "experiment": "index-pure-shared-cse-v1",
+      "semantic_type": "contraction-atomic-split-init-conditional"
+    },
+    {
+      "case_id": "3154cb2b7e9b009ccfc51eebd85d632b2f79a10d2123539d25318faea706d434",
+      "path": "/root/nfs/emmy/research/suites/cases-d3c154846d9e6cb1ecce0f64dfa6506d914bf78d2717629eafb0836c6fbc9999/atomic_matmul-3",
+      "experiment": "index-pure-shared-cse-v1",
+      "semantic_type": "contraction-atomic-split-init-conditional"
+    },
+    {
+      "case_id": "3c281b69affa24269769bb9001b750a642d3431f6e21e6f8ac04487bdab95b1c",
+      "path": "/root/nfs/emmy/research/suites/cases-d3c154846d9e6cb1ecce0f64dfa6506d914bf78d2717629eafb0836c6fbc9999/softmax-0",
+      "experiment": "index-pure-shared-cse-v1",
+      "semantic_type": "softmax-cooperative-online-multislice"
+    },
+    {
+      "case_id": "bb1aabb25c2be4e407e1a916f1fc1d54b133ff40fe6c43a5b40e40daad3d5226",
+      "path": "/root/nfs/emmy/research/suites/cases-d3c154846d9e6cb1ecce0f64dfa6506d914bf78d2717629eafb0836c6fbc9999/softmax-1",
+      "experiment": "index-pure-shared-cse-v1",
+      "semantic_type": "softmax-cooperative-online-multislice"
+    },
+    {
+      "case_id": "75ec16fa71883461a95d363098c210635875078cb804ce7207465e1e3cc89c87",
+      "path": "/root/nfs/emmy/research/suites/cases-d3c154846d9e6cb1ecce0f64dfa6506d914bf78d2717629eafb0836c6fbc9999/softmax-2",
+      "experiment": "index-pure-shared-cse-v1",
+      "semantic_type": "softmax-serial-three-pass"
+    },
+    {
+      "case_id": "ffd1f90cd56a38516f819b47fee3812e7186b98e7a9bea300703517ab03d6b35",
+      "path": "/root/nfs/emmy/research/suites/cases-d3c154846d9e6cb1ecce0f64dfa6506d914bf78d2717629eafb0836c6fbc9999/softmax-3",
+      "experiment": "index-pure-shared-cse-v1",
+      "semantic_type": "softmax-serial-three-pass"
+    },
+    {
+      "case_id": "2c22d891d590c575be672e7b50b165c3fcfe4784ad61c23f5bbf55ed3157a595",
+      "path": "/root/nfs/emmy/research/suites/cases-d3c154846d9e6cb1ecce0f64dfa6506d914bf78d2717629eafb0836c6fbc9999/attention-0",
+      "experiment": "index-pure-shared-cse-v1",
+      "semantic_type": "attention-ordered-three-kernel"
+    },
+    {
+      "case_id": "54ffb605d38b4f5cebfc6f42b1d7dc355a641c8dc18903a5b5f31b2f8ae4ba7d",
+      "path": "/root/nfs/emmy/research/suites/cases-d3c154846d9e6cb1ecce0f64dfa6506d914bf78d2717629eafb0836c6fbc9999/attention-1",
+      "experiment": "index-pure-shared-cse-v1",
+      "semantic_type": "attention-ordered-three-kernel"
+    },
+    {
+      "case_id": "951623014075ac86347abc9899e4f095574ca7488a453064f539c24fda063b0f",
+      "path": "/root/nfs/emmy/research/suites/cases-d3c154846d9e6cb1ecce0f64dfa6506d914bf78d2717629eafb0836c6fbc9999/attention-2",
+      "experiment": "index-pure-shared-cse-v1",
+      "semantic_type": "attention-ordered-three-kernel"
+    },
+    {
+      "case_id": "42ecb5e23b950b84fced17870a9b18764e9f1b0c19d6b889c241c71379031bce",
+      "path": "/root/nfs/emmy/research/suites/cases-d3c154846d9e6cb1ecce0f64dfa6506d914bf78d2717629eafb0836c6fbc9999/attention-3",
+      "experiment": "index-pure-shared-cse-v1",
+      "semantic_type": "attention-ordered-three-kernel"
+    },
+    {
+      "case_id": "4fa92c0643c4e22ebfba5eb40adb3292b7c943b3e68df763e92fe6a9bf3a4969",
+      "path": "/root/nfs/emmy/research/suites/cases-c1f61f75a9ea532b2cd39925b1e824eb10ea2bbc478b6609086a20c1f49c0ad8/pointwise-0",
+      "experiment": "copy-alignment-hoist-v2",
+      "semantic_type": "pointwise-add-scalar"
+    },
+    {
+      "case_id": "fd30a20fb6f6faba1f038f8aa8b67813eb1d8b46ebc3a4666b34f0970197fd64",
+      "path": "/root/nfs/emmy/research/suites/cases-c1f61f75a9ea532b2cd39925b1e824eb10ea2bbc478b6609086a20c1f49c0ad8/pointwise-1",
+      "experiment": "copy-alignment-hoist-v2",
+      "semantic_type": "pointwise-add-masked-group-tail"
+    },
+    {
+      "case_id": "d23e9e9fde531c7bb856bd5eda68a596754f13da9097bafa2d89405f7e0e3cd4",
+      "path": "/root/nfs/emmy/research/suites/cases-c1f61f75a9ea532b2cd39925b1e824eb10ea2bbc478b6609086a20c1f49c0ad8/pointwise-2",
+      "experiment": "copy-alignment-hoist-v2",
+      "semantic_type": "pointwise-add-scalar"
+    },
+    {
+      "case_id": "2ad4a1bbf6471b614cf7e1bed9221e76c048e2c42f4dce4a04725bb0345d3ad5",
+      "path": "/root/nfs/emmy/research/suites/cases-c1f61f75a9ea532b2cd39925b1e824eb10ea2bbc478b6609086a20c1f49c0ad8/pointwise-3",
+      "experiment": "copy-alignment-hoist-v2",
+      "semantic_type": "pointwise-add-masked-group-tail"
+    },
+    {
+      "case_id": "7996e822eb2b97e7bb863182502811033a6747c295bcf43037f0f4e75307f59d",
+      "path": "/root/nfs/emmy/research/suites/cases-c1f61f75a9ea532b2cd39925b1e824eb10ea2bbc478b6609086a20c1f49c0ad8/reduction-0",
+      "experiment": "copy-alignment-hoist-v2",
+      "semantic_type": "reduction-cooperative-full-participation-sum"
+    },
+    {
+      "case_id": "2cff8919df00d6fc8f4fb80e6aa694276e5a4b442ecd842341d394c6a8072440",
+      "path": "/root/nfs/emmy/research/suites/cases-c1f61f75a9ea532b2cd39925b1e824eb10ea2bbc478b6609086a20c1f49c0ad8/reduction-1",
+      "experiment": "copy-alignment-hoist-v2",
+      "semantic_type": "reduction-cooperative-full-participation-sum"
+    },
+    {
+      "case_id": "f044c4c8222f1998f1bd6f137a8789aea72a40a160a1e053e345e93077765dc5",
+      "path": "/root/nfs/emmy/research/suites/cases-c1f61f75a9ea532b2cd39925b1e824eb10ea2bbc478b6609086a20c1f49c0ad8/reduction-2",
+      "experiment": "copy-alignment-hoist-v2",
+      "semantic_type": "reduction-cooperative-full-participation-sum"
+    },
+    {
+      "case_id": "bff9982c9ae2c55e9c663ba51aac37f81732e498bbcc64a2888169d9fa9a3ea7",
+      "path": "/root/nfs/emmy/research/suites/cases-c1f61f75a9ea532b2cd39925b1e824eb10ea2bbc478b6609086a20c1f49c0ad8/reduction-3",
+      "experiment": "copy-alignment-hoist-v2",
+      "semantic_type": "reduction-cooperative-full-participation-sum"
+    },
+    {
+      "case_id": "3d6335e19eba5e9dc4f21c58888b55b08ac99e3f869ace69ce8a3cca6b1051c3",
+      "path": "/root/nfs/emmy/research/suites/cases-c1f61f75a9ea532b2cd39925b1e824eb10ea2bbc478b6609086a20c1f49c0ad8/rmsnorm-0",
+      "experiment": "copy-alignment-hoist-v2",
+      "semantic_type": "normalization-rms-serial"
+    },
+    {
+      "case_id": "ec26aec2a68d6eccde65cd84cfc99c8d9522477d5268d0975dcf6886d88becef",
+      "path": "/root/nfs/emmy/research/suites/cases-c1f61f75a9ea532b2cd39925b1e824eb10ea2bbc478b6609086a20c1f49c0ad8/rmsnorm-1",
+      "experiment": "copy-alignment-hoist-v2",
+      "semantic_type": "normalization-rms-serial"
+    },
+    {
+      "case_id": "28fb022c614e1d5f617bb04c81114e3c3659c2a2b5fc810363380e84d3e3fd2e",
+      "path": "/root/nfs/emmy/research/suites/cases-c1f61f75a9ea532b2cd39925b1e824eb10ea2bbc478b6609086a20c1f49c0ad8/rmsnorm-2",
+      "experiment": "copy-alignment-hoist-v2",
+      "semantic_type": "normalization-rms-serial"
+    },
+    {
+      "case_id": "16295c28f3d0d9ea63770cc1058aec4526c1c5867338c61c678a7ed83486729f",
+      "path": "/root/nfs/emmy/research/suites/cases-c1f61f75a9ea532b2cd39925b1e824eb10ea2bbc478b6609086a20c1f49c0ad8/rmsnorm-3",
+      "experiment": "copy-alignment-hoist-v2",
+      "semantic_type": "normalization-rms-serial"
+    },
+    {
+      "case_id": "1a6d4c82447595a0004632f21e09cf40b738f851960c92d003b5d18fa951c0ae",
+      "path": "/root/nfs/emmy/research/suites/cases-c1f61f75a9ea532b2cd39925b1e824eb10ea2bbc478b6609086a20c1f49c0ad8/l2norm-0",
+      "experiment": "copy-alignment-hoist-v2",
+      "semantic_type": "normalization-l2-serial"
+    },
+    {
+      "case_id": "5cff05e781ca7a13fb5418132c6edd8fb49f17bee8677a23908e3e7efdac4782",
+      "path": "/root/nfs/emmy/research/suites/cases-c1f61f75a9ea532b2cd39925b1e824eb10ea2bbc478b6609086a20c1f49c0ad8/l2norm-1",
+      "experiment": "copy-alignment-hoist-v2",
+      "semantic_type": "normalization-l2-serial"
+    },
+    {
+      "case_id": "3c9f49427d50dec958e3dfe8ddec87d0a09e9f913d625924dd880058429bae5f",
+      "path": "/root/nfs/emmy/research/suites/cases-c1f61f75a9ea532b2cd39925b1e824eb10ea2bbc478b6609086a20c1f49c0ad8/l2norm-2",
+      "experiment": "copy-alignment-hoist-v2",
+      "semantic_type": "normalization-l2-serial"
+    },
+    {
+      "case_id": "e74673de42afa4b0d1eb97b6edc10838766114250385e4bc512f9ff907c4b1ee",
+      "path": "/root/nfs/emmy/research/suites/cases-c1f61f75a9ea532b2cd39925b1e824eb10ea2bbc478b6609086a20c1f49c0ad8/l2norm-3",
+      "experiment": "copy-alignment-hoist-v2",
+      "semantic_type": "normalization-l2-serial"
+    },
+    {
+      "case_id": "5b8c426f511a975f84e45da9b3236f174cc8a9936bf755ce1b0653dd1082ed2e",
+      "path": "/root/nfs/emmy/research/suites/cases-c1f61f75a9ea532b2cd39925b1e824eb10ea2bbc478b6609086a20c1f49c0ad8/matmul-0",
+      "experiment": "copy-alignment-hoist-v2",
+      "semantic_type": "contraction-global-serial"
+    },
+    {
+      "case_id": "f9a24327578d03dad0145a6098b957da6e27a272433fd93c942dd93a72e07381",
+      "path": "/root/nfs/emmy/research/suites/cases-c1f61f75a9ea532b2cd39925b1e824eb10ea2bbc478b6609086a20c1f49c0ad8/matmul-1",
+      "experiment": "copy-alignment-hoist-v2",
+      "semantic_type": "contraction-global-serial"
+    },
+    {
+      "case_id": "03353f14d58ba8d6d8c92c27d665e927ab8b957b5431317a5904714fd36cffcf",
+      "path": "/root/nfs/emmy/research/suites/cases-c1f61f75a9ea532b2cd39925b1e824eb10ea2bbc478b6609086a20c1f49c0ad8/matmul-2",
+      "experiment": "copy-alignment-hoist-v2",
+      "semantic_type": "contraction-global-serial"
+    },
+    {
+      "case_id": "d9e0cf6a902bed5f8b32e6579a3904bb32d480269afd449312f035334418491c",
+      "path": "/root/nfs/emmy/research/suites/cases-c1f61f75a9ea532b2cd39925b1e824eb10ea2bbc478b6609086a20c1f49c0ad8/matmul-3",
+      "experiment": "copy-alignment-hoist-v2",
+      "semantic_type": "contraction-global-serial"
+    },
+    {
+      "case_id": "716b7e00a2df6df170ed31a65a7dfe819f210999fe3eac9be969e54ab2dac88e",
+      "path": "/root/nfs/emmy/research/suites/cases-c1f61f75a9ea532b2cd39925b1e824eb10ea2bbc478b6609086a20c1f49c0ad8/atomic_matmul-0",
+      "experiment": "copy-alignment-hoist-v2",
+      "semantic_type": "contraction-atomic-split-init-conditional"
+    },
+    {
+      "case_id": "c8848d9b9d58abd390a1813de9318bede3897c1fb86f1c27f3642f986648bde1",
+      "path": "/root/nfs/emmy/research/suites/cases-c1f61f75a9ea532b2cd39925b1e824eb10ea2bbc478b6609086a20c1f49c0ad8/atomic_matmul-1",
+      "experiment": "copy-alignment-hoist-v2",
+      "semantic_type": "contraction-atomic-split-init-conditional"
+    },
+    {
+      "case_id": "1331acc9f69d7240df7b651701207f4fec53db45977c9e3c4d975db381846ab0",
+      "path": "/root/nfs/emmy/research/suites/cases-c1f61f75a9ea532b2cd39925b1e824eb10ea2bbc478b6609086a20c1f49c0ad8/atomic_matmul-2",
+      "experiment": "copy-alignment-hoist-v2",
+      "semantic_type": "contraction-atomic-split-init-conditional"
+    },
+    {
+      "case_id": "ff77b056d4902fbcd75924417af9125c341221691f54f6f6cc8662ae5c6bf0a2",
+      "path": "/root/nfs/emmy/research/suites/cases-c1f61f75a9ea532b2cd39925b1e824eb10ea2bbc478b6609086a20c1f49c0ad8/atomic_matmul-3",
+      "experiment": "copy-alignment-hoist-v2",
+      "semantic_type": "contraction-atomic-split-init-conditional"
+    },
+    {
+      "case_id": "3cb5f4a62ce48c8d49d9bcf6f9bba55920b9108a04ebca803fdb80f7b2814a21",
+      "path": "/root/nfs/emmy/research/suites/cases-c1f61f75a9ea532b2cd39925b1e824eb10ea2bbc478b6609086a20c1f49c0ad8/softmax-0",
+      "experiment": "copy-alignment-hoist-v2",
+      "semantic_type": "softmax-cooperative-online-multislice"
+    },
+    {
+      "case_id": "0124aea3593beaf7c2b2ef096f8e3982d9a6de0a8cce15f2f01d9135acd150db",
+      "path": "/root/nfs/emmy/research/suites/cases-c1f61f75a9ea532b2cd39925b1e824eb10ea2bbc478b6609086a20c1f49c0ad8/softmax-1",
+      "experiment": "copy-alignment-hoist-v2",
+      "semantic_type": "softmax-cooperative-online-multislice"
+    },
+    {
+      "case_id": "c8297130210898c370902f9b776d08809cf01dfbd75e977e0855953e6bac9007",
+      "path": "/root/nfs/emmy/research/suites/cases-c1f61f75a9ea532b2cd39925b1e824eb10ea2bbc478b6609086a20c1f49c0ad8/softmax-2",
+      "experiment": "copy-alignment-hoist-v2",
+      "semantic_type": "softmax-serial-three-pass"
+    },
+    {
+      "case_id": "3081c31fa1dcbd0cf63b92e446f49cc9d5af483344bc34e430afa94102403948",
+      "path": "/root/nfs/emmy/research/suites/cases-c1f61f75a9ea532b2cd39925b1e824eb10ea2bbc478b6609086a20c1f49c0ad8/softmax-3",
+      "experiment": "copy-alignment-hoist-v2",
+      "semantic_type": "softmax-serial-three-pass"
+    },
+    {
+      "case_id": "261ad0eb505722f63396f92cd7e7347ef56b1469628587a1ea78e09278a2411c",
+      "path": "/root/nfs/emmy/research/suites/cases-c1f61f75a9ea532b2cd39925b1e824eb10ea2bbc478b6609086a20c1f49c0ad8/attention-0",
+      "experiment": "copy-alignment-hoist-v2",
+      "semantic_type": "attention-ordered-three-kernel"
+    },
+    {
+      "case_id": "52dcb2c138385ad9600a8bc0aacb6b7fa3dd3ac0e9b9b4be2c1c543ecb243857",
+      "path": "/root/nfs/emmy/research/suites/cases-c1f61f75a9ea532b2cd39925b1e824eb10ea2bbc478b6609086a20c1f49c0ad8/attention-1",
+      "experiment": "copy-alignment-hoist-v2",
+      "semantic_type": "attention-ordered-three-kernel"
+    },
+    {
+      "case_id": "ba91622632c142e1767ca94037bf4db369936d16a05e22e31413c234d729d352",
+      "path": "/root/nfs/emmy/research/suites/cases-c1f61f75a9ea532b2cd39925b1e824eb10ea2bbc478b6609086a20c1f49c0ad8/attention-2",
+      "experiment": "copy-alignment-hoist-v2",
+      "semantic_type": "attention-ordered-three-kernel"
+    },
+    {
+      "case_id": "a26537618a0227ae4a4811d8e13802d68e4ffb9bf16aaf55ca6a612e29129c37",
+      "path": "/root/nfs/emmy/research/suites/cases-c1f61f75a9ea532b2cd39925b1e824eb10ea2bbc478b6609086a20c1f49c0ad8/attention-3",
+      "experiment": "copy-alignment-hoist-v2",
+      "semantic_type": "attention-ordered-three-kernel"
+    },
+    {
+      "path": "/root/nfs/emmy/research/suites/cases-75a13aa19f4f988a512950cec383a644c3edf5c9b9a4686595c15ed6f98253b2/pointwise-0",
+      "case_id": "9174a7563f00cfee3db7be572f20bcf21582444f0ba352b24a6320c30adfe5df",
+      "semantic_type": "pointwise-add-full-group",
+      "experiment": "correctness-shift-load-v1"
+    },
+    {
+      "path": "/root/nfs/emmy/research/suites/cases-75a13aa19f4f988a512950cec383a644c3edf5c9b9a4686595c15ed6f98253b2/pointwise-1",
+      "case_id": "cdfe0ad92285bc33a7980e71dd07840936f9fcabdee2a6b226c396b1bf9f4c74",
+      "semantic_type": "pointwise-add-masked-group-tail",
+      "experiment": "correctness-shift-load-v1"
+    },
+    {
+      "path": "/root/nfs/emmy/research/suites/cases-75a13aa19f4f988a512950cec383a644c3edf5c9b9a4686595c15ed6f98253b2/pointwise-2",
+      "case_id": "016535ddfeb174c2b54d5514d44614900d632b3432e69f2e157079bc1bbc8f4f",
+      "semantic_type": "pointwise-add-full-group",
+      "experiment": "correctness-shift-load-v1"
+    },
+    {
+      "path": "/root/nfs/emmy/research/suites/cases-75a13aa19f4f988a512950cec383a644c3edf5c9b9a4686595c15ed6f98253b2/pointwise-3",
+      "case_id": "d6373c6748de64cbffca03450c0ea9bc4a7890bb5abaccdc650519475e11b1d4",
+      "semantic_type": "pointwise-add-masked-group-tail",
+      "experiment": "correctness-shift-load-v1"
+    },
+    {
+      "path": "/root/nfs/emmy/research/suites/cases-75a13aa19f4f988a512950cec383a644c3edf5c9b9a4686595c15ed6f98253b2/reduction-0",
+      "case_id": "7502a5674c9551ac6eab829bdc93e636c9dac712058ef953f182bfd550ab5fb4",
+      "semantic_type": "reduction-cooperative-full-participation-sum",
+      "experiment": "correctness-shift-load-v1"
+    },
+    {
+      "path": "/root/nfs/emmy/research/suites/cases-75a13aa19f4f988a512950cec383a644c3edf5c9b9a4686595c15ed6f98253b2/reduction-1",
+      "case_id": "390650e8630ee19c345440343922e0a5a10d32ea41654de86dd7b66a42b25580",
+      "semantic_type": "reduction-cooperative-full-participation-sum",
+      "experiment": "correctness-shift-load-v1"
+    },
+    {
+      "path": "/root/nfs/emmy/research/suites/cases-75a13aa19f4f988a512950cec383a644c3edf5c9b9a4686595c15ed6f98253b2/reduction-2",
+      "case_id": "66b6c44588a078cbda21d1555c47c1674dd0edc23275e44abbd78af9d4138227",
+      "semantic_type": "reduction-cooperative-full-participation-sum",
+      "experiment": "correctness-shift-load-v1"
+    },
+    {
+      "path": "/root/nfs/emmy/research/suites/cases-75a13aa19f4f988a512950cec383a644c3edf5c9b9a4686595c15ed6f98253b2/reduction-3",
+      "case_id": "e6d32f8ec6bf847dbf04fa3567cfee89a6d14d69df135e2bdb19670670a03e2d",
+      "semantic_type": "reduction-cooperative-full-participation-sum",
+      "experiment": "correctness-shift-load-v1"
+    },
+    {
+      "path": "/root/nfs/emmy/research/suites/cases-75a13aa19f4f988a512950cec383a644c3edf5c9b9a4686595c15ed6f98253b2/rmsnorm-0",
+      "case_id": "ee23f8f8eccb0bfe87e252b3dc63bd74903e047b11c5288a5021cf549db5a43c",
+      "semantic_type": "normalization-rms-serial",
+      "experiment": "correctness-shift-load-v1"
+    },
+    {
+      "path": "/root/nfs/emmy/research/suites/cases-75a13aa19f4f988a512950cec383a644c3edf5c9b9a4686595c15ed6f98253b2/rmsnorm-1",
+      "case_id": "de60ffacc5f9c2d47f8a2ecd493d1e1ae328bb11051ca0c802353a6c05fb81b9",
+      "semantic_type": "normalization-rms-serial",
+      "experiment": "correctness-shift-load-v1"
+    },
+    {
+      "path": "/root/nfs/emmy/research/suites/cases-75a13aa19f4f988a512950cec383a644c3edf5c9b9a4686595c15ed6f98253b2/rmsnorm-2",
+      "case_id": "e4f104e845c338366665d57fffaa35864049056c603a72d2cbbb613163444711",
+      "semantic_type": "normalization-rms-serial",
+      "experiment": "correctness-shift-load-v1"
+    },
+    {
+      "path": "/root/nfs/emmy/research/suites/cases-75a13aa19f4f988a512950cec383a644c3edf5c9b9a4686595c15ed6f98253b2/rmsnorm-3",
+      "case_id": "3d193d67ae4bb326bb0287b6a8f86d7461f10080f58fbec968520cc8f7c71447",
+      "semantic_type": "normalization-rms-serial",
+      "experiment": "correctness-shift-load-v1"
+    },
+    {
+      "path": "/root/nfs/emmy/research/suites/cases-75a13aa19f4f988a512950cec383a644c3edf5c9b9a4686595c15ed6f98253b2/l2norm-0",
+      "case_id": "fe13a8d79e1a85a277bc8a644d13475d4dd05341d424fd1baa3135d92c2c0436",
+      "semantic_type": "normalization-l2-serial",
+      "experiment": "correctness-shift-load-v1"
+    },
+    {
+      "path": "/root/nfs/emmy/research/suites/cases-75a13aa19f4f988a512950cec383a644c3edf5c9b9a4686595c15ed6f98253b2/l2norm-1",
+      "case_id": "e83c05d66e6302331ed7928b8c8bfc0b22570fd3e759bd02bf318300e42fc0ef",
+      "semantic_type": "normalization-l2-serial",
+      "experiment": "correctness-shift-load-v1"
+    },
+    {
+      "path": "/root/nfs/emmy/research/suites/cases-75a13aa19f4f988a512950cec383a644c3edf5c9b9a4686595c15ed6f98253b2/l2norm-2",
+      "case_id": "af3313e654a5a7cbb26cf01fd816ab6382c0d1ab55defee1c477fc9d159d1cc1",
+      "semantic_type": "normalization-l2-serial",
+      "experiment": "correctness-shift-load-v1"
+    },
+    {
+      "path": "/root/nfs/emmy/research/suites/cases-75a13aa19f4f988a512950cec383a644c3edf5c9b9a4686595c15ed6f98253b2/l2norm-3",
+      "case_id": "d42932ff9a8c0e3b35af70fec5b06267bff0efba25aa997942008c978637dddc",
+      "semantic_type": "normalization-l2-serial",
+      "experiment": "correctness-shift-load-v1"
+    },
+    {
+      "path": "/root/nfs/emmy/research/suites/cases-75a13aa19f4f988a512950cec383a644c3edf5c9b9a4686595c15ed6f98253b2/matmul-0",
+      "case_id": "f160580006c88dc9c9141cadee5085337772bcf313fb36eb91b1a716b6643011",
+      "semantic_type": "contraction-global-serial",
+      "experiment": "correctness-shift-load-v1"
+    },
+    {
+      "path": "/root/nfs/emmy/research/suites/cases-75a13aa19f4f988a512950cec383a644c3edf5c9b9a4686595c15ed6f98253b2/matmul-1",
+      "case_id": "f4c9efb507b59f579f1c238925eb8d3ce68a29530340c900feb1569bba6e6fa8",
+      "semantic_type": "contraction-global-serial",
+      "experiment": "correctness-shift-load-v1"
+    },
+    {
+      "path": "/root/nfs/emmy/research/suites/cases-75a13aa19f4f988a512950cec383a644c3edf5c9b9a4686595c15ed6f98253b2/matmul-2",
+      "case_id": "f3641718e136e3b6459ce9f5ea563a4f9126786cffdb5438011575da5c698e79",
+      "semantic_type": "contraction-global-serial",
+      "experiment": "correctness-shift-load-v1"
+    },
+    {
+      "path": "/root/nfs/emmy/research/suites/cases-75a13aa19f4f988a512950cec383a644c3edf5c9b9a4686595c15ed6f98253b2/matmul-3",
+      "case_id": "bac734d893b9da2b0e9a2b3eba17e14b49b5a7a8874cdcc6879a30796b238548",
+      "semantic_type": "contraction-global-serial",
+      "experiment": "correctness-shift-load-v1"
+    },
+    {
+      "path": "/root/nfs/emmy/research/suites/cases-75a13aa19f4f988a512950cec383a644c3edf5c9b9a4686595c15ed6f98253b2/atomic_matmul-0",
+      "case_id": "49a4f6fbbe3cc2247203ab4e9b852a002e2155f4a8d7f92f2ea8a3ef3c0881c1",
+      "semantic_type": "contraction-atomic-split-init-conditional",
+      "experiment": "correctness-shift-load-v1"
+    },
+    {
+      "path": "/root/nfs/emmy/research/suites/cases-75a13aa19f4f988a512950cec383a644c3edf5c9b9a4686595c15ed6f98253b2/atomic_matmul-1",
+      "case_id": "f201eb061ea65e9f48dc9ad6363faeb44ae7681c5d4ace03599563022191b2d2",
+      "semantic_type": "contraction-atomic-split-init-conditional",
+      "experiment": "correctness-shift-load-v1"
+    },
+    {
+      "path": "/root/nfs/emmy/research/suites/cases-75a13aa19f4f988a512950cec383a644c3edf5c9b9a4686595c15ed6f98253b2/atomic_matmul-2",
+      "case_id": "4ed69df0c0976590cf750d2d28e5b1d9c32c70f1ea6ad27505177c5d90d0e9fc",
+      "semantic_type": "contraction-atomic-split-init-conditional",
+      "experiment": "correctness-shift-load-v1"
+    },
+    {
+      "path": "/root/nfs/emmy/research/suites/cases-75a13aa19f4f988a512950cec383a644c3edf5c9b9a4686595c15ed6f98253b2/atomic_matmul-3",
+      "case_id": "ba701411f3d437d85961f10f7ccc798a057ba61f0a568f94141af5015dd24f15",
+      "semantic_type": "contraction-atomic-split-init-conditional",
+      "experiment": "correctness-shift-load-v1"
+    },
+    {
+      "path": "/root/nfs/emmy/research/suites/cases-75a13aa19f4f988a512950cec383a644c3edf5c9b9a4686595c15ed6f98253b2/softmax-0",
+      "case_id": "06e5a1c5e6164dc2e038e0144f2fa0a1bdf304f5f7cbcb40713d567b72c64316",
+      "semantic_type": "softmax-cooperative-online-multislice",
+      "experiment": "correctness-shift-load-v1"
+    },
+    {
+      "path": "/root/nfs/emmy/research/suites/cases-75a13aa19f4f988a512950cec383a644c3edf5c9b9a4686595c15ed6f98253b2/softmax-1",
+      "case_id": "6b999ef898afccdb92731880c66ee9194a3a73c62e23e50979fc8daf86a36107",
+      "semantic_type": "softmax-cooperative-online-multislice",
+      "experiment": "correctness-shift-load-v1"
+    },
+    {
+      "path": "/root/nfs/emmy/research/suites/cases-75a13aa19f4f988a512950cec383a644c3edf5c9b9a4686595c15ed6f98253b2/softmax-2",
+      "case_id": "748088226081bb2dce223e46dc7381b3e1a65820886105e03b1585fbb469791a",
+      "semantic_type": "softmax-serial-three-pass",
+      "experiment": "correctness-shift-load-v1"
+    },
+    {
+      "path": "/root/nfs/emmy/research/suites/cases-75a13aa19f4f988a512950cec383a644c3edf5c9b9a4686595c15ed6f98253b2/softmax-3",
+      "case_id": "4a3ed27a337c3c5eab3c407159131bc1c8e442d270eb6d2255721dcdd67b88a6",
+      "semantic_type": "softmax-serial-three-pass",
+      "experiment": "correctness-shift-load-v1"
+    },
+    {
+      "path": "/root/nfs/emmy/research/suites/cases-75a13aa19f4f988a512950cec383a644c3edf5c9b9a4686595c15ed6f98253b2/attention-0",
+      "case_id": "a9fe4240c1502a099693f03c1dac192733b56e9dae5af155d0f4e2ad369857fe",
+      "semantic_type": "attention-ordered-three-kernel",
+      "experiment": "correctness-shift-load-v1"
+    },
+    {
+      "path": "/root/nfs/emmy/research/suites/cases-75a13aa19f4f988a512950cec383a644c3edf5c9b9a4686595c15ed6f98253b2/attention-1",
+      "case_id": "a431077b5fbb765a5f77313aa399fbf5332189bf732fa2dec2004d356b7e6c14",
+      "semantic_type": "attention-ordered-three-kernel",
+      "experiment": "correctness-shift-load-v1"
+    },
+    {
+      "path": "/root/nfs/emmy/research/suites/cases-75a13aa19f4f988a512950cec383a644c3edf5c9b9a4686595c15ed6f98253b2/attention-2",
+      "case_id": "80bc56d5c1813dc945a2f940aba757827ff2cf821198c5efcc36e23eead11c09",
+      "semantic_type": "attention-ordered-three-kernel",
+      "experiment": "correctness-shift-load-v1"
+    },
+    {
+      "path": "/root/nfs/emmy/research/suites/cases-75a13aa19f4f988a512950cec383a644c3edf5c9b9a4686595c15ed6f98253b2/attention-3",
+      "case_id": "70e3cfe9c3ab7037a0b8f123ac21913021f36c8c0d74a96587df1c9ed6ad4c89",
+      "semantic_type": "attention-ordered-three-kernel",
+      "experiment": "correctness-shift-load-v1"
+    },
+    {
+      "case_id": "2c515fde3693c3646064d7f82f8e0c0acf5055c73a49c41340489a4c03658876",
+      "path": "/root/nfs/emmy/research/suites/cases-15f4a55c1b09eae9a9077be80f73d4c88afc0f60e3ae3a356dd69a56fd2141ea/atomic_matmul-0",
+      "experiment": "correctness-mutable-shadow-v2",
+      "semantic_type": "contraction-atomic-split-init-conditional"
+    },
+    {
+      "case_id": "a179b6c264063c783504913d461340774a3899be21ef8f3f76784966eccf20bc",
+      "path": "/root/nfs/emmy/research/suites/cases-15f4a55c1b09eae9a9077be80f73d4c88afc0f60e3ae3a356dd69a56fd2141ea/atomic_matmul-1",
+      "experiment": "correctness-mutable-shadow-v2",
+      "semantic_type": "contraction-atomic-split-init-conditional"
+    },
+    {
+      "case_id": "53f8301081e7704b211662b59c4e758507f6fc2df4779f137a4f6bc41c7b13b6",
+      "path": "/root/nfs/emmy/research/suites/cases-15f4a55c1b09eae9a9077be80f73d4c88afc0f60e3ae3a356dd69a56fd2141ea/atomic_matmul-2",
+      "experiment": "correctness-mutable-shadow-v2",
+      "semantic_type": "contraction-atomic-split-init-conditional"
+    },
+    {
+      "case_id": "3bd1fc922f79f05ba884e2543a6d45bdd11d7e7de699e640be5708f511208afa",
+      "path": "/root/nfs/emmy/research/suites/cases-15f4a55c1b09eae9a9077be80f73d4c88afc0f60e3ae3a356dd69a56fd2141ea/atomic_matmul-3",
+      "experiment": "correctness-mutable-shadow-v2",
+      "semantic_type": "contraction-atomic-split-init-conditional"
+    },
+    {
+      "case_id": "f0ad76565c4d0c1205450e32e4440384d8d7660f1c2836077ee07a0e42c3f970",
+      "path": "/root/nfs/emmy/research/suites/cases-15f4a55c1b09eae9a9077be80f73d4c88afc0f60e3ae3a356dd69a56fd2141ea/attention-0",
+      "experiment": "correctness-mutable-shadow-v2",
+      "semantic_type": "attention-ordered-three-kernel"
+    },
+    {
+      "case_id": "9649cf9b68073d2ac28464dc26c91a72c6c8a9b16d815c7265feb753c4ead160",
+      "path": "/root/nfs/emmy/research/suites/cases-15f4a55c1b09eae9a9077be80f73d4c88afc0f60e3ae3a356dd69a56fd2141ea/attention-1",
+      "experiment": "correctness-mutable-shadow-v2",
+      "semantic_type": "attention-ordered-three-kernel"
+    },
+    {
+      "case_id": "4297463436dc3e8376fd625c15e4fa08b2bb8d3b2d5bc3486dfe0fc6de1cda90",
+      "path": "/root/nfs/emmy/research/suites/cases-15f4a55c1b09eae9a9077be80f73d4c88afc0f60e3ae3a356dd69a56fd2141ea/attention-2",
+      "experiment": "correctness-mutable-shadow-v2",
+      "semantic_type": "attention-ordered-three-kernel"
+    },
+    {
+      "case_id": "2ee4ebe3c74656ec1a7538c26d45c870c3f6899465ac1b9197e9fabf258cffbe",
+      "path": "/root/nfs/emmy/research/suites/cases-15f4a55c1b09eae9a9077be80f73d4c88afc0f60e3ae3a356dd69a56fd2141ea/attention-3",
+      "experiment": "correctness-mutable-shadow-v2",
+      "semantic_type": "attention-ordered-three-kernel"
+    },
+    {
+      "case_id": "c8995f8df77ea3fbcd1a38c814b170be5b34baee612c284560e2ec884767a35e",
+      "path": "/root/nfs/emmy/research/suites/cases-15f4a55c1b09eae9a9077be80f73d4c88afc0f60e3ae3a356dd69a56fd2141ea/l2norm-0",
+      "experiment": "correctness-mutable-shadow-v2",
+      "semantic_type": "normalization-l2-serial"
+    },
+    {
+      "case_id": "758c08a4850f2fb0d3c922327104354e41dd3a25f5ff623ed0e8686e91a24637",
+      "path": "/root/nfs/emmy/research/suites/cases-15f4a55c1b09eae9a9077be80f73d4c88afc0f60e3ae3a356dd69a56fd2141ea/l2norm-1",
+      "experiment": "correctness-mutable-shadow-v2",
+      "semantic_type": "normalization-l2-serial"
+    },
+    {
+      "case_id": "b801011b370738b209dff8db42e9684c500aaac5392c3970d330dad83b1bf88e",
+      "path": "/root/nfs/emmy/research/suites/cases-15f4a55c1b09eae9a9077be80f73d4c88afc0f60e3ae3a356dd69a56fd2141ea/l2norm-2",
+      "experiment": "correctness-mutable-shadow-v2",
+      "semantic_type": "normalization-l2-serial"
+    },
+    {
+      "case_id": "477e70205a397fd6115a9d224d3e07e7b23b9b8319a6a13cc102d3a1bcb58b6f",
+      "path": "/root/nfs/emmy/research/suites/cases-15f4a55c1b09eae9a9077be80f73d4c88afc0f60e3ae3a356dd69a56fd2141ea/l2norm-3",
+      "experiment": "correctness-mutable-shadow-v2",
+      "semantic_type": "normalization-l2-serial"
+    },
+    {
+      "case_id": "76e32f5c2a1982b8e99f69c566bdb1327a5fdd1ee67f646e31f65a56f640f9ba",
+      "path": "/root/nfs/emmy/research/suites/cases-15f4a55c1b09eae9a9077be80f73d4c88afc0f60e3ae3a356dd69a56fd2141ea/matmul-0",
+      "experiment": "correctness-mutable-shadow-v2",
+      "semantic_type": "contraction-global-serial"
+    },
+    {
+      "case_id": "5dd0656c60a6fe62d31e24629ed0a0e3f531842ddb8fe212bd629bf09c36402f",
+      "path": "/root/nfs/emmy/research/suites/cases-15f4a55c1b09eae9a9077be80f73d4c88afc0f60e3ae3a356dd69a56fd2141ea/matmul-1",
+      "experiment": "correctness-mutable-shadow-v2",
+      "semantic_type": "contraction-global-serial"
+    },
+    {
+      "case_id": "5b013f3eb178e925f748f50f1eccb90ac0be70557549c68f2282606db2887e96",
+      "path": "/root/nfs/emmy/research/suites/cases-15f4a55c1b09eae9a9077be80f73d4c88afc0f60e3ae3a356dd69a56fd2141ea/matmul-2",
+      "experiment": "correctness-mutable-shadow-v2",
+      "semantic_type": "contraction-global-serial"
+    },
+    {
+      "case_id": "92ef4de625d643beb6cde514a01c36ac001c39804d669a0a8f19e62262609ee6",
+      "path": "/root/nfs/emmy/research/suites/cases-15f4a55c1b09eae9a9077be80f73d4c88afc0f60e3ae3a356dd69a56fd2141ea/matmul-3",
+      "experiment": "correctness-mutable-shadow-v2",
+      "semantic_type": "contraction-global-serial"
+    },
+    {
+      "case_id": "d2b1513dd3551d67f39aa43e0f31e92b570b60f6b6cccf1ce89c6312a7877dc9",
+      "path": "/root/nfs/emmy/research/suites/cases-15f4a55c1b09eae9a9077be80f73d4c88afc0f60e3ae3a356dd69a56fd2141ea/pointwise-0",
+      "experiment": "correctness-mutable-shadow-v2",
+      "semantic_type": "pointwise-add-full-group"
+    },
+    {
+      "case_id": "167c2e7bb1732a4197cb395e87b5b6b43674425550859c87e33ef6d1f8f179d9",
+      "path": "/root/nfs/emmy/research/suites/cases-15f4a55c1b09eae9a9077be80f73d4c88afc0f60e3ae3a356dd69a56fd2141ea/pointwise-1",
+      "experiment": "correctness-mutable-shadow-v2",
+      "semantic_type": "pointwise-add-masked-group-tail"
+    },
+    {
+      "case_id": "6f3366c8b92cea597b66530a69fbbc0f2642600c43b0c443845cd6fd64ddd7f0",
+      "path": "/root/nfs/emmy/research/suites/cases-15f4a55c1b09eae9a9077be80f73d4c88afc0f60e3ae3a356dd69a56fd2141ea/pointwise-2",
+      "experiment": "correctness-mutable-shadow-v2",
+      "semantic_type": "pointwise-add-scalar"
+    },
+    {
+      "case_id": "f45ff157a8cb08ec9e53f1dec199bf81e4db404bcf80bc06131c5f9075428b8c",
+      "path": "/root/nfs/emmy/research/suites/cases-15f4a55c1b09eae9a9077be80f73d4c88afc0f60e3ae3a356dd69a56fd2141ea/pointwise-3",
+      "experiment": "correctness-mutable-shadow-v2",
+      "semantic_type": "pointwise-add-masked-group-tail"
+    },
+    {
+      "case_id": "633efc77b34ba7aaf0897d39f2fff62f22edd1a560e73000efb331b1652b0a84",
+      "path": "/root/nfs/emmy/research/suites/cases-15f4a55c1b09eae9a9077be80f73d4c88afc0f60e3ae3a356dd69a56fd2141ea/reduction-0",
+      "experiment": "correctness-mutable-shadow-v2",
+      "semantic_type": "reduction-cooperative-full-participation-sum"
+    },
+    {
+      "case_id": "da237101804e7ff30e8e9b2e4dcdbbcb1521591cf2475c03c2a4c363227ae0fd",
+      "path": "/root/nfs/emmy/research/suites/cases-15f4a55c1b09eae9a9077be80f73d4c88afc0f60e3ae3a356dd69a56fd2141ea/reduction-1",
+      "experiment": "correctness-mutable-shadow-v2",
+      "semantic_type": "reduction-cooperative-full-participation-sum"
+    },
+    {
+      "case_id": "eff163e9760326d62e2acc5fe51a70b5e4ce0cb84dcf9cceecdd8b5e7db2e429",
+      "path": "/root/nfs/emmy/research/suites/cases-15f4a55c1b09eae9a9077be80f73d4c88afc0f60e3ae3a356dd69a56fd2141ea/reduction-2",
+      "experiment": "correctness-mutable-shadow-v2",
+      "semantic_type": "reduction-cooperative-full-participation-sum"
+    },
+    {
+      "case_id": "c8644755a9d442796fbe31b4760dd6b424edb1575eb702134c4ab5d7df9ed979",
+      "path": "/root/nfs/emmy/research/suites/cases-15f4a55c1b09eae9a9077be80f73d4c88afc0f60e3ae3a356dd69a56fd2141ea/reduction-3",
+      "experiment": "correctness-mutable-shadow-v2",
+      "semantic_type": "reduction-cooperative-full-participation-sum"
+    },
+    {
+      "case_id": "64c7d44df50b5af6ec6b823068644cc6157159823d38639f0772e5713b8fa0c9",
+      "path": "/root/nfs/emmy/research/suites/cases-15f4a55c1b09eae9a9077be80f73d4c88afc0f60e3ae3a356dd69a56fd2141ea/rmsnorm-0",
+      "experiment": "correctness-mutable-shadow-v2",
+      "semantic_type": "normalization-rms-serial"
+    },
+    {
+      "case_id": "52e5100435a5170dc6cc80f89a1b38c0f6e23cb7c796665f7f1efb0725bcc4eb",
+      "path": "/root/nfs/emmy/research/suites/cases-15f4a55c1b09eae9a9077be80f73d4c88afc0f60e3ae3a356dd69a56fd2141ea/rmsnorm-1",
+      "experiment": "correctness-mutable-shadow-v2",
+      "semantic_type": "normalization-rms-serial"
+    },
+    {
+      "case_id": "cfc99262fd7c537b0b1b96a393cda47e852f8d02219b912d3eedd60f00463b5e",
+      "path": "/root/nfs/emmy/research/suites/cases-15f4a55c1b09eae9a9077be80f73d4c88afc0f60e3ae3a356dd69a56fd2141ea/rmsnorm-2",
+      "experiment": "correctness-mutable-shadow-v2",
+      "semantic_type": "normalization-rms-serial"
+    },
+    {
+      "case_id": "ac0c5ece84c837f6db29574ca58a2501141a95b33517386dddd1b14849f0b9bb",
+      "path": "/root/nfs/emmy/research/suites/cases-15f4a55c1b09eae9a9077be80f73d4c88afc0f60e3ae3a356dd69a56fd2141ea/rmsnorm-3",
+      "experiment": "correctness-mutable-shadow-v2",
+      "semantic_type": "normalization-rms-serial"
+    },
+    {
+      "case_id": "78948baa10fbcc4bd1eb41edbeb5c8fd918f9ff33ca59a1cb3835b0a02cb8eec",
+      "path": "/root/nfs/emmy/research/suites/cases-15f4a55c1b09eae9a9077be80f73d4c88afc0f60e3ae3a356dd69a56fd2141ea/softmax-0",
+      "experiment": "correctness-mutable-shadow-v2",
+      "semantic_type": "softmax-cooperative-online-multislice"
+    },
+    {
+      "case_id": "63f1ad586d441cad5ef11787ee0d45b2fe608e5cbe3ce2963ca3129a25fae6c2",
+      "path": "/root/nfs/emmy/research/suites/cases-15f4a55c1b09eae9a9077be80f73d4c88afc0f60e3ae3a356dd69a56fd2141ea/softmax-1",
+      "experiment": "correctness-mutable-shadow-v2",
+      "semantic_type": "softmax-cooperative-online-multislice"
+    },
+    {
+      "case_id": "f5d3f7858dcad39ef915ce528516e862765e68c12ed62dd3bfbd491cba2c86bc",
+      "path": "/root/nfs/emmy/research/suites/cases-15f4a55c1b09eae9a9077be80f73d4c88afc0f60e3ae3a356dd69a56fd2141ea/softmax-2",
+      "experiment": "correctness-mutable-shadow-v2",
+      "semantic_type": "softmax-serial-three-pass"
+    },
+    {
+      "case_id": "2323b8e3c7e3124a622bbacd4323166aa946039600ee07bc8e51d17296817fbf",
+      "path": "/root/nfs/emmy/research/suites/cases-15f4a55c1b09eae9a9077be80f73d4c88afc0f60e3ae3a356dd69a56fd2141ea/softmax-3",
+      "experiment": "correctness-mutable-shadow-v2",
+      "semantic_type": "softmax-serial-three-pass"
+    }
+  ],
+  "fresh_opaque_confirmation_review": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/bugs-types/opaque-fresh-independent-review-v1.json",
+  "attention_case_mapping": [
+    {
+      "case_id": "e35aeaf4242506aad5305a9183d67ba836273df2e954ca93b8e8f65e3e9a7b46",
+      "path": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/attention-bounded-screen/full-segment16",
+      "semantic_type": "attention-fused-serial-key-online",
+      "version": "fused-online-cooperative-coverage-v3",
+      "pattern": "normal",
+      "shape": [
+        4,
+        19,
+        80,
+        16
+      ],
+      "activation_regime": "full-segment16",
+      "typed_graph_valid": true,
+      "file_hashes_checked": true
+    },
+    {
+      "case_id": "7ad3e910941f6bf0e71f664f4c48ac24c4425df7c642fb1bb8cbd04d1edec37d",
+      "path": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/attention-bounded-screen/full-segment32",
+      "semantic_type": "attention-fused-serial-key-online",
+      "version": "fused-online-cooperative-coverage-v3",
+      "pattern": "cancellation",
+      "shape": [
+        4,
+        7,
+        96,
+        32
+      ],
+      "activation_regime": "full-segment32",
+      "typed_graph_valid": true,
+      "file_hashes_checked": true
+    },
+    {
+      "case_id": "8e5b840f53eb525072ff57abd9035966a586dbfa4f323003e82644895eab04fe",
+      "path": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/attention-bounded-screen/partial-fallback",
+      "semantic_type": "attention-fused-serial-key-online",
+      "version": "fused-online-cooperative-coverage-v3",
+      "pattern": "bounded",
+      "shape": [
+        5,
+        7,
+        29,
+        7
+      ],
+      "activation_regime": "partial-fallback",
+      "typed_graph_valid": true,
+      "file_hashes_checked": true
+    },
+    {
+      "case_id": "01e2458a05700443b8644949c123585a5129a9bcee19fe82ec68ea6f95807eed",
+      "path": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/attention-order-screen/full-segment16",
+      "semantic_type": "attention-fused-serial-key-wide-cancellation-order",
+      "version": "fused-online-cooperative-coverage-v4",
+      "pattern": "wide-cancellation-sequential-order",
+      "shape": [
+        4,
+        13,
+        80,
+        16
+      ],
+      "activation_regime": "full-segment16",
+      "typed_graph_valid": true,
+      "file_hashes_checked": true
+    },
+    {
+      "case_id": "fed237f6219251ed922b726d78a7a07aeb8290abd7ff967036ed5bc23e59b90e",
+      "path": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/attention-order-screen/full-segment32",
+      "semantic_type": "attention-fused-serial-key-wide-cancellation-order",
+      "version": "fused-online-cooperative-coverage-v4",
+      "pattern": "wide-cancellation-sequential-order",
+      "shape": [
+        4,
+        3,
+        160,
+        32
+      ],
+      "activation_regime": "full-segment32",
+      "typed_graph_valid": true,
+      "file_hashes_checked": true
+    },
+    {
+      "case_id": "6ebeed85adf3b8c7acbd61f10f37da15ba491432b4ec9a09e28c7e9156d6c69d",
+      "path": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/attention-order-screen/partial-fallback",
+      "semantic_type": "attention-fused-serial-key-online",
+      "version": "fused-online-cooperative-coverage-v4",
+      "pattern": "bounded",
+      "shape": [
+        3,
+        19,
+        29,
+        7
+      ],
+      "activation_regime": "partial-fallback",
+      "typed_graph_valid": true,
+      "file_hashes_checked": true
+    }
+  ],
+  "classification_notes_v20": {
+    "async_four_domains_two_types": [
+      {
+        "type_id": "transport-async-ring-stage-order",
+        "semantic_contract": "FullCTA shared ring with L committed warmup groups and one committed future group per iteration; wait_group L plus barriers exposes the intended consumed stage. Ring tail removal must adjust remaining group counts.",
+        "domains": [
+          "canonical-tail",
+          "short-ring",
+          "nondivisible-counter"
+        ],
+        "distinguishing_difference": "Existing masked async16 type is transport/zero-fill only; multi-group ring producer/consumer stage ordering is a new contract.",
+        "status": "Parent-owned oracleV1 development validation independently approved by memory; awaiting frozen confidence draw",
+        "oracle_generator_sha256": "d8b861ad0cad3a9513a43e10c847f4ff7a3892aadd7dbe11ee589e293ca6da99",
+        "validation_case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/async-oracle-validation-112233/case-list.json",
+        "dedup_rule": "Short versus long tripcount, nondivisible stride boundary, L1/2/3, block32/64, CTAcounts, random contents and seeds are witnesses of these two contracts, not additional types."
+      },
+      {
+        "type_id": "transport-async-ring-postloop-padding-liveness",
+        "semantic_contract": "A final wait0/barrier and shared Load makes lookahead padding writes observable after the stage loop, requiring those writes to remain.",
+        "domains": [
+          "observable-padding"
+        ],
+        "distinguishing_difference": "Postloop shared-memory liveness differs from stage-sum ordering and is the semantic reason dead-lookahead elimination must decline.",
+        "status": "Parent-owned oracleV1 development validation independently approved by memory; awaiting frozen confidence draw",
+        "oracle_generator_sha256": "d8b861ad0cad3a9513a43e10c847f4ff7a3892aadd7dbe11ee589e293ca6da99",
+        "validation_case_list": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/async-oracle-validation-112233/case-list.json",
+        "dedup_rule": "Short versus long tripcount, nondivisible stride boundary, L1/2/3, block32/64, CTAcounts, random contents and seeds are witnesses of these two contracts, not additional types."
+      }
+    ],
+    "partial_static_only_pending": true,
+    "fresh_select_review": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/bugs-types/select-fresh-independent-review-v1/review.json"
+  },
+  "BOOL_oracle_type_mapping": {
+    "approved_new_types": 2,
+    "oracle_complete_artifact": "cc0adf140953e58e53a81d53ab2704f944d566e4fb931dc685ad36a516efad53",
+    "compiler_workspace": "/root/bcy/emmy/research-workspaces/scalar-bool-ssa-v1-prototype",
+    "compile_sha256_code_only": "e43facc1f13ac2c5c8a567c2a92f0fc5f5caae83510ba7ba48f2f69499afb727",
+    "no_new_generated_draws": true
+  },
+  "BOOL_completion": {
+    "source_id": "6481a0c89b849471a56f8b712d471551f039527b703fea1b24a678642076ec60",
+    "compile_sha256": "e1915b7a868751d800dbc84932ae91b94f2e8b24fd017b57c66f2a785adba480",
+    "evidence_id": "3279d30a6374abdf2e9bc9d1eded4c44ae78474ec1351618a1a72a1fee19f0d3",
+    "cases_passed": 172,
+    "failed_correctness_cases": [],
+    "new_types_since_v27": 0,
+    "performance_claim": false
+  },
+  "previous_inventory_sha256": "a7c5c66bbc5e18ac5f7906b0eb626ea875a9d9f4d58070d18a2e1c02a20d0875",
+  "previous_inventory_path": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/bugs-types/behavior-inventory-v33.json"
+}

@@ -1,0 +1,108 @@
+{
+  "status": "NO_CODE_LEVEL_BLOCKER_WITH_NUMERICAL_SCOPE_LIMITS",
+  "source_sha256": "96a954a0edf606637ade95f75510bffcd52da5e2c19edab23848c970bf020f58",
+  "parent_source_id": "935b5bbac8fd081dac44b3a8b43a3ed7d1f50c86339637da766c6a3da26e3123",
+  "parent_compile_sha256": "3cccc149da8c4e324bb0011580b38e7591e04bf68e2c9096a53c37486e589929",
+  "changed_AST_functions": [
+    "emit_operation"
+  ],
+  "reverse_exact_parent_bytes": true,
+  "alias_and_ownership": [
+    "emit_operation allocates a fresh result before branch; all absolute/exponent/shift/log/max/polynomial/predicate/labels use monotonically fresh allocators. Original input operand remains read-only through final max.",
+    "No memory accesses, pointer arithmetic, metadata/fixture/shape dispatch or mutable-name map writes added. Existing caller publication and snapshot rules untouched.",
+    "Only logarithm is shared across routes, assigned on every reachable route before joined label. Polynomial temporary never read on large path; shifted never read on small path. Reused polynomial destination is valid per-instruction read-before-write FMA.",
+    "Branch is lane-local; contains no warp/CTA collective/barrier/shared mutation. Divergence does not invalidate participation."
+  ],
+  "corner_paths": {
+    "NaN": "abs/mul/ex2 propagateNaN; ordered le is false, lg2 route yieldsNaN; finaladd remainsNaN regardless max numeric-NaN behavior. No payload/signalling-NaN guarantee.",
+    "negative_infinity": "ex2(-Inf)=+0, polynomialmul yields+0, max(-Inf,+0)=+0, final+0.",
+    "positive_infinity": "ex2(-Inf)=+0 then max(+Inf,+0)+0=+Inf.",
+    "signed_zero": "abs(+/-0)=+0, negative scale gives-0, ex2=1; large route log2(2)*ln2, positive finite output.",
+    "finite_extreme": "Very negativefinite product may overflowto-Inf, yieldingrepresentableunderflowzero; verypositive input returnsmaxpart with tinyorzero correction. No strengthened relative guarantee in underflow/subnormal regime."
+  },
+  "bounds": {
+    "u": 5.960464477539063e-08,
+    "r": 0.125,
+    "coefficient_rounding_relative_bound": 1.6650624810771841e-10,
+    "five_FMA_horner_relative_bound": 3.3958779891046374e-07,
+    "polynomial_FMA_plus_final_mul_rounding_bound": 3.993589701156708e-07,
+    "alternating_relative_truncation_bound": 6.130763462611608e-07,
+    "combined_polynomial_relative_bound": 1.0124355613871927e-06,
+    "normal_exp_argument_abs_bound_absx80": 8.420076333948145e-06,
+    "normal_exp_relative_bound_absx80": 6.134394165762662e-06,
+    "small_branch_plus_exp_final_add_and_finite_amp_bound_absx80": 7.266083713819427e-06,
+    "large_branch_inferred_absx_upper": 2.08,
+    "large_branch_log_add_error": 5.060546113108618e-07,
+    "large_branch_lg2_error": 1.4030826276089931e-06,
+    "large_branch_combined_exp_log_final_add_amp_relative_bound": 2.5404689460994945e-06,
+    "scope": "Finite F32 inputs|x|<=80, normal exp/log result, nonoverflowing normal downstream multiplication. Error bounds assume correctly-rounded RN basic operations and PTX documented2ulp ex2/2^-22 lg2. Not a universal composed-program error guarantee."
+  },
+  "pure_math_controls": {
+    "count": 1029,
+    "max_relative_error_vs_math_log1p": 5.410896485042435e-07,
+    "selected": [
+      {
+        "y": 0.125,
+        "polynomial_f32": 0.11778297275304794,
+        "log1p_f64": 0.11778303565638346,
+        "relative_error": 5.340610824137098e-07
+      },
+      {
+        "y": 0.0,
+        "polynomial_f32": 0.0,
+        "log1p_f64": 0.0,
+        "relative_error": 0
+      },
+      {
+        "y": 0.125,
+        "polynomial_f32": 0.11778297275304794,
+        "log1p_f64": 0.11778303565638346,
+        "relative_error": 5.340610824137098e-07
+      },
+      {
+        "y": 0.1249999925494194,
+        "polynomial_f32": 0.11778296530246735,
+        "log1p_f64": 0.11778302903364513,
+        "relative_error": 5.410896485042435e-07
+      },
+      {
+        "y": 2.06115369216775e-09,
+        "polynomial_f32": 2.06115369216775e-09,
+        "log1p_f64": 2.0611536900435727e-09,
+        "relative_error": 1.0305767472994335e-09
+      },
+      {
+        "y": 3.775134371775124e-11,
+        "polynomial_f32": 3.775134371775124e-11,
+        "log1p_f64": 3.7751343717038656e-11,
+        "relative_error": 1.8875719797230384e-11
+      }
+    ],
+    "model": "Decimal100 exact-input single-rounded FMA and multiply, then F32; diagnostic scalar polynomial only, no SFU simulation or compiler execution."
+  },
+  "primary_docs": {
+    "url": "https://docs.nvidia.com/cuda/archive/13.0.2/parallel-thread-execution/index.html",
+    "version": "PTXISA9.0/CUDA13.0.2",
+    "sections": [
+      "Floating Point Instructions ex2",
+      "Floating Point Instructions lg2",
+      "Floating Point Instructions fma",
+      "Comparison and Selection Instructions setp"
+    ],
+    "paraphrased_facts": "ex2 approximates2^a with maximum2ulp from correctly rounded result; lg2 absolute error2^-22 for input(0.5,2), relative error2^-22 otherwise positivefinite. Default f32 subnormals supported sm20+. Ordered comparisons rejectNaN. RN FMA rounds once.",
+    "local_docs": "Configured research/docs,reference,primary-sources and toolkit doc roots checked, absent; official online primary archive used."
+  },
+  "qualification_limits": [
+    "Source review and bounded normal-domain math only; no candidate compiler import/method invocation, no compilation, assembly, GPU or case drawing.",
+    "No actual PTX/SASS scheduling/contraction/register-lifetime proof yet; .rn polynomial forms state required rounding law but backend qualification remains.",
+    "Subnormal/underflow relative accuracy and arbitrary downstream amplification/cancellation are not guaranteed by the normal-domain bound. Parent oracle reference/numerical policy must state its domain independently.",
+    "Special-value source paths reviewed but evaluator may rejectNaN references; special-value GPU behavior not tested.",
+    "All15 and frozen independently generated cases/source-bound GPU gates remain mandatory."
+  ],
+  "public_operation_contract": {
+    "path": "/opt/emmy-venv/lib/python3.12/site-packages/emmy/compiler/ir/elementwise.py",
+    "sha256": "f4daefad067378fbc7f8b61f4611e65c8b949f0e3b8ecafdab8dd597ca1af090",
+    "line": 59,
+    "reference": "softplus registry uses np.logaddexp(0.0,x); operation contract read from installed Emmy source, no renderer/reference execution."
+  }
+}

@@ -1,0 +1,182 @@
+{
+  "actual_union": 278,
+  "baseline_id": "549b6047f91818ea876deb76adfc88cabc36f554c05ab2bc51b2c961aa9143f2",
+  "choice_id": "07b4626b8dee4ec3cacf1a72d7531e47da801089a192fafb10ae79ee971c7048",
+  "core_unique": 47,
+  "created_utc": "2026-10-23T03:59:12.860534+00:00",
+  "draw_chronology": [
+    {
+      "case_ids": [
+        "a9e51dacaefed9c53bac777e1ff4dce3b49731316da7595a414f49e540724a1a",
+        "bec67be84425e619948e02747350c723d07e6c59540a1dec381da36d3b7c455a",
+        "beed3837cbafcf16552b76dc0c7a7f988d191eb19f673aeb177ccb47374bd954",
+        "f0401a9aa139c60c0e5f85e0253a5854eb58b9e5a733c1d06db0747b53ca6af8"
+      ],
+      "derived": 1792727165.172703,
+      "generated": 1792727165.615166,
+      "oracle": "async",
+      "seed": 200016482891158823636084663191167359527
+    },
+    {
+      "case_ids": [
+        "a3fe8084f34745a8656cd7d427de197bf583ad104365655b9fb79a94a5dd690c",
+        "dd6dcf6102d28bb83743b0b72333fee4f5be654245bf2322f4ae664c3558e341",
+        "e859ad9acfc8c53d851ca8de4fd5d373f9e13961df5cdc3f6743eaf734aa607f",
+        "fcfc951bf1498941b3c41429eaa2b2bf6266d4e6ce5663eee40707aa75e5923e"
+      ],
+      "derived": 1792727164.7304983,
+      "generated": 1792727165.1433275,
+      "oracle": "pair",
+      "seed": 185524702051374566964077933345434231803
+    },
+    {
+      "case_ids": [
+        "6c8ff36183c0dd80c16c2f52b6e873f8e53e4e14a585e80d6a25f7abbb450efa",
+        "6d95385ab52abd5acf9e58eb9a2779f25a9aac4c5c24ff4f2ce3ae95e8f99aaa",
+        "ef95f2d825df2013d3bed973037a922f1fc184f849d47ce02b917fa492e0454e",
+        "fe30cac314b951b0e3b768174c51f64e4934766178e49e9467c859e9ea956846"
+      ],
+      "derived": 1792727165.6502776,
+      "generated": 1792727166.0409114,
+      "oracle": "tree",
+      "seed": 41438352293704157740847445382765126976
+    }
+  ],
+  "fresh_case_ids": [
+    "6c8ff36183c0dd80c16c2f52b6e873f8e53e4e14a585e80d6a25f7abbb450efa",
+    "6d95385ab52abd5acf9e58eb9a2779f25a9aac4c5c24ff4f2ce3ae95e8f99aaa",
+    "a3fe8084f34745a8656cd7d427de197bf583ad104365655b9fb79a94a5dd690c",
+    "a9e51dacaefed9c53bac777e1ff4dce3b49731316da7595a414f49e540724a1a",
+    "bec67be84425e619948e02747350c723d07e6c59540a1dec381da36d3b7c455a",
+    "beed3837cbafcf16552b76dc0c7a7f988d191eb19f673aeb177ccb47374bd954",
+    "dd6dcf6102d28bb83743b0b72333fee4f5be654245bf2322f4ae664c3558e341",
+    "e859ad9acfc8c53d851ca8de4fd5d373f9e13961df5cdc3f6743eaf734aa607f",
+    "ef95f2d825df2013d3bed973037a922f1fc184f849d47ce02b917fa492e0454e",
+    "f0401a9aa139c60c0e5f85e0253a5854eb58b9e5a733c1d06db0747b53ca6af8",
+    "fcfc951bf1498941b3c41429eaa2b2bf6266d4e6ce5663eee40707aa75e5923e",
+    "fe30cac314b951b0e3b768174c51f64e4934766178e49e9467c859e9ea956846"
+  ],
+  "frozen_at": 1792727164.6425176,
+  "known_lists": 73,
+  "known_unique": 246,
+  "limits": [
+    "Host metadata/native byte validation only; not GPU correctness or timing.",
+    "Native normal-path proof limitations inherited unchanged; no whole-CFG claim.",
+    "Known6spill warnings remain, no new spill regression on these exact targets.",
+    "Fresh case IDs disjoint, but two numeric-input duplicates honestly retained."
+  ],
+  "numeric_duplicate_inputs": [
+    {
+      "case_id": "fe30cac314b951b0e3b768174c51f64e4934766178e49e9467c859e9ea956846",
+      "same_numeric_input_as": [
+        "24e447a29f7665e75242d1ca946836b2f542d9cc71953cb5578797962bd97165"
+      ]
+    },
+    {
+      "case_id": "6d95385ab52abd5acf9e58eb9a2779f25a9aac4c5c24ff4f2ce3ae95e8f99aaa",
+      "same_numeric_input_as": [
+        "6890db887e9ddeaf5f0a49d1111ec35c0ac97c590f7720d2112e53c5a25b6e1a"
+      ]
+    }
+  ],
+  "overlap_published": 15,
+  "prepared_id": "71d40c4c2420f218d9e9fbc33c35e3437aae0131d1f0a58c137268907a5aa79a",
+  "prior70_unique": 234,
+  "reservation_id": "dc6e42c250746ebde8363a3c7d452e97f00864e6e319b231f001a8081e584766",
+  "reserved_at": 1792727164.664201,
+  "selected_at": 1792727138.148291,
+  "source_id": "212e052936722ec76f1c5c4c6b2243e9ff87fc79168f99284193d46b36eb15e4",
+  "source_only_provenance_issue": {
+    "actual": "aa789dd34609b037ab7d7f58eaf0138c52395dd34cf0f77b40850b960ae6ded8",
+    "disposition": "Descriptive shadowed-variable typo preserved. Actual union independently recomputed; valid source/reservation/lists unchanged. No redraw or oracle change.",
+    "expected": 278,
+    "field": "baseline_fresh_plan.target_total_after_replay"
+  },
+  "spills": [
+    {
+      "arch": "sm_120",
+      "case_id": "e42462914470b170c8821353f22256bf989c43c7b7312374f56169d5574e72d4",
+      "exact_parent_native_PTX_resources": true,
+      "registers": [
+        255
+      ],
+      "spills": [
+        [
+          "32",
+          "16"
+        ]
+      ]
+    },
+    {
+      "arch": "sm_89",
+      "case_id": "e42462914470b170c8821353f22256bf989c43c7b7312374f56169d5574e72d4",
+      "exact_parent_native_PTX_resources": true,
+      "registers": [
+        255
+      ],
+      "spills": [
+        [
+          "24",
+          "12"
+        ]
+      ]
+    },
+    {
+      "arch": "sm_120",
+      "case_id": "97abc829e63e7c3432400aa2ddda4a5ab5f3d758b406533c1bfb084a8673bc03",
+      "exact_parent_native_PTX_resources": true,
+      "registers": [
+        255
+      ],
+      "spills": [
+        [
+          "32",
+          "16"
+        ]
+      ]
+    },
+    {
+      "arch": "sm_89",
+      "case_id": "97abc829e63e7c3432400aa2ddda4a5ab5f3d758b406533c1bfb084a8673bc03",
+      "exact_parent_native_PTX_resources": true,
+      "registers": [
+        255
+      ],
+      "spills": [
+        [
+          "24",
+          "12"
+        ]
+      ]
+    },
+    {
+      "arch": "sm_120",
+      "case_id": "720332f6e50a61c0643c3e5c6ae232140a8639fb4d630f21170b680f5bad43b9",
+      "exact_parent_native_PTX_resources": true,
+      "registers": [
+        255
+      ],
+      "spills": [
+        [
+          "32",
+          "16"
+        ]
+      ]
+    },
+    {
+      "arch": "sm_89",
+      "case_id": "720332f6e50a61c0643c3e5c6ae232140a8639fb4d630f21170b680f5bad43b9",
+      "exact_parent_native_PTX_resources": true,
+      "registers": [
+        255
+      ],
+      "spills": [
+        [
+          "24",
+          "12"
+        ]
+      ]
+    }
+  ],
+  "status": "PASS_FINAL_SOURCE_CHOICE_DRAW_278_UNION_AND6_EXISTING_SPILL_TARGETS"
+}

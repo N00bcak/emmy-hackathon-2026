@@ -1,0 +1,171 @@
+{
+  "status": "APPROVE exact7092 composition source and actual saved-PTX carrier proof; GPU qualification still required",
+  "source_paths": {
+    "E191": "/root/bcy/emmy/research-workspaces/correctness-scalar-bool-ssa-v2-freeze/compile.py",
+    "vector798f": "/root/bcy/emmy/research-workspaces/vector4-bool-prefetch-v1-prototype/compile.py",
+    "fix3cccc": "/root/bcy/emmy/research-workspaces/nested-seeded-fold-scope-e191-v2-prototype/compile.py",
+    "composition7092": "/root/bcy/emmy/research-workspaces/vector4-complete-fold-scope-v2-prototype/compile.py"
+  },
+  "hashes": {
+    "E191": "e1915b7a868751d800dbc84932ae91b94f2e8b24fd017b57c66f2a785adba480",
+    "vector798f": "798f195d152770637d11d61e14c3770242d7763409fdffa056e9489b0abe573a",
+    "fix3cccc": "3cccc149da8c4e324bb0011580b38e7591e04bf68e2c9096a53c37486e589929",
+    "composition7092": "7092845e6af15890ad2f46b53e4a2687362ccd2c93af35226562283761446ddb"
+  },
+  "reverse_complete_fix_exact798f": true,
+  "reverse_vector_exact3cccc": true,
+  "forward_deltas_commute_byte_for_byte": true,
+  "AST_changed_vs798f": [
+    "init_scope_frame",
+    "restore_init_scope",
+    "statements",
+    "statements_with_init_scope"
+  ],
+  "AST_changed_vs3cccc": [
+    "global_dot_alignment",
+    "global_dot_prefetch",
+    "global_dot_vector_loop",
+    "global_dot_vector_plan",
+    "render",
+    "statements"
+  ],
+  "AST_outside_Emitter_exact": true,
+  "scope_consumers": [
+    {
+      "consumer": "Tile body",
+      "behavior": "Frame captured at Tile body entry, restored through generic finally. Seeded child declarations shadow ancestor until body exit; axis restoration remains independent.",
+      "verdict": "sound"
+    },
+    {
+      "consumer": "Cond then/else",
+      "behavior": "Each arm captures its own direct child seeds. Existing outer values/mutable snapshots and final physical mutable reconciliation remain; seedFalse updates mutate retained ancestor physical carrier, while seeded shadows allocate fresh carriers.",
+      "verdict": "sound"
+    },
+    {
+      "consumer": "Generic Loop/StridedLoop",
+      "behavior": "Current-loop own init_accums runs before frame capture; owned direct Accum targets are not themselves framed. Direct child seedTrue folds are framed, seedFalse children are not; nested ownership is not traversed across a further Loop. Zero-trip enclosing bodies restore ancestor metadata so no unexecuted child register leaks.",
+      "verdict": "sound"
+    },
+    {
+      "consumer": "Shared unroll8 body/tail",
+      "behavior": "All iterations use statements_with_init_scope(loop_init_frame). Admission is flat Load/Assign/Accum only; no new child-seed frame can arise.",
+      "verdict": "sound"
+    },
+    {
+      "consumer": "Serial read pipeline early continue",
+      "behavior": "Recognized body exactly Load+Accum, so new implicit-child frame is necessarily empty. Its current loop carrier remains finalized/exported.",
+      "verdict": "sound"
+    },
+    {
+      "consumer": "Ordered KEY batching early continue",
+      "behavior": "338a omitted restoration, proven on existing prior-carriers control.3cccc restores loop_init_frame after successful batching and before continue. Frame contains seeded child dot-score ancestor names only; current KEY-owned total carriers remain untouched.",
+      "verdict": "fixed by3cccc"
+    },
+    {
+      "consumer": "global vector dot branch/body/tail",
+      "behavior": "Admitted dot body exactly Load,Load,multiply,Accum: frame has no direct Init or child seeded loops. Both routes use same freshly allocated child carrier seeded before guard; restore_context preserves that mapping. Whole KEY frame restored after replay; persistent KEY-owned totals excluded.",
+      "verdict": "sound"
+    }
+  ],
+  "general_physical_proof": [
+    "reg() monotonically allocates; child init_accums precedes vector snapshot and captures fresh child score, never ancestor physical register.",
+    "Vector/scalar/tail operations retain the child carrier, private KEY snapshots and public SHFL destinations distinct. KEY tail cannot redefine score names under unchanged planner.",
+    "Scope restoration is metadata/cache invalidation only; no runtime overwrite or ancestor rollback is emitted. Current-loop own seeds run before frame capture and direct Accum exports remain unframed; seedFalse updates persist.",
+    "Both runtime guard routes and skipped-key path reconverge before private publication/replay. Saved actual witness guards initialized in prologue; ancestor destinations occur only once."
+  ],
+  "actual_KEY_rows": [
+    {
+      "case_id": "d7be87bc0caabbc560a024cd044944f15da13f4085819fc40ebcba4940f64200",
+      "case_dir": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/nested-key-scope-oracle-validation-710331/nested-key-score-shadow",
+      "PTX_sha256": "91416a6aa942beb1a53fd487fc6d350913d2aa519bd8ed8a5ccdc3c3af97ab9b",
+      "PTX_matches_trusted_prepared_both_target_inputs": true,
+      "ancestor_registers": [
+        "%f1",
+        "%f2"
+      ],
+      "ancestor_destination_count": [
+        1,
+        1
+      ],
+      "postKEY_stores": [
+        "%f3",
+        "%f4",
+        "%f1",
+        "%f2"
+      ],
+      "routes": [
+        {
+          "alignment_predicate": "%p4",
+          "guard_dominates_both_routes": true,
+          "child_carrier": "%f7",
+          "vector_and_scalar_write_same_seeded_child_carrier": true,
+          "joined_private_snapshot": "%f5",
+          "replay_public": "%f49",
+          "persistent_total": "%f3"
+        },
+        {
+          "alignment_predicate": "%p4",
+          "guard_dominates_both_routes": true,
+          "child_carrier": "%f28",
+          "vector_and_scalar_write_same_seeded_child_carrier": true,
+          "joined_private_snapshot": "%f6",
+          "replay_public": "%f50",
+          "persistent_total": "%f4"
+        }
+      ]
+    },
+    {
+      "case_id": "4c6c88581fe20f1735d190ca1889f979dc7f5341908067e2e8355062d25e8d74",
+      "case_dir": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/nested-key-scope-independent-v2/nested-key-score-shadow",
+      "PTX_sha256": "f00d7e912e78a634c3d37e7f27603ec9567fea0b88013eaa5bde4c2ef0084acd",
+      "PTX_matches_trusted_prepared_both_target_inputs": true,
+      "ancestor_registers": [
+        "%f1",
+        "%f2"
+      ],
+      "ancestor_destination_count": [
+        1,
+        1
+      ],
+      "postKEY_stores": [
+        "%f3",
+        "%f4",
+        "%f1",
+        "%f2"
+      ],
+      "routes": [
+        {
+          "alignment_predicate": "%p4",
+          "guard_dominates_both_routes": true,
+          "child_carrier": "%f7",
+          "vector_and_scalar_write_same_seeded_child_carrier": true,
+          "joined_private_snapshot": "%f5",
+          "replay_public": "%f49",
+          "persistent_total": "%f3"
+        },
+        {
+          "alignment_predicate": "%p4",
+          "guard_dominates_both_routes": true,
+          "child_carrier": "%f28",
+          "vector_and_scalar_write_same_seeded_child_carrier": true,
+          "joined_private_snapshot": "%f6",
+          "replay_public": "%f50",
+          "persistent_total": "%f4"
+        }
+      ]
+    }
+  ],
+  "evidence_hashes": {
+    "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/bugs-types/nested-seeded-fold-scope-vector-composition-v2/composition-proof.json": "03f64ef4e8d320873c78a46834d4e7f83fe3e367d4e1adf184217dd1c5397517",
+    "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/bugs-types/nested-seeded-fold-scope-vector-composition-v2/static-complete.json": "dccb5feca2623cacfa6642c0569e89ac89a439bc23a6fa5ecafc5cf8e18c0a2c",
+    "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/bugs-types/nested-seeded-fold-scope-vector-composition-v2/static-scope-witnesses5/prepared.json": "9f804a324e582c4cc2ec44dde81735b9dcf586c4ea161f22633a47815b5c1d04"
+  },
+  "limits": [
+    "Read-only source/AST and saved PTX audit; no compiler execution, assembly or GPU.",
+    "PTX proof confirms both guard routes and physical carrier separation; it does not itself establish native scheduling or runtime numerical correctness. Parent must bind all15/allknown/fresh isolated GPU to exact newly frozen7092.",
+    "Old798f/all15 static identities support preserving lowering but cannot repair or transfer old-source GPU qualification.",
+    "No source/evaluator/case/reference edits or draws;97e tree remains unchanged."
+  ],
+  "created_utc": "2026-10-23T00:38:01.932297+00:00",
+  "owned_jobs": []
+}

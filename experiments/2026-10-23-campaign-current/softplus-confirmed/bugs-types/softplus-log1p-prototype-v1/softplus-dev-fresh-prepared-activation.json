@@ -1,0 +1,116 @@
+{
+  "status": "PASS actual frozen-source PTX and both-target native activation; no own compiler rerun/GPU",
+  "source_id": "f0f5e4bf8d89a5e16d2c917853c92f08650179fc1bdb5681bef698610dbc76a7",
+  "compile_sha256": "96a954a0edf606637ade95f75510bffcd52da5e2c19edab23848c970bf020f58",
+  "rows": [
+    {
+      "list": "softplus-development",
+      "case_id": "2e5ef73f93e297caf646bf20a032c9c8d7a0060713dd4ced4c5b558097777bc8",
+      "case_dir": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/softplus-tail-oracle-validation-665541/softplus-and-amplified-tail",
+      "PTX_sha256": "9218be63a4624abe43eeb3340d5ce469beeb4c70216d6f044a19b4cea9b70350",
+      "targets": [
+        {
+          "arch": "sm_89",
+          "assembly_exit": 0,
+          "actual_poly_FMA_PTX_count": 5,
+          "native_FFMA_sites": 5,
+          "analytic_y_threshold_1over8_present": true,
+          "original_large_log_path_present": true,
+          "registers": [
+            12
+          ],
+          "spills": [
+            [
+              "0",
+              "0"
+            ]
+          ],
+          "cubin_SHA": "29fd23d80bd658d7ee678374f476cbbf4b2af4d2a2fced9fa5f527026442ec8b",
+          "SASS_SHA": "6a295cc6770300ea8d0dc527a78107e15937b87eb30b5f207127cdb808a43ed4",
+          "folder": "/root/nfs/emmy/research/assembly-cache/64185b912c33e46f70655a6c0a2012fc7c6f283ad9d75763bd5a4eebb4a78846"
+        },
+        {
+          "arch": "sm_120",
+          "assembly_exit": 0,
+          "actual_poly_FMA_PTX_count": 5,
+          "native_FFMA_sites": 5,
+          "analytic_y_threshold_1over8_present": true,
+          "original_large_log_path_present": true,
+          "registers": [
+            14
+          ],
+          "spills": [
+            [
+              "0",
+              "0"
+            ]
+          ],
+          "cubin_SHA": "9686e968a4e403cec7d4d60d0f5b18f72d3d4c5e73f539c1866852fb96750045",
+          "SASS_SHA": "bc1ce5ee466fcb5ad4d8632a546ecc8853bb2ba05150d4c987cb0b6bdbf7689e",
+          "folder": "/root/nfs/emmy/research/assembly-cache/4832ef2404486de552ee8950c51c602cef299769923a8499994fef6c4dc81a6f"
+        }
+      ],
+      "same_case_baseline935_registers": {
+        "sm_89": [
+          12
+        ],
+        "sm_120": [
+          14
+        ]
+      },
+      "register_increase_warning": {
+        "sm_89": false,
+        "sm_120": false
+      }
+    },
+    {
+      "list": "softplus-fresh",
+      "case_id": "2749fdfd9a91ddf505d7aa253b8fd1a6c4061bdc3daae61bac2b19072c6fc156",
+      "case_dir": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/softplus-tail-independent-v1/softplus-and-amplified-tail",
+      "PTX_sha256": "f774edca5f03b2ca4568c53aecf68de06d73b1df93fda9d5efb98d2619f4267a",
+      "targets": [
+        {
+          "arch": "sm_89",
+          "assembly_exit": 0,
+          "actual_poly_FMA_PTX_count": 5,
+          "native_FFMA_sites": 5,
+          "analytic_y_threshold_1over8_present": true,
+          "original_large_log_path_present": true,
+          "registers": [
+            12
+          ],
+          "spills": [
+            [
+              "0",
+              "0"
+            ]
+          ],
+          "cubin_SHA": "15d4612ad851cfce783c32d11366964ff33689e0d27c817e99161af357f5c9e6",
+          "SASS_SHA": "58d9404d6799f5a773ccf04fb9320859f22a8cec12a65cc4a1fe1831218fdf23",
+          "folder": "/root/nfs/emmy/research/assembly-cache/880cfcde1bf17c775d6506e58c2575df684f83f2b3d5f06345afe6a1658cd2a3"
+        },
+        {
+          "arch": "sm_120",
+          "assembly_exit": 0,
+          "actual_poly_FMA_PTX_count": 5,
+          "native_FFMA_sites": 5,
+          "analytic_y_threshold_1over8_present": true,
+          "original_large_log_path_present": true,
+          "registers": [
+            14
+          ],
+          "spills": [
+            [
+              "0",
+              "0"
+            ]
+          ],
+          "cubin_SHA": "9486dac784c22283aa826feabdfde3658dd6ae2e8b70899916426cd7b135e231",
+          "SASS_SHA": "86fa4f5c1d9cd694bfa484231b8264f30c7aef9e05ddd09a726f7fd25e2c3c4e",
+          "folder": "/root/nfs/emmy/research/assembly-cache/b0ae7697ca739ee707407f769a9e2c0bdff8f38e780a6c6f1524aef9f1c6c233"
+        }
+      ]
+    }
+  ],
+  "limits": "Static activation is not numerical correctness or performance evidence. Registers/spills reported; no latency claim."
+}

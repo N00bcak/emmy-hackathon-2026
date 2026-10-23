@@ -1,0 +1,4 @@
+experiment,case,baseline_median_us,candidate_median_us,median_block_ratio,case_noise_threshold,pairs,classification
+index-pure-shared-cse-v1,m01_matmul_512,25.6,25.6,1.0,0.12499981,200,inconclusive
+copy-alignment-hoist-v2,m01_matmul_512,25.6,25.6,1.0,0.10479,200,inconclusive
+copy-alignment-hoist-v2,m02_matmul_rect,5.12,5.12,0.993827,0.75,200,inconclusive

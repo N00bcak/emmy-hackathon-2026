@@ -1,0 +1,423 @@
+{
+  "cases": [
+    {
+      "case": "pointwise-0",
+      "latency_us": 3.0720001086592674,
+      "useful_flops": null,
+      "logical_bytes": null,
+      "work_mode": null
+    },
+    {
+      "case": "pointwise-1",
+      "latency_us": 4.159999778494239,
+      "useful_flops": null,
+      "logical_bytes": null,
+      "work_mode": null
+    },
+    {
+      "case": "pointwise-2",
+      "latency_us": 3.10400000307709,
+      "useful_flops": null,
+      "logical_bytes": null,
+      "work_mode": null
+    },
+    {
+      "case": "pointwise-3",
+      "latency_us": 4.095999989658594,
+      "useful_flops": null,
+      "logical_bytes": null,
+      "work_mode": null
+    },
+    {
+      "case": "reduction-0",
+      "latency_us": 4.3039999436587095,
+      "useful_flops": null,
+      "logical_bytes": null,
+      "work_mode": null
+    },
+    {
+      "case": "reduction-1",
+      "latency_us": 4.095999989658594,
+      "useful_flops": null,
+      "logical_bytes": null,
+      "work_mode": null
+    },
+    {
+      "case": "reduction-2",
+      "latency_us": 3.0720001086592674,
+      "useful_flops": null,
+      "logical_bytes": null,
+      "work_mode": null
+    },
+    {
+      "case": "reduction-3",
+      "latency_us": 4.207999911159277,
+      "useful_flops": null,
+      "logical_bytes": null,
+      "work_mode": null
+    },
+    {
+      "case": "rmsnorm-0",
+      "latency_us": 5.119999870657921,
+      "useful_flops": null,
+      "logical_bytes": null,
+      "work_mode": null
+    },
+    {
+      "case": "rmsnorm-1",
+      "latency_us": 3.0720001086592674,
+      "useful_flops": null,
+      "logical_bytes": null,
+      "work_mode": null
+    },
+    {
+      "case": "rmsnorm-2",
+      "latency_us": 9.216000325977802,
+      "useful_flops": null,
+      "logical_bytes": null,
+      "work_mode": null
+    },
+    {
+      "case": "rmsnorm-3",
+      "latency_us": 4.94399992749095,
+      "useful_flops": null,
+      "logical_bytes": null,
+      "work_mode": null
+    },
+    {
+      "case": "l2norm-0",
+      "latency_us": 5.119999870657921,
+      "useful_flops": null,
+      "logical_bytes": null,
+      "work_mode": null
+    },
+    {
+      "case": "l2norm-1",
+      "latency_us": 5.119999870657921,
+      "useful_flops": null,
+      "logical_bytes": null,
+      "work_mode": null
+    },
+    {
+      "case": "l2norm-2",
+      "latency_us": 7.168000098317862,
+      "useful_flops": null,
+      "logical_bytes": null,
+      "work_mode": null
+    },
+    {
+      "case": "l2norm-3",
+      "latency_us": 4.111999878659844,
+      "useful_flops": null,
+      "logical_bytes": null,
+      "work_mode": null
+    },
+    {
+      "case": "matmul-0",
+      "latency_us": 4.095999989658594,
+      "useful_flops": null,
+      "logical_bytes": null,
+      "work_mode": null
+    },
+    {
+      "case": "matmul-1",
+      "latency_us": 3.7119999760761857,
+      "useful_flops": null,
+      "logical_bytes": null,
+      "work_mode": null
+    },
+    {
+      "case": "matmul-2",
+      "latency_us": 4.207999911159277,
+      "useful_flops": null,
+      "logical_bytes": null,
+      "work_mode": null
+    },
+    {
+      "case": "matmul-3",
+      "latency_us": 4.095999989658594,
+      "useful_flops": null,
+      "logical_bytes": null,
+      "work_mode": null
+    },
+    {
+      "case": "atomic_matmul-0",
+      "latency_us": 5.119999870657921,
+      "useful_flops": null,
+      "logical_bytes": null,
+      "work_mode": null
+    },
+    {
+      "case": "atomic_matmul-1",
+      "latency_us": 5.119999870657921,
+      "useful_flops": null,
+      "logical_bytes": null,
+      "work_mode": null
+    },
+    {
+      "case": "atomic_matmul-2",
+      "latency_us": 4.143999889492989,
+      "useful_flops": null,
+      "logical_bytes": null,
+      "work_mode": null
+    },
+    {
+      "case": "atomic_matmul-3",
+      "latency_us": 4.335999954491854,
+      "useful_flops": null,
+      "logical_bytes": null,
+      "work_mode": null
+    },
+    {
+      "case": "softmax-0",
+      "latency_us": 4.095999989658594,
+      "useful_flops": null,
+      "logical_bytes": null,
+      "work_mode": null
+    },
+    {
+      "case": "softmax-1",
+      "latency_us": 4.143999889492989,
+      "useful_flops": null,
+      "logical_bytes": null,
+      "work_mode": null
+    },
+    {
+      "case": "softmax-2",
+      "latency_us": 6.144000217318535,
+      "useful_flops": null,
+      "logical_bytes": null,
+      "work_mode": null
+    },
+    {
+      "case": "softmax-3",
+      "latency_us": 7.168000098317862,
+      "useful_flops": null,
+      "logical_bytes": null,
+      "work_mode": null
+    },
+    {
+      "case": "attention-0",
+      "latency_us": 10.464000049978495,
+      "useful_flops": null,
+      "logical_bytes": null,
+      "work_mode": null
+    },
+    {
+      "case": "attention-1",
+      "latency_us": 13.312000315636396,
+      "useful_flops": null,
+      "logical_bytes": null,
+      "work_mode": null
+    },
+    {
+      "case": "attention-2",
+      "latency_us": 9.440000168979168,
+      "useful_flops": null,
+      "logical_bytes": null,
+      "work_mode": null
+    },
+    {
+      "case": "attention-3",
+      "latency_us": 12.287999968975782,
+      "useful_flops": null,
+      "logical_bytes": null,
+      "work_mode": null
+    },
+    {
+      "case": "p00_scalar_add",
+      "latency_us": 3.0720001086592674,
+      "useful_flops": 128,
+      "logical_bytes": 1536,
+      "work_mode": "fp32_simt",
+      "compute_ceiling": {
+        "flops_s": 82600000000000.0,
+        "mode": "fp32_simt",
+        "basis": "theoretical",
+        "source": "NVIDIA Ada architecture whitepaper Appendix A: RTX4090 FP32 non-Tensor at boost; rounded82.6TFLOP/s"
+      }
+    },
+    {
+      "case": "p01_vector_add",
+      "latency_us": 4.095999989658594,
+      "useful_flops": 1024,
+      "logical_bytes": 12288,
+      "work_mode": "fp32_simt",
+      "compute_ceiling": {
+        "flops_s": 82600000000000.0,
+        "mode": "fp32_simt",
+        "basis": "theoretical",
+        "source": "NVIDIA Ada architecture whitepaper Appendix A: RTX4090 FP32 non-Tensor at boost; rounded82.6TFLOP/s"
+      }
+    },
+    {
+      "case": "p02_scale_shift",
+      "latency_us": 4.095999989658594,
+      "useful_flops": 8192,
+      "logical_bytes": 32776,
+      "work_mode": "fp32_simt",
+      "compute_ceiling": {
+        "flops_s": 82600000000000.0,
+        "mode": "fp32_simt",
+        "basis": "theoretical",
+        "source": "NVIDIA Ada architecture whitepaper Appendix A: RTX4090 FP32 non-Tensor at boost; rounded82.6TFLOP/s"
+      }
+    },
+    {
+      "case": "p03_relu_mul",
+      "latency_us": 4.111999878659844,
+      "useful_flops": 2048,
+      "logical_bytes": 24576,
+      "work_mode": "fp32_simt",
+      "compute_ceiling": {
+        "flops_s": 82600000000000.0,
+        "mode": "fp32_simt",
+        "basis": "theoretical",
+        "source": "NVIDIA Ada architecture whitepaper Appendix A: RTX4090 FP32 non-Tensor at boost; rounded82.6TFLOP/s"
+      }
+    },
+    {
+      "case": "r01_array_sum",
+      "latency_us": 3.0720001086592674,
+      "useful_flops": 1023,
+      "logical_bytes": 4100,
+      "work_mode": "fp32_simt",
+      "compute_ceiling": {
+        "flops_s": 82600000000000.0,
+        "mode": "fp32_simt",
+        "basis": "theoretical",
+        "source": "NVIDIA Ada architecture whitepaper Appendix A: RTX4090 FP32 non-Tensor at boost; rounded82.6TFLOP/s"
+      }
+    },
+    {
+      "case": "r02_big_sum",
+      "latency_us": 20.479999482631683,
+      "useful_flops": 65535,
+      "logical_bytes": 262148,
+      "work_mode": "fp32_simt",
+      "compute_ceiling": {
+        "flops_s": 82600000000000.0,
+        "mode": "fp32_simt",
+        "basis": "theoretical",
+        "source": "NVIDIA Ada architecture whitepaper Appendix A: RTX4090 FP32 non-Tensor at boost; rounded82.6TFLOP/s"
+      }
+    },
+    {
+      "case": "r03_mean",
+      "latency_us": 12.28800043463707,
+      "useful_flops": 32767,
+      "logical_bytes": 131080,
+      "work_mode": "fp32_simt",
+      "compute_ceiling": {
+        "flops_s": 82600000000000.0,
+        "mode": "fp32_simt",
+        "basis": "theoretical",
+        "source": "NVIDIA Ada architecture whitepaper Appendix A: RTX4090 FP32 non-Tensor at boost; rounded82.6TFLOP/s"
+      }
+    },
+    {
+      "case": "r04_row_sum",
+      "latency_us": 3.0720001086592674,
+      "useful_flops": 32704,
+      "logical_bytes": 131328,
+      "work_mode": "fp32_simt",
+      "compute_ceiling": {
+        "flops_s": 82600000000000.0,
+        "mode": "fp32_simt",
+        "basis": "theoretical",
+        "source": "NVIDIA Ada architecture whitepaper Appendix A: RTX4090 FP32 non-Tensor at boost; rounded82.6TFLOP/s"
+      }
+    },
+    {
+      "case": "m01_matmul_512",
+      "latency_us": 25.599999353289604,
+      "useful_flops": 268435456,
+      "logical_bytes": 3145728,
+      "work_mode": "fp32_simt",
+      "compute_ceiling": {
+        "flops_s": 82600000000000.0,
+        "mode": "fp32_simt",
+        "basis": "theoretical",
+        "source": "NVIDIA Ada architecture whitepaper Appendix A: RTX4090 FP32 non-Tensor at boost; rounded82.6TFLOP/s"
+      }
+    },
+    {
+      "case": "m02_matmul_rect",
+      "latency_us": 5.023999838158488,
+      "useful_flops": 4194304,
+      "logical_bytes": 229376,
+      "work_mode": "fp32_simt",
+      "compute_ceiling": {
+        "flops_s": 82600000000000.0,
+        "mode": "fp32_simt",
+        "basis": "theoretical",
+        "source": "NVIDIA Ada architecture whitepaper Appendix A: RTX4090 FP32 non-Tensor at boost; rounded82.6TFLOP/s"
+      }
+    },
+    {
+      "case": "f01_rmsnorm",
+      "latency_us": 5.119999870657921,
+      "useful_flops": 262208,
+      "logical_bytes": 528392,
+      "work_mode": "fp32_simt",
+      "compute_ceiling": {
+        "flops_s": 82600000000000.0,
+        "mode": "fp32_simt",
+        "basis": "theoretical",
+        "source": "NVIDIA Ada architecture whitepaper Appendix A: RTX4090 FP32 non-Tensor at boost; rounded82.6TFLOP/s"
+      }
+    },
+    {
+      "case": "f02_row_softmax",
+      "latency_us": 3.1679999083280563,
+      "useful_flops": 49088,
+      "logical_bytes": 131072,
+      "work_mode": "fp32_simt",
+      "compute_ceiling": {
+        "flops_s": 82600000000000.0,
+        "mode": "fp32_simt",
+        "basis": "theoretical",
+        "source": "NVIDIA Ada architecture whitepaper Appendix A: RTX4090 FP32 non-Tensor at boost; rounded82.6TFLOP/s"
+      }
+    },
+    {
+      "case": "f03_l2norm",
+      "latency_us": 4.095999989658594,
+      "useful_flops": 98240,
+      "logical_bytes": 262144,
+      "work_mode": "fp32_simt",
+      "compute_ceiling": {
+        "flops_s": 82600000000000.0,
+        "mode": "fp32_simt",
+        "basis": "theoretical",
+        "source": "NVIDIA Ada architecture whitepaper Appendix A: RTX4090 FP32 non-Tensor at boost; rounded82.6TFLOP/s"
+      }
+    },
+    {
+      "case": "a01_attention",
+      "latency_us": 200.70399343967438,
+      "useful_flops": 1064896,
+      "logical_bytes": 65540,
+      "work_mode": "fp32_simt",
+      "compute_ceiling": {
+        "flops_s": 82600000000000.0,
+        "mode": "fp32_simt",
+        "basis": "theoretical",
+        "source": "NVIDIA Ada architecture whitepaper Appendix A: RTX4090 FP32 non-Tensor at boost; rounded82.6TFLOP/s"
+      }
+    },
+    {
+      "case": "a02_attention_128",
+      "latency_us": 53.408000618219376,
+      "useful_flops": 2162560,
+      "logical_bytes": 65540,
+      "work_mode": "fp32_simt",
+      "compute_ceiling": {
+        "flops_s": 82600000000000.0,
+        "mode": "fp32_simt",
+        "basis": "theoretical",
+        "source": "NVIDIA Ada architecture whitepaper Appendix A: RTX4090 FP32 non-Tensor at boost; rounded82.6TFLOP/s"
+      }
+    }
+  ]
+}

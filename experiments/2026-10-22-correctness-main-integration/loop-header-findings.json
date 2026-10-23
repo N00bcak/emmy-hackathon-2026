@@ -1,0 +1,31 @@
+{
+  "updated_at": 1792689108.2740967,
+  "old_experiment": "main-83a3944-correctness-integration-v11",
+  "old_source": "f2ae635129f93c54092a1326bac3dc1ac3e97724e4e91a710efaccc72f3fe16b",
+  "live_step": {
+    "failure_artifact": "86aae460c8e0cfbbb1d2bc046e733011d0098465a60cec577cec678e8bbdf43b",
+    "normal_and_fresh_sanitizer_wrong": true,
+    "mismatched": 3,
+    "max_abs_error": 15.0,
+    "guards_inputs_intact": true,
+    "controls_passed": 2,
+    "oracle": "dd70e15131bf73aef2f517d27caca375a88ef5b6b484d4e948471ee6e8da4c06"
+  },
+  "end_snapshot": {
+    "failure_artifact": "7e22f29598c1703b68582304fc8b5c2bb0341efbbe644709ebcd8ab4ed049d9c",
+    "normal_worker_pid": 433540,
+    "sanitizer_worker_pid": 433554,
+    "mismatched": 96,
+    "max_abs_error": 2147483712.0,
+    "guards_inputs_intact": true,
+    "sanitizer_memory_errors": 0,
+    "sanitizer_exit1_reason": "Output comparison failed; first repetition stops, no complete3rep claim",
+    "controls_passed": 2,
+    "oracle": "d4bceb69df5fa77b8807aff598dc27c58a9302edc97d183709b8723738522f8e",
+    "host_job": "20261022T171014Z-research-gpu-xkgc6K",
+    "admission_observed_no_contention": true
+  },
+  "promotion": false,
+  "timing": false,
+  "next": "Freeze independently reviewed general header repair; preserve810+10oldloop+32freshcore+10freshloop=862; completefullqualification andpostselectionindependenttiming beforepromotion/mainFF"
+}

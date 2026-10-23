@@ -1,0 +1,532 @@
+{
+  "status": "APPROVED_ACTUAL_12_REFERENCES_TYPED_IR_AND_FRESHNESS",
+  "source_id": "212e052936722ec76f1c5c4c6b2243e9ff87fc79168f99284193d46b36eb15e4",
+  "compile_sha256": "4ff5a7f903ce477ed88a06cdd9bbbfd68c25141c1835edbc97b60c7b9dc8b040",
+  "reservation": {
+    "id": "dc6e42c250746ebde8363a3c7d452e97f00864e6e319b231f001a8081e584766",
+    "reserved_at": 1792727164.664201,
+    "seed": 57794779290398946677668656987027394742,
+    "source_id": "212e052936722ec76f1c5c4c6b2243e9ff87fc79168f99284193d46b36eb15e4",
+    "suite_id": "0fa85c2e98ef65616058b558c1008d80f0f3530ae13cfdf276774050f8a2d5ce"
+  },
+  "freeze_before_reserve_derive_draw": true,
+  "all_70_historical_keypaths_preserved": true,
+  "old_known_unique_cases": 234,
+  "fresh_ids": [
+    "bec67be84425e619948e02747350c723d07e6c59540a1dec381da36d3b7c455a",
+    "f0401a9aa139c60c0e5f85e0253a5854eb58b9e5a733c1d06db0747b53ca6af8",
+    "a9e51dacaefed9c53bac777e1ff4dce3b49731316da7595a414f49e540724a1a",
+    "beed3837cbafcf16552b76dc0c7a7f988d191eb19f673aeb177ccb47374bd954",
+    "e859ad9acfc8c53d851ca8de4fd5d373f9e13961df5cdc3f6743eaf734aa607f",
+    "a3fe8084f34745a8656cd7d427de197bf583ad104365655b9fb79a94a5dd690c",
+    "fcfc951bf1498941b3c41429eaa2b2bf6266d4e6ce5663eee40707aa75e5923e",
+    "dd6dcf6102d28bb83743b0b72333fee4f5be654245bf2322f4ae664c3558e341",
+    "fe30cac314b951b0e3b768174c51f64e4934766178e49e9467c859e9ea956846",
+    "6c8ff36183c0dd80c16c2f52b6e873f8e53e4e14a585e80d6a25f7abbb450efa",
+    "ef95f2d825df2013d3bed973037a922f1fc184f849d47ce02b917fa492e0454e",
+    "6d95385ab52abd5acf9e58eb9a2779f25a9aac4c5c24ff4f2ce3ae95e8f99aaa"
+  ],
+  "fresh_ids_disjoint_234": true,
+  "numeric_input_duplicates_against_prior_234": [
+    {
+      "case_id": "fe30cac314b951b0e3b768174c51f64e4934766178e49e9467c859e9ea956846",
+      "same_numeric_input_as": [
+        "24e447a29f7665e75242d1ca946836b2f542d9cc71953cb5578797962bd97165"
+      ]
+    },
+    {
+      "case_id": "6d95385ab52abd5acf9e58eb9a2779f25a9aac4c5c24ff4f2ce3ae95e8f99aaa",
+      "same_numeric_input_as": [
+        "6890db887e9ddeaf5f0a49d1111ec35c0ac97c590f7720d2112e53c5a25b6e1a"
+      ]
+    }
+  ],
+  "families": {
+    "pair": {
+      "family": "pair",
+      "rows": [
+        {
+          "case_id": "e859ad9acfc8c53d851ca8de4fd5d373f9e13961df5cdc3f6743eaf734aa607f",
+          "E": 8,
+          "B": 32,
+          "stride": 64,
+          "pad": 0,
+          "tail_mod8": 0,
+          "seeded": true,
+          "initial": [
+            0.0,
+            0.0
+          ],
+          "expected_words": 64,
+          "dense_F64_fsum_serial_F32_exact_bits": true,
+          "all_products_exactly_F32": true,
+          "typed_Graph_valid": true,
+          "unique_staging_and_full_output_writers": true,
+          "unused_padding_shared_words": 0,
+          "compute_shared_reads_all_staged": true,
+          "Sync_after_complete_staging_fullCTA": true,
+          "counter": "quad-order-swap",
+          "counter_min_abs_gap": 1.0,
+          "dropped_tail_or_final_row_min_gap": 1.0,
+          "static_shared_bytes": 3072,
+          "ABI_order": [
+            "out_383979",
+            "a_383979",
+            "b_383979"
+          ]
+        },
+        {
+          "case_id": "a3fe8084f34745a8656cd7d427de197bf583ad104365655b9fb79a94a5dd690c",
+          "E": 9,
+          "B": 64,
+          "stride": 128,
+          "pad": 0,
+          "tail_mod8": 1,
+          "seeded": false,
+          "initial": [
+            -5.0,
+            7.0
+          ],
+          "expected_words": 128,
+          "dense_F64_fsum_serial_F32_exact_bits": true,
+          "all_products_exactly_F32": true,
+          "typed_Graph_valid": true,
+          "unique_staging_and_full_output_writers": true,
+          "unused_padding_shared_words": 0,
+          "compute_shared_reads_all_staged": true,
+          "Sync_after_complete_staging_fullCTA": true,
+          "counter": "forgotten-explicit-Init",
+          "counter_min_abs_gap": 5.0,
+          "dropped_tail_or_final_row_min_gap": 1.0,
+          "static_shared_bytes": 6912,
+          "ABI_order": [
+            "a_342020",
+            "out_342020",
+            "b_342020"
+          ]
+        },
+        {
+          "case_id": "fcfc951bf1498941b3c41429eaa2b2bf6266d4e6ce5663eee40707aa75e5923e",
+          "E": 12,
+          "B": 128,
+          "stride": 258,
+          "pad": 2,
+          "tail_mod8": 4,
+          "seeded": false,
+          "initial": [
+            -5.0,
+            7.0
+          ],
+          "expected_words": 256,
+          "dense_F64_fsum_serial_F32_exact_bits": true,
+          "all_products_exactly_F32": true,
+          "typed_Graph_valid": true,
+          "unique_staging_and_full_output_writers": true,
+          "unused_padding_shared_words": 24,
+          "compute_shared_reads_all_staged": true,
+          "Sync_after_complete_staging_fullCTA": true,
+          "counter": "forgotten-explicit-Init",
+          "counter_min_abs_gap": 5.0,
+          "dropped_tail_or_final_row_min_gap": 4.0,
+          "static_shared_bytes": 18528,
+          "ABI_order": [
+            "b_862830",
+            "a_862830",
+            "out_862830"
+          ]
+        },
+        {
+          "case_id": "dd6dcf6102d28bb83743b0b72333fee4f5be654245bf2322f4ae664c3558e341",
+          "E": 17,
+          "B": 64,
+          "stride": 128,
+          "pad": 0,
+          "tail_mod8": 1,
+          "seeded": true,
+          "initial": [
+            0.0,
+            0.0
+          ],
+          "expected_words": 128,
+          "dense_F64_fsum_serial_F32_exact_bits": true,
+          "all_products_exactly_F32": true,
+          "typed_Graph_valid": true,
+          "unique_staging_and_full_output_writers": true,
+          "unused_padding_shared_words": 0,
+          "compute_shared_reads_all_staged": true,
+          "Sync_after_complete_staging_fullCTA": true,
+          "counter": "quad-order-swap",
+          "counter_min_abs_gap": 1.0,
+          "dropped_tail_or_final_row_min_gap": 1.0,
+          "static_shared_bytes": 13056,
+          "ABI_order": [
+            "out_114153",
+            "b_114153",
+            "a_114153"
+          ]
+        }
+      ],
+      "words": 576,
+      "limits": [
+        "No direct outer-bv1 snapshot coverage."
+      ]
+    },
+    "async": {
+      "family": "async",
+      "rows": [
+        {
+          "case_id": "bec67be84425e619948e02747350c723d07e6c59540a1dec381da36d3b7c455a",
+          "domain": "canonical-tail",
+          "shape": [
+            2,
+            7,
+            32
+          ],
+          "L": 2,
+          "S": 3,
+          "T": 7,
+          "step": 1,
+          "extent": 7,
+          "words": 64,
+          "waits": [
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2
+          ],
+          "live_padding": false,
+          "all_coordinates_checked": 448,
+          "exact_numpy_int64_and_python_sum": true,
+          "original_schedule_matches": true
+        },
+        {
+          "case_id": "f0401a9aa139c60c0e5f85e0253a5854eb58b9e5a733c1d06db0747b53ca6af8",
+          "domain": "short-ring",
+          "shape": [
+            1,
+            1,
+            32
+          ],
+          "L": 2,
+          "S": 3,
+          "T": 1,
+          "step": 1,
+          "extent": 1,
+          "words": 32,
+          "waits": [
+            2
+          ],
+          "live_padding": false,
+          "all_coordinates_checked": 32,
+          "exact_numpy_int64_and_python_sum": true,
+          "original_schedule_matches": true
+        },
+        {
+          "case_id": "a9e51dacaefed9c53bac777e1ff4dce3b49731316da7595a414f49e540724a1a",
+          "domain": "nondivisible-counter",
+          "shape": [
+            2,
+            7,
+            32
+          ],
+          "L": 2,
+          "S": 3,
+          "T": 7,
+          "step": 2,
+          "extent": 13,
+          "words": 64,
+          "waits": [
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2
+          ],
+          "live_padding": false,
+          "all_coordinates_checked": 448,
+          "exact_numpy_int64_and_python_sum": true,
+          "original_schedule_matches": true
+        },
+        {
+          "case_id": "beed3837cbafcf16552b76dc0c7a7f988d191eb19f673aeb177ccb47374bd954",
+          "domain": "observable-padding",
+          "shape": [
+            1,
+            7,
+            64
+          ],
+          "L": 2,
+          "S": 3,
+          "T": 7,
+          "step": 1,
+          "extent": 7,
+          "words": 128,
+          "waits": [
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2
+          ],
+          "live_padding": true,
+          "all_coordinates_checked": 448,
+          "exact_numpy_int64_and_python_sum": true,
+          "original_schedule_matches": true
+        }
+      ],
+      "words": 288,
+      "limits": [
+        "No compiler invocation or activation claim; no partial-CTA coverage."
+      ]
+    },
+    "tree": {
+      "family": "tree",
+      "rows": [
+        {
+          "path": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/pair-phase-tree-vector-independent-v2-tree/tree-2-root-snapshot",
+          "id": "fe30cac314b951b0e3b768174c51f64e4934766178e49e9467c859e9ea956846",
+          "files": {
+            "expected.npz": "8ea6748d3c498750faca5074bc2bae17933b6b47944c1d6f356eaa2fc013c8b4",
+            "inputs.npz": "f2781d7aaf28d9ece508fc92e2b8f94571e2c2d7d74efcf77a3c7774043ea0ce",
+            "k_224429.ir.json": "542afb6bdd919979be2d66182a99a3beefd723f4d90aed22937b23a6ca925b25",
+            "meta.json": "f36eaa89893634ba96e4d0820697511f3bccdeeda0e3e48f08734810c847a604"
+          },
+          "L": 2,
+          "block": 64,
+          "scratch_liveout": false,
+          "arg_order": [
+            "in_224429",
+            "out_224429"
+          ],
+          "root": 32.0,
+          "initial_snapshot": 67.0,
+          "wrong_linear": 32.0,
+          "ordered_updates": [
+            [
+              0,
+              1,
+              44.0,
+              -12.0,
+              32.0
+            ]
+          ],
+          "final_scratch": [
+            32.0,
+            -12.0
+          ],
+          "words_bitwise_checked": 128,
+          "activation_claim": "Canonical typed eligibility only; no compiler invocation. Scratch-liveout requires conservative decline."
+        },
+        {
+          "path": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/pair-phase-tree-vector-independent-v2-tree/tree-4-root-snapshot",
+          "id": "6c8ff36183c0dd80c16c2f52b6e873f8e53e4e14a585e80d6a25f7abbb450efa",
+          "files": {
+            "expected.npz": "09d0cd19548d971f250c75a5292527950a91404935a877084c67d09e56b5d03f",
+            "inputs.npz": "1bb48ae44af5b41e4357a5c6f51bdb5fee7f402d76ff9cea0d213ae710b5604a",
+            "k_605409.ir.json": "da391541374e07c19d17c0b20801aa9638cf1683736c4f21c96d713802829497",
+            "meta.json": "43539a0a32ca2597fce6e04d7df945c839a04b1ac04e0e6992506465c699a605"
+          },
+          "L": 4,
+          "block": 128,
+          "scratch_liveout": false,
+          "arg_order": [
+            "out_605409",
+            "in_605409"
+          ],
+          "root": 8.0,
+          "initial_snapshot": 69.0,
+          "wrong_linear": 4.0,
+          "ordered_updates": [
+            [
+              0,
+              2,
+              268435456.0,
+              -268435456.0,
+              0.0
+            ],
+            [
+              1,
+              3,
+              4.0,
+              4.0,
+              8.0
+            ],
+            [
+              0,
+              1,
+              0.0,
+              8.0,
+              8.0
+            ]
+          ],
+          "final_scratch": [
+            8.0,
+            8.0,
+            -268435456.0,
+            4.0
+          ],
+          "words_bitwise_checked": 256,
+          "activation_claim": "Canonical typed eligibility only; no compiler invocation. Scratch-liveout requires conservative decline."
+        },
+        {
+          "path": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/pair-phase-tree-vector-independent-v2-tree/tree-8-root-snapshot",
+          "id": "ef95f2d825df2013d3bed973037a922f1fc184f849d47ce02b917fa492e0454e",
+          "files": {
+            "expected.npz": "c19d70b89fa7b928f1214de3e27b7dacedfbfa66c0761a293e6f14472fc1610f",
+            "inputs.npz": "3217d6db7bf9cf5560bace0ab1fc1497b2929adb533f411819ca949b5ef31cee",
+            "k_737850.ir.json": "4fa4183e2f120bfdc821fd90b48bd2357286d66ca97e5b2e6254e74c67da1333",
+            "meta.json": "5b908eefeee9066b419e9ddacaf4619c61257dc22cf43e59e686b4d245460f55"
+          },
+          "L": 8,
+          "block": 256,
+          "scratch_liveout": false,
+          "arg_order": [
+            "in_737850",
+            "out_737850"
+          ],
+          "root": 12.0,
+          "initial_snapshot": 94.0,
+          "wrong_linear": 9.0,
+          "ordered_updates": [
+            [
+              0,
+              4,
+              67108864.0,
+              0.0,
+              67108864.0
+            ],
+            [
+              1,
+              5,
+              3.0,
+              3.0,
+              6.0
+            ],
+            [
+              2,
+              6,
+              -67108864.0,
+              0.0,
+              -67108864.0
+            ],
+            [
+              3,
+              7,
+              3.0,
+              3.0,
+              6.0
+            ],
+            [
+              0,
+              2,
+              67108864.0,
+              -67108864.0,
+              0.0
+            ],
+            [
+              1,
+              3,
+              6.0,
+              6.0,
+              12.0
+            ],
+            [
+              0,
+              1,
+              0.0,
+              12.0,
+              12.0
+            ]
+          ],
+          "final_scratch": [
+            12.0,
+            12.0,
+            -67108864.0,
+            6.0,
+            0.0,
+            3.0,
+            0.0,
+            3.0
+          ],
+          "words_bitwise_checked": 512,
+          "activation_claim": "Canonical typed eligibility only; no compiler invocation. Scratch-liveout requires conservative decline."
+        },
+        {
+          "path": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/pair-phase-tree-vector-independent-v2-tree/tree-4-scratch-liveout",
+          "id": "6d95385ab52abd5acf9e58eb9a2779f25a9aac4c5c24ff4f2ce3ae95e8f99aaa",
+          "files": {
+            "expected.npz": "81895ff870b7c359f7c5426810aa7d345986d95bca5faca1dfbfbf0c39c8d2f7",
+            "inputs.npz": "6c49a88c1f2f3040aa0b657b8f07b0cfd2846b11597e3af142e88b337c07be71",
+            "k_155830.ir.json": "a55f5e0849b57fc86f800f6105e9034bcb4c2d670734b25cc28a5c0b0dbe14b5",
+            "meta.json": "943219ab28ec471b8227ff0149704ffcbc204f9ce1f6d8fd8229b0ee1813adfd"
+          },
+          "L": 4,
+          "block": 128,
+          "scratch_liveout": true,
+          "arg_order": [
+            "out_155830",
+            "in_155830"
+          ],
+          "root": 2.0,
+          "initial_snapshot": 75.0,
+          "wrong_linear": 1.0,
+          "ordered_updates": [
+            [
+              0,
+              2,
+              1073741824.0,
+              -1073741824.0,
+              0.0
+            ],
+            [
+              1,
+              3,
+              1.0,
+              1.0,
+              2.0
+            ],
+            [
+              0,
+              1,
+              0.0,
+              2.0,
+              2.0
+            ]
+          ],
+          "final_scratch": [
+            2.0,
+            2.0,
+            -1073741824.0,
+            1.0
+          ],
+          "words_bitwise_checked": 384,
+          "activation_claim": "Canonical typed eligibility only; no compiler invocation. Scratch-liveout requires conservative decline."
+        }
+      ],
+      "words": 1280,
+      "limits": [
+        "No compiler invocation; typed eligibility is not actual optimization activation."
+      ]
+    }
+  },
+  "expected_words_checked": 2144,
+  "additional_Fraction_crosscheck_words": 580,
+  "new_types": 0,
+  "inventory_total": 83,
+  "limits": [
+    "Selected independent confirmation: choice artifact before exact same source freeze and reservation; GPU still pending.",
+    "No generator/compiler invocation, assembly, GPU or timing.",
+    "Parent owns candidate activation/native audit and isolated numerical gates.",
+    "Numeric duplicates are reported without redraw."
+  ],
+  "selection_artifact_id": "07b4626b8dee4ec3cacf1a72d7531e47da801089a192fafb10ae79ee971c7048",
+  "selection_before_source_freeze": true,
+  "selected_at": 1792727138.148291
+}

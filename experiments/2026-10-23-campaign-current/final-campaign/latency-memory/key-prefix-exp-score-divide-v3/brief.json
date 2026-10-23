@@ -1,0 +1,19 @@
+{
+  "status": "source-first-unexecuted",
+  "parent_compile_sha256": "c9898393448e76aa24d56d113f227fe133aca3790372e14fb85566e4595de86f",
+  "retained_parent_mechanisms": "Exact4ffPhase+Tree+Pair+vector+allcorrectness repairs plus reviewed prefix v2",
+  "prior_result": "Preserve parent formal365d/c989 INCONCLUSIVE: all8 frozenV8 use divide and do not activate multiply-only planner. No oracle mutation or sample redraw.",
+  "hypothesis": "Admit exact typed F32 score Assign multiply OR divide; continue emitting that original Assign unchanged. No reciprocal rewrite, swapped operands or arithmetic reassociation.",
+  "proof": "Raw dot score bits are distributed per key. The other operand is already proved immutable and segment-uniform F32. Thus each lane can compute either original ordered F32 multiply/divide expression for its own key, yielding same score bits replay would compute for that key in every column. Existing finite/nonzero score and peak/fullbatch runtime guards, prefix max chronology and serial replay proof stay unchanged.",
+  "falsifiers": [
+    "raw operand appears twice",
+    "other operand rebound in any KEY/dot definition",
+    "physicalBuiltin or opaque scale index",
+    "nonuniform column-dependent other operand",
+    "mixed F16/F64 or unstamped/unproved score dtype",
+    "zero/NaN/Inf computed score or peak chooses exact original fallback",
+    "KEYseedFalse/multi-dot/partialCTA decline asbefore"
+  ],
+  "budget": "10min source/docs; no CPU until explicit grant. Later one120sCPU controls/V8activation/all15; noGPU/freeze/timing. Finish03:55UTC global04:12:11UTC.",
+  "recorded_utc": "2026-10-23T03:43:28.046843+00:00"
+}

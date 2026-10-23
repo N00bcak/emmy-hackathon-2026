@@ -1,0 +1,127 @@
+{
+  "source_binding": {
+    "source_id": "935b5bbac8fd081dac44b3a8b43a3ed7d1f50c86339637da766c6a3da26e3123",
+    "compile_sha256": "3cccc149da8c4e324bb0011580b38e7591e04bf68e2c9096a53c37486e589929",
+    "reservation_id": "1fbebdafb3ecc491d85dd2d97a4a5a5b1b1b178c196a5860d4c94568fd0b5b08",
+    "source_draw_path": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/correctness-nested-seeded-fold-scope-v2-source-draw.json",
+    "source_draw_sha256": "beb2f1988ceae0246e84c375f7fbd3d86fda50f00bf040e06d9a8f406b009184",
+    "chronology_source_freeze_before_reserve_before_both_generations": true,
+    "oracle_ids": [
+      "837eef82d2e8d94a1be75f3ade4d9a14d06d003cf6fada7cac78b2b2619a36ae",
+      "4616961ff3c6d758b1fa8901ea2f5daf86a260ff64f8aa97bec98dc1b06a099f"
+    ],
+    "seeds": [
+      29961646118471678603150053529282690138,
+      331061064998076161400541947749541224351
+    ],
+    "previous_v1_draws_remain_known_unchanged": true
+  },
+  "status": "APPROVE both fresh935 realized oracle references",
+  "cases": [
+    {
+      "label": "KEY-fresh935",
+      "case_dir": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/nested-key-scope-independent-v2/nested-key-score-shadow",
+      "case_id": "4c6c88581fe20f1735d190ca1889f979dc7f5341908067e2e8355062d25e8d74",
+      "case_list_sha256": "ff85a8be2b44368b29586f0deed2688e745ea217c3b8f9bbab92b031b87cf7e6",
+      "file_hashes": {
+        "expected.npz": "49e854e29b24c5187eb7fbc63a601028c767f233a9fdb5f808b2c2405cd47b47",
+        "inputs.npz": "53dfe20267eb85838a7b7c510e2b09a9c6f3d53def89125ce8721acda3e786de",
+        "k_684742.ir.json": "0ee85109aa4c95cab8aaa6b24674c59b14a88503caaeb20285c4a421ba6c52d7",
+        "meta.json": "6561f15dbc8bcd6a9ae2379eb5e071a26c41dc00b978c3afad11d5e3149d5850"
+      },
+      "typed_graph_valid": true,
+      "ABI_and_arrays_match": true,
+      "all_words_reference_bitwise_match": 128,
+      "logical_cells": 32,
+      "physical_threads": 32,
+      "padding_threads": 0,
+      "write_count_range": [
+        1,
+        1
+      ],
+      "no_cross_cell_writers": true,
+      "plain_integer_and_serialF32_and_fsum_dots": 56,
+      "F64_dense_and_keysum_match": true,
+      "score_leak_counter_words": 64,
+      "guaranteed_lastscore_positive_ancestor_negative": true,
+      "actual_output_rows": [
+        [
+          224.0,
+          259.0,
+          -25.0,
+          -37.0
+        ],
+        [
+          371.0,
+          300.0,
+          -25.0,
+          -37.0
+        ],
+        [
+          302.0,
+          370.0,
+          -25.0,
+          -37.0
+        ],
+        [
+          323.0,
+          378.0,
+          -25.0,
+          -37.0
+        ]
+      ],
+      "source_bound_fresh_reference": true,
+      "GPU_confirmation_performed_by_this_review": false,
+      "classification": "fresh935 source-bound oracle reference validated independently; compiler GPU confirmation pending"
+    },
+    {
+      "label": "Loop-fresh935",
+      "case_dir": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/nested-seeded-fold-independent-v2/nested-seeded-fold-scopes",
+      "case_id": "8353f18038868b04151cfa02ef3f2f3ebbdd42760760035c0462d6490151d98a",
+      "case_list_sha256": "4c2cbbc4704c305127ef64db9a200ac9931b94cf59003f4af257177412203fc8",
+      "file_hashes": {
+        "expected.npz": "21fc729b168fcdb08889d29380ff7640096d302ad4b6463c1856a3fd08ce2b15",
+        "inputs.npz": "8739c76e681f900923b900c9df0ef75cf421d39cabb54650c4b9ad19b6a76d85",
+        "k_596343.ir.json": "96b906f226b843f1d9ea2ed74b725a5ec471d109f56b740ec148b68268bc1856",
+        "meta.json": "2015497987a524fe16405a8c47977562763d215b91924d681aad1ef180a52811"
+      },
+      "typed_graph_valid": true,
+      "ABI_and_arrays_match": true,
+      "all_words_reference_bitwise_match": 776,
+      "logical_cells": 97,
+      "physical_threads": 128,
+      "padding_threads": 31,
+      "write_count_range": [
+        1,
+        1
+      ],
+      "no_cross_cell_writers": true,
+      "plain_count_algebra_row": [
+        12,
+        81,
+        81,
+        93,
+        9,
+        3,
+        9,
+        9
+      ],
+      "stride_iterations": 1,
+      "defined_scope_leak_counter_words": 194,
+      "undefined_empty_scope_columns_not_fabricated": [
+        2,
+        7
+      ],
+      "source_bound_fresh_reference": true,
+      "GPU_confirmation_performed_by_this_review": false,
+      "classification": "fresh935 source-bound oracle reference validated independently; compiler GPU confirmation pending",
+      "frozen_oracle_artifact": "837eef82d2e8d94a1be75f3ade4d9a14d06d003cf6fada7cac78b2b2619a36ae"
+    }
+  ],
+  "expected_words": 904,
+  "review_method": "Independent typed lexical-cell interpreter plus plain Python count/integer loops, fsum and denseF64; no generator or compiler invocation",
+  "no_case_reference_or_source_changes": true,
+  "no_GPU_or_assembly": true,
+  "created_utc": "2026-10-23T00:31:35.404648+00:00",
+  "jobs": []
+}

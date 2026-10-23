@@ -1,0 +1,11 @@
+# Closed campaign handoff
+
+Research stopped at the six-hour limit. Do not resume this closed run. Hosted calibration OFF; n00bcak; no commits/publication. Resolve runtime from private configuration. Read REPORT.md, qualified-assessment.json, qualified-case-ledger.json and per-case-performance.csv in final-export, then control/state.json. Historical first-retention.json/final-assessment.json contain raw counts superseded by qualification.
+
+Retained baseline e02740fea768412b05c780b12f5d2c560ecce74561b02b66a14ca949615f50a2, compile SHA a8265ab9a78b0663d4daa2a5b16ac62e5a2d5dce6bfe03420306cdbcf893e8a2. All15 published; 149 qualified distinct cases (130 generated); 52 qualified paired comparisons. m01 128 to40.96us confirmed.14 generated cases quarantined (8atomic,2shared,4fused); generatedm02 reopened. No resolved qualified regression; broad case noise limits small-kernel conclusions. RTX4090 execution only; sm120 assembly only.
+
+Next authorized campaign: validate/freeze explicit-Init conditional-reduction oracle version and reevaluate both arms; then combine/review by-value Let and declared-type conversion fixes, since retained e027 has16 valid diagnosed failures (8snapshot,8conversion). Source06d786b1 is research-only: all15/core gate plus8conversion GPU passes, remaining supplemental/fresh confirmation incomplete. Read experiments/let-declared-conversion-v1/handoff.json and campaign/boolean-controls-let-declared-conversion-v1. Do not copy it without required independent confirmation. Keep source/suite-bound all15 gates before any timing.
+
+Unsigned86d0 has unconfirmed m01 screen gain; vector3b1e no resolved gain; shared affine hoist planning only. Read worker final handoffs and planning/shared-load-vectorization/findings.md. Corrected shared generator60bbf302 is static-only and unapproved. No new atomic evaluator version written/registered/run. Preserve earlier oracle flaws and invalid drafts instead of overwriting them.
+
+Before any future dispatch verify actual live jobs and source identities; never kill by age alone. No live own GPU jobs at closure. Use shared admission and configured host/container wrappers; no remote Git. New source changes invalidate gates. No paid compute or hosted fallback. Research requires a fresh explicit bounded run.

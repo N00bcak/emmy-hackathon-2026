@@ -1,0 +1,4 @@
+interface:
+  display_name: "Kernel Performance"
+  short_description: "Measure latency, utilization and compiler bottlenecks"
+  default_prompt: "Use $kernel-performance to audit the current compiler's per-case latency, FLOPs, MFU, memory traffic and supported bottleneck explanations."

@@ -1,0 +1,47 @@
+{
+  "status": "APPROVE exact643dd code/math for parent qualification; no source-level blocker",
+  "source": "/root/bcy/emmy/research-workspaces/erf-small-series-v1-prototype/compile.py",
+  "source_sha256": "643dd234c98b52921afe5feedf6889053a4f24011122a9fed336cda4082bafde",
+  "baseline_sha256": "96a954a0edf606637ade95f75510bffcd52da5e2c19edab23848c970bf020f58",
+  "reverse_entire_emit_erf_recovers_every96a_byte": true,
+  "AST_outside_emit_erf_exact": true,
+  "inherited_large_path_instruction_strings_order_exact": true,
+  "consumer_methods": [
+    [
+      "emit_operation",
+      1443
+    ]
+  ],
+  "formula": "erf(x)=2/sqrt(pi)*x*sum_{n=0}infty((-x*x)^n/(n!*(2n+1))); degree5in z=x\u00b2 gives odddegree11.",
+  "small_branch_proof": [
+    "For|x|<=.5,z<=.25,alternatingtermsmonotonedecrease; nextterm<=z^6/9360 andtruefactor>=1-z/3>=11/12. Relativetruncation<=2.85e-8.",
+    "Horner starts-1/1320 then5explicitFMAcoefficients1/216,-1/42,1/10,-1/3,1. FinalmultiplicationsusesIGNEDoriginalx, roundedconstant2/sqrtpi, thenpolynomial; no1+tinyor1-m cancellation.",
+    "FMAintermediates remainnonzeronormalboundedconstants; gamma7weightedabspolynomial bound covers5FMA+2RNmul, coefficientencoding andzroundingerrors separatelybounded. zunderflowinternallyisallowed; absolutezrounderror<=u*.25dominatesitinthisdomain.",
+    "FollowingF32amplifieroperationandreferenceF32erfboundaryrounding includedinconservativecombinednormaldomainbound. NoSFUapprox usedinsmallbranch."
+  ],
+  "bounds": {
+    "normal_input_abs_max": 0.5,
+    "unit_roundoff": 5.960464477539063e-08,
+    "true_polynomial_lower_bound": 0.9166666666666666,
+    "trunc_relative": 2.8454618298368298e-08,
+    "five_FMA_two_mul_rounding_bound": 4.961158452253963e-07,
+    "coefficient_encoding_relative": 2.8186328478327743e-09,
+    "square_rounding_relative_effect": 6.3089094481845235e-09,
+    "two_over_sqrtpi_constant_relative": 5.196425558658849e-08,
+    "combined_with_reference_and_following_multiply_relative_upper": 7.644763631020624e-07,
+    "normal_nonoverflow_domain_bound_under_1e_minus6": true
+  },
+  "scope_and_corners": [
+    "Orderedabs<=.5falseforNaN; NaNand\u00b1Infuseexactinheritedlargepath. Signedzero smallbranch usesoriginalsignedx, positiveconstant andpositivefactor, so\u00b10signpreserved. NoNaNpayloadguarantee.",
+    "Freshsigneddestinationallocatedbeforebranch, smallmulandoldlargeSELPeachdefineitbeforejoin; no branchlocaluninitializedregisterread. Existingmonotonicreg/labelallocatorunchanged.",
+    "Onlydirecterf andexactGELUcallhelper; gelu_tanhseparatepath unchanged. ExactGELUgetsnewerfonlyfor|scaledx|<=.5; downstreamoperationorder retained. Itsnumericalqualificationstillrequired.",
+    "Analyticthreshold/coefficientsaregeneric, nofixture/case/shape/valueidentity decisions."
+  ],
+  "limits": [
+    "Notexactlyroundeduniversalerfproof. Conservativeboundstatedfornormalinputsandnormalfiniteoutputs/followingproduct; arbitraryamplifiedsubnormalcasesreceive nouniversalrelativepromise.",
+    "Largebranchretainsknownabsoluteapproximationandfloatingerrors; all15/allknown/freshanddirecterf/exactGELUcontrolsrequired.",
+    "No compiler/method execution, PTXemission, assembly, oracle/reference/casewritesorGPU. Parentmustbindactualbaselinefailureandcandidatequalification."
+  ],
+  "created_utc": "2026-10-23T01:25:59.963418+00:00",
+  "owned_jobs": []
+}

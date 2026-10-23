@@ -1,0 +1,525 @@
+{
+  "status": "UNQUALIFIED_FUTURE_COMPILER_NO_GPU_THIS_RUN",
+  "compile_sha256": "c9b17dac338c3d0b34002bfdcbf0c624fb6dc3ffd9dfd40b32fd44cd609ef045",
+  "source_unchanged": true,
+  "inverse_to": "c9898393448e76aa24d56d113f227fe133aca3790372e14fb85566e4595de86f",
+  "controls": {
+    "count": 26,
+    "active": 8,
+    "exact_fallback": 18,
+    "model_checks": 9920
+  },
+  "V8": [
+    {
+      "case_id": "ef2c779d25ffd234b9ebac2624da6bf4dbd77e1f122e6b3c6b5482815dc64758",
+      "case": "seeded-attention-v8-oracle-validation-645882/full-segment16",
+      "active": true,
+      "cached_before_replay_and_backedge": true,
+      "exp_count": 2,
+      "fallback_PTX_identical": false,
+      "division_PTX_count": 3,
+      "native": {
+        "sm_89": {
+          "folder": "/root/nfs/emmy/research/assembly-cache/0066cc01d11ffa7d99c24ad6c98a8d77823276a1961878f1346b3033e3808c86",
+          "registers": [
+            40
+          ],
+          "before_registers": [
+            40
+          ],
+          "spills": [
+            [
+              "0",
+              "0"
+            ]
+          ],
+          "before_spills": [
+            [
+              "0",
+              "0"
+            ]
+          ],
+          "sass_sha256": "33f11adc9fce2f68b07d1547c9b08756a0aed18251c53660736b8aedc6d83e7b",
+          "EX2_static": 4,
+          "SHFL_static": 8,
+          "FFMA_static": 61,
+          "native_limit": "Counts/static ordering evidence only; native division operand/dataflow equivalence and full CFG unproved."
+        },
+        "sm_120": {
+          "folder": "/root/nfs/emmy/research/assembly-cache/8fe7c94082d14a97ff360aff31b8768acfb19818dc5cb82f53cd2ef0543ece45",
+          "registers": [
+            40
+          ],
+          "before_registers": [
+            40
+          ],
+          "spills": [
+            [
+              "0",
+              "0"
+            ]
+          ],
+          "before_spills": [
+            [
+              "0",
+              "0"
+            ]
+          ],
+          "sass_sha256": "a7dca4b2b3c1c878be9b44f306e539c0eba95b49b6cc3596dbb593c51819606d",
+          "EX2_static": 4,
+          "SHFL_static": 8,
+          "FFMA_static": 61,
+          "native_limit": "Counts/static ordering evidence only; native division operand/dataflow equivalence and full CFG unproved."
+        }
+      }
+    },
+    {
+      "case_id": "eb2e86373e9981add190bced43e891adf1d780d27d474e6ee08434829334fea8",
+      "case": "seeded-attention-v8-oracle-validation-645882/full-segment32",
+      "active": true,
+      "cached_before_replay_and_backedge": true,
+      "exp_count": 2,
+      "fallback_PTX_identical": false,
+      "division_PTX_count": 3,
+      "native": {
+        "sm_89": {
+          "folder": "/root/nfs/emmy/research/assembly-cache/bc97738cfb2981f68f2fb25b3f7d885ef6dce87e20b628c5a35dedd9e3ea4241",
+          "registers": [
+            40
+          ],
+          "before_registers": [
+            40
+          ],
+          "spills": [
+            [
+              "0",
+              "0"
+            ]
+          ],
+          "before_spills": [
+            [
+              "0",
+              "0"
+            ]
+          ],
+          "sass_sha256": "46b3426013b78fe4c961997a8229b6fed3828cc2016407776e81faad9e4cab03",
+          "EX2_static": 4,
+          "SHFL_static": 9,
+          "FFMA_static": 93,
+          "native_limit": "Counts/static ordering evidence only; native division operand/dataflow equivalence and full CFG unproved."
+        },
+        "sm_120": {
+          "folder": "/root/nfs/emmy/research/assembly-cache/80b9bef610deac8b8f46eecc80196aad94544621bed0cd04c67cc2527b82d95e",
+          "registers": [
+            56
+          ],
+          "before_registers": [
+            56
+          ],
+          "spills": [
+            [
+              "0",
+              "0"
+            ]
+          ],
+          "before_spills": [
+            [
+              "0",
+              "0"
+            ]
+          ],
+          "sass_sha256": "555de7d14e0bdba073cc935d6bef0d0bb4df5a60b3e787515e2fce0c41227f49",
+          "EX2_static": 4,
+          "SHFL_static": 9,
+          "FFMA_static": 93,
+          "native_limit": "Counts/static ordering evidence only; native division operand/dataflow equivalence and full CFG unproved."
+        }
+      }
+    },
+    {
+      "case_id": "fc5d9274fbe55637c3fcf4da331fd752135a3135b3d01ba66151b5b3eb404daa",
+      "case": "seeded-attention-v8-oracle-validation-645882/tail32",
+      "active": true,
+      "cached_before_replay_and_backedge": true,
+      "exp_count": 2,
+      "fallback_PTX_identical": false,
+      "division_PTX_count": 3,
+      "native": {
+        "sm_89": {
+          "folder": "/root/nfs/emmy/research/assembly-cache/ee1d5dd1217b4749ef36794aaa312d19d05b6bca7887dc32700958ff4b28cb92",
+          "registers": [
+            44
+          ],
+          "before_registers": [
+            44
+          ],
+          "spills": [
+            [
+              "0",
+              "0"
+            ]
+          ],
+          "before_spills": [
+            [
+              "0",
+              "0"
+            ]
+          ],
+          "sass_sha256": "34b3adc66526bc30c177a3046f3397c031b466b979474ae8e82679542b26ddfa",
+          "EX2_static": 4,
+          "SHFL_static": 9,
+          "FFMA_static": 221,
+          "native_limit": "Counts/static ordering evidence only; native division operand/dataflow equivalence and full CFG unproved."
+        },
+        "sm_120": {
+          "folder": "/root/nfs/emmy/research/assembly-cache/7c4d815d58765dab462302546e8ec5425599ac730e092bf8550c228cc072f32f",
+          "registers": [
+            40
+          ],
+          "before_registers": [
+            40
+          ],
+          "spills": [
+            [
+              "0",
+              "0"
+            ]
+          ],
+          "before_spills": [
+            [
+              "0",
+              "0"
+            ]
+          ],
+          "sass_sha256": "8eb20f949c99bf825802d410bd2da791fce6b678b9188bc1a91f82f78cd74f1e",
+          "EX2_static": 4,
+          "SHFL_static": 9,
+          "FFMA_static": 221,
+          "native_limit": "Counts/static ordering evidence only; native division operand/dataflow equivalence and full CFG unproved."
+        }
+      }
+    },
+    {
+      "case_id": "1447f343ce4964ac35f4b47cd71ef76fcde518949f23d90bc9643bd2762cb8d5",
+      "case": "seeded-attention-v8-oracle-validation-645882/partial-fallback",
+      "active": false,
+      "cached_before_replay_and_backedge": false,
+      "exp_count": 0,
+      "fallback_PTX_identical": true,
+      "division_PTX_count": null,
+      "native": {
+        "sm_89": {
+          "folder": "/root/nfs/emmy/research/assembly-cache/d50689c8a73d7134654f3d2ef147169c98aa412bb45058a00edf5edf6b0572c9",
+          "registers": [
+            40
+          ],
+          "before_registers": [
+            40
+          ],
+          "spills": [
+            [
+              "0",
+              "0"
+            ]
+          ],
+          "before_spills": [
+            [
+              "0",
+              "0"
+            ]
+          ],
+          "sass_sha256": "0bd945c12d03e440266c5d3f3b477f1758b15672be03a88ee070961a26286a51",
+          "EX2_static": 2,
+          "SHFL_static": 0,
+          "FFMA_static": 53,
+          "native_limit": "Counts/static ordering evidence only; native division operand/dataflow equivalence and full CFG unproved."
+        },
+        "sm_120": {
+          "folder": "/root/nfs/emmy/research/assembly-cache/6772a0f6c0fc6ed21d416d2e435d6c2e721ca1aff681efcdf6f1a200ead39835",
+          "registers": [
+            40
+          ],
+          "before_registers": [
+            40
+          ],
+          "spills": [
+            [
+              "0",
+              "0"
+            ]
+          ],
+          "before_spills": [
+            [
+              "0",
+              "0"
+            ]
+          ],
+          "sass_sha256": "2f2d8339bfba9c3f97bbb08a5557016df0e54096589e8c9d36e9019be066305d",
+          "EX2_static": 2,
+          "SHFL_static": 0,
+          "FFMA_static": 53,
+          "native_limit": "Counts/static ordering evidence only; native division operand/dataflow equivalence and full CFG unproved."
+        }
+      }
+    },
+    {
+      "case_id": "e71bc833bb43b88ba5b175be89e9125189e28c257e54572c5173b5fac998944d",
+      "case": "key-prefix-exp-phase-tree-pair-screen-v2-seeded/full-segment16",
+      "active": true,
+      "cached_before_replay_and_backedge": true,
+      "exp_count": 2,
+      "fallback_PTX_identical": false,
+      "division_PTX_count": 3,
+      "native": {
+        "sm_89": {
+          "folder": "/root/nfs/emmy/research/assembly-cache/fd9bf8711b72ace5f001c50ae557485573cbfc5f4e1264ca2fae7907472c9d60",
+          "registers": [
+            40
+          ],
+          "before_registers": [
+            40
+          ],
+          "spills": [
+            [
+              "0",
+              "0"
+            ]
+          ],
+          "before_spills": [
+            [
+              "0",
+              "0"
+            ]
+          ],
+          "sass_sha256": "edf896561dc380b549b8d44c1fa857e84c40e50d30d1107f16468525066df846",
+          "EX2_static": 4,
+          "SHFL_static": 8,
+          "FFMA_static": 61,
+          "native_limit": "Counts/static ordering evidence only; native division operand/dataflow equivalence and full CFG unproved."
+        },
+        "sm_120": {
+          "folder": "/root/nfs/emmy/research/assembly-cache/b484582b1bf73be6be97d9b95c813a9b5a02068b0548801586af3b5bc2ed50b1",
+          "registers": [
+            40
+          ],
+          "before_registers": [
+            40
+          ],
+          "spills": [
+            [
+              "0",
+              "0"
+            ]
+          ],
+          "before_spills": [
+            [
+              "0",
+              "0"
+            ]
+          ],
+          "sass_sha256": "1e0924d2a83d140dfcc248b246be4d5883d70ef3f52e47fda3f3ede890b0b1b0",
+          "EX2_static": 4,
+          "SHFL_static": 8,
+          "FFMA_static": 61,
+          "native_limit": "Counts/static ordering evidence only; native division operand/dataflow equivalence and full CFG unproved."
+        }
+      }
+    },
+    {
+      "case_id": "aa23bbd00f94abe9dbc6694c46de82eb9301c84a543e450bb885fbd04814cfc9",
+      "case": "key-prefix-exp-phase-tree-pair-screen-v2-seeded/full-segment32",
+      "active": true,
+      "cached_before_replay_and_backedge": true,
+      "exp_count": 2,
+      "fallback_PTX_identical": false,
+      "division_PTX_count": 3,
+      "native": {
+        "sm_89": {
+          "folder": "/root/nfs/emmy/research/assembly-cache/23a6dcd574a63757a6feb8deeb61b33a39b643d1915ceaef372aaac79f3b22aa",
+          "registers": [
+            40
+          ],
+          "before_registers": [
+            40
+          ],
+          "spills": [
+            [
+              "0",
+              "0"
+            ]
+          ],
+          "before_spills": [
+            [
+              "0",
+              "0"
+            ]
+          ],
+          "sass_sha256": "1c9d9032bb062b70ebcd1ca64d729b6b6f5e337bb8e35881830086ec6f97bb61",
+          "EX2_static": 4,
+          "SHFL_static": 9,
+          "FFMA_static": 219,
+          "native_limit": "Counts/static ordering evidence only; native division operand/dataflow equivalence and full CFG unproved."
+        },
+        "sm_120": {
+          "folder": "/root/nfs/emmy/research/assembly-cache/1f1e644e91a1ae9b137636bfaec5b9f18ac213c2fe0ae7df028bf892a6feca33",
+          "registers": [
+            40
+          ],
+          "before_registers": [
+            40
+          ],
+          "spills": [
+            [
+              "0",
+              "0"
+            ]
+          ],
+          "before_spills": [
+            [
+              "0",
+              "0"
+            ]
+          ],
+          "sass_sha256": "251653e7882945df1667ddd9302bf4deeeb6e14483076e7e91816db949b41c75",
+          "EX2_static": 4,
+          "SHFL_static": 9,
+          "FFMA_static": 219,
+          "native_limit": "Counts/static ordering evidence only; native division operand/dataflow equivalence and full CFG unproved."
+        }
+      }
+    },
+    {
+      "case_id": "de25e54114aafebfaba9eafe00ae8d6e99c0c9899d8da73bdf1bf36b358a40db",
+      "case": "key-prefix-exp-phase-tree-pair-screen-v2-seeded/tail32",
+      "active": true,
+      "cached_before_replay_and_backedge": true,
+      "exp_count": 2,
+      "fallback_PTX_identical": false,
+      "division_PTX_count": 3,
+      "native": {
+        "sm_89": {
+          "folder": "/root/nfs/emmy/research/assembly-cache/14fdf6b7581dfde74dfcc78884992d732e1ac457cd5945701b13b9aa8c52e5e8",
+          "registers": [
+            44
+          ],
+          "before_registers": [
+            44
+          ],
+          "spills": [
+            [
+              "0",
+              "0"
+            ]
+          ],
+          "before_spills": [
+            [
+              "0",
+              "0"
+            ]
+          ],
+          "sass_sha256": "5f55567d5702739e14468d80dda81e98f2b7bdb26e940c3b41cd55edaeba976a",
+          "EX2_static": 4,
+          "SHFL_static": 9,
+          "FFMA_static": 349,
+          "native_limit": "Counts/static ordering evidence only; native division operand/dataflow equivalence and full CFG unproved."
+        },
+        "sm_120": {
+          "folder": "/root/nfs/emmy/research/assembly-cache/2e7bb34f79c8bda7631ac769f56b4ede36178e46c3addade3f6aaf9c3b0ed00a",
+          "registers": [
+            40
+          ],
+          "before_registers": [
+            40
+          ],
+          "spills": [
+            [
+              "0",
+              "0"
+            ]
+          ],
+          "before_spills": [
+            [
+              "0",
+              "0"
+            ]
+          ],
+          "sass_sha256": "9b55bb8c87c60edd160526160e029b7e7efef23305251c39f9cd84beeda452c6",
+          "EX2_static": 4,
+          "SHFL_static": 9,
+          "FFMA_static": 349,
+          "native_limit": "Counts/static ordering evidence only; native division operand/dataflow equivalence and full CFG unproved."
+        }
+      }
+    },
+    {
+      "case_id": "ef3488d3d03c4f7f3620186ff7372cca28aa9e0571f7b99093be9ef08570f98c",
+      "case": "key-prefix-exp-phase-tree-pair-screen-v2-seeded/partial-fallback",
+      "active": false,
+      "cached_before_replay_and_backedge": false,
+      "exp_count": 0,
+      "fallback_PTX_identical": true,
+      "division_PTX_count": null,
+      "native": {
+        "sm_89": {
+          "folder": "/root/nfs/emmy/research/assembly-cache/a5db1250a2b49acded1c48aea21a0729b9f70c2bf0f67c9886ba3a1bdb378458",
+          "registers": [
+            40
+          ],
+          "before_registers": [
+            40
+          ],
+          "spills": [
+            [
+              "0",
+              "0"
+            ]
+          ],
+          "before_spills": [
+            [
+              "0",
+              "0"
+            ]
+          ],
+          "sass_sha256": "987d5e0d66b58af2c41b4a7facd9b49f5e0183b5257b1823e59f511739455a45",
+          "EX2_static": 2,
+          "SHFL_static": 0,
+          "FFMA_static": 43,
+          "native_limit": "Counts/static ordering evidence only; native division operand/dataflow equivalence and full CFG unproved."
+        },
+        "sm_120": {
+          "folder": "/root/nfs/emmy/research/assembly-cache/bfe63b8da05d7375d2de103bd67891365ae8b210687068b8c7d8b13c5d23614e",
+          "registers": [
+            40
+          ],
+          "before_registers": [
+            40
+          ],
+          "spills": [
+            [
+              "0",
+              "0"
+            ]
+          ],
+          "before_spills": [
+            [
+              "0",
+              "0"
+            ]
+          ],
+          "sass_sha256": "6ca197cdc8429ecd284949d57b280813cda58b2a82462b5b3c3a22735582e0c8",
+          "EX2_static": 2,
+          "SHFL_static": 0,
+          "FFMA_static": 43,
+          "native_limit": "Counts/static ordering evidence only; native division operand/dataflow equivalence and full CFG unproved."
+        }
+      }
+    }
+  ],
+  "all15_status": "PASS_all15_both_architectures_exact_expected_routes",
+  "all15_changed_vs_prior_routes": [],
+  "native_limit": "V8 static activation/cached exp placement/clamp mask/div.rn presence, counts/resources only. Original score Assign and ordered args unchanged; native division input/order/full-CFG equivalence not independently proved. No latency or correctness GPU claim.",
+  "CPU": "23840 joined exit0 in64.395s; slot2 released; no live owned prep jobs",
+  "prior_candidate": "365d/c989 remains formal INCONCLUSIVE; existing8samples kept exactly, none redrawn; these are fixed diagnostic samples for v3, not independent confirmation.",
+  "next_action": "Future run: independent source-only one-predicate review, native division/input/order and coefficient lifetime proof, then source freeze with all published/allfixed/fresh independent GPU correctness gates before any E3 timing; no owner transfer now.",
+  "recorded_utc": "2026-10-23T03:48:05.531551+00:00"
+}

@@ -1,0 +1,10 @@
+{
+  "compiler_sha256": "f47c21b0bb2818df21cd218573cd3cd1231f87955ee78c43a779f5b0be6ebac0",
+  "branch": "n00bcak",
+  "ast_parse": "passed",
+  "gpu_tests": "exact source executed in private Linux RTX4090 runtime",
+  "local_gpu_execution": false,
+  "source_transferred_this_close": false,
+  "evidence_archive_sha256": "bb2ee6430f7519576d3e75afd055c57f6263e99d93f9a42e7a18fe6bce163d48",
+  "verified_at": "2026-10-23T04:12:08.256552+00:00"
+}

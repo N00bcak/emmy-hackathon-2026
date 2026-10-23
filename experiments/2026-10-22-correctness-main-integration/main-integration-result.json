@@ -1,0 +1,16 @@
+{
+  "branch": "n00bcak",
+  "old_HEAD": "3f1b749d9116c794f8f68c35be02af0314187b2a",
+  "main_HEAD": "83a394490fbc232e0a0aefae8e5211657460dd6d",
+  "compiler_sha256": "ef5e7fe0092f95c86a4effa628c533c6c3ec2e4d16802035ed31073e27d88d6a",
+  "test_sha256": "291595a668e0e2f33bb1fe37b2c06348819636a4be5c8edbd6356202e35f0e02",
+  "preserved_untracked_files": 9,
+  "creates_commit": false,
+  "publishes": false,
+  "completed": true,
+  "new_HEAD": "83a394490fbc232e0a0aefae8e5211657460dd6d",
+  "source_id": "d883119296f923cc179e64220d8fc3937930ec1cafe15a8e14e2693325f04aed",
+  "correctness_evidence_id": "16abf6be48dda88276337051b862e32c5919ab62f4b32cefc3d95f63f0259a41",
+  "independent_evidence_id": "e951e625fb9451da81fa1dfdfe144836887c4b23844066a12a0d62a38f95b5d7",
+  "untracked_bytes_preserved": true
+}

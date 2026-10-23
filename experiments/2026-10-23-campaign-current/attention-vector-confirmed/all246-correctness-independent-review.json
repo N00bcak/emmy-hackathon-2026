@@ -1,0 +1,129 @@
+{
+  "verdict": "APPROVE selected f47c all246 correctness gate and maintainedcoverage identities. Performance qualification/promotion remains with the ongoing paired fixed32/full47 adapter.",
+  "evaluation_artifact_id": "aca1972ab4915d26dfad73d2e858dd00440feacfc8b514ecb881d2cdefdb8d09",
+  "source_id": "549b6047f91818ea876deb76adfc88cabc36f554c05ab2bc51b2c961aa9143f2",
+  "compile_sha256": "f47c21b0bb2818df21cd218573cd3cd1231f87955ee78c43a779f5b0be6ebac0",
+  "suite_id": "0fa85c2e98ef65616058b558c1008d80f0f3530ae13cfdf276774050f8a2d5ce",
+  "confirmation_id": "61fd828c21bf594154c940d29038b9a25e4a4b4f30db1f9dc4c4ee6fd5668c08",
+  "candidate_cases": 246,
+  "published": 15,
+  "generated": 231,
+  "case_set_exact_known214_plus_core47_minus_overlap15": true,
+  "all_pass_guards_inputs_isolated": true,
+  "sanitizer_required_and_passed": true,
+  "candidate_and_baseline_published_gates": [
+    {
+      "artifact_id": "94e8ba132630adba4cba9be76c19fc733ae85b37eacab0344a497ff3dfbef5f1",
+      "source_id": "549b6047f91818ea876deb76adfc88cabc36f554c05ab2bc51b2c961aa9143f2",
+      "published15_pass": true,
+      "sanitizer_passed": true
+    },
+    {
+      "artifact_id": "a95220b0033f2582d5fcd9a0c9c22767014082149e3fd92f3b6c959d300b418f",
+      "source_id": "ae7efd5ad535a05d39ac0567b07d118ced230c73dee13409744e83993289ff32",
+      "published15_pass": true,
+      "sanitizer_passed": true
+    }
+  ],
+  "referenced_content_manifest_count": 265,
+  "referenced_manifest_kinds": {
+    "generated-diagnostic": 214,
+    "confirmation-case": 47,
+    "confirmation-adapter-freeze": 1,
+    "host-gpu-observations": 2,
+    "confirmation-prepared": 1
+  },
+  "all_referenced_manifest_content_ids_verified": true,
+  "host_jobs": [
+    "/root/nfs/emmy/measurements/20261023T024136Z-research-gpu-EjEKwr",
+    "/root/nfs/emmy/measurements/20261023T024422Z-research-gpu-Nbgahv",
+    "/root/nfs/emmy/measurements/20261023T024734Z-research-gpu-rQZW4O"
+  ],
+  "all_host_jobs_observed_clean": true,
+  "observed_device": "RTX4090 GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+  "ledger": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/bugs-types/behavior-inventory-v34.json",
+  "ledger_sha256": "abbccc424f026ff448058a87d2c7e1af68cbbcefea69b2ee8b423bc62359c188",
+  "catalogued_types": 82,
+  "reserved_types": 1,
+  "total_types": 83,
+  "cap": 100,
+  "no_duplicate_type_ids": true,
+  "history_preservation_chain": [
+    {
+      "path": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/correctness-nested-seeded-fold-scope-v2-supplement-plan.json",
+      "lists": 48,
+      "sha256": "a951473988062aeca7c7d7d2bc5e90304670b0b4c524b17ccba4ac62203c34f6",
+      "preserves_prior_exact_keypaths": false
+    },
+    {
+      "path": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/correctness-softplus-log1p-v1-supplement-plan.json",
+      "lists": 50,
+      "sha256": "d6307b4433894101136e800df8e7a6c2b4758599277f667b1adccec56e2bc538",
+      "preserves_prior_exact_keypaths": true
+    },
+    {
+      "path": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/dot-vector4-softplus-scope-screen-v1-supplement-plan.json",
+      "lists": 53,
+      "sha256": "2b6608ae2ec360ac5102e64201c3bb7729aa6d68ccfa43524d160425f78503ae",
+      "preserves_prior_exact_keypaths": true
+    },
+    {
+      "path": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/correctness-erf-small-series-v1-supplement-plan.json",
+      "lists": 55,
+      "sha256": "1b2a0a12f97268b057bd65c2a97afeb71af7f24f58017f94b68c85ebfb0f438e",
+      "preserves_prior_exact_keypaths": true
+    },
+    {
+      "path": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/dot-vector4-erf-scope-screen-v1-supplement-plan.json",
+      "lists": 58,
+      "sha256": "616b1a7c7b7c5371f1fd63643879f2203c8fd12bd4e68f1201dc0e2edd47d7fe",
+      "preserves_prior_exact_keypaths": true
+    },
+    {
+      "path": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/key-private-q32-erf-vector-screen-v1-supplement-plan.json",
+      "lists": 61,
+      "sha256": "c533d62d72722a9a6d116583bb742190f7ef06057c519a169b9970f8a5eef204",
+      "preserves_prior_exact_keypaths": true
+    },
+    {
+      "path": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/attention-known-with-mixed-control-plan-v1.json",
+      "lists": 62,
+      "sha256": "9b886319271d74f319c8a60efbd861a71e8eeaae5c33951feaa134fa11afa1e2",
+      "preserves_prior_exact_keypaths": true
+    },
+    {
+      "path": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/attention-selected-erf-independent-v1-supplement-plan.json",
+      "lists": 65,
+      "sha256": "9c60718730dfb759afb36605e03038570eaa5797af4bc97e08def7c739e1cba2",
+      "preserves_prior_exact_keypaths": true
+    }
+  ],
+  "selected_fresh8_case_ids": [
+    "02d4159571da7f0cc142693dc65e3c36f177e1f5cb619fb7833f0c42bd10df8e",
+    "1e0918cfe4c0b80ff304f231d5f71e319bbad05c3b3ee53992f423f8605001a5",
+    "9cf1676e95dbfe4794bf8358d49d532b04fe39f92db5c909bcba9ee7d46598d9",
+    "b2ba82b45d470f88237b50a5c75ed7f230fcc91c1f7331b118018ea4f78718be",
+    "c974ec730c3e361d5a62608aa954478a6cea10d6f9183d7f03bd9f45a6a125c8",
+    "c99263904986dd31c5dd7e8a38489cd12ea9ab9c5bc80674f20aa2597f5d68d7",
+    "e42462914470b170c8821353f22256bf989c43c7b7312374f56169d5574e72d4",
+    "f8257ec740c225609dc5e08babff4d4708d6c349f7f1d0ef3dc631d2460c7eb5"
+  ],
+  "fresh8_present_and_disjoint_old62": true,
+  "choice_before_freeze_reserve_derive_draw": true,
+  "choice_artifact_id": "2f17b1460e1c6ff76afcd74d4bd53682f7f1e64facfa37b9584d4e84bf108dd5",
+  "continuation_record": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/attention-selected-erf-independent-v1-budget-continuation.json",
+  "continuation_stop_UTC": "2026-10-23T03:08:17.046825+00:00",
+  "global_stop_UTC": "2026-10-23T04:12:11+00:00",
+  "unchanged_source_cases_fixed32metrics_continuation": true,
+  "limits": [
+    "Correctnessreceipt intentionally disables timing and marks benchmark_qualified=false and baseline_gpu_verified=false; linkedbaselinepublished15gate independentlyverifiedhere. Ongoingpairedtimingadapter owns baselineperformance qualification and finalstatistics.",
+    "No timingresult, speedup, regressionabsence orpromotion approval inferredfromcorrectness.",
+    "All referencedcontent-ID manifests checked; binaryoutputpayloadfiles were notrehash/read during activeGPUtiming andGPUchecks were notreplayed byreviewer.",
+    "Allmaintained48\u219265 historical listkeypaths preserved. Archived894cases remainretained butare notclaimedallretestedbythis246receipt.",
+    "Hostadmission/periodicobservations arenotareservationorproofofnotransientoverlap. Staticbotharchassembly isnot5090GPUexecution; actualreceiptdevice4090only.",
+    "83count includesone reservedtype; seeds/shapes/freshdrawsdo notcreateadditionaltypes. WithdrawnmixedF16prototype281 remainsunused/unnecessary; controliscoverageonly."
+  ],
+  "no_compiler_GPU_or_Store_mutation": true,
+  "owned_jobs": [],
+  "created_utc": "2026-10-23T02:58:01.642810+00:00"
+}

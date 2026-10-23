@@ -1,0 +1,10 @@
+{
+  "compiler_sha256": "320afd082767ca1ecfb86a94f032671e6a86a2742d26634c9892dfdcda3aa825",
+  "source_id": "5c31de2f8da5449b303104cde2fb21b3ecd06945233b45f8395229aafef58381",
+  "evidence_id": "d2e2d1052452236a77d5205640a647b1cd68b355dbafc4b83096029b30aadc86",
+  "promotion_decision": "44b3ef314593924386e5f4187563603c9fc1f893b8d93df292d0ab7a953282fe",
+  "published_passed": 15,
+  "total_gpu_cases_passed": 570,
+  "device": "RTX 4090",
+  "scope": "Correctness baseline; isolated GPU checks, guards, required sanitizers and clean host postchecks. No independently confirmed latency claim. Main integration pending fresh source-bound verification."
+}

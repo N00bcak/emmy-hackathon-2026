@@ -1,0 +1,173 @@
+{
+  "source_id": "549b6047f91818ea876deb76adfc88cabc36f554c05ab2bc51b2c961aa9143f2",
+  "formula": "100 * useful_flops / (latency_us * 1e-6) / peak_fp32_flops_s",
+  "arithmetic_checked_published_cases": 15,
+  "independently_rederived_work_counts": [
+    "p00_scalar_add",
+    "r02_big_sum",
+    "m01_matmul_512",
+    "a01_attention",
+    "a02_attention_128"
+  ],
+  "unit_conversion_verified": "tools/research_gpu.py: CUDA cuEventElapsedTime milliseconds *1000 -> samples_us; metrics calculator microseconds *1e-6 -> seconds",
+  "calculation_error_found": false,
+  "interpretation": "Whole-GPU useful-FLOP efficiency against theoretical FP32 peak, not measured executed hardware utilization or closeness to a same-launch optimum.",
+  "limits": [
+    "Useful mathematical work excludes redundant arithmetic and special-operation cost.",
+    "Small/low-CTA launches cannot use the whole-device peak; grid upper bounds do not measure active SM count or occupancy.",
+    "FMA-based FP32 peak is a broad reference, not a demonstrated attainable ceiling for each operation mix.",
+    "No empty control or profiler breakdown measured; no exact bottleneck claim."
+  ],
+  "rows": [
+    {
+      "case": "p00_scalar_add",
+      "useful_flops": 128,
+      "latency_seconds": "0.0000030720001086592674",
+      "peak_fp32_flops_per_second": "82600000000000.0",
+      "recomputed_mfu_pct": 5.044390459186572e-05,
+      "independent_work_count_check": true,
+      "gflops_s": 0.041666665192881085,
+      "max_sms_from_grid": 1
+    },
+    {
+      "case": "p01_vector_add",
+      "useful_flops": 1024,
+      "latency_seconds": "0.000003120000008493662",
+      "peak_fp32_flops_per_second": "82600000000000.0",
+      "recomputed_mfu_pct": 0.00039734276914242896,
+      "independent_work_count_check": false,
+      "gflops_s": 0.32820512731164636,
+      "max_sms_from_grid": 2
+    },
+    {
+      "case": "p02_scale_shift",
+      "useful_flops": 8192,
+      "latency_seconds": "0.000004095999989658594",
+      "peak_fp32_flops_per_second": "82600000000000.0",
+      "recomputed_mfu_pct": 0.0024213075121664825,
+      "independent_work_count_check": false,
+      "gflops_s": 2.0000000050495146,
+      "max_sms_from_grid": 4
+    },
+    {
+      "case": "p03_relu_mul",
+      "useful_flops": 2048,
+      "latency_seconds": "0.000004671999951824546",
+      "peak_fp32_flops_per_second": "82600000000000.0",
+      "recomputed_mfu_pct": 0.0005306975410456212,
+      "independent_work_count_check": false,
+      "gflops_s": 0.4383561689036831,
+      "max_sms_from_grid": 2
+    },
+    {
+      "case": "r01_array_sum",
+      "useful_flops": 1023,
+      "latency_seconds": "0.000004095999989658594",
+      "peak_fp32_flops_per_second": "82600000000000.0",
+      "recomputed_mfu_pct": 0.00030236786925614157,
+      "independent_work_count_check": false,
+      "gflops_s": 0.24975586000557293,
+      "max_sms_from_grid": 1
+    },
+    {
+      "case": "r02_big_sum",
+      "useful_flops": 65535,
+      "latency_seconds": "0.0000077599999494850636",
+      "peak_fp32_flops_per_second": "82600000000000.0",
+      "recomputed_mfu_pct": 0.010224251832613133,
+      "independent_work_count_check": true,
+      "gflops_s": 8.445232013738448,
+      "max_sms_from_grid": 1
+    },
+    {
+      "case": "r03_mean",
+      "useful_flops": 32767,
+      "latency_seconds": "0.000006144000217318535",
+      "peak_fp32_flops_per_second": "82600000000000.0",
+      "recomputed_mfu_pct": 0.006456622741256499,
+      "independent_work_count_check": false,
+      "gflops_s": 5.333170384277869,
+      "max_sms_from_grid": 1
+    },
+    {
+      "case": "r04_row_sum",
+      "useful_flops": 32704,
+      "latency_seconds": "0.000003263999940827489",
+      "peak_fp32_flops_per_second": "82600000000000.0",
+      "recomputed_mfu_pct": 0.012130276059056968,
+      "independent_work_count_check": false,
+      "gflops_s": 10.019608024781055,
+      "max_sms_from_grid": 64
+    },
+    {
+      "case": "m01_matmul_512",
+      "useful_flops": 268435456,
+      "latency_seconds": "0.000025599999353289604",
+      "peak_fp32_flops_per_second": "82600000000000.0",
+      "recomputed_mfu_pct": 12.694625018029765,
+      "independent_work_count_check": true,
+      "gflops_s": 10485.760264892584,
+      "max_sms_from_grid": 128
+    },
+    {
+      "case": "m02_matmul_rect",
+      "useful_flops": 4194304,
+      "latency_seconds": "0.000005119999870657921",
+      "peak_fp32_flops_per_second": "82600000000000.0",
+      "recomputed_mfu_pct": 0.9917675795335753,
+      "independent_work_count_check": false,
+      "gflops_s": 819.2000206947332,
+      "max_sms_from_grid": 128
+    },
+    {
+      "case": "f01_rmsnorm",
+      "useful_flops": 262208,
+      "latency_seconds": "0.000005119999870657921",
+      "peak_fp32_flops_per_second": "82600000000000.0",
+      "recomputed_mfu_pct": 0.06200060689314358,
+      "independent_work_count_check": false,
+      "gflops_s": 51.2125012937366,
+      "max_sms_from_grid": 64
+    },
+    {
+      "case": "f02_row_softmax",
+      "useful_flops": 49088,
+      "latency_seconds": "0.0000030720001086592674",
+      "peak_fp32_flops_per_second": "82600000000000.0",
+      "recomputed_mfu_pct": 0.0193452374109805,
+      "independent_work_count_check": false,
+      "gflops_s": 15.979166101469895,
+      "max_sms_from_grid": 64
+    },
+    {
+      "case": "f03_l2norm",
+      "useful_flops": 98240,
+      "latency_seconds": "0.000004095999989658594",
+      "peak_fp32_flops_per_second": "82600000000000.0",
+      "recomputed_mfu_pct": 0.029036773681058992,
+      "independent_work_count_check": false,
+      "gflops_s": 23.984375060554726,
+      "max_sms_from_grid": 64
+    },
+    {
+      "case": "a01_attention",
+      "useful_flops": 1064896,
+      "latency_seconds": "0.000018432000651955605",
+      "peak_fp32_flops_per_second": "82600000000000.0",
+      "recomputed_mfu_pct": 0.0699446773753378,
+      "independent_work_count_check": true,
+      "gflops_s": 57.77430351202903,
+      "max_sms_from_grid": 4
+    },
+    {
+      "case": "a02_attention_128",
+      "useful_flops": 2162560,
+      "latency_seconds": "0.000023552000522613525",
+      "peak_fp32_flops_per_second": "82600000000000.0",
+      "recomputed_mfu_pct": 0.111163014693019,
+      "independent_work_count_check": true,
+      "gflops_s": 91.8206501364337,
+      "max_sms_from_grid": 128
+    }
+  ]
+}

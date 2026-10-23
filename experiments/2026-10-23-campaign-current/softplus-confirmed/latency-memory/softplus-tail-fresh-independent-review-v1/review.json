@@ -1,0 +1,83 @@
+{
+  "source_binding": {
+    "source_id": "f0f5e4bf8d89a5e16d2c917853c92f08650179fc1bdb5681bef698610dbc76a7",
+    "compile_sha256": "96a954a0edf606637ade95f75510bffcd52da5e2c19edab23848c970bf020f58",
+    "reservation_id": "c2de6be504be92f3745013bb2a44e7e3871fd62515219f9779cb5e5dfcd7fa0c",
+    "seed": 328502009610589895303910077098999751888,
+    "oracle_id": "c9544d14214e0544da38cd95c9868d6476995de5c6b284427a225680a8bfb8f2",
+    "oracle_manifest_sha256": "f3ca2876a6a637bc8f96800e4ed708ab56ee1ca847686480c143fbc7733216cc",
+    "all_frozen_oracle_files_verified": 10,
+    "source_draw_sha256": "6c4270d6798dc2d2cb8057640bbc0d66ce0915b8abb07cdabd7de8aefb7d9cd4",
+    "chronology": {
+      "oracle_accepted": 1792716745.706808,
+      "source_frozen": 1792716847.760784,
+      "reservation": 1792716847.7949543,
+      "recorded_before_generation": 1792716847.8340862,
+      "generated": 1792716848.2212281
+    },
+    "strict_chronology_verified": true,
+    "prior_development_sample_retained_known": true
+  },
+  "status": "APPROVE source-bound fresh softplus reference; GPU qualification remains parent-owned",
+  "case_id": "2749fdfd9a91ddf505d7aa253b8fd1a6c4061bdc3daae61bac2b19072c6fc156",
+  "case_dir": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/softplus-tail-independent-v1/softplus-and-amplified-tail",
+  "case_list_sha256": "f488a6670a7461d4d5d90daab8d09cbfe7190ffad29fecc1988c0b5b727a069b",
+  "file_hashes": {
+    "expected.npz": "37e1eb114d8b7b26e9b9589201620654988459fee827ff7c903913eb08582e0e",
+    "inputs.npz": "e3b8ef574849d56f1e6aa5933b67b4501dade32d001f2ffaf0d6d004569de5a7",
+    "k_385048.ir.json": "c699cab65f1f79f2123f8fa216942bb202d01135ee3ef93c1bc8c0ed835138a0",
+    "meta.json": "22aa16fac246ca1e669cf9fecf1ef9244f15b37ab9be411db6a302df8c80610c"
+  },
+  "source_generator_sha256": "15f62f181a33a13f5e5184ec4ba6827fb40946b810d660a2fe335db5c2c436bd",
+  "seed": 328502009610589895303910077098999751888,
+  "typed_graph_valid": true,
+  "ABI_scalar_amp_and_rotated_order_valid": true,
+  "expected_words": 130,
+  "all130_words_bitwise_match_plain_math_and_Decimal95_and_F64_logaddexp_boundary_multiply": true,
+  "complete_writes": {
+    "logical_cells": 65,
+    "output_slots_per_cell": 2,
+    "physical_threads": 96,
+    "padding_threads": 31,
+    "all_outputs_unique_and_written": true
+  },
+  "fixed_tolerances": {
+    "rtol": 1e-05,
+    "atol": 1e-07
+  },
+  "negative_tail_counters": [
+    {
+      "index": 0,
+      "x": -20.0,
+      "mathematical_reference_F32": [
+        2.06115369216775e-09,
+        2.061153715734377e+21
+      ],
+      "ideal_SFU_old_F32_add_log_path": [
+        0.0,
+        0.0
+      ],
+      "amplified_discriminates": true
+    },
+    {
+      "index": 1,
+      "x": -24.0,
+      "mathematical_reference_F32": [
+        3.775134371775124e-11,
+        3.775134471159598e+19
+      ],
+      "ideal_SFU_old_F32_add_log_path": [
+        0.0,
+        0.0
+      ],
+      "amplified_discriminates": true
+    }
+  ],
+  "limits": [
+    "Independent actual oracle review only; no compiler execution, assembly or GPU.",
+    "Ideal-SFU old F32 add/log model is a mathematical countercontrol, not actual frozen baseline GPU evidence; parent owns real baseline check.",
+    "No redrawing or case/reference/generator modifications. Frozen oracle precedes this source-bound independent draw; earlier development sample remains known."
+  ],
+  "created_utc": "2026-10-23T00:55:40.120269+00:00",
+  "owned_jobs": []
+}

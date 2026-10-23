@@ -1,0 +1,50 @@
+{
+  "compiler_sha256": "ef5e7fe0092f95c86a4effa628c533c6c3ec2e4d16802035ed31073e27d88d6a",
+  "source_id": "d883119296f923cc179e64220d8fc3937930ec1cafe15a8e14e2693325f04aed",
+  "suite_id": "0fa85c2e98ef65616058b558c1008d80f0f3530ae13cfdf276774050f8a2d5ce",
+  "published_gate_id": "0e0b699bde2a799b941b2274a39ea69e6b50812bbf32a7effadf4e3551c6591e",
+  "evidence_id": "e951e625fb9451da81fa1dfdfe144836887c4b23844066a12a0d62a38f95b5d7",
+  "device": {
+    "clock_rate_khz": 2520000,
+    "compute_major": 8,
+    "compute_minor": 9,
+    "context_identity": "481414:976563728",
+    "driver_version": 13040,
+    "memory_clock_khz": 10501000,
+    "multiprocessors": 128,
+    "name": "NVIDIA GeForce RTX 4090",
+    "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry.",
+    "uuid": "GPU-48d29aae-97ad-f0cd-f255-b0677b15e8ab",
+    "worker_pid": 481414
+  },
+  "fresh_measurements": false,
+  "emmy_local_version": "0.3.11",
+  "scope": "Offline audit; qualified retained32paired samples per case; no GPU dispatch or new gate issuance.",
+  "remote_status": "SSH failed hostname resolution in this side chat; live gates/jobs, profiler availability, observed clocks and durable remote store cannot be revalidated.",
+  "clock_note": "Device clock_rate_khz is a nominal limit, not an observed clock trace. MFU uses published theoretical boost ceiling.",
+  "unavailable": [
+    "fresh timing",
+    "Nsight counters",
+    "DRAM/L2/shared traffic",
+    "physical register/spill counts",
+    "live clocks",
+    "same-launch optimized reference",
+    "empty-kernel control",
+    "remote persistence"
+  ],
+  "artifact_hashes": {
+    "compile.py": "ef5e7fe0092f95c86a4effa628c533c6c3ec2e4d16802035ed31073e27d88d6a",
+    "source-manifest.json": "5aefe899478f20bbb55f6d276bd0635294ec906755d8cfff0ac551e388f2bc3b",
+    "independent47-timing-receipt.json": "51d2c511648144aefd9261bbeb57b89a35bdfea874173c7a78f17df8df5bafc2",
+    "fresh47-correctness-receipt.json": "d2de628844fa7cf762071d58995d29efa0d70401fd082240117a31b219ffc9b4",
+    "independent-per-case.csv": "10e9db085af509e0dae6bc930865dd42d31dc0f6a49cf831712b113aa53c94d1"
+  },
+  "analysis_code_sha256": "a667ed4075174ef86ae6963e38dcf5ece3355e9c1ab7dc903e1d1a8f932f30f1",
+  "metrics_calculator_sha256": "66ad5a1751dea0e7b4ac3c8859111a7f61fe98cb6c46e47015361618d0a39517",
+  "peak_source": "https://images.nvidia.com/aem-dam/Solutions/geforce/ada/nvidia-ada-gpu-architecture.pdf",
+  "peak_fp32_tflops_s": 82.6,
+  "peak_dram_gb_s": 1008,
+  "bandwidth_note": "1008GB/s is theoretical reference only; logical/time is never classified as measured DRAM bandwidth.",
+  "published_rows": 15,
+  "generated_rows": 32
+}

@@ -1,0 +1,13 @@
+{
+  "actual_computation": "246 unique known cases +47 core cases -15 shared published IDs =278",
+  "actual_union_audit": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/nonq-phase-tree-pair-next-v1/final-provenance-union-spills-audit-v1.json",
+  "audit_sha256": "1059cdefb09a99e3975a35a99a796671658b8b3de599353174b56c803e68f249",
+  "correct_count": 278,
+  "created_utc": "2026-10-23T03:59:50.256728+00:00",
+  "field": "target_total_after_replay",
+  "old_value": "aa789dd34609b037ab7d7f58eaf0138c52395dd34cf0f77b40850b960ae6ded8",
+  "original_plan": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/pair-phase-tree-vector-independent-v2-baseline-fresh-plan.json",
+  "original_plan_sha256": "94db73dbb467fcdb376660d3e76aea557fc87450b4dd00c3bd8d7f6001db4e1e",
+  "scope": "No original plan, generator, case, evaluator, source, reservation, metadata or input mutation; no redraw. Runner source/reservation/lists bindings verified. Parent must assert actual278 GPU cases before timing.",
+  "status": "DESCRIPTIVE_COUNT_FIELD_CORRECTION_WITH_ORIGINAL_PRESERVED"
+}

@@ -1,0 +1,16 @@
+problem,status,median_us,latency_valid,mismatched,elements,max_abs_error
+a01_attention,pass,19.072,True,0,4096,6.556510925292969e-07
+a02_attention_128,pass,25.2,True,0,4096,4.470348358154297e-07
+f01_rmsnorm,pass,4.768,True,0,65536,1.9073486328125e-06
+f02_row_softmax,pass,3.104,True,0,16384,7.450580596923828e-09
+f03_l2norm,pass,3.184,True,0,32768,1.4901161193847656e-08
+m01_matmul_512,fail,21.696,False,262069,262144,144.74808502197266
+m02_matmul_rect,pass,4.992,True,0,8192,1.1444091796875e-05
+p00_scalar_add,pass,3.152,True,0,128,0.0
+p01_vector_add,pass,3.104,True,0,1024,0.0
+p02_scale_shift,pass,3.168,True,0,4096,0.0
+p03_relu_mul,pass,3.104,True,0,2048,0.0
+r01_array_sum,pass,3.104,True,0,1,3.814697265625e-06
+r02_big_sum,pass,8.832,True,0,1,1.52587890625e-05
+r03_mean,pass,6.784,True,0,1,9.313225746154785e-10
+r04_row_sum,pass,3.088,True,0,64,5.7220458984375e-06

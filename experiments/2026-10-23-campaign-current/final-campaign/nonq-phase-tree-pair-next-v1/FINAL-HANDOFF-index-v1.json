@@ -1,0 +1,151 @@
+{
+  "actual_core_comparables_changed": 11,
+  "choice_id": "07b4626b8dee4ec3cacf1a72d7531e47da801089a192fafb10ae79ee971c7048",
+  "compile_sha256": "4ff5a7f903ce477ed88a06cdd9bbbfd68c25141c1835edbc97b60c7b9dc8b040",
+  "created_utc": "2026-10-23T03:59:50.337402+00:00",
+  "experiment": "pair-phase-tree-vector-independent-v2",
+  "future_work_unqualified": {
+    "record": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/latency-index/key-prefix-exp-score-divide-source-review-v3/RESUMABLE-NATIVE-SUMMARY.json",
+    "source": "c9b17dac338c3d0b34002bfdcbf0c624fb6dc3ffd9dfd40b32fd44cd609ef045",
+    "status": "CPU/static only; no GPU/freeze/performance. Native division normal-path equivalence and W16 scan closure bounded; missing full root/address/EX2/lifetime/exception coverage. ExistingV8 inputs now known screening data, not future fresh confirmation."
+  },
+  "generated_changes": 4,
+  "global_stop_utc": "2026-10-23T04:12:11Z",
+  "native_coverage": {
+    "arches": [
+      "sm_89",
+      "sm_120"
+    ],
+    "async4": "canonical tighter waitL-1/fewer nativeBAR/same commit-group sites;3negatives exactparent",
+    "candidate_spills_core_fresh": 0,
+    "core": 47,
+    "fresh": 12,
+    "pair4": "native LDS64 all4",
+    "tree4": "3positive BAR1; scratch-liveout exactfallback"
+  },
+  "next_action": "Parent completes source-bound all278 GPU and baseline samecases then full47fixed32 paired timing before04:12:11UTC. Retain only independently confirmed gain and report every per-case regression/inconclusive. Stop index work now.",
+  "owned_CPU_workers": 0,
+  "owned_GPU_workers": 0,
+  "owned_live_jobs": [],
+  "prepared_id": "71d40c4c2420f218d9e9fbc33c35e3437aae0131d1f0a58c137268907a5aa79a",
+  "preserved_warnings": [
+    {
+      "arch": "sm_120",
+      "case_id": "e42462914470b170c8821353f22256bf989c43c7b7312374f56169d5574e72d4",
+      "exact_parent_native_PTX_resources": true,
+      "registers": [
+        255
+      ],
+      "spills": [
+        [
+          "32",
+          "16"
+        ]
+      ]
+    },
+    {
+      "arch": "sm_89",
+      "case_id": "e42462914470b170c8821353f22256bf989c43c7b7312374f56169d5574e72d4",
+      "exact_parent_native_PTX_resources": true,
+      "registers": [
+        255
+      ],
+      "spills": [
+        [
+          "24",
+          "12"
+        ]
+      ]
+    },
+    {
+      "arch": "sm_120",
+      "case_id": "97abc829e63e7c3432400aa2ddda4a5ab5f3d758b406533c1bfb084a8673bc03",
+      "exact_parent_native_PTX_resources": true,
+      "registers": [
+        255
+      ],
+      "spills": [
+        [
+          "32",
+          "16"
+        ]
+      ]
+    },
+    {
+      "arch": "sm_89",
+      "case_id": "97abc829e63e7c3432400aa2ddda4a5ab5f3d758b406533c1bfb084a8673bc03",
+      "exact_parent_native_PTX_resources": true,
+      "registers": [
+        255
+      ],
+      "spills": [
+        [
+          "24",
+          "12"
+        ]
+      ]
+    },
+    {
+      "arch": "sm_120",
+      "case_id": "720332f6e50a61c0643c3e5c6ae232140a8639fb4d630f21170b680f5bad43b9",
+      "exact_parent_native_PTX_resources": true,
+      "registers": [
+        255
+      ],
+      "spills": [
+        [
+          "32",
+          "16"
+        ]
+      ]
+    },
+    {
+      "arch": "sm_89",
+      "case_id": "720332f6e50a61c0643c3e5c6ae232140a8639fb4d630f21170b680f5bad43b9",
+      "exact_parent_native_PTX_resources": true,
+      "registers": [
+        255
+      ],
+      "spills": [
+        [
+          "24",
+          "12"
+        ]
+      ]
+    }
+  ],
+  "provenance": "Actual IDs/source/compile/frozen static_key/hash checks; choice before freeze before reserve before seed derivation/draw. All73 lists andprior70 exact paths preserved; sourcebound union278. Two numerical-input duplicates honestly retained.",
+  "published_attention": "PTX/native/resources exactly retained parent; no Qcache/prefix coefficients",
+  "published_changes": [
+    "m01_matmul_512",
+    "r01_array_sum",
+    "r02_big_sum",
+    "r03_mean",
+    "r04_row_sum",
+    "f01_rmsnorm",
+    "f03_l2norm"
+  ],
+  "reports": {
+    "COUNT-CORRECTION-final-baseline-plan-v1.json": {
+      "path": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/nonq-phase-tree-pair-next-v1/COUNT-CORRECTION-final-baseline-plan-v1.json",
+      "sha256": "e95a03bed45400bf8ebee9519bd1a1ab3f0ea77e32361de9e6749f3a11401f16"
+    },
+    "final-core47-fresh12-native-audit-v1.json": {
+      "path": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/nonq-phase-tree-pair-next-v1/final-core47-fresh12-native-audit-v1.json",
+      "sha256": "936461450bc03487b2c82e1abd80372e23477f3f391528d42666f6127ac49d93"
+    },
+    "final-provenance-union-spills-audit-v1.json": {
+      "path": "/root/nfs/emmy/research/campaigns/campaign-20261023-12h-v2/nonq-phase-tree-pair-next-v1/final-provenance-union-spills-audit-v1.json",
+      "sha256": "1059cdefb09a99e3975a35a99a796671658b8b3de599353174b56c803e68f249"
+    }
+  },
+  "reservation_id": "dc6e42c250746ebde8363a3c7d452e97f00864e6e319b231f001a8081e584766",
+  "retained_baseline_source_id": "549b6047f91818ea876deb76adfc88cabc36f554c05ab2bc51b2c961aa9143f2",
+  "source_id": "212e052936722ec76f1c5c4c6b2243e9ff87fc79168f99284193d46b36eb15e4",
+  "source_limits": [
+    "Native proofs transfer through exact PTX/cubin/SASS identity; bounded normal-path/exception/whole-CFG limitations retained.",
+    "Static/native audit is not GPU numerical correctness or latency evidence.",
+    "No performance promotion until parent all278 runtime gates and full47fixed32 independent paired timing pass."
+  ],
+  "status": "FINAL_SELECTED4FF_HOST_NATIVE_PROVENANCE_AUDITS_COMPLETE_RUNTIME_PENDING_PARENT"
+}

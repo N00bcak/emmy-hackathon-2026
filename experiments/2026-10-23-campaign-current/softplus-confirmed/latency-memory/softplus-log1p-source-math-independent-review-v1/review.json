@@ -1,0 +1,51 @@
+{
+  "status": "APPROVE exact96a source/math for source-bound CPU/GPU qualification; no general code blocker found",
+  "source": "/root/bcy/emmy/research-workspaces/softplus-log1p-v1-prototype/compile.py",
+  "source_sha256": "96a954a0edf606637ade95f75510bffcd52da5e2c19edab23848c970bf020f58",
+  "baseline_sha256": "3cccc149da8c4e324bb0011580b38e7591e04bf68e2c9096a53c37486e589929",
+  "exact_reverse_softplus_branch_recovers_every3cccc_byte": true,
+  "AST_only_Emitter_emit_operation_changed": true,
+  "formula": "max(x,0)+log1p(y), y=exp(-abs(x)); for actualcomputed0<=y<=1/8 use y*(1-y/2+y^2/3-y^3/4+y^4/5-y^5/6), otherwise inheritedlogpath",
+  "degree6_proof": [
+    "Alternating-series remainder <=y^7/7; log1p(y)>=y/(1+y), so relative remainder <=(1+y)y^6/7 on[0,1/8].",
+    "Horner coefficient order checked exactly: initialfma(-1/6,y,1/5), then yP-1/4, yP+1/3, yP-1/2, yP+1; finalyP. Five explicitfma.rn plusmul.rn preserves tinyy without forming1+y.",
+    "All Horner intermediates normal with no near-zero cancellation onthisinterval. gamma6 weightedabsolute-polynomial bound, plusF32 coefficientrepresentationerrors, dividedbyPmin=1-y/2 supplies conservativeforwardbound.",
+    "Error in approximate exp propagates through log1p with relative condition <=1, and final additionofnonnegative max has no cancellation.",
+    "PTX manual specifies ex2 max2ulp fromcorrectlyrounded result; allowance2.5ulp vs real translates to5u relative for normaly. Multiplyargument bound includes coefficientF32encoding androunding.",
+    "Forlargebrachy>1/8 on[-80,80], |x|<3 follows exp(-3)<1/8 withhugemarginoverex2error; lg2 absolute2^-22 over shifted(1,2) plusaddrounding andln2coefficient/multiply bounds gives<3e-6. Boundarynear2 usesrelativeboundwithoutchanginglimit."
+  ],
+  "bounds_normal_domain": {
+    "x_abs_max": 80,
+    "unit_roundoff": 5.960464477539063e-08,
+    "truncation_relative": 6.130763462611608e-07,
+    "Horner_and_coefficient_relative": 4.0767188922988503e-07,
+    "argument80_absolute": 8.420076335576568e-06,
+    "exp80_relative_including_round_and2ulp": 6.134394166891405e-06,
+    "small_branch_composed_relative_upper": 7.393606858308033e-06,
+    "large_branch_composed_relative_upper": 2.7267975548639356e-06,
+    "reference_boundary_and_final_multiply_rounding_included": true,
+    "required_rtol": 1e-05
+  },
+  "source_semantics": [
+    "Threshold is analytic range in computed y, independent of fixture/inputshape/values; no metadataorcase names used.",
+    "Ordered setp.le rejectsNaN into originalNaNlogpath; finalsum remainsNaN. x=-Inf yieldsy0,poly0,max0->+0; x=+Inf yields+Inf; signedzeros takeinheritedy1log2path.",
+    "Both branches definelogarithm beforejoin; small-onlypolynomial neverreadonlargepath. Freshreg/label API and allsurroundingemit codeunchanged.",
+    "Existingdtypeguard and operationboundary retained; following multiplyremainsseparateF32operation."
+  ],
+  "limits": [
+    "Math bound assumes realnormaly/results and finite nonoverflowingnormalproduct in oracle[-80,80]; subnormal/underflow/cancellation inlateruseroperations cannot receive a universal relative guarantee.",
+    "No compiler execution, method emission, assembly or GPU. PTX/SASS branchvalidity and numericactualtests remain parentqualification.",
+    "Does not claimexactlyroundedsoftplus orNaNpayloadpreservation. Native approximateex2/lg2 guarantees and ordinaryF32toleranceused."
+  ],
+  "primary_source": {
+    "URL": "https://docs.nvidia.com/cuda/archive/13.0.2/parallel-thread-execution/index.html#floating-point-instructions-ex2",
+    "version": "CUDA13.0.2 PTXISA9.0",
+    "checked_claims": [
+      "ex2.approx.f32 max2ulp fromcorrectlyrounded; defaultsubnormalssupported",
+      "lg2.approx.f32 abs2^-22 in(.5,2), relative2^-22 outside",
+      "fma.rn single-round nearest-even"
+    ]
+  },
+  "created_utc": "2026-10-23T00:52:57.548014+00:00",
+  "owned_jobs": []
+}
