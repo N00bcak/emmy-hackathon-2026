@@ -1,0 +1,1 @@
+{"atol":0.0,"graph_inputs":["x"],"graph_outputs":["out"],"id":"f16-async-raw-bytecopy-v2","kernels":[{"arg_order":["out","x"],"args":[{"dtype":"f16","name":"out","output":true,"shape":[4]},{"dtype":"f16","name":"x","shape":[8]}],"block":[8,1,1],"entry":"k_half_copy","final":true,"grid":[1,1,1],"node":"out","smem_bytes":16,"zero_outputs":[]}],"rtol":0.0}

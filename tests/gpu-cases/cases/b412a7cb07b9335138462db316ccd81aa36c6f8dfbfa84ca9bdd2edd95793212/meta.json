@@ -1,0 +1,1 @@
+{"atol":0.0,"graph_inputs":[],"graph_outputs":["out_935711"],"id":"nested-seeded-fold-lexical-scope-v1","kernels":[{"arg_order":["out_935711"],"args":[{"dtype":"f32","name":"out_935711","output":true,"shape":[35,8]}],"block":[32,1,1],"entry":"k_935711","final":true,"grid":[2,1,1],"node":"out_935711","smem_bytes":0,"zero_outputs":[]}],"rtol":0.0}

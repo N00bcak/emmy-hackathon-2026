@@ -57,6 +57,12 @@ The condensation itself claims no compiler performance improvement. The subseque
 
 ## Selection and confirmation
 
+The fixture payloads are now bundled in [tests/gpu-cases](../tests/gpu-cases/README.md).
+Run `python -m tools.bundled_regressions` to verify all 100 copied cases and the
+unchanged default 93-case policy. Its `--out` option resolves portable fixture
+paths into a local catalog for the existing selector. The seven campaign extras
+remain separate from the default selection; no tolerance changed during export.
+
 Resolve runtime paths from private configuration. Select from the existing archive:
 
 ```sh

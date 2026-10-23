@@ -1,0 +1,1 @@
+{"graph_inputs": ["x"], "graph_outputs": ["out"], "rtol": 0, "atol": 0, "kernels": [{"node": "out", "entry": "k", "arg_order": ["out", "x"], "args": [{"name": "out", "dtype": "f32", "shape": [], "output": true}, {"name": "x", "dtype": "f32", "shape": [3]}], "grid": [2, 1, 1], "block": [64, 1, 1], "smem_bytes": 0, "zero_outputs": []}]}

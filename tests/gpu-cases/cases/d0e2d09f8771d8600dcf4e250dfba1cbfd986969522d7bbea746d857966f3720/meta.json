@@ -1,0 +1,1 @@
+{"atol":0.0,"graph_inputs":["x"],"graph_outputs":["out"],"id":"mixed-storage-copy-byte-stride-v1","kernels":[{"arg_order":["out","x"],"args":[{"dtype":"f32","name":"out","output":true,"shape":[4]},{"dtype":"f64","name":"x","shape":[8]}],"block":[8,1,1],"entry":"k_mixed_copy","final":true,"grid":[1,1,1],"node":"out","smem_bytes":16,"zero_outputs":[]}],"rtol":0.0}

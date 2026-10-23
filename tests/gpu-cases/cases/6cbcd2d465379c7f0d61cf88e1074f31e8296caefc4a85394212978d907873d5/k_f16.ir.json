@@ -1,0 +1,45 @@
+{
+  "inputs": [
+    "x"
+  ],
+  "nodes": {
+    "out": {
+      "inputs": [],
+      "op": "KernelOp",
+      "op_fields": {
+        "body": [
+          "Tile(axes=(Axis(name='i', extent=Dim(16), window=None),), body=(Smem(name='scratch', extents=(16,), dtype='half', align=2), Load(names=('v',), input='x', index=(Var(name='i'),), dtype=DataType(name='f16', np=dtype('float16'), nbytes=2)), Write(output='scratch', index=(Var(name='i'),), values=('v',), value_dtype=DataType(name='f16', np=dtype('float16'), nbytes=2), atomic=False, swizzle='NONE'), Load(names=('w',), input='scratch', index=(Var(name='i'),), dtype=DataType(name='f16', np=dtype('float16'), nbytes=2)), Assign(name='scaled', op=ElementwiseImpl('multiply'), args=('w', 'two'), dtype=DataType(name='f16', np=dtype('float16'), nbytes=2)), Assign(name='mask', op=ElementwiseImpl('greater_equal'), args=('w', 'zero'), dtype=DataType(name='f16', np=dtype('float16'), nbytes=2)), Assign(name='pick', op=ElementwiseImpl('where'), args=('mask', 'scaled', 'w'), dtype=DataType(name='f16', np=dtype('float16'), nbytes=2)), Write(output='out', index=(Var(name='i'),), values=('pick',), value_dtype=DataType(name='f16', np=dtype('float16'), nbytes=2), atomic=False, swizzle='NONE')), block_threads=16, aux_threads=0, raster_axes=None, raster_group=None, raster_orient='m')"
+        ],
+        "name": "k_f16",
+        "serial": [],
+        "zero_delegated": []
+      },
+      "outputs": [
+        {
+          "dtype": "f16",
+          "name": "out",
+          "shape": [
+            16
+          ]
+        }
+      ]
+    },
+    "x": {
+      "inputs": [],
+      "op": "InputOp",
+      "op_fields": {},
+      "outputs": [
+        {
+          "dtype": "f16",
+          "name": "x",
+          "shape": [
+            16
+          ]
+        }
+      ]
+    }
+  },
+  "outputs": [
+    "out"
+  ]
+}
