@@ -1,0 +1,493 @@
+{
+  "status": "five independently confirmed improvements retained; single official representative batch completed successfully",
+  "branch": "n00bcak",
+  "source_id": "b4d3b3238c85e619f59dc7954c8518d90f8bfcd0152c5d9a8005ba9580101143",
+  "parent_source_id": "c4e757fb2b7e63661d7301bc9684009aa8ec88ef7248badac8d35ea2579b96c8",
+  "compile_sha256": "712fb81b24d332b80348cd24a2ef00e3ca328fea9684095fefab36033e7243cf",
+  "suite_id": "64c1a2c428dc69e87cbb49718fff7d722b2f2ef921cbab341a19898308bf5499",
+  "decision_id": "0f2c2594c7877121e427f7cffe8fd90a7e9ce43f107fe52a98d30da94a7791d5",
+  "assessed_evidence_id": "6b0694f13350e410d5147b51258a193a1e2914aeee08e501557e7b45c419af6d",
+  "fresh_candidate_full66": "41c85e5f9a59004938486a10d892bdaca4d3ae7586785d46e46883a9410f21be",
+  "fresh_baseline_full66": "a748bfcfbec9a1532a5e2fbff45b191540132bfac530c34541ad1441ed938e9f",
+  "independent_timing": "867bdd39b15a8913203b49798c95af3cdfc7184b08efd58e828cf8ca1b0a2678",
+  "confirmed_speed_promotions": 5,
+  "official_requests": 9,
+  "verification": {
+    "all_published": 15,
+    "fixed_gpu_cases": 66,
+    "guarded_repetitions_per_arm": 198,
+    "sanitizers_per_arm": 16,
+    "named_existing_unit_methods": 32,
+    "internal_unit_leaf_checks": 52,
+    "named_tests_per_experiment": 98,
+    "unchanged_tolerances": true,
+    "new_cases": 1,
+    "new_case_reason": "Demonstrated performance-essential mutable-register alias bug in prescale candidate; existing65 had no Assign/Accum observer. Baseline already correct.",
+    "sm89_assembly": true,
+    "sm120_assembly": true,
+    "execution_device": "RTX4090",
+    "sm120_execution": true,
+    "expanded_unit_and_gpu_case_count": 118,
+    "unit_review_sha256": "c8a456453a7f13fd7b4779e1725d6bfb58f7dfed381aa0ab6d3fe05a29e0e2c5",
+    "candidate_all15_gate": "f3af544fba7bb3858d488ac8cd27aa038197620b53596e6082f8dfe00a435e8b",
+    "baseline_all15_gate": "45f452de197930987a4432f57c940ae9983f74e419d4f4ca6eeecd7df03df356",
+    "all_checks_under_clarified_definition": 118,
+    "complies_with_clarified_100_check_limit": false,
+    "sm120_execution_scope": "Hosted a01 attention only, three repetitions per arm. Full66 execution remains RTX4090 only."
+  },
+  "performance": {
+    "metric": "incremental vs retained scalar-address packet and producer MAX fusion; warm-cache CUDA graph grouped32 time per launch, not isolated launch latency",
+    "a01_attention_ratio": 0.9387182068745766,
+    "existing_d51_core_witness_ratio": 0.9385475042001381,
+    "AA_margins": {
+      "a01": 0.016759904610973875,
+      "d51": 0.016759904610973875
+    },
+    "both_phases_and_each_AB_block_confirmed": true,
+    "independent_faster_slower_per_case": [
+      64,
+      0
+    ],
+    "other_64_cases": "identical native images against parent; no new timing",
+    "resolved_regressions_for_retained_source": [],
+    "do_not_multiply_separate_comparisons": true,
+    "independent_raw_review_sha256": "8b80e8dd5e7109dfaf425c3d54398869acce8e3e0f7e0721ad24f33458e4f8d8",
+    "resources_on_changed_cases": {
+      "registers_sm89": 172,
+      "registers_sm120": 185,
+      "spills": 0,
+      "shared_memory_unchanged": true,
+      "native_text_change_bytes": 768
+    }
+  },
+  "limits": [
+    "No hidden-set correctness claim.",
+    "All15 and full66 execution are source-bound RTX4090 evidence. Hosted RTX5090 execution covers only the single a01 representative, independently of sm120 assembly.",
+    "The hosted timing has three samples per arm and is indicative; it is not a significance-qualified whole-suite speedup.",
+    "Combined118 prior checks exceeded the clarified100-check limit; that deviation is recorded without rewriting historical evidence. No new local tests or variants were run on resumption.",
+    "All raw source, cases, buffers, assembly, timings, admission, HTTP journals, failures and authoritative handoff remain in the configured private research store.",
+    "One official batch has been spent; no retry or second batch is authorized. Git network operations and publication remain owner-controlled."
+  ],
+  "promotion_history": [
+    {
+      "status": "active bounded campaign; first independently confirmed source installed, uncommitted",
+      "branch": "n00bcak",
+      "source_id": "16568e50b03286d96b4d24f00d7b95338901cfe634276301391af16c7352c2b8",
+      "parent_source_id": "e021a2d9d9547c09c7540f5f66ab571010bad2ea84fcea1484f5c9ddb874794e",
+      "compile_sha256": "92f7da507c505584569aae07f311c84037a98a809b4c242b971021cdc05a373a",
+      "suite_id": "64c1a2c428dc69e87cbb49718fff7d722b2f2ef921cbab341a19898308bf5499",
+      "decision_id": "099378ea3ff5c8905d2cb090385257b5b0ea0bcc04cec19c67df06c703a3a4a4",
+      "assessed_evidence_id": "60659e5cdb27183e4ae441601ed0308e64c949b2dd8910c672e8ba4e3615761f",
+      "fresh_candidate_full66": "0ca8428780371d7347ac34c91c17de0917b19d42b3eedd5ffaa9201f55ed5973",
+      "fresh_baseline_full66": "372eb94fe240750da3508ea650ba1d52fab3feb6471cd711f556f8e02a955d28",
+      "independent_timing": "be85eb468c8ed91e17a00d26e979832416008a408e62d1fd2d604228cfea2dbd",
+      "confirmed_speed_promotions": 1,
+      "official_requests": 0,
+      "verification": {
+        "all_published": 15,
+        "fixed_gpu_cases": 66,
+        "guarded_repetitions_per_arm": 198,
+        "sanitizers_per_arm": 16,
+        "named_existing_unit_methods": 32,
+        "internal_unit_leaf_checks": 52,
+        "named_tests_per_experiment": 98,
+        "unchanged_tolerances": true,
+        "new_cases": 1,
+        "new_case_reason": "Demonstrated performance-essential mutable-register alias bug in prescale candidate; existing65 had no Assign/Accum observer. Baseline already correct.",
+        "sm89_assembly": true,
+        "sm120_assembly": true,
+        "execution_device": "RTX4090",
+        "sm120_execution": false,
+        "all_checks_under_clarified_definition": 118,
+        "complies_with_clarified_100_check_limit": false
+      },
+      "performance": {
+        "metric": "warm-cache CUDA graph grouped32 time per launch, not isolated launch latency",
+        "a01_attention_ratio": 0.8458497823654718,
+        "existing_d51_core_witness_ratio": 0.8458497823654718,
+        "AA_margin": 0.011857797537194958,
+        "both_phases_and_each_AB_block_confirmed": true,
+        "a02_attention_128": {
+          "ratio": 0.8571428757039733,
+          "AA_margin": 0.4285713728880801,
+          "status": "inconclusive originalR1"
+        },
+        "alias_regression_case": "historical inconclusive; identical native image, no new timing",
+        "resolved_regressions_for_retained_source": []
+      },
+      "limits": [
+        "No hidden-set correctness claim.",
+        "SM120 assembly does not establish RTX5090 correctness.",
+        "All raw source, cases, buffers, assembly, timings, admissions, failures and handoff retained in configured private research store.",
+        "Official batch requires five genuine incremental promotions; no commit before passing that exact official source."
+      ]
+    },
+    {
+      "status": "active bounded campaign; two independently confirmed incremental improvements installed, uncommitted",
+      "branch": "n00bcak",
+      "source_id": "7c0cb76228841b5fb9ab0f1d9fec39556d2baae4de88e1af4895de2b3acaf258",
+      "parent_source_id": "16568e50b03286d96b4d24f00d7b95338901cfe634276301391af16c7352c2b8",
+      "compile_sha256": "028942b92cf950262c6f2ab42fd2c4756566562229dab66eb469b89f792c565c",
+      "suite_id": "64c1a2c428dc69e87cbb49718fff7d722b2f2ef921cbab341a19898308bf5499",
+      "decision_id": "8f2a578752d28015bbcccfbb9893053e28e6b05faf3f61ad023c3dcf4acfcc56",
+      "assessed_evidence_id": "4a7fd5ffdd6be73f76c97b0ea78430e2fa4c3e6f2ce0a8f951bdae855a19f14e",
+      "fresh_candidate_full66": "d453d6ee69344cf3b397c03dfa2fe92ddb3b9c21ffab54439721b05778bd55c9",
+      "fresh_baseline_full66": "5977cf1942996c371fda46fe0754a5869ef6cdbad86bb7c904b316536d3ef113",
+      "independent_timing": "0caea0afb7481807f7d2b5a83159b68f141bb0635de87e8267cba4de6ef5c01c",
+      "confirmed_speed_promotions": 2,
+      "official_requests": 0,
+      "verification": {
+        "all_published": 15,
+        "fixed_gpu_cases": 66,
+        "guarded_repetitions_per_arm": 198,
+        "sanitizers_per_arm": 16,
+        "named_existing_unit_methods": 32,
+        "internal_unit_leaf_checks": 52,
+        "named_tests_per_experiment": 98,
+        "unchanged_tolerances": true,
+        "new_cases": 1,
+        "new_case_reason": "Demonstrated performance-essential mutable-register alias bug in prescale candidate; existing65 had no Assign/Accum observer. Baseline already correct.",
+        "sm89_assembly": true,
+        "sm120_assembly": true,
+        "execution_device": "RTX4090",
+        "sm120_execution": false,
+        "expanded_unit_and_gpu_case_count": 118,
+        "unit_review_sha256": "e36b2592299530fdc03b7fd0deeedab7f866e366695eafb6640f1f50e858c95f",
+        "all_checks_under_clarified_definition": 118,
+        "complies_with_clarified_100_check_limit": false
+      },
+      "performance": {
+        "metric": "incremental vs retained sharedP; warm-cache CUDA graph grouped32 time per launch, not isolated launch latency",
+        "a01_attention_ratio": 0.9107980604825401,
+        "existing_d51_core_witness_ratio": 0.9107980604825401,
+        "AA_margin": 0.014084408894048162,
+        "both_phases_and_each_AB_block_confirmed": true,
+        "independent_faster_slower_per_case": [
+          63,
+          1
+        ],
+        "a02_attention_128": {
+          "ratio": 0.9481527657687676,
+          "AA_margin": 0.4285713728880801,
+          "status": "inconclusive originalR1"
+        },
+        "other_63_cases": "identical native images against parent; no new timing",
+        "resolved_regressions_for_retained_source": [],
+        "do_not_multiply_separate_comparisons": true
+      },
+      "limits": [
+        "No hidden-set correctness claim.",
+        "SM120 assembly does not establish RTX5090 correctness.",
+        "All raw source, cases, buffers, assembly, timings, admissions, failures and handoff retained in configured private research store.",
+        "Official batch requires five genuine incremental promotions; no commit before passing that exact official source."
+      ],
+      "rejected_first_screen_regressions": [
+        {
+          "case": "r02",
+          "variant": "vectorSUM",
+          "ratio": 1.231886,
+          "AA_margin": 0.017442,
+          "status": "rejected; first screen only"
+        },
+        {
+          "case": "r02",
+          "variant": "vectorILP",
+          "ratio": 1.194481811,
+          "AA_margin": 0.01754374,
+          "status": "rejected; first screen only"
+        },
+        {
+          "case": "r02",
+          "variant": "vectorRolling",
+          "ratio": 1.098837243,
+          "AA_margin": 0.01754374,
+          "status": "rejected; first screen only"
+        }
+      ]
+    },
+    {
+      "status": "active bounded campaign; three independently confirmed incremental improvements installed, uncommitted",
+      "branch": "n00bcak",
+      "source_id": "65583fddf45c6f33ffa6de3c83df1f8b93dadd14244719a813aa93d3dfa22826",
+      "parent_source_id": "7c0cb76228841b5fb9ab0f1d9fec39556d2baae4de88e1af4895de2b3acaf258",
+      "compile_sha256": "039e85c20e88c25e60a432386fa49f9832c6f0221b39593f2302e84a2097b662",
+      "suite_id": "64c1a2c428dc69e87cbb49718fff7d722b2f2ef921cbab341a19898308bf5499",
+      "decision_id": "475bb9b4f3983ea54c38a3c105b3301644bee5aa6a3d2a3b44071c2de26c2bd6",
+      "assessed_evidence_id": "116e9bc90339de05981a9b5f645ddee786bf341538f1a2103dff6f872273847b",
+      "fresh_candidate_full66": "c55ae6182cdec7c46df2262c26cc94993840638bb27c96c9a53c9d5f71bb687c",
+      "fresh_baseline_full66": "e3e01717f43cf1ac81f7bf2b78e40ef2f990e9efa7e672d436bb4b4b3da093df",
+      "independent_timing": "5696f6ccc27fdb8edfe9107162f9b932fe34ffc4e4ce83d0bbf1a9ba431267b7",
+      "confirmed_speed_promotions": 3,
+      "official_requests": 0,
+      "verification": {
+        "all_published": 15,
+        "fixed_gpu_cases": 66,
+        "guarded_repetitions_per_arm": 198,
+        "sanitizers_per_arm": 16,
+        "named_existing_unit_methods": 32,
+        "internal_unit_leaf_checks": 52,
+        "named_tests_per_experiment": 98,
+        "unchanged_tolerances": true,
+        "new_cases": 1,
+        "new_case_reason": "Demonstrated performance-essential mutable-register alias bug in prescale candidate; existing65 had no Assign/Accum observer. Baseline already correct.",
+        "sm89_assembly": true,
+        "sm120_assembly": true,
+        "execution_device": "RTX4090",
+        "sm120_execution": false,
+        "expanded_unit_and_gpu_case_count": 118,
+        "unit_review_sha256": "08b30067e68eb76dd78b1ef98942d390ee1ee8eceae0fbd0083823286b15cc89",
+        "all_checks_under_clarified_definition": 118,
+        "complies_with_clarified_100_check_limit": false
+      },
+      "performance": {
+        "metric": "incremental vs retained duplicateMAX; warm-cache CUDA graph grouped32 time per launch, not isolated launch latency",
+        "a01_attention_ratio": 0.9793815105758673,
+        "existing_d51_core_witness_ratio": 0.9793815105758673,
+        "AA_margin": 0.015464035840318635,
+        "both_phases_and_each_AB_block_confirmed": true,
+        "independent_faster_slower_per_case": [
+          64,
+          0
+        ],
+        "other_64_cases": "identical native images against parent; no new timing",
+        "resolved_regressions_for_retained_source": [],
+        "do_not_multiply_separate_comparisons": true,
+        "independent_raw_review_sha256": "1a43c7f6b6ce197052a311d31966b22265bcbd24b1a0727a56ccd9b411ed3cc3"
+      },
+      "limits": [
+        "No hidden-set correctness claim.",
+        "SM120 assembly does not establish RTX5090 correctness.",
+        "All raw source, cases, buffers, assembly, timings, admissions, failures and handoff retained in configured private research store.",
+        "Official batch requires five genuine incremental promotions; no commit before passing that exact official source."
+      ],
+      "rejected_first_screen_regressions": [
+        {
+          "case": "r02",
+          "variant": "vectorSUM",
+          "ratio": 1.231886,
+          "AA_margin": 0.017442,
+          "status": "rejected; first screen only"
+        },
+        {
+          "case": "r02",
+          "variant": "vectorILP",
+          "ratio": 1.194481811,
+          "AA_margin": 0.01754374,
+          "status": "rejected; first screen only"
+        },
+        {
+          "case": "r02",
+          "variant": "vectorRolling",
+          "ratio": 1.098837243,
+          "AA_margin": 0.01754374,
+          "status": "rejected; first screen only"
+        }
+      ]
+    },
+    {
+      "status": "active bounded campaign; four independently confirmed incremental improvements installed, uncommitted",
+      "branch": "n00bcak",
+      "source_id": "c4e757fb2b7e63661d7301bc9684009aa8ec88ef7248badac8d35ea2579b96c8",
+      "parent_source_id": "65583fddf45c6f33ffa6de3c83df1f8b93dadd14244719a813aa93d3dfa22826",
+      "compile_sha256": "ccc498f9f11e8390bb11f7226829d94241299757b54ea92a166f95229ce89d50",
+      "suite_id": "64c1a2c428dc69e87cbb49718fff7d722b2f2ef921cbab341a19898308bf5499",
+      "decision_id": "fcf5a9d42a7b2cbe779dc50bc85aa991865eff959951dc776e45b8c9303d744f",
+      "assessed_evidence_id": "eb33ba457cab69e7e5f3d6f69239f3f09adb68b4816df025aa154d9d4828ae76",
+      "fresh_candidate_full66": "297effe939a77b5dc94a56585aabf714c0d934d5e78dfcee3422ef140ead7942",
+      "fresh_baseline_full66": "4c9f6adb458c878f63011ed1db0eb0f4193e638f7d327db891615a731b521c6e",
+      "independent_timing": "39edfc147d5cc3baf29e6ab5909b309c040a132216e17f703779c1b550b1b748",
+      "confirmed_speed_promotions": 4,
+      "official_requests": 0,
+      "verification": {
+        "all_published": 15,
+        "fixed_gpu_cases": 66,
+        "guarded_repetitions_per_arm": 198,
+        "sanitizers_per_arm": 16,
+        "named_existing_unit_methods": 32,
+        "internal_unit_leaf_checks": 52,
+        "named_tests_per_experiment": 98,
+        "unchanged_tolerances": true,
+        "new_cases": 1,
+        "new_case_reason": "Demonstrated performance-essential mutable-register alias bug in prescale candidate; existing65 had no Assign/Accum observer. Baseline already correct.",
+        "sm89_assembly": true,
+        "sm120_assembly": true,
+        "execution_device": "RTX4090",
+        "sm120_execution": false,
+        "expanded_unit_and_gpu_case_count": 118,
+        "unit_review_sha256": "2ecdd91ebeecfb8bc39a7b7dd0b295d23a7051c58df760c9f6ffaf5afa2c5974",
+        "all_checks_under_clarified_definition": 118,
+        "complies_with_clarified_100_check_limit": false
+      },
+      "performance": {
+        "metric": "incremental vs retained scalar-address packet; warm-cache CUDA graph grouped32 time per launch, not isolated launch latency",
+        "a01_attention_ratio": 0.9472291668433033,
+        "existing_d51_core_witness_ratio": 0.9447368060278014,
+        "AA_margins": {
+          "a01": 0.015873136863997273,
+          "d51": 0.01578936363787453
+        },
+        "both_phases_and_each_AB_block_confirmed": true,
+        "independent_faster_slower_per_case": [
+          64,
+          0
+        ],
+        "other_64_cases": "identical native images against parent; no new timing",
+        "resolved_regressions_for_retained_source": [],
+        "do_not_multiply_separate_comparisons": true,
+        "independent_raw_review_sha256": "ec6cedf759dcdaf09444654bdace5254afe87eb92b188ce59c23e5016a616342",
+        "resources_on_changed_cases": {
+          "registers_sm89": 184,
+          "registers_sm120": 186,
+          "spills": 0,
+          "shared_memory_unchanged": true
+        }
+      },
+      "limits": [
+        "No hidden-set correctness claim.",
+        "SM120 assembly does not establish RTX5090 correctness.",
+        "All raw source, cases, buffers, assembly, timings, admissions, failures and handoff retained in configured private research store.",
+        "Official batch requires five genuine incremental promotions; no commit before passing that exact official source."
+      ],
+      "rejected_first_screen_regressions": [
+        {
+          "case": "r02",
+          "variant": "vectorSUM",
+          "ratio": 1.231886,
+          "AA_margin": 0.017442,
+          "status": "rejected; first screen only"
+        },
+        {
+          "case": "r02",
+          "variant": "vectorILP",
+          "ratio": 1.194481811,
+          "AA_margin": 0.01754374,
+          "status": "rejected; first screen only"
+        },
+        {
+          "case": "r02",
+          "variant": "vectorRolling",
+          "ratio": 1.098837243,
+          "AA_margin": 0.01754374,
+          "status": "rejected; first screen only"
+        }
+      ]
+    }
+  ],
+  "rejected_first_screen_regressions": [
+    {
+      "case": "r02",
+      "variant": "vectorSUM",
+      "ratio": 1.231886,
+      "AA_margin": 0.017442,
+      "status": "rejected; first screen only"
+    },
+    {
+      "case": "r02",
+      "variant": "vectorILP",
+      "ratio": 1.194481811,
+      "AA_margin": 0.01754374,
+      "status": "rejected; first screen only"
+    },
+    {
+      "case": "r02",
+      "variant": "vectorRolling",
+      "ratio": 1.098837243,
+      "AA_margin": 0.01754374,
+      "status": "rejected; first screen only"
+    }
+  ],
+  "official_preparation": {
+    "status": "completed: one unchanged-helper batch, nine requests, no retries",
+    "helper_sha256": "af9e19b8ed6bba34ae1ff6afc3deac517ca48d2ba776a51d66bf84edae347bae",
+    "planned_requests": 9,
+    "hard_cap": 25,
+    "single_case": "a01_attention",
+    "first_shortlist_decision": "69587404d394a872db46633aeac50cac183dc4bbf560a2e2ae1e8c0bb659b3ba",
+    "eligibility_evidence": "2d9754273c94cd2943f90c0bccb3fa6003feb0b58e62319785f73c9ab238073a",
+    "eligibility_artifact": "3b94824fdb43a27fc5b64e85152ddd2f276dd091a7aa3c5263d4be7fcde41e97",
+    "companion_raw_review_sha256": "ac205c243421350fc164adc117a812ac2c764cbd13a1b52cc3c40203e0b00ef1",
+    "main_pairs_unchanged": true,
+    "new_single_AB_burst": true,
+    "hosted_scope": "one published representative; no all15 hosted claim",
+    "approval_rejection_reason": "Automatic approval review requires explicit approval to send realized published-case inputs, metadata and baseline/candidate PTX to the existing external grading endpoint.",
+    "destination_payload_approved": true,
+    "approval_rejection_resolved_by_explicit_user_reply": true,
+    "current_blocker": null,
+    "goal_scoped_future_submissions_authorized": true
+  },
+  "campaign_budget": {
+    "run_id": "campaign-20261024-speed-v1",
+    "start_utc": "2026-10-23T20:53:35.257462Z",
+    "hard_stop_utc": "2026-10-24T08:53:35.257462Z",
+    "evaluated_entries": 76,
+    "distinct_evaluated_sources": 24,
+    "conservative_variant_ceiling": 89,
+    "max_variants": 200,
+    "manual_debug_sources_already_counted": true,
+    "budget_audit_sha256": "72f7821f190108d09a0033e9d11f4b3e751a33fc6a08aff78f8c627efef7ad1a",
+    "restored_remaining_seconds": 23400,
+    "restoration_anchor_utc": "2026-10-24T09:52:58Z",
+    "restored_hard_stop_utc": "2026-10-24T16:22:58Z",
+    "restoration_artifact": "c50fee6efe581824c6eeb1017214727b9eb043274fb0fd2225ec1efd96249658",
+    "local_tests_run_after_clarification": 0,
+    "hosted_output_comparisons_after_clarification": 6
+  },
+  "mechanism_finding_sha256": "f86823fd36d577b595e9bbae1d4b33e9ee67e6e615ad9558e55a8a98560e61c5",
+  "test_limit_clarification": {
+    "user_definition": "All checks per experiment, including CPU leaf checks",
+    "limit": 100,
+    "gpu_cases": 66,
+    "cpu_leaf_checks": 52,
+    "combined_checks": 118,
+    "compliant": false,
+    "previous_counting": "98 named cases/methods was insufficient under the clarified definition",
+    "response": "Recorded the overrun; no further tests or experiments will be run. Prior checks cannot be undone."
+  },
+  "official_result": {
+    "status": "completed",
+    "scope": "One published a01 attention representative; not hosted all15 or hidden-set grading",
+    "requests_attempted": 9,
+    "planned_requests": 9,
+    "cap": 25,
+    "singleton_batch_spent": true,
+    "helper_sha256": "af9e19b8ed6bba34ae1ff6afc3deac517ca48d2ba776a51d66bf84edae347bae",
+    "raw_result_sha256": "de6cee4f2be5b646a30394c7f51c97f7de6feef0f8e601b66128150fc3933a40",
+    "source_id": "b4d3b3238c85e619f59dc7954c8518d90f8bfcd0152c5d9a8005ba9580101143",
+    "baseline_id": "c4e757fb2b7e63661d7301bc9684009aa8ec88ef7248badac8d35ea2579b96c8",
+    "suite_id": "64c1a2c428dc69e87cbb49718fff7d722b2f2ef921cbab341a19898308bf5499",
+    "device": "NVIDIA GeForce RTX 5090 (compute capability 12.0, sm_120)",
+    "assembly_arch": "sm_120",
+    "measurement": {
+      "warmup": 5,
+      "iters": 20,
+      "repetitions": 3
+    },
+    "case_id": "a01_attention",
+    "baseline_samples_us": [
+      8.864,
+      8.864,
+      8.896
+    ],
+    "candidate_samples_us": [
+      6.816,
+      6.848,
+      6.864
+    ],
+    "baseline_median_us": 8.864,
+    "candidate_median_us": 6.848,
+    "candidate_over_baseline": 0.7725631768953067,
+    "indicative_time_reduction_percent": 22.743682310469325,
+    "output_comparisons": 6,
+    "mismatched_elements": 0,
+    "maximum_absolute_error": 6.556510925292969e-07,
+    "unchanged_tolerances": {
+      "rtol": 0.001,
+      "atol": 0.0001
+    },
+    "direction_agreement": true,
+    "uncertainty": "Indicative timing; few cases and repeats. Accumulate compatible observations across runs; no reliable predictor is established.",
+    "no_further_batch_allowed": true,
+    "independent_audit_sha256": "feafa67040957cfcde9c1d6ae623f5f1f0a0c9b0e8e743a7722bb72adb75e39c",
+    "minimum_completion_to_next_request_seconds": 2.015641212463379
+  }
+}
