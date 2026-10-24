@@ -32,6 +32,13 @@ repository again does not reactivate discovery.
 
 ## Mandatory all-15 correctness
 
+Plan each compiler experiment with the [consolidated 100-check
+gate](experiment-gate.md) before running checks. Its 66 unchanged GPU cases and
+34 additional CPU leaf checks fit the total limit, including parameter cases.
+Do not append the standalone compiler unit suite: its shared published/m01/m02
+assertions already run inside the combined cases. The planner rejects changed
+inventories and over-budget additions before execution.
+
 Routine GPU checks use the [audited 65-case regression suite](gpu-regression.md):
 all 15 published contracts plus 50 core witnesses. The versioned scope ledger
 records targeted mechanism/dtype checks and non-gating stress diagnostics.

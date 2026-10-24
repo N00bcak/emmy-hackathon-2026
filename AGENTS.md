@@ -28,6 +28,14 @@ not impose universal intermediate exactness or serial summation order. Preserve
 exact indices, ABI, integer/transport semantics and each output's membership.
 Historical 93-case receipts remain historical and cannot qualify the new suite.
 
+Compiler experiments use `tests/experiment-gate.json` and
+`python -m tools.experiment_gate plan` before execution: all 65 original GPU
+witnesses plus the existing scaled-score alias regression and 34 additional CPU
+leaf checks, totaling 100. Published entry/assembly checks and m01/m02 PTX
+assertions execute on their same source-bound GPU cases. Do not append the
+standalone compiler unit suite or hide parameter cases under method counts.
+See `docs/experiment-gate.md`; changed inventories and a 101st case fail closed.
+
 Keep shared research policy separate from machine configuration. Research roots,
 storage backends, SSH details, GPU selection, mounts, container settings and
 launch commands belong in ignored private runtime configuration. Resolve the

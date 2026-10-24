@@ -2,6 +2,13 @@
 
 Five independently confirmed incremental improvements are installed on `n00bcak`. The one authorized official helper batch completed successfully: nine HTTP attempts, six output comparisons with zero mismatches, on the RTX5090. The batch is spent; do not retry or create a second batch. These files support the authorized local commit. Publication remains owner-controlled.
 
+The supporting checks have now been [consolidated into a 100-case
+gate](../experiment-gate.md): the same 66 GPU cases plus 34 additional CPU leaf
+checks. All 111 CPU assertion sites are preserved. The new qualification reuses
+the unchanged source-bound GPU record and executes the shared PTX assertions
+and CPU checks; it does not relabel the original 118-check run. See
+[consolidation evidence](experiment-gate-consolidation.json).
+
 The source object is `b4d3b3238c85e619f59dc7954c8518d90f8bfcd0152c5d9a8005ba9580101143`; `compile.py` SHA256 is `712fb81b24d332b80348cd24a2ef00e3ca328fea9684095fefab36033e7243cf`. Full identities, promotion history, verification scope and the official result are in [the evidence record](campaign-20261024-speed.json).
 
 ## Confirmed local results

@@ -216,21 +216,6 @@ class CompilerTests(unittest.TestCase):
         self.assertRegex(out, r'@%p\d+ max(?:\.NaN)?\.f32')
         self.assertRegex(out, r'@%p\d+ mov\.f32')
 
-    def test_log_lowering_is_natural_log(self):
-        from emmy.compiler.ir.elementwise import ElementwiseImpl
-        p=fixture('p00_scalar_add',self.out/'log-natural',tile_extent=1,data_extent=1)
-        graph=Graph.from_dict(json.loads(p.read_text()))
-        node=graph.nodes['add']
-        tile=node.op.body[0]
-        load=tile.body[0]
-        from emmy.compiler.ir.stmt.leaves import Assign
-        logv=Assign('logv',ElementwiseImpl('log'),(load.names[0],),None)
-        node.op=replace(node.op,body=(replace(tile,body=(load,logv)),))
-        p.write_text(json.dumps(graph.to_dict(),indent=2,default=repr))
-        out=self.assemble(p)
-        self.assertIn('lg2.approx.f32',out)
-        self.assertIn('0f3f317218',out)  # ln(2), not a base-2 result
-
     def test_reduce_aliases_canonicalize(self):
         from emmy.compiler.ir.elementwise import ElementwiseImpl
         p=fixture('r01_array_sum',self.out/'reduce-alias',tile_extent=127,data_extent=127)
@@ -308,7 +293,9 @@ class CompilerTests(unittest.TestCase):
 
     def test_vector_copy_has_runtime_fallback_and_scalar_negative(self):
         aligned=fixture('m02_matmul_rect',self.out/'vector-copy-aligned')
-        out=self.assemble(aligned)
+        self.check_vector_copy_runtime_fallback(self.assemble(aligned))
+
+    def check_vector_copy_runtime_fallback(self, out):
         self.assertIn('cp.async.cg.shared.global',out)
         self.assertIn('cp.async.commit_group',out)
         self.assertIn('cp.async.wait_group 0',out)
@@ -317,6 +304,8 @@ class CompilerTests(unittest.TestCase):
         # assumption; it branches to the scalar path on either address.
         self.assertIn('and.b64',out)
         self.assertIn('setp.eq.u64',out)
+
+    def test_cp_async_destination_address_arithmetic(self):
         # Evaluate emitted address arithmetic independently of register names.
         # The shared-state destination must be base+offset, including when the
         # assembler assigns a nonzero dynamic slab position (SM120 regression).
@@ -388,8 +377,11 @@ class CompilerTests(unittest.TestCase):
         inner body must not recompute it; indices that depend on the induction
         variable legitimately remain in the body.
         """
-        import re
         source=next((ROOT/'m01_matmul_512').glob('*.ir.json'))
+        self.check_m01_invariant_index_division(source, mod.compile_path(source))
+
+    def check_m01_invariant_index_division(self, source, text):
+        import re
         graph=Graph.from_dict(json.loads(source.read_text()))
         node=next(n for n in graph.nodes.values() if type(n.op).__name__=='KernelOp')
         tile=next(s for s in node.op.body if type(s).__name__=='Tile')
@@ -420,7 +412,7 @@ class CompilerTests(unittest.TestCase):
         self.assertEqual(1,sum(count>1 for count in division_counts.values()))
         single_use=sum(count==1 for count in division_counts.values())
 
-        lines=mod.compile_path(source).splitlines()
+        lines=text.splitlines()
         labels={}
         for index,line in enumerate(lines):
             match=re.fullmatch(r'\s*([A-Za-z_]\w*):\s*',line)
@@ -761,12 +753,15 @@ class CompilerTests(unittest.TestCase):
                 ptx=self.out/(problem+'.ptx')
                 ptx.write_text(text,encoding='ascii')
                 meta=json.loads(source.with_name('meta.json').read_text())
-                for kernel in meta['kernels']:
-                    self.assertIn('.entry '+kernel['entry']+'(',text)
+                self.check_published_entries(meta, text)
                 for arch in ('sm_89','sm_120'):
                     result=subprocess.run(['ptxas','-arch='+arch,str(ptx),'-o',str(self.out/(problem+arch+'.cubin'))],
                                           capture_output=True,text=True,timeout=30)
                     self.assertEqual(result.returncode,0,result.stderr)
+
+    def check_published_entries(self, meta, text):
+        for kernel in meta['kernels']:
+            self.assertIn('.entry '+kernel['entry']+'(',text)
 
     def test_f16_storage_uses_b16_carrier_and_promoted_arithmetic(self):
         from emmy.compiler.dtype import F16
@@ -816,6 +811,7 @@ class CompilerTests(unittest.TestCase):
         path=self.out/'scalar-math'
         path.mkdir()
         path=typed_pointwise((Load('v','x',(Var('i'),)),
+                              Assign('logv',ElementwiseImpl('log'),('v',)),
                               Assign('s',ElementwiseImpl('sin'),('v',)),
                               Assign('c',ElementwiseImpl('cos'),('v',)),
                               Assign('e',ElementwiseImpl('erf'),('v',)),
@@ -829,6 +825,8 @@ class CompilerTests(unittest.TestCase):
             {'name':'two','dtype':'f32','shape':[],'scalar':True,'value':2.0})
         path.with_name('meta.json').write_text(json.dumps(meta))
         out=self.assemble(path)
+        self.assertIn('lg2.approx.f32',out)
+        self.assertIn('0f3f317218',out)  # Natural logarithm: retain ln(2).
         self.assertRegex(out, r'ex2\.approx(?:\.ftz)?\.f32')
         for instruction in ('sin.approx.f32','cos.approx.f32',
                             'tanh.approx.f32','setp.gt.f32'):
