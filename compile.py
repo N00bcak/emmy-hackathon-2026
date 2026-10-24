@@ -525,6 +525,11 @@ def residue(expr, modulus, variables=None):
         return None
     if kind == 'Var':
         return None if variables is None else variables.get(expr.name)
+    if kind == 'TernaryExpr':
+        # Either branch may be taken: known only when both agree.
+        a = residue(expr.if_true, modulus, variables)
+        b = residue(expr.if_false, modulus, variables)
+        return a if a is not None and a == b else None
     if kind == 'BinaryExpr':
         left = residue(expr.left, modulus, variables)
         right = residue(expr.right, modulus, variables)
@@ -565,6 +570,30 @@ def residue(expr, modulus, variables=None):
     return None
 
 
+def axis_coefficient(expr, name):
+    """``d`` when ``expr`` is (terms free of ``name``) + d * name, else None."""
+    names = expr_names(expr)
+    if names is None:
+        return None
+    if name not in names:
+        return 0
+    kind = type(expr).__name__
+    if kind == 'Var':
+        return 1
+    if kind == 'BinaryExpr' and expr.op in ('+', '-'):
+        left, right = axis_coefficient(expr.left, name), axis_coefficient(expr.right, name)
+        if left is None or right is None:
+            return None
+        return left + right if expr.op == '+' else left - right
+    if kind == 'BinaryExpr' and expr.op == '*':
+        for factor, other in ((expr.left, expr.right), (expr.right, expr.left)):
+            if (type(factor).__name__ == 'Literal' and isinstance(factor.value, int)
+                    and not isinstance(factor.value, bool)):
+                inner = axis_coefficient(other, name)
+                return None if inner is None else inner * factor.value
+    return None
+
+
 def flat_residue(shape, index, modulus, variables=None):
     """Residue of a row-major flattened index, or None when unproven."""
     if len(index) != len(shape):
@@ -579,6 +608,18 @@ def flat_residue(shape, index, modulus, variables=None):
             return None
         total = (total + part * stride) % modulus
     return total
+
+
+def cta_cooperative(statements):
+    """True when threads of a CTA interact: barriers, shuffles, tree
+    reductions, shared memory or asynchronous copies anywhere in the tree."""
+    for statement in statements:
+        if type(statement).__name__ in ('WarpShuffle', 'TreeHalve', 'Sync', 'Smem', 'CpAsyncCopy',
+                                        'CpAsyncCommit', 'CpAsyncWait'):
+            return True
+        if any(cta_cooperative(nested) for nested in statement_bodies(statement)):
+            return True
+    return False
 
 
 def has_collective(statements):
@@ -652,6 +693,9 @@ STRAIGHT_LINE_KINDS = frozenset(('Load', 'Let', 'Assign', 'Accum'))
 # Group sizes for thread-strided loops, largest first. On the RTX 5090, 32
 # halved r02's latency against 8; 64 measured the same as 32.
 STRIDED_UNROLL = (32, 8)
+# 128-bit loads a merged strided reduction keeps in flight per thread,
+# largest first: bytes in flight bound a one-CTA reduction streaming from DRAM.
+STRIDED_VECTOR_BATCH = (32, 8, 1)
 
 
 def straight_line(statements):
@@ -667,12 +711,96 @@ def static_or_none(value):
         return None
 
 
+# Longest serial loop whose unshared per-iteration load is prefetched into
+# registers (one per iteration) before the hoisted precompute.
+REGISTER_PREFETCH_MAX = 128
+# Most x values per lane the fused softmax pass keeps in registers.
+SOFTMAX_FUSED_VALUES = 32
 # Shared bytes one Tile may spend on cooperatively hoisted values.
 HOIST_SHARED_LIMIT = 32 * 1024
 # Work items a thread evaluates together in one hoisted reduction trip.
 HOIST_REDUCTION_BATCH = 4
 # Most elements per thread a staged copy issues straight-line.
 STAGE_STRAIGHT_LINE = 64
+# Most staged-load values per thread requested while a hoisted matmul runs.
+HOIST_OVERLAP_VALUES = 32
+# Longest serial loop over hoisted rows, and longest staged matmul k extent,
+# emitted fully unrolled: with one warp per scheduler a rolled trip exposes
+# its shared-load latency, while straight-line code lets loads run ahead.
+HOISTED_UNROLL_MAX = 64
+
+# Integer div/rem by an immediate divisor. ptxas for sm_120 keeps the generic
+# reciprocal-iteration sequence (I2F, MUFU.RCP, F2I, fixups) even for powers
+# of two, so the emitter strength-reduces each instruction it writes.
+CONSTANT_DIVREM = re.compile(r'(div|rem)\.([us])(32|64) (%[a-z]+\d+), (%[a-z]+\d+), (\d+);')
+
+
+NO_DESTINATION = ('st.', 'bar', 'bra', 'ret', 'cp.async', 'red.', 'membar', 'fence', 'prefetch')
+
+
+def written_registers(instruction):
+    """Registers an emitted instruction writes (its first operand)."""
+    text = instruction.strip()
+    if text.startswith('@'):
+        text = text.split(None, 1)[1] if ' ' in text else ''
+    opcode, _, operands = text.partition(' ')
+    if not operands or opcode.startswith(NO_DESTINATION):
+        return ()
+    if operands.startswith('{'):
+        return tuple(r.strip() for r in operands[1:operands.index('}')].split(','))
+    return tuple(r.strip() for r in operands.split(',', 1)[0].rstrip(';').split('|'))
+
+
+def constant_divrem(emitter, instruction):
+    """Exact shift/mask or multiply-high replacement, or None to keep it.
+
+    Unsigned powers of two are a shift and a mask. Signed powers of two bias
+    a negative dividend by 2**k - 1 first, which reproduces PTX truncation
+    toward zero. Other u32 divisors use the Granlund-Montgomery round-up
+    sequence (1994, Fig. 4.1), exact for every 32-bit dividend.
+    """
+    match = CONSTANT_DIVREM.fullmatch(instruction)
+    if match is None:
+        return None
+    op, kind, width, out, a, divisor = match.groups()
+    width, divisor = int(width), int(divisor)
+    if not 0 < divisor < 1 << (width - 1 if kind == 's' else width):
+        return None
+    prefix = 'rd' if width == 64 else 'r'
+    if not (out.startswith('%' + prefix) and a.startswith('%' + prefix)
+            and out[len(prefix) + 1:].isdigit() and a[len(prefix) + 1:].isdigit()):
+        return None
+    bits = f'b{width}'
+    mask = (1 << width) - 1
+    k = divisor.bit_length() - 1
+    if divisor == 1:
+        return [f'mov.{bits} {out}, {a if op == "div" else 0};']
+    if divisor & (divisor - 1) == 0:
+        if kind == 'u':
+            return [f'shr.u{width} {out}, {a}, {k};' if op == 'div'
+                    else f'and.{bits} {out}, {a}, {divisor - 1};']
+        bias = emitter.reg(prefix)
+        lines = [f'shr.s{width} {bias}, {a}, {width - 1};',
+                 f'shr.u{width} {bias}, {bias}, {width - k};',
+                 f'add.s{width} {bias}, {bias}, {a};']
+        if op == 'div':
+            return lines + [f'shr.s{width} {out}, {bias}, {k};']
+        return lines + [f'and.{bits} {bias}, {bias}, 0x{mask ^ (divisor - 1):X};',
+                        f'sub.s{width} {out}, {a}, {bias};']
+    if kind != 'u' or width != 32:
+        return None
+    shift = divisor.bit_length()
+    magic = (((1 << 32) * ((1 << shift) - divisor)) // divisor) + 1
+    high, quotient = emitter.reg('r'), emitter.reg('r')
+    lines = [f'mul.hi.u32 {high}, {a}, {magic};',
+             f'sub.u32 {quotient}, {a}, {high};',
+             f'shr.u32 {quotient}, {quotient}, 1;',
+             f'add.u32 {quotient}, {quotient}, {high};']
+    if op == 'div':
+        return lines + [f'shr.u32 {out}, {quotient}, {shift - 1};']
+    return lines + [f'shr.u32 {quotient}, {quotient}, {shift - 1};',
+                    f'mul.lo.u32 {quotient}, {quotient}, {divisor};',
+                    f'sub.u32 {out}, {a}, {quotient};']
 
 
 def touched_names(statements):
@@ -949,7 +1077,10 @@ class HoistedValue:
     ``used`` lists the CTA-varying axes the statement reads, row-major; the
     remaining CTA-varying axes only replicated the same value across threads.
     Results live in shared rows of ``extent + 1`` words (padded so that
-    threads reading different rows at one serial index hit distinct banks).
+    threads reading different rows at one serial index hit distinct banks),
+    or of ``extent + 4`` words when four serial indices fill a 16-byte
+    vector: rows stay aligned and the serial loop reads four values per
+    128-bit load, still hitting distinct bank groups.
     ``serial_fastest`` orders work items so that the global index the
     statement reads contiguously varies across adjacent threads.
     """
@@ -958,7 +1089,7 @@ class HoistedValue:
         self.statement, self.exports, self.used = statement, exports, used
         self.configs, self.extent, self.symbol = configs, extent, symbol
         self.serial_fastest = serial_fastest
-        self.row_words = extent + 1
+        self.row_words = extent + 4 if extent % 4 == 0 else extent + 1
         self.nbytes = len(exports) * configs * self.row_words * 4
 
 
@@ -1100,6 +1231,8 @@ class Emitter:
         self.geometry_3d = any(d != 1 for d in (*meta['block'][1:], *meta['grid'][1:]))
         self.physical_builtins = {}
         self.lines, self.declarations = [], []
+        # (instruction, dtype, operand register) -> result register.
+        self.unary_cache = {}
         self.externals = []
         self.counts = {'r': 0, 'rh': 0, 'rd': 0, 'f': 0, 'fd': 0, 'p': 0}
         self.values, self.buffers, self.shared = {}, {}, {}
@@ -1116,6 +1249,8 @@ class Emitter:
         self.loop_expressions = []
         self.versions = {}
         self.var_residue = {}
+        # Literal (start, step) of strided induction variables while bound.
+        self.axis_facts = {}
         self.shared_statements = {}
         self.shared_bytes = 0
         self.has_cp_async = False
@@ -1123,9 +1258,22 @@ class Emitter:
         self.hoist_plans = {}
         self.hoisted = {}
         self.hoist_bytes = 0
+        # Hoisted rows that are 16-byte aligned, and the active four-wide
+        # serial group (axis, group byte offset, position, row vectors).
+        self.vector_rows, self.hoist_vector = set(), None
+        # Called by a staged hoisted matmul once its operands are staged.
+        self.hoist_overlap = None
         self.vn_skip, self.vn_record, self.vn_registers = {}, {}, {}
         self.vector_loops = 0
         self.tile_extents = {}
+        # Hoisted-softmax rewrite: statements dropped from the serial loop and
+        # statements whose value is read from shared memory per iteration.
+        self.skip_ids, self.subst_load = set(), {}
+        self.no_vector_reduction = set()
+        # Serial-loop loads issued before the hoisted precompute: per outer
+        # loop, body position -> one register per iteration.
+        self.prefetch_plans, self.register_prefetch = {}, {}
+        self.hoist_ctx = None
         self.subst = {}
         def shared_layout(statements):
             for statement in statements:
@@ -1279,7 +1427,14 @@ class Emitter:
         return f'%{kind}{self.counts[kind]}'
 
     def emit(self, instruction):
-        self.lines.append('    ' + instruction)
+        reduced = constant_divrem(self, instruction)
+        for line in reduced or (instruction,):
+            if self.unary_cache:
+                written = set(written_registers(line))
+                for key, value in list(self.unary_cache.items()):
+                    if key[2] in written or value in written:
+                        del self.unary_cache[key]
+            self.lines.append('    ' + line)
 
     def label(self, prefix='L'):
         self.label_count += 1
@@ -1291,6 +1446,7 @@ class Emitter:
         # that were emitted into a loop preheader.
         self.address_cache.clear()
         self.expr_cache.clear()
+        self.unary_cache.clear()
         self.address_cache.update(self.loop_invariants[-1] if self.loop_invariants else {})
         self.expr_cache.update(self.loop_expressions[-1] if self.loop_expressions else {})
         self.lines.append(label + ':')
@@ -1299,6 +1455,7 @@ class Emitter:
         """Invalidate address expressions that depend on a rebound value."""
         self.versions[name] = self.versions.get(name, 0) + 1
         self.var_residue.pop(name, None)
+        self.axis_facts.pop(name, None)
         self.address_cache.clear()
         self.expr_cache.clear()
         self.address_cache.update(self.loop_invariants[-1] if self.loop_invariants else {})
@@ -1711,7 +1868,26 @@ class Emitter:
                      or (result == 'f16' and operation in native_half)
                      or (result == 'f64' and operation in native_double))
         native_computation = True
-        if result == 'pred':
+        if result == 'pred' and operation in COMPARISONS and len(typed) == 2 and all(
+                t != 'pred' for t in argument_types):
+            # A comparison of numeric operands into BOOL (``bool m = x > t``)
+            # is the comparison itself: compare in the operands' common type,
+            # then take the exact 1/0 mask as truth.
+            common = argument_types[0] if argument_types[0] == argument_types[1] else 'f32'
+            register, actual = self.emit_operation(op, typed, common)
+            register, result = self.snapshot_operand(register, actual, 'pred')
+            native_computation = False
+        elif (result == 'pred' and operation in ('bitwise_and', 'bitwise_or', 'bitwise_xor',
+                                                 'logical_and', 'logical_or', 'logical_xor')
+              and len(typed) == 2 and all(t == 'pred' for t in argument_types)):
+            # Truth-valued and/or/xor of two masks is the predicate operation.
+            register = self.reg('p')
+            instruction = {'bitwise_and': 'and', 'logical_and': 'and', 'bitwise_or': 'or',
+                           'logical_or': 'or'}.get(operation, 'xor')
+            self.emit(f'{instruction}.pred {register}, {typed[0][0]}, {typed[1][0]};')
+            result = 'pred'
+            native_computation = False
+        elif result == 'pred':
             # Public BOOL scalar results promote their BOOL inputs to F32,
             # evaluate the ordinary op, then convert back to truth once.
             # Numeric-to-BOOL folds have a different upstream conversion law.
@@ -1758,6 +1934,65 @@ class Emitter:
                         else self.integer_range(typed[0][0]) if operation == 'copy' and len(typed) == 1 and typed[0][1] == 'i32'
                         else None)
             self.set_integer_range(register, interval)
+
+    def emit_pow(self, reg, x, y):
+        """f32 pow(x, y) with C powf's sign and domain rules.
+
+        The exponent is a runtime value. y == 0 gives 1. An integer exponent
+        with |y| <= 16 uses binary exponentiation (a few ulp; a negative
+        exponent takes one correctly rounded reciprocal). Otherwise |x|**y is
+        exp2(y * log2|x|). A negative base keeps its sign for odd integer
+        exponents and gives NaN for non-integer ones; a zero base follows from
+        log2(0) = -inf.
+        """
+        f, p = (lambda: self.reg('f')), (lambda: self.reg('p'))
+        ay, yi, ax, lg, prod, fast = f(), f(), f(), f(), f(), f()
+        self.emit(f'abs.f32 {ay}, {y};')
+        self.emit(f'cvt.rzi.f32.f32 {yi}, {y};')
+        integer, small, odd_p, negx, zero_y, negy = p(), p(), p(), p(), p(), p()
+        self.emit(f'setp.eq.f32 {integer}, {yi}, {y};')
+        self.emit(f'setp.le.f32 {small}, {ay}, 0f41800000;')
+        self.emit(f'and.pred {small}, {small}, {integer};')
+        self.emit(f'setp.lt.f32 {negx}, {x}, 0f00000000;')
+        self.emit(f'setp.eq.f32 {zero_y}, {y}, 0f00000000;')
+        self.emit(f'setp.lt.f32 {negy}, {y}, 0f00000000;')
+        # |x| ** y through the SFU.
+        self.emit(f'abs.f32 {ax}, {x};')
+        self.emit(f'lg2.approx.f32 {lg}, {ax};')
+        self.emit(f'mul.f32 {prod}, {lg}, {y};')
+        self.emit(f'ex2.approx.f32 {fast}, {prod};')
+        # Odd integer exponent: y/2 is not an integer.
+        half, halfi = f(), f()
+        self.emit(f'mul.f32 {half}, {y}, 0f3f000000;')
+        self.emit(f'cvt.rzi.f32.f32 {halfi}, {half};')
+        self.emit(f'setp.ne.f32 {odd_p}, {halfi}, {half};')
+        self.emit(f'and.pred {odd_p}, {odd_p}, {integer};')
+        # Binary exponentiation for small integer exponents.
+        n, bit = self.reg('r'), self.reg('r')
+        acc, base, tmp = f(), f(), f()
+        self.emit(f'cvt.rzi.u32.f32 {n}, {ay};')
+        self.emit(f'mov.f32 {acc}, 0f3f800000;')
+        self.emit(f'mov.f32 {base}, {x};')
+        for step in range(5):
+            on = p()
+            self.emit(f'and.b32 {bit}, {n}, {1 << step};')
+            self.emit(f'setp.ne.u32 {on}, {bit}, 0;')
+            self.emit(f'mul.rn.f32 {tmp}, {acc}, {base};')
+            self.emit(f'selp.f32 {acc}, {tmp}, {acc}, {on};')
+            if step < 4:
+                self.emit(f'mul.rn.f32 {base}, {base}, {base};')
+        inverse = f()
+        self.emit(f'rcp.rn.f32 {inverse}, {acc};')
+        self.emit(f'selp.f32 {acc}, {inverse}, {acc}, {negy};')
+        # General path: sign for odd integers, NaN for non-integer negative bases.
+        signed, nan_case = f(), p()
+        self.emit(f'neg.f32 {signed}, {fast};')
+        self.emit(f'selp.f32 {fast}, {signed}, {fast}, {odd_p};')
+        self.emit(f'not.pred {nan_case}, {integer};')
+        self.emit(f'and.pred {nan_case}, {nan_case}, {negx};')
+        self.emit(f'selp.f32 {fast}, 0f7fffffff, {fast}, {nan_case};')
+        self.emit(f'selp.f32 {reg}, {acc}, {fast}, {small};')
+        self.emit(f'selp.f32 {reg}, 0f3f800000, {reg}, {zero_y};')
 
     def emit_operation(self, op, args, dtype=None, literal_args=None):
         op = reduce_canon(getattr(op, 'name', op))
@@ -1878,6 +2113,16 @@ class Emitter:
                     self.emit(f'cvt.rn.f16.f32 {reg}, {out};')
                 else:
                     self.emit(f'{unary[op]}.f16 {reg}, {operands[0]};')
+            elif result == 'f32' and op in ('sqrt', 'reciprocal') and not self.inactive:
+                # Correctly rounded sqrt/rcp expand to a slow-path branch each.
+                # Equal operand registers give equal results: reuse one until
+                # either register is rewritten or control flow joins.
+                key = (unary[op], result, operands[0])
+                if key in self.unary_cache:
+                    self.emit(f'mov.f32 {reg}, {self.unary_cache[key]};')
+                else:
+                    self.emit(f'{unary[op]}.{result} {reg}, {operands[0]};')
+                    self.unary_cache[key] = reg
             else:
                 self.emit(f'{unary[op]}.{result} {reg}, {operands[0]};')
         elif op == 'tanh' and len(operands) == 1:
@@ -2001,7 +2246,9 @@ class Emitter:
             self.emit(f'cos.approx.f32 {cosine}, {operands[0]};')
             self.emit(f'div.rn.f32 {reg}, {sine}, {cosine};')
         elif op == 'pow' and len(operands) == 2:
-            raise Unsupported('General pow accuracy/domain is not established; no metadata-value specialization')
+            if result != 'f32':
+                raise Unsupported('pow is only supported for f32')
+            self.emit_pow(reg, operands[0], operands[1])
         elif op == 'sign' and len(operands) == 1:
             if result != 'f32':
                 raise Unsupported('sign is only supported for f32')
@@ -3384,6 +3631,200 @@ class Emitter:
                 raise Unsupported('Partial CTA tree dtype/layout identity is unproved')
 
 
+    def merged_reduction_tail(self, following, folds, launched):
+        """True when every fold leaves the loop only through a complete CTA
+        merge: a full-warp WarpShuffle whose combine is exactly the fold's op,
+        per-warp partials written by lane 0, a barrier, and a TreeHalve over
+        every warp with the same combine. Each thread's partial then reaches
+        only the CTA-wide total, so which elements a thread folds does not
+        change any output beyond floating-point regrouping."""
+        names = set(folds)
+        # 'lane' and 'warp' below must be the physical lane and warp.
+        if {'lane', 'warp'} & set(self.tile_extents):
+            return False
+
+        def simple_combine(statement):
+            pairs = {}
+            for c in statement.combine_states:
+                if type(c).__name__ != 'Assign' or c.name not in folds:
+                    return False
+                partner = dict(zip(statement.state, statement.state_b)).get(c.name)
+                if (reduce_canon(c.op.name) != folds[c.name] or partner is None
+                        or sorted(c.args) != sorted((c.name, partner))):
+                    return False
+                pairs[c.name] = True
+            return set(pairs) == names and set(statement.state) == names
+
+        rest = list(following)
+        if not rest or type(rest[0]).__name__ != 'WarpShuffle':
+            return False
+        shuffle = rest.pop(0)
+        if shuffle.length != 32 or launched % 32 or not simple_combine(shuffle):
+            return False
+        written = set()
+        while rest and type(rest[0]).__name__ != 'TreeHalve':
+            s = rest.pop(0)
+            kind = type(s).__name__
+            if kind in ('Smem', 'Sync'):
+                continue
+            cond = getattr(s, 'cond', None)
+            if (kind != 'Cond' or s.else_body or type(cond).__name__ != 'BinaryExpr'
+                    or cond.op != '==' or type(cond.left).__name__ != 'Var' or cond.left.name != 'lane'
+                    or type(cond.right).__name__ != 'Literal' or cond.right.value != 0):
+                return False
+            for w in s.body:
+                if (type(w).__name__ != 'Write' or w.output not in self.shared or len(w.values) != 1
+                        or w.values[0] not in names or len(w.index) != 1
+                        or type(w.index[0]).__name__ != 'Var' or w.index[0].name != 'warp'):
+                    return False
+                written.add((w.output, w.values[0]))
+        if not rest:
+            return False
+        tree = rest[0]
+        return (tree.length == launched // 32 and tree.tid_var == 'warp' and simple_combine(tree)
+                and set(zip(tree.bufs, tree.state)) == written)
+
+    def merged_vector_reduction(self, loop, following):
+        """A thread-strided reduction whose partials are merged CTA-wide,
+        folded four contiguous elements per 128-bit load.
+
+        Thread t originally folds elements t, t + stride, ...; here it folds
+        4t..4t+3, 4t + 4*stride, ... The threads still cover every element
+        exactly once, and merged_reduction_tail proves only the CTA total
+        escapes, so outputs change only by regrouping (judged by the final
+        tolerance). Each fold must be add/max/min of a value computed from the
+        current element and CTA-uniform values alone, so no per-thread value
+        (such as weight[lane]) meets a reassigned element. A misaligned base
+        pointer takes the original lowering. Returns False when it does not
+        apply (nothing emitted).
+        """
+        ctx = self.hoist_ctx
+        stride = static_or_none(loop.step)
+        bound = static_or_none(loop.end if loop.end is not None else loop.axis.extent)
+        start = loop.start
+        if (ctx is None or self.inactive or not straight_line(loop.body) or stride is None
+                or bound is None or type(start).__name__ != 'Var'
+                or ctx['cta_axes'] != {start.name} or self.tile_extents.get(start.name) != stride
+                or stride != ctx['launched'] or bound % (4 * stride) or bound + 4 * stride >= (1 << 31)):
+            return False
+        axis = loop.axis.name
+        folds, local, loads = {}, set(), []
+        for x in loop.body:
+            kind = type(x).__name__
+            if kind == 'Load':
+                names = [expr_names(c) for c in x.index]
+                if any(n is None for n in names) or len(x.names) != 1:
+                    return False
+                if axis in set().union(*names):
+                    form = flat_affine(self.buffers[x.input][0], x.index)
+                    last = x.index[-1]
+                    if (dtype_name(self.buffers[x.input][1]) != 'f32' or x.input not in self.ptrs
+                            or x.input in self.shared or form is None or form[0] % 4
+                            or not (type(last).__name__ == 'Var' and last.name == axis)
+                            or form[1].get(('var', axis)) != 1
+                            or any(c % 4 for term, c in form[1].items() if term != ('var', axis))
+                            or any(not self.cta_uniform(n, loop) for c in x.index[:-1]
+                                   for n in expr_names(c))):
+                        return False
+                    loads.append(x)
+                elif not all(self.cta_uniform(n, loop) for c in x.index for n in expr_names(c)):
+                    return False
+                local.add(x.names[0])
+            elif kind in ('Assign', 'Let'):
+                if any(d == axis or (d not in local and not self.cta_uniform(d, loop))
+                       for d in x.deps()):
+                    return False
+                local.add(x.name)
+            elif kind == 'Accum':
+                op = reduce_canon(x.op.name)
+                if (op not in ('add', 'maximum', 'minimum') or x.base not in (None, x.name)
+                        or x.value not in local or x.name in folds and folds[x.name] != op):
+                    return False
+                folds[x.name] = op
+            else:
+                return False
+        if not loads or not folds or any(n in folds for n in local):
+            return False
+        if not self.merged_reduction_tail(following, folds, ctx['launched']):
+            return False
+
+        fold_stmts = [x for x in loop.body if type(x).__name__ == 'Accum']
+        before = {name: (self.values.get(name), self.mutable.get(name)) for name in folds}
+        vector, joined = self.label('vreduce'), self.label('vreduce_done')
+        misaligned = None
+        for name in dict.fromkeys(x.input for x in loads):
+            low, q = self.reg('rd'), self.reg('p')
+            self.emit(f'and.b64 {low}, {self.ptrs[name]}, 15;')
+            self.emit(f'setp.ne.u64 {q}, {low}, 0;')
+            if misaligned is not None:
+                self.emit(f'or.pred {q}, {q}, {misaligned};')
+            misaligned = q
+        self.emit(f'@!{misaligned} bra {vector};')
+        # Misaligned buffers: the original lowering, unchanged.
+        self.no_vector_reduction.add(id(loop))
+        self.statements([loop])
+        results = {name: self.values[name] for name in folds}
+        self.emit(f'bra {joined};')
+        self.mark(vector)
+        saved_vn = (self.vn_skip, self.vn_record)
+        self.vn_skip, self.vn_record = {}, {}
+        for name, (value, mutable) in before.items():
+            if value is not None:
+                self.values[name] = value
+                self.mutable[name] = mutable
+        if loop.seed:
+            self.init_accums(loop.body)
+        else:
+            for name in folds:
+                fresh = self.reg('f')
+                self.emit(f'mov.f32 {fresh}, {self.value(name)};')
+                self.values[name] = (fresh, 'f32')
+                self.mutable[name] = fresh
+        first, _ = self.expr(start)
+        va = self.reg('r')
+        self.emit(f'shl.b32 {va}, {first}, 2;')
+        vstep = 4 * stride
+        for group in STRIDED_VECTOR_BATCH:
+            begin, done = self.label('vreduce_loop'), self.label('vreduce_end')
+            self.mark(begin)
+            last, q = self.reg('r'), self.reg('p')
+            self.emit(f'add.s32 {last}, {va}, {(group - 1) * vstep};')
+            self.emit(f'setp.ge.s32 {q}, {last}, {bound};')
+            self.emit(f'@{q} bra {done};')
+            fetched = []
+            for k in range(group):
+                ak = self.reg('r')
+                self.emit(f'add.s32 {ak}, {va}, {k * vstep};')
+                self.values[axis] = (ak, 'i32')
+                self.rebind(axis)
+                lanes = {}
+                for x in loads:
+                    addr, space = self.address(x.input, x.index)
+                    regs = [self.reg('f') for _ in range(4)]
+                    self.emit(f'ld.{space}.v4.f32 {{{", ".join(regs)}}}, [{addr}];')
+                    lanes[id(x)] = regs
+                fetched.append(lanes)
+            for lanes in fetched:
+                for j in range(4):
+                    for x in loop.body:
+                        if id(x) in lanes:
+                            self.values[x.names[0]] = (lanes[id(x)][j], 'f32')
+                            self.rebind(x.names[0])
+                        else:
+                            self.statements([x])
+            self.emit(f'add.s32 {va}, {va}, {group * vstep};')
+            self.emit(f'bra {begin};')
+            self.mark(done)
+        for name, (reg, _) in results.items():
+            self.emit(f'mov.f32 {reg}, {self.value(name)};')
+        self.vn_skip, self.vn_record = saved_vn
+        self.mark(joined)
+        for name, value in results.items():
+            self.values[name] = value
+            self.mutable[name] = value[0]
+            self.rebind(name)
+        return True
+
     def strided_main_loop(self, s, r, step, end):
         """Run whole groups of iterations of a thread-strided loop back to
         back, largest STRIDED_UNROLL group first; the caller's loop then
@@ -3586,6 +4027,340 @@ class Emitter:
                 self.subst[id(alpha)] = [(alpha.name, one)]
 
 
+    def cta_uniform(self, name, loop, seen=frozenset()):
+        """True when ``name`` holds the same value in every thread of a CTA:
+        it is bound before ``loop`` at Tile level from literals, block axes,
+        scalar arguments and other uniform names, never from a CTA axis."""
+        ctx = self.hoist_ctx
+        if ctx is None or name in ctx['cta_axes'] or name in seen:
+            return False
+        if name in self.tile_extents:
+            return True   # a block (CTA-uniform) Tile axis
+        if name in getattr(self, 'scalar_args', {}):
+            return True
+        for s in ctx['tile'].body:
+            if s is loop:
+                return False
+            kind = type(s).__name__
+            if kind == 'Load' and name in s.names:
+                return (s.input in self.ptrs and s.input not in self.shared and all(
+                    (n := expr_names(c)) is not None and all(self.cta_uniform(x, loop, seen | {name}) for x in n)
+                    for c in s.index))
+            if kind in ('Assign', 'Let') and s.name == name:
+                return all(self.cta_uniform(d, loop, seen | {name}) for d in s.deps())
+        return False
+
+    def fused_softmax_pass(self, groups, order, starts, total, lanes, per_lane, extent,
+                           msym, evaluate_x, carriers):
+        """Row maxima and numerators in one pass. Each of a row's ``lanes``
+        lanes keeps its ``per_lane`` x values in registers, the butterfly
+        maximum gives every lane the row maximum, and each lane then turns its
+        own values into p in place. Values and instructions per element are
+        those of the separate passes; only the second score read and one
+        barrier disappear."""
+        tid = self.hardware_tid
+        row, part = self.reg('r'), self.reg('r')
+        self.emit(f'shr.u32 {row}, {tid}, {lanes.bit_length() - 1};')
+        self.emit(f'and.b32 {part}, {tid}, {lanes - 1};')
+        xs = [self.reg('f') for _ in range(per_lane)]
+        addrs = [self.reg('rd') for _ in range(per_lane)]
+        m = self.reg('f')
+        self.emit(f'mov.f32 {m}, {literal(-1e30, "f32")};')
+        rep = {}
+        for c in carriers:
+            rep.setdefault(c[0], c)
+
+        def group_block(g, body):
+            plan = groups[g][0]
+            skip = self.label('fused_skip')
+            lo, hi = self.reg('p'), self.reg('p')
+            self.emit(f'setp.lt.u32 {lo}, {row}, {starts[g]};')
+            self.emit(f'setp.ge.u32 {hi}, {row}, {starts[g] + plan.configs};')
+            self.emit(f'or.pred {lo}, {lo}, {hi};')
+            self.emit(f'@{lo} bra {skip};')
+            config = self.reg('r')
+            self.emit(f'sub.u32 {config}, {row}, {starts[g]};')
+            body(g, config)
+            self.mark(skip)
+
+        def load_row(g, config):
+            for i in range(per_lane):
+                j = self.reg('r')
+                self.emit(f'add.u32 {j}, {part}, {i * lanes};')
+                addr, value = evaluate_x(g, config, j)
+                self.emit(f'mov.u64 {addrs[i]}, {addr};')
+                self.emit(f'mov.f32 {xs[i]}, {value};')
+                self.emit(f'max.f32 {m}, {m}, {xs[i]};')
+
+        for g in order:
+            group_block(g, load_row)
+        offset = lanes // 2
+        while offset:
+            other = self.reg('f')
+            self.emit(f'shfl.sync.bfly.b32 {other}, {m}, {offset}, 31, -1;')
+            self.emit(f'max.f32 {m}, {m}, {other};')
+            offset //= 2
+
+        def numerators(g, config):
+            _, fold, gn, dg, alpha, diff, beta, hoisted, others = rep[g]
+            x = groups[g][3]
+            for i in range(per_lane):
+                self.values[x] = (xs[i], 'f32')
+                self.rebind(x)
+                self.values[gn.name] = (m, 'f32')
+                self.rebind(gn.name)
+                self.statements([diff, beta])
+                self.emit(f'st.shared.f32 [{addrs[i]}], {self.value(beta.name)};')
+            owner = self.label('fused_owner')
+            q = self.reg('p')
+            self.emit(f'setp.ne.u32 {q}, {part}, 0;')
+            self.emit(f'@{q} bra {owner};')
+            ma, mb = self.reg('rd'), self.reg('rd')
+            self.emit(f'mul.wide.u32 {ma}, {row}, 4;')
+            self.emit(f'mov.u64 {mb}, {msym};')
+            self.emit(f'add.u64 {ma}, {mb}, {ma};')
+            self.emit(f'st.shared.f32 [{ma}], {m};')
+            self.mark(owner)
+
+        for g in order:
+            group_block(g, numerators)
+        self.emit('bar.sync 0;')
+
+    def hoisted_softmax(self, loop, online):
+        """Compute an online softmax's maxima and numerators once per CTA.
+
+        After the two-pass rewrite each step needs p = exp(x - m) where x is a
+        function of one hoisted score (shared memory, per row configuration)
+        and CTA-uniform values, and m is that row's maximum. Every thread that
+        shares the row recomputes both. Here groups of lanes reduce m per row
+        with a butterfly maximum (exact in any order), then the CTA evaluates
+        each (row, key) p once with the body's own statements and stores it
+        over the score in place. The serial loop then reads p; the carrier's
+        maximum becomes m, delta 0 and alpha 1. Every value is produced by the
+        same instructions as before, so results are unchanged. Returns False
+        (nothing emitted) when the shape does not qualify.
+        """
+        ctx = self.hoist_ctx
+        if ctx is None or self.inactive:
+            return False
+        body = list(loop.body)
+        serial = loop.axis.name
+        extent = static(loop.axis.extent)
+
+        def readers(name):
+            return [s for s in body if name in set(s.deps())]
+
+        groups, carriers = {}, []
+        for fold, x, gn, dg, alpha, slice_ in online:
+            diffs = [s for s in body if type(s).__name__ == 'Assign' and s.op.name == 'subtract'
+                     and tuple(s.args) == (x, gn.name)]
+            if len(diffs) != 1:
+                return False
+            betas = [s for s in body if type(s).__name__ == 'Assign' and s.op.name == 'exp'
+                     and tuple(s.args) == (diffs[0].name,)]
+            if len(betas) != 1:
+                return False
+            hoisted = [s for s in slice_ if id(s) in self.hoisted]
+            if len(hoisted) != 1:
+                return False
+            plan, axis, rows = self.hoisted[id(hoisted[0])]
+            if axis != serial or plan.extent != extent:
+                return False
+            others = [s for s in slice_ if s is not hoisted[0]]
+            local = {s.name for s in others if type(s).__name__ in ('Assign', 'Let')}
+            exports = {d for s in others for d in s.deps()} & set(plan.exports)
+            if len(exports) != 1 or any(type(s).__name__ not in ('Assign', 'Let') for s in others):
+                return False
+            export = exports.pop()
+            if any(d not in local and d != export and not self.cta_uniform(d, loop)
+                   for s in others for d in s.deps()):
+                return False
+            if {id(s) for s in readers(x)} - {id(gn), id(diffs[0]), id(fold)}:
+                return False
+
+            def key(name):
+                if name == export:
+                    return ('score',)
+                s = next((s for s in others if s.name == name), None)
+                if s is None:
+                    return ('uniform', name)
+                if type(s).__name__ == 'Let':
+                    return ('let', str(s.dtype), vn_expr(s.value, key))
+                return ('assign', s.op.name, str(s.dtype), tuple(key(a) for a in s.args))
+            group = (id(hoisted[0]), export)
+            xkey = key(x)
+            if groups.setdefault(group, (plan, export, others, x, xkey))[4] != xkey:
+                return False   # two different functions of one score row
+            carriers.append((group, fold, gn, dg, alpha, diffs[0], betas[0], hoisted[0], others))
+
+        # A score may be read only by the x statements this rewrite drops.
+        for g, (plan, export, *_rest) in groups.items():
+            dropped = {id(s) for c in carriers if c[0] == g for s in c[8]}
+            if {id(s) for s in readers(export)} - dropped:
+                return False
+        order = list(groups)
+        starts, total = {}, 0
+        for g in order:
+            starts[g] = total
+            total += groups[g][0].configs
+        launched = ctx['launched']
+        nbytes = 4 * total
+        # The maximum pass gives every row its own lane group in one sweep.
+        if total > launched or self.shared_bytes + self.hoist_bytes + nbytes > 48 * 1024:
+            return False
+        self.hoist_bytes += nbytes
+        msym = f'__rowmax{len(self.declarations)}'
+        self.declarations.append(f'.shared .align 4 .b8 {msym}[{nbytes}];')
+        tid = self.hardware_tid
+        saved_vn = (self.vn_skip, self.vn_record)
+        self.vn_skip, self.vn_record = {}, {}
+
+        def score_address(plan, export, config, j):
+            k = plan.exports.index(export)
+            word = self.reg('r')
+            self.emit(f'mad.lo.u32 {word}, {config}, {plan.row_words}, {j};')
+            self.emit(f'add.u32 {word}, {word}, {k * plan.configs * plan.row_words};')
+            addr, base = self.reg('rd'), self.reg('rd')
+            self.emit(f'mul.wide.u32 {addr}, {word}, 4;')
+            self.emit(f'mov.u64 {base}, {plan.symbol};')
+            self.emit(f'add.u64 {addr}, {base}, {addr};')
+            return addr
+
+        def evaluate_x(g, config, j):
+            plan, export, others, x, _ = groups[g]
+            addr = score_address(plan, export, config, j)
+            s = self.reg('f')
+            self.emit(f'ld.shared.f32 {s}, [{addr}];')
+            self.values[export] = (s, 'f32')
+            self.rebind(export)
+            self.statements(others)
+            return addr, self.value(x)
+
+        # Row maxima: lanes_per_row lanes share a row, folding a strided
+        # subset of keys, then combine with a butterfly maximum.
+        lanes = 1
+        while lanes * 2 <= 32 and lanes * 2 * total <= launched:
+            lanes *= 2
+        per_lane = extent // lanes
+        if extent % lanes == 0 and per_lane <= SOFTMAX_FUSED_VALUES:
+            self.fused_softmax_pass(groups, order, starts, total, lanes, per_lane, extent,
+                                    msym, evaluate_x, carriers)
+        else:
+            row, part = self.reg('r'), self.reg('r')
+            self.emit(f'shr.u32 {row}, {tid}, {lanes.bit_length() - 1};')
+            self.emit(f'and.b32 {part}, {tid}, {lanes - 1};')
+            m = self.reg('f')
+            self.emit(f'mov.f32 {m}, {literal(-1e30, "f32")};')
+            for g in order:
+                plan = groups[g][0]
+                skip = self.label('rowmax_skip')
+                lo, hi = self.reg('p'), self.reg('p')
+                self.emit(f'setp.lt.u32 {lo}, {row}, {starts[g]};')
+                self.emit(f'setp.ge.u32 {hi}, {row}, {starts[g] + plan.configs};')
+                self.emit(f'or.pred {lo}, {lo}, {hi};')
+                self.emit(f'@{lo} bra {skip};')
+                config, j = self.reg('r'), self.reg('r')
+                self.emit(f'sub.u32 {config}, {row}, {starts[g]};')
+                self.emit(f'mov.u32 {j}, {part};')
+                begin, done = self.label('rowmax'), self.label('rowmax_done')
+                self.mark(begin)
+                q = self.reg('p')
+                self.emit(f'setp.ge.u32 {q}, {j}, {extent};')
+                self.emit(f'@{q} bra {done};')
+                _, xv = evaluate_x(g, config, j)
+                self.emit(f'max.f32 {m}, {m}, {xv};')
+                self.emit(f'add.u32 {j}, {j}, {lanes};')
+                self.emit(f'bra {begin};')
+                self.mark(done)
+                self.mark(skip)
+            offset = lanes // 2
+            while offset:
+                other = self.reg('f')
+                self.emit(f'shfl.sync.bfly.b32 {other}, {m}, {offset}, 31, -1;')
+                self.emit(f'max.f32 {m}, {m}, {other};')
+                offset //= 2
+            store, owner = self.label('rowmax_store'), self.reg('p')
+            self.emit(f'setp.ne.u32 {owner}, {part}, 0;')
+            valid = self.reg('p')
+            self.emit(f'setp.ge.u32 {valid}, {row}, {total};')
+            self.emit(f'or.pred {owner}, {owner}, {valid};')
+            self.emit(f'@{owner} bra {store};')
+            ma, mb = self.reg('rd'), self.reg('rd')
+            self.emit(f'mul.wide.u32 {ma}, {row}, 4;')
+            self.emit(f'mov.u64 {mb}, {msym};')
+            self.emit(f'add.u64 {ma}, {mb}, {ma};')
+            self.emit(f'st.shared.f32 [{ma}], {m};')
+            self.mark(store)
+            self.emit('bar.sync 0;')
+
+            # Numerators, in place over the scores.
+            rep = {}
+            for c in carriers:
+                rep.setdefault(c[0], c)
+            for g in order:
+                plan = groups[g][0]
+                _, fold, gn, dg, alpha, diff, beta, hoisted, others = rep[g]
+                work = plan.configs * extent
+                w = self.reg('r')
+                self.emit(f'mov.u32 {w}, {tid};')
+                begin, done = self.label('numer'), self.label('numer_done')
+                self.mark(begin)
+                q = self.reg('p')
+                self.emit(f'setp.ge.u32 {q}, {w}, {work};')
+                self.emit(f'@{q} bra {done};')
+                config, j = self.reg('r'), self.reg('r')
+                self.emit(f'div.u32 {config}, {w}, {extent};')
+                self.emit(f'rem.u32 {j}, {w}, {extent};')
+                addr, _ = evaluate_x(g, config, j)
+                word, ma, mb, mv = self.reg('r'), self.reg('rd'), self.reg('rd'), self.reg('f')
+                self.emit(f'add.u32 {word}, {config}, {starts[g]};')
+                self.emit(f'mul.wide.u32 {ma}, {word}, 4;')
+                self.emit(f'mov.u64 {mb}, {msym};')
+                self.emit(f'add.u64 {ma}, {mb}, {ma};')
+                self.emit(f'ld.shared.f32 {mv}, [{ma}];')
+                self.values[gn.name] = (mv, 'f32')
+                self.rebind(gn.name)
+                self.statements([diff, beta])
+                self.emit(f'st.shared.f32 [{addr}], {self.value(beta.name)};')
+                self.emit(f'add.u32 {w}, {w}, {launched};')
+                self.emit(f'bra {begin};')
+                self.mark(done)
+            self.emit('bar.sync 0;')
+        self.vn_skip, self.vn_record = saved_vn
+
+        # The serial loop reads p and this thread's own row maximum.
+        zero, one = self.reg('f'), self.reg('f')
+        self.emit(f'mov.f32 {zero}, {literal(0.0, "f32")};')
+        self.emit(f'mov.f32 {one}, {literal(1.0, "f32")};')
+        own = {}
+        for g in order:
+            plan, export = groups[g][0], groups[g][1]
+            config = self.reg('r')
+            self.emit(f'mov.u32 {config}, 0;')
+            for name, extent_ in plan.used:
+                self.emit(f'mad.lo.u32 {config}, {config}, {extent_}, {self.value(name)};')
+            word, ma, mb, mv = self.reg('r'), self.reg('rd'), self.reg('rd'), self.reg('f')
+            self.emit(f'add.u32 {word}, {config}, {starts[g]};')
+            self.emit(f'mul.wide.u32 {ma}, {word}, 4;')
+            self.emit(f'mov.u64 {mb}, {msym};')
+            self.emit(f'add.u64 {ma}, {mb}, {ma};')
+            self.emit(f'ld.shared.f32 {mv}, [{ma}];')
+            _, _, rows = self.hoisted[g[0]]
+            own[g] = (mv, rows[plan.exports.index(export)])
+        for g, fold, gn, dg, alpha, diff, beta, hoisted, others in carriers:
+            mv, row_ptr = own[g]
+            self.values[fold.name] = (mv, 'f32')
+            self.mutable[fold.name] = mv
+            self.rebind(fold.name)
+            self.subst[id(fold)] = []
+            self.subst[id(gn)] = [(gn.name, mv)]
+            self.subst[id(dg)] = [(dg.name, zero)]
+            if alpha is not None:
+                self.subst[id(alpha)] = [(alpha.name, one)]
+            self.skip_ids.update({id(hoisted), id(diff), *(id(s) for s in others)})
+            self.subst_load[id(beta)] = (beta.name, row_ptr, serial)
+        return True
+
     def normalized_softmax_plans(self, loop):
         """Require the complete rescaled numerator/denominator recurrence.
 
@@ -3726,6 +4501,7 @@ class Emitter:
             return
         axis_extent = {axis.name: extent for axis, extent in zip(tile.axes, extents)}
         cta_axes = [axis.name for axis in tile.axes[cut:]]
+        self.hoist_ctx = {'tile': tile, 'cta_axes': set(cta_axes), 'launched': launched}
         outputs = {arg['name'] for arg in self.meta['args'] if arg.get('output')}
         written = written_buffers(tile.body) | outputs
         budget = HOIST_SHARED_LIMIT
@@ -3778,8 +4554,13 @@ class Emitter:
                     continue
                 used = [name for name in cta_axes if name in free]
                 # Only values that several threads would recompute or reload
-                # are worth a shared round trip.
+                # are worth a shared round trip; an unshared scalar load can
+                # still be requested early into registers.
                 if math.prod(axis_extent[name] for name in cta_axes if name not in free) < 2:
+                    if (inner_kind == 'Load' and len(inner.names) == 1
+                            and extent <= REGISTER_PREFETCH_MAX):
+                        self.prefetch_plans.setdefault(id(outer), []).append(
+                            (list(outer.body).index(inner), inner))
                     continue
                 configs = math.prod(axis_extent[name] for name in used)
                 plan = HoistedValue(inner, exports, [(name, axis_extent[name]) for name in used],
@@ -3793,6 +4574,8 @@ class Emitter:
                 candidates.append(plan)
             if candidates:
                 self.hoist_plans[id(outer)] = (outer, candidates, launched)
+            else:
+                self.prefetch_plans.pop(id(outer), None)
 
     def decode_config(self, index, used):
         """Row-major axis values of a hoist configuration index."""
@@ -3822,8 +4605,37 @@ class Emitter:
             else:
                 key = ('Load', id(plan))
             groups.setdefault(key, []).append(plan)
+        # Global loads whose items split evenly over the CTA are requested
+        # once a staged matmul's operands are in shared memory, so their
+        # latency overlaps its arithmetic; they are stored after it.
+        overlap, issued = {}, {}
+        if any(key[0] == 'Loop' for key in groups):
+            budget = HOIST_OVERLAP_VALUES
+            for key, members in groups.items():
+                lead = members[0]
+                work = lead.configs * extent
+                values = work // launched * sum(len(plan.exports) for plan in members)
+                if (key[0] == 'Load' and work % launched == 0 and values <= budget
+                        and lead.statement.input not in self.shared):
+                    budget -= values
+                    overlap[key] = members
+
+        def issue_overlap():
+            for key, members in overlap.items():
+                if key in issued:
+                    continue
+                coords = []
+                for k in range(members[0].configs * extent // launched):
+                    item = self.reg('r')
+                    self.emit(f'add.u32 {item}, {tid}, {k * launched};')
+                    coords.append(self.hoist_item_coords(members[0], outer, item))
+                issued[key] = self.evaluate_hoist_items(members, coords)
+
+        self.hoist_overlap = issue_overlap
         for key, members in groups.items():
             lead = members[0]
+            if key in overlap:
+                continue
             if key[0] == 'Loop':
                 shape = self.matmul_members(members, outer)
                 if shape is not None:
@@ -3849,23 +4661,35 @@ class Emitter:
                     item = self.reg('r')
                     self.emit(f'add.u32 {item}, {w}, {k * launched};')
                     coords.append(self.hoist_item_coords(lead, outer, item))
-                items = self.evaluate_hoist_items(members, coords)
                 # Every item's operands are requested before any is stored.
-                for config, serial, results in items:
-                    for plan, values in results:
-                        for k, value in enumerate(values):
-                            word = self.reg('r')
-                            self.emit(f'mad.lo.u32 {word}, {config}, {plan.row_words}, {serial};')
-                            self.emit(f'add.u32 {word}, {word}, {k * plan.configs * plan.row_words};')
-                            addr = self.reg('rd')
-                            self.emit(f'mul.wide.u32 {addr}, {word}, 4;')
-                            base = self.reg('rd')
-                            self.emit(f'mov.u64 {base}, {plan.symbol};')
-                            self.emit(f'add.u64 {addr}, {base}, {addr};')
-                            self.emit(f'st.shared.f32 [{addr}], {value};')
+                self.store_hoist_items(self.evaluate_hoist_items(members, coords))
                 self.emit(f'add.u32 {w}, {w}, {batch * launched};')
                 self.emit(f'bra {begin};')
                 self.mark(done)
+        self.hoist_overlap = None
+        issue_overlap()
+        for items in issued.values():
+            self.store_hoist_items(items)
+        # A per-iteration load no other thread shares is not staged, but every
+        # iteration's value can be requested now: issued after the precompute's own
+        # loads, its latency overlaps the precompute, and the serial loop (unrolled) reads registers.
+        prefetch = {}
+        for name in names:
+            if saved[name] is not None:
+                self.values[name] = saved[name]
+                self.rebind(name)
+        for position, load in self.prefetch_plans.pop(id(outer), []):
+            registers = []
+            for coordinate in range(extent):
+                self.values[outer.axis.name] = (str(coordinate), 'i32')
+                self.rebind(outer.axis.name)
+                addr, space = self.address(load.input, load.index)
+                r = self.reg('f')
+                self.emit(f'ld.{space}.f32 {r}, [{addr}];')
+                registers.append(r)
+            prefetch[position] = registers
+        if prefetch:
+            self.register_prefetch[id(outer)] = prefetch
         for name, value in saved.items():
             if value is None:
                 self.values.pop(name, None)
@@ -3890,7 +4714,24 @@ class Emitter:
                 self.emit(f'mov.u64 {base}, {plan.symbol};')
                 self.emit(f'add.u64 {row}, {base}, {row};')
                 rows.append(row)
+                if plan.row_words % 4 == 0:
+                    # 16-byte aligned symbol, word offset a multiple of four.
+                    self.vector_rows.add(row)
             self.hoisted[id(plan.statement)] = (plan, outer.axis.name, rows)
+
+    def store_hoist_items(self, items):
+        for config, serial, results in items:
+            for plan, values in results:
+                for k, value in enumerate(values):
+                    word = self.reg('r')
+                    self.emit(f'mad.lo.u32 {word}, {config}, {plan.row_words}, {serial};')
+                    self.emit(f'add.u32 {word}, {word}, {k * plan.configs * plan.row_words};')
+                    addr = self.reg('rd')
+                    self.emit(f'mul.wide.u32 {addr}, {word}, 4;')
+                    base = self.reg('rd')
+                    self.emit(f'mov.u64 {base}, {plan.symbol};')
+                    self.emit(f'add.u64 {addr}, {base}, {addr};')
+                    self.emit(f'st.shared.f32 [{addr}], {value};')
 
     def matmul_members(self, members, outer):
         """Recognize hoisted reductions of the form acc += A[c, k] * B[k, s].
@@ -3989,26 +4830,99 @@ class Emitter:
         """
         trips = [math.prod(e for _, e in dims) / launched for _, dims, _ in copies]
         if all(x == int(x) for x in trips) and sum(trips) <= STAGE_STRAIGHT_LINE:
-            pending = []
-            for (load, dims, offset), count in zip(copies, trips):
-                for k in range(int(count)):
-                    item = self.reg('r')
-                    self.emit(f'add.u32 {item}, {self.hardware_tid}, {k * launched};')
-                    self.bind_coords(self.decode_config(item, dims))
-                    addr, space = self.address(load.input, load.index)
-                    value = self.reg('f')
-                    self.emit(f'ld.{space}.f32 {value}, [{addr}];')
-                    pending.append((item, value, offset))
-            base = self.reg('rd')
-            self.emit(f'mov.u64 {base}, {symbol};')
-            for item, value, offset in pending:
-                sa = self.reg('rd')
-                self.emit(f'mul.wide.u32 {sa}, {item}, 4;')
-                self.emit(f'add.u64 {sa}, {base}, {sa};')
-                self.emit(f'st.shared.f32 [{sa}+{offset}], {value};')
+            vector = self.stage_vector_plan(copies, launched)
+            if vector:
+                # Runtime 16-byte alignment of each vector source selects the
+                # 128-bit copy; the scalar copy below remains the fallback.
+                scalar, joined = self.label('stage_scalar'), self.label('stage_joined')
+                misaligned = None
+                for name in dict.fromkeys(copies[i][0].input for i in vector):
+                    low, p = self.reg('rd'), self.reg('p')
+                    self.emit(f'and.b64 {low}, {self.ptrs[name]}, 15;')
+                    self.emit(f'setp.ne.u64 {p}, {low}, 0;')
+                    if misaligned is not None:
+                        self.emit(f'or.pred {p}, {p}, {misaligned};')
+                    misaligned = p
+                self.emit(f'@{misaligned} bra {scalar};')
+                self.stage_straight_line(copies, trips, symbol, launched, vector)
+                self.emit(f'bra {joined};')
+                self.mark(scalar)
+                self.stage_straight_line(copies, trips, symbol, launched, set())
+                self.mark(joined)
+                return
+            self.stage_straight_line(copies, trips, symbol, launched, set())
             return
         for load, dims, offset in copies:
             self.stage_operand(load, dims, symbol, offset, launched)
+
+    def stage_vector_plan(self, copies, launched):
+        """Copies whose footprint moves as aligned groups of four elements.
+
+        A group is four consecutive footprint items: equal leading axes and
+        last axis 4j..4j+3. Its global elements are consecutive when the
+        flattened index is the last axis plus terms free of it, and the
+        group's first element is 16-byte aligned (given an aligned buffer)
+        when that index is a multiple of four whenever the last axis is.
+        Free names are restricted to footprint and Tile axes, so no other
+        name can depend on the last axis.
+        """
+        ctx = self.hoist_ctx
+        tile_axes = {axis.name for axis in ctx['tile'].axes} if ctx else set()
+        plan = set()
+        for position, (load, dims, offset) in enumerate(copies):
+            last, extent = dims[-1]
+            total = math.prod(e for _, e in dims)
+            if (load.input in self.shared or len(load.names) != 1 or load.input not in self.ptrs
+                    or dtype_name(self.buffers[load.input][1]) != 'f32'
+                    or (load.dtype is not None and dtype_name(load.dtype) != 'f32')
+                    or extent % 4 or (total // 4) % launched or offset % 16):
+                continue
+            shape = [static(d) for d in self.buffers[load.input][0]]
+            if len(shape) != len(load.index):
+                continue
+            names = [expr_names(c) for c in load.index]
+            if any(n is None or not n <= tile_axes | {name for name, _ in dims} for n in names):
+                continue
+            coefficients = [axis_coefficient(c, last) for c in load.index]
+            if None in coefficients:
+                continue
+            strides = [math.prod(shape[i + 1:]) for i in range(len(shape))]
+            if (sum(c * stride for c, stride in zip(coefficients, strides)) != 1
+                    or flat_residue(shape, load.index, 4, {last: 0}) != 0):
+                continue
+            plan.add(position)
+        return plan
+
+    def stage_straight_line(self, copies, trips, symbol, launched, vector):
+        """Every load of the copy is issued before any store."""
+        pending = []
+        for position, ((load, dims, offset), count) in enumerate(zip(copies, trips)):
+            width = 4 if position in vector else 1
+            for k in range(int(count) // width):
+                item = self.reg('r')
+                self.emit(f'add.u32 {item}, {self.hardware_tid}, {k * launched};')
+                if width > 1:
+                    first = self.reg('r')
+                    self.emit(f'shl.b32 {first}, {item}, 2;')
+                    item = first
+                self.bind_coords(self.decode_config(item, dims))
+                addr, space = self.address(load.input, load.index)
+                values = [self.reg('f') for _ in range(width)]
+                if width > 1:
+                    self.emit(f'ld.{space}.v4.f32 {{{", ".join(values)}}}, [{addr}];')
+                else:
+                    self.emit(f'ld.{space}.f32 {values[0]}, [{addr}];')
+                pending.append((item, values, offset))
+        base = self.reg('rd')
+        self.emit(f'mov.u64 {base}, {symbol};')
+        for item, values, offset in pending:
+            sa = self.reg('rd')
+            self.emit(f'mul.wide.u32 {sa}, {item}, 4;')
+            self.emit(f'add.u64 {sa}, {base}, {sa};')
+            if len(values) > 1:
+                self.emit(f'st.shared.v4.f32 [{sa}+{offset}], {{{", ".join(values)}}};')
+            else:
+                self.emit(f'st.shared.f32 [{sa}+{offset}], {values[0]};')
 
     def stage_operand(self, load, dims, symbol, offset, launched):
         """Copy one load's CTA footprint to shared memory, row-major over
@@ -4071,6 +4985,8 @@ class Emitter:
         copies.append((b, [(k_axis, k_extent), (outer.axis.name, extent)], b_offset))
         self.stage_operands(copies, symbol, launched)
         self.emit('bar.sync 0;')
+        if self.hoist_overlap is not None:
+            self.hoist_overlap()
         blocks = extent // 4
         work = lead.configs * blocks
         w = self.reg('r')
@@ -4102,38 +5018,50 @@ class Emitter:
         for row in accs:
             for acc in row:
                 self.emit(f'mov.f32 {acc}, {literal(0.0, "f32")};')
-        k = self.reg('r')
-        self.emit(f'mov.u32 {k}, 0;')
-        k_begin, k_done = self.label('mm_k'), self.label('mm_k_done')
-        self.mark(k_begin)
-        q = self.reg('p')
-        self.emit(f'setp.ge.u32 {q}, {k}, {k_extent};')
-        self.emit(f'@{q} bra {k_done};')
-        a_off = self.reg('rd')
-        self.emit(f'mul.wide.u32 {a_off}, {k}, 4;')
-        b_off = self.reg('rd')
-        self.emit(f'mul.wide.u32 {b_off}, {k}, {4 * extent};')
-        b_ptr = self.reg('rd')
-        self.emit(f'add.u64 {b_ptr}, {b_col}, {b_off};')
-        bvecs = []
-        for step in range(4):
-            vec = [self.reg('f') for _ in range(4)]
-            self.emit(f'ld.shared.v4.f32 {{{", ".join(vec)}}}, [{b_ptr}+{4 * step * extent}];')
-            bvecs.append(vec)
-        for (a, a_first), row, a_row in zip(operands, accs, a_rows):
-            a_ptr = self.reg('rd')
-            self.emit(f'add.u64 {a_ptr}, {a_row}, {a_off};')
-            avec = [self.reg('f') for _ in range(4)]
-            self.emit(f'ld.shared.v4.f32 {{{", ".join(avec)}}}, [{a_ptr}];')
+        def k_step(b_ptr, b_base, a_ptrs, a_base):
+            bvecs = []
             for step in range(4):
-                for bv, acc in zip(bvecs[step], row):
-                    product = self.reg('f')
-                    x, y = (avec[step], bv) if a_first else (bv, avec[step])
-                    self.emit(f'mul.f32 {product}, {x}, {y};')
-                    self.emit(f'add.f32 {acc}, {acc}, {product};')
-        self.emit(f'add.u32 {k}, {k}, 4;')
-        self.emit(f'bra {k_begin};')
-        self.mark(k_done)
+                vec = [self.reg('f') for _ in range(4)]
+                self.emit(f'ld.shared.v4.f32 {{{", ".join(vec)}}}, '
+                          f'[{b_ptr}+{b_base + 4 * step * extent}];')
+                bvecs.append(vec)
+            for (a, a_first), row, a_ptr in zip(operands, accs, a_ptrs):
+                avec = [self.reg('f') for _ in range(4)]
+                self.emit(f'ld.shared.v4.f32 {{{", ".join(avec)}}}, [{a_ptr}+{a_base}];')
+                for step in range(4):
+                    for bv, acc in zip(bvecs[step], row):
+                        product = self.reg('f')
+                        x, y = (avec[step], bv) if a_first else (bv, avec[step])
+                        self.emit(f'mul.f32 {product}, {x}, {y};')
+                        self.emit(f'add.f32 {acc}, {acc}, {product};')
+
+        if k_extent <= HOISTED_UNROLL_MAX:
+            # Straight-line k: every operand address is a constant offset.
+            for k0 in range(0, k_extent, 4):
+                k_step(b_col, 4 * k0 * extent, a_rows, 4 * k0)
+        else:
+            k = self.reg('r')
+            self.emit(f'mov.u32 {k}, 0;')
+            k_begin, k_done = self.label('mm_k'), self.label('mm_k_done')
+            self.mark(k_begin)
+            q = self.reg('p')
+            self.emit(f'setp.ge.u32 {q}, {k}, {k_extent};')
+            self.emit(f'@{q} bra {k_done};')
+            a_off = self.reg('rd')
+            self.emit(f'mul.wide.u32 {a_off}, {k}, 4;')
+            b_off = self.reg('rd')
+            self.emit(f'mul.wide.u32 {b_off}, {k}, {4 * extent};')
+            b_ptr = self.reg('rd')
+            self.emit(f'add.u64 {b_ptr}, {b_col}, {b_off};')
+            a_ptrs = []
+            for a_row in a_rows:
+                a_ptr = self.reg('rd')
+                self.emit(f'add.u64 {a_ptr}, {a_row}, {a_off};')
+                a_ptrs.append(a_ptr)
+            k_step(b_ptr, 0, a_ptrs, 0)
+            self.emit(f'add.u32 {k}, {k}, 4;')
+            self.emit(f'bra {k_begin};')
+            self.mark(k_done)
         for plan, row in zip(members, accs):
             word = self.reg('r')
             self.emit(f'mad.lo.u32 {word}, {config}, {plan.row_words}, {serial};')
@@ -4311,23 +5239,170 @@ class Emitter:
 
     def load_hoisted(self, statement):
         plan, serial, rows = self.hoisted[id(statement)]
-        offset = self.reg('rd')
-        self.emit(f'mul.wide.u32 {offset}, {self.value(serial)}, 4;')
         for name, row in zip(plan.exports, rows):
-            addr, r = self.reg('rd'), self.reg('f')
-            self.emit(f'add.u64 {addr}, {row}, {offset};')
-            self.emit(f'ld.shared.f32 {r}, [{addr}];')
-            self.values[name] = (r, 'f32')
+            self.values[name] = (self.hoisted_row_read(row, serial), 'f32')
             self.rebind(name)
+
+    def hoisted_vector_loop(self, loop, extent, frame):
+        """A serial loop reading aligned hoisted rows, four iterations a trip.
+
+        Iterations still run in order, one body copy each; only the row reads
+        are shared, one 128-bit load per row per four iterations.
+        """
+        axis = loop.axis.name
+
+        def vector_read(statement):
+            if id(statement) in self.subst_load:
+                _, row, serial = self.subst_load[id(statement)]
+                return serial == axis and row in self.vector_rows
+            if id(statement) in self.hoisted:
+                _, serial, rows = self.hoisted[id(statement)]
+                return serial == axis and any(row in self.vector_rows for row in rows)
+            return False
+
+        if (self.inactive or extent % 4 or not 8 <= extent <= I32_MAX
+                or axis in defined_names(loop.body)
+                or not any(vector_read(statement) for statement in loop.body)):
+            return False
+        if extent <= HOISTED_UNROLL_MAX:
+            try:
+                for coordinate in range(extent):
+                    self.values[axis] = (str(coordinate), 'i32')
+                    self.rebind(axis)
+                    if coordinate % 4 == 0:
+                        vectors = {}
+                    self.hoist_vector = (axis, 4 * (coordinate - coordinate % 4),
+                                         coordinate % 4, vectors)
+                    self.statements_with_init_scope(loop.body, frame)
+            finally:
+                self.hoist_vector = None
+            return True
+        r = self.reg('r')
+        self.emit(f'mov.s32 {r}, 0;')
+        self.set_integer_range(r, checked_i32_interval(0, extent - 4))
+        self.values[axis] = (r, 'i32')
+        self.rebind(axis)
+        self.hoist_invariants(loop.body, defined_names(loop.body) | {axis})
+        begin, done = self.label('vector_loop'), self.label('vector_loop_done')
+        self.mark(begin)
+        p = self.reg('p')
+        self.emit(f'setp.ge.s32 {p}, {r}, {extent};')
+        self.emit(f'@{p} bra {done};')
+        base = self.reg('rd')
+        self.emit(f'mul.wide.u32 {base}, {r}, 4;')
+        vectors = {}
+        try:
+            for position in range(4):
+                index = r
+                if position:
+                    index = self.reg('r')
+                    self.emit(f'add.s32 {index}, {r}, {position};')
+                    self.set_integer_range(index, checked_i32_interval(position, extent - 4 + position))
+                self.values[axis] = (index, 'i32')
+                self.rebind(axis)
+                self.hoist_vector = (axis, base, position, vectors)
+                self.statements_with_init_scope(loop.body, frame)
+        finally:
+            self.hoist_vector = None
+        self.emit(f'add.s32 {r}, {r}, 4;')
+        self.values[axis] = (r, 'i32')
+        self.rebind(axis)
+        self.emit(f'bra {begin};')
+        self.mark(done)
+        self.emit(f'mov.s32 {r}, {extent};')
+        self.set_integer_range(r, checked_i32_interval(extent, extent))
+        return True
+
+    def hoisted_row_read(self, row, serial):
+        """This iteration's word of a hoisted shared row.
+
+        Inside a four-wide serial group, an aligned row is read once per group
+        with one 128-bit load and every reader takes its own position. Rows
+        are written before the serial loop and never inside it.
+        """
+        group = self.hoist_vector
+        if group is not None and group[0] == serial and row in self.vector_rows:
+            _, base, position, vectors = group
+            if row not in vectors:
+                vector = tuple(self.reg('f') for _ in range(4))
+                if isinstance(base, int):
+                    address = f'{row}+{base}'
+                else:
+                    address = self.reg('rd')
+                    self.emit(f'add.u64 {address}, {row}, {base};')
+                self.emit('ld.shared.v4.f32 {' + ', '.join(vector) + f'}}, [{address}];')
+                vectors[row] = vector
+            return vectors[row][position]
+        offset, address, r = self.reg('rd'), self.reg('rd'), self.reg('f')
+        self.emit(f'mul.wide.u32 {offset}, {self.value(serial)}, 4;')
+        self.emit(f'add.u64 {address}, {row}, {offset};')
+        self.emit(f'ld.shared.f32 {r}, [{address}];')
+        return r
+
+    def deferred_before_hoists(self, statements):
+        """Pure arithmetic that may wait until just after a CTA hoist.
+
+        In a run of Loads, Inits, Lets and Assigns ending at a statement with
+        hoist plans, an Assign or Let whose result neither a kept statement
+        of the run nor the hoisted work reads, and whose operands nothing
+        later in the run rebinds, is emitted right after the hoist instead.
+        Loads stay in place, so their latency overlaps the hoist's staging
+        loads instead of a dependent instruction stalling issue ahead of them.
+        """
+        deferred = {}
+        if self.inactive or not any(id(s) in self.hoist_plans for s in statements):
+            return deferred
+        special = (self.skip_ids, self.subst_load, self.hoisted, self.subst, self.vn_skip,
+                   self.vn_record, self.hoist_plans)
+        for end, statement in enumerate(statements):
+            if id(statement) not in self.hoist_plans:
+                continue
+            outer, plans, _ = self.hoist_plans[id(statement)]
+            reads = touched_names([plan.statement for plan in plans])
+            reads |= touched_names([load for _, load in self.prefetch_plans.get(id(outer), [])])
+            rebound = set()
+            chosen = []
+            for position in range(end - 1, -1, -1):
+                candidate = statements[position]
+                kind = type(candidate).__name__
+                if kind not in ('Load', 'Init', 'Let', 'Assign'):
+                    break
+                names = defined_names([candidate])
+                if (kind in ('Let', 'Assign') and not names & reads and not names & rebound
+                        and not set(candidate.deps()) & rebound
+                        and not any(id(candidate) in table for table in special)):
+                    chosen.append(candidate)
+                else:
+                    reads |= touched_names([candidate])
+                rebound |= names
+            if chosen:
+                deferred[id(statement)] = chosen[::-1]
+        return deferred
 
     def statements(self, statements, shared_prefetch=None):
         pending = []
+        deferred = self.deferred_before_hoists(statements)
+        waiting = {id(x) for chosen in deferred.values() for x in chosen}
         for position, s in enumerate(statements):
             for name, key in pending:
                 self.vn_registers[key] = self.values[name]
             pending = self.vn_record.get(id(s), [])
+            if id(s) in waiting:
+                pending = []
+                continue
             if id(s) in self.hoist_plans:
                 self.emit_hoisted(*self.hoist_plans.pop(id(s)))
+                if id(s) in deferred:
+                    self.statements(deferred[id(s)])
+            if id(s) in self.skip_ids:
+                # Computed once per CTA by the hoisted softmax; nothing reads it.
+                pending = []
+                continue
+            if id(s) in self.subst_load:
+                name, row, serial = self.subst_load[id(s)]
+                self.values[name] = (self.hoisted_row_read(row, serial), 'f32')
+                self.rebind(name)
+                continue
             if id(s) in self.hoisted:
                 self.load_hoisted(s)
                 continue
@@ -4359,9 +5434,14 @@ class Emitter:
                 cells = s.block_threads if s.block_threads is not None else launched
                 if cells != launched:
                     raise Unsupported('Tile block_threads differs from prescribed launch')
-                if s.raster_axes:
-                    # Prove raster coordinates are block-uniform: all within-CTA
-                    # coordinate factors form a suffix of exactly block_threads.
+                if s.raster_axes and cta_cooperative(s.body):
+                    # Raster metadata only permutes CTAs, and each cell is
+                    # decoded row-major from the global thread id exactly as
+                    # Emmy's renderer does, so a body whose threads never
+                    # cooperate is correct under any raster. Cooperative bodies
+                    # (barriers, shuffles, shared memory) need block-uniform
+                    # raster coordinates: all within-CTA coordinate factors
+                    # must form a suffix of exactly block_threads.
                     cuts = [i for i in range(len(extents) + 1)
                             if math.prod(extents[i:]) == launched]
                     if not cuts or any(name not in [axis.name for axis in s.axes[:max(cuts)]]
@@ -4578,6 +5658,9 @@ class Emitter:
                 self.values[s.name] = (old, self.values[s.name][1])
                 self.mutable[s.name] = old
                 self.rebind(s.name)
+            elif (kind == 'StridedLoop' and id(s) not in self.no_vector_reduction
+                  and self.merged_vector_reduction(s, statements[position + 1:])):
+                pass
             elif kind in ('StridedLoop', 'Loop'):
                 previous_axis = self.values.get(s.axis.name)
                 previous_invariant_depth = len(self.loop_invariants)
@@ -4604,10 +5687,30 @@ class Emitter:
                         for name, rep in carried.items():
                             self.values[name] = self.values[rep]
                             self.mutable[name] = self.mutable[rep]
-                        if online:
+                        if online and not self.hoisted_softmax(s, online):
                             self.two_pass_softmax(s, online)
                     loop_init_frame = self.init_scope_frame(s.body)
                     extent = static(s.axis.extent)
+                    if kind == 'Loop' and id(s) in self.register_prefetch:
+                        prefetched = self.register_prefetch.pop(id(s))
+                        try:
+                            for coordinate in range(extent):
+                                self.values[s.axis.name] = (str(coordinate), 'i32')
+                                self.rebind(s.axis.name)
+                                if extent % 4 == 0:
+                                    if coordinate % 4 == 0:
+                                        vectors = {}
+                                    self.hoist_vector = (s.axis.name, 4 * (coordinate - coordinate % 4),
+                                                         coordinate % 4, vectors)
+                                self.statements_with_init_scope(
+                                    s.body, loop_init_frame,
+                                    {position: registers[coordinate]
+                                     for position, registers in prefetched.items()})
+                        finally:
+                            self.hoist_vector = None
+                        continue
+                    if kind == 'Loop' and self.hoisted_vector_loop(s, extent, loop_init_frame):
+                        continue
                     if kind == 'StridedLoop' and self.serial_read_pipeline(s):
                         continue
                     if kind == 'Loop' and self.ordered_key_batch(s):
@@ -4708,6 +5811,14 @@ class Emitter:
                             self.set_integer_range(r, checked_i32_interval(lo, hi - 1))
                     self.values[s.axis.name] = (r, 'i32')
                     self.rebind(s.axis.name)
+                    if (kind == 'StridedLoop' and not live_step
+                            and s.axis.name not in defined_names(s.body)):
+                        literal_start = static_or_none(s.start)
+                        literal_step = static_or_none(s.step)
+                        if literal_start is not None and literal_step is not None and literal_step > 0:
+                            # Every trip's value is start + k*step; the body
+                            # sees it until the backedge rebinds the axis.
+                            self.axis_facts[s.axis.name] = (literal_start, literal_step)
                     vector = self.vector_load_plan(s) if kind == 'Loop' else None
                     if vector is not None:
                         self.vector_loops += 1
@@ -4881,8 +5992,11 @@ class Emitter:
                         self.emit(f'{pred}ld.global.u8 {bits}, [{src_byte}];')
                         self.emit(f'{pred}st.shared.u8 [{dst_byte}], {bits};')
                     continue
-                destination_residue = flat_residue(self.buffers[s.smem][0], destination, width, self.var_residue)
-                source_residue = flat_residue(self.buffers[s.src][0], s.src_index, width, self.var_residue)
+                known = dict(self.var_residue)
+                known.update({name: start % width for name, (start, step) in self.axis_facts.items()
+                              if step % width == 0})
+                destination_residue = flat_residue(self.buffers[s.smem][0], destination, width, known)
+                source_residue = flat_residue(self.buffers[s.src][0], s.src_index, width, known)
                 statically_aligned = (width == 4 and dtype == 'f32'
                                       and self.shared_statements[s.smem].align >= 16
                                       and self.shared_offsets[s.smem] % 16 == 0
@@ -5088,6 +6202,328 @@ class Emitter:
         return '\n'.join(['.version 8.0', '.target sm_89', '.address_size 64', '', *self.externals, f'.visible .entry {ident(self.node.op.name)}(', ',\n'.join(params), ')', bounds, '{', *decl, *self.lines, 'kernel_done:', '    ret;', '}', ''])
 
 
+class PlanLines:
+    """Register counter and line buffer for plan-driven kernels."""
+
+    def __init__(self):
+        self.counts = {'r': 0, 'rd': 0, 'f': 0, 'p': 0}
+        self.lines = []
+
+    def reg(self, kind):
+        self.counts[kind] += 1
+        return f'%{kind}{self.counts[kind]}'
+
+    def emit(self, instruction):
+        for line in constant_divrem(self, instruction) or (instruction,):
+            self.lines.append('    ' + line)
+
+
+# Largest staged K slice tried first, and the most slices emitted unrolled.
+PLAN_K_SLICES = (64, 32, 16)
+PLAN_MAX_SLICES = 32
+
+
+def plan_simt_ptx(plan, meta):
+    """Exact-F32 SIMT PTX for a classifier-proven ``out = A @ B`` plan.
+
+    The plan proves the output partition (row-major CTA order of block_m x
+    block_n tiles), full K coverage and the operand identities. Each thread
+    keeps 4 rows x 4 columns in each of ``halves`` column halves of the tile
+    (so a warp's B vectors cover one contiguous 128-byte span per half); the
+    CTA's threads form groups that split every
+    staged K slice, and the group partials are summed in a fixed order through
+    shared memory at the end. Products are exact F32 FMAs taken in ascending
+    k within a group; only the grouping of the K sum differs from the typed
+    program, which the output tolerance judges. Returns None outside this
+    envelope, keeping the existing lowering.
+    """
+    args = {a['name']: a for a in meta['args']}
+    if (plan.a_transpose or plan.b_transpose or plan.atomic_output or plan.k_splits != 1
+            or plan.epilogue != 'copy' or any(a.get('scalar') for a in meta['args'])
+            or len(set(meta['arg_order'])) != len(meta['arg_order'])
+            or any(args.get(x, {}).get('dtype') != 'f32'
+                   for x in (plan.a_buffer, plan.b_buffer, plan.output))
+            or list(meta['block'][1:]) != [1, 1] or list(meta['grid'][1:]) != [1, 1]):
+        return None
+    m, n, k = plan.m, plan.n, plan.k
+    bm, bn, threads = plan.block_m, plan.block_n, plan.block_threads
+    if (threads != meta['block'][0] or plan.grid_m * plan.grid_n != meta['grid'][0]
+            or bm % 4 or bn % 4 or m % bm or n % bn):
+        return None
+    smem_limit = int(meta['smem_bytes'])
+    choice = None
+    for halves in (2, 1):
+        if bn % (4 * halves):
+            continue
+        cols = bn // (4 * halves)          # 4-column groups per half
+        per_group = (bm // 4) * cols
+        if threads % per_group or per_group % 32 or (cols < 32 and 32 % cols):
+            continue
+        groups = threads // per_group
+        # Consecutive lanes share a row group when a warp spans several:
+        # XOR-swizzling A's 16-byte chunks by row group keeps those lanes'
+        # A vectors in distinct bank groups.
+        spread = 32 // cols if cols < 32 else 1
+        for bk in PLAN_K_SLICES:
+            if (k % bk or (bk // 4) % groups or k // bk > PLAN_MAX_SLICES
+                    or spread > bk // 4):
+                continue
+            stage = 4 * (bm * bk + bk * bn)
+            for stages in (3, 2):
+                if (stages * stage <= smem_limit
+                        and (groups == 1 or 4 * groups * bm * bn <= smem_limit)):
+                    choice = (halves, cols, per_group, groups, spread, bk, stages, stage)
+                    break
+            if choice:
+                break
+        if choice:
+            break
+    if choice is None:
+        return None
+    halves, cols, per_group, groups, spread, bk, stages, stage_bytes = choice
+    half = bn // halves
+    slices = k // bk
+    per_k = bk // groups              # k values one group takes from a slice
+    a_bytes = 4 * bm * bk
+
+    out = PlanLines()
+    emit, reg = out.emit, out.reg
+    params, ptrs = [], {}
+    for i, name in enumerate(meta['arg_order']):
+        params.append(f'    .param .u64 param_{i}')
+        r = reg('rd')
+        emit(f'ld.param.u64 {r}, [param_{i}];')
+        emit(f'cvta.to.global.u64 {r}, {r};')
+        ptrs[name] = r
+    a_ptr, b_ptr, c_ptr = ptrs[plan.a_buffer], ptrs[plan.b_buffer], ptrs[plan.output]
+
+    tid, bid = reg('r'), reg('r')
+    emit(f'mov.u32 {tid}, %tid.x;')
+    emit(f'mov.u32 {bid}, %ctaid.x;')
+    g, q, tr, tc, x = (reg('r') for _ in range(5))
+    emit(f'div.u32 {g}, {tid}, {per_group};')
+    emit(f'rem.u32 {q}, {tid}, {per_group};')
+    emit(f'div.u32 {tr}, {q}, {cols};')
+    emit(f'rem.u32 {tc}, {q}, {cols};')
+    emit(f'and.b32 {x}, {tr}, {spread - 1};')
+    cta_m, cta_n, row0, col0 = (reg('r') for _ in range(4))
+    emit(f'div.u32 {cta_m}, {bid}, {plan.grid_n};')
+    emit(f'rem.u32 {cta_n}, {bid}, {plan.grid_n};')
+    emit(f'mul.lo.u32 {row0}, {cta_m}, {bm};')
+    emit(f'mul.lo.u32 {col0}, {cta_n}, {bn};')
+    smem = reg('r')
+    emit(f'mov.u32 {smem}, __emmy_smem;')
+
+    # 16-byte copies need 16-byte aligned rows in both operands.
+    vector = reg('p')
+    if k % 4 or n % 4:
+        emit(f'setp.ne.u32 {vector}, 0, 0;')
+    else:
+        low, other = reg('rd'), reg('rd')
+        emit(f'or.b64 {low}, {a_ptr}, {b_ptr};')
+        emit(f'and.b64 {other}, {low}, 15;')
+        emit(f'setp.eq.u64 {vector}, {other}, 0;')
+
+    def chunk_copies(chunks, per_row):
+        """Per thread: (guard or None, row, chunk) for its share of chunks."""
+        result = []
+        for i in range(-(-chunks // threads)):
+            item = reg('r')
+            emit(f'add.u32 {item}, {tid}, {i * threads};')
+            guard = None
+            if (i + 1) * threads > chunks:
+                guard = reg('p')
+                emit(f'setp.lt.u32 {guard}, {item}, {chunks};')
+            row, chunk = reg('r'), reg('r')
+            emit(f'div.u32 {row}, {item}, {per_row};')
+            emit(f'rem.u32 {chunk}, {item}, {per_row};')
+            result.append((guard, row, chunk))
+        return result
+
+    copies = []    # (guard, shared offset within a stage, global address at slice 0, slice stride)
+    for guard, row, chunk in chunk_copies(bm * bk // 4, bk // 4):
+        swizzled, word, dst = reg('r'), reg('r'), reg('r')
+        emit(f'shr.u32 {swizzled}, {row}, 2;')
+        emit(f'and.b32 {swizzled}, {swizzled}, {spread - 1};')
+        emit(f'xor.b32 {swizzled}, {swizzled}, {chunk};')
+        emit(f'mul.lo.u32 {dst}, {row}, {4 * bk};')
+        emit(f'mad.lo.u32 {dst}, {swizzled}, 16, {dst};')
+        emit(f'add.u32 {dst}, {dst}, {smem};')
+        emit(f'add.u32 {word}, {row0}, {row};')
+        emit(f'mul.lo.u32 {word}, {word}, {k};')
+        emit(f'mad.lo.u32 {word}, {chunk}, 4, {word};')
+        src = reg('rd')
+        emit(f'mul.wide.u32 {src}, {word}, 4;')
+        emit(f'add.u64 {src}, {a_ptr}, {src};')
+        copies.append((guard, dst, src, 4 * bk))
+    for guard, row, chunk in chunk_copies(bk * bn // 4, bn // 4):
+        word, dst = reg('r'), reg('r')
+        emit(f'mul.lo.u32 {dst}, {row}, {4 * bn};')
+        emit(f'mad.lo.u32 {dst}, {chunk}, 16, {dst};')
+        emit(f'add.u32 {dst}, {dst}, {smem};')
+        emit(f'add.u32 {dst}, {dst}, {a_bytes};')
+        emit(f'mul.lo.u32 {word}, {row}, {n};')
+        emit(f'add.u32 {word}, {word}, {col0};')
+        emit(f'mad.lo.u32 {word}, {chunk}, 4, {word};')
+        src = reg('rd')
+        emit(f'mul.wide.u32 {src}, {word}, 4;')
+        emit(f'add.u64 {src}, {b_ptr}, {src};')
+        copies.append((guard, dst, src, 4 * bk * n))
+
+    def issue(slice_):
+        buffer = (slice_ % stages) * stage_bytes
+        for guard, dst, src, stride in copies:
+            d, a = reg('r'), reg('rd')
+            emit(f'add.u32 {d}, {dst}, {buffer};')
+            emit(f'add.u64 {a}, {src}, {slice_ * stride};')
+            wide, narrow = vector, f'!{vector}'
+            if guard is not None:
+                wide, narrow = reg('p'), reg('p')
+                emit(f'and.pred {wide}, {vector}, {guard};')
+                emit(f'not.pred {narrow}, {vector};')
+                emit(f'and.pred {narrow}, {narrow}, {guard};')
+            emit(f'@{wide} cp.async.cg.shared.global [{d}], [{a}], 16;')
+            for offset in range(0, 16, 4):
+                emit(f'@{narrow} cp.async.ca.shared.global [{d}+{offset}], [{a}+{offset}], 4;')
+        emit('cp.async.commit_group;')
+
+    # Read pointers: this thread's A rows (one per swizzled chunk) and B column.
+    a_rows = []
+    for j in range(per_k // 4):
+        chunk, ptr = reg('r'), reg('r')
+        emit(f'mad.lo.u32 {chunk}, {g}, {per_k // 4}, {j};')
+        emit(f'xor.b32 {chunk}, {chunk}, {x};')
+        emit(f'mul.lo.u32 {ptr}, {tr}, {16 * bk};')
+        emit(f'mad.lo.u32 {ptr}, {chunk}, 16, {ptr};')
+        emit(f'add.u32 {ptr}, {ptr}, {smem};')
+        a_rows.append(ptr)
+    b_col = reg('r')
+    emit(f'mul.lo.u32 {b_col}, {g}, {4 * per_k * bn};')
+    emit(f'mad.lo.u32 {b_col}, {tc}, 16, {b_col};')
+    emit(f'add.u32 {b_col}, {b_col}, {smem};')
+    emit(f'add.u32 {b_col}, {b_col}, {a_bytes};')
+
+    acc = [[reg('f') for _ in range(4 * halves)] for _ in range(4)]
+    for row in acc:
+        for r in row:
+            emit(f'mov.f32 {r}, 0f00000000;')
+    for slice_ in range(stages - 1):
+        if slice_ < slices:
+            issue(slice_)
+        else:
+            emit('cp.async.commit_group;')
+    for slice_ in range(slices):
+        ahead = slice_ + stages - 1
+        if ahead < slices:
+            issue(ahead)
+        else:
+            emit('cp.async.commit_group;')
+        emit(f'cp.async.wait_group {stages - 1};')
+        emit('bar.sync 0;')
+        buffer = (slice_ % stages) * stage_bytes
+        for j, a_row in enumerate(a_rows):
+            avec = []
+            for i in range(4):
+                v = [reg('f') for _ in range(4)]
+                emit(f'ld.shared.v4.f32 {{{", ".join(v)}}}, [{a_row}+{buffer + 4 * bk * i}];')
+                avec.append(v)
+            for t in range(4):
+                bvec = []
+                for h in range(halves):
+                    v = [reg('f') for _ in range(4)]
+                    emit(f'ld.shared.v4.f32 {{{", ".join(v)}}}, '
+                         f'[{b_col}+{buffer + 4 * bn * (4 * j + t) + 4 * half * h}];')
+                    bvec += v
+                for i in range(4):
+                    for c in range(4 * halves):
+                        emit(f'fma.rn.f32 {acc[i][c]}, {avec[i][t]}, {bvec[c]}, {acc[i][c]};')
+        emit('bar.sync 0;')
+
+    aligned_c = reg('p')
+    if n % 4:
+        emit(f'setp.ne.u32 {aligned_c}, 0, 0;')
+    else:
+        low = reg('rd')
+        emit(f'and.b64 {low}, {c_ptr}, 15;')
+        emit(f'setp.eq.u64 {aligned_c}, {low}, 0;')
+
+    def store(row, col4, values):
+        word, addr = reg('r'), reg('rd')
+        emit(f'add.u32 {word}, {row0}, {row};')
+        emit(f'mul.lo.u32 {word}, {word}, {n};')
+        emit(f'add.u32 {word}, {word}, {col0};')
+        emit(f'mad.lo.u32 {word}, {col4}, 4, {word};')
+        emit(f'mul.wide.u32 {addr}, {word}, 4;')
+        emit(f'add.u64 {addr}, {c_ptr}, {addr};')
+        emit(f'@{aligned_c} st.global.v4.f32 [{addr}], {{{", ".join(values)}}};')
+        for i, value in enumerate(values):
+            emit(f'@!{aligned_c} st.global.f32 [{addr}+{4 * i}], {value};')
+
+    if groups == 1:
+        for i in range(4):
+            row = reg('r')
+            emit(f'mad.lo.u32 {row}, {tr}, 4, {i};')
+            for h in range(halves):
+                col4 = reg('r')
+                emit(f'add.u32 {col4}, {tc}, {h * half // 4};')
+                store(row, col4, acc[i][4 * h:4 * h + 4])
+    else:
+        part = reg('r')
+        emit(f'mul.lo.u32 {part}, {g}, {4 * bm * bn};')
+        emit(f'mad.lo.u32 {part}, {tr}, {16 * bn}, {part};')
+        emit(f'mad.lo.u32 {part}, {tc}, 16, {part};')
+        emit(f'add.u32 {part}, {part}, {smem};')
+        for i in range(4):
+            for h in range(halves):
+                emit(f'st.shared.v4.f32 [{part}+{4 * bn * i + 4 * half * h}], '
+                     f'{{{", ".join(acc[i][4 * h:4 * h + 4])}}};')
+        emit('bar.sync 0;')
+        for guard, row, col4 in chunk_copies(bm * bn // 4, bn // 4):
+            skip = None
+            if guard is not None:
+                skip = f'plan_store_skip_{out.counts["p"]}'
+                emit(f'@!{guard} bra {skip};')
+            src = reg('r')
+            emit(f'mul.lo.u32 {src}, {row}, {4 * bn};')
+            emit(f'mad.lo.u32 {src}, {col4}, 16, {src};')
+            emit(f'add.u32 {src}, {src}, {smem};')
+            total = None
+            for h in range(groups):
+                v = [reg('f') for _ in range(4)]
+                emit(f'ld.shared.v4.f32 {{{", ".join(v)}}}, [{src}+{4 * bm * bn * h}];')
+                if total is None:
+                    total = v
+                else:
+                    for a, b in zip(total, v):
+                        emit(f'add.f32 {a}, {a}, {b};')
+            store(row, col4, total)
+            if skip is not None:
+                out.lines.append(skip + ':')
+
+    decl = [f'    .reg .b32 %r<{out.counts["r"] + 1}>;',
+            f'    .reg .b64 %rd<{out.counts["rd"] + 1}>;',
+            f'    .reg .f32 %f<{out.counts["f"] + 1}>;',
+            f'    .reg .pred %p<{out.counts["p"] + 1}>;']
+    return '\n'.join(['.version 8.0', '.target sm_89', '.address_size 64', '',
+                      '.extern .shared .align 16 .b8 __emmy_smem[];',
+                      f'.visible .entry {ident(plan.entry)}(', ',\n'.join(params), ')',
+                      f'.maxntid {threads}, 1, 1', '{', *decl, *out.lines, '    ret;', '}', ''])
+
+
+def plan_simt_route(graph, node, meta):
+    """PTX from a proven matmul plan, or None to keep the general lowering."""
+    try:
+        import tensor_core
+        decision = tensor_core.classify(graph, node, meta, numerics='f32')
+        if decision.verdict != tensor_core.PLAN or decision.plan is None:
+            return None
+        return plan_simt_ptx(decision.plan, meta)
+    except (ImportError, ValueError, KeyError, TypeError, AttributeError,
+            IndexError, ArithmeticError) as exc:
+        print(f'compile.py: plan SIMT fallback: {type(exc).__name__}: {exc}', file=sys.stderr)
+        return None
+
+
 def compile_path(path):
     path = Path(path)
     graph = Graph.from_dict(json.loads(path.read_text()))
@@ -5114,6 +6550,9 @@ def compile_path(path):
     # three-term TF32 path on m01 (17.0 vs 21.1 us); prefer it outright.
     simt = Emitter(graph, node, matches[0])
     simt_ptx = simt.render()
+    planned = plan_simt_route(graph, node, matches[0])
+    if planned is not None:
+        return planned
     if simt.vector_loops:
         return simt_ptx
     # The tensor-core path is fail-closed: only an independently validated

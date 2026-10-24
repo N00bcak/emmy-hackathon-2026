@@ -1130,8 +1130,12 @@ def _atomic_groups(write):
     return bool(write.atomic)
 
 
-def classify(graph, node, meta):
-    """Return a fail-closed Plan/UnsupportedMatch/NoMatch classification."""
+def classify(graph, node, meta, numerics='tf32'):
+    """Return a fail-closed Plan/UnsupportedMatch/NoMatch classification.
+
+    ``numerics='f32'`` asks only for the geometry/coverage proof: a consumer
+    that contracts in exact F32 products needs no TF32 certificate.
+    """
     try:
         if type(node.op).__name__ != 'KernelOp':
             return Classification(NO_MATCH, 'node is not a KernelOp')
@@ -1542,7 +1546,7 @@ def classify(graph, node, meta):
         if any(metadata_args.get(name, {}).get('dtype') != 'f32'
                for name in (a_buffer, b_buffer, output)):
             return Classification(UNSUPPORTED, 'TF32 plan requires f32 operands and output')
-        if not implicit_f32_mma_numerically_legal():
+        if numerics == 'tf32' and not implicit_f32_mma_numerically_legal():
             return Classification(UNSUPPORTED,
                                   'implicit F32 contraction lacks a TF32 numerical certificate')
         m, n = output_shape
