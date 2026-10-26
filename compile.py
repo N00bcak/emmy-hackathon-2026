@@ -696,6 +696,9 @@ STRIDED_UNROLL = (32, 8)
 # 128-bit loads a merged strided reduction keeps in flight per thread,
 # largest first: bytes in flight bound a one-CTA reduction streaming from DRAM.
 STRIDED_VECTOR_BATCH = (32, 8, 1)
+# Most f32 values per thread a merged strided reduction keeps in registers
+# for a later map over the same row (row_cached_map).
+ROW_CACHE_VALUES = 32
 
 
 def straight_line(statements):
@@ -1270,6 +1273,10 @@ class Emitter:
         # statements whose value is read from shared memory per iteration.
         self.skip_ids, self.subst_load = set(), {}
         self.no_vector_reduction = set()
+        # Fully unrolled merged reductions whose loaded registers a later map
+        # over the same row may reuse, the trees that leave a CTA total in
+        # every thread, and maps already sent down their fallback.
+        self.row_caches, self.cta_total_trees, self.no_row_cache = {}, set(), set()
         # Serial-loop loads issued before the hoisted precompute: per outer
         # loop, body position -> one register per iteration.
         self.prefetch_plans, self.register_prefetch = {}, {}
@@ -3747,12 +3754,30 @@ class Emitter:
             return False
         if not self.merged_reduction_tail(following, folds, ctx['launched']):
             return False
+        tree = next(x for x in following if type(x).__name__ == 'TreeHalve')
+        if tree.inner is None:
+            # Every thread then reads the total back from slot 0.
+            self.cta_total_trees.add(id(tree))
 
-        fold_stmts = [x for x in loop.body if type(x).__name__ == 'Accum']
+        self.prefetch_scalar_loads(following)
+        vstep = 4 * stride
+        trips = bound // vstep
+        # A later map over this row reuses the loaded registers when the
+        # thread's share fits; its other row loads are issued with ours.
+        cached = trips * 4 * len(loads) <= ROW_CACHE_VALUES
+        pointers = list(dict.fromkeys(x.input for x in loads))
+        extra = []
+        if cached:
+            later = next((x for x in following if self.same_strided_header(x, loop)), None)
+            planned = self.row_map_plan(later, loop, loads) if later is not None else None
+            if planned is not None:
+                extra = [(x, later.axis.name) for x, how, _ in planned[0] if how == 'vector']
+                pointers += [name for name in planned[1] if name not in pointers]
+
         before = {name: (self.values.get(name), self.mutable.get(name)) for name in folds}
         vector, joined = self.label('vreduce'), self.label('vreduce_done')
         misaligned = None
-        for name in dict.fromkeys(x.input for x in loads):
+        for name in pointers:
             low, q = self.reg('rd'), self.reg('p')
             self.emit(f'and.b64 {low}, {self.ptrs[name]}, 15;')
             self.emit(f'setp.ne.u64 {q}, {low}, 0;')
@@ -3783,26 +3808,29 @@ class Emitter:
         first, _ = self.expr(start)
         va = self.reg('r')
         self.emit(f'shl.b32 {va}, {first}, 2;')
-        vstep = 4 * stride
-        for group in STRIDED_VECTOR_BATCH:
-            begin, done = self.label('vreduce_loop'), self.label('vreduce_end')
-            self.mark(begin)
-            last, q = self.reg('r'), self.reg('p')
-            self.emit(f'add.s32 {last}, {va}, {(group - 1) * vstep};')
-            self.emit(f'setp.ge.s32 {q}, {last}, {bound};')
-            self.emit(f'@{q} bra {done};')
+
+        def fold_vectors(group, extra=()):
+            """Load ``group`` vectors from ``va`` on, then fold them in order.
+            ``extra`` loads (statement, axis) are issued alongside, unfolded."""
             fetched = []
             for k in range(group):
                 ak = self.reg('r')
                 self.emit(f'add.s32 {ak}, {va}, {k * vstep};')
-                self.values[axis] = (ak, 'i32')
-                self.rebind(axis)
                 lanes = {}
-                for x in loads:
+                for x, name in [(x, axis) for x in loads] + list(extra):
+                    previous = self.values.get(name)
+                    self.values[name] = (ak, 'i32')
+                    self.rebind(name)
                     addr, space = self.address(x.input, x.index)
                     regs = [self.reg('f') for _ in range(4)]
                     self.emit(f'ld.{space}.v4.f32 {{{", ".join(regs)}}}, [{addr}];')
                     lanes[id(x)] = regs
+                    if name != axis:
+                        if previous is None:
+                            self.values.pop(name, None)
+                        else:
+                            self.values[name] = previous
+                        self.rebind(name)
                 fetched.append(lanes)
             for lanes in fetched:
                 for j in range(4):
@@ -3812,9 +3840,27 @@ class Emitter:
                             self.rebind(x.names[0])
                         else:
                             self.statements([x])
-            self.emit(f'add.s32 {va}, {va}, {group * vstep};')
-            self.emit(f'bra {begin};')
-            self.mark(done)
+            return fetched
+
+        if cached:
+            # The start is a CTA axis below the stride, so every thread makes
+            # exactly ``trips`` vector steps: unrolled, the loaded registers
+            # stay live for the later map (row_cached_map).
+            fetched = fold_vectors(trips, extra)
+            self.row_caches[id(loop)] = (loop, va, trips, loads, {
+                id(x): [lanes[id(x)] for lanes in fetched] for x in loads + [x for x, _ in extra]})
+        else:
+            for group in STRIDED_VECTOR_BATCH:
+                begin, done = self.label('vreduce_loop'), self.label('vreduce_end')
+                self.mark(begin)
+                last, q = self.reg('r'), self.reg('p')
+                self.emit(f'add.s32 {last}, {va}, {(group - 1) * vstep};')
+                self.emit(f'setp.ge.s32 {q}, {last}, {bound};')
+                self.emit(f'@{q} bra {done};')
+                fold_vectors(group)
+                self.emit(f'add.s32 {va}, {va}, {group * vstep};')
+                self.emit(f'bra {begin};')
+                self.mark(done)
         for name, (reg, _) in results.items():
             self.emit(f'mov.f32 {reg}, {self.value(name)};')
         self.vn_skip, self.vn_record = saved_vn
@@ -3823,6 +3869,224 @@ class Emitter:
             self.values[name] = value
             self.mutable[name] = value[0]
             self.rebind(name)
+        return True
+
+    def prefetch_scalar_loads(self, following):
+        """Issue now the Tile-level scalar loads among ``following``.
+
+        A load qualifies when it reads an f32 input the kernel never writes,
+        indexed only by literals and Tile axes nothing rebinds: it returns
+        the same value now as where it stands, and issuing it before a
+        reduction overlaps its latency with that reduction instead of
+        stalling the dependent arithmetic after the merge. The statement
+        later binds the prefetched register.
+        """
+        tile = self.hoist_ctx['tile']
+        outputs = {arg['name'] for arg in self.meta['args'] if arg.get('output')}
+        written = written_buffers(tile.body) | outputs
+        rebound = defined_names(tile.body)
+        special = (self.skip_ids, self.subst_load, self.hoisted, self.subst, self.vn_skip,
+                   self.vn_record, self.hoist_plans)
+        for x in following:
+            if (type(x).__name__ != 'Load' or len(x.names) != 1 or x.input in written
+                    or x.input not in self.ptrs or x.input in self.shared
+                    or dtype_name(self.buffers[x.input][1]) != 'f32'
+                    or (x.dtype is not None and dtype_name(x.dtype) != 'f32')
+                    or any(id(x) in table for table in special)):
+                continue
+            names = [expr_names(c) for c in x.index]
+            if any(n is None or n - set(self.tile_extents) or n & rebound for n in names):
+                continue
+            addr, space = self.address(x.input, x.index)
+            r = self.reg('f')
+            self.emit(f'ld.{space}.f32 {r}, [{addr}];')
+            self.subst[id(x)] = [(x.names[0], r)]
+
+    def same_strided_header(self, statement, loop):
+        """``statement`` is a StridedLoop with ``loop``'s start, step and bound."""
+        if type(statement).__name__ != 'StridedLoop' or type(statement.start).__name__ != 'Var':
+            return False
+        bound = lambda x: static_or_none(x.end if x.end is not None else x.axis.extent)
+        return (statement.start.name == loop.start.name
+                and static_or_none(statement.step) == static_or_none(loop.step) is not None
+                and bound(statement) == bound(loop) is not None)
+
+    def row_map_plan(self, loop, source, source_loads):
+        """Plan a thread-strided map over the row the merged reduction
+        ``source`` loads, on that reduction's element mapping.
+
+        Every thread takes the 4-element groups the reduction gave it. That
+        is sound for a map: each element's value may depend only on its own
+        loads, its own index and CTA-uniform values (scalars, block axes,
+        merged CTA totals), and each element is still written exactly once.
+        Per-element loads and writes must be f32 global accesses whose
+        4-element groups are 16-byte aligned once the base pointer is.
+        Returns ([(statement, how, source load)], pointers) with ``how`` one
+        of 'cached' (reuses ``source``'s registers), 'vector', 'plain' or
+        'store', or None.
+        """
+        axis = loop.axis.name
+        if self.inactive or axis in defined_names(loop.body):
+            return None
+        outputs = {arg['name'] for arg in self.meta['args'] if arg.get('output')}
+        written = written_buffers(self.hoist_ctx['tile'].body) | outputs
+        special = (self.skip_ids, self.subst_load, self.hoisted, self.subst, self.vn_skip,
+                   self.vn_record, self.hoist_plans)
+
+        def vector_form(buffer, index):
+            names = [expr_names(c) for c in index]
+            if (any(n is None for n in names) or buffer not in self.ptrs or buffer in self.shared
+                    or dtype_name(self.buffers[buffer][1]) != 'f32'):
+                return None
+            form = flat_affine(self.buffers[buffer][0], index)
+            last = index[-1]
+            if (form is None or form[0] % 4 or not (type(last).__name__ == 'Var' and last.name == axis)
+                    or form[1].get(('var', axis)) != 1
+                    or any(c % 4 for term, c in form[1].items() if term != ('var', axis))
+                    or any(not self.cta_uniform(n, loop) for c in index[:-1] for n in expr_names(c))):
+                return None
+            return form
+
+        def same_row(load, form):
+            """The source load reading exactly this row, if any. Its other
+            index terms must be Tile axes, which no statement rebinds."""
+            for x in source_loads:
+                theirs = flat_affine(self.buffers[x.input][0], x.index)
+                renamed = {(('var', axis) if term == ('var', source.axis.name) else term): c
+                           for term, c in theirs[1].items()}
+                if (x.input == load.input and theirs[0] == form[0] and renamed == form[1]
+                        and all(term == ('var', axis) or (term[0] == 'var' and term[1] in self.tile_extents)
+                                for term in form[1])):
+                    return x
+            return None
+
+        local, f32_values, plan = set(), set(), []
+        for x in loop.body:
+            kind = type(x).__name__
+            if any(id(x) in table for table in special):
+                return None
+            if kind == 'Load':
+                if (len(x.names) != 1 or x.input in written
+                        or (x.dtype is not None and dtype_name(x.dtype) != 'f32')):
+                    return None
+                if axis in set().union(*(expr_names(c) or set() for c in x.index)):
+                    form = vector_form(x.input, x.index)
+                    if form is None:
+                        return None
+                    hit = same_row(x, form)
+                    plan.append((x, 'cached', hit) if hit is not None else (x, 'vector', None))
+                    f32_values.add(x.names[0])
+                elif all((n := expr_names(c)) is not None and all(self.cta_uniform(m, loop) for m in n)
+                         for c in x.index):
+                    plan.append((x, 'plain', None))
+                else:
+                    return None
+                local.add(x.names[0])
+            elif kind in ('Assign', 'Let'):
+                if any(d != axis and d not in local and not self.cta_uniform(d, loop) for d in x.deps()):
+                    return None
+                if x.dtype is not None and dtype_name(x.dtype) == 'f32':
+                    f32_values.add(x.name)
+                local.add(x.name)
+                plan.append((x, 'plain', None))
+            elif kind == 'Write':
+                if (x.output not in outputs or len(x.values) != 1 or x.values[0] not in f32_values
+                        or vector_form(x.output, x.index) is None):
+                    return None
+                plan.append((x, 'store', None))
+            else:
+                return None
+        if not any(how == 'cached' for _, how, _ in plan):
+            return None
+        pointers = list(dict.fromkeys(
+            [x.input for x in source_loads]
+            + [x.input for x, how, _ in plan if how in ('cached', 'vector')]
+            + [x.output for x, how, _ in plan if how == 'store']))
+        return plan, pointers
+
+    def row_cached_map(self, loop, statements, position):
+        """Emit a map planned by row_map_plan after its merged reduction.
+
+        Loads of the cached row reuse the reduction's registers, loads the
+        reduction issued alongside its own reuse theirs, and writes are
+        128-bit. Any misaligned pointer, the reduction's included, takes the
+        original lowering; the reduction checked the same pointers before
+        its vector path, so the registers are only read when it took that
+        path. Returns False when it does not apply (nothing emitted).
+        """
+        if self.hoist_ctx is None or id(loop) in self.no_row_cache:
+            return False
+        cache = None
+        for earlier in statements[:position]:
+            found = self.row_caches.get(id(earlier))
+            if found is not None and self.same_strided_header(loop, found[0]):
+                cache = found
+        if cache is None:
+            return False
+        source, va, trips, source_loads, registers = cache
+        planned = self.row_map_plan(loop, source, source_loads)
+        if planned is None:
+            return False
+        plan, pointers = planned
+        axis, stride = loop.axis.name, static(loop.step)
+        misaligned = None
+        for name in pointers:
+            low, q = self.reg('rd'), self.reg('p')
+            self.emit(f'and.b64 {low}, {self.ptrs[name]}, 15;')
+            self.emit(f'setp.ne.u64 {q}, {low}, 0;')
+            if misaligned is not None:
+                self.emit(f'or.pred {q}, {q}, {misaligned};')
+            misaligned = q
+        fallback, joined = self.label('row_map_fallback'), self.label('row_map_done')
+        self.emit(f'@{misaligned} bra {fallback};')
+        previous_axis = self.values.get(axis)
+        for k in range(trips):
+            element = self.reg('r')
+            self.emit(f'add.s32 {element}, {va}, {k * 4 * stride};')
+            self.values[axis] = (element, 'i32')
+            self.rebind(axis)
+            vectors = {}
+            for x, how, hit in plan:
+                if how == 'cached':
+                    vectors[id(x)] = registers[id(hit)][k]
+                elif how == 'vector' and id(x) in registers:
+                    vectors[id(x)] = registers[id(x)][k]
+                elif how == 'vector':
+                    addr, space = self.address(x.input, x.index)
+                    vectors[id(x)] = [self.reg('f') for _ in range(4)]
+                    self.emit(f'ld.{space}.v4.f32 {{{", ".join(vectors[id(x)])}}}, [{addr}];')
+            stores = {}
+            for j in range(4):
+                lane = element
+                if j:
+                    lane = self.reg('r')
+                    self.emit(f'add.s32 {lane}, {element}, {j};')
+                self.values[axis] = (lane, 'i32')
+                self.rebind(axis)
+                for x, how, _ in plan:
+                    if how in ('cached', 'vector'):
+                        self.values[x.names[0]] = (vectors[id(x)][j], 'f32')
+                        self.rebind(x.names[0])
+                    elif how == 'plain':
+                        self.statements([x])
+                    else:
+                        stores.setdefault(id(x), []).append(self.value(x.values[0]))
+            self.values[axis] = (element, 'i32')
+            self.rebind(axis)
+            for x, how, _ in plan:
+                if how == 'store':
+                    addr, space = self.address(x.output, x.index)
+                    self.emit(f'st.{space}.v4.f32 [{addr}], {{{", ".join(stores[id(x)])}}};')
+        self.emit(f'bra {joined};')
+        self.mark(fallback)
+        if previous_axis is None:
+            self.values.pop(axis, None)
+        else:
+            self.values[axis] = previous_axis
+        self.rebind(axis)
+        self.no_row_cache.add(id(loop))
+        self.statements([loop])
+        self.mark(joined)
         return True
 
     def strided_main_loop(self, s, r, step, end):
@@ -4038,17 +4302,23 @@ class Emitter:
             return True   # a block (CTA-uniform) Tile axis
         if name in getattr(self, 'scalar_args', {}):
             return True
+        # The last Tile-level definition before ``loop`` decides.
+        uniform = False
         for s in ctx['tile'].body:
             if s is loop:
-                return False
+                return uniform
             kind = type(s).__name__
             if kind == 'Load' and name in s.names:
-                return (s.input in self.ptrs and s.input not in self.shared and all(
+                uniform = (s.input in self.ptrs and s.input not in self.shared and all(
                     (n := expr_names(c)) is not None and all(self.cta_uniform(x, loop, seen | {name}) for x in n)
                     for c in s.index))
-            if kind in ('Assign', 'Let') and s.name == name:
-                return all(self.cta_uniform(d, loop, seen | {name}) for d in s.deps())
-        return False
+            elif kind in ('Assign', 'Let') and s.name == name:
+                uniform = all(self.cta_uniform(d, loop, seen | {name}) for d in s.deps())
+            elif kind == 'TreeHalve' and name in s.state and id(s) in self.cta_total_trees:
+                uniform = True
+            elif name in defined_names([s]):
+                uniform = False
+        return uniform
 
     def fused_softmax_pass(self, groups, order, starts, total, lanes, per_lane, extent,
                            msym, evaluate_x, carriers):
@@ -5658,6 +5928,8 @@ class Emitter:
                 self.values[s.name] = (old, self.values[s.name][1])
                 self.mutable[s.name] = old
                 self.rebind(s.name)
+            elif kind == 'StridedLoop' and self.row_cached_map(s, statements, position):
+                pass
             elif (kind == 'StridedLoop' and id(s) not in self.no_vector_reduction
                   and self.merged_vector_reduction(s, statements[position + 1:])):
                 pass
@@ -6218,8 +6490,8 @@ class PlanLines:
             self.lines.append('    ' + line)
 
 
-# Largest staged K slice tried first, and the most slices emitted unrolled.
-PLAN_K_SLICES = (64, 32, 16)
+# Smallest staged K slice tried first, and the most slices emitted unrolled.
+PLAN_K_SLICES = (4, 8, 16, 32, 64)
 PLAN_MAX_SLICES = 32
 
 
@@ -6229,13 +6501,15 @@ def plan_simt_ptx(plan, meta):
     The plan proves the output partition (row-major CTA order of block_m x
     block_n tiles), full K coverage and the operand identities. Each thread
     keeps 4 rows x 4 columns in each of ``halves`` column halves of the tile
-    (so a warp's B vectors cover one contiguous 128-byte span per half); the
-    CTA's threads form groups that split every
-    staged K slice, and the group partials are summed in a fixed order through
-    shared memory at the end. Products are exact F32 FMAs taken in ascending
-    k within a group; only the grouping of the K sum differs from the typed
-    program, which the output tolerance judges. Returns None outside this
-    envelope, keeping the existing lowering.
+    (so a warp's B vectors cover one contiguous 128-byte span per half). The
+    CTA's threads form groups that each own a contiguous K range, staged
+    through the group's own cp.async ring and synchronised by a named barrier
+    over the group alone, so groups never wait on each other until their
+    partials are summed in a fixed order through shared memory at the end.
+    Products are exact F32 FMAs taken in ascending k within a group; only the
+    grouping of the K sum differs from the typed program, which the output
+    tolerance judges. Returns None outside this envelope, keeping the
+    existing lowering.
     """
     args = {a['name']: a for a in meta['args']}
     if (plan.a_transpose or plan.b_transpose or plan.atomic_output or plan.k_splits != 1
@@ -6260,19 +6534,16 @@ def plan_simt_ptx(plan, meta):
         if threads % per_group or per_group % 32 or (cols < 32 and 32 % cols):
             continue
         groups = threads // per_group
-        # Consecutive lanes share a row group when a warp spans several:
-        # XOR-swizzling A's 16-byte chunks by row group keeps those lanes'
-        # A vectors in distinct bank groups.
-        spread = 32 // cols if cols < 32 else 1
+        # Named barriers 1..15 serve the groups; 0 stays CTA-wide.
+        if groups > 15 or k % groups or (groups > 1 and 4 * groups * bm * bn > smem_limit):
+            continue
         for bk in PLAN_K_SLICES:
-            if (k % bk or (bk // 4) % groups or k // bk > PLAN_MAX_SLICES
-                    or spread > bk // 4):
+            if (k // groups) % bk or k // groups // bk > PLAN_MAX_SLICES:
                 continue
             stage = 4 * (bm * bk + bk * bn)
             for stages in (3, 2):
-                if (stages * stage <= smem_limit
-                        and (groups == 1 or 4 * groups * bm * bn <= smem_limit)):
-                    choice = (halves, cols, per_group, groups, spread, bk, stages, stage)
+                if groups * stages * stage <= smem_limit:
+                    choice = (halves, cols, per_group, groups, bk, stages, stage)
                     break
             if choice:
                 break
@@ -6280,10 +6551,10 @@ def plan_simt_ptx(plan, meta):
             break
     if choice is None:
         return None
-    halves, cols, per_group, groups, spread, bk, stages, stage_bytes = choice
+    halves, cols, per_group, groups, bk, stages, stage_bytes = choice
     half = bn // halves
-    slices = k // bk
-    per_k = bk // groups              # k values one group takes from a slice
+    k_range = k // groups             # contiguous k values one group owns
+    slices = k_range // bk
     a_bytes = 4 * bm * bk
 
     out = PlanLines()
@@ -6300,19 +6571,22 @@ def plan_simt_ptx(plan, meta):
     tid, bid = reg('r'), reg('r')
     emit(f'mov.u32 {tid}, %tid.x;')
     emit(f'mov.u32 {bid}, %ctaid.x;')
-    g, q, tr, tc, x = (reg('r') for _ in range(5))
+    g, q, tr, tc = (reg('r') for _ in range(4))
     emit(f'div.u32 {g}, {tid}, {per_group};')
     emit(f'rem.u32 {q}, {tid}, {per_group};')
     emit(f'div.u32 {tr}, {q}, {cols};')
     emit(f'rem.u32 {tc}, {q}, {cols};')
-    emit(f'and.b32 {x}, {tr}, {spread - 1};')
     cta_m, cta_n, row0, col0 = (reg('r') for _ in range(4))
     emit(f'div.u32 {cta_m}, {bid}, {plan.grid_n};')
     emit(f'rem.u32 {cta_n}, {bid}, {plan.grid_n};')
     emit(f'mul.lo.u32 {row0}, {cta_m}, {bm};')
     emit(f'mul.lo.u32 {col0}, {cta_n}, {bn};')
-    smem = reg('r')
+    # Each group's ring, barrier id and first k.
+    smem, ring, barrier, k0 = (reg('r') for _ in range(4))
     emit(f'mov.u32 {smem}, __emmy_smem;')
+    emit(f'mad.lo.u32 {ring}, {g}, {stages * stage_bytes}, {smem};')
+    emit(f'add.u32 {barrier}, {g}, 1;')
+    emit(f'mul.lo.u32 {k0}, {g}, {k_range};')
 
     # 16-byte copies need 16-byte aligned rows in both operands.
     vector = reg('p')
@@ -6324,14 +6598,15 @@ def plan_simt_ptx(plan, meta):
         emit(f'and.b64 {other}, {low}, 15;')
         emit(f'setp.eq.u64 {vector}, {other}, 0;')
 
-    def chunk_copies(chunks, per_row):
-        """Per thread: (guard or None, row, chunk) for its share of chunks."""
+    def chunk_copies(chunks, per_row, index, count):
+        """Per thread: (guard or None, row, chunk) for its share of chunks,
+        dealt by ``index`` over ``count`` threads."""
         result = []
-        for i in range(-(-chunks // threads)):
+        for i in range(-(-chunks // count)):
             item = reg('r')
-            emit(f'add.u32 {item}, {tid}, {i * threads};')
+            emit(f'add.u32 {item}, {index}, {i * count};')
             guard = None
-            if (i + 1) * threads > chunks:
+            if (i + 1) * count > chunks:
                 guard = reg('p')
                 emit(f'setp.lt.u32 {guard}, {item}, {chunks};')
             row, chunk = reg('r'), reg('r')
@@ -6340,29 +6615,33 @@ def plan_simt_ptx(plan, meta):
             result.append((guard, row, chunk))
         return result
 
-    copies = []    # (guard, shared offset within a stage, global address at slice 0, slice stride)
-    for guard, row, chunk in chunk_copies(bm * bk // 4, bk // 4):
-        swizzled, word, dst = reg('r'), reg('r'), reg('r')
-        emit(f'shr.u32 {swizzled}, {row}, 2;')
-        emit(f'and.b32 {swizzled}, {swizzled}, {spread - 1};')
-        emit(f'xor.b32 {swizzled}, {swizzled}, {chunk};')
-        emit(f'mul.lo.u32 {dst}, {row}, {4 * bk};')
-        emit(f'mad.lo.u32 {dst}, {swizzled}, 16, {dst};')
-        emit(f'add.u32 {dst}, {dst}, {smem};')
+    # A is staged chunk-major with row r in slot (r % 4) * (bm / 4) + r / 4:
+    # a thread reads rows 4 * tr + i together, so lanes of consecutive row
+    # groups read consecutive 16-byte slots, free of bank conflicts.
+    copies = []    # (guard, shared address in stage 0, global address at slice 0, slice stride)
+    for guard, row, chunk in chunk_copies(bm * bk // 4, bk // 4, q, per_group):
+        slot, word, dst = reg('r'), reg('r'), reg('r')
+        emit(f'and.b32 {slot}, {row}, 3;')
+        emit(f'shr.u32 {word}, {row}, 2;')
+        emit(f'mad.lo.u32 {slot}, {slot}, {bm // 4}, {word};')
+        emit(f'mul.lo.u32 {dst}, {chunk}, {16 * bm};')
+        emit(f'mad.lo.u32 {dst}, {slot}, 16, {dst};')
+        emit(f'add.u32 {dst}, {dst}, {ring};')
         emit(f'add.u32 {word}, {row0}, {row};')
-        emit(f'mul.lo.u32 {word}, {word}, {k};')
+        emit(f'mad.lo.u32 {word}, {word}, {k}, {k0};')
         emit(f'mad.lo.u32 {word}, {chunk}, 4, {word};')
         src = reg('rd')
         emit(f'mul.wide.u32 {src}, {word}, 4;')
         emit(f'add.u64 {src}, {a_ptr}, {src};')
         copies.append((guard, dst, src, 4 * bk))
-    for guard, row, chunk in chunk_copies(bk * bn // 4, bn // 4):
+    for guard, row, chunk in chunk_copies(bk * bn // 4, bn // 4, q, per_group):
         word, dst = reg('r'), reg('r')
         emit(f'mul.lo.u32 {dst}, {row}, {4 * bn};')
         emit(f'mad.lo.u32 {dst}, {chunk}, 16, {dst};')
-        emit(f'add.u32 {dst}, {dst}, {smem};')
+        emit(f'add.u32 {dst}, {dst}, {ring};')
         emit(f'add.u32 {dst}, {dst}, {a_bytes};')
-        emit(f'mul.lo.u32 {word}, {row}, {n};')
+        emit(f'add.u32 {word}, {k0}, {row};')
+        emit(f'mul.lo.u32 {word}, {word}, {n};')
         emit(f'add.u32 {word}, {word}, {col0};')
         emit(f'mad.lo.u32 {word}, {chunk}, 4, {word};')
         src = reg('rd')
@@ -6387,20 +6666,10 @@ def plan_simt_ptx(plan, meta):
                 emit(f'@{narrow} cp.async.ca.shared.global [{d}+{offset}], [{a}+{offset}], 4;')
         emit('cp.async.commit_group;')
 
-    # Read pointers: this thread's A rows (one per swizzled chunk) and B column.
-    a_rows = []
-    for j in range(per_k // 4):
-        chunk, ptr = reg('r'), reg('r')
-        emit(f'mad.lo.u32 {chunk}, {g}, {per_k // 4}, {j};')
-        emit(f'xor.b32 {chunk}, {chunk}, {x};')
-        emit(f'mul.lo.u32 {ptr}, {tr}, {16 * bk};')
-        emit(f'mad.lo.u32 {ptr}, {chunk}, 16, {ptr};')
-        emit(f'add.u32 {ptr}, {ptr}, {smem};')
-        a_rows.append(ptr)
-    b_col = reg('r')
-    emit(f'mul.lo.u32 {b_col}, {g}, {4 * per_k * bn};')
-    emit(f'mad.lo.u32 {b_col}, {tc}, 16, {b_col};')
-    emit(f'add.u32 {b_col}, {b_col}, {smem};')
+    # Read pointers: this thread's A row-group slot and B column.
+    a_row, b_col = reg('r'), reg('r')
+    emit(f'mad.lo.u32 {a_row}, {tr}, 16, {ring};')
+    emit(f'mad.lo.u32 {b_col}, {tc}, 16, {ring};')
     emit(f'add.u32 {b_col}, {b_col}, {a_bytes};')
 
     acc = [[reg('f') for _ in range(4 * halves)] for _ in range(4)]
@@ -6413,19 +6682,21 @@ def plan_simt_ptx(plan, meta):
         else:
             emit('cp.async.commit_group;')
     for slice_ in range(slices):
+        emit(f'cp.async.wait_group {stages - 2};')
+        emit(f'bar.sync {barrier}, {per_group};')
+        # Every group thread has finished slice_ - 1, whose buffer this refills.
         ahead = slice_ + stages - 1
         if ahead < slices:
             issue(ahead)
         else:
             emit('cp.async.commit_group;')
-        emit(f'cp.async.wait_group {stages - 1};')
-        emit('bar.sync 0;')
         buffer = (slice_ % stages) * stage_bytes
-        for j, a_row in enumerate(a_rows):
+        for j in range(bk // 4):
             avec = []
             for i in range(4):
                 v = [reg('f') for _ in range(4)]
-                emit(f'ld.shared.v4.f32 {{{", ".join(v)}}}, [{a_row}+{buffer + 4 * bk * i}];')
+                emit(f'ld.shared.v4.f32 {{{", ".join(v)}}}, '
+                     f'[{a_row}+{buffer + 16 * bm * j + 4 * bm * i}];')
                 avec.append(v)
             for t in range(4):
                 bvec = []
@@ -6437,6 +6708,8 @@ def plan_simt_ptx(plan, meta):
                 for i in range(4):
                     for c in range(4 * halves):
                         emit(f'fma.rn.f32 {acc[i][c]}, {avec[i][t]}, {bvec[c]}, {acc[i][c]};')
+    if groups > 1:
+        # The partials below overwrite other groups' rings.
         emit('bar.sync 0;')
 
     aligned_c = reg('p')
@@ -6478,7 +6751,7 @@ def plan_simt_ptx(plan, meta):
                 emit(f'st.shared.v4.f32 [{part}+{4 * bn * i + 4 * half * h}], '
                      f'{{{", ".join(acc[i][4 * h:4 * h + 4])}}};')
         emit('bar.sync 0;')
-        for guard, row, col4 in chunk_copies(bm * bn // 4, bn // 4):
+        for guard, row, col4 in chunk_copies(bm * bn // 4, bn // 4, tid, threads):
             skip = None
             if guard is not None:
                 skip = f'plan_store_skip_{out.counts["p"]}'
