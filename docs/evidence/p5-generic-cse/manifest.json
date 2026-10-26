@@ -1,0 +1,18 @@
+{
+  "schema": "p5-generic-cse-evidence-v1",
+  "outcome": "deferred",
+  "compiler_sha256": "067ef9c4ce31a4bf5ccda90a8d13e9bd1b71b89aff19abe7598cdba4c77e2921",
+  "base_commit": "d8f65f002db6c14d25c805255f7e7e6400329696",
+  "local_proxy": {
+    "gpu": "NVIDIA GeForce RTX 4060 Laptop GPU",
+    "compute_capability": "8.9",
+    "driver": "615.78.08",
+    "ptxas": "CUDA 13.4 V13.4.92",
+    "python": "3.14.8"
+  },
+  "files": {
+    "REPORT.md": "b570de6b8aa9556a07cb62c84fed650be9fe2217338387acc18f69b308ddbfd3",
+    "sass-loop-inventory.json": "bd7e108063b3d73b3417e272658b2c5a1fe7eaa7a40a18ed0b498ae1599ab324",
+    "sass-noop-inventory.json": "dfc4fda71fde845c60500c46edb0c362dead6a86f3beb46c4f282a212b43a5ea"
+  }
+}
