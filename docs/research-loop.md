@@ -52,6 +52,18 @@ never waive a published correctness failure. Later failures revoke an earlier
 gate. Historical ten-case qualification records remain historical evidence;
 they do not satisfy this rule and must not be relabeled as all-15 results.
 
+Correctness gates do not decide speed. A performance shortlist or promotion
+requires a fresh, noise-calibrated paired wall-clock result for a workload where
+the proposed effect can exceed the measurement floor, with no resolved
+regression in the measured family and fresh isolated confirmation. PTX size,
+SASS instruction/memory/issue counts, spills and occupancy are mechanism
+diagnostics: record them, but do not accept, reject or classify a speed change
+from static counts. Wall-clock latency is the ultimate arbiter. If valid paired
+timing is unavailable or unresolved, the speed verdict is unresolved; static
+evidence cannot substitute for it. A launch-bound published case can anchor
+correctness and regressions without establishing a speed effect; use a larger
+typed-IR witness with an independent reference for that claim.
+
 Correctness-debug work remains allowed so a broken baseline can be repaired.
 Without valid candidate and baseline gates, confirmation runs correctness only
 and emits no timing claims. Passing all 15 isolated checks, including the atomic

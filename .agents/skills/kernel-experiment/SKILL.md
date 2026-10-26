@@ -53,6 +53,12 @@ comparison evidence. A sweep winner still needs fresh cases and new measurements
 Label warm-cache versus rotating-buffer behavior; never claim streaming throughput
 from warm-cache timings. Keep compiler/assembly/runtime costs separate.
 
+Wall-clock latency is the ultimate arbiter of a performance change. SASS issue,
+instruction and memory counts, spills and occupancy are diagnostics for
+activation, attribution and which candidates merit timing; they cannot award or
+deny a speed verdict. Record them, but decide promotion, rejection or an
+unresolved result from fresh paired wall-clock evidence and its confirmation.
+
 Persist source, IR/meta, realized inputs, references/tolerances, PTX/cubin/SASS,
 commands, environment, admission, output checks and raw samples in that store. Update the
 handoff with live jobs/dependencies/next executable action before yielding. Only

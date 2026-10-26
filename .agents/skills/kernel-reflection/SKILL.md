@@ -24,6 +24,9 @@ and performance failures. Infrastructure errors are unverified, not wrong answer
 Keep failed evidence and counterexamples; a useful null result is valid progress.
 Never promote incorrect code or an exploratory sweep winner without fresh isolated
 confirmation. Treat ambiguous gains as inconclusive and show per-case regressions.
+Wall-clock latency is the ultimate arbiter; SASS issue/instruction/memory counts,
+spills and occupancy explain a mechanism but cannot turn an unresolved or
+negative timing result into a win, or a confirmed win into a loss.
 
 Write a concise mechanism finding: applicable IR conditions, legality assumptions,
 PTX/SASS effect, supporting experiments, contradictions, prerequisites and next

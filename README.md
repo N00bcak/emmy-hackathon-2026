@@ -8,7 +8,11 @@ audited core witnesses, at unchanged metadata tolerances. See the
 tolerance receipts and paired performance.
 The [selective exponential lowering](docs/selective-exponential.md) preserves
 subnormal results while avoiding duplicate exponential work.
-The current source has not been executed on the official RTX 5090.
+The current P1 source has passed the published and audited gates on RTX
+4060/sm_89; freshly hosted RTX 5090/sm_120 witnesses resolved a vector-access
+win for the large p03 shape without claiming an official hidden-set result.
+See the [compiler-design record](docs/compiler-design-plan.md) for source-bound
+correctness, timing and evidence limits.
 The [shared-window repair](docs/shared-window-fix.md) and
 [RTX 4060 report](docs/baseline-correctness.md) describe earlier source versions.
 

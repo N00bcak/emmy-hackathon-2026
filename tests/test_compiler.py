@@ -52,7 +52,7 @@ def fixture(problem, destination, *, tile_extent=None, data_extent=None, arg_rev
     return path
 
 
-def typed_pointwise(body, destination, *, extent=4, out_shape=(4,), block=4):
+def typed_pointwise(body, destination, *, extent=4, out_shape=(4,), block=4, input_shape=None):
     """Write a small typed-IR graph whose Tile body is supplied by the test."""
     from emmy.compiler.ir.axis import Axis
     from emmy.compiler.ir.base import InputOp
@@ -60,7 +60,8 @@ def typed_pointwise(body, destination, *, extent=4, out_shape=(4,), block=4):
     from emmy.compiler.tensor import Tensor
     from emmy.compiler.dtype import F32
     graph=Graph()
-    graph.add_node(InputOp(),[],Tensor('x',(extent,),F32),node_id='x')
+    shape=tuple(input_shape or (extent,))
+    graph.add_node(InputOp(),[],Tensor('x',shape,F32),node_id='x')
     graph.add_node(KernelOp(body=(Tile((Axis('i',extent),),tuple(body),block_threads=block),),name='k'),
                    ['x'],Tensor('out',tuple(out_shape),F32),node_id='out')
     destination.mkdir(parents=True, exist_ok=True)
@@ -69,9 +70,25 @@ def typed_pointwise(body, destination, *, extent=4, out_shape=(4,), block=4):
     path.with_name('meta.json').write_text(json.dumps({'graph_inputs':['x'],'graph_outputs':['out'],
         'rtol':0,'atol':0,'kernels':[{'node':'out','entry':'k','arg_order':['x','out'],
         'grid':[1,1,1],'block':[block,1,1],'smem_bytes':0,'zero_outputs':[],
-        'args':[{'name':'x','dtype':'f32','shape':[extent]},
+        'args':[{'name':'x','dtype':'f32','shape':list(shape)},
                 {'name':'out','dtype':'f32','shape':list(out_shape),'output':True}]}]}))
     return path
+
+
+def emitter_fixture():
+    """A complete emitter state for unit tests of one lowering helper.
+
+    Keeping this in one place avoids the stale partial ``__new__`` fixtures
+    that silently miss fields added to ``Emitter.emit`` or its helpers.
+    """
+    emitter = mod.Emitter.__new__(mod.Emitter)
+    emitter.counts = {'r': 0, 'rh': 0, 'rd': 0, 'f': 0, 'fd': 0, 'p': 0}
+    emitter.lines = []
+    emitter.unary_cache = {}
+    emitter.label_count = 0
+    emitter.dynamic_shared = False
+    emitter.cp_async_base = '__emmy_smem'
+    return emitter
 
 
 class CompilerTests(unittest.TestCase):
@@ -324,8 +341,7 @@ class CompilerTests(unittest.TestCase):
         for dynamic in (False, True):
             for base, offset in ((0, 48), (1024, 48), (6144, 256)):
                 with self.subTest(dynamic=dynamic, base=base, offset=offset):
-                    emitter=mod.Emitter.__new__(mod.Emitter)
-                    emitter.counts={'r':0, 'rd':0}; emitter.lines=[]
+                    emitter=emitter_fixture()
                     emitter.dynamic_shared=dynamic
                     emitter.cp_async_base='dynamic_slab'
                     emitter._dynamic_shared_base='%old_base'
@@ -380,119 +396,310 @@ class CompilerTests(unittest.TestCase):
         out=self.assemble(path)
         self.assertNotIn('cp.async.cg.shared.global',out)
 
-    def test_m01_inner_loop_hoists_invariant_index_division(self):
-        """m01's loop-invariant index quotient and remainder are not duplicated.
+    def test_pointwise_tuple_accesses_vectorize_with_runtime_fallback(self):
+        for problem in ('p02_scale_shift', 'p03_relu_mul'):
+            with self.subTest(problem=problem):
+                source=next((ROOT/problem).glob('*.ir.json'))
+                out=mod.compile_path(source)
+                # Every affine four-element tuple is one 128-bit transaction,
+                # but the pointer is only known aligned at runtime. Each vector
+                # access keeps a scalar branch for a misaligned allocation.
+                self.assertGreaterEqual(out.count('ld.global.v4.f32'), 1)
+                self.assertRegex(out, r'st\.global\.v4\.f32')
+                self.assertGreaterEqual(out.count('and.b64'), 2)
+                self.assertIn('setp.eq.u64',out)
+                self.assertRegex(out, r'@!%p\d+ bra access_scalar_\d+;')
+                self.assertRegex(out, r'ld\.global\.f32 %f\d+, \[%rd\d+\+4\];')
 
-        m01 reuses the staging quotient/remainder through multiple shared-memory
-        addresses. The preheader must compute that maximal index once, and the
-        inner body must not recompute it; indices that depend on the induction
-        variable legitimately remain in the body.
-        """
+    def test_noncontiguous_and_unaligned_groups_stay_scalar(self):
+        from emmy.compiler.ir.expr import BinaryExpr, Literal, Var
+        from emmy.compiler.ir.kernel.ir import Load, Write
+        def index(offset, step):
+            base=BinaryExpr('*',Var('i'),Literal(4,'int'))
+            start=base if not offset else BinaryExpr('+',base,Literal(offset,'int'))
+            return start if not step else BinaryExpr('+',start,Literal(step,'int'))
+        def copy(step, offset):
+            names=tuple(f'v{k}' for k in range(4))
+            return (*(Load(name,'x',(index(offset,k*step),)) for k,name in enumerate(names)),
+                    Write('out',(index(offset,0),),values=names))
+        for label, step, offset in (('noncontiguous',2,0),('offset-one',1,1)):
+            with self.subTest(label=label):
+                path=typed_pointwise(copy(step,offset),self.out/label,extent=4,block=1,
+                                     input_shape=(64,))
+                meta=json.loads(path.with_name('meta.json').read_text())
+                meta['kernels'][0]['grid']=[4,1,1]
+                path.with_name('meta.json').write_text(json.dumps(meta))
+                out=self.assemble(path)
+                # Offset one has a contiguous four-element run, but it starts
+                # unaligned. A strided source has no contiguous load run; its
+                # destination still does, so only the store may combine.
+                self.assertNotIn('ld.global.v4.f32',out)
+                self.assertEqual(4,out.count('ld.global.f32'))
+                if step > 1:
+                    self.assertIn('st.global.v4.f32',out)
+                    self.assertEqual(4,out.count('st.global.f32'))
+                else:
+                    self.assertNotIn('st.global.v4.f32',out)
+                    self.assertEqual(4,out.count('st.global.f32'))
+
+    def test_destination_shadowing_prevents_vector_load_group(self):
+        import importlib.util
+        from emmy.compiler.ir.expr import BinaryExpr, Literal, Var
+        from emmy.compiler.ir.kernel.ir import Load
+        from emmy.compiler.ir.stmt.leaves import Let
+        spec=importlib.util.spec_from_file_location('access_compiler',HERE/'compile.py')
+        access=importlib.util.module_from_spec(spec);spec.loader.exec_module(access)
+        def index(k):
+            base=BinaryExpr('*',Var('i'),Literal(4,'int'))
+            return base if not k else BinaryExpr('+',base,Literal(k,'int'))
+        clean=(Load('a','x',(index(0),)),Load('b','x',(index(1),)),
+               Load('c','x',(index(2),)),Load('d','x',(index(3),)))
+        shadowed=(Load('a','x',(index(0),)),Load('b','x',(index(1),)),
+                  Let('c',Literal(9,'int')),Load('c','x',(index(2),)),
+                  Load('d','x',(index(3),)))
+        buffers={'x':((64,),'f32')}
+        proven=access.access_descriptors(clean,buffers,{})
+        rejected=access.access_descriptors(shadowed,buffers,{})
+        self.assertEqual(1,len(proven.loads))
+        self.assertEqual((1,1,1,1),proven.loads[next(iter(proven.loads))].reads)
+        self.assertEqual({},rejected.loads)
+
+    def test_shared_aligned_group_has_no_runtime_fallback(self):
+        from emmy.compiler.ir.kernel.ir import Load, Smem, Sync, Write
+        from emmy.compiler.ir.expr import BinaryExpr, Literal, Var
+        def index(k):
+            base=BinaryExpr('*',Var('i'),Literal(4,'int'))
+            return base if not k else BinaryExpr('+',base,Literal(k,'int'))
+        names=tuple(f'v{k}' for k in range(4))
+        body=(Smem('scratch',(16,),'float',16),
+              *(Load(name,'x',(index(k),)) for k,name in enumerate(names)),
+              Write('scratch',(index(0),),values=names),Sync(0,None,False),
+              *(Load(f's{k}','scratch',(index(k),)) for k in range(4)),
+              Write('out',(index(0),),values=tuple(f's{k}' for k in range(4))))
+        path=typed_pointwise(body,self.out/'shared-vector',extent=16,block=1,
+                             input_shape=(16,),out_shape=(16,))
+        meta=json.loads(path.with_name('meta.json').read_text())
+        meta['kernels'][0]['grid']=[16,1,1]
+        meta['kernels'][0]['arg_order'].append('scratch')
+        meta['kernels'][0]['args'].append(
+            {'name':'scratch','dtype':'f32','shape':[16],'output':True})
+        path.with_name('meta.json').write_text(json.dumps(meta))
+        out=self.assemble(path)
+        self.assertIn('st.shared.v4.f32',out)
+        self.assertIn('ld.global.v4.f32',out)
+        # Shared offsets are statically aligned, so those groups do not pay for
+        # a per-access alignment predicate; the global source still does.
+        self.assertNotRegex(out, r'@!%p\d+ bra [^\n]*\n\s*ld\.shared\.v4')
+
+    def test_mixed_typed_grouped_store_stays_scalar(self):
+        import importlib.util
+        from emmy.compiler.dtype import F32, BOOL
+        from emmy.compiler.ir.expr import Literal
+        from emmy.compiler.ir.kernel.ir import Write
+        from emmy.compiler.ir.stmt.leaves import Let
+        spec=importlib.util.spec_from_file_location('typed_store_compiler',HERE/'compile.py')
+        typed=importlib.util.module_from_spec(spec);spec.loader.exec_module(typed)
+        body=(Let('a',Literal(0,'int'),F32),Let('b',Literal(True,'bool'),BOOL),
+              Let('c',Literal(2,'int'),F32),Let('d',Literal(False,'bool'),BOOL),
+              Write('out',(Literal(0,'int'),),values=('a','b','c','d')))
+        plan=typed.access_descriptors(body,{'out':((4,),'f32')},{})
+        self.assertEqual({},plan.stores)
+
+    def test_integer_grouped_store_converts_like_scalar(self):
+        import importlib.util
+        from emmy.compiler.ir.expr import Literal
+        from emmy.compiler.ir.kernel.ir import Write
+        from emmy.compiler.ir.stmt.leaves import Let
+        from emmy.compiler.dtype import I32
+        spec=importlib.util.spec_from_file_location('integer_store_compiler',HERE/'compile.py')
+        typed=importlib.util.module_from_spec(spec);spec.loader.exec_module(typed)
+        body=(Let('a',Literal(0,'int'),I32),Let('b',Literal(1,'int'),I32),
+              Let('c',Literal(2,'int'),I32),Let('d',Literal(3,'int'),I32),
+              Write('out',(Literal(0,'int'),),values=('a','b','c','d')))
+        plan=typed.access_descriptors(body,{'out':((4,),'f32')},{})
+        self.assertEqual(1,len(plan.stores))
+
+    def test_partial_cta_vector_load_has_three_way_mask(self):
+        from emmy.compiler.ir.expr import BinaryExpr, Literal, Var
+        from emmy.compiler.ir.kernel.ir import Load, Sync, Write
+        def index(k):
+            base=BinaryExpr('*',Var('i'),Literal(4,'int'))
+            return base if not k else BinaryExpr('+',base,Literal(k,'int'))
+        names=tuple(f'v{k}' for k in range(4))
+        body=(*(Load(name,'x',(index(k),)) for k,name in enumerate(names)),
+              Write('out',(index(0),),values=names),Sync(0,None,False))
+        path=typed_pointwise(body,self.out/'partial-vector',extent=7,block=4,
+                             input_shape=(28,),out_shape=(28,))
+        meta=json.loads(path.with_name('meta.json').read_text())
+        meta['kernels'][0]['grid']=[2,1,1]
+        path.with_name('meta.json').write_text(json.dumps(meta))
+        out=self.assemble(path)
+        self.assertRegex(out, r'@!%p\d+ bra access_masked_zero_\d+;')
+        self.assertRegex(out, r'@!%p\d+ bra access_masked_scalar_\d+;')
+        self.assertIn('ld.global.v4.f32',out)
+        self.assertRegex(out, r'ld\.global\.f32 %f\d+, \[%rd\d+\+12\];')
+        self.assertRegex(out, r'@%p\d+ st\.global\.v4\.f32')
+
+    def test_m01_inner_loop_hoists_invariant_index_division(self):
+        """m01's selected staged pipeline has its documented invariants."""
         import re
         source=next((ROOT/'m01_matmul_512').glob('*.ir.json'))
-        graph=Graph.from_dict(json.loads(source.read_text()))
-        node=next(n for n in graph.nodes.values() if type(n.op).__name__=='KernelOp')
-        tile=next(s for s in node.op.body if type(s).__name__=='Tile')
-        outer=next(s for s in tile.body if type(s).__name__ in ('Loop','StridedLoop'))
-        inner=next(s for s in outer.body if type(s).__name__ in ('Loop','StridedLoop'))
-
-        def uses_division(expr):
-            kind=type(expr).__name__
-            if kind=='BinaryExpr':
-                return (expr.op in ('/','//','%') or uses_division(expr.left)
-                        or uses_division(expr.right))
-            if kind=='TernaryExpr':
-                return (uses_division(expr.cond) or uses_division(expr.if_true)
-                        or uses_division(expr.if_false))
-            return False
-
-        names=mod.defined_names(inner.body)|{inner.axis.name}
-        expressions=[coord for _buffer,index,_offsets in mod.index_addresses(inner.body)
-                     for coord in index]
-        counts={}
-        by_key={}
-        for expression in mod.invariant_occurrences(expressions,names):
-            key=mod.structural_key(expression)
-            counts[key]=counts.get(key,0)+1
-            by_key.setdefault(key,expression)
-        division_counts={key:count for key,count in counts.items()
-                         if uses_division(by_key[key])}
-        self.assertEqual(1,sum(count>1 for count in division_counts.values()))
-        single_use=sum(count==1 for count in division_counts.values())
-
         lines=mod.compile_path(source).splitlines()
-        labels={}
-        for index,line in enumerate(lines):
-            match=re.fullmatch(r'\s*([A-Za-z_]\w*):\s*',line)
-            if match:
-                labels[match.group(1)]=index
-        backedges=[]
-        for index,line in enumerate(lines):
-            match=re.fullmatch(r'\s*bra\s+([A-Za-z_]\w*);\s*',line)
-            if match and match.group(1) in labels and labels[match.group(1)]<index:
-                backedges.append((labels[match.group(1)],index))
-        self.assertGreaterEqual(len(backedges),2)
-        start,end=min(backedges,key=lambda span:span[1]-span[0])
-        preheader_start=max((i for i in labels.values() if i<start),default=-1)+1
-        preheader=lines[preheader_start:start]
-        body='\n'.join(lines[start+1:end])
-
-        # Dynamic shared memory has a nonzero window base on sm_120. Retain it
-        # when adding the destination's offset; subtracting only the slab base
-        # silently writes through a different address on that target.
         rendered='\n'.join(lines)
-        self.assertRegex(rendered, r'mov\.u64 %rd\d+, __emmy_smem;')
+        # plan_simt_ptx addresses the dynamic slab with a 32-bit shared-window
+        # base; the generic path's 64-bit form is not part of this route.
         self.assertRegex(rendered, r'mov\.u32 %r\d+, __emmy_smem;')
+        self.assertIn('cp.async.cg.shared.global', rendered)
+        self.assertIn('cp.async.wait_group', rendered)
+        self.assertIn('bar.sync', rendered)
+        self.assertIn('fma.rn.f32', rendered)
+        self.assertNotRegex(rendered, r'\bbra\s+(?:loop|loop_done)_\d+;')
+        self.assertRegex(rendered, r'ld\.shared\.v4\.f32')
+        self.assertRegex(rendered, r'st\.global\.v4\.f32')
 
-        div_re=re.compile(r'\bdiv\.[su]32\s+(%r\d+)\s*,\s*(%r\d+)\s*,\s*(%r\d+|\d+);')
-        rem_re=re.compile(r'\brem\.[su]32\s+(%r\d+)\s*,\s*(%r\d+)\s*,\s*(%r\d+|\d+);')
-        divisions=[match.groups() for line in preheader
-                   if (match:=div_re.search(line))]
-        remainders=[match.groups() for line in preheader
-                    if (match:=rem_re.search(line))]
-        self.assertLessEqual(len(divisions),1)
-        self.assertLessEqual(len(remainders),1)
-        if not divisions:
-            # Nonnegative integer range proofs can lower a remainder directly,
-            # without computing an unused quotient or a sign correction.
-            self.assertEqual(1,len(remainders))
-            remainder=remainders[0][0]
-            preheader_results=(remainder,)
-        elif remainders:
-            self.assertEqual(divisions[0][1:],remainders[0][1:])
-            remainder=remainders[0][0]
-        else:
-            # A floor-division lowering can reconstruct the remainder as
-            # dividend - quotient*divisor, then apply its sign correction.
-            quotient,dividend,divisor=divisions[0]
-            product=next((match.group(1) for line in preheader
-                          if (match:=re.search(rf'mul\.lo\.s32\s+(%r\d+)\s*,\s*{re.escape(quotient)}\s*,\s*{re.escape(divisor)};',line))),None)
-            self.assertIsNotNone(product)
-            remainder=next((match.group(1) for line in preheader
-                            if (match:=re.search(rf'sub\.s32\s+(%r\d+)\s*,\s*{re.escape(dividend)}\s*,\s*{re.escape(product)};',line))),None)
-            self.assertIsNotNone(remainder)
-        if divisions:
-            preheader_results=(divisions[0][0],remainder)
-        for register in preheader_results:
-            self.assertNotRegex(body,rf'{re.escape(register)}(?!\w)')
+    def test_generic_loop_hoists_invariant_index_division(self):
+        """The generic loop analysis hoists a repeated invariant quotient."""
+        from emmy.compiler.ir.axis import Axis
+        from emmy.compiler.ir.expr import BinaryExpr, Literal, Var
+        from emmy.compiler.ir.kernel.ir import Load, Loop, Write
+        from emmy.compiler.ir.elementwise import ElementwiseImpl
+        from emmy.compiler.ir.stmt.leaves import Assign
+        quotient=BinaryExpr('//',BinaryExpr('*',Var('i'),Literal(4,'int')),
+                            Literal(2,'int'))
+        loop=Loop(Axis('k',4),(Load('a','x',(quotient,)),
+                               Load('b','x',(quotient,)),
+                               Assign('v',ElementwiseImpl('add'),('a','b')),
+                               Write('out',(Var('i'),),'v')),seed=False)
+        out=self.assemble(typed_pointwise((loop,),self.out/'generic-hoist',extent=4))
+        match=re.search(r'\nloop_\d+:',out)
+        self.assertIsNotNone(match)
+        preheader, body=out[:match.start()],out[match.start():]
+        # The quotient is invariant in k, appears in both loads and is used
+        # twice, so its strength-reduced form is computed once before the
+        # backedge and neither product nor shift is repeated inside the loop.
+        self.assertEqual(1,preheader.count('shr.s32'))
+        self.assertNotIn('shr.s32',body)
+        self.assertNotIn('div.',body)
+        self.assertNotIn('rem.',body)
+        self.assertEqual(2,body.count('ld.global.f32'))
 
-        derived=set(preheader_results)
-        changed=True
-        while changed:
-            changed=False
-            for line in preheader:
-                registers=re.findall(r'%r(?:d)?\d+',line)
-                if len(registers)>1 and any(reg in derived for reg in registers[1:]):
-                    if registers[0] not in derived:
-                        derived.add(registers[0])
-                        changed=True
-        # Strength-reduced address bases may feed a single vector load.
-        self.assertTrue(any(len(re.findall(rf'{re.escape(reg)}(?!\w)',body))>=1
-                            for reg in derived))
-        self.assertLessEqual(sum(bool(re.search(r'\bdiv\.[su]32\b',line))
-                                 for line in lines[start+1:end]),single_use)
-        self.assertLessEqual(sum(bool(re.search(r'\brem\.[su]32\b',line))
-                                 for line in lines[start+1:end]),single_use)
+    def test_prefetch_scalar_loads_replaces_the_map_read(
+            self):
+        """f03 issues its map input beside the reduction and reuses it."""
+        source=next((ROOT/'f03_l2norm').glob('*.ir.json'))
+        out=mod.compile_path(source)
+        lines=out.splitlines()
+        vector_start=next(i for i,line in enumerate(lines)
+                          if 'ld.global.v4.f32' in line)
+        map_start=next(i for i,line in enumerate(lines)
+                       if 'row_map_fallback_' in line)
+        map_end=next(i for i,line in enumerate(lines[map_start+1:],map_start+1)
+                     if 'row_map_done_' in line)
+        vector_region='\n'.join(lines[vector_start:map_start])
+        map_region='\n'.join(lines[map_start:map_end])
+        # The reduction vector loads x; the map consumes those same registers
+        # rather than issuing a second vector read for the same row.
+        loaded=set(re.findall(r'ld\.global\.v4\.f32 \{([^}]*)\}',vector_region)[0].split(', '))
+        used=set(re.findall(r'mul\.f32 %f\d+, (%f\d+),',map_region))
+        self.assertTrue(loaded & used)
+        self.assertNotIn('ld.global.v4.f32',map_region)
+
+    def test_row_cache_and_cta_total_mechanisms_are_populated(self):
+        """f01/f03/f04's merged reductions leave a cache and CTA total."""
+        for problem in ('f01_rmsnorm','f03_l2norm','r04_row_sum'):
+            with self.subTest(problem=problem):
+                source=next((ROOT/problem).glob('*.ir.json'))
+                graph=Graph.from_dict(json.loads(source.read_text()))
+                meta=json.loads(source.with_name('meta.json').read_text())['kernels'][0]
+                node=graph.nodes[meta['node']]
+                emitter=mod.Emitter(graph,node,meta)
+                emitter.render()
+                self.assertEqual(1,len(emitter.row_caches))
+                self.assertEqual(1,len(emitter.cta_total_trees))
+                _source,_va,_trips,loads,registers=next(iter(emitter.row_caches.values()))
+                self.assertTrue(loads)
+                self.assertTrue(all(registers.values()))
+
+    def test_row_maps_use_the_shared_strided_access_proof(self):
+        """f01/f03 keep row reuse, and a rejected proof fails closed."""
+        from emmy.compiler.dtype import F32
+        from emmy.compiler.ir.axis import Axis
+        from emmy.compiler.ir.expr import BinaryExpr, Literal, Var
+        from emmy.compiler.ir.kernel.ir import Load, StridedLoop, Write
+        map_axis = Axis('lane', 512)
+        row = (Var('row'), Var('lane'))
+        map_loop = StridedLoop(
+            map_axis, Var('lane_co'), Literal(128, 'int'),
+            (Load('value', 'x', row, dtype=F32),
+             Write('out', row, 'value', value_dtype=F32)))
+        source = StridedLoop(
+            Axis('lane', 512), Var('lane_co'), Literal(128, 'int'),
+            (Load('source_value', 'x', (Var('row'), Var('lane')), dtype=F32),))
+        buffers = {'x': ((64, 512), 'f32'), 'out': ((64, 512), 'f32')}
+        uniform = {'row', 'lane_co'}.__contains__
+        proven = mod.strided_access_groups(
+            map_loop, source, tuple(source.body), buffers, {'x', 'out'}, set(),
+            {'row': 64, 'lane_co': 128}, uniform)
+        self.assertEqual(1, len(proven.loads))
+        self.assertEqual(1, len(proven.stores))
+        self.assertIs(proven.loads[map_loop.body[0]].cached, source.body[0])
+        # Every field that contributes to vector legality is checked here.
+        rejected = {
+            'axis-coefficient': ((Var('row'), Literal(2, 'int')), buffers, uniform),
+            'not-last-coordinate': ((Var('lane'), Var('row')), buffers, uniform),
+            'nonuniform-row': ((Var('tid'), Var('lane')), buffers, uniform),
+            'mixed-dtype': (row, {**buffers, 'out': ((64, 512), 'f64')}, uniform),
+            'unaligned-row-term': (
+                row, {'x': ((64, 513), 'f32'), 'out': ((64, 513), 'f32')}, uniform),
+        }
+        for label, (index, table, is_uniform) in rejected.items():
+            with self.subTest(label=label):
+                body = (Load('value', 'x', index, dtype=F32),
+                        Write('out', index, 'value', value_dtype=F32))
+                loop = replace(map_loop, body=body)
+                self.assertIsNone(mod.strided_access_groups(
+                    loop, source, tuple(source.body), table, {'x', 'out'}, set(),
+                    {'row': 64, 'lane_co': 128}, is_uniform))
+        # A legal map whose source row is not the cached load still vectorizes,
+        # but without claiming the reduction's registers.
+        moved = replace(source.body[0], index=(Var('row'), BinaryExpr('+', Var('lane'), Literal(4, 'int'))))
+        uncached = mod.strided_access_groups(
+            map_loop, replace(source, body=(moved,)), (moved,), buffers,
+            {'x', 'out'}, set(), {'row': 64, 'lane_co': 128}, uniform)
+        self.assertIsNone(uncached.loads[map_loop.body[0]].cached)
+
+        for problem in ('f01_rmsnorm', 'f03_l2norm'):
+            with self.subTest(problem=problem):
+                source = next((ROOT/problem).glob('*.ir.json'))
+                out = mod.compile_path(source)
+                self.assertIn('row_map_fallback_', out)
+                self.assertRegex(out, r'st\.global\.v4\.f32')
+                original = mod.strided_access_groups
+                mod.strided_access_groups = lambda *args, **kwargs: None
+                try:
+                    rejected_out = mod.compile_path(source)
+                finally:
+                    mod.strided_access_groups = original
+                self.assertNotIn('row_map_fallback_', rejected_out)
+
+    def test_collective_tree_reuses_its_root_slot(self):
+        """A CTA total is read from shared slot zero once, not re-read."""
+        source=next((ROOT/'r04_row_sum').glob('*.ir.json'))
+        lines=mod.compile_path(source).splitlines()
+        tree_skips=[i for i,line in enumerate(lines) if re.fullmatch(r'tree_skip_\d+:',line)]
+        self.assertTrue(tree_skips)
+        # The final barrier publishes the tree root; the consumer then loads
+        # slot zero exactly once and reuses that register in the epilogue.
+        root_start=tree_skips[-1]
+        root_lines=lines[root_start:]
+        shared_loads=[line.strip() for line in root_lines if 'ld.shared.f32' in line]
+        self.assertEqual(1,len(shared_loads))
+        self.assertIn('[%rd',shared_loads[0])
+        load_at=next(i for i,line in enumerate(root_lines)
+                     if 'ld.shared.f32' in line)
+        epilogue='\n'.join(root_lines[load_at+1:])
+        self.assertNotIn('ld.shared.f32',epilogue)
+        self.assertIn('st.global.f32',epilogue)
 
     def test_cond_definitions_participate_in_hoist_analysis(self):
         from emmy.compiler.ir.expr import BinaryExpr, Literal, Var

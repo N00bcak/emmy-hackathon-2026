@@ -1,4 +1,35 @@
-# Local retained state — 2026-10-24
+# Local retained state — 2026-10-27
+
+The current retained compiler is the P1 candidate with SHA-256
+`067ef9c4ce31a4bf5ccda90a8d13e9bd1b71b89aff19abe7598cdba4c77e2921`.
+It passed all 15 published contracts at exact metadata tolerances plus the
+reordered-ABI check on RTX 4060/sm_89, the audited 65-case policy at 65/65 with
+16/16 sanitizer checks, five generated access variants with five sanitizer
+checks, isolated width-1 m01, and fresh 4M-element p02/p03 witnesses with
+independent NumPy references. Fresh hosted RTX 5090/sm_120 pairs resolved a
+vector-access win on the large p03 witness at 0.8805 (2M) and 0.8166 (4M), with
+fresh confirmations of 0.8768 and 0.8190 and A/A controls of 1.0021 and 1.0000.
+The large p02 witnesses remained unresolved (1.0000 and 0.9982), not resolved
+regressions. Published pointwise and reduction launches remain correctness and
+regression anchors, not speed evidence. The P0 row-cache, prefetch and CTA-total
+mechanisms are not credited with a measured speed gain. These are local-harness
+measurements, not evaluator-issued hidden-set receipts. Full source-bound
+evidence and limits are in [the compiler-design record](compiler-design-plan.md).
+
+The P1 change adds shared straight-line access descriptors and a strided access
+group proof for contiguous f32 vector loads and stores, with a runtime alignment
+fallback. A plain thread-strided map without a preceding merged reduction stays
+scalar pending a separate ownership proof. The wall-clock versus SASS issue-count
+documentation and judging change is CLOSED: SASS counts are mechanism diagnostics;
+only fresh paired wall-clock results decide a speed verdict.
+
+No Git network, remote-management, commit or publication action was part of the
+research session; the owner controls publication. No discovery campaign or
+research service was started by this handoff.
+
+---
+
+# Previous local retained state — 2026-10-24
 
 The routine gate is the audited 65-case policy in `tests/gpu-regression.json`
 (15 published and 50 core cases). The historical 93-case policy remains in
@@ -12,7 +43,7 @@ and the rejected vector-reduction integration. These are historical evaluation
 receipts; adopting the 65-case selector does not create a fresh GPU receipt.
 The compiler fixes and supporting evidence are retained in the local repository.
 
-The local merge of fetched `origin/main` at `0914413` retains this compiler
+The local merge of an owner-fetched `origin/main` commit at `0914413` retains this compiler
 byte-for-byte. Its vector-reduction redistribution is excluded because the
 existing per-lane witness demonstrated changed output ownership; see the
 [legality review](evidence/main-merge-updated/vector-legality-review.json).

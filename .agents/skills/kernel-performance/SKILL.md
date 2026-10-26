@@ -90,6 +90,9 @@ throughput using the evidence ladder in the reference. Low occupancy, a stall
 percentage, a register increase, or low MFU alone does not establish causation.
 Map hot SASS/instruction patterns back to lowering and typed IR when possible;
 label correlation and hypotheses separately from demonstrated causes.
+Use wall-clock latency as the performance criterion. SASS issue/instruction and
+memory counts, spills and occupancy are diagnostic proxies: they can explain or
+prioritize a measurement, but cannot establish or overturn its speed verdict.
 
 Where available, compare against (1) straightforward reference code preserving
 the exact launch/ABI/numerics and (2) an optimized implementation as an explicitly

@@ -831,6 +831,356 @@ def written_buffers(statements):
     return found
 
 
+class AccessLane:
+    """One element of a proven contiguous f32 access group."""
+    __slots__ = ('position', 'statement', 'element', 'lane', 'name')
+
+    def __init__(self, position, statement, element, lane, name):
+        self.position = position
+        self.statement = statement
+        self.element = element
+        self.lane = lane
+        self.name = name
+
+
+class AccessDescriptor:
+    """A typed 128-bit access with affine contiguous source offsets.
+
+    ``terms`` are the flattened index's non-constant affine terms and
+    ``constant`` is its constant offset. ``reads`` and ``writes`` count the
+    accesses to each lane in source order. Shared bases have a static
+    alignment; global bases use a runtime predicate and retain the scalar
+    fallback.
+    """
+    __slots__ = ('kind', 'buffer', 'space', 'dtype', 'terms', 'constant',
+                 'alignment', 'static_aligned', 'reads', 'writes', 'lanes')
+
+    def __init__(self, kind, buffer, space, dtype, terms, constant, alignment,
+                 static_aligned, reads, writes, lanes):
+        self.kind = kind
+        self.buffer = buffer
+        self.space = space
+        self.dtype = dtype
+        self.terms = terms
+        self.constant = constant
+        self.alignment = alignment
+        self.static_aligned = static_aligned
+        self.reads = reads
+        self.writes = writes
+        self.lanes = lanes
+
+    @property
+    def width(self):
+        return len(self.lanes)
+
+
+class AccessPlan:
+    """Block-local descriptors and loaded vector registers."""
+
+    def __init__(self):
+        self.loads = {}
+        self.stores = {}
+        self.load_lanes = {}
+        self.store_lanes = {}
+        self.registers = {}
+
+
+class AccessGroup:
+    """A typed four-adjacent-element map access.
+
+    One map statement names the base element of a four-element group; the
+    loop's thread-strided axis advances that group by ``stride`` elements per
+    iteration. ``terms`` and ``constant`` describe the flattened address
+    without that axis. ``cached`` identifies the equivalent reduction load
+    when the group may reuse its registers. This is the map form of the same
+    legality facts represented by :class:`AccessDescriptor`.
+    """
+    __slots__ = ('kind', 'statement', 'buffer', 'axis', 'stride', 'terms',
+                 'constant', 'cached', 'names')
+
+    def __init__(self, kind, statement, buffer, axis, stride, terms, constant,
+                 cached, names):
+        self.kind = kind
+        self.statement = statement
+        self.buffer = buffer
+        self.axis = axis
+        self.stride = stride
+        self.terms = terms
+        self.constant = constant
+        self.cached = cached
+        self.names = names
+
+
+def strided_access_groups(loop, source, source_loads, buffers, global_buffers,
+                          shared, tile_extents, cta_uniform):
+    """Prove thread-strided four-element map accesses.
+
+    This is the strided form of :func:`access_descriptors`. Each map statement
+    covers four adjacent elements, so the last index coordinate must be the
+    map axis with flattened coefficient one. The loop then advances that group
+    by its positive static stride. Every earlier coordinate must be
+    CTA-uniform, every other flattened term must preserve four-element
+    alignment, and the buffer must be a typed f32 global. A matching reduction
+    load is attached as the cache source.
+
+    Axis-independent loads are the existing scalar/Tile-uniform path and are
+    omitted from the plan. Returns an ``AccessPlan`` whose ``loads`` and
+    ``stores`` map statement identities to :class:`AccessGroup`, or ``None`` if
+    any access is unsafe. ``tile_extents`` is the set of Tile axes known to be
+    CTA-uniform.
+    """
+    axis = loop.axis.name
+    stride = static_or_none(loop.step)
+    if stride is None or stride <= 0:
+        return None
+    groups = AccessPlan()
+    for statement in loop.body:
+        kind = type(statement).__name__
+        if kind not in ('Load', 'Write'):
+            continue
+        buffer = statement.input if kind == 'Load' else statement.output
+        names = statement.names if kind == 'Load' else statement.values
+        coordinate_names = [expr_names(coord) for coord in statement.index]
+        if buffer not in buffers or any(names is None for names in coordinate_names):
+            return None
+        depends_on_axis = any(axis in names for names in coordinate_names)
+        if kind == 'Load' and not depends_on_axis:
+            if all(cta_uniform(name) for names in coordinate_names for name in names):
+                continue
+            return None
+        if (buffer not in global_buffers or buffer in shared or len(names) != 1
+                or (kind == 'Write' and not depends_on_axis)):
+            return None
+        shape, storage_dtype = buffers[buffer]
+        if dtype_name(storage_dtype) != 'f32':
+            return None
+        if kind == 'Load' and statement.dtype is not None and dtype_name(statement.dtype) != 'f32':
+            return None
+        if kind == 'Write' and (statement.atomic or statement.swizzle not in ('NONE', None)):
+            return None
+        form = flat_affine(shape, statement.index)
+        if form is None:
+            return None
+        constant, terms = form
+        if constant % 4 or terms.get(('var', axis)) != 1:
+            return None
+        if any(coefficient % 4 for term, coefficient in terms.items()
+               if term != ('var', axis)):
+            return None
+        last = statement.index[-1]
+        if (type(last).__name__ != 'Var' or last.name != axis
+                or any(not cta_uniform(name) for coord in statement.index[:-1]
+                       for name in expr_names(coord) or ())):
+            return None
+        cached = None
+        if kind == 'Load':
+            for candidate in source_loads:
+                if candidate.input != buffer:
+                    continue
+                other = flat_affine(shape, candidate.index)
+                if other is None:
+                    continue
+                other_terms = dict(other[1])
+                source_axis = ('var', source.axis.name)
+                if other_terms.get(source_axis) != 1:
+                    continue
+                renamed = {('var', axis) if term == source_axis else term: value
+                           for term, value in other_terms.items()}
+                if (other[0] == constant and renamed == terms
+                        and all(term == ('var', axis)
+                                or (term[0] == 'var' and term[1] in tile_extents)
+                                for term in terms
+                                if term != ('var', axis))):
+                    cached = candidate
+                    break
+        group = AccessGroup(kind, statement, buffer, axis, stride, terms,
+                            constant, cached, tuple(names))
+        (groups.loads if kind == 'Load' else groups.stores)[statement] = group
+    return groups
+
+
+def _terms_key(terms):
+    return tuple(sorted(terms.items(), key=lambda item: repr(item[0])))
+
+
+def access_descriptors(statements, buffers, shared, shared_alignment=None, blocked=()):
+    """Prove f32 four-element contiguous groups in one straight-line block.
+
+    The proof is intentionally local to a statement list. Elements must be
+    adjacent uses in source order and have the same affine non-constant terms;
+    only that constant offset may differ, by exactly the lane number. A
+    destination may name an index operand only if every lane address is
+    evaluated before any destination is published, so the lowering keeps that
+    ordering. No statement is moved.
+    """
+    plan = AccessPlan()
+    written = written_buffers(statements)
+    bindings = {}
+    for statement in statements:
+        kind = type(statement).__name__
+        if kind == 'Load':
+            source_dtype = dtype_name(buffers[statement.input][1]) if statement.input in buffers else 'f32'
+            dtype = dtype_name(statement.dtype) if statement.dtype is not None else source_dtype
+            for name in statement.names:
+                bindings[name] = dtype
+        elif kind in ('Assign', 'Accum'):
+            bindings[statement.name] = ssa_dtype_name(statement.dtype) if statement.dtype is not None else 'f32'
+        elif kind == 'Let':
+            bindings[statement.name] = ssa_dtype_name(statement.dtype) if statement.dtype is not None else 'f32'
+    runs = {}
+    blocked = set(blocked)
+    for position, statement in enumerate(statements):
+        kind = type(statement).__name__
+        if kind not in ('Load', 'Write'):
+            continue
+        if id(statement) in blocked:
+            continue
+        if kind == 'Load':
+            buffer, index, names = statement.input, statement.index, statement.names
+            if len(names) not in (1, 4):
+                continue
+            elements = [(position, statement, names[element], element)
+                        for element in range(len(names))]
+        else:
+            if statement.atomic or statement.swizzle not in ('NONE', None):
+                continue
+            buffer, index, names = statement.output, statement.index, statement.values
+            if len(names) != 4:
+                continue
+            elements = [(position, statement, names[element], element)
+                        for element in range(len(names))]
+        if buffer not in buffers:
+            continue
+        shape, storage_dtype = buffers[buffer]
+        storage_dtype = dtype_name(storage_dtype)
+        if storage_dtype != 'f32':
+            continue
+        if kind == 'Load':
+            if statement.dtype is not None and dtype_name(statement.dtype) != 'f32':
+                continue
+        else:
+            value_dtype = (ssa_dtype_name(statement.value_dtype)
+                           if statement.value_dtype is not None else storage_dtype)
+            if value_dtype != 'f32':
+                continue
+            if any(bindings.get(name) not in ('f32', 'i32', 'u32', 'i64', 'u64') for name in names):
+                continue
+        if kind == 'Load' and buffer in written:
+            continue
+        if len(set(names)) != len(names):
+            continue
+        form = flat_affine(shape, index)
+        if form is None:
+            continue
+        constant, terms = form
+        if any(coefficient % 4 for coefficient in terms.values()):
+            continue
+        if any(part is None for part in (expr_names(coord) for coord in index)):
+            continue
+        key = (kind, buffer, _terms_key(terms))
+        group = runs.setdefault(key, [])
+        group.append((constant, index, elements, statement))
+
+    for (kind, buffer, terms_key), members in runs.items():
+        entries = {}
+        for constant, index, elements, statement in members:
+            for position, lane_statement, name, element in elements:
+                entries.setdefault(constant + element,
+                                   (position, lane_statement, constant, element, name, index))
+        used = set()
+        ordered = sorted(entries)
+        for offset in ordered:
+            if offset in used:
+                continue
+            run = [entries.get(offset + lane) for lane in range(4)]
+            if any(member is None for member in run) or any(offset + lane in used for lane in range(4)):
+                continue
+            if offset % 4:
+                continue
+            # A load group may span pure statements, but no index operand or
+            # lane destination may be rebound while later lanes are moved to
+            # the leader. A destination is also live from its original load
+            # onward, so an intervening read of it cannot be moved past that
+            # definition. (Reads before the destination's own load are fine.)
+            first, last = run[0][0], run[-1][0]
+            intervening = statements[first + 1:last]
+            if any(type(statement).__name__ not in ('Load', 'Let', 'Assign', 'Accum')
+                   for statement in intervening):
+                continue
+            # Moving a later load to its run leader is only effect-free when
+            # nothing between them can write a buffer that might alias it.
+            # Tuple stores are single statements and do not cross anything.
+            if kind == 'Load' and written_buffers(intervening):
+                continue
+            index_names = set()
+            for member in run:
+                for coord in member[5]:
+                    index_names |= expr_names(coord)
+            lane_ids = {id(member[1]) for member in run}
+            intervening_names = defined_names(
+                statement for statement in statements[first + 1:last]
+                if id(statement) not in lane_ids)
+            names = tuple(member[4] for member in run)
+            if (index_names & (intervening_names | set(names))
+                    or set(names) & intervening_names):
+                continue
+            if kind == 'Load':
+                # Lanes bind at the leader. An intervening read of a name whose
+                # lane definition comes later would observe the pre-group
+                # binding instead, so reject that interleave. Reads after the
+                # name's own lane are unchanged by moving later lanes up.
+                lane_positions = {member[4]: member[0] for member in run}
+                if any(lane_positions[name] > position
+                       for position in range(first + 1, last)
+                       for name in statements[position].deps()
+                       if name in lane_positions):
+                    continue
+            if len(set(names)) != 4:
+                continue
+            lanes = []
+            prior_position = -1
+            for lane_number, member in enumerate(run):
+                position, lane_statement, constant, element, name, _ = member
+                lane_constant = constant + element
+                if lane_constant != offset + lane_number:
+                    break
+                if position < prior_position or (lane_number and position == prior_position
+                                                 and lane_statement is not run[lane_number - 1][1]):
+                    break
+                prior_position = position
+                lanes.append(AccessLane(position, lane_statement, element,
+                                        lane_number, name))
+            if len(lanes) != 4:
+                continue
+            leader = lanes[0].statement
+            statements_used = {id(lane.statement) for lane in lanes}
+            if statements_used & blocked:
+                continue
+            if kind == 'Write' and any(lane.statement is not leader for lane in lanes[1:]):
+                continue
+            space = 'shared' if buffer in shared else 'global'
+            static_aligned = False
+            if space == 'shared':
+                base_offset = shared_alignment.get(buffer, 0) if shared_alignment else 0
+                if (base_offset + 4 * run[0][2]) % 16 != 0:
+                    continue
+                static_aligned = True
+            descriptor = AccessDescriptor(
+                kind, buffer, space, 'f32', terms_key, run[0][2], 16,
+                static_aligned,
+                tuple(1 if kind == 'Load' else 0 for _ in lanes),
+                tuple(1 if kind == 'Write' else 0 for _ in lanes), lanes)
+            leader_id = id(leader)
+            if kind == 'Load':
+                plan.loads[leader_id] = descriptor
+                for lane in lanes[1:]:
+                    plan.load_lanes[id(lane.statement)] = leader_id
+            else:
+                plan.stores[leader_id] = descriptor
+            used.update(offset + lane for lane in range(4))
+    return plan
+
+
 # Copies per trip when a loop's shared loads combine into vector loads.
 VECTOR_UNROLL = 4
 
@@ -1282,6 +1632,9 @@ class Emitter:
         self.prefetch_plans, self.register_prefetch = {}, {}
         self.hoist_ctx = None
         self.subst = {}
+        # Access descriptors are rebuilt for each straight-line statement list.
+        # They are keyed by IR statement identity, never by fixture spelling.
+        self.access_plan = AccessPlan()
         def shared_layout(statements):
             for statement in statements:
                 if type(statement).__name__ == 'Smem':
@@ -3932,32 +4285,10 @@ class Emitter:
         written = written_buffers(self.hoist_ctx['tile'].body) | outputs
         special = (self.skip_ids, self.subst_load, self.hoisted, self.subst, self.vn_skip,
                    self.vn_record, self.hoist_plans)
-
-        def vector_form(buffer, index):
-            names = [expr_names(c) for c in index]
-            if (any(n is None for n in names) or buffer not in self.ptrs or buffer in self.shared
-                    or dtype_name(self.buffers[buffer][1]) != 'f32'):
-                return None
-            form = flat_affine(self.buffers[buffer][0], index)
-            last = index[-1]
-            if (form is None or form[0] % 4 or not (type(last).__name__ == 'Var' and last.name == axis)
-                    or form[1].get(('var', axis)) != 1
-                    or any(c % 4 for term, c in form[1].items() if term != ('var', axis))
-                    or any(not self.cta_uniform(n, loop) for c in index[:-1] for n in expr_names(c))):
-                return None
-            return form
-
-        def same_row(load, form):
-            """The source load reading exactly this row, if any. Its other
-            index terms must be Tile axes, which no statement rebinds."""
-            for x in source_loads:
-                theirs = flat_affine(self.buffers[x.input][0], x.index)
-                renamed = {(('var', axis) if term == ('var', source.axis.name) else term): c
-                           for term, c in theirs[1].items()}
-                if (x.input == load.input and theirs[0] == form[0] and renamed == form[1]
-                        and all(term == ('var', axis) or (term[0] == 'var' and term[1] in self.tile_extents)
-                                for term in form[1])):
-                    return x
+        access = strided_access_groups(
+            loop, source, source_loads, self.buffers, self.ptrs, self.shared,
+            self.tile_extents, lambda name: self.cta_uniform(name, loop))
+        if access is None:
             return None
 
         local, f32_values, plan = set(), set(), []
@@ -3970,11 +4301,11 @@ class Emitter:
                         or (x.dtype is not None and dtype_name(x.dtype) != 'f32')):
                     return None
                 if axis in set().union(*(expr_names(c) or set() for c in x.index)):
-                    form = vector_form(x.input, x.index)
-                    if form is None:
+                    group = access.loads.get(x)
+                    if group is None:
                         return None
-                    hit = same_row(x, form)
-                    plan.append((x, 'cached', hit) if hit is not None else (x, 'vector', None))
+                    plan.append((x, 'cached', group.cached)
+                                if group.cached is not None else (x, 'vector', None))
                     f32_values.add(x.names[0])
                 elif all((n := expr_names(c)) is not None and all(self.cta_uniform(m, loop) for m in n)
                          for c in x.index):
@@ -3991,7 +4322,7 @@ class Emitter:
                 plan.append((x, 'plain', None))
             elif kind == 'Write':
                 if (x.output not in outputs or len(x.values) != 1 or x.values[0] not in f32_values
-                        or vector_form(x.output, x.index) is None):
+                        or x not in access.stores):
                     return None
                 plan.append((x, 'store', None))
             else:
@@ -4123,6 +4454,112 @@ class Emitter:
                 self.rebind(s.axis.name)
             self.emit(f'bra {begin};')
             self.mark(done)
+
+    def vector_group_base(self, descriptor):
+        """Address of a descriptor's first element, checked for alignment."""
+        first = descriptor.lanes[0]
+        address, space = self.address(descriptor.buffer, first.statement.index, first.element)
+        if descriptor.static_aligned:
+            return address, space, None
+        low, predicate = self.reg('rd'), self.reg('p')
+        self.emit(f'and.b64 {low}, {address}, 15;')
+        self.emit(f'setp.eq.u64 {predicate}, {low}, 0;')
+        return address, space, predicate
+
+    def emit_vector_load(self, address, space, predicate):
+        """128-bit f32 load with an exact scalar fallback for a misaligned base."""
+        registers = [self.reg('f') for _ in range(4)]
+        operands = ', '.join(registers)
+        if predicate is not None:
+            scalar = self.label('access_scalar')
+            vector_done = self.label('access_vector_done')
+            self.emit(f'@!{predicate} bra {scalar};')
+            self.emit(f'ld.{space}.v4.f32 {{{operands}}}, [{address}];')
+            self.emit(f'bra {vector_done};')
+            self.mark(scalar)
+            for lane, register in enumerate(registers):
+                self.emit(f'ld.{space}.f32 {register}, [{address}+{4 * lane}];')
+            self.mark(vector_done)
+        else:
+            self.emit(f'ld.{space}.v4.f32 {{{operands}}}, [{address}];')
+        return registers
+
+    def vector_load_group(self, descriptor):
+        """Load four proven-contiguous f32 lanes at the leader statement."""
+        address, space, predicate = self.vector_group_base(descriptor)
+        if self.inactive:
+            # Preserve the scalar path's zero for masked destinations, keep the
+            # barrier/participation predicate an outer conjunction, and keep
+            # an active misaligned lane on the scalar fallback instead of
+            # letting the inactive-lane zero path erase its value.
+            active = self.inactive[-1]
+            registers = [self.reg('f') for _ in range(4)]
+            operands = ', '.join(registers)
+            scalar = self.label('access_masked_scalar') if predicate is not None else None
+            zero = self.label('access_masked_zero')
+            done = self.label('access_masked_done')
+            self.emit(f'@!{active} bra {zero};')
+            if predicate is not None:
+                self.emit(f'@!{predicate} bra {scalar};')
+            self.emit(f'ld.{space}.v4.f32 {{{operands}}}, [{address}];')
+            self.emit(f'bra {done};')
+            if scalar is not None:
+                self.mark(scalar)
+                for lane, register in enumerate(registers):
+                    self.emit(f'ld.{space}.f32 {register}, [{address}+{4 * lane}];')
+                self.emit(f'bra {done};')
+            self.mark(zero)
+            for register in registers:
+                self.emit(f'mov.f32 {register}, {literal(0, "f32")};')
+            self.mark(done)
+        else:
+            registers = self.emit_vector_load(address, space, predicate)
+        for lane, register in zip(descriptor.lanes, registers, strict=True):
+            self.values[lane.name] = (register, 'f32')
+            self.mutable.pop(lane.name, None)
+            self.rebind(lane.name)
+        leader_id = id(descriptor.lanes[0].statement)
+        self.access_plan.registers[leader_id] = registers
+
+    def vector_store_group(self, descriptor):
+        """Store four proven-contiguous f32 lanes as one aligned tuple store."""
+        address, space, predicate = self.vector_group_base(descriptor)
+        values = [convert_register(self, self.value(lane.name),
+                                   self.binding(lane.name)[1], 'f32')
+                  for lane in descriptor.lanes]
+        operands = ', '.join(values)
+        active = self.inactive[-1] if self.inactive else None
+        scalar = self.label('access_store_scalar') if predicate is not None else None
+        done = self.label('access_store_done') if predicate is not None else None
+        if predicate is not None:
+            self.emit(f'@!{predicate} bra {scalar};')
+        prefix = f'@{active} ' if active is not None else ''
+        self.emit(f'{prefix}st.{space}.v4.f32 [{address}], {{{operands}}};')
+        if predicate is not None:
+            self.emit(f'bra {done};')
+            self.mark(scalar)
+            for lane, value in enumerate(values):
+                pred = f'@{active} ' if active is not None else ''
+                self.emit(f'{pred}st.{space}.f32 [{address}+{4 * lane}], {value};')
+            self.mark(done)
+
+    def access_plan_for(self, statements, prefetched=()):
+        """Build the block-local access descriptors used by ``statements``.
+
+        The generic statement walk deliberately excludes rows that are
+        rewritten by hoisting, prefetch or value numbering: those statements
+        no longer correspond to the memory operation at this position. The
+        descriptor is immutable and keyed by statement identity.
+        """
+        special = (self.skip_ids, self.subst_load, self.hoisted, self.subst, self.vn_skip,
+                   self.vn_record, self.hoist_plans)
+        blocked = {id(s) for s in statements
+                   if any(id(s) in table for table in special)}
+        blocked.update(id(statements[position]) for position in prefetched
+                       if 0 <= position < len(statements))
+        return access_descriptors(statements, self.buffers, self.shared,
+                                  {name: self.shared_offsets[name] for name in self.shared_offsets},
+                                  blocked)
 
     def vector_load_plan(self, loop):
         """Plan 128/64-bit shared loads for a loop unrolled VECTOR_UNROLL times.
@@ -5653,6 +6090,13 @@ class Emitter:
         pending = []
         deferred = self.deferred_before_hoists(statements)
         waiting = {id(x) for chosen in deferred.values() for x in chosen}
+        plan = self.access_plan_for(statements, shared_prefetch or ())
+        # Statement identities are unique within an emitter. Merge instead of
+        # replacing so a nested body cannot discard its parent's descriptors;
+        # rewritten rows are still excluded above and checked before use below.
+        self.access_plan.loads.update(plan.loads)
+        self.access_plan.stores.update(plan.stores)
+        self.access_plan.load_lanes.update(plan.load_lanes)
         for position, s in enumerate(statements):
             for name, key in pending:
                 self.vn_registers[key] = self.values[name]
@@ -5812,6 +6256,12 @@ class Emitter:
                     # Emmy's vector renderer reinterprets a typed vector pack;
                     # numerical conversion is only established for scalar Load.
                     raise Unsupported('Vector Load stamp must match buffer storage dtype')
+                descriptor = self.access_plan.loads.get(id(s))
+                if descriptor is not None:
+                    self.vector_load_group(descriptor)
+                    continue
+                if id(s) in self.access_plan.load_lanes:
+                    continue
                 phys = dtype_info(source_dtype)[1]
                 loaded_bindings = []
                 for i, name in enumerate(s.names):
@@ -5836,6 +6286,10 @@ class Emitter:
                     raise Unsupported('Swizzled writes unsupported')
                 output_dtype = dtype_name(self.buffers[s.output][1])
                 value_dtype = ssa_dtype_name(s.value_dtype) if s.value_dtype is not None else output_dtype
+                descriptor = self.access_plan.stores.get(id(s))
+                if descriptor is not None and output_dtype == 'f32' and not s.atomic:
+                    self.vector_store_group(descriptor)
+                    continue
                 phys = dtype_info(output_dtype)[1]
                 for i, name in enumerate(s.values):
                     addr, space = self.address(s.output, s.index, i)
