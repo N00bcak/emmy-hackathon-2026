@@ -28,6 +28,42 @@ The design premise is:
   shows that it helps; removing memory traffic, barriers, or live registers is
   the mechanism, not the result.
 
+The scaled performance suite in `tests/performance/manifest.json` provides
+the timing witnesses for P1-P5. Its `perf-a` tier contains 4M-element
+pointwise and scalar-reduction cases, `3072 x 4096` row sums,
+`3072 x 2048` RMSNorm/L2Norm/softmax cases, `1024 x 1024 x 512` matmul and
+`256 x 64` attention; `perf-b` is the stress tier at 16M pointwise/reduction,
+`4096 x 4096` row sums and softmax, `2048 x 4096` norms,
+`2048 x 2048 x 512` matmul and `512 x 64` attention. Both tiers use frozen
+typed-IR shapes, independent NumPy float64 references, and the published
+family tolerances.
+
+Current local status: all 22 cases pass full-output correctness and exceed the
+10x measured-floor threshold. Local guarded-driver A/A receipts admit 9/11
+`perf-a` and 8/11 `perf-b` cases under the fixed 5% deadband. The remaining
+cases (`r04` and `f02` in `perf-a`; `p02`, `r04` and `m01` in `perf-b`) are
+explicitly noise-unresolved in `tests/performance/README.md`.
+These are local diagnostics, not hosted benchmark receipts or a
+candidate-versus-baseline speed claim.
+
+Use only the cases named in the priority sections below. The published cases
+remain correctness anchors but are excluded from scaled timing lists because
+their launch times are below the noise floor. The `perf-b` cases are stress
+witnesses and do not replace their `perf-a` analogue for a mechanism verdict.
+`r01_array_sum_4m` and `r01_array_sum_16m` are excluded from P1-P5
+timing because none of those actions targets scalar-reduction work; they remain
+correctness evidence. `m01_matmul_1024x1024x512` has an admitted local A/A
+receipt but remains diagnostic for mechanism work until the staged pipeline has
+its own legality and timing study.
+
+The small `A<n>` audit fixtures and the published cases are correctness-only
+for every priority below. Their grids and element counts are launch-bound:
+for example, `A86` is `3 x 127` with three CTAs, and `A95` has one element and
+one CTA. Do not use an `A<n>` fixture as a speed witness, an A/A calibration
+case, or a timing exit condition. A timing claim must name a scaled suite case
+and satisfy that case's output-correctness, A/A deadband, launch-floor ratio
+and fresh confirmation gates.
+
 The plan therefore targets typed, whole-region analyses. It does not add a
 second general-purpose optimizer over PTX text, and it does not replace the
 specialized paths that already work. Those paths remain correctness fallbacks
@@ -141,9 +177,10 @@ Current CPU result: 44 compiler tests pass. The 65-case policy passes 65/65
 with 16/16 sanitizer checks. The frozen candidate is unchanged throughout these
 gates.
 
-Fresh hosted RTX 5090 pairs were recorded for f01, f03, r04, m01 and pointwise
-controls (`.../hosted-5090/p0-*`). Published-launch results are at the
-3-11 us floor and are not speed evidence:
+Fresh hosted RTX 5090 pairs were attempted for f01, f03, r04, m01 and pointwise
+controls (`.../hosted-5090/p0-*`). Those published launches run at the 3-11 us
+floor, so the table is retained only as a launch-bound rejection record. It is
+not a performance case list and cannot support a timing verdict:
 
 | case | ratio | A/A median (range) | verdict |
 | --- | ---: | ---: | --- |
@@ -159,6 +196,8 @@ controls (`.../hosted-5090/p0-*`). Published-launch results are at the
 Identical-code A/A controls can cross the harness's fixed 1% label by several
 percent on these launch-bound cases. Those labels are therefore not a valid
 noise calibration there, and neither arm is promoted or rejected from them.
+The published fixtures stay correctness and regression anchors; scaled cases
+in `tests/performance/manifest.json` are the only timing witnesses.
 
 Larger independently referenced witnesses separate mechanism from launch floor:
 f01 and f03 at 1024x4096 remain neutral. Their candidate ratios were 1.0002 and
@@ -232,9 +271,20 @@ alias-aware effect check proves earlier issue is safe.
 - Generated contiguous, non-contiguous, unaligned and reordered-ABI pointwise
   variants preserve outputs exactly where required.
 - All 15 published cases pass at their exact metadata tolerances.
-- A fresh, noise-calibrated paired timing run resolves at least one pointwise
-  or map case as faster, and no case in the measured family regresses beyond
-  the calibrated deadband. A separate isolated run confirms the win.
+- Primary timing witness: `p03_relu_mul_4m` exercises four-element loads and a
+  straight-line vector store. `p01_vector_add_4m` is a width-four ABI control;
+  `p02_scale_shift_8m` is a single-input control. `p00_scalar_add_4m` is
+  width-two, outside the first P1 four-element group, so it is a transport
+  control rather than a primary. Do not count the 128-element published `p00`,
+  which is the measured launch-floor witness. Use the 16M `perf-b` variants
+  only after `perf-a` admits them.
+- Map witnesses: `r04_row_sum_3072x4096` exercises affine row addressing and
+  `f01_rmsnorm_3072x2048` and `f03_l2norm_3072x2048` exercise the row-cache
+  map. These are follow-on P1 evidence only where the row-map planner is in
+  scope; they do not replace the pointwise primary witnesses.
+- A fresh, noise-calibrated paired timing run resolves at least one primary
+  pointwise case as faster, with no resolved regression in the measured
+  pointwise or admitted map cases. A separate isolated run confirms the win.
 - SASS instruction and issue counts are recorded to explain the result, but they
   neither authorize nor veto promotion. Wall-clock time is the ultimate arbiter.
 
@@ -328,10 +378,22 @@ compare the shared-memory round trip against the recomputation cost.
   reuse only for the duplicate graph.
 - All 15 published cases pass at their exact metadata tolerances, with fresh
   isolated confirmation before timing.
-- A fresh, noise-calibrated paired timing run resolves f02 (`A86`, the
-  single-slice-tail softmax) or one of the attention reuse witnesses `A57`,
-  `A79` or `A83` as faster, with no resolved regression in the measured reuse
-  family. A separate isolated run confirms the win.
+- Primary row-reuse witnesses: `f01_rmsnorm_3072x2048` and
+  `f03_l2norm_3072x2048` exercise cross-phase row reuse at 6M elements;
+  `f02_row_softmax_3072x2048` exercises the two-pass softmax reuse candidate.
+  `r04_row_sum_3072x4096` is the reduction-only control for the row path.
+  The 16M `perf-b` rows are stress witnesses, not substitutes for first
+  admission.
+- Attention reuse witnesses: `a01_attention_256x64` is the smallest scaled
+  attention case and remains secondary to the row-reuse primaries; use it only
+  when measuring the CTA-uniform hoisting sub-mechanism. Do not use the
+  published 64x64 `a01`, whose launch dominates.
+- A fresh, noise-calibrated paired timing run resolves one row-reuse primary
+  (`f01_rmsnorm_3072x2048`, `f03_l2norm_3072x2048` or
+  `f02_row_softmax_3072x2048`) as faster, with no resolved regression in the
+  measured reuse family. A separate isolated run confirms the win. `A86` and
+  the `A57`, `A79` and `A83` attention guards are correctness-only; they cannot
+  satisfy this timing exit.
 - Load, barrier, issue and register counts are recorded as mechanism evidence.
   They do not decide acceptance; wall-clock time is the ultimate arbiter.
 
@@ -364,15 +426,18 @@ Case labels below use `A<n>` for row `n` in
 the routine 65-case array. Repeated witness names make the audit index the
 unambiguous reference.
 
-- Primary gain targets: `a01_attention` and `a02_attention_128`. These contain
-  the repeated QK/PV dot and map structure that the existing KEY batching only
-  partly captures.
-- Generalization cases: `A57`
+- Primary scaled gain targets: `a01_attention_256x64` and
+  `a01_attention_512x64`. These contain the repeated QK/PV dot and map
+  structure that the existing KEY batching only partly captures. Do not time
+  the published 64x64 `a01` or 128x32 `a02` as P3 evidence; both are launch
+  anchors and the suite has no `a02` scale case.
+- Correctness generalization cases: `A57`
   (`nested-key-score-shadow`, width 16) and `A84` (the width-8 variant) test
   child score scopes; `A71` (`shared-dot-seed-and-tail`) and `A72`
   (`shared-dot-misaligned-row-stride`) test fusion order and access fallback;
   `A85` (`nested-seeded-fold-scopes`) tests accumulator ownership across nested
-  seeded folds.
+  seeded folds. These fixtures have at most 280 output elements and are not P3
+  timing witnesses.
 - Negative guards: `A62` (`attention-0`, `ordered-three-kernel-attention`)
   requires three ordered kernels and intermediate buffers, so fusion must not
   cross that boundary. `A79` (`independent-query-normalizers`) must keep
@@ -397,8 +462,9 @@ unambiguous reference.
   complete routine 65-case policy passes, including `A57`, `A62`,
   `A71`-`A72`, `A75`-`A76`, `A79`-`A85` and the three row-cache clients above.
 - A fresh noise-calibrated paired timing run on the target device resolves
-  `a01_attention` or `a02_attention_128` as faster, with no resolved regression
-  in any attention case. A separate isolated run confirms the win.
+  `a01_attention_256x64` or `a01_attention_512x64` as faster, with no resolved
+  regression in either scaled attention case. A separate isolated run confirms
+  the win. The published attention cases remain correctness anchors only.
 - Final-SASS load, barrier and issue counts, spills and occupancy are recorded
   as mechanism evidence. They neither substitute for a timing win nor reject a
   measured win by themselves; wall-clock time is the ultimate arbiter.
@@ -422,15 +488,19 @@ lower static count is a performance verdict, and neither can reject a measured w
 
 ### 8.1 Expected test cases
 
-- Primary gain targets: `p02_scale_shift` and `p03_relu_mul` exercise the
-  straight-line address chain with the least unrelated control flow. The map
-  loops in `f01_rmsnorm`, `f03_l2norm` and `r04_row_sum` exercise affine row
-  addressing once P1 and P2 supply a proven access plan.
-- Tail and index guards: `A90` (`scalar-pointwise-odd-tail`) and `A91`
+- Primary gain targets: `p02_scale_shift_8m` and `p03_relu_mul_4m` exercise the
+  straight-line address chain with the least unrelated control flow. Use the
+  16M `perf-b` variants only after `perf-a` admission. The map loops in
+  `f01_rmsnorm_3072x2048`, `f03_l2norm_3072x2048` and
+  `r04_row_sum_3072x4096` exercise affine row addressing once P1 and P2 supply
+  a proven access plan; they are follow-on, not first-P4 acceptance cases.
+- Tail and index guards (correctness-only): `A90`
+  (`scalar-pointwise-odd-tail`) and `A91`
   (`width-two-pointwise-odd-tail`) require a scalar tail after a proven group;
   `A24` (`signed-index-arithmetic`) requires exact signed division and remainder
   in addresses; `A25` (`vector-alignment-and-tail`) requires the alignment and
-  partial-group fallback.
+  partial-group fallback. All are limited to at most 4,099 outputs and must not
+  be used as P4 timing references.
 - Scope and snapshot guards: `A30` (`nested-tile-binding-restoration`), `A31`
   (`loop-axis-shadow-scope`), `A50` (`load-name-shadow`) and `A51`
   (`grouped-load-snapshot`) catch a cached base or offset that survives the
@@ -439,10 +509,9 @@ lower static count is a performance verdict, and neither can reject a measured w
 - Targeted extension: `A95` (`axis-rebound-before-load`) is outside the routine
   65-case policy but must run for P4 because it directly tests a stale loop-axis
   assumption in the vector planner.
-- `m01_matmul_512` is a follow-on address-pressure probe, not an acceptance case
-  for the first P4. Its recorded 115 IMAD, 18 LOP3 and 18 SHF against 96 FFMA per
-  unrolled body make it interesting, but its named-barrier staged pipeline needs
-  a separate legality and timing study.
+- `m01_matmul_1024x1024x512` is a follow-on address-pressure probe, not an
+  acceptance case for the first P4. Its larger staged pipeline needs a separate
+  legality and timing study; the published 512-cube is below the launch floor.
 
 ### 8.2 Exit criteria
 
@@ -456,8 +525,10 @@ lower static count is a performance verdict, and neither can reject a measured w
   `A31`, `A50`, `A51`, `A58`, `A59`, `A90` and `A91` pass. Targeted `A95` also
   passes.
 - A fresh noise-calibrated paired timing run resolves at least one primary case
-  as faster, with no resolved regression in the primary pointwise or map
-  family. A separate isolated run confirms the result.
+  (`p02_scale_shift_8m` or `p03_relu_mul_4m`) as faster, with no resolved
+  regression in either primary. Admitted map cases may strengthen the result
+  but cannot substitute for a primary pointwise win. A separate isolated run
+  confirms the result.
 - If resolved timing does not improve, retain the general address lowering and
   record the rejection; if timing remains unresolved, record that result
   instead. Do not promote on PTX size, a lower SASS issue count, or any other
@@ -477,11 +548,14 @@ only to explain which work disappeared.
 
 ### 9.1 Expected test cases
 
-- Opportunity probes: `p02_scale_shift` and `p03_relu_mul` can expose duplicate
-  constants and dead prologue work; `f01_rmsnorm`, `f03_l2norm` and
-  `r04_row_sum` can expose loop-invariant index work; `m01_matmul_512` is a
-  screening case for invariant staged-plan arithmetic. Any of these may show
-  that `ptxas` already removed the candidate, which is a valid negative result.
+- Scaled opportunity probes: `p02_scale_shift_8m` and `p03_relu_mul_4m` can expose
+  duplicate constants and dead prologue work; `f01_rmsnorm_3072x2048`,
+  `f03_l2norm_3072x2048` and `r04_row_sum_3072x4096` can expose loop-invariant
+  index work; `m01_matmul_1024x1024x512` is a screening case for invariant
+  staged-plan arithmetic. Remove the published small pointwise and reduction
+  cases and all `A<n>` fixtures from P5 timing; they are below the noise floor
+  and serve as correctness anchors. Any probe may show that `ptxas` already
+  removed the candidate, which is a valid negative result.
 - CSE cache-key sentinels: `A26`-`A29` (`cast`, `FuncCall`, `FlatIndex` and
   `Builtin` child keys) require distinct children to remain distinct.
 - Scope and lifetime sentinels: `A30`-`A32` and `A40` cover nested Tile/loop
@@ -515,9 +589,12 @@ only to explain which work disappeared.
   semantics, output membership and all load-to-store visibility. It must not
   expose reassociation merely to create a common subexpression.
 - A fresh noise-calibrated paired timing run resolves a win on at least one
-  probe, with no resolved regression elsewhere. A separate isolated run
-  confirms the result. A static reduction without a measured win does not
-  qualify, and static counts cannot overturn a measured win.
+  scaled probe (`p02_scale_shift_8m`, `p03_relu_mul_4m`,
+  `f01_rmsnorm_3072x2048`, `f03_l2norm_3072x2048` or
+  `r04_row_sum_3072x4096`), with no resolved regression in the admitted
+  probes. `m01_matmul_1024x1024x512` is a diagnostic screen only. A separate
+  isolated run confirms the result. A static reduction without a measured win
+  does not qualify, and static counts cannot overturn a measured win.
 - If resolved timing shows no win, record P5 as deferred, retain the existing
   scoped CSE, GVN and invariant hoisting, and do not merge a whole-function
   pass. If timing is unresolved, keep the result unresolved rather than
@@ -549,7 +626,10 @@ only to explain which work disappeared.
 - Compile all 15 published IRs for sm_89 and sm_120.
 - Run the authorized GPU correctness gate on the routine 65-case policy, plus
   required sanitizer checks for atomics.
-- Record fresh paired timings for f01, f03, r04, m01 and a control set.
+- Record fresh paired timings for the scaled `f01_rmsnorm_3072x2048`,
+  `f03_l2norm_3072x2048`, `r04_row_sum_3072x4096` and
+  `m01_matmul_1024x1024x512` cases and their scaled controls. The published
+  f01, f03, r04 and m01 fixtures are correctness anchors only.
 - When a published launch is below the measurement floor, add a larger typed
   witness and calibrate A/A before classifying its result.
 
@@ -561,7 +641,10 @@ the P0 timing record is neutral and makes no speed-promotion claim.
 
 - Add the shared access descriptor and legality analysis.
 - Lower proven f32 four-element groups with a scalar alignment fallback.
-- Add typed pointwise variants before touching map loops.
+- Time the four-wide `p03_relu_mul_4m` primary, with `p01_vector_add_4m` and
+  `p02_scale_shift_8m` as controls, before touching the `r04`, `f01` or `f03`
+  map cases. Keep width-two `p00_scalar_add_4m` as a transport control because
+  it is not a four-element P1 group.
 
 Exit: the P1 criteria in section 5.4.
 
@@ -570,14 +653,21 @@ Exit: the P1 criteria in section 5.4.
 - Factor uniformity, escape and cost into one analysis.
 - Re-express the row cache, hoisting and CTA-total rules as clients.
 - Extend reuse only where the cost model permits.
+- Use `f01_rmsnorm_3072x2048`, `f03_l2norm_3072x2048` and
+  `f02_row_softmax_3072x2048` for the row-reuse verdict, with
+  `r04_row_sum_3072x4096` as the control.
 
 Exit: the P2 criteria in section 6.4.
 
 ### Step 3: sibling-loop fusion and P3
 
 - Implement only with preserved fold order and an alias-safe effect proof.
-- Validate on `a01_attention`, `a02_attention_128`, `A62`, `A71`-`A72` and
-  `A75`-`A85`, plus generated sibling-dot variants. Do not validate only on a01.
+- Validate correctness on `a01_attention`, `a02_attention_128`, `A62`,
+  `A71`-`A72` and `A75`-`A85`, plus generated sibling-dot variants. These small
+  fixtures gate correctness only; do not time them or validate only on a01.
+- Time `a01_attention_256x64` first, then `a01_attention_512x64`; the latter is
+  the confirmation-scale witness. The published attention cases remain
+  launch-bound correctness anchors.
 
 Exit: the P3 criteria in section 7.2.
 
@@ -585,8 +675,12 @@ Exit: the P3 criteria in section 7.2.
 
 - Apply only to access-plan loops.
 - Record SASS issue count and register pressure as diagnostics.
-- Run `A24`-`A25`, `A30`-`A31`, `A50`-`A51`, `A58`-`A59`, `A90`-`A91` and
-  targeted `A95` before timing.
+- Run correctness guards `A24`-`A25`, `A30`-`A31`, `A50`-`A51`, `A58`-`A59`,
+  `A90`-`A91` and targeted `A95` before timing. Do not time these small
+  fixtures.
+- Time `p02_scale_shift_8m` and `p03_relu_mul_4m` first; treat
+  `f01_rmsnorm_3072x2048`, `f03_l2norm_3072x2048` and
+  `r04_row_sum_3072x4096` as admitted-map follow-ons.
 - Gate promotion on a fresh paired wall-clock win with no resolved regression;
   static counts explain a result but cannot replace it.
 
@@ -599,7 +693,11 @@ Exit: the P4 criteria in section 8.2.
   `ptxas`, or another falsifiable mechanism predicts a timing gain; otherwise
   close P5 as deferred.
 - Run the cache-key, scope, normalization and visibility sentinels from section
-  9.2 before any timing.
+  9.2 as correctness checks before any timing. They are not performance cases.
+- Screen with `p02_scale_shift_8m`, `p03_relu_mul_4m`,
+  `f01_rmsnorm_3072x2048`, `f03_l2norm_3072x2048` and
+  `r04_row_sum_3072x4096`; keep `m01_matmul_1024x1024x512` diagnostic until its
+  staged-plan timing study is complete.
 
 Exit: the P5 criteria in section 9.2. A deferred P5 does not block P3 or P4.
 
@@ -607,11 +705,11 @@ Exit: the P5 criteria in section 9.2. A deferred P5 does not block P3 or P4.
 
 | mechanism | correctness cases | diagnostic checks | wall-clock verdict |
 | --- | --- | --- | --- |
-| P1 vector access | p02, p03, f01/f03 maps, generated contiguous/non-contiguous/unaligned pointwise IRs | both-target assembly, SASS LDG/STG counts, spills | pointwise family; fresh paired wall-clock win and no resolved regression |
-| P2 reuse | f01, f02, f03, a01, a02; `A57`, `A79`, `A83`, `A86` plus typed uniformity variants | SASS LDG/LDS/barrier counts, registers | f01/f02 and attention; fresh paired wall-clock win and no resolved regression |
-| P3 loop fusion | a01/a02, `A62`, `A71`-`A72`, `A75`-`A76`, `A79`, `A83`-`A85`, `A57`, `A84` plus fresh sibling-dot variants | SASS LDG/LDS counts, operand-order and ownership checks, spills | attention; fresh paired wall-clock win and no resolved regression |
-| P4 address strength | p02, p03, f01, f03, r04; `A24`-`A25`, `A30`-`A31`, `A50`-`A51`, `A58`-`A59`, `A90`-`A91`; targeted `A95` | SASS issue and IMAD/LEA/SHF/LOP3 counts, registers, spill and occupancy | selected P1-enabled family; fresh paired wall-clock win and no resolved regression |
-| P5 generic CSE/LICM/DCE | p02, p03, f01, f03, r04, m01 screen; `A26`-`A32`, `A40`, `A50`-`A52`, `A55`, `A57`, `A68`, `A79`, `A83`-`A85`; targeted `A95` | no-op SASS inventory and final counts | fresh paired wall-clock win, else defer |
+| P1 vector access | published p02, p03, f01/f03 maps, generated contiguous/non-contiguous/unaligned pointwise IRs | both-target assembly, SASS LDG/STG counts, spills | `p03_relu_mul_4m` (primary), `p01_vector_add_4m` (width-four control), `p02_scale_shift_8m` (single-input control), `p00_scalar_add_4m` (width-two transport control); fresh paired wall-clock win and no resolved regression |
+| P2 reuse | published f01, f02, f03, a01, a02; correctness-only `A57`, `A79`, `A83`, `A86` plus typed uniformity variants | SASS LDG/LDS/barrier counts, registers | `f01_rmsnorm_3072x2048`, `f03_l2norm_3072x2048`, `f02_row_softmax_3072x2048` (row primaries), `r04_row_sum_3072x4096` (control), `a01_attention_256x64` (secondary); fresh paired wall-clock win and no resolved regression |
+| P3 loop fusion | published a01/a02; correctness-only `A62`, `A71`-`A72`, `A75`-`A76`, `A79`, `A83`-`A85`, `A57`, `A84` plus fresh sibling-dot variants | SASS LDG/LDS counts, operand-order and ownership checks, spills | `a01_attention_256x64` and `a01_attention_512x64`; fresh paired wall-clock win and no resolved regression |
+| P4 address strength | published p02, p03, f01, f03, r04; correctness-only `A24`-`A25`, `A30`-`A31`, `A50`-`A51`, `A58`-`A59`, `A90`-`A91`; targeted `A95` | SASS issue and IMAD/LEA/SHF/LOP3 counts, registers, spill and occupancy | `p02_scale_shift_8m`, `p03_relu_mul_4m` (primaries), `f01_rmsnorm_3072x2048`, `f03_l2norm_3072x2048`, `r04_row_sum_3072x4096` (maps), `m01_matmul_1024x1024x512` (diagnostic); fresh paired wall-clock win and no resolved regression |
+| P5 generic CSE/LICM/DCE | published p02, p03, f01, f03, r04, m01; correctness-only `A26`-`A32`, `A40`, `A50`-`A52`, `A55`, `A57`, `A68`, `A79`, `A83`-`A85`; targeted `A95` | no-op SASS inventory and final counts | `p02_scale_shift_8m`, `p03_relu_mul_4m`, `f01_rmsnorm_3072x2048`, `f03_l2norm_3072x2048`, `r04_row_sum_3072x4096`; `m01_matmul_1024x1024x512` diagnostic; fresh paired wall-clock win, else defer |
 
 Every candidate also runs the routine audited 65-case policy. Correctness-only
 screening is not a timing promotion. All timing candidates require the
@@ -676,9 +774,11 @@ repeat.
 
 | priority | expected to help | expected to stay unchanged |
 | --- | --- | --- |
-| P3 | `a01_attention`, `a02_attention_128`; generalization through `A57`, `A71`-`A72`, `A84`-`A85` | `A62` (three-kernel boundary), `A79` (distinct normalizers), `A83` (equivalent-only reuse), `f01`/`f03`/`r04` ownership |
-| P4 | `p02_scale_shift`, `p03_relu_mul`, `f01`/`f03`/`r04` maps; tails `A90`-`A91` | `A24`-`A25`, `A30`-`A31`, `A50`-`A51`, `A58`-`A59`, targeted `A95` |
-| P5 | `p02_scale_shift`, `p03_relu_mul`; invariant index work in `f01`/`f03`/`r04`; `m01` screen | cache keys `A26`-`A29`, scopes `A30`-`A32`/`A40`/`A50`-`A52`/`A55`, attention `A57`/`A79`/`A83`-`A85`, visibility `A68` |
+| P1 | `p03_relu_mul_4m`; generalization through generated contiguous/non-contiguous/unaligned pointwise IRs | `p01_vector_add_4m` and `p02_scale_shift_8m` controls; `p00_scalar_add_4m` width-two transport control; `r04_row_sum_3072x4096`, `f01_rmsnorm_3072x2048` and `f03_l2norm_3072x2048` map follow-ons |
+| P2 | `f01_rmsnorm_3072x2048`, `f03_l2norm_3072x2048`, `f02_row_softmax_3072x2048` | `r04_row_sum_3072x4096` control; `a01_attention_256x64` secondary; `A86` correctness-only; `A79`/`A83` reuse boundaries |
+| P3 | `a01_attention_256x64`, `a01_attention_512x64` | correctness-only `A57`, `A71`-`A72`, `A84`-`A85` generalization; `A62` (three-kernel boundary), `A79` (distinct normalizers), `A83` (equivalent-only reuse), `f01`/`f03`/`r04` ownership |
+| P4 | `p02_scale_shift_8m`, `p03_relu_mul_4m`; map follow-ons `f01`/`f03`/`r04` | correctness-only tails `A90`-`A91`; `A24`-`A25`, `A30`-`A31`, `A50`-`A51`, `A58`-`A59`, targeted `A95`; `m01_matmul_1024x1024x512` diagnostic |
+| P5 | `p02_scale_shift_8m`, `p03_relu_mul_4m`; invariant index work in `f01_rmsnorm_3072x2048`/`f03_l2norm_3072x2048`/`r04_row_sum_3072x4096`; `m01_matmul_1024x1024x512` screen | correctness-only cache keys `A26`-`A29`, scopes `A30`-`A32`/`A40`/`A50`-`A52`/`A55`, attention `A57`/`A79`/`A83`-`A85`, visibility `A68` |
 
 “Expected to help” means the case has a plausible structural opportunity; it
 does not assert a gain. Each priority still has to demonstrate a fresh paired

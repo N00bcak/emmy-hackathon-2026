@@ -1,0 +1,365 @@
+{
+  "schema": "emmy-performance-suite-v1",
+  "suite_version": "perf-v1",
+  "reference_policy": "independent NumPy float64, cast to declared f32 output",
+  "tolerance_policy": "published family tolerance; never relaxed for scale",
+  "return_limit": 4194304,
+  "tiers": {
+    "perf-a": {
+      "purpose": "observable work for ordinary paired timing",
+      "cases": [
+        {
+          "id": "p00_scalar_add_4m",
+          "family": "pointwise",
+          "anchor": "p00_scalar_add",
+          "shape": [
+            4000000
+          ],
+          "seed": 11000,
+          "operation": "add",
+          "vector_width": 2,
+          "block": 256,
+          "tolerance": [
+            0.0,
+            0.0
+          ],
+          "local_only": false
+        },
+        {
+          "id": "p01_vector_add_4m",
+          "family": "pointwise",
+          "anchor": "p01_vector_add",
+          "shape": [
+            4000000
+          ],
+          "seed": 11001,
+          "operation": "add",
+          "vector_width": 2,
+          "block": 256,
+          "tolerance": [
+            0.0,
+            0.0
+          ],
+          "local_only": false
+        },
+        {
+          "id": "p02_scale_shift_8m",
+          "family": "pointwise",
+          "anchor": "p02_scale_shift",
+          "shape": [
+            8000000
+          ],
+          "seed": 11002,
+          "operation": "scale_shift",
+          "vector_width": 4,
+          "block": 256,
+          "tolerance": [
+            1e-06,
+            1e-06
+          ],
+          "local_only": true
+        },
+        {
+          "id": "p03_relu_mul_4m",
+          "family": "pointwise",
+          "anchor": "p03_relu_mul",
+          "shape": [
+            4000000
+          ],
+          "seed": 11003,
+          "operation": "relu_mul",
+          "vector_width": 4,
+          "block": 256,
+          "tolerance": [
+            0.0,
+            0.0
+          ],
+          "local_only": false
+        },
+        {
+          "id": "r01_array_sum_4m",
+          "family": "reduction",
+          "anchor": "r01_array_sum",
+          "shape": [
+            4000000
+          ],
+          "seed": 11004,
+          "tolerance": [
+            0.0001,
+            0.0001
+          ],
+          "local_only": false
+        },
+        {
+          "id": "r04_row_sum_3072x4096",
+          "family": "row_sum",
+          "anchor": "r04_row_sum",
+          "shape": [
+            3072,
+            4096
+          ],
+          "seed": 11005,
+          "tolerance": [
+            0.0001,
+            0.0001
+          ],
+          "local_only": false
+        },
+        {
+          "id": "m01_matmul_1024x1024x512",
+          "family": "matmul",
+          "anchor": "m01_matmul_512",
+          "shape": [
+            1024,
+            1024,
+            512
+          ],
+          "seed": 11006,
+          "tolerance": [
+            0.001,
+            0.001
+          ],
+          "local_only": false
+        },
+        {
+          "id": "f01_rmsnorm_3072x2048",
+          "family": "rmsnorm",
+          "anchor": "f01_rmsnorm",
+          "shape": [
+            3072,
+            2048
+          ],
+          "seed": 11007,
+          "tolerance": [
+            0.001,
+            0.0001
+          ],
+          "local_only": true
+        },
+        {
+          "id": "f02_row_softmax_3072x2048",
+          "family": "softmax",
+          "anchor": "f02_row_softmax",
+          "shape": [
+            3072,
+            2048
+          ],
+          "seed": 11008,
+          "tolerance": [
+            0.001,
+            1e-05
+          ],
+          "local_only": true
+        },
+        {
+          "id": "f03_l2norm_3072x2048",
+          "family": "l2norm",
+          "anchor": "f03_l2norm",
+          "shape": [
+            3072,
+            2048
+          ],
+          "seed": 11009,
+          "tolerance": [
+            0.001,
+            0.0001
+          ],
+          "local_only": true
+        },
+        {
+          "id": "a01_attention_256x64",
+          "family": "attention",
+          "anchor": "a01_attention",
+          "shape": [
+            256,
+            64
+          ],
+          "seed": 11010,
+          "tolerance": [
+            0.001,
+            0.0001
+          ],
+          "local_only": false
+        }
+      ]
+    },
+    "perf-b": {
+      "purpose": "stress the same mechanisms without changing semantics",
+      "cases": [
+        {
+          "id": "p00_scalar_add_16m",
+          "family": "pointwise",
+          "anchor": "p00_scalar_add",
+          "shape": [
+            16000000
+          ],
+          "seed": 12000,
+          "operation": "add",
+          "vector_width": 2,
+          "block": 256,
+          "tolerance": [
+            0.0,
+            0.0
+          ],
+          "local_only": true
+        },
+        {
+          "id": "p01_vector_add_16m",
+          "family": "pointwise",
+          "anchor": "p01_vector_add",
+          "shape": [
+            16000000
+          ],
+          "seed": 12001,
+          "operation": "add",
+          "vector_width": 2,
+          "block": 256,
+          "tolerance": [
+            0.0,
+            0.0
+          ],
+          "local_only": true
+        },
+        {
+          "id": "p02_scale_shift_16m",
+          "family": "pointwise",
+          "anchor": "p02_scale_shift",
+          "shape": [
+            16000000
+          ],
+          "seed": 12002,
+          "operation": "scale_shift",
+          "vector_width": 4,
+          "block": 256,
+          "tolerance": [
+            1e-06,
+            1e-06
+          ],
+          "local_only": true
+        },
+        {
+          "id": "p03_relu_mul_16m",
+          "family": "pointwise",
+          "anchor": "p03_relu_mul",
+          "shape": [
+            16000000
+          ],
+          "seed": 12003,
+          "operation": "relu_mul",
+          "vector_width": 4,
+          "block": 256,
+          "tolerance": [
+            0.0,
+            0.0
+          ],
+          "local_only": true
+        },
+        {
+          "id": "r01_array_sum_16m",
+          "family": "reduction",
+          "anchor": "r01_array_sum",
+          "shape": [
+            16000000
+          ],
+          "seed": 12004,
+          "tolerance": [
+            0.0001,
+            0.0001
+          ],
+          "local_only": false
+        },
+        {
+          "id": "r04_row_sum_4096x4096",
+          "family": "row_sum",
+          "anchor": "r04_row_sum",
+          "shape": [
+            4096,
+            4096
+          ],
+          "seed": 12005,
+          "tolerance": [
+            0.0001,
+            0.0001
+          ],
+          "local_only": false
+        },
+        {
+          "id": "m01_matmul_2048x2048x512",
+          "family": "matmul",
+          "anchor": "m01_matmul_512",
+          "shape": [
+            2048,
+            2048,
+            512
+          ],
+          "seed": 12006,
+          "tolerance": [
+            0.001,
+            0.001
+          ],
+          "local_only": false
+        },
+        {
+          "id": "f01_rmsnorm_2048x4096",
+          "family": "rmsnorm",
+          "anchor": "f01_rmsnorm",
+          "shape": [
+            2048,
+            4096
+          ],
+          "seed": 12007,
+          "tolerance": [
+            0.001,
+            0.0001
+          ],
+          "local_only": true
+        },
+        {
+          "id": "f02_row_softmax_4096x4096",
+          "family": "softmax",
+          "anchor": "f02_row_softmax",
+          "shape": [
+            4096,
+            4096
+          ],
+          "seed": 12008,
+          "tolerance": [
+            0.001,
+            1e-05
+          ],
+          "local_only": true
+        },
+        {
+          "id": "f03_l2norm_2048x4096",
+          "family": "l2norm",
+          "anchor": "f03_l2norm",
+          "shape": [
+            2048,
+            4096
+          ],
+          "seed": 12009,
+          "tolerance": [
+            0.001,
+            0.0001
+          ],
+          "local_only": true
+        },
+        {
+          "id": "a01_attention_512x64",
+          "family": "attention",
+          "anchor": "a01_attention",
+          "shape": [
+            512,
+            64
+          ],
+          "seed": 12010,
+          "tolerance": [
+            0.001,
+            0.0001
+          ],
+          "local_only": false
+        }
+      ]
+    }
+  }
+}
