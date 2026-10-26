@@ -1,0 +1,98 @@
+{
+  "schema": "emmy-local-gate-v1",
+  "created": "2026-10-26T22:37:56Z",
+  "device": "NVIDIA GeForce RTX 4060 Laptop GPU, 8.9",
+  "source": "/home/ada/Projects/emmy-p4-address-strength",
+  "compiler_sha256": "a057a3bdc7e0f55c7959960d9ceeb4b370c0f4b3a126fbec46b2b5674f4357c1",
+  "case_list_sha256": "74e689b434606d0bc0aefa7d1ac2b8404e9e952a904151879a7fa24e1746d842",
+  "part": 0,
+  "parts": 1,
+  "cases": [
+    {
+      "index": 0,
+      "id": "2feed43c8085a9ce0a90ae785afb150dd9914eb8a2cb54b4ba2934ab53c467d3",
+      "case_dir": "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/cases-v3/perf-a/p02_scale_shift_8m",
+      "requires_sanitizer": false,
+      "requires_isolated_first": false,
+      "ok": true,
+      "exit_code": 0,
+      "launch_count": 3
+    },
+    {
+      "index": 1,
+      "id": "18c1f7e9e097fa918cefe8a858269be460ba684ef3eab1d6f996cbf4c861fdd6",
+      "case_dir": "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/cases-v3/perf-a/p03_relu_mul_4m",
+      "requires_sanitizer": false,
+      "requires_isolated_first": false,
+      "ok": true,
+      "exit_code": 0,
+      "launch_count": 3
+    },
+    {
+      "index": 2,
+      "id": "03e78f3970ce4d768df324efc9e2555e289139e6649cedd8ee71b6d319294f44",
+      "case_dir": "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/cases-v3/perf-a/f01_rmsnorm_3072x2048",
+      "requires_sanitizer": false,
+      "requires_isolated_first": false,
+      "ok": true,
+      "exit_code": 0,
+      "launch_count": 3
+    },
+    {
+      "index": 3,
+      "id": "018096ad87b2845905f50d0f83440f7bfc4fee7faa836b2e20dc5c7b8b4d0826",
+      "case_dir": "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/cases-v3/perf-a/f02_row_softmax_3072x2048",
+      "requires_sanitizer": false,
+      "requires_isolated_first": false,
+      "ok": true,
+      "exit_code": 0,
+      "launch_count": 3
+    },
+    {
+      "index": 4,
+      "id": "815a144f7fad94875544b70db18f5e891c6b070f83f333173c300a1a897d2b46",
+      "case_dir": "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/cases-v3/perf-a/f03_l2norm_3072x2048",
+      "requires_sanitizer": false,
+      "requires_isolated_first": false,
+      "ok": true,
+      "exit_code": 0,
+      "launch_count": 3
+    },
+    {
+      "index": 5,
+      "id": "7c2c332fde05ec1b6caa7862c5b30b8a1993f50284871a886caad24bff53f566",
+      "case_dir": "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/cases-v3/perf-a/r04_row_sum_3072x4096",
+      "requires_sanitizer": false,
+      "requires_isolated_first": false,
+      "ok": true,
+      "exit_code": 0,
+      "launch_count": 3
+    },
+    {
+      "index": 6,
+      "id": "717c872b720bde169117f3ce350b72205c4da34b032ef459a1b27022344f036b",
+      "case_dir": "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/cases-v3/perf-a/m01_matmul_1024x1024x512",
+      "requires_sanitizer": false,
+      "requires_isolated_first": false,
+      "ok": true,
+      "exit_code": 0,
+      "launch_count": 3
+    },
+    {
+      "index": 7,
+      "id": "3906185c81c902e5056a52a979844e8f885350cfad17cb54c9a22207d3a5d2e6",
+      "case_dir": "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/cases-v3/perf-a/a01_attention_256x64",
+      "requires_sanitizer": false,
+      "requires_isolated_first": false,
+      "ok": true,
+      "exit_code": 0,
+      "launch_count": 3
+    }
+  ],
+  "sanitizers": [],
+  "limitation": "Owner-authorized local run without compiler UID/seccomp isolation. Not an evaluator-issued receipt.",
+  "seconds": 22.609945585994865,
+  "all_passed": true,
+  "sanitizers_passed": true,
+  "compiler_unchanged": true
+}
