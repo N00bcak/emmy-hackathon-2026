@@ -1509,6 +1509,8 @@ def smem_alignment(statement):
     return max(natural, int(getattr(statement, 'align', 0) or 0))
 
 
+SIBLING_WORK_BATCH_MAX_VALUES = 64
+
 class Emitter:
     def __init__(self, graph, node, meta):
         self.graph, self.node, self.meta = graph, node, meta
@@ -5789,6 +5791,10 @@ class Emitter:
         b, operands = shape
         lead = members[0]
         blocks = lead.extent // tn
+        batch = self.sibling_work_batch(lead, members, tn, launched, blocks)
+        if batch > 1:
+            self.matmul_work_loop_batch(shape, members, outer, launched, tn, batch)
+            return
         work = lead.configs * blocks
         w = self.reg('r')
         self.emit(f'mov.u32 {w}, {self.hardware_tid};')
@@ -5856,6 +5862,128 @@ class Emitter:
                 self.emit(f'add.u64 {sa}, {base}, {sa};')
                 self.emit(f'st.shared.f32 [{sa}], {acc};')
         self.emit(f'add.u32 {w}, {w}, {launched};')
+        self.emit(f'bra {begin};')
+        self.mark(done)
+
+    def sibling_work_batch(self, lead, members, tn, launched, blocks):
+        """Admit config-only sibling items that share one serial B operand.
+
+        ``matmul_work_loop`` advances a thread by ``launched`` work items.
+        When that stride is a multiple of the column-block count, the serial
+        coordinate is fixed and only the CTA-configuration coordinate moves.
+        ``matmul_members`` has already proved the B expression independent of
+        that configuration, so distinct items in the batch are independent
+        accumulators reading one identical B value.  Their source folds retain
+        their original per-element order.
+        """
+        if self.inactive or getattr(self, 'sibling_fusion_disabled', False):
+            return 1
+        if tn <= 0 or blocks <= 0 or launched % blocks:
+            return 1
+        stride = launched // blocks
+        if stride <= 0 or lead.configs % stride:
+            return 1
+        items = lead.configs // stride
+        # A partial batch leaves the same outer work loop around a narrower
+        # body: it duplicates loop control and extends the live set without
+        # removing the residual trip.  Admit batching only when one batch is
+        # the thread's complete configuration run and that full live set fits
+        # the explicit value budget.
+        live = items * len(members) * tn + tn + 2 * len(members)
+        if items > 1 and live <= SIBLING_WORK_BATCH_MAX_VALUES:
+            return items
+        return 1
+
+    def matmul_work_loop_batch(self, shape, members, outer, launched, tn, batch):
+        """Hoisted sibling dots sharing one serial B read per K step."""
+        b, operands = shape
+        lead = members[0]
+        blocks = lead.extent // tn
+        work = lead.configs * blocks
+        stride = launched // blocks
+        w = self.reg('r')
+        self.emit(f'mov.u32 {w}, {self.hardware_tid};')
+        begin, done = self.label('mm_batch'), self.label('mm_batch_items_done')
+        self.mark(begin)
+        p = self.reg('p')
+        self.emit(f'setp.ge.u32 {p}, {w}, {work};')
+        self.emit(f'@{p} bra {done};')
+        block, config, serial = self.reg('r'), self.reg('r'), self.reg('r')
+        self.emit(f'rem.u32 {block}, {w}, {blocks};')
+        self.emit(f'div.u32 {config}, {w}, {blocks};')
+        self.emit(f'mul.lo.u32 {serial}, {block}, {tn};')
+        configs = []
+        bindings = []
+        for j in range(batch):
+            if j:
+                item_config = self.reg('r')
+                self.emit(f'add.u32 {item_config}, {config}, {j * stride};')
+            else:
+                item_config = config
+            configs.append(item_config)
+            bindings.append({outer.axis.name: serial,
+                             **self.decode_config(item_config, lead.used)})
+        self.bind_coords(bindings[0])
+        accs = []
+        for _ in range(batch):
+            member_rows = []
+            for _ in members:
+                row = []
+                for _ in range(tn):
+                    acc = self.reg('f')
+                    self.emit(f'mov.f32 {acc}, {literal(0.0, "f32")};')
+                    row.append(acc)
+                member_rows.append(row)
+            accs.append(member_rows)
+        k = self.reg('r')
+        self.emit(f'mov.s32 {k}, 0;')
+        self.bind_coords({plan.statement.axis.name: k for plan in members})
+        self.loop_invariants.append({})
+        self.loop_expressions.append({})
+        k_begin, k_done = self.label('mm_batch_k'), self.label('mm_batch_k_done')
+        self.mark(k_begin)
+        q = self.reg('p')
+        self.emit(f'setp.ge.s32 {q}, {k}, {static(members[0].statement.axis.extent)};')
+        self.emit(f'@{q} bra {k_done};')
+        addr, space = self.address(b.input, b.index)
+        bs = [self.reg('f') for _ in range(tn)]
+        if tn == 4:
+            self.emit(f'ld.{space}.v4.f32 {{{', '.join(bs)}}}, [{addr}];')
+        else:
+            self.emit(f'ld.{space}.f32 {bs[0]}, [{addr}];')
+        for j, binding in enumerate(bindings):
+            self.bind_coords({**binding,
+                              **{plan.statement.axis.name: k for plan in members}})
+            for (a, a_first), row in zip(operands, accs[j]):
+                a_addr, a_space = self.address(a.input, a.index)
+                av = self.reg('f')
+                self.emit(f'ld.{a_space}.f32 {av}, [{a_addr}];')
+                for bv, acc in zip(bs, row):
+                    product = self.reg('f')
+                    x, y = (av, bv) if a_first else (bv, av)
+                    self.emit(f'mul.f32 {product}, {x}, {y};')
+                    self.emit(f'add.f32 {acc}, {acc}, {product};')
+        self.emit(f'add.s32 {k}, {k}, 1;')
+        self.bind_coords({plan.statement.axis.name: k for plan in members})
+        self.emit(f'bra {k_begin};')
+        self.mark(k_done)
+        self.loop_invariants.pop()
+        self.loop_expressions.pop()
+        for item_config, member_rows in zip(configs, accs):
+            for plan, row in zip(members, member_rows):
+                for j, acc in enumerate(row):
+                    acc = self.prescale_hoisted_score(plan, acc)
+                    word = self.reg('r')
+                    self.emit(f'mad.lo.u32 {word}, {item_config}, {plan.row_words}, {serial};')
+                    if j:
+                        self.emit(f'add.u32 {word}, {word}, {j};')
+                    sa = self.reg('rd')
+                    self.emit(f'mul.wide.u32 {sa}, {word}, 4;')
+                    base = self.reg('rd')
+                    self.emit(f'mov.u64 {base}, {plan.symbol};')
+                    self.emit(f'add.u64 {sa}, {base}, {sa};')
+                    self.emit(f'st.shared.f32 [{sa}], {acc};')
+        self.emit(f'add.u32 {w}, {w}, {batch * launched};')
         self.emit(f'bra {begin};')
         self.mark(done)
 
