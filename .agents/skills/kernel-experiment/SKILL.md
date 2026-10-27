@@ -34,6 +34,10 @@ compiler under its restricted identity and caches cases/references and assembly.
 Inspect both-target SASS activation and resources before GPU timing. A mechanism
 that did not activate needs explanation/revision; more registers alone is not a
 reason to reject it. Preserve diagnostics, failed artifacts and exact reproducers.
+If `ptxas` removes, rebuilds or cancels an optimization that was visible in PTX,
+re-implement the lowering so the intended final-SASS effect survives on every
+timing target, or fail closed and record the mechanism as inactive. PTX-only
+effects are not activation and must not proceed to timing as if they fired.
 
 All GPU work goes through host admission. Let the shared scheduler own dispatch.
 Concurrent correctness screens guarded private buffers; corruption quarantines

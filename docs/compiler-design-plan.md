@@ -1,8 +1,12 @@
 # Compiler-design optimization plan: access structure and reuse
 
-Status: P0 complete; P1 accepted on fresh paired wall-clock timing; P2-P5
-proposed. Static counts are diagnostic. The wall-clock versus SASS issue-count
-documentation and judging change is CLOSED.
+Status: P0 complete; P1 accepted on fresh paired wall-clock timing; P2 accepted
+on scaled f02 with a confirmed hosted win; P3 accepted and integrated locally
+on a confirmed scaled-attention win with no resolved regression; P4 SASS-active
+on the pointwise primaries but timing-unresolved and unmerged; P5 deferred with
+no compiler change after a complete post-P2/P3 final-SASS inventory of all 14
+scaled plan shapes, including both f02 tiers. Static counts are diagnostic. The
+wall-clock versus SASS issue-count documentation and judging change is CLOSED.
 
 Date: 2026-10-27
 
@@ -758,6 +762,14 @@ LDG/LDS/STG counts, spill counts and occupancy are retained as mechanism
 evidence and falsification aids. They may guide which candidates are worth
 timing, but they are neither acceptance criteria nor a veto over a reproducible
 measured improvement. Wall-clock latency is the ultimate arbiter.
+
+Mechanism activation, separately from the performance verdict, is judged on the
+measured shape in final post-`ptxas` SASS. A change that exists only in PTX is
+not activation: if `ptxas` removes, rebuilds or cancels it, re-implement the
+lowering so the intended final-SASS effect survives, or fail closed and record
+that the mechanism is inactive. Static SASS counts still cannot award or reject
+a performance result; this rule only prevents an inactive mechanism from being
+measured or described as if it had fired.
 
 Report exactly one performance verdict per compared case: faster, slower or
 unresolved. Only a complete paired result outside the case-specific A/A deadband

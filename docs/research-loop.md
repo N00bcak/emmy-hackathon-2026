@@ -64,6 +64,15 @@ evidence cannot substitute for it. A launch-bound published case can anchor
 correctness and regressions without establishing a speed effect; use a larger
 typed-IR witness with an independent reference for that claim.
 
+Mechanism activation is separate from the speed verdict and is judged only on
+final post-`ptxas` SASS. Tell every worker to re-implement an optimization whose
+intended instruction, load, address or live-register change does not survive
+`ptxas` on every timing target. If a surviving form cannot be implemented
+legally, fail closed and record the mechanism as inactive rather than timing a
+PTX-only effect. Activation evidence includes both-target SASS hashes, resource
+counts and the exact surviving delta; static counts still cannot award or veto
+a timing result.
+
 Correctness-debug work remains allowed so a broken baseline can be repaired.
 Without valid candidate and baseline gates, confirmation runs correctness only
 and emits no timing claims. Passing all 15 isolated checks, including the atomic
