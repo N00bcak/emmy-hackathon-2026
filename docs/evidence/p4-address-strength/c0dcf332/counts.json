@@ -1,0 +1,8 @@
+{
+  "schema": "emmy-p4-on-p3-final-sass-v1",
+  "candidate_compile_sha256": "c0dcf3321d209ef5de1205a8e592890810a155c6b9aa687abb38b434b88d62e7",
+  "fallback_compile_sha256": "488e135d211ea4661f60d344c888076caa5150aa4d41e7fc0ea99e68b12f6654",
+  "ptxas_invocation": "ptxas -arch=<target> -v <kernel.ptx> -o <module.cubin>",
+  "disassembly": "cuobjdump -sass <module.cubin>",
+  "result": "one SHF.L.U32 removed; IMAD.WIDE byte scale 0x4 -> 0x10; no spill growth"
+}

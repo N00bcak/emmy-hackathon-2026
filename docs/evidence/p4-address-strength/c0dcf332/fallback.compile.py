@@ -701,6 +701,37 @@ STRIDED_VECTOR_BATCH = (32, 8, 1)
 ROW_CACHE_VALUES = 32
 
 
+def scalar_cache_fits(reduction_body, map_body, loads, trips):
+    """Conservative f32 register budget for scalar cross-phase row reuse.
+
+    The retained row values stay live through the map; the reduction's start
+    binding and the current induction coordinate are the only address values
+    kept live because the phase is emitted trip by trip. Count those, every
+    reduction accumulator, and every value the map may materialize. This is
+    intentionally a value-count bound rather than an occupancy model;
+    declining an uncertain cache is always safe.
+    """
+    if trips <= 0:
+        return False
+
+    def is_f32(statement):
+        dtype = getattr(statement, 'dtype', None)
+        return dtype is None or dtype_name(dtype) == 'f32'
+
+    accumulators = {statement.name for statement in reduction_body
+                    if type(statement).__name__ == 'Accum' and is_f32(statement)}
+    map_values = set()
+    for statement in map_body:
+        kind = type(statement).__name__
+        if kind == 'Load' and len(statement.names) == 1 and is_f32(statement):
+            map_values.add(statement.names[0])
+        elif kind in ('Assign', 'Let') and is_f32(statement):
+            map_values.add(statement.name)
+    retained = trips * len(loads)
+    address_values = 2
+    return retained + address_values + len(accumulators) + len(map_values) <= ROW_CACHE_VALUES
+
+
 def straight_line(statements):
     """Loads, pure bindings and folds only: no memory writes, collectives or
     control flow, so consecutive iterations may be emitted back to back."""
@@ -727,10 +758,20 @@ HOIST_REDUCTION_BATCH = 4
 STAGE_STRAIGHT_LINE = 64
 # Most staged-load values per thread requested while a hoisted matmul runs.
 HOIST_OVERLAP_VALUES = 32
+# Hoisted matmul work items that differ only in a CTA configuration axis share
+# the same serial-axis B operand.  Batch a conservative number of those
+# independent dots so one B load feeds all of them; the bound counts their
+# accumulators, the B vector, and their per-item addresses.
+SIBLING_WORK_BATCH_MAX_VALUES = 40
 # Longest serial loop over hoisted rows, and longest staged matmul k extent,
 # emitted fully unrolled: with one warp per scheduler a rolled trip exposes
 # its shared-load latency, while straight-line code lets loads run ahead.
 HOISTED_UNROLL_MAX = 64
+# Sibling-dot fusion is admitted only when its live state fits this explicit
+# value budget.  This counts accumulators, the coordinate, and one vector
+# group per fused dot; four sibling dots fit while a wider accidental group
+# falls back to the existing per-dot route.
+SIBLING_FUSION_MAX_VALUES = 32
 
 # Integer div/rem by an immediate divisor. ptxas for sm_120 keeps the generic
 # reciprocal-iteration sequence (I2F, MUFU.RCP, F2I, fixups) even for powers
@@ -909,6 +950,179 @@ class AccessGroup:
         self.constant = constant
         self.cached = cached
         self.names = names
+
+
+class ReuseValue:
+    """Typed facts about one pure value in a straight-line reuse scope.
+
+    ``key`` identifies the computation graph structurally, so two independent
+    normalizers with different query offsets are distinct while a duplicated
+    graph has one key. ``uniform`` means every free name is either CTA-uniform
+    or the one serial axis the caller permits. ``loads`` is the transitive set
+    of readonly global loads the value would recompute.
+    """
+    __slots__ = ('name', 'statement', 'dtype', 'free', 'loads', 'key',
+                 'uniform', 'supported')
+
+    def __init__(self, name, statement, dtype, free, loads, key, uniform, supported):
+        self.name, self.statement, self.dtype = name, statement, dtype
+        self.free, self.loads, self.key = frozenset(free), tuple(loads), key
+        self.uniform, self.supported = uniform, supported
+
+
+def reuse_expr_key(expr, values):
+    """Structural identity of a pure expression after resolving local defs."""
+    kind = type(expr).__name__
+    if kind == 'Literal':
+        return ('literal', repr(expr.value), str(getattr(expr, 'dtype', None)))
+    if kind == 'Var':
+        value = values.get(expr.name)
+        return value.key if value is not None else ('external', expr.name)
+    if kind == 'BinaryExpr':
+        return ('binary', expr.op, reuse_expr_key(expr.left, values),
+                reuse_expr_key(expr.right, values))
+    if kind == 'TernaryExpr':
+        return ('ternary', reuse_expr_key(expr.cond, values),
+                reuse_expr_key(expr.if_true, values),
+                reuse_expr_key(expr.if_false, values))
+    return ('opaque', id(expr))
+
+
+class ReuseAnalysis:
+    """Answers the shared P2 reuse questions for a straight-line typed body.
+
+    The caller supplies the names known uniform before the scope, the buffers
+    the kernel never writes, and at most one serial axis whose coordinate may
+    participate in the value. A value is reusable only if its transitive load
+    set is readonly; materialization policy remains in the client, which can
+    compare register/shared bytes with the number of threads that would
+    otherwise recompute it.
+    """
+    def __init__(self, statements, *, uniform, readonly, serial_axes=(), opaque=(),
+                 initial_uniform=()):
+        self.values, self.unknown = {}, set()
+        self.serial_axes = frozenset(serial_axes)
+        self.opaque = frozenset(opaque)
+        self.readonly = frozenset(readonly)
+        initial_uniform = frozenset(initial_uniform)
+
+        for name in initial_uniform:
+            self.values[name] = ReuseValue(name, None, 'f32', (), (),
+                                           ('uniform-initial', name), True, True)
+
+        def free_of(statement):
+            kind = type(statement).__name__
+            if kind == 'Load':
+                names = set()
+                for coordinate in statement.index:
+                    part = expr_names(coordinate)
+                    if part is None:
+                        return None
+                    names |= part
+                return names
+            if kind in ('Let', 'Assign'):
+                return set(statement.deps())
+            return None
+
+        for statement in statements:
+            kind = type(statement).__name__
+            if kind == 'Load':
+                defined = list(statement.names)
+            elif kind in ('Let', 'Assign'):
+                defined = [statement.name]
+            elif kind == 'Accum' and statement.name in initial_uniform:
+                self.values[statement.name] = ReuseValue(
+                    statement.name, statement, 'f32', (), (),
+                    ('uniform-total', statement.name), True, True)
+                self.unknown.discard(statement.name)
+                continue
+            elif kind in ('Accum', 'Init'):
+                # Folds are scoped carriers, not values offered for reuse.
+                # Their operands are analyzed through the statements that
+                # define them; a carried name never becomes a cache key here.
+                self.unknown.update(defined_names([statement]))
+                continue
+            else:
+                self.unknown.update(defined_names([statement]))
+                continue
+            free = free_of(statement)
+            if free is None or id(statement) in self.opaque:
+                self.unknown.update(defined)
+                continue
+            supported = all(name in self.values or uniform(name) or name in self.serial_axes
+                            for name in free)
+            loads = []
+            if kind == 'Load':
+                loads.append((statement.input, tuple(statement.index)))
+                key = ('load', statement.input, str(statement.dtype),
+                       tuple(reuse_expr_key(c, self.values) for c in statement.index))
+                dtype = str(statement.dtype) if statement.dtype is not None else None
+            elif kind == 'Let':
+                key = ('let', str(statement.dtype), reuse_expr_key(statement.value, self.values))
+                dtype = str(statement.dtype)
+            else:
+                key = ('assign', statement.op.name, str(statement.dtype),
+                       tuple(reuse_expr_key(a, self.values) if isinstance(a, str)
+                             else ('literal-arg', repr(a)) for a in statement.args))
+                dtype = str(statement.dtype)
+            for name in free:
+                value = self.values.get(name)
+                if value is not None:
+                    loads.extend(value.loads)
+            loads = tuple(dict.fromkeys(loads))
+            readonly_ok = all(buffer in readonly for buffer, _ in loads)
+            value_uniform = (supported and readonly_ok and
+                             all(name in self.values and self.values[name].uniform
+                                 or uniform(name) or name in self.serial_axes
+                                 for name in free))
+            for name in defined:
+                self.values[name] = ReuseValue(name, statement, dtype, free, loads,
+                                               key, value_uniform,
+                                               supported and readonly_ok)
+                self.unknown.discard(name)
+
+    def value(self, name):
+        return self.values.get(name)
+
+    def hoistable(self, serial_axis, allowed_names):
+        """Whether a reduction runs from literals, Tile names and one serial axis."""
+        allowed = set(allowed_names) | {serial_axis}
+        return (self.unknown.isdisjoint(allowed)
+                and all(value.supported and value.uniform and value.free <= allowed
+                        for value in self.values.values()))
+
+    def loads_are_hoistable(self, loads, serial_axis, allowed_names):
+        """Prove a reduction's transitive loads for one-CTA materialization."""
+        allowed = set(allowed_names) | {serial_axis}
+        for load in loads:
+            for name in load.names:
+                value = self.values.get(name)
+                if (value is None or not value.supported
+                        or not value.free <= allowed
+                        or any(buffer not in self.readonly for buffer, _ in value.loads)):
+                    return False
+        return True
+
+    def equivalent(self, left, right):
+        a, b = self.value(left), self.value(right)
+        return a is not None and b is not None and a.supported and b.supported and a.key == b.key
+
+    def transitive_loads(self, names):
+        found = []
+        for name in names:
+            value = self.values.get(name)
+            if value is not None:
+                found.extend(value.loads)
+        return tuple(dict.fromkeys(found))
+
+    def uniform_expr(self, expr):
+        """Free names are literals, uniform names, or this scope's serial axes."""
+        names = expr_names(expr)
+        if names is None:
+            return False
+        return all(name in self.values and self.values[name].uniform
+                   or name in self.serial_axes
+                   for name in names)
 
 
 def strided_access_groups(loop, source, source_loads, buffers, global_buffers,
@@ -1232,6 +1446,7 @@ def flat_affine(shape, index):
 
 
 def affine_byte_scale(shape, dtype, index):
+    return None
     """One-term affine address that can scale its coordinate directly.
 
     The generic path flattens to an element offset and then multiplies by the
@@ -1653,6 +1868,9 @@ class Emitter:
         # over the same row may reuse, the trees that leave a CTA total in
         # every thread, and maps already sent down their fallback.
         self.row_caches, self.cta_total_trees, self.no_row_cache = {}, set(), set()
+        # Scalar phase caches for rows whose four-wide form does not apply and
+        # the second-pass map plans that consume them.
+        self.scalar_row_caches, self.scalar_row_maps = {}, {}
         # Serial-loop loads issued before the hoisted precompute: per outer
         # loop, body position -> one register per iteration.
         self.prefetch_plans, self.register_prefetch = {}, {}
@@ -3708,6 +3926,234 @@ class Emitter:
         self.rebind(loop.axis.name)
         return True
 
+    def sibling_dot_shape(self, loop):
+        """Structural description of one vectorizable KEY-style dot loop."""
+        if type(loop).__name__ != 'Loop' or self.inactive or not loop.seed:
+            return None
+        plan = self.global_dot_vector_plan(loop)
+        if len(plan) != 1:
+            return None
+        body = list(loop.body)
+        if [type(s).__name__ for s in body] != ['Load', 'Load', 'Assign', 'Accum']:
+            return None
+        loads = [s for s in body if type(s).__name__ == 'Load']
+        product = next(s for s in body if type(s).__name__ == 'Assign')
+        update = next(s for s in body if type(s).__name__ == 'Accum')
+        vector_position = next(iter(plan))
+        vector_load = body[vector_position]
+        other_position = 1 - vector_position
+        other_load = body[other_position]
+        if ((vector_load is not loads[0] and vector_load is not loads[1])
+                or other_load is vector_load):
+            return None
+        if (reduce_canon(update.op.name) != 'add' or update.base is not None
+                or tuple(update.axes) != (loop.axis.name,)
+                or update.value != product.name
+                or sorted(product.args) != sorted((vector_load.names[0], other_load.names[0]))
+                or any(s.dtype is not None and dtype_name(s.dtype) != 'f32'
+                       for s in (product, update))):
+            return None
+        if any(len(load.names) != 1 or load.input not in self.buffers
+               or load.input in self.shared or load.input in self.scalar_parameters
+               or (load.dtype is not None and dtype_name(load.dtype) != 'f32')
+               for load in (vector_load, other_load)):
+            return None
+        local = {name for load in loads for name in load.names} | {
+            product.name, update.name, loop.axis.name}
+        if len(local) != 5:
+            return None
+        defined = defined_names(body)
+        if loop.axis.name in defined:
+            return None
+        for coordinate in other_load.index:
+            names = expr_names(coordinate)
+            if names is None or (names - {loop.axis.name}) & defined:
+                return None
+        written = written_buffers(self.node.op.body)
+        if vector_load.input in written or other_load.input in written:
+            return None
+        vector_key = structural_key(vector_load.index[-1]) if vector_load.index else None
+        other_key = tuple(structural_key(c) for c in other_load.index)
+        if other_key is None or None in other_key or vector_key is None:
+            return None
+        return {
+            'loop': loop,
+            'axis': loop.axis.name,
+            'extent': static(loop.axis.extent),
+            'body': body,
+            'vector_position': vector_position,
+            'other_position': other_position,
+            'vector_load': vector_load,
+            'other_load': other_load,
+            'product': product,
+            'update': update,
+            'vector_key': (vector_load.input, tuple(structural_key(c)
+                                                    for c in vector_load.index)),
+            'other_key': (other_load.input, other_key),
+            'active_names': frozenset(local),
+        }
+
+    def sibling_dot_groups(self, statements):
+        """Admit same-position sibling dots that may share scalar B loads."""
+        if self.inactive or getattr(self, 'sibling_fusion_disabled', False):
+            return {}, set()
+        groups, members = {}, set()
+        position = 0
+        statements = list(statements)
+        while position < len(statements):
+            statement = statements[position]
+            if (type(statement).__name__ != 'Loop' or id(statement) in self.skip_ids
+                    or id(statement) in self.hoisted or id(statement) in self.hoist_plans):
+                position += 1
+                continue
+            run = []
+            placeholders = []
+            while position < len(statements):
+                statement = statements[position]
+                if (type(statement).__name__ != 'Loop' or id(statement) in self.skip_ids
+                        or id(statement) in self.hoisted or id(statement) in self.hoist_plans):
+                    if type(statement).__name__ == 'Loop' and id(statement) in self.hoisted:
+                        placeholders.append(statement)
+                        position += 1
+                        continue
+                    break
+                run.append(statement)
+                position += 1
+            if placeholders and len(run) >= 2:
+                # A hoisted sibling is read from shared rows where it stands;
+                # keep that statement in place and fuse only the residual
+                # loops.  Do not absorb a placeholder unless it is followed
+                # by another admitted member of the same dot run.
+                if position >= len(statements) or type(statements[position]).__name__ != 'Loop':
+                    placeholders = []
+            if len(run) < 2:
+                placeholders = []
+                continue
+            shapes = [self.sibling_dot_shape(loop) for loop in run]
+            if any(shape is None for shape in shapes):
+                continue
+            extent = shapes[0]['extent']
+            if (extent % 4 or any(shape['extent'] != extent for shape in shapes)
+                    or len({shape['other_key'] for shape in shapes}) != 1
+                    or len({shape['vector_key'] for shape in shapes}) != len(shapes)
+                    or len({shape['update'].name for shape in shapes}) != len(shapes)):
+                continue
+            live = 5 * len(shapes) + 8
+            if live > SIBLING_FUSION_MAX_VALUES:
+                continue
+            group = tuple(shapes)
+            groups[id(run[0])] = group
+            members.update(id(loop) for loop in (*run, *placeholders))
+        return groups, members
+
+    def emit_sibling_dot_group(self, group):
+        """One inner-axis trip updates each sibling's independent accumulator.
+
+        The shared B load is evaluated once per inner coordinate. Every dot's
+        own product/fold statements run in their original order, once per
+        coordinate, so no accumulator is reassociated or reordered.
+        """
+        extent = group[0]['extent']
+        axes = tuple(dict.fromkeys(shape['axis'] for shape in group))
+        saved_context = (dict(self.values), dict(self.mutable), dict(self.int_ranges),
+                         dict(self.accum_ops))
+
+        def restore_context(context=saved_context):
+            self.values = dict(context[0])
+            self.mutable = dict(context[1])
+            self.int_ranges = dict(context[2])
+            self.accum_ops = dict(context[3])
+            self.address_cache.clear()
+            self.expr_cache.clear()
+
+        for shape in group:
+            self.init_accums(shape['body'])
+        carriers = tuple(self.values[shape['update'].name] for shape in group)
+        seeded = (dict(self.values), dict(self.mutable), dict(self.int_ranges),
+                  dict(self.accum_ops))
+        predicates = [self.global_dot_alignment(shape['vector_load'].input)
+                      for shape in group]
+        aligned = predicates[0]
+        for predicate in predicates[1:]:
+            both = self.reg('p')
+            self.emit(f'and.pred {both}, {aligned}, {predicate};')
+            aligned = both
+        scalar, joined = self.label('sibling_scalar'), self.label('sibling_complete')
+        self.emit(f'@!{aligned} bra {scalar};')
+        r = self.reg('r')
+        self.emit(f'mov.s32 {r}, 0;')
+        self.set_integer_range(r, checked_i32_interval(0, extent - 4))
+        for axis in axes:
+            self.values[axis] = (r, 'i32')
+            self.rebind(axis)
+        self.hoist_invariants([s for shape in group for s in shape['body']],
+                              defined_names([s for shape in group for s in shape['body']])
+                              | set(axes))
+        begin, done = self.label('sibling_dots'), self.label('sibling_dots_done')
+        self.mark(begin)
+        stop = self.reg('p')
+        self.emit(f'setp.ge.s32 {stop}, {r}, {extent};')
+        self.emit(f'@{stop} bra {done};')
+        vectors = []
+        for shape in group:
+            prefetched = self.global_dot_prefetch({shape['vector_position']:
+                                                   shape['vector_load']})
+            vectors.append(prefetched[shape['vector_position']])
+        for offset in range(4):
+            index = r
+            if offset:
+                index = self.reg('r')
+                self.emit(f'add.s32 {index}, {r}, {offset};')
+                self.set_integer_range(index, checked_i32_interval(offset, extent - 4 + offset))
+            for axis in axes:
+                self.values[axis] = (index, 'i32')
+                self.rebind(axis)
+            shared = group[0]['other_load']
+            address, space = self.address(shared.input, shared.index)
+            assert space == 'global'
+            other = self.reg('f')
+            self.emit(f'ld.global.f32 {other}, [{address}];')
+            for shape, vector in zip(group, vectors, strict=True):
+                self.values[shape['axis']] = (index, 'i32')
+                self.rebind(shape['axis'])
+                self.statements(shape['body'], {shape['vector_position']: vector[offset],
+                                                shape['other_position']: other})
+        self.emit(f'add.s32 {r}, {r}, 4;')
+        for axis in axes:
+            self.rebind(axis)
+        self.emit(f'bra {begin};')
+        self.mark(done)
+        self.emit(f'bra {joined};')
+
+        restore_context(seeded)
+        self.mark(scalar)
+        for shape in group:
+            axis_register = self.reg('r')
+            self.emit(f'mov.s32 {axis_register}, 0;')
+            self.set_integer_range(axis_register, checked_i32_interval(0, extent - 1))
+            self.values[shape['axis']] = (axis_register, 'i32')
+            self.rebind(shape['axis'])
+            begin, done = self.label('sibling_scalar_loop'), self.label('sibling_scalar_done')
+            self.mark(begin)
+            stop = self.reg('p')
+            self.emit(f'setp.ge.s32 {stop}, {axis_register}, {extent};')
+            self.emit(f'@{stop} bra {done};')
+            self.statements(shape['body'])
+            self.emit(f'add.s32 {axis_register}, {axis_register}, 1;')
+            self.rebind(shape['axis'])
+            self.emit(f'bra {begin};')
+            self.mark(done)
+
+        restore_context()
+        for shape, carrier in zip(group, carriers, strict=True):
+            name = shape['update'].name
+            self.values[name] = carrier
+            self.mutable[name] = carrier[0]
+            self.accum_ops[name] = 'add'
+            self.rebind(name)
+            self.rebind(shape['axis'])
+        self.mark(joined)
+
 
     def shared_vector_plan(self, loop):
         """Prove four existing scalar shared reads form one aligned vector.
@@ -4102,6 +4548,35 @@ class Emitter:
         return (tree.length == launched // 32 and tree.tid_var == 'warp' and simple_combine(tree)
                 and set(zip(tree.bufs, tree.state)) == written)
 
+    def cta_tree_total(self, tree, launched):
+        """Prove a TreeHalve leaves one CTA-wide value in every state carrier.
+
+        This is deliberately weaker than :meth:`merged_reduction_tail`: the
+        combine need not be a simple monoid, because the fact used by phase
+        reuse is only that every thread reads the same root slot after the
+        complete tree. Inner-segment trees and named barriers are excluded
+        until their root visibility is proved separately.
+        """
+        if (type(tree).__name__ != 'TreeHalve' or tree.inner is not None
+                or tree.tid_var != 'warp' or tree.barrier_id != 0
+                or tree.barrier_count is not None or launched % 32
+                or tree.length != launched // 32 or tree.length <= 0
+                or tree.length & (tree.length - 1)
+                or len(tree.bufs) != len(tree.state)
+                or len(tree.state) != len(tree.state_b)
+                or not tree.combine_states
+                or len(set(tree.state)) != len(tree.state)
+                or len(set(tree.bufs)) != len(tree.bufs)):
+            return False
+        for buf, state in zip(tree.bufs, tree.state, strict=True):
+            if buf not in self.shared or buf not in self.buffers:
+                return False
+            shape, dtype = self.buffers[buf]
+            if (len(shape) != 1 or shape[0] < tree.length
+                    or dtype_name(dtype) != 'f32'):
+                return False
+        return True
+
     def merged_vector_reduction(self, loop, following):
         """A thread-strided reduction whose partials are merged CTA-wide,
         folded four contiguous elements per 128-bit load.
@@ -4321,6 +4796,310 @@ class Emitter:
         return (statement.start.name == loop.start.name
                 and static_or_none(statement.step) == static_or_none(loop.step) is not None
                 and bound(statement) == bound(loop) is not None)
+
+    def scalar_phase_loop(self, loop, following):
+        """Retain a reduction's per-thread scalar row values for its map phase.
+
+        This is the P2 cross-phase client when the four-wide cache does not
+        apply (f02's row width is not a multiple of four). A ReuseAnalysis
+        proves every retained load reads an unwritten global buffer and every
+        index is a literal, a stable name, or this thread's induction
+        coordinate. The original per-thread trip order is preserved exactly;
+        the cache substitutes only loads with identical affine addresses and
+        never regroups a fold or changes a floating-point operand order. The
+        register budget includes retained loads, reduction accumulators, map
+        values and the unrolled coordinate registers.
+        """
+        ctx = self.hoist_ctx
+        if ctx is None or self.inactive or id(loop) in self.scalar_row_caches:
+            return False
+        stride = static_or_none(loop.step)
+        bound = static_or_none(loop.end if loop.end is not None else loop.axis.extent)
+        if (type(loop.start).__name__ != 'Var' or stride is None or bound is None
+                or stride <= 0 or bound % stride or not straight_line(loop.body)
+                or loop.axis.name in defined_names(loop.body)
+                or loop.start.name not in ctx['cta_axes']
+                or self.tile_extents.get(loop.start.name) != stride
+                or stride != ctx['launched']):
+            return False
+        outputs = {arg['name'] for arg in self.meta['args'] if arg.get('output')}
+        tile = ctx['tile']
+        written = written_buffers(tile.body) | outputs
+        analysis = ReuseAnalysis(
+            loop.body, uniform=lambda name: self.cta_uniform(name, loop),
+            readonly=set(self.ptrs) - written, serial_axes={loop.axis.name})
+        loads = []
+        for statement in loop.body:
+            kind = type(statement).__name__
+            if kind == 'Accum':
+                continue
+            if kind != 'Load' or len(statement.names) != 1:
+                continue
+            value = analysis.value(statement.names[0])
+            if value is None or not value.supported or loop.axis.name not in value.free:
+                continue
+            loads.append(statement)
+        if not loads:
+            return False
+        if not analysis.loads_are_hoistable(loads, loop.axis.name, set(self.tile_extents)):
+            return False
+        later = next((x for x in following if type(x).__name__ == 'StridedLoop'
+                      and self.same_strided_header(x, loop)), None)
+        if later is None:
+            return False
+        # A fold crossing into the map phase is reusable only after a complete
+        # CTA-wide tree. The map proves that visibility explicitly rather than
+        # assuming every carried name denotes the same value in every thread.
+        carried = {statement.name for statement in loop.body
+                   if type(statement).__name__ == 'Accum'}
+        tree = next((x for x in following if type(x).__name__ == 'TreeHalve'), None)
+        totals = frozenset()
+        if (tree is not None and carried <= set(tree.state)
+                and self.cta_tree_total(tree, ctx['launched'])):
+            totals = frozenset(tree.state)
+        plan = self.scalar_row_map_plan(later, loop, loads, totals, tree)
+        if plan is None:
+            return False
+        trips = bound // stride
+        if not scalar_cache_fits(loop.body, later.body, loads, trips):
+            return False
+        # Fully unroll this thread's trips in their original order and retain
+        # only the analyzed load results. Coordinates are materialized one at
+        # a time, so a wide row does not keep every induction value live. No
+        # element moves between threads, so the reduction merge's grouping is
+        # irrelevant to this substitution.
+        if loop.seed:
+            self.init_accums(loop.body)
+        previous_axis = self.values.get(loop.axis.name)
+        registers = {id(load): [] for load in loads}
+        try:
+            first, _ = self.expr(loop.start)
+            start_value = self.reg('r')
+            self.emit(f'mov.s32 {start_value}, {first};')
+            for k in range(trips):
+                if k == 0:
+                    coordinate = start_value
+                else:
+                    coordinate = self.reg('r')
+                    self.emit(f'add.s32 {coordinate}, {start_value}, {k * stride};')
+                self.values[loop.axis.name] = (coordinate, 'i32')
+                self.rebind(loop.axis.name)
+                self.statements(loop.body)
+                for load in loads:
+                    registers[id(load)].append(self.values[load.names[0]])
+        finally:
+            if previous_axis is None:
+                self.values.pop(loop.axis.name, None)
+            else:
+                self.values[loop.axis.name] = previous_axis
+            self.rebind(loop.axis.name)
+        self.scalar_row_caches[id(loop)] = (loop, loads, trips, plan, registers)
+        return True
+
+    def scalar_row_map_plan(self, loop, source, source_loads, totals=frozenset(), tree=None):
+        """Plan a scalar map that consumes ``source``'s retained row values."""
+        # The cache is only legal when the map iterates the same per-thread
+        # element positions in the same order as the reduction.
+        sbound = static_or_none(source.end if source.end is not None else source.axis.extent)
+        lstride = static_or_none(loop.step)
+        lbound = static_or_none(loop.end if loop.end is not None else loop.axis.extent)
+        if (lstride is None or sbound is None or lbound is None
+                or lstride != static_or_none(source.step) or lbound != sbound
+                or type(source.start).__name__ != 'Var'
+                or type(loop.start).__name__ != 'Var'
+                or source.start.name != loop.start.name):
+            return None
+        if self.inactive or loop.axis.name in defined_names(loop.body):
+            return None
+        outputs = {arg['name'] for arg in self.meta['args'] if arg.get('output')}
+        written = written_buffers(self.hoist_ctx['tile'].body) | outputs
+        # Values visible before the source reduction (Tile scalars, reciprocal
+        # of a CTA total, etc.) are unchanged in the map phase. Analyze the
+        # source in that ambient scope, while keeping only its own straight-line
+        # loads as cache candidates.
+        ambient = []
+        for statement in self.hoist_ctx['tile'].body:
+            if statement is source:
+                break
+            ambient.append(statement)
+        prefix = list(self.hoist_ctx['tile'].body)
+        source_position = next(i for i, statement in enumerate(prefix) if statement is source)
+        ambient = prefix[:source_position]
+        for statement in reversed(prefix[source_position + 1:]):
+            if type(statement).__name__ not in ('Assign', 'Let'):
+                break
+            ambient.insert(0, statement)
+        source_analysis = ReuseAnalysis(
+            (*ambient, *source.body),
+            uniform=lambda name: self.cta_uniform(name, source),
+            readonly=set(self.ptrs) - written, serial_axes={source.axis.name},
+            initial_uniform=set(self.tile_extents) | set(self.scalar_parameters))
+        by_buffer = {}
+        source_ids = {id(statement) for statement in source.body}
+        for load in source_loads:
+            if id(load) not in source_ids:
+                return None
+            value = source_analysis.value(load.names[0])
+            if value is not None:
+                form = flat_affine(self.buffers[load.input][0], load.index)
+                if form is not None:
+                    terms = {(('var', loop.axis.name) if term == ('var', source.axis.name)
+                              else term): coefficient
+                             for term, coefficient in form[1].items()}
+                    by_buffer.setdefault((load.input, form[0], _terms_key(terms)), load)
+        local, plan = set(), []
+        carried = {fold.name for fold in source.body
+                   if type(fold).__name__ == 'Accum'}
+        ambient_defs = set()
+        for statement in self.hoist_ctx['tile'].body:
+            if statement is loop:
+                break
+            ambient_defs |= defined_names([statement])
+        # Only names whose value is provably the same in both phases may cross
+        # the reuse boundary. Ambient definitions are admitted below only when
+        # that proof succeeds; spelling alone is not enough.
+        initial = set(totals) | set(self.tile_extents) | set(self.scalar_parameters)
+        map_analysis = ReuseAnalysis(
+            loop.body, uniform=lambda name: self.cta_uniform(name, loop),
+            readonly=set(self.ptrs) - written, serial_axes={loop.axis.name},
+            initial_uniform=initial)
+        stable = set(initial)
+        tile_body = list(self.hoist_ctx['tile'].body)
+        tree_position = tile_body.index(tree) if tree is not None and tree in tile_body else None
+        if tree_position is not None:
+            post = []
+            for statement in tile_body[tree_position + 1:]:
+                if statement is loop:
+                    break
+                if type(statement).__name__ in ('Assign', 'Let'):
+                    post.append(statement)
+                elif defined_names([statement]):
+                    # A branch, load or other definition does not establish a
+                    # phase-stable value without its own proof.
+                    post = None
+                    break
+            if post is None:
+                return None
+            if post:
+                post_analysis = ReuseAnalysis(
+                    post, uniform=lambda name: self.cta_uniform(name, loop),
+                    readonly=set(self.ptrs) - written,
+                    initial_uniform=initial)
+                for name in defined_names(post):
+                    value = post_analysis.value(name)
+                    if value is not None and value.supported and value.uniform:
+                        stable.add(name)
+        cached = False
+        for statement in loop.body:
+            kind = type(statement).__name__
+            if kind == 'Load':
+                if len(statement.names) != 1 or statement.input in written:
+                    return None
+                parts = [expr_names(c) for c in statement.index]
+                if any(part is None for part in parts):
+                    return None
+                names = set().union(*parts)
+                if loop.axis.name in names:
+                    form = flat_affine(self.buffers[statement.input][0], statement.index)
+                    if form is None:
+                        return None
+                    match = by_buffer.get((statement.input, form[0], _terms_key(form[1])))
+                    if match is None or any(
+                            name != loop.axis.name and name not in stable for name in names):
+                        return None
+                    plan.append((statement, 'cached', match))
+                    cached = True
+                elif all(self.cta_uniform(n, loop) for c in statement.index
+                         for n in expr_names(c) or ()):
+                    plan.append((statement, 'plain', None))
+                else:
+                    return None
+                local.add(statement.names[0])
+            elif kind in ('Assign', 'Let'):
+                for dependency in statement.deps():
+                    # A map element may read its own local chain, a CTA
+                    # uniform, or a value the reduction phase bound: that
+                    # binding is the CTA total/scalar both phases share.
+                    if (dependency in local or dependency in stable
+                            or self.cta_uniform(dependency, loop)
+                            or (map_analysis.value(dependency) is not None
+                                and map_analysis.value(dependency).uniform)):
+                        continue
+                    return None
+                local.add(statement.name)
+                plan.append((statement, 'plain', None))
+            elif kind == 'Write':
+                if (statement.output not in outputs or statement.atomic
+                        or statement.swizzle not in ('NONE', None)
+                        or len(statement.values) != 1):
+                    return None
+                form = flat_affine(self.buffers[statement.output][0], statement.index)
+                if (form is None or form[1].get(('var', loop.axis.name)) != 1
+                        or any(not self.cta_uniform(name, loop)
+                               for coord in statement.index[:-1]
+                               for name in expr_names(coord) or ())):
+                    return None
+                value_dtype = statement.value_dtype
+                if (value_dtype is not None and dtype_name(value_dtype) != 'f32'
+                        or statement.values[0] not in local):
+                    return None
+                plan.append((statement, 'plain', None))
+            else:
+                return None
+        if not cached:
+            return None
+        return plan
+
+    def scalar_row_cached_map(self, loop, statements, position):
+        """Emit a map from a scalar_phase_loop cache, or fail closed."""
+        cache = None
+        for earlier in statements[:position]:
+            found = self.scalar_row_caches.get(id(earlier))
+            if found is not None and self.same_strided_header(loop, found[0]):
+                cache = found
+        if cache is None:
+            return False
+        source, loads, trips, plan, registers = cache
+        if plan is None or len(plan) == 0:
+            return False
+        # The scalar cache subsumes the generic StridedLoop lowering for this
+        # exact body; undo the value-numbering entries a prior planning pass
+        # may have recorded so every statement in this body executes here.
+        for statement in plan:
+            self.vn_skip.pop(id(statement[0]), None)
+            self.vn_record.pop(id(statement[0]), None)
+        self.scalar_row_maps[id(loop)] = cache
+        axis, stride = loop.axis.name, static(loop.step)
+        previous_axis = self.values.get(axis)
+        source_start, _ = self.expr(loop.start)
+        start_value = self.reg('r')
+        self.emit(f'mov.s32 {start_value}, {source_start};')
+        source_start = start_value
+        try:
+            for k in range(trips):
+                element = self.reg('r')
+                if k == 0:
+                    self.emit(f'mov.s32 {element}, {source_start};')
+                else:
+                    self.emit(f'add.s32 {element}, {source_start}, {k * stride};')
+                self.values[axis] = (element, 'i32')
+                self.rebind(axis)
+                for statement, how, match in plan:
+                    if how != 'cached':
+                        self.statements([statement])
+                        continue
+                    values = registers[id(match)]
+                    if k >= len(values):
+                        return False
+                    self.values[statement.names[0]] = values[k]
+                    self.rebind(statement.names[0])
+        finally:
+            if previous_axis is None:
+                self.values.pop(axis, None)
+            else:
+                self.values[axis] = previous_axis
+            self.rebind(axis)
+        return True
 
     def row_map_plan(self, loop, source, source_loads):
         """Plan a thread-strided map over the row the merged reduction
@@ -5310,7 +6089,19 @@ class Emitter:
                     exports = list(inner.names)
                 else:
                     continue
+                reuse = ReuseAnalysis(
+                    inner.body if inner_kind == 'Loop' else (inner,),
+                    uniform=lambda name: name in axis_extent,
+                    readonly=set(self.ptrs) - written,
+                    serial_axes={outer.axis.name, inner.axis.name}
+                    if inner_kind == 'Loop' else {outer.axis.name},
+                    opaque=self.hoisted)
                 if not free <= set(axis_extent) | {outer.axis.name}:
+                    continue
+                allowed = set(axis_extent)
+                if inner_kind == 'Loop':
+                    allowed.add(inner.axis.name)
+                if not reuse.loads_are_hoistable(loads, outer.axis.name, allowed):
                     continue
                 if not all(unwritten_input(x) for x in loads):
                     continue
@@ -5845,6 +6636,10 @@ class Emitter:
         b, operands = shape
         lead = members[0]
         blocks = lead.extent // tn
+        batch = self.sibling_work_batch(lead, members, tn, launched, blocks)
+        if batch > 1:
+            self.matmul_work_loop_batch(shape, members, outer, launched, tn, batch)
+            return
         work = lead.configs * blocks
         w = self.reg('r')
         self.emit(f'mov.u32 {w}, {self.hardware_tid};')
@@ -5911,6 +6706,127 @@ class Emitter:
                 self.emit(f'add.u64 {sa}, {base}, {sa};')
                 self.emit(f'st.shared.f32 [{sa}], {acc};')
         self.emit(f'add.u32 {w}, {w}, {launched};')
+        self.emit(f'bra {begin};')
+        self.mark(done)
+
+    def sibling_work_batch(self, lead, members, tn, launched, blocks):
+        """Admit config-only sibling items that share one serial B operand.
+
+        ``matmul_work_loop`` advances a thread by ``launched`` work items.
+        When that stride is a multiple of the column-block count, the serial
+        coordinate is fixed and only the CTA-configuration coordinate moves.
+        ``matmul_members`` has already proved the B expression independent of
+        that configuration, so distinct items in the batch are independent
+        accumulators reading one identical B value.  Their source folds retain
+        their original per-element order.
+        """
+        if self.inactive or getattr(self, 'sibling_fusion_disabled', False):
+            return 1
+        if tn <= 0 or blocks <= 0 or launched % blocks:
+            return 1
+        stride = launched // blocks
+        if stride <= 0 or lead.configs % stride:
+            return 1
+        items = lead.configs // stride
+        # A partial batch leaves the same outer work loop around a narrower
+        # body: it duplicates loop control and extends the live set without
+        # removing the residual trip.  Admit batching only when one batch is
+        # the thread's complete configuration run and that full live set fits
+        # the explicit value budget.
+        live = items * len(members) * tn + tn + 2 * len(members)
+        if items > 1 and live <= SIBLING_WORK_BATCH_MAX_VALUES:
+            return items
+        return 1
+
+    def matmul_work_loop_batch(self, shape, members, outer, launched, tn, batch):
+        """Hoisted sibling dots sharing one serial B read per K step."""
+        b, operands = shape
+        lead = members[0]
+        blocks = lead.extent // tn
+        work = lead.configs * blocks
+        stride = launched // blocks
+        w = self.reg('r')
+        self.emit(f'mov.u32 {w}, {self.hardware_tid};')
+        begin, done = self.label('mm_batch'), self.label('mm_batch_items_done')
+        self.mark(begin)
+        p = self.reg('p')
+        self.emit(f'setp.ge.u32 {p}, {w}, {work};')
+        self.emit(f'@{p} bra {done};')
+        block, config, serial = self.reg('r'), self.reg('r'), self.reg('r')
+        self.emit(f'rem.u32 {block}, {w}, {blocks};')
+        self.emit(f'div.u32 {config}, {w}, {blocks};')
+        self.emit(f'mul.lo.u32 {serial}, {block}, {tn};')
+        configs = []
+        bindings = []
+        for j in range(batch):
+            if j:
+                item_config = self.reg('r')
+                self.emit(f'add.u32 {item_config}, {config}, {j * stride};')
+            else:
+                item_config = config
+            configs.append(item_config)
+            bindings.append({outer.axis.name: serial,
+                             **self.decode_config(item_config, lead.used)})
+        self.bind_coords(bindings[0])
+        accs = []
+        for _ in range(batch):
+            member_rows = []
+            for _ in members:
+                row = []
+                for _ in range(tn):
+                    acc = self.reg('f')
+                    self.emit(f'mov.f32 {acc}, {literal(0.0, "f32")};')
+                    row.append(acc)
+                member_rows.append(row)
+            accs.append(member_rows)
+        k = self.reg('r')
+        self.emit(f'mov.s32 {k}, 0;')
+        self.bind_coords({plan.statement.axis.name: k for plan in members})
+        self.loop_invariants.append({})
+        self.loop_expressions.append({})
+        k_begin, k_done = self.label('mm_batch_k'), self.label('mm_batch_k_done')
+        self.mark(k_begin)
+        q = self.reg('p')
+        self.emit(f'setp.ge.s32 {q}, {k}, {static(members[0].statement.axis.extent)};')
+        self.emit(f'@{q} bra {k_done};')
+        addr, space = self.address(b.input, b.index)
+        bs = [self.reg('f') for _ in range(tn)]
+        if tn == 4:
+            self.emit(f'ld.{space}.v4.f32 {{{', '.join(bs)}}}, [{addr}];')
+        else:
+            self.emit(f'ld.{space}.f32 {bs[0]}, [{addr}];')
+        for j, binding in enumerate(bindings):
+            self.bind_coords({**binding,
+                              **{plan.statement.axis.name: k for plan in members}})
+            for (a, a_first), row in zip(operands, accs[j]):
+                a_addr, a_space = self.address(a.input, a.index)
+                av = self.reg('f')
+                self.emit(f'ld.{a_space}.f32 {av}, [{a_addr}];')
+                for bv, acc in zip(bs, row):
+                    product = self.reg('f')
+                    x, y = (av, bv) if a_first else (bv, av)
+                    self.emit(f'mul.f32 {product}, {x}, {y};')
+                    self.emit(f'add.f32 {acc}, {acc}, {product};')
+        self.emit(f'add.s32 {k}, {k}, 1;')
+        self.bind_coords({plan.statement.axis.name: k for plan in members})
+        self.emit(f'bra {k_begin};')
+        self.mark(k_done)
+        self.loop_invariants.pop()
+        self.loop_expressions.pop()
+        for item_config, member_rows in zip(configs, accs):
+            for plan, row in zip(members, member_rows):
+                for j, acc in enumerate(row):
+                    word = self.reg('r')
+                    self.emit(f'mad.lo.u32 {word}, {item_config}, {plan.row_words}, {serial};')
+                    if j:
+                        self.emit(f'add.u32 {word}, {word}, {j};')
+                    sa = self.reg('rd')
+                    self.emit(f'mul.wide.u32 {sa}, {word}, 4;')
+                    base = self.reg('rd')
+                    self.emit(f'mov.u64 {base}, {plan.symbol};')
+                    self.emit(f'add.u64 {sa}, {base}, {sa};')
+                    self.emit(f'st.shared.f32 [{sa}], {acc};')
+        self.emit(f'add.u32 {w}, {w}, {batch * launched};')
         self.emit(f'bra {begin};')
         self.mark(done)
 
@@ -6146,6 +7062,7 @@ class Emitter:
 
     def statements(self, statements, shared_prefetch=None):
         pending = []
+        sibling_groups, sibling_members = self.sibling_dot_groups(statements)
         deferred = self.deferred_before_hoists(statements)
         waiting = {id(x) for chosen in deferred.values() for x in chosen}
         plan = self.access_plan_for(statements, shared_prefetch or ())
@@ -6160,6 +7077,11 @@ class Emitter:
                 self.vn_registers[key] = self.values[name]
             pending = self.vn_record.get(id(s), [])
             if id(s) in waiting:
+                pending = []
+                continue
+            if id(s) in sibling_members:
+                if id(s) in sibling_groups:
+                    self.emit_sibling_dot_group(sibling_groups[id(s)])
                 pending = []
                 continue
             if id(s) in self.hoist_plans:
@@ -6442,8 +7364,13 @@ class Emitter:
                 self.rebind(s.name)
             elif kind == 'StridedLoop' and self.row_cached_map(s, statements, position):
                 pass
+            elif kind == 'StridedLoop' and self.scalar_row_cached_map(s, statements, position):
+                pass
             elif (kind == 'StridedLoop' and id(s) not in self.no_vector_reduction
                   and self.merged_vector_reduction(s, statements[position + 1:])):
+                pass
+            elif (kind == 'StridedLoop' and id(s) not in self.no_vector_reduction
+                  and self.scalar_phase_loop(s, statements[position + 1:])):
                 pass
             elif kind in ('StridedLoop', 'Loop'):
                 previous_axis = self.values.get(s.axis.name)

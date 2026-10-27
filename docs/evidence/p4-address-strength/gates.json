@@ -1,0 +1,117 @@
+{
+  "schema": "emmy-p4-address-strength-evidence-gates-v1",
+  "scope": "Evidence index for rebased P4; hosted timing unresolved, not a win.",
+  "compiler_sha256": "74164ed51aff8fc3886e4b5daa029f526d26d4fe5e2d0cf86ac706ec1cfb602d",
+  "tests_sha256": "9a6a2d2112a309250160eb636e5a3229d0b3a12f66baa89ae90d945ce3247f0a",
+  "baseline_sha256": "0a6f12033a942f4da9176ebf1e963c16193d8883610d3d4807bbc9870ab0de2a",
+  "published_15": {
+    "all_passed": true,
+    "missing": [],
+    "failed": [],
+    "source_unchanged": true,
+    "path": "artifacts/published-15.json",
+    "sha256": "b831bde376721f403a48da7f50a15c98fb8209f0c75611ee3a0a55b102c25caa",
+    "runner_gate_path": "artifacts/published-runner-gate.json",
+    "runner_gate_sha256": "1b19523c339f620158ceabf4f02c931479c1774c8d6b54b1c0f6f602d4f65c2b",
+    "limitation": "Published correctness only; hidden-set correctness unverified."
+  },
+  "core65": {
+    "all_passed": true,
+    "case_count": 65,
+    "failed_count": 0,
+    "sanitizer_count": 16,
+    "sanitizers_passed": true,
+    "path": "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/p4-rebased-74164ed5-gates-20261027/core65-results.json",
+    "sha256": "2c660e5e1c0f752deb8abbb02bdfdb47aae5092f82acd0e1c7ccdcb5f092867b"
+  },
+  "guards": {
+    "all_passed": true,
+    "count": 10,
+    "names": [
+      "A24",
+      "A25",
+      "A30",
+      "A31",
+      "A50",
+      "A51",
+      "A58",
+      "A59",
+      "A90",
+      "A91"
+    ],
+    "path": "artifacts/guards.json",
+    "sha256": "3253f473fa502a009221a91e5d6014b05ada4404753f33eaceaa27f3649124e7"
+  },
+  "a95": {
+    "ok": true,
+    "launch_count": 3,
+    "sanitizer_ok": true,
+    "sanitizer_launch_count": 3,
+    "path": "artifacts/a95.json",
+    "sha256": "9906db875e1b76d2ae42db1db31618d02e9404b2fed8782f95d4689c85c3132d",
+    "sanitizer_path": "artifacts/a95-sanitizer.json",
+    "sanitizer_sha256": "935b9e113f8427e07d02f70d062044ca3eb723f0cd305fd0e5d10913d9df520e"
+  },
+  "scaled_correctness": {
+    "all_passed": true,
+    "path": "artifacts/scaled-correctness.json",
+    "sha256": "075789540a87534e75df041cd7e2ca61940036936099489b745427f2078366ac",
+    "bound_receipt_path": "local-correctness-receipt.json",
+    "bound_receipt_sha256": "16fc19eaf31fdba2128df4404c0aa266960cc9e40140340213686c8a6bc8b883",
+    "bound_cases": {
+      "p02_scale_shift_8m": {
+        "elements": 8000000,
+        "mismatched": 0,
+        "full_outputs_pass": true
+      },
+      "p03_relu_mul_4m": {
+        "elements": 4000000,
+        "mismatched": 0,
+        "full_outputs_pass": true
+      }
+    }
+  },
+  "local_4060_proxy": {
+    "proxy_only": true,
+    "hosted_acceptance": false,
+    "path": "artifacts/paired-proxy.json",
+    "sha256": "a3891a618a66214210bb0d67ab74bc801dbb700269b7c357b0db274df18b89a5",
+    "cases": {
+      "p02_scale_shift_8m": {
+        "median_ratio": 1.0031949125388044,
+        "completed_pairs": 21
+      },
+      "p03_relu_mul_4m": {
+        "median_ratio": 0.991341988342215,
+        "completed_pairs": 21
+      }
+    },
+    "limitation": "RTX 4060 local proxy; unresolved; not hosted acceptance."
+  },
+  "hosted_timing": {
+    "protocol_path": "plan.md",
+    "protocol_sha256": "fcfed74ae7a339e3691475335c02a78ff68715742cf2d231eba28025690dcdb0",
+    "execution_order": [
+      "p02_scale_shift_8m",
+      "p03_relu_mul_4m"
+    ],
+    "p02": {
+      "path": "p02-primary-result.json",
+      "sha256": "a60f70b5fd4726e04af3631add5d5c24ac86bbd624006d89308001e764f1daff",
+      "median_ratio": 1,
+      "deadband": 0.052508751458576364,
+      "direction": "unresolved",
+      "confirmation": "not run"
+    },
+    "p03": {
+      "path": "p03-primary-result.json",
+      "sha256": "a6b1388aef182d6b969598f5228a1001a60367479f0ce7a51edefef961efb39d",
+      "median_ratio": 1,
+      "deadband": 0.06844741235392304,
+      "direction": "unresolved",
+      "confirmation": "not run"
+    },
+    "accepted_win": false,
+    "disposition": "unmerged; no resolved faster primary"
+  }
+}

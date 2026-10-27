@@ -1,0 +1,16 @@
+compile.py: plan SIMT fallback: ModuleNotFoundError: No module named 'tensor_core'
+compile.py: tensor-core fallback: ModuleNotFoundError: No module named 'tensor_core'
+p02_scale_shift_8m True 0
+compile.py: plan SIMT fallback: ModuleNotFoundError: No module named 'tensor_core'
+compile.py: tensor-core fallback: ModuleNotFoundError: No module named 'tensor_core'
+p03_relu_mul_4m True 0
+compile.py: plan SIMT fallback: ModuleNotFoundError: No module named 'tensor_core'
+compile.py: tensor-core fallback: ModuleNotFoundError: No module named 'tensor_core'
+f01_rmsnorm_3072x2048 True 0
+compile.py: plan SIMT fallback: ModuleNotFoundError: No module named 'tensor_core'
+compile.py: tensor-core fallback: ModuleNotFoundError: No module named 'tensor_core'
+f03_l2norm_3072x2048 True 0
+compile.py: plan SIMT fallback: ModuleNotFoundError: No module named 'tensor_core'
+compile.py: tensor-core fallback: ModuleNotFoundError: No module named 'tensor_core'
+r04_row_sum_3072x4096 True 0
+all_passed True

@@ -1,0 +1,467 @@
+test_affine_address_falls_back_on_unproven_structure (tests.test_compiler.CompilerTests.test_affine_address_falls_back_on_unproven_structure) ... ok
+test_affine_address_requires_current_proven_i32_binding (tests.test_compiler.CompilerTests.test_affine_address_requires_current_proven_i32_binding) ... ok
+test_affine_address_survives_ptxas_on_scaled_primaries (tests.test_compiler.CompilerTests.test_affine_address_survives_ptxas_on_scaled_primaries)
+The direct byte scale survives ptxas on both primary shapes. ... ok
+test_all_published_lower_and_assemble_for_both_targets (tests.test_compiler.CompilerTests.test_all_published_lower_and_assemble_for_both_targets) ... 
+  test_all_published_lower_and_assemble_for_both_targets (tests.test_compiler.CompilerTests.test_all_published_lower_and_assemble_for_both_targets) (problem='p00_scalar_add') ... ERROR
+  test_all_published_lower_and_assemble_for_both_targets (tests.test_compiler.CompilerTests.test_all_published_lower_and_assemble_for_both_targets) (problem='p01_vector_add') ... ERROR
+  test_all_published_lower_and_assemble_for_both_targets (tests.test_compiler.CompilerTests.test_all_published_lower_and_assemble_for_both_targets) (problem='p02_scale_shift') ... ERROR
+  test_all_published_lower_and_assemble_for_both_targets (tests.test_compiler.CompilerTests.test_all_published_lower_and_assemble_for_both_targets) (problem='p03_relu_mul') ... ERROR
+  test_all_published_lower_and_assemble_for_both_targets (tests.test_compiler.CompilerTests.test_all_published_lower_and_assemble_for_both_targets) (problem='r01_array_sum') ... ERROR
+  test_all_published_lower_and_assemble_for_both_targets (tests.test_compiler.CompilerTests.test_all_published_lower_and_assemble_for_both_targets) (problem='r02_big_sum') ... ERROR
+  test_all_published_lower_and_assemble_for_both_targets (tests.test_compiler.CompilerTests.test_all_published_lower_and_assemble_for_both_targets) (problem='r03_mean') ... ERROR
+  test_all_published_lower_and_assemble_for_both_targets (tests.test_compiler.CompilerTests.test_all_published_lower_and_assemble_for_both_targets) (problem='r04_row_sum') ... ERROR
+  test_all_published_lower_and_assemble_for_both_targets (tests.test_compiler.CompilerTests.test_all_published_lower_and_assemble_for_both_targets) (problem='m01_matmul_512') ... ERROR
+  test_all_published_lower_and_assemble_for_both_targets (tests.test_compiler.CompilerTests.test_all_published_lower_and_assemble_for_both_targets) (problem='m02_matmul_rect') ... ERROR
+  test_all_published_lower_and_assemble_for_both_targets (tests.test_compiler.CompilerTests.test_all_published_lower_and_assemble_for_both_targets) (problem='f01_rmsnorm') ... ERROR
+  test_all_published_lower_and_assemble_for_both_targets (tests.test_compiler.CompilerTests.test_all_published_lower_and_assemble_for_both_targets) (problem='f02_row_softmax') ... ERROR
+  test_all_published_lower_and_assemble_for_both_targets (tests.test_compiler.CompilerTests.test_all_published_lower_and_assemble_for_both_targets) (problem='f03_l2norm') ... ERROR
+  test_all_published_lower_and_assemble_for_both_targets (tests.test_compiler.CompilerTests.test_all_published_lower_and_assemble_for_both_targets) (problem='a01_attention') ... ERROR
+  test_all_published_lower_and_assemble_for_both_targets (tests.test_compiler.CompilerTests.test_all_published_lower_and_assemble_for_both_targets) (problem='a02_attention_128') ... ERROR
+test_bitcast_preserves_bits_across_dtype (tests.test_compiler.CompilerTests.test_bitcast_preserves_bits_across_dtype) ... ok
+test_collective_tree_reuses_its_root_slot (tests.test_compiler.CompilerTests.test_collective_tree_reuses_its_root_slot)
+A CTA total is read from shared slot zero once, not re-read. ... ERROR
+test_cond_definitions_participate_in_hoist_analysis (tests.test_compiler.CompilerTests.test_cond_definitions_participate_in_hoist_analysis) ... ok
+test_cond_false_arm_uses_outer_binding (tests.test_compiler.CompilerTests.test_cond_false_arm_uses_outer_binding) ... ok
+test_cond_ssa_bindings_do_not_leak_to_join (tests.test_compiler.CompilerTests.test_cond_ssa_bindings_do_not_leak_to_join) ... ok
+test_destination_shadowing_prevents_vector_load_group (tests.test_compiler.CompilerTests.test_destination_shadowing_prevents_vector_load_group) ... ok
+test_f16_storage_uses_b16_carrier_and_promoted_arithmetic (tests.test_compiler.CompilerTests.test_f16_storage_uses_b16_carrier_and_promoted_arithmetic) ... ok
+test_generic_loop_hoists_invariant_index_division (tests.test_compiler.CompilerTests.test_generic_loop_hoists_invariant_index_division)
+The generic loop analysis hoists a repeated invariant quotient. ... ok
+test_int64_floor_division_uses_64bit_scratch_registers (tests.test_compiler.CompilerTests.test_int64_floor_division_uses_64bit_scratch_registers) ... ok
+test_integer_arithmetic_and_bitwise_are_typed (tests.test_compiler.CompilerTests.test_integer_arithmetic_and_bitwise_are_typed) ... ok
+test_integer_copy_is_a_typed_register_move (tests.test_compiler.CompilerTests.test_integer_copy_is_a_typed_register_move) ... ok
+test_integer_grouped_store_converts_like_scalar (tests.test_compiler.CompilerTests.test_integer_grouped_store_converts_like_scalar) ... ok
+test_let_rebinding_invalidates_cached_address (tests.test_compiler.CompilerTests.test_let_rebinding_invalidates_cached_address) ... ok
+test_log_lowering_is_natural_log (tests.test_compiler.CompilerTests.test_log_lowering_is_natural_log) ... ERROR
+test_m01_inner_loop_hoists_invariant_index_division (tests.test_compiler.CompilerTests.test_m01_inner_loop_hoists_invariant_index_division)
+m01's selected staged pipeline has its documented invariants. ... ERROR
+test_mixed_typed_grouped_store_stays_scalar (tests.test_compiler.CompilerTests.test_mixed_typed_grouped_store_stays_scalar) ... ok
+test_nested_collective_partial_cta_masks_memory (tests.test_compiler.CompilerTests.test_nested_collective_partial_cta_masks_memory) ... ERROR
+test_noncontiguous_and_unaligned_groups_stay_scalar (tests.test_compiler.CompilerTests.test_noncontiguous_and_unaligned_groups_stay_scalar) ... ok
+test_nonfixture_pointwise_tail_and_reordered_abi (tests.test_compiler.CompilerTests.test_nonfixture_pointwise_tail_and_reordered_abi) ... ERROR
+test_nonfixture_reduction_tail (tests.test_compiler.CompilerTests.test_nonfixture_reduction_tail) ... ERROR
+test_nonunit_block_and_grid_dimensions_flatten (tests.test_compiler.CompilerTests.test_nonunit_block_and_grid_dimensions_flatten) ... ERROR
+test_numeric_mask_comparison_and_where (tests.test_compiler.CompilerTests.test_numeric_mask_comparison_and_where) ... ok
+test_partial_collective_tile_keeps_all_threads_in_barrier (tests.test_compiler.CompilerTests.test_partial_collective_tile_keeps_all_threads_in_barrier) ... ERROR
+test_partial_cta_non_sum_reduction_masks_fold (tests.test_compiler.CompilerTests.test_partial_cta_non_sum_reduction_masks_fold) ... ERROR
+test_partial_cta_vector_load_has_three_way_mask (tests.test_compiler.CompilerTests.test_partial_cta_vector_load_has_three_way_mask) ... ok
+test_pointwise_tuple_accesses_vectorize_with_runtime_fallback (tests.test_compiler.CompilerTests.test_pointwise_tuple_accesses_vectorize_with_runtime_fallback) ... 
+  test_pointwise_tuple_accesses_vectorize_with_runtime_fallback (tests.test_compiler.CompilerTests.test_pointwise_tuple_accesses_vectorize_with_runtime_fallback) (problem='p02_scale_shift') ... ERROR
+  test_pointwise_tuple_accesses_vectorize_with_runtime_fallback (tests.test_compiler.CompilerTests.test_pointwise_tuple_accesses_vectorize_with_runtime_fallback) (problem='p03_relu_mul') ... ERROR
+test_pow_support_or_clean_rejection (tests.test_compiler.CompilerTests.test_pow_support_or_clean_rejection) ... ok
+test_prefetch_scalar_loads_replaces_the_map_read (tests.test_compiler.CompilerTests.test_prefetch_scalar_loads_replaces_the_map_read)
+f03 issues its map input beside the reduction and reuses it. ... ERROR
+test_reduce_aliases_canonicalize (tests.test_compiler.CompilerTests.test_reduce_aliases_canonicalize) ... ERROR
+test_reject_invalid_abi (tests.test_compiler.CompilerTests.test_reject_invalid_abi) ... ERROR
+test_reject_tree_indexed_by_lane (tests.test_compiler.CompilerTests.test_reject_tree_indexed_by_lane) ... ERROR
+test_residue_rejects_non_multiple_product (tests.test_compiler.CompilerTests.test_residue_rejects_non_multiple_product) ... ok
+test_reuse_analysis_matches_equivalent_duplicate_graphs (tests.test_compiler.CompilerTests.test_reuse_analysis_matches_equivalent_duplicate_graphs)
+A83's repeated value loads share a key; distinct columns do not. ... ok
+test_reuse_analysis_separates_independent_query_graphs (tests.test_compiler.CompilerTests.test_reuse_analysis_separates_independent_query_graphs)
+A79's distinct query offsets must not share a structural key. ... ok
+test_row_cache_and_cta_total_mechanisms_are_populated (tests.test_compiler.CompilerTests.test_row_cache_and_cta_total_mechanisms_are_populated)
+f01/f03/f04's merged reductions leave a cache and CTA total. ... 
+  test_row_cache_and_cta_total_mechanisms_are_populated (tests.test_compiler.CompilerTests.test_row_cache_and_cta_total_mechanisms_are_populated) (problem='f01_rmsnorm')
+f01/f03/f04's merged reductions leave a cache and CTA total. ... ERROR
+  test_row_cache_and_cta_total_mechanisms_are_populated (tests.test_compiler.CompilerTests.test_row_cache_and_cta_total_mechanisms_are_populated) (problem='f03_l2norm')
+f01/f03/f04's merged reductions leave a cache and CTA total. ... ERROR
+  test_row_cache_and_cta_total_mechanisms_are_populated (tests.test_compiler.CompilerTests.test_row_cache_and_cta_total_mechanisms_are_populated) (problem='r04_row_sum')
+f01/f03/f04's merged reductions leave a cache and CTA total. ... ERROR
+test_row_maps_use_the_shared_strided_access_proof (tests.test_compiler.CompilerTests.test_row_maps_use_the_shared_strided_access_proof)
+f01/f03 keep row reuse, and a rejected proof fails closed. ... 
+  test_row_maps_use_the_shared_strided_access_proof (tests.test_compiler.CompilerTests.test_row_maps_use_the_shared_strided_access_proof) (problem='f01_rmsnorm')
+f01/f03 keep row reuse, and a rejected proof fails closed. ... ERROR
+  test_row_maps_use_the_shared_strided_access_proof (tests.test_compiler.CompilerTests.test_row_maps_use_the_shared_strided_access_proof) (problem='f03_l2norm')
+f01/f03 keep row reuse, and a rejected proof fails closed. ... ERROR
+test_scalar_by_value_argument_binds_as_ssa (tests.test_compiler.CompilerTests.test_scalar_by_value_argument_binds_as_ssa) ... ERROR
+test_scalar_cache_rejects_mismatched_map_headers (tests.test_compiler.CompilerTests.test_scalar_cache_rejects_mismatched_map_headers)
+Only an identical start/step/bound may consume the live cache. ... ok
+test_scalar_math_ops_lower_without_external_calls (tests.test_compiler.CompilerTests.test_scalar_math_ops_lower_without_external_calls) ... ok
+test_scalar_phase_cache_fails_closed (tests.test_compiler.CompilerTests.test_scalar_phase_cache_fails_closed)
+Mismatched, rewritten, remapped and over-budget caches stay scalar. ... ok
+test_scalar_second_pass_reuses_f02_scores (tests.test_compiler.CompilerTests.test_scalar_second_pass_reuses_f02_scores)
+f02 keeps each thread's pass-one scores for the numerator map. ... ERROR
+test_scaled_softmax_reuse_survives_ptxas (tests.test_compiler.CompilerTests.test_scaled_softmax_reuse_survives_ptxas)
+A 2048-wide row activates the scalar cache in final SASS. ... ERROR
+test_select_tail_identity_and_warp_barrier (tests.test_compiler.CompilerTests.test_select_tail_identity_and_warp_barrier) ... ok
+test_shared_aligned_group_has_no_runtime_fallback (tests.test_compiler.CompilerTests.test_shared_aligned_group_has_no_runtime_fallback) ... ok
+test_single_variable_affine_address_scales_directly (tests.test_compiler.CompilerTests.test_single_variable_affine_address_scales_directly) ... ok
+test_unaligned_copy_index_stays_scalar (tests.test_compiler.CompilerTests.test_unaligned_copy_index_stays_scalar) ... ERROR
+test_unsigned_negation_and_absolute_use_valid_ptx (tests.test_compiler.CompilerTests.test_unsigned_negation_and_absolute_use_valid_ptx) ... ok
+test_unsupported_errors_do_not_emit_partial_ptx (tests.test_compiler.CompilerTests.test_unsupported_errors_do_not_emit_partial_ptx) ... ERROR
+test_vector_copy_has_runtime_fallback_and_scalar_negative (tests.test_compiler.CompilerTests.test_vector_copy_has_runtime_fallback_and_scalar_negative) ... ERROR
+test_write_uses_output_width_and_converts_value_dtype (tests.test_compiler.CompilerTests.test_write_uses_output_width_and_converts_value_dtype) ... ok
+
+======================================================================
+ERROR: test_all_published_lower_and_assemble_for_both_targets (tests.test_compiler.CompilerTests.test_all_published_lower_and_assemble_for_both_targets) (problem='p00_scalar_add')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ada/Projects/emmy-p4-address-strength/tests/test_compiler.py", line 1325, in test_all_published_lower_and_assemble_for_both_targets
+    source=next((ROOT/problem).glob('*.ir.json'))
+StopIteration
+
+======================================================================
+ERROR: test_all_published_lower_and_assemble_for_both_targets (tests.test_compiler.CompilerTests.test_all_published_lower_and_assemble_for_both_targets) (problem='p01_vector_add')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ada/Projects/emmy-p4-address-strength/tests/test_compiler.py", line 1325, in test_all_published_lower_and_assemble_for_both_targets
+    source=next((ROOT/problem).glob('*.ir.json'))
+StopIteration
+
+======================================================================
+ERROR: test_all_published_lower_and_assemble_for_both_targets (tests.test_compiler.CompilerTests.test_all_published_lower_and_assemble_for_both_targets) (problem='p02_scale_shift')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ada/Projects/emmy-p4-address-strength/tests/test_compiler.py", line 1325, in test_all_published_lower_and_assemble_for_both_targets
+    source=next((ROOT/problem).glob('*.ir.json'))
+StopIteration
+
+======================================================================
+ERROR: test_all_published_lower_and_assemble_for_both_targets (tests.test_compiler.CompilerTests.test_all_published_lower_and_assemble_for_both_targets) (problem='p03_relu_mul')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ada/Projects/emmy-p4-address-strength/tests/test_compiler.py", line 1325, in test_all_published_lower_and_assemble_for_both_targets
+    source=next((ROOT/problem).glob('*.ir.json'))
+StopIteration
+
+======================================================================
+ERROR: test_all_published_lower_and_assemble_for_both_targets (tests.test_compiler.CompilerTests.test_all_published_lower_and_assemble_for_both_targets) (problem='r01_array_sum')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ada/Projects/emmy-p4-address-strength/tests/test_compiler.py", line 1325, in test_all_published_lower_and_assemble_for_both_targets
+    source=next((ROOT/problem).glob('*.ir.json'))
+StopIteration
+
+======================================================================
+ERROR: test_all_published_lower_and_assemble_for_both_targets (tests.test_compiler.CompilerTests.test_all_published_lower_and_assemble_for_both_targets) (problem='r02_big_sum')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ada/Projects/emmy-p4-address-strength/tests/test_compiler.py", line 1325, in test_all_published_lower_and_assemble_for_both_targets
+    source=next((ROOT/problem).glob('*.ir.json'))
+StopIteration
+
+======================================================================
+ERROR: test_all_published_lower_and_assemble_for_both_targets (tests.test_compiler.CompilerTests.test_all_published_lower_and_assemble_for_both_targets) (problem='r03_mean')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ada/Projects/emmy-p4-address-strength/tests/test_compiler.py", line 1325, in test_all_published_lower_and_assemble_for_both_targets
+    source=next((ROOT/problem).glob('*.ir.json'))
+StopIteration
+
+======================================================================
+ERROR: test_all_published_lower_and_assemble_for_both_targets (tests.test_compiler.CompilerTests.test_all_published_lower_and_assemble_for_both_targets) (problem='r04_row_sum')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ada/Projects/emmy-p4-address-strength/tests/test_compiler.py", line 1325, in test_all_published_lower_and_assemble_for_both_targets
+    source=next((ROOT/problem).glob('*.ir.json'))
+StopIteration
+
+======================================================================
+ERROR: test_all_published_lower_and_assemble_for_both_targets (tests.test_compiler.CompilerTests.test_all_published_lower_and_assemble_for_both_targets) (problem='m01_matmul_512')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ada/Projects/emmy-p4-address-strength/tests/test_compiler.py", line 1325, in test_all_published_lower_and_assemble_for_both_targets
+    source=next((ROOT/problem).glob('*.ir.json'))
+StopIteration
+
+======================================================================
+ERROR: test_all_published_lower_and_assemble_for_both_targets (tests.test_compiler.CompilerTests.test_all_published_lower_and_assemble_for_both_targets) (problem='m02_matmul_rect')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ada/Projects/emmy-p4-address-strength/tests/test_compiler.py", line 1325, in test_all_published_lower_and_assemble_for_both_targets
+    source=next((ROOT/problem).glob('*.ir.json'))
+StopIteration
+
+======================================================================
+ERROR: test_all_published_lower_and_assemble_for_both_targets (tests.test_compiler.CompilerTests.test_all_published_lower_and_assemble_for_both_targets) (problem='f01_rmsnorm')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ada/Projects/emmy-p4-address-strength/tests/test_compiler.py", line 1325, in test_all_published_lower_and_assemble_for_both_targets
+    source=next((ROOT/problem).glob('*.ir.json'))
+StopIteration
+
+======================================================================
+ERROR: test_all_published_lower_and_assemble_for_both_targets (tests.test_compiler.CompilerTests.test_all_published_lower_and_assemble_for_both_targets) (problem='f02_row_softmax')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ada/Projects/emmy-p4-address-strength/tests/test_compiler.py", line 1325, in test_all_published_lower_and_assemble_for_both_targets
+    source=next((ROOT/problem).glob('*.ir.json'))
+StopIteration
+
+======================================================================
+ERROR: test_all_published_lower_and_assemble_for_both_targets (tests.test_compiler.CompilerTests.test_all_published_lower_and_assemble_for_both_targets) (problem='f03_l2norm')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ada/Projects/emmy-p4-address-strength/tests/test_compiler.py", line 1325, in test_all_published_lower_and_assemble_for_both_targets
+    source=next((ROOT/problem).glob('*.ir.json'))
+StopIteration
+
+======================================================================
+ERROR: test_all_published_lower_and_assemble_for_both_targets (tests.test_compiler.CompilerTests.test_all_published_lower_and_assemble_for_both_targets) (problem='a01_attention')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ada/Projects/emmy-p4-address-strength/tests/test_compiler.py", line 1325, in test_all_published_lower_and_assemble_for_both_targets
+    source=next((ROOT/problem).glob('*.ir.json'))
+StopIteration
+
+======================================================================
+ERROR: test_all_published_lower_and_assemble_for_both_targets (tests.test_compiler.CompilerTests.test_all_published_lower_and_assemble_for_both_targets) (problem='a02_attention_128')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ada/Projects/emmy-p4-address-strength/tests/test_compiler.py", line 1325, in test_all_published_lower_and_assemble_for_both_targets
+    source=next((ROOT/problem).glob('*.ir.json'))
+StopIteration
+
+======================================================================
+ERROR: test_collective_tree_reuses_its_root_slot (tests.test_compiler.CompilerTests.test_collective_tree_reuses_its_root_slot)
+A CTA total is read from shared slot zero once, not re-read.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ada/Projects/emmy-p4-address-strength/tests/test_compiler.py", line 1046, in test_collective_tree_reuses_its_root_slot
+    source=next((ROOT/'r04_row_sum').glob('*.ir.json'))
+StopIteration
+
+======================================================================
+ERROR: test_log_lowering_is_natural_log (tests.test_compiler.CompilerTests.test_log_lowering_is_natural_log)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ada/Projects/emmy-p4-address-strength/tests/test_compiler.py", line 450, in test_log_lowering_is_natural_log
+    p=fixture('p00_scalar_add',self.out/'log-natural',tile_extent=1,data_extent=1)
+  File "/home/ada/Projects/emmy-p4-address-strength/tests/test_compiler.py", line 27, in fixture
+    source = next((ROOT/problem).glob('*.ir.json'))
+StopIteration
+
+======================================================================
+ERROR: test_m01_inner_loop_hoists_invariant_index_division (tests.test_compiler.CompilerTests.test_m01_inner_loop_hoists_invariant_index_division)
+m01's selected staged pipeline has its documented invariants.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ada/Projects/emmy-p4-address-strength/tests/test_compiler.py", line 758, in test_m01_inner_loop_hoists_invariant_index_division
+    source=next((ROOT/'m01_matmul_512').glob('*.ir.json'))
+StopIteration
+
+======================================================================
+ERROR: test_nested_collective_partial_cta_masks_memory (tests.test_compiler.CompilerTests.test_nested_collective_partial_cta_masks_memory)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ada/Projects/emmy-p4-address-strength/tests/test_compiler.py", line 207, in test_nested_collective_partial_cta_masks_memory
+    path=fixture('r01_array_sum',self.out/'invalid-nested-collective',tile_extent=127)
+  File "/home/ada/Projects/emmy-p4-address-strength/tests/test_compiler.py", line 27, in fixture
+    source = next((ROOT/problem).glob('*.ir.json'))
+StopIteration
+
+======================================================================
+ERROR: test_nonfixture_pointwise_tail_and_reordered_abi (tests.test_compiler.CompilerTests.test_nonfixture_pointwise_tail_and_reordered_abi)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ada/Projects/emmy-p4-address-strength/tests/test_compiler.py", line 180, in test_nonfixture_pointwise_tail_and_reordered_abi
+    p=fixture('p00_scalar_add',self.out/'pointwise14',tile_extent=7,data_extent=14,arg_reverse=True)
+  File "/home/ada/Projects/emmy-p4-address-strength/tests/test_compiler.py", line 27, in fixture
+    source = next((ROOT/problem).glob('*.ir.json'))
+StopIteration
+
+======================================================================
+ERROR: test_nonfixture_reduction_tail (tests.test_compiler.CompilerTests.test_nonfixture_reduction_tail)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ada/Projects/emmy-p4-address-strength/tests/test_compiler.py", line 187, in test_nonfixture_reduction_tail
+    p=fixture('r01_array_sum',self.out/'sum257',data_extent=257,arg_reverse=True)
+  File "/home/ada/Projects/emmy-p4-address-strength/tests/test_compiler.py", line 27, in fixture
+    source = next((ROOT/problem).glob('*.ir.json'))
+StopIteration
+
+======================================================================
+ERROR: test_nonunit_block_and_grid_dimensions_flatten (tests.test_compiler.CompilerTests.test_nonunit_block_and_grid_dimensions_flatten)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ada/Projects/emmy-p4-address-strength/tests/test_compiler.py", line 267, in test_nonunit_block_and_grid_dimensions_flatten
+    p=fixture('p00_scalar_add',self.out/'multi-dim-launch',tile_extent=128,data_extent=256)
+  File "/home/ada/Projects/emmy-p4-address-strength/tests/test_compiler.py", line 27, in fixture
+    source = next((ROOT/problem).glob('*.ir.json'))
+StopIteration
+
+======================================================================
+ERROR: test_partial_collective_tile_keeps_all_threads_in_barrier (tests.test_compiler.CompilerTests.test_partial_collective_tile_keeps_all_threads_in_barrier)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ada/Projects/emmy-p4-address-strength/tests/test_compiler.py", line 194, in test_partial_collective_tile_keeps_all_threads_in_barrier
+    p=fixture('r01_array_sum',self.out/'invalid-collective',tile_extent=127)
+  File "/home/ada/Projects/emmy-p4-address-strength/tests/test_compiler.py", line 27, in fixture
+    source = next((ROOT/problem).glob('*.ir.json'))
+StopIteration
+
+======================================================================
+ERROR: test_partial_cta_non_sum_reduction_masks_fold (tests.test_compiler.CompilerTests.test_partial_cta_non_sum_reduction_masks_fold)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ada/Projects/emmy-p4-address-strength/tests/test_compiler.py", line 427, in test_partial_cta_non_sum_reduction_masks_fold
+    p=fixture('r01_array_sum',self.out/'partial-max',tile_extent=127,data_extent=127)
+  File "/home/ada/Projects/emmy-p4-address-strength/tests/test_compiler.py", line 27, in fixture
+    source = next((ROOT/problem).glob('*.ir.json'))
+StopIteration
+
+======================================================================
+ERROR: test_pointwise_tuple_accesses_vectorize_with_runtime_fallback (tests.test_compiler.CompilerTests.test_pointwise_tuple_accesses_vectorize_with_runtime_fallback) (problem='p02_scale_shift')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ada/Projects/emmy-p4-address-strength/tests/test_compiler.py", line 614, in test_pointwise_tuple_accesses_vectorize_with_runtime_fallback
+    source=next((ROOT/problem).glob('*.ir.json'))
+StopIteration
+
+======================================================================
+ERROR: test_pointwise_tuple_accesses_vectorize_with_runtime_fallback (tests.test_compiler.CompilerTests.test_pointwise_tuple_accesses_vectorize_with_runtime_fallback) (problem='p03_relu_mul')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ada/Projects/emmy-p4-address-strength/tests/test_compiler.py", line 614, in test_pointwise_tuple_accesses_vectorize_with_runtime_fallback
+    source=next((ROOT/problem).glob('*.ir.json'))
+StopIteration
+
+======================================================================
+ERROR: test_prefetch_scalar_loads_replaces_the_map_read (tests.test_compiler.CompilerTests.test_prefetch_scalar_loads_replaces_the_map_read)
+f03 issues its map input beside the reduction and reuses it.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ada/Projects/emmy-p4-address-strength/tests/test_compiler.py", line 801, in test_prefetch_scalar_loads_replaces_the_map_read
+    source=next((ROOT/'f03_l2norm').glob('*.ir.json'))
+StopIteration
+
+======================================================================
+ERROR: test_reduce_aliases_canonicalize (tests.test_compiler.CompilerTests.test_reduce_aliases_canonicalize)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ada/Projects/emmy-p4-address-strength/tests/test_compiler.py", line 465, in test_reduce_aliases_canonicalize
+    p=fixture('r01_array_sum',self.out/'reduce-alias',tile_extent=127,data_extent=127)
+  File "/home/ada/Projects/emmy-p4-address-strength/tests/test_compiler.py", line 27, in fixture
+    source = next((ROOT/problem).glob('*.ir.json'))
+StopIteration
+
+======================================================================
+ERROR: test_reject_invalid_abi (tests.test_compiler.CompilerTests.test_reject_invalid_abi)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ada/Projects/emmy-p4-address-strength/tests/test_compiler.py", line 232, in test_reject_invalid_abi
+    p=fixture('p00_scalar_add',self.out/'invalid-abi')
+  File "/home/ada/Projects/emmy-p4-address-strength/tests/test_compiler.py", line 27, in fixture
+    source = next((ROOT/problem).glob('*.ir.json'))
+StopIteration
+
+======================================================================
+ERROR: test_reject_tree_indexed_by_lane (tests.test_compiler.CompilerTests.test_reject_tree_indexed_by_lane)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ada/Projects/emmy-p4-address-strength/tests/test_compiler.py", line 221, in test_reject_tree_indexed_by_lane
+    path=fixture('r01_array_sum',self.out/'invalid-tree-mapping')
+  File "/home/ada/Projects/emmy-p4-address-strength/tests/test_compiler.py", line 27, in fixture
+    source = next((ROOT/problem).glob('*.ir.json'))
+StopIteration
+
+======================================================================
+ERROR: test_row_cache_and_cta_total_mechanisms_are_populated (tests.test_compiler.CompilerTests.test_row_cache_and_cta_total_mechanisms_are_populated) (problem='f01_rmsnorm')
+f01/f03/f04's merged reductions leave a cache and CTA total.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ada/Projects/emmy-p4-address-strength/tests/test_compiler.py", line 823, in test_row_cache_and_cta_total_mechanisms_are_populated
+    source=next((ROOT/problem).glob('*.ir.json'))
+StopIteration
+
+======================================================================
+ERROR: test_row_cache_and_cta_total_mechanisms_are_populated (tests.test_compiler.CompilerTests.test_row_cache_and_cta_total_mechanisms_are_populated) (problem='f03_l2norm')
+f01/f03/f04's merged reductions leave a cache and CTA total.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ada/Projects/emmy-p4-address-strength/tests/test_compiler.py", line 823, in test_row_cache_and_cta_total_mechanisms_are_populated
+    source=next((ROOT/problem).glob('*.ir.json'))
+StopIteration
+
+======================================================================
+ERROR: test_row_cache_and_cta_total_mechanisms_are_populated (tests.test_compiler.CompilerTests.test_row_cache_and_cta_total_mechanisms_are_populated) (problem='r04_row_sum')
+f01/f03/f04's merged reductions leave a cache and CTA total.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ada/Projects/emmy-p4-address-strength/tests/test_compiler.py", line 823, in test_row_cache_and_cta_total_mechanisms_are_populated
+    source=next((ROOT/problem).glob('*.ir.json'))
+StopIteration
+
+======================================================================
+ERROR: test_row_maps_use_the_shared_strided_access_proof (tests.test_compiler.CompilerTests.test_row_maps_use_the_shared_strided_access_proof) (problem='f01_rmsnorm')
+f01/f03 keep row reuse, and a rejected proof fails closed.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ada/Projects/emmy-p4-address-strength/tests/test_compiler.py", line 885, in test_row_maps_use_the_shared_strided_access_proof
+    source = next((ROOT/problem).glob('*.ir.json'))
+StopIteration
+
+======================================================================
+ERROR: test_row_maps_use_the_shared_strided_access_proof (tests.test_compiler.CompilerTests.test_row_maps_use_the_shared_strided_access_proof) (problem='f03_l2norm')
+f01/f03 keep row reuse, and a rejected proof fails closed.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ada/Projects/emmy-p4-address-strength/tests/test_compiler.py", line 885, in test_row_maps_use_the_shared_strided_access_proof
+    source = next((ROOT/problem).glob('*.ir.json'))
+StopIteration
+
+======================================================================
+ERROR: test_scalar_by_value_argument_binds_as_ssa (tests.test_compiler.CompilerTests.test_scalar_by_value_argument_binds_as_ssa)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ada/Projects/emmy-p4-address-strength/tests/test_compiler.py", line 240, in test_scalar_by_value_argument_binds_as_ssa
+    p=fixture('p00_scalar_add',self.out/'scalar-abi',tile_extent=1,data_extent=1)
+  File "/home/ada/Projects/emmy-p4-address-strength/tests/test_compiler.py", line 27, in fixture
+    source = next((ROOT/problem).glob('*.ir.json'))
+StopIteration
+
+======================================================================
+ERROR: test_scalar_second_pass_reuses_f02_scores (tests.test_compiler.CompilerTests.test_scalar_second_pass_reuses_f02_scores)
+f02 keeps each thread's pass-one scores for the numerator map.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ada/Projects/emmy-p4-address-strength/tests/test_compiler.py", line 899, in test_scalar_second_pass_reuses_f02_scores
+    source = next((ROOT/'f02_row_softmax').glob('*.ir.json'))
+StopIteration
+
+======================================================================
+ERROR: test_scaled_softmax_reuse_survives_ptxas (tests.test_compiler.CompilerTests.test_scaled_softmax_reuse_survives_ptxas)
+A 2048-wide row activates the scalar cache in final SASS.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ada/Projects/emmy-p4-address-strength/tests/test_compiler.py", line 917, in test_scaled_softmax_reuse_survives_ptxas
+    path = self.scaled_softmax(self.out/'scaled-softmax')
+  File "/home/ada/Projects/emmy-p4-address-strength/tests/test_compiler.py", line 125, in scaled_softmax
+    source = next((ROOT/'f02_row_softmax').glob('*.ir.json'))
+StopIteration
+
+======================================================================
+ERROR: test_unaligned_copy_index_stays_scalar (tests.test_compiler.CompilerTests.test_unaligned_copy_index_stays_scalar)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ada/Projects/emmy-p4-address-strength/tests/test_compiler.py", line 577, in test_unaligned_copy_index_stays_scalar
+    path=fixture('m02_matmul_rect',self.out/'vector-copy-unaligned')
+  File "/home/ada/Projects/emmy-p4-address-strength/tests/test_compiler.py", line 27, in fixture
+    source = next((ROOT/problem).glob('*.ir.json'))
+StopIteration
+
+======================================================================
+ERROR: test_unsupported_errors_do_not_emit_partial_ptx (tests.test_compiler.CompilerTests.test_unsupported_errors_do_not_emit_partial_ptx)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ada/Projects/emmy-p4-address-strength/tests/test_compiler.py", line 1159, in test_unsupported_errors_do_not_emit_partial_ptx
+    p=fixture('p00_scalar_add',self.out/'unsupported-abi')
+  File "/home/ada/Projects/emmy-p4-address-strength/tests/test_compiler.py", line 27, in fixture
+    source = next((ROOT/problem).glob('*.ir.json'))
+StopIteration
+
+======================================================================
+ERROR: test_vector_copy_has_runtime_fallback_and_scalar_negative (tests.test_compiler.CompilerTests.test_vector_copy_has_runtime_fallback_and_scalar_negative)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ada/Projects/emmy-p4-address-strength/tests/test_compiler.py", line 539, in test_vector_copy_has_runtime_fallback_and_scalar_negative
+    aligned=fixture('m02_matmul_rect',self.out/'vector-copy-aligned')
+  File "/home/ada/Projects/emmy-p4-address-strength/tests/test_compiler.py", line 27, in fixture
+    source = next((ROOT/problem).glob('*.ir.json'))
+StopIteration
+
+----------------------------------------------------------------------
+Ran 54 tests in 7.995s
+
+FAILED (errors=41)

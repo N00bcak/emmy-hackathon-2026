@@ -1,0 +1,196 @@
+{
+  "schema": "emmy-p4-rebased-guards-v1",
+  "compiler_sha256": "c0dcf3321d209ef5de1205a8e592890810a155c6b9aa687abb38b434b88d62e7",
+  "guards": {
+    "A24": {
+      "name": "case-31",
+      "id": "b3b9d4ccd080adb9d5a05ae938aec6089818bc50230ec5093d25c135097c90a1",
+      "ok": true,
+      "canaries": true,
+      "resources": [
+        {
+          "entry": "k_out_116831",
+          "dynamic_shared_bytes": 0,
+          "block_threads": 32,
+          "max_threads_per_block": 32,
+          "static_shared_bytes": 0,
+          "local_bytes": 0,
+          "registers": 14,
+          "max_active_blocks_per_sm": 24,
+          "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+        }
+      ]
+    },
+    "A25": {
+      "name": "case-4",
+      "id": "b24c76efd4ba9fd8763e69cfd1e0926f876281a2a06fd64c8dc9e882b9a33aed",
+      "ok": true,
+      "canaries": true,
+      "resources": [
+        {
+          "entry": "k_out_750445",
+          "dynamic_shared_bytes": 0,
+          "block_threads": 32,
+          "max_threads_per_block": 32,
+          "static_shared_bytes": 0,
+          "local_bytes": 0,
+          "registers": 26,
+          "max_active_blocks_per_sm": 24,
+          "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+        }
+      ]
+    },
+    "A30": {
+      "name": "04-nested-restore",
+      "id": "068fb6cb67fb91185ea4063ac15b15ae1ea8b0ebeb9a05d6fef2e777f31f2348",
+      "ok": true,
+      "canaries": true,
+      "resources": [
+        {
+          "entry": "k",
+          "dynamic_shared_bytes": 0,
+          "block_threads": 32,
+          "max_threads_per_block": 32,
+          "static_shared_bytes": 0,
+          "local_bytes": 0,
+          "registers": 8,
+          "max_active_blocks_per_sm": 24,
+          "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+        }
+      ]
+    },
+    "A31": {
+      "name": "07-loop-axis-shadow",
+      "id": "1f9428cef0a7750c55fec497401857955bd037aed43ab72a1abf26627ef390af",
+      "ok": true,
+      "canaries": true,
+      "resources": [
+        {
+          "entry": "k",
+          "dynamic_shared_bytes": 0,
+          "block_threads": 32,
+          "max_threads_per_block": 32,
+          "static_shared_bytes": 0,
+          "local_bytes": 0,
+          "registers": 14,
+          "max_active_blocks_per_sm": 24,
+          "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+        }
+      ]
+    },
+    "A50": {
+      "name": "scalar-shadow",
+      "id": "fa41b5e778718c3209536b85787001a3fce87f9cbc7f4b8288e18ffa0777fcc6",
+      "ok": true,
+      "canaries": true,
+      "resources": [
+        {
+          "entry": "k_out_579822",
+          "dynamic_shared_bytes": 0,
+          "block_threads": 32,
+          "max_threads_per_block": 32,
+          "static_shared_bytes": 0,
+          "local_bytes": 0,
+          "registers": 14,
+          "max_active_blocks_per_sm": 24,
+          "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+        }
+      ]
+    },
+    "A51": {
+      "name": "grouped-simultaneous",
+      "id": "8a7db526571189e3b67c95f11a3294d910c6e10a53d58c33f0c9a97031e3a9b8",
+      "ok": true,
+      "canaries": true,
+      "resources": [
+        {
+          "entry": "k_out_825342",
+          "dynamic_shared_bytes": 0,
+          "block_threads": 32,
+          "max_threads_per_block": 32,
+          "static_shared_bytes": 0,
+          "local_bytes": 0,
+          "registers": 12,
+          "max_active_blocks_per_sm": 24,
+          "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+        }
+      ]
+    },
+    "A58": {
+      "name": "rmsnorm-0",
+      "id": "09d6470c83d329ff46f9a20e9fee4ac3aebe60c50227116328113f9a20a888f0",
+      "ok": true,
+      "canaries": true,
+      "resources": [
+        {
+          "entry": "k_out_408564",
+          "dynamic_shared_bytes": 0,
+          "block_threads": 64,
+          "max_threads_per_block": 64,
+          "static_shared_bytes": 0,
+          "local_bytes": 0,
+          "registers": 40,
+          "max_active_blocks_per_sm": 24,
+          "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+        }
+      ]
+    },
+    "A59": {
+      "name": "l2norm-0",
+      "id": "e8f4437dd934a945ab53494a64920d8c0145bacfe1a4df3dd4fcba6a08c4790d",
+      "ok": true,
+      "canaries": true,
+      "resources": [
+        {
+          "entry": "k_out_348309",
+          "dynamic_shared_bytes": 0,
+          "block_threads": 256,
+          "max_threads_per_block": 256,
+          "static_shared_bytes": 0,
+          "local_bytes": 0,
+          "registers": 18,
+          "max_active_blocks_per_sm": 6,
+          "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+        }
+      ]
+    },
+    "A90": {
+      "name": "pointwise-3",
+      "id": "06a6f12448fbb8fa89a986b27daaf213436aecfc3a82bba559eb3ba17e6b8e70",
+      "ok": true,
+      "canaries": true,
+      "resources": [
+        {
+          "entry": "k_out_638002",
+          "dynamic_shared_bytes": 0,
+          "block_threads": 64,
+          "max_threads_per_block": 64,
+          "static_shared_bytes": 0,
+          "local_bytes": 0,
+          "registers": 12,
+          "max_active_blocks_per_sm": 24,
+          "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+        }
+      ]
+    },
+    "A91": {
+      "name": "pointwise-1",
+      "id": "fe256034fe7c7c62265efd48a8f68916a616af576075f2b372d88752fcde592c",
+      "ok": true,
+      "canaries": true,
+      "resources": [
+        {
+          "entry": "k_out_904538",
+          "dynamic_shared_bytes": 0,
+          "block_threads": 64,
+          "max_threads_per_block": 64,
+          "static_shared_bytes": 0,
+          "local_bytes": 0,
+          "registers": 12,
+          "max_active_blocks_per_sm": 24,
+          "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "schema": "emmy-p4-rebased-local4060-paired-v1",
+  "device": "NVIDIA GeForce RTX 4060 Laptop GPU, sm_89",
+  "proxy": true,
+  "hosted_acceptance": false,
+  "candidate_compiler_sha256": "74164ed51aff8fc3886e4b5daa029f526d26d4fe5e2d0cf86ac706ec1cfb602d",
+  "baseline": "forced affine_byte_scale fallback, same frozen source and ptxas flags",
+  "cases": {
+    "p02_scale_shift_8m": {
+      "ok": true,
+      "completed_pairs": 21,
+      "median_ratio": 1.0031949125388044,
+      "min_ratio": 0.675409839194177,
+      "max_ratio": 1.0346720925478001,
+      "p10_ratio": 0.9811911713762106,
+      "p90_ratio": 1.0129032300463436,
+      "candidate_cubins": [
+        "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/p4-rebased-74164ed5-candidate-suite-20261027/perf-a/artifacts/perf-a/p02_scale_shift_8m/kernel-0-k_add_pointwise.sm_89.cubin"
+      ],
+      "baseline_cubins": [
+        "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/p4-rebased-74164ed5-gates-20261027/fallback-cubin/p02_scale_shift_8m-kernel-0/module.cubin"
+      ],
+      "candidate_compiler_sha256": "74164ed51aff8fc3886e4b5daa029f526d26d4fe5e2d0cf86ac706ec1cfb602d",
+      "device": {
+        "name": "NVIDIA GeForce RTX 4060 Laptop GPU",
+        "worker_pid": 643001,
+        "context_identity": "643001:94798510364624",
+        "driver_version": 13040,
+        "clock_rate_khz": 1890000,
+        "multiprocessors": 24,
+        "memory_clock_khz": 8001000,
+        "compute_major": 8,
+        "compute_minor": 9,
+        "uuid": "GPU-01c8f1da-9f9f-fa3e-bbe2-0771199ab74a",
+        "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry."
+      },
+      "timing_protocol": "cuda-graph-paired-v2",
+      "result_path": "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/p4-rebased-74164ed5-gates-20261027/paired-p02_scale_shift_8m.json"
+    },
+    "p03_relu_mul_4m": {
+      "ok": true,
+      "completed_pairs": 21,
+      "median_ratio": 0.991341988342215,
+      "min_ratio": 0.7508971185885673,
+      "max_ratio": 1.1594202348383809,
+      "p10_ratio": 0.9037338701157173,
+      "p90_ratio": 1.0410959386533765,
+      "candidate_cubins": [
+        "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/p4-rebased-74164ed5-candidate-suite-20261027/perf-a/artifacts/perf-a/p03_relu_mul_4m/kernel-0-k_mul_pointwise.sm_89.cubin"
+      ],
+      "baseline_cubins": [
+        "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/p4-rebased-74164ed5-gates-20261027/fallback-cubin/p03_relu_mul_4m-kernel-0/module.cubin"
+      ],
+      "candidate_compiler_sha256": "74164ed51aff8fc3886e4b5daa029f526d26d4fe5e2d0cf86ac706ec1cfb602d",
+      "device": {
+        "name": "NVIDIA GeForce RTX 4060 Laptop GPU",
+        "worker_pid": 643193,
+        "context_identity": "643193:93959844349040",
+        "driver_version": 13040,
+        "clock_rate_khz": 1890000,
+        "multiprocessors": 24,
+        "memory_clock_khz": 8001000,
+        "compute_major": 8,
+        "compute_minor": 9,
+        "uuid": "GPU-01c8f1da-9f9f-fa3e-bbe2-0771199ab74a",
+        "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry."
+      },
+      "timing_protocol": "cuda-graph-paired-v2",
+      "result_path": "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/p4-rebased-74164ed5-gates-20261027/paired-p03_relu_mul_4m.json"
+    }
+  }
+}
