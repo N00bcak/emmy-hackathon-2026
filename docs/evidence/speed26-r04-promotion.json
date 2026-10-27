@@ -1,0 +1,41 @@
+{
+  "decision": "retain_exact_strided_source_as_third_independently_confirmed_speed_promotion",
+  "source_id": "c0d2700cc9d905eb472b766d2df7cbb1316b861985c90d6fb5ab713baadb3323",
+  "compile_sha256": "8124a732e1ab1ad71f401d8ee83ff25eef4d8f6ce0e5eead4c93082b70db2734",
+  "comparison_source_id": "b61dcfadf0a473fe4b3d6500e56bdd2da174fd6242b2bf830ccc3ed8836a6b1c",
+  "patch_sha256": "6592fa0daf4d26da4ba4bf9e940d4b5f781969bff5e353f2a9bef720ef74d474",
+  "suite_id": "9c3e5fe486ce9465ed70df41d873d32ed84647caab11b0e0ed1d1260adaa87ca",
+  "gpu_case_count": 66,
+  "published_case_count": 15,
+  "fixed_experiment_check_count": 100,
+  "tolerances_changed": false,
+  "new_cases": false,
+  "candidate_fresh_all15_evidence": "18e28dbb14664a390bfff14be13fe3f167e15465d9cab1e7c36330a594f8acf4",
+  "candidate_published_gate": "2e5d5640405ad198a9d16f7bed7fb24be390f2bff4d17118985f51523ffaa680",
+  "comparison_fresh_all15_evidence": "065648c88f50217bbd6fb39561c8f6d0a5d42582b3f306d4b628c217cdffd893",
+  "comparison_published_gate": "ebe610d6d564fb1334a7e179c2f215fb77d0c1bed0970c2c74c5fa9cd5f02f10",
+  "candidate_fixed100": "campaign-20261026-speed-cont-v14/cpu100/strided-r128-independent-v1/results/results.json",
+  "comparison_fixed100": "campaign-20261026-speed-cont-v14/cpu100/retained-r128-independent-v1/results/results.json",
+  "screen_accepted_evidence": "dee5d1035db37d745aac7c7fab1fba07974c4fc294719c3299ca1c0dc92b5355",
+  "independent_accepted_evidence": "630bc6bfa507ecbfaa40e6fcafe97ac97e76f569b5ecbbdb0c76ba71070e235b",
+  "timing_protocol": "cuda-graph-grouped128-v1",
+  "device": "local RTX 4090",
+  "metric": "warm grouped 128 replay, candidate time / retained time",
+  "screen_block_ratios": [0.9166666822135852, 0.9166666822135852],
+  "independent_block_ratios": [0.9166666822135852, 0.9166666822135852],
+  "independent_aa_margin": 0.019292810286533624,
+  "preregistered_extra_margin": 0.01,
+  "robust_gain": true,
+  "per_case_review": {
+    "r04_row_sum": "confirmed 8.33% lower warm R128 time; both blocks in independent run passed controls",
+    "f03_l2norm": "correctness passed; prior R32 candidate/baseline ratio 0.934782588, but gain did not exceed its 0.065217412 AA margin plus 0.01; timing unresolved",
+    "r01_array_sum": "correctness passed; timing not calibrated, so latency change unresolved",
+    "other_published_cases": "compiled images unchanged by this source change; all published correctness cases passed"
+  },
+  "limits": [
+    "The measured r04 result is warm grouped replay on a 4090, not isolated launch latency.",
+    "sm120 assembly passed earlier; no RTX 5090 execution or correctness claim.",
+    "r01 and f03 latency effects remain unresolved; no measured per-case regression was established."
+  ],
+  "research_root": "/mnt/nfs/bcy/emmy/research"
+}

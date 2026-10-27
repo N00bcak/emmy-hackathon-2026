@@ -5,6 +5,7 @@ No emitter, renderer, or external compiler performs the IR lowering. ptxas may
 assemble the resulting PTX separately. Unsupported constructs fail explicitly.
 """
 from __future__ import annotations
+import dataclasses
 import json
 import math
 import re
@@ -581,6 +582,18 @@ def flat_residue(shape, index, modulus, variables=None):
     return total
 
 
+def cta_cooperative(statements):
+    """True when threads of a CTA interact: barriers, shuffles, tree
+    reductions, shared memory or asynchronous copies anywhere in the tree."""
+    for statement in statements:
+        if type(statement).__name__ in ('WarpShuffle', 'TreeHalve', 'Sync', 'Smem', 'CpAsyncCopy',
+                                        'CpAsyncCommit', 'CpAsyncWait'):
+            return True
+        if any(cta_cooperative(nested) for nested in statement_bodies(statement)):
+            return True
+    return False
+
+
 def has_collective(statements):
     """A divergent tile exit cannot bypass any nested collective."""
     for statement in statements:
@@ -698,6 +711,181 @@ def written_buffers(statements):
         for nested in statement_bodies(s):
             found.update(written_buffers(nested))
     return found
+
+
+def substitute_axis(value, mapping):
+    """Rebuild a statement tree with mapped ``Var``s substituted. A mapped
+    name used as a bare string is not understood, so it raises."""
+    if isinstance(value, _typed_expr._ExprOps):
+        return value.substitute(mapping)
+    if isinstance(value, str):
+        if value in mapping:
+            raise Unsupported(f'Axis {value} referenced outside an expression')
+        return value
+    if isinstance(value, tuple):
+        rebuilt = [substitute_axis(item, mapping) for item in value]
+        return type(value)(rebuilt) if type(value) is not tuple else tuple(rebuilt)
+    if dataclasses.is_dataclass(value) and not isinstance(value, type):
+        if type(value).__name__ in ('Axis', 'Dim', 'DataType', 'Window', 'ElementwiseImpl'):
+            if type(value).__name__ == 'Axis' and value.name in mapping:
+                raise Unsupported(f'Axis {value.name} rebound inside the Tile')
+            return value
+        changed = {}
+        for f in dataclasses.fields(value):
+            if not f.init:
+                continue
+            old = getattr(value, f.name)
+            new = substitute_axis(old, mapping)
+            if new is not old:
+                changed[f.name] = new
+        return dataclasses.replace(value, **changed) if changed else value
+    return value
+
+
+def unique_retile_writes(tile, meta, names, extents):
+    """Prove that changing lane ownership cannot reorder colliding writes.
+
+    This intentionally accepts only direct scalar writes with affine Tile-axis
+    coordinates. Exhaustive static enumeration is bounded; large/opaque Tiles
+    keep the original lowering.
+    """
+    writes = [item for item in tile.body if type(item).__name__ == 'Write']
+    if (not writes or any(type(item).__name__ != 'Write'
+                          and written_buffers((item,)) for item in tile.body)
+            or math.prod(extents) * len(writes) > 262144):
+        return False
+    outputs = {arg['name']: tuple(arg['shape']) for arg in meta['args']
+               if arg.get('output') and all(isinstance(d, int) and d > 0
+                                            for d in arg['shape'])}
+    definitions = []
+    axis_terms = {('var', name) for name in names}
+    for write in writes:
+        shape = outputs.get(write.output)
+        if (shape is None or write.atomic or len(write.values) != 1
+                or len(write.index) != len(shape)):
+            return False
+        coords = []
+        for part in write.index:
+            form = affine_form(part)
+            if form is None or not set(form[1]) <= axis_terms:
+                return False
+            coords.append(form)
+        definitions.append((write.output, shape, coords))
+    seen = {name: set() for name in outputs}
+    # Decode each Tile point in the same row-major order as the generic Tile.
+    for flat in range(math.prod(extents)):
+        values, remainder = {}, flat
+        for name, extent in reversed(list(zip(names, extents))):
+            values[name], remainder = remainder % extent, remainder // extent
+        for output, shape, coords in definitions:
+            linear = 0
+            for index, (constant, terms) in enumerate(coords):
+                coordinate = constant + sum(coef * values[term[1]]
+                                            for term, coef in terms.items())
+                if coordinate < 0 or coordinate >= shape[index]:
+                    return False
+                linear += coordinate * math.prod(shape[index + 1:])
+            if linear in seen[output]:
+                return False
+            seen[output].add(linear)
+    return True
+
+
+def retile_redundant_hoists(node, meta):
+    """Reorder a Tile's axes so each CTA owns whole rows of a hoisted reduction
+    (e.g. attention's QK^T scores) instead of recomputing rows another CTA also
+    needs; one axis may be split as hi * f + lo. Only for a non-cooperative Tile
+    that exactly fills the grid, where any cell-to-thread order is equivalent."""
+    body = node.op.body
+    if len(body) != 1 or type(body[0]).__name__ != 'Tile':
+        return node
+    tile = body[0]
+    # Without raster_group, raster_axes is only a tag; the decode is row-major.
+    if tile.aux_threads or tile.raster_group is not None or cta_cooperative(tile.body):
+        return node
+    # Reordering independent cells is legal only if global writes cannot
+    # affect any load, and the Tile has no atomic side effect.
+    def accesses(items):
+        for item in items:
+            yield item
+            for nested in statement_bodies(item):
+                yield from accesses(nested)
+    items = list(accesses(tile.body))
+    writes = [item for item in items if type(item).__name__ == 'Write']
+    if (not writes or any(item.atomic for item in writes)
+            or any(type(item).__name__ == 'Load' and item.input in written_buffers(tile.body)
+                   for item in items)):
+        return node
+    names = [axis.name for axis in tile.axes]
+    extents = [static_or_none(axis.extent) for axis in tile.axes]
+    launched, grid = math.prod(meta['block']), math.prod(meta['grid'])
+    if (None in extents or len(set(names)) != len(names) or any(e <= 0 for e in extents)
+            or any(d != 1 for d in (*meta['block'][1:], *meta['grid'][1:]))
+            or tile.block_threads not in (None, launched)
+            or math.prod(extents) != launched * grid
+            or not unique_retile_writes(tile, meta, names, extents)):
+        return node
+    axis_extent = dict(zip(names, extents))
+    dependent = set()
+    for outer in tile.body:
+        if type(outer).__name__ != 'Loop':
+            continue
+        for inner in outer.body:
+            if (type(inner).__name__ != 'Loop' or not inner.seed or not straight_line(inner.body)
+                    or not any(type(x).__name__ == 'Accum' for x in inner.body)):
+                continue
+            free = touched_names(inner.body) - defined_names(inner.body) - {inner.axis.name}
+            if free <= set(names) | {outer.axis.name}:
+                dependent |= free & set(names)
+    independent = [n for n in names if n not in dependent]
+    if not dependent or not independent:
+        return node
+    cuts = [i for i in range(len(extents) + 1) if math.prod(extents[i:]) == launched]
+    if cuts and all(n in names[cuts[-1]:] for n in independent):
+        return node  # already no cross-CTA recompute
+    inner_size = math.prod(axis_extent[n] for n in independent)
+    if launched % inner_size:
+        return node
+    want = launched // inner_size
+    order = [n for n in names if n in dependent]
+    lo, size, split = [], 1, None
+    for name in reversed(order):
+        if size == want:
+            break
+        extent = axis_extent[name]
+        if size * extent <= want and want % (size * extent) == 0:
+            lo.insert(0, name)
+            size *= extent
+            continue
+        factor = want // size
+        if want % size or extent % factor:
+            return node
+        split = (name, extent // factor, factor)
+        size = want
+        break
+    if size != want:
+        return node
+    by_name = {axis.name: axis for axis in tile.axes}
+    hi = [n for n in order if n not in lo and (split is None or n != split[0])]
+    axes, mapping = [by_name[n] for n in hi], {}
+    if split is not None:
+        name, upper, factor = split
+        taken = touched_names(tile.body) | set(names)
+        high, low = f'{name}__hi', f'{name}__lo'
+        if high in taken or low in taken:
+            return node
+        Dim = type(by_name[name].extent)
+        axes.append(dataclasses.replace(by_name[name], name=high, extent=Dim(upper), window=None))
+        axes.append(dataclasses.replace(by_name[name], name=low, extent=Dim(factor), window=None))
+        mapping[name] = _typed_expr.Var(high) * _typed_expr.Literal(factor, 'int') + _typed_expr.Var(low)
+    axes += [by_name[n] for n in lo] + [by_name[n] for n in independent]
+    try:
+        new_body = substitute_axis(tile.body, mapping) if mapping else tile.body
+    except Unsupported:
+        return node
+    retiled = dataclasses.replace(tile, axes=tuple(axes), body=new_body, raster_axes=None)
+    op = dataclasses.replace(node.op, body=type(body)([retiled]))
+    return dataclasses.replace(node, op=op)
 
 
 # Copies per trip when a loop's shared loads combine into vector loads.
@@ -1734,7 +1922,24 @@ class Emitter:
             # This deliberately preserves typed native integer/wide copies.
             register, result = self.emit_operation(op, typed, result)
         elif result == 'f32' or (native_op and (all_at_result or integer_promotion)):
-            register, result = self.emit_operation(op, typed, result)
+            if (operation == 'reciprocal' and result == 'f32' and len(args) == 1
+                    and args[0] == getattr(self, 'softmax_pair_sum_name', None)
+                    and getattr(self, 'allow_softmax_approx_rcp', False)):
+                denominator = typed[0][0]
+                normal, finite, fast = self.reg('p'), self.reg('p'), self.reg('p')
+                fallback, joined = self.label('softmax_rcp_exact'), self.label('softmax_rcp_join')
+                register = self.reg('f')
+                self.emit(f'setp.ge.f32 {normal}, {denominator}, {f32(2.0**-126)};')
+                self.emit(f'setp.lt.f32 {finite}, {denominator}, {f32(float("inf"))};')
+                self.emit(f'and.pred {fast}, {normal}, {finite};')
+                self.emit(f'@!{fast} bra {fallback};')
+                self.emit(f'rcp.approx.f32 {register}, {denominator};')
+                self.emit(f'bra {joined};')
+                self.mark(fallback)
+                self.emit(f'rcp.rn.f32 {register}, {denominator};')
+                self.mark(joined)
+            else:
+                register, result = self.emit_operation(op, typed, result)
         else:
             if any(t in ('f64','i64','u64') for t in argument_types):
                 raise Unsupported('Mixed/non-native wide stamped arithmetic has no established computation law')
@@ -2659,6 +2864,203 @@ class Emitter:
             plans[id(loop)] = (step, trips, end, load, accum)
         return plans
 
+
+    def find_rms_input_replay(self, tile, extents, launched):
+        """Prove a complete eight-value F32 row reduction and later row map.
+
+        Repartition each 1024-element row into two four-wide groups per CTA
+        lane. Every output element keeps its original input values, while the
+        reduction's summation order may differ at the unchanged final tolerance.
+        """
+        if (self.inactive or self.geometry_3d or tile.aux_threads
+                or len(tile.axes) != 2 or len(extents) != 2
+                or extents[1] != launched or tile.block_threads != launched
+                or math.prod(extents) != launched * math.prod(self.meta['grid'])):
+            return None
+        loops = [item for item in tile.body if type(item).__name__ == 'StridedLoop']
+        if len(loops) != 2 or tile.body[-1] is not loops[1]:
+            return None
+        first, second = loops
+        if (first is second or not first.seed or not second.seed
+                or first.unroll or second.unroll or first.end is not None or second.end is not None
+                or first.axis.name == second.axis.name
+                or first.axis.name in (tile.axes[0].name, tile.axes[1].name)
+                or second.axis.name in (tile.axes[0].name, tile.axes[1].name)
+                or static(first.axis.extent) != static(second.axis.extent)
+                or static(first.axis.extent) != 8 * launched):
+            return None
+        for item in loops:
+            if (type(item.start).__name__ != 'Var'
+                    or item.start.name != tile.axes[1].name
+                    or type(item.step).__name__ != 'Literal'
+                    or type(item.step.value) is not int
+                    or item.step.dtype not in ('int', 'i32')
+                    or item.step.value != launched):
+                return None
+        one, two = list(first.body), list(second.body)
+        if ([type(item).__name__ for item in one] != ['Load', 'Assign', 'Accum']
+                or [type(item).__name__ for item in two]
+                != ['Load', 'Assign', 'Load', 'Assign', 'Write']):
+            return None
+        x1, square, fold = one
+        x2, scale, weight, product, write = two
+        if (len(x1.names) != 1 or len(x2.names) != 1 or len(weight.names) != 1
+                or x1.input != x2.input or x1.input not in self.ptrs
+                or x1.input in self.shared or x1.input in self.scalar_parameters
+                or x1.input in written_buffers(tile.body)
+                or weight.input in written_buffers(tile.body)
+                or weight.input not in self.ptrs or weight.input in self.shared
+                or x1.input not in self.buffers or write.output not in self.ptrs
+                or dtype_name(self.buffers[x1.input][1]) != 'f32'
+                or dtype_name(self.buffers[weight.input][1]) != 'f32'
+                or dtype_name(self.buffers[write.output][1]) != 'f32'
+                or any(item.dtype is not None and dtype_name(item.dtype) != 'f32'
+                       for item in (x1, x2, square, fold, scale, weight, product))
+                or square.op.name != 'multiply'
+                or tuple(square.args) != (x1.names[0], x1.names[0])
+                or reduce_canon(fold.op.name) != 'add'
+                or fold.value != square.name or fold.base is not None
+                or tuple(fold.axes) != (first.axis.name,)
+                or scale.op.name != 'multiply' or len(scale.args) != 2
+                or x2.names[0] not in scale.args
+                or product.op.name != 'multiply' or len(product.args) != 2
+                or set(product.args) != {weight.names[0], scale.name}
+                or write.atomic or write.swizzle not in ('NONE', None)
+                or len(write.values) != 1 or write.values[0] != product.name
+                or write.output in (x1.input, weight.input)
+                or write.output not in {arg['name'] for arg in self.meta['args']
+                                        if arg.get('output')}
+                or (write.value_dtype is not None
+                    and dtype_name(write.value_dtype) != 'f32')):
+            return None
+        shape = self.buffers[x1.input][0]
+        wshape = self.buffers[weight.input][0]
+        oshape = self.buffers[write.output][0]
+        if (len(shape) != 2 or shape[0] < extents[0] or shape[1] != 8 * launched
+                or len(wshape) != 1 or wshape[0] < 8 * launched
+                or len(oshape) != 2 or oshape[0] < extents[0]
+                or oshape[1] != 8 * launched):
+            return None
+        def row_column(index, axis):
+            return (len(index) == 2
+                    and all(type(part).__name__ == 'Var' for part in index)
+                    and tuple(part.name for part in index)
+                    == (tile.axes[0].name, axis))
+        if (not row_column(x1.index, first.axis.name)
+                or not row_column(x2.index, second.axis.name)
+                or not row_column(write.index, second.axis.name)
+                or len(weight.index) != 1
+                or type(weight.index[0]).__name__ != 'Var'
+                or weight.index[0].name != second.axis.name):
+            return None
+        # The second Load has exactly one consumer. The first Load's square
+        # and fold remain in their original order; all Tile statements between
+        # the loops, including WarpShuffle, shared tree and barriers, stay put.
+        if (sum(x2.names[0] in item.deps() for item in two[1:]) != 1
+                or any(x2.names[0] in item.deps() for item in two[2:])):
+            return None
+        return {'first': first, 'second': second, 'load1': x1, 'load2': x2,
+                'scale': scale, 'weight': weight, 'product': product, 'write': write,
+                'bank': None, 'step': launched, 'align': {}}
+
+    def rms_replay_alignment(self, name, plan):
+        predicate = plan['align'].get(name)
+        if predicate is None:
+            low, predicate = self.reg('rd'), self.reg('p')
+            self.emit(f'and.b64 {low}, {self.ptrs[name]}, 15;')
+            self.emit(f'setp.eq.u64 {predicate}, {low}, 0;')
+            plan['align'][name] = predicate
+        return predicate
+
+    def rms_replay_vector_load(self, load, axis, base, plan):
+        self.values[axis] = (base, 'i32')
+        self.rebind(axis)
+        address, space = self.address(load.input, load.index)
+        if space != 'global':
+            raise Unsupported('RMS row replay requires global inputs')
+        registers = [self.reg('f') for _ in range(4)]
+        predicate = self.rms_replay_alignment(load.input, plan)
+        self.emit(f'@{predicate} ld.global.v4.f32 '
+                  f'{{{", ".join(registers)}}}, [{address}];')
+        for offset, register in enumerate(registers):
+            self.emit(f'@!{predicate} ld.global.f32 {register}, '
+                      f'[{address}+{4 * offset}];')
+        return registers
+
+    def rms_replay_vector_store(self, write, axis, base, values, plan):
+        self.values[axis] = (base, 'i32')
+        self.rebind(axis)
+        address, space = self.address(write.output, write.index)
+        if space != 'global':
+            raise Unsupported('RMS row replay requires global output')
+        predicate = self.rms_replay_alignment(write.output, plan)
+        self.emit(f'@{predicate} st.global.v4.f32 [{address}], '
+                  f'{{{", ".join(values)}}};')
+        for offset, value in enumerate(values):
+            self.emit(f'@!{predicate} st.global.f32 '
+                      f'[{address}+{4 * offset}], {value};')
+
+    def rms_input_replay_loop(self, loop, frame):
+        plan = getattr(self, 'rms_input_replay', None)
+        if plan is None or (loop is not plan['first'] and loop is not plan['second']):
+            return False
+        first = loop is plan['first']
+        if not first and (plan['bank'] is None or len(plan['bank']) != 2):
+            raise Unsupported('RMS row replay must follow its certified producer')
+        start, dtype = self.expr(loop.start)
+        if dtype != 'i32':
+            raise Unsupported('RMS row replay requires an I32 tile coordinate')
+        step = plan['step']
+        groups = []
+        for group in range(2):
+            base = self.reg('r')
+            self.emit(f'mad.lo.u32 {base}, {start}, 4, {group * 4 * step};')
+            self.set_integer_range(base, checked_i32_interval(group * 4 * step,
+                                                               (group + 1) * 4 * step - 1))
+            if first:
+                values = self.rms_replay_vector_load(
+                    plan['load1'], loop.axis.name, base, plan)
+            else:
+                values = plan['bank'][group][1]
+            groups.append((base, values))
+        if first:
+            # Both global requests precede the first dependent multiply.
+            plan['bank'] = groups
+        for group, (base, xvalues) in enumerate(groups):
+            wvalues = None
+            if not first:
+                wvalues = self.rms_replay_vector_load(
+                    plan['weight'], loop.axis.name, base, plan)
+            output = []
+            for offset, xvalue in enumerate(xvalues):
+                axis = base
+                if offset:
+                    axis = self.reg('r')
+                    self.emit(f'add.s32 {axis}, {base}, {offset};')
+                self.set_integer_range(axis, checked_i32_interval(
+                    group * 4 * step + offset,
+                    (group + 1) * 4 * step - 4 + offset))
+                self.values[loop.axis.name] = (axis, 'i32')
+                self.rebind(loop.axis.name)
+                load_name = plan['load1'].names[0] if first else plan['load2'].names[0]
+                self.values[load_name] = (xvalue, 'f32')
+                self.mutable.pop(load_name, None)
+                self.rebind(load_name)
+                if first:
+                    self.statements_with_init_scope(loop.body[1:], frame)
+                else:
+                    weight_name = plan['weight'].names[0]
+                    self.values[weight_name] = (wvalues[offset], 'f32')
+                    self.mutable.pop(weight_name, None)
+                    self.rebind(weight_name)
+                    self.statements_with_init_scope(
+                        (plan['scale'], plan['product']), frame)
+                    output.append(self.value(plan['product'].name))
+            if not first:
+                self.rms_replay_vector_store(
+                    plan['write'], loop.axis.name, base, output, plan)
+        return True
+
     def serial_read_pipeline(self, loop):
         plan = self.serial_read_plans.get(id(loop))
         if plan is None or self.inactive:
@@ -2674,6 +3076,15 @@ class Emitter:
         current_axis = self.reg('r')
         self.emit(f'mov.s32 {current_axis}, {start};')
         self.set_integer_range(current_axis, checked_i32_interval(0, end - 1))
+        # The typed serial plan has a single readonly 1D F32 global input,
+        # complete Tile participation and an in-bounds uniform trip count.
+        # Keep each original load and fold in order; only advance its address.
+        pointer_bank = trips >= 16 and 0 < step and 7 * step * 4 < 4096
+        if pointer_bank:
+            start_byte = self.reg('rd')
+            self.emit(f'mul.wide.s32 {start_byte}, {start}, 4;')
+            stream_pointer = self.reg('rd')
+            self.emit(f'add.u64 {stream_pointer}, {self.ptrs[load.input]}, {start_byte};')
 
         def load_at(offset):
             point = current_axis
@@ -2683,7 +3094,14 @@ class Emitter:
             self.set_integer_range(point, checked_i32_interval(0, end - 1))
             self.values[loop.axis.name] = (point, 'i32')
             self.rebind(loop.axis.name)
-            self.statements((load,))
+            if pointer_bank:
+                value = self.reg('f')
+                self.emit(f'ld.global.f32 {value}, [{stream_pointer}+{offset * 4}];')
+                self.values[load.names[0]] = (value, 'f32')
+                self.mutable.pop(load.names[0], None)
+                self.rebind(load.names[0])
+            else:
+                self.statements((load,))
             value, dtype = self.values[load.names[0]]
             if dtype != 'f32':
                 raise Unsupported('Serial prefetch requires an F32 load')
@@ -2716,6 +3134,8 @@ class Emitter:
         for destination, value in zip(current, future, strict=True):
             self.emit(f'mov.f32 {destination}, {value};')
         self.emit(f'add.s32 {current_axis}, {current_axis}, {4 * step};')
+        if pointer_bank:
+            self.emit(f'add.u64 {stream_pointer}, {stream_pointer}, {4 * step * 4};')
         self.emit(f'add.s32 {group}, {group}, 1;')
         self.rebind(loop.axis.name)
         self.emit(f'bra {begin};')
@@ -3387,6 +3807,157 @@ class Emitter:
                     or (combine.dtype is not None and dtype_name(combine.dtype) != 'f32')):
                 raise Unsupported('Partial CTA tree dtype/layout identity is unproved')
 
+
+    def small_strided_softmax_pair(self, loop):
+        """Collapse a complete two-trip F32 online local max/sum state.
+
+        The typed body and bounds prove two unconditional read-only scores per
+        lane. Only its final max/sum carriers may escape to later collectives;
+        no prefix or temporary is observable. The collective code is untouched.
+        """
+        if (self.inactive or not loop.seed or loop.end is not None
+                or len(self.node.op.body) != 1
+                or type(self.node.op.body[0]).__name__ != 'Tile'):
+            return False
+        tile = self.node.op.body[0]
+        if loop not in tile.body:
+            return False
+        stride = static_or_none(loop.step)
+        extent = static_or_none(loop.axis.extent)
+        if (stride is None or extent is None or stride <= 0
+                or extent != 2 * stride or extent > I32_MAX):
+            return False
+        body = tuple(loop.body)
+        if [type(x).__name__ for x in body] != [
+                'Let', 'Load', 'Assign', 'Assign', 'Assign', 'Assign',
+                'Assign', 'Assign', 'Assign', 'Accum', 'Accum']:
+            return False
+        one, load, maximum, old_delta, alpha, new_delta, beta, old_scale, new_scale, sum_fold, max_fold = body
+        if (type(one.value).__name__ != 'Literal' or one.value.value != 1.0
+                or len(load.names) != 1 or load.input not in self.ptrs
+                or load.input in self.shared or load.input in self.scalar_parameters
+                or load.input in written_buffers(tile.body)
+                or load.input not in self.buffers
+                or dtype_name(self.buffers[load.input][1]) != 'f32'
+                or any(x.dtype is not None and dtype_name(x.dtype) != 'f32'
+                       for x in body)):
+            return False
+        score = load.names[0]
+        max_name, sum_name = max_fold.name, sum_fold.name
+        def assign(statement, op, args):
+            return statement.op.name == op and tuple(statement.args) == tuple(args)
+        if (not assign(maximum, 'maximum', (max_name, score))
+                or not assign(old_delta, 'subtract', (max_name, maximum.name))
+                or not assign(alpha, 'exp', (old_delta.name,))
+                or not assign(new_delta, 'subtract', (score, maximum.name))
+                or not assign(beta, 'exp', (new_delta.name,))
+                or not assign(old_scale, 'multiply', (sum_name, alpha.name))
+                or tuple(new_scale.args) not in ((beta.name, one.name), (one.name, beta.name))
+                or new_scale.op.name != 'multiply'
+                or reduce_canon(sum_fold.op.name) != 'add'
+                or sum_fold.base != old_scale.name or sum_fold.value != new_scale.name
+                or reduce_canon(max_fold.op.name) != 'maximum'
+                or max_fold.base is not None or max_fold.value != score
+                or tuple(sum_fold.axes) != (loop.axis.name,)
+                or tuple(max_fold.axes) != (loop.axis.name,)):
+            return False
+        defined = defined_names(body)
+        if (len(defined) != 11 or loop.axis.name in defined
+                or set(loop.start.free_vars()) & defined
+                or any(set(index.free_vars()) & defined for index in load.index)):
+            return False
+        outside = touched_names([item for item in tile.body if item is not loop])
+        if (outside & (defined - {max_name, sum_name})):
+            return False
+        start, dtype = self.expr(loop.start)
+        bounds = self.integer_range(start) if dtype == 'i32' else None
+        if bounds is None or not (0 <= bounds[0] <= bounds[1] < stride):
+            return False
+        if (max_name not in self.values or sum_name not in self.values
+                or self.values[max_name][1] != 'f32'
+                or self.values[sum_name][1] != 'f32'):
+            return False
+        self.values[loop.axis.name] = (start, 'i32')
+        self.rebind(loop.axis.name)
+        self.statements((load,))
+        first = self.value(score)
+        second_index = self.reg('r')
+        self.emit(f'add.s32 {second_index}, {start}, {stride};')
+        self.set_integer_range(second_index,
+                               checked_i32_interval(bounds[0] + stride, bounds[1] + stride))
+        self.values[loop.axis.name] = (second_index, 'i32')
+        self.rebind(loop.axis.name)
+        self.statements((load,))
+        second = self.value(score)
+        local_first = self.reg('f')
+        local_max = self.reg('f')
+        self.emit(f'max.f32 {local_first}, {self.value(max_name)}, {first};')
+        self.emit(f'max.f32 {local_max}, {local_first}, {second};')
+        delta_first, _ = self.emit_operation('subtract', [(first, 'f32'), (local_max, 'f32')], 'f32')
+        delta_second, _ = self.emit_operation('subtract', [(second, 'f32'), (local_max, 'f32')], 'f32')
+        exp_first, _ = self.emit_operation('exp', [(delta_first, 'f32')], 'f32')
+        exp_second, _ = self.emit_operation('exp', [(delta_second, 'f32')], 'f32')
+        total, _ = self.emit_operation('add', [(exp_first, 'f32'), (exp_second, 'f32')], 'f32')
+        old_max, old_sum = self.value(max_name), self.value(sum_name)
+        self.emit(f'mov.f32 {old_max}, {local_max};')
+        self.emit(f'mov.f32 {old_sum}, {total};')
+        self.values[max_name] = (old_max, 'f32')
+        self.values[sum_name] = (old_sum, 'f32')
+        self.softmax_pair_sum_name = sum_name
+        self.mutable[max_name] = old_max
+        self.mutable[sum_name] = old_sum
+        self.rebind(max_name)
+        self.rebind(sum_name)
+        return True
+
+    def exact_short_strided_loop(self, loop, init_frame):
+        """Emit each proven trip once when a Tile lane owns a short stripe.
+
+        The start is the Tile axis itself, ranging from zero to step-1.  A
+        static extent divisible by step gives every physical lane exactly the
+        same number of trips.  Emit the original body and fold updates in
+        textual order; only induction and control instructions disappear.
+        """
+        if (self.inactive or self.geometry_3d or len(self.node.op.body) != 1
+                or type(self.node.op.body[0]).__name__ != 'Tile'):
+            return False
+        tile = self.node.op.body[0]
+        if (not tile.body or tile.body[0] is not loop
+                or tile.aux_threads or tile.raster_axes
+                or tile.block_threads != self.block_threads
+                or math.prod(static(axis.extent) for axis in tile.axes)
+                   != self.block_threads * self.grid_blocks
+                or type(loop.start).__name__ != 'Var'
+                or type(loop.step).__name__ != 'Literal'
+                or type(loop.step.value) is not int
+                or loop.step.dtype not in ('int', 'i32')
+                or loop.end is not None or loop.unroll):
+            return False
+        step, extent = loop.step.value, static(loop.axis.extent)
+        if (step <= 0 or extent <= 0 or extent > I32_MAX - step
+                or extent % step or not 2 <= extent // step <= 8
+                or self.tile_extents.get(loop.start.name) != step
+                or loop.axis.name == loop.start.name
+                or loop.axis.name in defined_names(loop.body)
+                or not straight_line(loop.body)
+                or any(id(x) in self.hoisted or id(x) in self.hoist_plans
+                       for x in loop.body)):
+            return False
+        start, dtype = self.binding(loop.start.name)
+        if dtype != 'i32':
+            return False
+        for trip in range(extent // step):
+            index = self.reg('r')
+            if trip:
+                self.emit(f'add.s32 {index}, {start}, {trip * step};')
+            else:
+                self.emit(f'mov.s32 {index}, {start};')
+            self.set_integer_range(index, checked_i32_interval(trip * step,
+                                                               (trip + 1) * step - 1))
+            self.values[loop.axis.name] = (index, 'i32')
+            self.rebind(loop.axis.name)
+            self.statements_with_init_scope(loop.body, init_frame)
+        return True
 
     def strided_main_loop(self, s, r, step, end):
         """Run whole groups of iterations of a thread-strided loop back to
@@ -5189,9 +5760,14 @@ class Emitter:
                     self.tile_extents = {axis.name: extent for axis, extent in zip(s.axes, extents)}
                     if not inactive and not self.inactive and not self.dynamic_shared:
                         self.plan_hoists(s, extents, launched)
+                    previous_replay = getattr(self, 'rms_input_replay', None)
+                    self.rms_input_replay = (
+                        self.find_rms_input_replay(s, extents, launched)
+                        if not inactive and not self.inactive else None)
                     try:
                         self.statements_with_init_scope(s.body, self.init_scope_frame(s.body))
                     finally:
+                        self.rms_input_replay = previous_replay
                         if inactive and collective:
                             self.inactive.pop()
                 finally:
@@ -5368,6 +5944,12 @@ class Emitter:
                             self.two_pass_softmax(s, online)
                     loop_init_frame = self.init_scope_frame(s.body)
                     extent = static(s.axis.extent)
+                    if kind == 'StridedLoop' and self.rms_input_replay_loop(s, loop_init_frame):
+                        continue
+                    if kind == 'StridedLoop' and self.small_strided_softmax_pair(s):
+                        continue
+                    if kind == 'StridedLoop' and self.exact_short_strided_loop(s, loop_init_frame):
+                        continue
                     if kind == 'StridedLoop' and self.serial_read_pipeline(s):
                         continue
                     if kind == 'Loop' and self.scalar_shared_address_packet_loop(s, loop_init_frame):
@@ -5884,7 +6466,22 @@ def compile_path(path):
     # A SIMT reduction loop whose shared operands lower to strength-reduced
     # vector loads computes in exact fp32 and, on the RTX 5090, beat the
     # three-term TF32 path on m01 (17.0 vs 21.1 us); prefer it outright.
-    simt = Emitter(graph, node, matches[0])
+    simt = Emitter(graph, retile_redundant_hoists(node, matches[0]), matches[0])
+    # Approximate reciprocal is eligible only for a single final F32
+    # normalized output with an explicit, sufficiently broad error budget.
+    # The typed two-trip matcher and sum-carrier check gate activation below.
+    outputs = list(graph.outputs)
+    simt.allow_softmax_approx_rcp = (
+        len(kernels) == len(metadata['kernels']) == len(outputs) == 1
+        and matches[0].get('final') is True
+        and metadata.get('graph_outputs') == outputs
+        and isinstance(metadata.get('rtol'), (int, float))
+        and isinstance(metadata.get('atol'), (int, float))
+        and metadata['rtol'] >= 1e-4 and metadata['atol'] >= 1e-6
+        and len(metadata.get('kernels', ())) == 1
+        and len(matches[0].get('args', ())) == 2
+        and sum(bool(a.get('output')) for a in matches[0]['args']) == 1
+        and all(a.get('dtype') == 'f32' for a in matches[0]['args']))
     own = tuple(node.buffer_names())
     simt.shared_probability_enabled = (
         len(kernels) == len(metadata['kernels']) == 1 and len(own) == 1
