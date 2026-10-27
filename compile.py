@@ -5,6 +5,7 @@ No emitter, renderer, or external compiler performs the IR lowering. ptxas may
 assemble the resulting PTX separately. Unsupported constructs fail explicitly.
 """
 from __future__ import annotations
+import dataclasses
 import json
 import math
 import re
@@ -829,6 +830,118 @@ def written_buffers(statements):
         for nested in statement_bodies(s):
             found.update(written_buffers(nested))
     return found
+
+
+def substitute_axis(value, mapping):
+    """Rebuild a statement tree with mapped ``Var``s substituted. A mapped
+    name used as a bare string is not understood, so it raises."""
+    if isinstance(value, _typed_expr._ExprOps):
+        return value.substitute(mapping)
+    if isinstance(value, str):
+        if value in mapping:
+            raise Unsupported(f'Axis {value} referenced outside an expression')
+        return value
+    if isinstance(value, tuple):
+        rebuilt = [substitute_axis(item, mapping) for item in value]
+        return type(value)(rebuilt) if type(value) is not tuple else tuple(rebuilt)
+    if dataclasses.is_dataclass(value) and not isinstance(value, type):
+        if type(value).__name__ in ('Axis', 'Dim', 'DataType', 'Window', 'ElementwiseImpl'):
+            if type(value).__name__ == 'Axis' and value.name in mapping:
+                raise Unsupported(f'Axis {value.name} rebound inside the Tile')
+            return value
+        changed = {}
+        for f in dataclasses.fields(value):
+            if not f.init:
+                continue
+            old = getattr(value, f.name)
+            new = substitute_axis(old, mapping)
+            if new is not old:
+                changed[f.name] = new
+        return dataclasses.replace(value, **changed) if changed else value
+    return value
+
+
+def retile_redundant_hoists(node, meta):
+    """Reorder a Tile's axes so each CTA owns whole rows of a hoisted reduction
+    (e.g. attention's QK^T scores) instead of recomputing rows another CTA also
+    needs; one axis may be split as hi * f + lo. Only for a non-cooperative Tile
+    that exactly fills the grid, where any cell-to-thread order is equivalent."""
+    body = node.op.body
+    if len(body) != 1 or type(body[0]).__name__ != 'Tile':
+        return node
+    tile = body[0]
+    # Without raster_group, raster_axes is only a tag; the decode is row-major.
+    if tile.aux_threads or tile.raster_group is not None or cta_cooperative(tile.body):
+        return node
+    names = [axis.name for axis in tile.axes]
+    extents = [static_or_none(axis.extent) for axis in tile.axes]
+    launched, grid = math.prod(meta['block']), math.prod(meta['grid'])
+    if (None in extents or len(set(names)) != len(names) or any(e <= 0 for e in extents)
+            or any(d != 1 for d in (*meta['block'][1:], *meta['grid'][1:]))
+            or tile.block_threads not in (None, launched)
+            or math.prod(extents) != launched * grid):
+        return node
+    axis_extent = dict(zip(names, extents))
+    dependent = set()
+    for outer in tile.body:
+        if type(outer).__name__ != 'Loop':
+            continue
+        for inner in outer.body:
+            if (type(inner).__name__ != 'Loop' or not inner.seed or not straight_line(inner.body)
+                    or not any(type(x).__name__ == 'Accum' for x in inner.body)):
+                continue
+            free = touched_names(inner.body) - defined_names(inner.body) - {inner.axis.name}
+            if free <= set(names) | {outer.axis.name}:
+                dependent |= free & set(names)
+    independent = [n for n in names if n not in dependent]
+    if not dependent or not independent:
+        return node
+    cuts = [i for i in range(len(extents) + 1) if math.prod(extents[i:]) == launched]
+    if cuts and all(n in names[cuts[-1]:] for n in independent):
+        return node  # already no cross-CTA recompute
+    inner_size = math.prod(axis_extent[n] for n in independent)
+    if launched % inner_size:
+        return node
+    want = launched // inner_size
+    order = [n for n in names if n in dependent]
+    lo, size, split = [], 1, None
+    for name in reversed(order):
+        if size == want:
+            break
+        extent = axis_extent[name]
+        if size * extent <= want and want % (size * extent) == 0:
+            lo.insert(0, name)
+            size *= extent
+            continue
+        factor = want // size
+        if want % size or extent % factor:
+            return node
+        split = (name, extent // factor, factor)
+        size = want
+        break
+    if size != want:
+        return node
+    by_name = {axis.name: axis for axis in tile.axes}
+    hi = [n for n in order if n not in lo and (split is None or n != split[0])]
+    axes, mapping = [by_name[n] for n in hi], {}
+    if split is not None:
+        name, upper, factor = split
+        taken = touched_names(tile.body) | set(names)
+        high, low = f'{name}__hi', f'{name}__lo'
+        if high in taken or low in taken:
+            return node
+        Dim = type(by_name[name].extent)
+        axes.append(dataclasses.replace(by_name[name], name=high, extent=Dim(upper), window=None))
+        axes.append(dataclasses.replace(by_name[name], name=low, extent=Dim(factor), window=None))
+        mapping[name] = _typed_expr.Var(high) * _typed_expr.Literal(factor, 'int') + _typed_expr.Var(low)
+    axes += [by_name[n] for n in lo] + [by_name[n] for n in independent]
+    try:
+        new_body = substitute_axis(tile.body, mapping) if mapping else tile.body
+    except Unsupported:
+        return node
+    retiled = dataclasses.replace(tile, axes=tuple(axes), body=new_body, raster_axes=None)
+    op = dataclasses.replace(node.op, body=type(body)([retiled]))
+    return dataclasses.replace(node, op=op)
 
 
 class AccessLane:
@@ -5672,10 +5785,10 @@ class Emitter:
         The A rows of every member and the B tile are first copied to shared
         memory with batched loads (the global latency is paid a few times,
         not once per k step). Each work item then owns one configuration and
-        four consecutive columns and walks k four at a time with 128-bit
-        shared loads: per four k steps, one A vector per member and four B
-        vectors feed 16 x members FMAs. Every output still folds mul(a, b)
-        over k in order from the same identity, so results are unchanged.
+        ``cw`` consecutive columns and walks k four at a time with vector
+        shared loads. ``cw`` is the widest of 4, 2, 1 that still gives every
+        thread an item, since the phase is latency bound. Every output still
+        folds mul(a, b) over k in order, so results are unchanged.
         """
         b, operands = shape
         lead = members[0]
@@ -5694,7 +5807,8 @@ class Emitter:
         self.emit('bar.sync 0;')
         if self.hoist_overlap is not None:
             self.hoist_overlap()
-        blocks = extent // 4
+        cw = next((c for c in (4, 2, 1) if extent % c == 0 and lead.configs * (extent // c) >= launched), 4)
+        blocks = extent // cw
         work = lead.configs * blocks
         w = self.reg('r')
         self.emit(f'mov.u32 {w}, {self.hardware_tid};')
@@ -5706,7 +5820,7 @@ class Emitter:
         block, config, serial = self.reg('r'), self.reg('r'), self.reg('r')
         self.emit(f'rem.u32 {block}, {w}, {blocks};')
         self.emit(f'div.u32 {config}, {w}, {blocks};')
-        self.emit(f'shl.b32 {serial}, {block}, 2;')
+        self.emit(f'mul.lo.u32 {serial}, {block}, {cw};')
         base = self.reg('rd')
         self.emit(f'mov.u64 {base}, {symbol};')
         a_rows = []
@@ -5721,16 +5835,17 @@ class Emitter:
         self.emit(f'mul.wide.u32 {b_col}, {serial}, 4;')
         self.emit(f'add.u64 {b_col}, {base}, {b_col};')
         self.emit(f'add.u64 {b_col}, {b_col}, {b_offset};')
-        accs = [[self.reg('f') for _ in range(4)] for _ in members]
+        accs = [[self.reg('f') for _ in range(cw)] for _ in members]
         for row in accs:
             for acc in row:
                 self.emit(f'mov.f32 {acc}, {literal(0.0, "f32")};')
+        b_load = {4: 'ld.shared.v4.f32', 2: 'ld.shared.v2.f32', 1: 'ld.shared.f32'}[cw]
         def k_step(b_ptr, b_base, a_ptrs, a_base):
             bvecs = []
             for step in range(4):
-                vec = [self.reg('f') for _ in range(4)]
-                self.emit(f'ld.shared.v4.f32 {{{", ".join(vec)}}}, '
-                          f'[{b_ptr}+{b_base + 4 * step * extent}];')
+                vec = [self.reg('f') for _ in range(cw)]
+                operand = f'{{{", ".join(vec)}}}' if cw > 1 else vec[0]
+                self.emit(f'{b_load} {operand}, [{b_ptr}+{b_base + 4 * step * extent}];')
                 bvecs.append(vec)
             for (a, a_first), row, a_ptr in zip(operands, accs, a_ptrs):
                 avec = [self.reg('f') for _ in range(4)]
@@ -7275,7 +7390,7 @@ def compile_path(path):
     # A SIMT reduction loop whose shared operands lower to strength-reduced
     # vector loads computes in exact fp32 and, on the RTX 5090, beat the
     # three-term TF32 path on m01 (17.0 vs 21.1 us); prefer it outright.
-    simt = Emitter(graph, node, matches[0])
+    simt = Emitter(graph, retile_redundant_hoists(node, matches[0]), matches[0])
     simt_ptx = simt.render()
     planned = plan_simt_route(graph, node, matches[0])
     if planned is not None:
