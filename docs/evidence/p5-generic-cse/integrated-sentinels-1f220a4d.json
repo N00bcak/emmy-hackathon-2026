@@ -1,0 +1,221 @@
+{
+  "schema": "p5-integrated-isolated-sentinels-v1",
+  "date": "2026-10-27",
+  "compiler_sha256": "1f220a4dabcc436c49ab933bcc505e0e4d6ad1e04aef347a14a0b6cbd2fd0d1d",
+  "suite": "campaign100",
+  "source": "/home/ada/Projects/emmy-hackathon-2026/compile.py",
+  "command": "run_cases_isolated.py --compiler /home/ada/Projects/emmy-hackathon-2026/compile.py --out .emmy/p5-inventory/integrated-1f220a4d-sentinels-campaign100 --suite campaign100 --repetitions 2 --case <19 IDs>",
+  "passed": 19,
+  "total": 19,
+  "cases": [
+    {
+      "id": "f188ef762959e2f777587b9dbfb60421c6765cfd5412b37516c4b7113e7ff42a",
+      "label": "A26",
+      "name": "case-14",
+      "bug_type": "cast-cache-key",
+      "ok": true,
+      "requires_sanitizer": false,
+      "repetitions": 2,
+      "result_sha256": "d3228a519b35b14ac0af3c3c46f3eb5e24a4a2284f793e49cfccf2f98ffbc154",
+      "result_path": "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/integrated-1f220a4d-sentinels-campaign100/f188ef762959e2f777587b9dbfb60421c6765cfd5412b37516c4b7113e7ff42a-result.json"
+    },
+    {
+      "id": "0e80b09925f0f9637cdef513d58020e8dbd3fe023ee87c0372fbc01393d37f7e",
+      "label": "A27",
+      "name": "case-15",
+      "bug_type": "funcall-cache-key",
+      "ok": true,
+      "requires_sanitizer": false,
+      "repetitions": 2,
+      "result_sha256": "1a24c966f68d9672518ddc6e07735db3aed48ee123435164c7f8f4cd2887be23",
+      "result_path": "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/integrated-1f220a4d-sentinels-campaign100/0e80b09925f0f9637cdef513d58020e8dbd3fe023ee87c0372fbc01393d37f7e-result.json"
+    },
+    {
+      "id": "bd8a59fd719b12c89bb2bef8b221fb1c007d5ade73a552c1d35f9a055886d363",
+      "label": "A28",
+      "name": "case-16",
+      "bug_type": "flatindex-cache-key",
+      "ok": true,
+      "requires_sanitizer": false,
+      "repetitions": 2,
+      "result_sha256": "c87b538d9a96599bb4289beb4b812b126d988fba7d874976049adf5bf8ccace6",
+      "result_path": "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/integrated-1f220a4d-sentinels-campaign100/bd8a59fd719b12c89bb2bef8b221fb1c007d5ade73a552c1d35f9a055886d363-result.json"
+    },
+    {
+      "id": "3e9203274f6927cb955cf2e8d0af2e7e870ace628d9a26e6b356409a4e032631",
+      "label": "A29",
+      "name": "case-17",
+      "bug_type": "builtin-cache-key",
+      "ok": true,
+      "requires_sanitizer": false,
+      "repetitions": 2,
+      "result_sha256": "b306ca2bbe3d5d4b959b4bb5ce3b802d9a6c15063956cedfec658a90be7fb1ca",
+      "result_path": "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/integrated-1f220a4d-sentinels-campaign100/3e9203274f6927cb955cf2e8d0af2e7e870ace628d9a26e6b356409a4e032631-result.json"
+    },
+    {
+      "id": "068fb6cb67fb91185ea4063ac15b15ae1ea8b0ebeb9a05d6fef2e777f31f2348",
+      "label": "A30",
+      "name": "04-nested-restore",
+      "bug_type": "nested-tile-binding-restoration",
+      "ok": true,
+      "requires_sanitizer": true,
+      "repetitions": 2,
+      "result_sha256": "2bab3fd3a6d8ab363db8fde9678c01687e1dee0e82f262253adacbc3cadf8795",
+      "result_path": "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/integrated-1f220a4d-sentinels-campaign100/068fb6cb67fb91185ea4063ac15b15ae1ea8b0ebeb9a05d6fef2e777f31f2348-result.json"
+    },
+    {
+      "id": "1f9428cef0a7750c55fec497401857955bd037aed43ab72a1abf26627ef390af",
+      "label": "A31",
+      "name": "07-loop-axis-shadow",
+      "bug_type": "loop-axis-shadow-scope",
+      "ok": true,
+      "requires_sanitizer": true,
+      "repetitions": 2,
+      "result_sha256": "97db771f17c793aef201b81be3eb4bdc40b91a51f3c8ffb94bfa31f964128bb0",
+      "result_path": "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/integrated-1f220a4d-sentinels-campaign100/1f9428cef0a7750c55fec497401857955bd037aed43ab72a1abf26627ef390af-result.json"
+    },
+    {
+      "id": "807f6dfcde812fedd65efdbd0428a3f07108c21131ef242269c5fa5df0fec1c2",
+      "label": "A32",
+      "name": "09-nested-unequal-guard",
+      "bug_type": "nested-tile-distinct-guards",
+      "ok": true,
+      "requires_sanitizer": true,
+      "repetitions": 2,
+      "result_sha256": "2007016a012cc87a62982df237f63f8fe89b1725fa02ea0af451201e73766f8d",
+      "result_path": "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/integrated-1f220a4d-sentinels-campaign100/807f6dfcde812fedd65efdbd0428a3f07108c21131ef242269c5fa5df0fec1c2-result.json"
+    },
+    {
+      "id": "5224818b2d26d5b73af6c783a756518a271351ca1a5529cbc0686f7e181387fa",
+      "label": "A40",
+      "name": "case-8",
+      "bug_type": "nested-init-shadow",
+      "ok": true,
+      "requires_sanitizer": false,
+      "repetitions": 2,
+      "result_sha256": "a082302c9804bef87ce305dfbdab276a37e2b3135187c5f74b651818ab84f070",
+      "result_path": "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/integrated-1f220a4d-sentinels-campaign100/5224818b2d26d5b73af6c783a756518a271351ca1a5529cbc0686f7e181387fa-result.json"
+    },
+    {
+      "id": "fa41b5e778718c3209536b85787001a3fce87f9cbc7f4b8288e18ffa0777fcc6",
+      "label": "A50",
+      "name": "scalar-shadow",
+      "bug_type": "load-name-shadow",
+      "ok": true,
+      "requires_sanitizer": false,
+      "repetitions": 2,
+      "result_sha256": "ee176542ca3fd1bef744ffd62a0f56b6073595c0aa75d452700bfc9257f4402e",
+      "result_path": "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/integrated-1f220a4d-sentinels-campaign100/fa41b5e778718c3209536b85787001a3fce87f9cbc7f4b8288e18ffa0777fcc6-result.json"
+    },
+    {
+      "id": "8a7db526571189e3b67c95f11a3294d910c6e10a53d58c33f0c9a97031e3a9b8",
+      "label": "A51",
+      "name": "grouped-simultaneous",
+      "bug_type": "grouped-load-snapshot",
+      "ok": true,
+      "requires_sanitizer": false,
+      "repetitions": 2,
+      "result_sha256": "d34d9599c8a6bd71a29e4082afbdd8950a8f00015cdc4b868b0fd933045fb23b",
+      "result_path": "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/integrated-1f220a4d-sentinels-campaign100/8a7db526571189e3b67c95f11a3294d910c6e10a53d58c33f0c9a97031e3a9b8-result.json"
+    },
+    {
+      "id": "ee167cb896bcfad085da910c9c0eb88a93bf186403b908a2524fca7e8a4c5378",
+      "label": "A52",
+      "name": "nested-init-and-carried-update",
+      "bug_type": "nested-tile-init-vs-update",
+      "ok": true,
+      "requires_sanitizer": false,
+      "repetitions": 2,
+      "result_sha256": "926e56cd5d3c954dbbc65eeb113df529ba82a1761ce46687e4b4cdbfd3245f5c",
+      "result_path": "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/integrated-1f220a4d-sentinels-campaign100/ee167cb896bcfad085da910c9c0eb88a93bf186403b908a2524fca7e8a4c5378-result.json"
+    },
+    {
+      "id": "a3637b82238835d8027901de0aee04a9d7df15e69ac12d965e1c9f490c209ef5",
+      "label": "A55",
+      "name": "select-shadow-and-snapshot",
+      "bug_type": "select-binding-snapshot",
+      "ok": true,
+      "requires_sanitizer": false,
+      "repetitions": 2,
+      "result_sha256": "8cfdc22ab8f3e33331a90f99958f1c2831286b5dff67b7d99d5e1c2d1342c8c0",
+      "result_path": "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/integrated-1f220a4d-sentinels-campaign100/a3637b82238835d8027901de0aee04a9d7df15e69ac12d965e1c9f490c209ef5-result.json"
+    },
+    {
+      "id": "d7be87bc0caabbc560a024cd044944f15da13f4085819fc40ebcba4940f64200",
+      "label": "A57",
+      "name": "nested-key-score-shadow",
+      "bug_type": "KEY-child-score-scope-width16",
+      "ok": true,
+      "requires_sanitizer": false,
+      "repetitions": 2,
+      "result_sha256": "1ebb3321d2173a23bca10cc9ccfd593a8f36e205b4d67cd1cfee2d4657e11a8f",
+      "result_path": "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/integrated-1f220a4d-sentinels-campaign100/d7be87bc0caabbc560a024cd044944f15da13f4085819fc40ebcba4940f64200-result.json"
+    },
+    {
+      "id": "a083ac93290653c119bae4512c057058495a50fa9d0528dc7ce6e3caff5c6065",
+      "label": "A68",
+      "name": "observable-padding",
+      "bug_type": "async-ring-observable-padding",
+      "ok": true,
+      "requires_sanitizer": false,
+      "repetitions": 2,
+      "result_sha256": "78f23348ccce5109816bee33f35ac2fee05fcc6faa839dbd9b5eebc91608ced9",
+      "result_path": "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/integrated-1f220a4d-sentinels-campaign100/a083ac93290653c119bae4512c057058495a50fa9d0528dc7ce6e3caff5c6065-result.json"
+    },
+    {
+      "id": "c974ec730c3e361d5a62608aa954478a6cea10d6f9183d7f03bd9f45a6a125c8",
+      "label": "A79",
+      "name": "full-segment16",
+      "bug_type": "independent-query-normalizers",
+      "ok": true,
+      "requires_sanitizer": false,
+      "repetitions": 2,
+      "result_sha256": "e5dc1043faa5722e24fc7fe379b1ab9f95884c8c04e4a519081111bba4c42b23",
+      "result_path": "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/integrated-1f220a4d-sentinels-campaign100/c974ec730c3e361d5a62608aa954478a6cea10d6f9183d7f03bd9f45a6a125c8-result.json"
+    },
+    {
+      "id": "274cb67281df56837bc7b9c4acf1ab1f3c08fcdfc957790eb7e64d6140c8e2f4",
+      "label": "A83",
+      "name": "full-segment16",
+      "bug_type": "duplicate-vs-distinct-normalization",
+      "ok": true,
+      "requires_sanitizer": false,
+      "repetitions": 2,
+      "result_sha256": "50a779509e48389ca606039991316d7093c7f0fd8d08f4c00b44a6d6ef55b8ae",
+      "result_path": "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/integrated-1f220a4d-sentinels-campaign100/274cb67281df56837bc7b9c4acf1ab1f3c08fcdfc957790eb7e64d6140c8e2f4-result.json"
+    },
+    {
+      "id": "4c6c88581fe20f1735d190ca1889f979dc7f5341908067e2e8355062d25e8d74",
+      "label": "A84",
+      "name": "nested-key-score-shadow",
+      "bug_type": "KEY-child-score-scope-width8",
+      "ok": true,
+      "requires_sanitizer": false,
+      "repetitions": 2,
+      "result_sha256": "f8b1857b0a3ace4b867f1d39c3e730933d60dddc0a87ccf6bce7c377c102e4f1",
+      "result_path": "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/integrated-1f220a4d-sentinels-campaign100/4c6c88581fe20f1735d190ca1889f979dc7f5341908067e2e8355062d25e8d74-result.json"
+    },
+    {
+      "id": "b412a7cb07b9335138462db316ccd81aa36c6f8dfbfa84ca9bdd2edd95793212",
+      "label": "A85",
+      "name": "nested-seeded-fold-scopes",
+      "bug_type": "nested-seeded-fold-owner",
+      "ok": true,
+      "requires_sanitizer": false,
+      "repetitions": 2,
+      "result_sha256": "748f07b1b7281e868df54e43acd8590361d09488083028304feb1de4e3ea5a3b",
+      "result_path": "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/integrated-1f220a4d-sentinels-campaign100/b412a7cb07b9335138462db316ccd81aa36c6f8dfbfa84ca9bdd2edd95793212-result.json"
+    },
+    {
+      "id": "e5a00bcecf77832d362d8926481a665537efc1b93f0bd5cd9d98df9731b4b55b",
+      "label": "A95",
+      "name": "axis-rebound-before-load",
+      "bug_type": "legacy-vector-loop-axis-rebinding",
+      "ok": true,
+      "requires_sanitizer": true,
+      "repetitions": 2,
+      "result_sha256": "3ceea65d6bca79fc46f6fd5dfca54986f8b2b7713eb7f2d186cd4cc7b7d7de9a",
+      "result_path": "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/integrated-1f220a4d-sentinels-campaign100/e5a00bcecf77832d362d8926481a665537efc1b93f0bd5cd9d98df9731b4b55b-result.json"
+    }
+  ]
+}

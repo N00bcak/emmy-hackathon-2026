@@ -1,0 +1,272 @@
+{
+  "schema": "p5-driver-occupancy-sm89-v1",
+  "compiler_sha256": "067ef9c4ce31a4bf5ccda90a8d13e9bd1b71b89aff19abe7598cdba4c77e2921",
+  "target": "sm_89",
+  "note": "Driver feasibility only; not a throughput prediction. sm_120 occupancy unavailable locally.",
+  "cases": [
+    {
+      "case": "perf-a/p02_scale_shift_8m",
+      "block": [
+        256,
+        1,
+        1
+      ],
+      "block_threads": 256,
+      "grid": [
+        7813,
+        1,
+        1
+      ],
+      "dynamic_shared_bytes": 0,
+      "cubin_sha256": "76477660b552d3ff0580ea151b723bf58e10dee993f3edfa8f8ff0b4a0340916",
+      "occupancy_rc": 0,
+      "max_active_blocks_per_sm": 6,
+      "max_threads_per_block": 256,
+      "static_shared_bytes": 0,
+      "local_bytes": 0,
+      "registers": 16
+    },
+    {
+      "case": "perf-b/p02_scale_shift_16m",
+      "block": [
+        256,
+        1,
+        1
+      ],
+      "block_threads": 256,
+      "grid": [
+        15625,
+        1,
+        1
+      ],
+      "dynamic_shared_bytes": 0,
+      "cubin_sha256": "56da410a9b2a409db688c2cec364a72b494d25d0f4410ce9eae6ddb026531c27",
+      "occupancy_rc": 0,
+      "max_active_blocks_per_sm": 6,
+      "max_threads_per_block": 256,
+      "static_shared_bytes": 0,
+      "local_bytes": 0,
+      "registers": 16
+    },
+    {
+      "case": "perf-a/p03_relu_mul_4m",
+      "block": [
+        256,
+        1,
+        1
+      ],
+      "block_threads": 256,
+      "grid": [
+        3907,
+        1,
+        1
+      ],
+      "dynamic_shared_bytes": 0,
+      "cubin_sha256": "265d1778d8ff5057899adf58884ca5dfce4b46e1debf9ccce42f100c962d0a92",
+      "occupancy_rc": 0,
+      "max_active_blocks_per_sm": 6,
+      "max_threads_per_block": 256,
+      "static_shared_bytes": 0,
+      "local_bytes": 0,
+      "registers": 20
+    },
+    {
+      "case": "perf-b/p03_relu_mul_16m",
+      "block": [
+        256,
+        1,
+        1
+      ],
+      "block_threads": 256,
+      "grid": [
+        15625,
+        1,
+        1
+      ],
+      "dynamic_shared_bytes": 0,
+      "cubin_sha256": "41cf212acd910d135ac8eec488d3bfd71320bb5481292405a0aa56ad5010e9eb",
+      "occupancy_rc": 0,
+      "max_active_blocks_per_sm": 6,
+      "max_threads_per_block": 256,
+      "static_shared_bytes": 0,
+      "local_bytes": 0,
+      "registers": 20
+    },
+    {
+      "case": "perf-a/f01_rmsnorm_3072x2048",
+      "block": [
+        128,
+        1,
+        1
+      ],
+      "block_threads": 128,
+      "grid": [
+        3072,
+        1,
+        1
+      ],
+      "dynamic_shared_bytes": 0,
+      "cubin_sha256": "c48b224177b74e0be607ac01aadd637009700d4d5bb1ad266c5db8d9c32f0c61",
+      "occupancy_rc": 0,
+      "max_active_blocks_per_sm": 10,
+      "max_threads_per_block": 128,
+      "static_shared_bytes": 16,
+      "local_bytes": 0,
+      "registers": 48
+    },
+    {
+      "case": "perf-b/f01_rmsnorm_2048x4096",
+      "block": [
+        128,
+        1,
+        1
+      ],
+      "block_threads": 128,
+      "grid": [
+        2048,
+        1,
+        1
+      ],
+      "dynamic_shared_bytes": 0,
+      "cubin_sha256": "8b9b7aef93124e694d4ad4054df73512885b1e79c624b1667046ff78d6652d09",
+      "occupancy_rc": 0,
+      "max_active_blocks_per_sm": 6,
+      "max_threads_per_block": 128,
+      "static_shared_bytes": 16,
+      "local_bytes": 0,
+      "registers": 80
+    },
+    {
+      "case": "perf-a/f03_l2norm_3072x2048",
+      "block": [
+        128,
+        1,
+        1
+      ],
+      "block_threads": 128,
+      "grid": [
+        3072,
+        1,
+        1
+      ],
+      "dynamic_shared_bytes": 0,
+      "cubin_sha256": "920e1c237ad05eed63fb029087b5c6839639f8fa8d001ec2132b385d137a27d9",
+      "occupancy_rc": 0,
+      "max_active_blocks_per_sm": 12,
+      "max_threads_per_block": 128,
+      "static_shared_bytes": 16,
+      "local_bytes": 0,
+      "registers": 40
+    },
+    {
+      "case": "perf-b/f03_l2norm_2048x4096",
+      "block": [
+        128,
+        1,
+        1
+      ],
+      "block_threads": 128,
+      "grid": [
+        2048,
+        1,
+        1
+      ],
+      "dynamic_shared_bytes": 0,
+      "cubin_sha256": "33c6d7ef23097858aa4c07f97515e94ca0ce5839be86b9846ef8708798b373b3",
+      "occupancy_rc": 0,
+      "max_active_blocks_per_sm": 10,
+      "max_threads_per_block": 128,
+      "static_shared_bytes": 16,
+      "local_bytes": 0,
+      "registers": 48
+    },
+    {
+      "case": "perf-a/r04_row_sum_3072x4096",
+      "block": [
+        128,
+        1,
+        1
+      ],
+      "block_threads": 128,
+      "grid": [
+        3072,
+        1,
+        1
+      ],
+      "dynamic_shared_bytes": 0,
+      "cubin_sha256": "e9c5f8ef6e977c4a79052ebb66d6b2e45c267763ea4d043feb9c1c570815495c",
+      "occupancy_rc": 0,
+      "max_active_blocks_per_sm": 12,
+      "max_threads_per_block": 128,
+      "static_shared_bytes": 16,
+      "local_bytes": 0,
+      "registers": 40
+    },
+    {
+      "case": "perf-b/r04_row_sum_4096x4096",
+      "block": [
+        128,
+        1,
+        1
+      ],
+      "block_threads": 128,
+      "grid": [
+        4096,
+        1,
+        1
+      ],
+      "dynamic_shared_bytes": 0,
+      "cubin_sha256": "e9c5f8ef6e977c4a79052ebb66d6b2e45c267763ea4d043feb9c1c570815495c",
+      "occupancy_rc": 0,
+      "max_active_blocks_per_sm": 12,
+      "max_threads_per_block": 128,
+      "static_shared_bytes": 16,
+      "local_bytes": 0,
+      "registers": 40
+    },
+    {
+      "case": "perf-a/m01_matmul_1024x1024x512",
+      "block": [
+        512,
+        1,
+        1
+      ],
+      "block_threads": 512,
+      "grid": [
+        512,
+        1,
+        1
+      ],
+      "dynamic_shared_bytes": 73728,
+      "cubin_sha256": "8752f0a6d7a34b8b15ac17e94344b215fb925df34242e863ebcab6e7af3fa419",
+      "occupancy_rc": 0,
+      "max_active_blocks_per_sm": 1,
+      "max_threads_per_block": 512,
+      "static_shared_bytes": 0,
+      "local_bytes": 0,
+      "registers": 94
+    },
+    {
+      "case": "perf-b/m01_matmul_2048x2048x512",
+      "block": [
+        512,
+        1,
+        1
+      ],
+      "block_threads": 512,
+      "grid": [
+        2048,
+        1,
+        1
+      ],
+      "dynamic_shared_bytes": 73728,
+      "cubin_sha256": "3b3bfc32d983b4e712e09a772fb3b8832aecd2389338a8c92d92b6dc525248c0",
+      "occupancy_rc": 0,
+      "max_active_blocks_per_sm": 1,
+      "max_threads_per_block": 512,
+      "static_shared_bytes": 0,
+      "local_bytes": 0,
+      "registers": 94
+    }
+  ]
+}
