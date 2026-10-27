@@ -888,6 +888,242 @@ def retile_redundant_hoists(node, meta):
     return dataclasses.replace(node, op=op)
 
 
+class AccessLane:
+    """One element of a proven contiguous f32 access group."""
+    __slots__ = ('position', 'statement', 'element', 'lane', 'name')
+
+    def __init__(self, position, statement, element, lane, name):
+        self.position = position
+        self.statement = statement
+        self.element = element
+        self.lane = lane
+        self.name = name
+
+
+class AccessDescriptor:
+    """A typed 128-bit access with affine contiguous source offsets.
+
+    ``terms`` are the flattened index's non-constant affine terms and
+    ``constant`` is its constant offset. ``reads`` and ``writes`` count the
+    accesses to each lane in source order. Shared bases have a static
+    alignment; global bases use a runtime predicate and retain the scalar
+    fallback.
+    """
+    __slots__ = ('kind', 'buffer', 'space', 'dtype', 'terms', 'constant',
+                 'alignment', 'static_aligned', 'reads', 'writes', 'lanes')
+
+    def __init__(self, kind, buffer, space, dtype, terms, constant, alignment,
+                 static_aligned, reads, writes, lanes):
+        self.kind = kind
+        self.buffer = buffer
+        self.space = space
+        self.dtype = dtype
+        self.terms = terms
+        self.constant = constant
+        self.alignment = alignment
+        self.static_aligned = static_aligned
+        self.reads = reads
+        self.writes = writes
+        self.lanes = lanes
+
+    @property
+    def width(self):
+        return len(self.lanes)
+
+
+class AccessPlan:
+    """Block-local descriptors and loaded vector registers."""
+
+    def __init__(self):
+        self.loads = {}
+        self.stores = {}
+        self.load_lanes = {}
+        self.store_lanes = {}
+        self.registers = {}
+
+
+def _terms_key(terms):
+    return tuple(sorted(terms.items(), key=lambda item: repr(item[0])))
+
+
+def access_descriptors(statements, buffers, shared, shared_alignment=None, blocked=()):
+    """Prove f32 four-element contiguous groups in one straight-line block.
+
+    The proof is intentionally local to a statement list. Elements must be
+    adjacent uses in source order and have the same affine non-constant terms;
+    only that constant offset may differ, by exactly the lane number. A
+    destination may name an index operand only if every lane address is
+    evaluated before any destination is published, so the lowering keeps that
+    ordering. No statement is moved.
+    """
+    plan = AccessPlan()
+    written = written_buffers(statements)
+    bindings = {}
+    for statement in statements:
+        kind = type(statement).__name__
+        if kind == 'Load':
+            source_dtype = dtype_name(buffers[statement.input][1]) if statement.input in buffers else 'f32'
+            dtype = dtype_name(statement.dtype) if statement.dtype is not None else source_dtype
+            for name in statement.names:
+                bindings[name] = dtype
+        elif kind in ('Assign', 'Accum'):
+            bindings[statement.name] = ssa_dtype_name(statement.dtype) if statement.dtype is not None else 'f32'
+        elif kind == 'Let':
+            bindings[statement.name] = ssa_dtype_name(statement.dtype) if statement.dtype is not None else 'f32'
+    runs = {}
+    blocked = set(blocked)
+    for position, statement in enumerate(statements):
+        kind = type(statement).__name__
+        if kind not in ('Load', 'Write'):
+            continue
+        if id(statement) in blocked:
+            continue
+        if kind == 'Load':
+            buffer, index, names = statement.input, statement.index, statement.names
+            if len(names) not in (1, 4):
+                continue
+            elements = [(position, statement, names[element], element)
+                        for element in range(len(names))]
+        else:
+            if statement.atomic or statement.swizzle not in ('NONE', None):
+                continue
+            buffer, index, names = statement.output, statement.index, statement.values
+            if len(names) != 4:
+                continue
+            elements = [(position, statement, names[element], element)
+                        for element in range(len(names))]
+        if buffer not in buffers:
+            continue
+        shape, storage_dtype = buffers[buffer]
+        storage_dtype = dtype_name(storage_dtype)
+        if storage_dtype != 'f32':
+            continue
+        if kind == 'Load':
+            if statement.dtype is not None and dtype_name(statement.dtype) != 'f32':
+                continue
+        else:
+            value_dtype = (ssa_dtype_name(statement.value_dtype)
+                           if statement.value_dtype is not None else storage_dtype)
+            if value_dtype != 'f32':
+                continue
+            if any(bindings.get(name) not in ('f32', 'i32', 'u32', 'i64', 'u64') for name in names):
+                continue
+        if kind == 'Load' and buffer in written:
+            continue
+        if len(set(names)) != len(names):
+            continue
+        form = flat_affine(shape, index)
+        if form is None:
+            continue
+        constant, terms = form
+        if any(coefficient % 4 for coefficient in terms.values()):
+            continue
+        if any(part is None for part in (expr_names(coord) for coord in index)):
+            continue
+        key = (kind, buffer, _terms_key(terms))
+        group = runs.setdefault(key, [])
+        group.append((constant, index, elements, statement))
+
+    for (kind, buffer, terms_key), members in runs.items():
+        entries = {}
+        for constant, index, elements, statement in members:
+            for position, lane_statement, name, element in elements:
+                entries.setdefault(constant + element,
+                                   (position, lane_statement, constant, element, name, index))
+        used = set()
+        ordered = sorted(entries)
+        for offset in ordered:
+            if offset in used:
+                continue
+            run = [entries.get(offset + lane) for lane in range(4)]
+            if any(member is None for member in run) or any(offset + lane in used for lane in range(4)):
+                continue
+            if offset % 4:
+                continue
+            # A load group may span pure statements, but no index operand or
+            # lane destination may be rebound while later lanes are moved to
+            # the leader. A destination is also live from its original load
+            # onward, so an intervening read of it cannot be moved past that
+            # definition. (Reads before the destination's own load are fine.)
+            first, last = run[0][0], run[-1][0]
+            intervening = statements[first + 1:last]
+            if any(type(statement).__name__ not in ('Load', 'Let', 'Assign', 'Accum')
+                   for statement in intervening):
+                continue
+            # Moving a later load to its run leader is only effect-free when
+            # nothing between them can write a buffer that might alias it.
+            # Tuple stores are single statements and do not cross anything.
+            if kind == 'Load' and written_buffers(intervening):
+                continue
+            index_names = set()
+            for member in run:
+                for coord in member[5]:
+                    index_names |= expr_names(coord)
+            lane_ids = {id(member[1]) for member in run}
+            intervening_names = defined_names(
+                statement for statement in statements[first + 1:last]
+                if id(statement) not in lane_ids)
+            names = tuple(member[4] for member in run)
+            if (index_names & (intervening_names | set(names))
+                    or set(names) & intervening_names):
+                continue
+            if kind == 'Load':
+                # Lanes bind at the leader. An intervening read of a name whose
+                # lane definition comes later would observe the pre-group
+                # binding instead, so reject that interleave. Reads after the
+                # name's own lane are unchanged by moving later lanes up.
+                lane_positions = {member[4]: member[0] for member in run}
+                if any(lane_positions[name] > position
+                       for position in range(first + 1, last)
+                       for name in statements[position].deps()
+                       if name in lane_positions):
+                    continue
+            if len(set(names)) != 4:
+                continue
+            lanes = []
+            prior_position = -1
+            for lane_number, member in enumerate(run):
+                position, lane_statement, constant, element, name, _ = member
+                lane_constant = constant + element
+                if lane_constant != offset + lane_number:
+                    break
+                if position < prior_position or (lane_number and position == prior_position
+                                                 and lane_statement is not run[lane_number - 1][1]):
+                    break
+                prior_position = position
+                lanes.append(AccessLane(position, lane_statement, element,
+                                        lane_number, name))
+            if len(lanes) != 4:
+                continue
+            leader = lanes[0].statement
+            statements_used = {id(lane.statement) for lane in lanes}
+            if statements_used & blocked:
+                continue
+            if kind == 'Write' and any(lane.statement is not leader for lane in lanes[1:]):
+                continue
+            space = 'shared' if buffer in shared else 'global'
+            static_aligned = False
+            if space == 'shared':
+                base_offset = shared_alignment.get(buffer, 0) if shared_alignment else 0
+                if (base_offset + 4 * run[0][2]) % 16 != 0:
+                    continue
+                static_aligned = True
+            descriptor = AccessDescriptor(
+                kind, buffer, space, 'f32', terms_key, run[0][2], 16,
+                static_aligned,
+                tuple(1 if kind == 'Load' else 0 for _ in lanes),
+                tuple(1 if kind == 'Write' else 0 for _ in lanes), lanes)
+            leader_id = id(leader)
+            if kind == 'Load':
+                plan.loads[leader_id] = descriptor
+                for lane in lanes[1:]:
+                    plan.load_lanes[id(lane.statement)] = leader_id
+            else:
+                plan.stores[leader_id] = descriptor
+            used.update(offset + lane for lane in range(4))
+    return plan
+
+
 # Copies per trip when a loop's shared loads combine into vector loads.
 VECTOR_UNROLL = 4
 
@@ -1315,6 +1551,7 @@ class Emitter:
         self.vector_loops = 0
         self.tile_extents = {}
         self.subst = {}
+        self.access_plan = AccessPlan()
         def shared_layout(statements):
             for statement in statements:
                 if type(statement).__name__ == 'Smem':
@@ -3994,6 +4231,112 @@ class Emitter:
             self.emit(f'bra {begin};')
             self.mark(done)
 
+    def vector_group_base(self, descriptor):
+        """Address of a descriptor's first element, checked for alignment."""
+        first = descriptor.lanes[0]
+        address, space = self.address(descriptor.buffer, first.statement.index, first.element)
+        if descriptor.static_aligned:
+            return address, space, None
+        low, predicate = self.reg('rd'), self.reg('p')
+        self.emit(f'and.b64 {low}, {address}, 15;')
+        self.emit(f'setp.eq.u64 {predicate}, {low}, 0;')
+        return address, space, predicate
+
+
+    def emit_vector_load(self, address, space, predicate):
+        """128-bit f32 load with an exact scalar fallback for a misaligned base."""
+        registers = [self.reg('f') for _ in range(4)]
+        operands = ', '.join(registers)
+        if predicate is not None:
+            scalar = self.label('access_scalar')
+            vector_done = self.label('access_vector_done')
+            self.emit(f'@!{predicate} bra {scalar};')
+            self.emit(f'ld.{space}.v4.f32 {{{operands}}}, [{address}];')
+            self.emit(f'bra {vector_done};')
+            self.mark(scalar)
+            for lane, register in enumerate(registers):
+                self.emit(f'ld.{space}.f32 {register}, [{address}+{4 * lane}];')
+            self.mark(vector_done)
+        else:
+            self.emit(f'ld.{space}.v4.f32 {{{operands}}}, [{address}];')
+        return registers
+
+
+    def vector_load_group(self, descriptor):
+        """Load four proven-contiguous f32 lanes at the leader statement."""
+        address, space, predicate = self.vector_group_base(descriptor)
+        if self.inactive:
+            # Preserve the scalar path's zero for masked destinations, keep the
+            # barrier/participation predicate an outer conjunction, and keep
+            # an active misaligned lane on the scalar fallback instead of
+            # letting the inactive-lane zero path erase its value.
+            active = self.inactive[-1]
+            registers = [self.reg('f') for _ in range(4)]
+            operands = ', '.join(registers)
+            scalar = self.label('access_masked_scalar') if predicate is not None else None
+            zero = self.label('access_masked_zero')
+            done = self.label('access_masked_done')
+            self.emit(f'@!{active} bra {zero};')
+            if predicate is not None:
+                self.emit(f'@!{predicate} bra {scalar};')
+            self.emit(f'ld.{space}.v4.f32 {{{operands}}}, [{address}];')
+            self.emit(f'bra {done};')
+            if scalar is not None:
+                self.mark(scalar)
+                for lane, register in enumerate(registers):
+                    self.emit(f'ld.{space}.f32 {register}, [{address}+{4 * lane}];')
+                self.emit(f'bra {done};')
+            self.mark(zero)
+            for register in registers:
+                self.emit(f'mov.f32 {register}, {literal(0, "f32")};')
+            self.mark(done)
+        else:
+            registers = self.emit_vector_load(address, space, predicate)
+        for lane, register in zip(descriptor.lanes, registers, strict=True):
+            self.values[lane.name] = (register, 'f32')
+            self.mutable.pop(lane.name, None)
+            self.rebind(lane.name)
+        leader_id = id(descriptor.lanes[0].statement)
+        self.access_plan.registers[leader_id] = registers
+
+
+    def vector_store_group(self, descriptor):
+        """Store four proven-contiguous f32 lanes as one aligned tuple store."""
+        address, space, predicate = self.vector_group_base(descriptor)
+        values = [convert_register(self, self.value(lane.name),
+                                   self.binding(lane.name)[1], 'f32')
+                  for lane in descriptor.lanes]
+        operands = ', '.join(values)
+        active = self.inactive[-1] if self.inactive else None
+        scalar = self.label('access_store_scalar') if predicate is not None else None
+        done = self.label('access_store_done') if predicate is not None else None
+        if predicate is not None:
+            self.emit(f'@!{predicate} bra {scalar};')
+        prefix = f'@{active} ' if active is not None else ''
+        self.emit(f'{prefix}st.{space}.v4.f32 [{address}], {{{operands}}};')
+        if predicate is not None:
+            self.emit(f'bra {done};')
+            self.mark(scalar)
+            for lane, value in enumerate(values):
+                pred = f'@{active} ' if active is not None else ''
+                self.emit(f'{pred}st.{space}.f32 [{address}+{4 * lane}], {value};')
+            self.mark(done)
+
+
+    def access_plan_for(self, statements, prefetched=()):
+        """Only unchanged straight-line memory accesses are grouped."""
+        special = (self.hoisted, self.subst, self.vn_skip,
+                   self.vn_record, self.hoist_plans,
+                   self.shared_probability_skip, self.shared_probability_betas,
+                   self.prescaled_assignments)
+        blocked = {id(s) for s in statements
+                   if any(id(s) in table for table in special)}
+        blocked.update(id(statements[position]) for position in prefetched
+                       if 0 <= position < len(statements))
+        return access_descriptors(statements, self.buffers, self.shared,
+                                  {name: self.shared_offsets[name] for name in self.shared_offsets},
+                                  blocked)
+
     def vector_load_plan(self, loop):
         """Plan 128/64-bit shared loads for a loop unrolled VECTOR_UNROLL times.
 
@@ -5637,6 +5980,10 @@ class Emitter:
 
     def statements(self, statements, shared_prefetch=None):
         pending = []
+        plan = self.access_plan_for(statements, shared_prefetch or ())
+        self.access_plan.loads.update(plan.loads)
+        self.access_plan.stores.update(plan.stores)
+        self.access_plan.load_lanes.update(plan.load_lanes)
         for position, s in enumerate(statements):
             for name, key in pending:
                 self.vn_registers[key] = self.values[name]
@@ -5796,6 +6143,12 @@ class Emitter:
                     # Emmy's vector renderer reinterprets a typed vector pack;
                     # numerical conversion is only established for scalar Load.
                     raise Unsupported('Vector Load stamp must match buffer storage dtype')
+                descriptor = self.access_plan.loads.get(id(s))
+                if descriptor is not None:
+                    self.vector_load_group(descriptor)
+                    continue
+                if id(s) in self.access_plan.load_lanes:
+                    continue
                 phys = dtype_info(source_dtype)[1]
                 loaded_bindings = []
                 for i, name in enumerate(s.names):
@@ -5820,6 +6173,10 @@ class Emitter:
                     raise Unsupported('Swizzled writes unsupported')
                 output_dtype = dtype_name(self.buffers[s.output][1])
                 value_dtype = ssa_dtype_name(s.value_dtype) if s.value_dtype is not None else output_dtype
+                descriptor = self.access_plan.stores.get(id(s))
+                if descriptor is not None and output_dtype == 'f32' and not s.atomic:
+                    self.vector_store_group(descriptor)
+                    continue
                 phys = dtype_info(output_dtype)[1]
                 for i, name in enumerate(s.values):
                     addr, space = self.address(s.output, s.index, i)
