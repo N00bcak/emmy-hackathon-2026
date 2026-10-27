@@ -1,0 +1,138 @@
+{
+ "schema": "p5-generic-cse-evidence-v1",
+ "outcome": "deferred",
+ "activation": "not-demonstrated",
+ "timing": "not-authorized",
+ "merge_recommendation": "evidence-only; no compiler pass",
+ "compiler_sha256": "067ef9c4ce31a4bf5ccda90a8d13e9bd1b71b89aff19abe7598cdba4c77e2921",
+ "base_commit": "d8f65f002db6c14d25c805255f7e7e6400329696",
+ "local_proxy": {
+  "gpu": "NVIDIA GeForce RTX 4060 Laptop GPU",
+  "compute_capability": "8.9",
+  "driver": "615.78.08",
+  "ptxas": "CUDA 13.4 V13.4.92",
+  "python": "3.14.8"
+ },
+ "evidence_role": {
+  "sass-loop-inventory.json": "final SASS loop/op inventory; primary no-op evidence",
+  "sass-noop-inventory.json": "coarse PTX screen; audit only, not activation evidence",
+  "two-target-final-sass.json": "final SASS on both targets; no-op baseline audit only",
+  "driver-occupancy-sm89.json": "sm_89 driver feasibility only; not throughput evidence",
+  "current-source-sass-inventory.json": "integrated P2+P3 final-SASS inventory for all 14 scaled P5 plan shapes, both targets; baseline-only",
+  "integrated-sentinels-1f220a4d.json": "integrated-source isolated sentinel receipt; 19/19 correctness checks, not timing"
+ },
+ "files": {
+  "REPORT.md": "25cf0728739a5f23f18b50ef379c8dc785ebe57710032286ec69f702b9f44f24",
+  "sass-loop-inventory.json": "bd7e108063b3d73b3417e272658b2c5a1fe7eaa7a40a18ed0b498ae1599ab324",
+  "sass-noop-inventory.json": "dfc4fda71fde845c60500c46edb0c362dead6a86f3beb46c4f282a212b43a5ea",
+  "two-target-final-sass.json": "8f47dbbdac66d5161b5dea6c7d51baab8a105d8bfadeda39593b75b4a8966f1b",
+  "driver-occupancy-sm89.json": "e22a490ddd632f7eb11b61ebfb5600db9192d9e215ccab6349e0ec94cfeac541",
+  "current-source-sass-inventory.json": "05432afbff193c6ac985d7ee4629e037cb26b9eae9abaa4ce0c872363ee1bdec",
+  "integrated-sentinels-1f220a4d.json": "8e63378d2ad24ef8a5a0e8cc35b07bf4cce09bc78fc8d92cd8b43e1aecc95eb9"
+ },
+ "two_target_audit": {
+  "status": "assembly-and-final-sass-only",
+  "sm_89": "compiled/disassembled; local correctness and occupancy available",
+  "sm_120": "compiled/disassembled; execution and occupancy unverified",
+  "candidate_fallback_comparison": "none; no P5 candidate"
+ },
+ "post_integration_source_check": {
+  "compiler_sha256": "1f220a4dabcc436c49ab933bcc505e0e4d6ad1e04aef347a14a0b6cbd2fd0d1d",
+  "inventory_file": "current-source-sass-inventory.json",
+  "inventory_sha256": "05432afbff193c6ac985d7ee4629e037cb26b9eae9abaa4ce0c872363ee1bdec",
+  "shapes": "14 scaled plan shapes, both perf-a and perf-b, on sm_89 and sm_120",
+  "unchanged_vs_pre_p2": [
+   "perf-a/p02_scale_shift_8m",
+   "perf-b/p02_scale_shift_16m",
+   "perf-a/p03_relu_mul_4m",
+   "perf-b/p03_relu_mul_16m",
+   "perf-a/f01_rmsnorm_3072x2048",
+   "perf-b/f01_rmsnorm_2048x4096",
+   "perf-a/f03_l2norm_3072x2048",
+   "perf-b/f03_l2norm_2048x4096",
+   "perf-a/r04_row_sum_3072x4096",
+   "perf-b/r04_row_sum_4096x4096",
+   "perf-a/m01_matmul_1024x1024x512",
+   "perf-b/m01_matmul_2048x2048x512"
+  ],
+  "f02": {
+   "perf-a/f02_row_softmax_3072x2048": {
+    "sm_89": {
+     "insns": 688,
+     "LDG": 16,
+     "STG": 16,
+     "registers": 40,
+     "spills": 0,
+     "sass_sha256": "b4f77e0c6047af56c7e218767ad35052d52a94b053bb4f755e3ab228d95d9da3"
+    },
+    "sm_120": {
+     "insns": 720,
+     "LDG": 16,
+     "STG": 16,
+     "registers": 40,
+     "spills": 0,
+     "sass_sha256": "1c8a56a2c4694c9bf461187e25915d61bbd905e0cbc810ba95bf604f3e4a1642"
+    },
+    "disposition": "P2 row cache active; no new P5 candidate"
+   },
+   "perf-b/f02_row_softmax_4096x4096": {
+    "sm_89": {
+     "insns": 1120,
+     "LDG": 48,
+     "STG": 1,
+     "registers": 40,
+     "spills": 0,
+     "sass_sha256": "bdac09fe006fafb4c5e59c6efc2585c38b437234d67db95df900adb66c778d92"
+    },
+    "sm_120": {
+     "insns": 1160,
+     "LDG": 48,
+     "STG": 1,
+     "registers": 40,
+     "spills": 0,
+     "sass_sha256": "fb85906ca2a51405e6f8f2b94ca3c2c8475e493919d48f53dba46845c945ff48"
+    },
+    "disposition": "P2 fail-closed at ROW_CACHE_VALUES=32; no P5 candidate"
+   }
+  },
+  "note": "The f02 inventory gap is closed. P5 remains deferred and baseline-only, with no candidate/fallback pair and no timing authorization."
+ },
+ "integrated_sentinels": {
+  "receipt": "integrated-sentinels-1f220a4d.json",
+  "receipt_sha256": "8e63378d2ad24ef8a5a0e8cc35b07bf4cce09bc78fc8d92cd8b43e1aecc95eb9",
+  "compiler_sha256": "1f220a4dabcc436c49ab933bcc505e0e4d6ad1e04aef347a14a0b6cbd2fd0d1d",
+  "suite": "campaign100",
+  "passed": 19,
+  "total": 19,
+  "repetitions": 2,
+  "cases": [
+   "A26",
+   "A27",
+   "A28",
+   "A29",
+   "A30",
+   "A31",
+   "A32",
+   "A40",
+   "A50",
+   "A51",
+   "A52",
+   "A55",
+   "A57",
+   "A68",
+   "A79",
+   "A83",
+   "A84",
+   "A85",
+   "A95"
+  ],
+  "evidence_role": "correctness-only; no timing or activation claim"
+ },
+ "related_evidence": {
+  "p2-p4-sass-recheck-20261027.json": {
+   "path": "../p2-p4-sass-recheck-20261027.json",
+   "sha256": "a0c7dc94023f47436cd18ec305df7dc6671fc771177fa83971cf7b7a8a2f728e",
+   "role": "independent P2/P4 final-SASS rebuild; supports the accepted P2 and unmerged P4 dispositions cited by this P5 report"
+  }
+ }
+}

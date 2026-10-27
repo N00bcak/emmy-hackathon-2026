@@ -1,0 +1,1459 @@
+{
+  "schema": "p5-two-target-final-sass-v1",
+  "compiler_sha256": "067ef9c4ce31a4bf5ccda90a8d13e9bd1b71b89aff19abe7598cdba4c77e2921",
+  "build_mode": {
+    "compiler": "frozen compile.py",
+    "ptxas": "ptxas -arch=<target> -v",
+    "disassembler": "nvdisasm -c",
+    "candidate": "none",
+    "fallback": "none; baseline-only inventory"
+  },
+  "cases": [
+    {
+      "case": "perf-a/p02_scale_shift_8m",
+      "entry": "k_add_pointwise",
+      "ir_sha256": "e72b5ed6eb9b238a1890169404f140771dbf54e696217dfd72a01cdffbcc4881",
+      "source_ptx_sha256": "fadb770a9f65ad5365ed54e98f6cad17bcc053a2525799deb57e92b29536d766",
+      "targets": {
+        "sm_89": {
+          "ptx_sha256": "fadb770a9f65ad5365ed54e98f6cad17bcc053a2525799deb57e92b29536d766",
+          "cubin_sha256": "76477660b552d3ff0580ea151b723bf58e10dee993f3edfa8f8ff0b4a0340916",
+          "sass_sha256": "2f2367ed704afb64337799bd73a4967cd94682d0cf3fb81f173fc1e526ae5a75",
+          "sass_instructions": 48,
+          "sass_op_counts": {
+            "BRA": 1,
+            "EXIT": 3,
+            "FFMA": 4,
+            "IMAD": 3,
+            "ISETP": 1,
+            "LDG": 7,
+            "LOP3": 2,
+            "MOV": 6,
+            "NOP": 12,
+            "S2R": 2,
+            "SHF": 1,
+            "STG": 5,
+            "ULDC": 1
+          },
+          "memory_ops": {
+            "LDG": 7,
+            "STG": 5
+          },
+          "registers": 16,
+          "spill_store_bytes": 0,
+          "spill_load_bytes": 0,
+          "barriers": 0,
+          "shared_bytes": 0,
+          "ptxas_command": [
+            "ptxas",
+            "-arch=sm_89",
+            "-v",
+            "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/two-target/perf-a/p02_scale_shift_8m/kernel-0-sm_89.ptx",
+            "-o",
+            "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/two-target/perf-a/p02_scale_shift_8m/kernel-0-sm_89.sm_89.cubin"
+          ],
+          "nvdisasm_command": [
+            "nvdisasm",
+            "-c",
+            "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/two-target/perf-a/p02_scale_shift_8m/kernel-0-sm_89.sm_89.cubin"
+          ],
+          "ptxas_log_sha256": "3548c05faa03b1b5d10a1e6c325f6ca467ca8216093190f1ae01c024406271f9"
+        },
+        "sm_120": {
+          "ptx_sha256": "fadb770a9f65ad5365ed54e98f6cad17bcc053a2525799deb57e92b29536d766",
+          "cubin_sha256": "2899460e713ca875f8bd2070743c359b7e1026c8712e15bc547ddd76f3fbc429",
+          "sass_sha256": "ae6490dcf9b923950cc6de67a1b646eb95a9bf1ff58a1d01a752ac6946524c9e",
+          "sass_instructions": 48,
+          "sass_op_counts": {
+            "BRA": 1,
+            "EXIT": 3,
+            "FFMA": 4,
+            "IMAD": 3,
+            "ISETP": 1,
+            "LDC": 6,
+            "LDCU": 1,
+            "LDG": 7,
+            "LOP3": 2,
+            "NOP": 12,
+            "S2R": 1,
+            "S2UR": 1,
+            "SHF": 1,
+            "STG": 5
+          },
+          "memory_ops": {
+            "LDG": 7,
+            "STG": 5
+          },
+          "registers": 18,
+          "spill_store_bytes": 0,
+          "spill_load_bytes": 0,
+          "barriers": 0,
+          "shared_bytes": 0,
+          "ptxas_command": [
+            "ptxas",
+            "-arch=sm_120",
+            "-v",
+            "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/two-target/perf-a/p02_scale_shift_8m/kernel-0-sm_120.ptx",
+            "-o",
+            "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/two-target/perf-a/p02_scale_shift_8m/kernel-0-sm_120.sm_120.cubin"
+          ],
+          "nvdisasm_command": [
+            "nvdisasm",
+            "-c",
+            "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/two-target/perf-a/p02_scale_shift_8m/kernel-0-sm_120.sm_120.cubin"
+          ],
+          "ptxas_log_sha256": "9584208318d6cb72132b2c6ecb25773f1ec3f5d2f03d9efcc2fff08e40195aeb"
+        }
+      }
+    },
+    {
+      "case": "perf-b/p02_scale_shift_16m",
+      "entry": "k_add_pointwise",
+      "ir_sha256": "2c2992f1378736bb7507a3d050a8f41f1843eda3cf1836925ff18b9c81018488",
+      "source_ptx_sha256": "a183da215aa4f208c5f415347fadebdd6b71c45cc0eb8688eb5fe06f261badf8",
+      "targets": {
+        "sm_89": {
+          "ptx_sha256": "a183da215aa4f208c5f415347fadebdd6b71c45cc0eb8688eb5fe06f261badf8",
+          "cubin_sha256": "56da410a9b2a409db688c2cec364a72b494d25d0f4410ce9eae6ddb026531c27",
+          "sass_sha256": "4b93e12fb63816dd01bf158676e3134a9c92919d677303d43101597447575b99",
+          "sass_instructions": 48,
+          "sass_op_counts": {
+            "BRA": 1,
+            "EXIT": 3,
+            "FFMA": 4,
+            "IMAD": 3,
+            "ISETP": 1,
+            "LDG": 7,
+            "LOP3": 2,
+            "MOV": 6,
+            "NOP": 12,
+            "S2R": 2,
+            "SHF": 1,
+            "STG": 5,
+            "ULDC": 1
+          },
+          "memory_ops": {
+            "LDG": 7,
+            "STG": 5
+          },
+          "registers": 16,
+          "spill_store_bytes": 0,
+          "spill_load_bytes": 0,
+          "barriers": 0,
+          "shared_bytes": 0,
+          "ptxas_command": [
+            "ptxas",
+            "-arch=sm_89",
+            "-v",
+            "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/two-target/perf-b/p02_scale_shift_16m/kernel-0-sm_89.ptx",
+            "-o",
+            "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/two-target/perf-b/p02_scale_shift_16m/kernel-0-sm_89.sm_89.cubin"
+          ],
+          "nvdisasm_command": [
+            "nvdisasm",
+            "-c",
+            "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/two-target/perf-b/p02_scale_shift_16m/kernel-0-sm_89.sm_89.cubin"
+          ],
+          "ptxas_log_sha256": "e256c677c1e8358af4deff16386a247084abef291f98d5e57f651a695d925d5f"
+        },
+        "sm_120": {
+          "ptx_sha256": "a183da215aa4f208c5f415347fadebdd6b71c45cc0eb8688eb5fe06f261badf8",
+          "cubin_sha256": "013e2f9d904f1c784ae59ce2ae784958909483107a5dcb3b7a4e650213e2d958",
+          "sass_sha256": "9f37383680cf1b47e59319552b0feb2f4eda8f6ab58bf6d21916dca99265440b",
+          "sass_instructions": 48,
+          "sass_op_counts": {
+            "BRA": 1,
+            "EXIT": 3,
+            "FFMA": 4,
+            "IMAD": 3,
+            "ISETP": 1,
+            "LDC": 6,
+            "LDCU": 1,
+            "LDG": 7,
+            "LOP3": 2,
+            "NOP": 12,
+            "S2R": 1,
+            "S2UR": 1,
+            "SHF": 1,
+            "STG": 5
+          },
+          "memory_ops": {
+            "LDG": 7,
+            "STG": 5
+          },
+          "registers": 18,
+          "spill_store_bytes": 0,
+          "spill_load_bytes": 0,
+          "barriers": 0,
+          "shared_bytes": 0,
+          "ptxas_command": [
+            "ptxas",
+            "-arch=sm_120",
+            "-v",
+            "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/two-target/perf-b/p02_scale_shift_16m/kernel-0-sm_120.ptx",
+            "-o",
+            "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/two-target/perf-b/p02_scale_shift_16m/kernel-0-sm_120.sm_120.cubin"
+          ],
+          "nvdisasm_command": [
+            "nvdisasm",
+            "-c",
+            "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/two-target/perf-b/p02_scale_shift_16m/kernel-0-sm_120.sm_120.cubin"
+          ],
+          "ptxas_log_sha256": "e62f0a491f258193ea3d5ca2983aa4c68ddfa05bbc620392c54c022210f1c7fa"
+        }
+      }
+    },
+    {
+      "case": "perf-a/p03_relu_mul_4m",
+      "entry": "k_mul_pointwise",
+      "ir_sha256": "cd262f51bfcb9f0150e0fb2ae83c5155be69e94b11ef9feb4568475c1c691f33",
+      "source_ptx_sha256": "611a44bd34cc3c0efe411de207be53b5092520df8946792920df0905fe7dd415",
+      "targets": {
+        "sm_89": {
+          "ptx_sha256": "611a44bd34cc3c0efe411de207be53b5092520df8946792920df0905fe7dd415",
+          "cubin_sha256": "265d1778d8ff5057899adf58884ca5dfce4b46e1debf9ccce42f100c962d0a92",
+          "sass_sha256": "76a003e5b6b42b7b40216585c67329340d87d79786e9c26c8f48d1918f55f452",
+          "sass_instructions": 56,
+          "sass_op_counts": {
+            "BRA": 1,
+            "EXIT": 3,
+            "FMNMX": 4,
+            "FMUL": 4,
+            "IMAD": 4,
+            "ISETP": 1,
+            "LDG": 10,
+            "LOP3": 3,
+            "MOV": 2,
+            "NOP": 15,
+            "S2R": 2,
+            "SHF": 1,
+            "STG": 5,
+            "ULDC": 1
+          },
+          "memory_ops": {
+            "LDG": 10,
+            "STG": 5
+          },
+          "registers": 20,
+          "spill_store_bytes": 0,
+          "spill_load_bytes": 0,
+          "barriers": 0,
+          "shared_bytes": 0,
+          "ptxas_command": [
+            "ptxas",
+            "-arch=sm_89",
+            "-v",
+            "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/two-target/perf-a/p03_relu_mul_4m/kernel-0-sm_89.ptx",
+            "-o",
+            "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/two-target/perf-a/p03_relu_mul_4m/kernel-0-sm_89.sm_89.cubin"
+          ],
+          "nvdisasm_command": [
+            "nvdisasm",
+            "-c",
+            "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/two-target/perf-a/p03_relu_mul_4m/kernel-0-sm_89.sm_89.cubin"
+          ],
+          "ptxas_log_sha256": "feee53b22340ca7abaa0c53a3bc0b345ee9ab64b9f067242042ac53c9ba12e89"
+        },
+        "sm_120": {
+          "ptx_sha256": "611a44bd34cc3c0efe411de207be53b5092520df8946792920df0905fe7dd415",
+          "cubin_sha256": "9f790b8405e882820dad8690981223272eae1aeab96b50cfcda6997302b2d621",
+          "sass_sha256": "11198fad351b49532f864eb78c06897c10a3b0f0e819042cdb4028c7d3280755",
+          "sass_instructions": 56,
+          "sass_op_counts": {
+            "BRA": 1,
+            "EXIT": 3,
+            "FMNMX": 4,
+            "FMUL": 4,
+            "IMAD": 4,
+            "ISETP": 1,
+            "LDC": 5,
+            "LDCU": 1,
+            "LDG": 10,
+            "LOP3": 3,
+            "NOP": 12,
+            "S2R": 1,
+            "S2UR": 1,
+            "SHF": 1,
+            "STG": 5
+          },
+          "memory_ops": {
+            "LDG": 10,
+            "STG": 5
+          },
+          "registers": 20,
+          "spill_store_bytes": 0,
+          "spill_load_bytes": 0,
+          "barriers": 0,
+          "shared_bytes": 0,
+          "ptxas_command": [
+            "ptxas",
+            "-arch=sm_120",
+            "-v",
+            "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/two-target/perf-a/p03_relu_mul_4m/kernel-0-sm_120.ptx",
+            "-o",
+            "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/two-target/perf-a/p03_relu_mul_4m/kernel-0-sm_120.sm_120.cubin"
+          ],
+          "nvdisasm_command": [
+            "nvdisasm",
+            "-c",
+            "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/two-target/perf-a/p03_relu_mul_4m/kernel-0-sm_120.sm_120.cubin"
+          ],
+          "ptxas_log_sha256": "e9c2231ed5bed63705b664627743b134ecc4c814e4c0fd147bd296fd6048c62b"
+        }
+      }
+    },
+    {
+      "case": "perf-b/p03_relu_mul_16m",
+      "entry": "k_mul_pointwise",
+      "ir_sha256": "c7566c57f6bd63289d3f3734d73cd15d0755d612a8709a29b497fa73192b1b41",
+      "source_ptx_sha256": "35e667a960d7c12a035f6ae31aeb41a65270cf6650fd8e921045fe854eeaf8df",
+      "targets": {
+        "sm_89": {
+          "ptx_sha256": "35e667a960d7c12a035f6ae31aeb41a65270cf6650fd8e921045fe854eeaf8df",
+          "cubin_sha256": "41cf212acd910d135ac8eec488d3bfd71320bb5481292405a0aa56ad5010e9eb",
+          "sass_sha256": "44f41c1804bd0ef7432cd438ce733110d2211e885d125df6737a0e43ce19e505",
+          "sass_instructions": 56,
+          "sass_op_counts": {
+            "BRA": 1,
+            "EXIT": 3,
+            "FMNMX": 4,
+            "FMUL": 4,
+            "IMAD": 4,
+            "ISETP": 1,
+            "LDG": 10,
+            "LOP3": 3,
+            "MOV": 2,
+            "NOP": 15,
+            "S2R": 2,
+            "SHF": 1,
+            "STG": 5,
+            "ULDC": 1
+          },
+          "memory_ops": {
+            "LDG": 10,
+            "STG": 5
+          },
+          "registers": 20,
+          "spill_store_bytes": 0,
+          "spill_load_bytes": 0,
+          "barriers": 0,
+          "shared_bytes": 0,
+          "ptxas_command": [
+            "ptxas",
+            "-arch=sm_89",
+            "-v",
+            "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/two-target/perf-b/p03_relu_mul_16m/kernel-0-sm_89.ptx",
+            "-o",
+            "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/two-target/perf-b/p03_relu_mul_16m/kernel-0-sm_89.sm_89.cubin"
+          ],
+          "nvdisasm_command": [
+            "nvdisasm",
+            "-c",
+            "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/two-target/perf-b/p03_relu_mul_16m/kernel-0-sm_89.sm_89.cubin"
+          ],
+          "ptxas_log_sha256": "06dbe93fa523800f2afefa659f5f2490851aa816d4494e9fcba518670aefd431"
+        },
+        "sm_120": {
+          "ptx_sha256": "35e667a960d7c12a035f6ae31aeb41a65270cf6650fd8e921045fe854eeaf8df",
+          "cubin_sha256": "787ab3ac9d456e2559d1239364a87e8a135a6cea1cbff199398159be3dfdb715",
+          "sass_sha256": "3730507913c7c0cd6ea8e2ee3590f9981d73ff491e1a7b8800c5cc71a7fea4b7",
+          "sass_instructions": 56,
+          "sass_op_counts": {
+            "BRA": 1,
+            "EXIT": 3,
+            "FMNMX": 4,
+            "FMUL": 4,
+            "IMAD": 4,
+            "ISETP": 1,
+            "LDC": 5,
+            "LDCU": 1,
+            "LDG": 10,
+            "LOP3": 3,
+            "NOP": 12,
+            "S2R": 1,
+            "S2UR": 1,
+            "SHF": 1,
+            "STG": 5
+          },
+          "memory_ops": {
+            "LDG": 10,
+            "STG": 5
+          },
+          "registers": 20,
+          "spill_store_bytes": 0,
+          "spill_load_bytes": 0,
+          "barriers": 0,
+          "shared_bytes": 0,
+          "ptxas_command": [
+            "ptxas",
+            "-arch=sm_120",
+            "-v",
+            "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/two-target/perf-b/p03_relu_mul_16m/kernel-0-sm_120.ptx",
+            "-o",
+            "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/two-target/perf-b/p03_relu_mul_16m/kernel-0-sm_120.sm_120.cubin"
+          ],
+          "nvdisasm_command": [
+            "nvdisasm",
+            "-c",
+            "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/two-target/perf-b/p03_relu_mul_16m/kernel-0-sm_120.sm_120.cubin"
+          ],
+          "ptxas_log_sha256": "71df0f261b36fa2a59f0cff6b691023a4003b178a45e7b4ca0e4e5ee16d4b27c"
+        }
+      }
+    },
+    {
+      "case": "perf-a/f01_rmsnorm_3072x2048",
+      "entry": "k_mean_cbd1de",
+      "ir_sha256": "db9cbbb4837daf8134dc96880cd9591b2d9cd229e5b4127077c4f9b5b7aaabda",
+      "source_ptx_sha256": "fb03da810c79387de89cda8fdab1111bb47310cb48ddfd3b476f203957f12a98",
+      "targets": {
+        "sm_89": {
+          "ptx_sha256": "fb03da810c79387de89cda8fdab1111bb47310cb48ddfd3b476f203957f12a98",
+          "cubin_sha256": "c48b224177b74e0be607ac01aadd637009700d4d5bb1ad266c5db8d9c32f0c61",
+          "sass_sha256": "9e4e169a2a4bba40da6c568b73f24264275bf5e0d005389c5a82c3d6040506de",
+          "sass_instructions": 536,
+          "sass_op_counts": {
+            "BAR": 3,
+            "BRA": 30,
+            "BSSY": 5,
+            "BSYNC": 5,
+            "CALL": 3,
+            "EXIT": 2,
+            "FADD": 13,
+            "FFMA": 80,
+            "FMUL": 39,
+            "FSETP": 4,
+            "IADD3": 70,
+            "IMAD": 63,
+            "ISETP": 21,
+            "LDG": 59,
+            "LDS": 5,
+            "LEA": 8,
+            "LOP3": 31,
+            "MOV": 29,
+            "MUFU": 8,
+            "NOP": 8,
+            "PLOP3": 6,
+            "RET": 2,
+            "S2R": 2,
+            "SEL": 2,
+            "SHF": 20,
+            "SHFL": 5,
+            "STG": 5,
+            "STS": 3,
+            "ULDC": 4,
+            "VOTE": 1
+          },
+          "memory_ops": {
+            "LDG": 59,
+            "STG": 5,
+            "LDS": 5,
+            "STS": 3
+          },
+          "registers": 48,
+          "spill_store_bytes": 0,
+          "spill_load_bytes": 0,
+          "barriers": 1,
+          "shared_bytes": 16,
+          "ptxas_command": [
+            "ptxas",
+            "-arch=sm_89",
+            "-v",
+            "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/two-target/perf-a/f01_rmsnorm_3072x2048/kernel-0-sm_89.ptx",
+            "-o",
+            "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/two-target/perf-a/f01_rmsnorm_3072x2048/kernel-0-sm_89.sm_89.cubin"
+          ],
+          "nvdisasm_command": [
+            "nvdisasm",
+            "-c",
+            "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/two-target/perf-a/f01_rmsnorm_3072x2048/kernel-0-sm_89.sm_89.cubin"
+          ],
+          "ptxas_log_sha256": "9e1c07ffd7f025802adda404afcea7d6c00c6dde9c83879108b9f4a485884e5d"
+        },
+        "sm_120": {
+          "ptx_sha256": "fb03da810c79387de89cda8fdab1111bb47310cb48ddfd3b476f203957f12a98",
+          "cubin_sha256": "150e169f0fe82f52c4daed119d15afc9e8fe7b7804b2c704d9723a14d9e2c6a0",
+          "sass_sha256": "0640cd2d6891cd0b17d17a34a2da930059c3357fcea5461a57ede5dcd61dc19b",
+          "sass_instructions": 568,
+          "sass_op_counts": {
+            "BAR": 3,
+            "BRA": 32,
+            "BSSY": 7,
+            "BSYNC": 7,
+            "CALL": 3,
+            "EXIT": 2,
+            "FADD": 13,
+            "FFMA": 80,
+            "FMUL": 39,
+            "FSETP": 4,
+            "HFMA2": 3,
+            "IADD": 70,
+            "IMAD": 63,
+            "ISETP": 21,
+            "LDC": 15,
+            "LDCU": 7,
+            "LDG": 59,
+            "LDS": 5,
+            "LEA": 14,
+            "LOP3": 25,
+            "MOV": 12,
+            "MUFU": 8,
+            "NOP": 19,
+            "PLOP3": 4,
+            "RET": 2,
+            "S2R": 2,
+            "S2UR": 4,
+            "SEL": 2,
+            "SHF": 15,
+            "SHFL": 5,
+            "STG": 5,
+            "STS": 3,
+            "ULEA": 3,
+            "ULOP3": 6,
+            "UMOV": 3,
+            "UPLOP3": 2,
+            "VOTE": 1
+          },
+          "memory_ops": {
+            "LDG": 59,
+            "STG": 5,
+            "LDS": 5,
+            "STS": 3
+          },
+          "registers": 48,
+          "spill_store_bytes": 0,
+          "spill_load_bytes": 0,
+          "barriers": 1,
+          "shared_bytes": 16,
+          "ptxas_command": [
+            "ptxas",
+            "-arch=sm_120",
+            "-v",
+            "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/two-target/perf-a/f01_rmsnorm_3072x2048/kernel-0-sm_120.ptx",
+            "-o",
+            "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/two-target/perf-a/f01_rmsnorm_3072x2048/kernel-0-sm_120.sm_120.cubin"
+          ],
+          "nvdisasm_command": [
+            "nvdisasm",
+            "-c",
+            "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/two-target/perf-a/f01_rmsnorm_3072x2048/kernel-0-sm_120.sm_120.cubin"
+          ],
+          "ptxas_log_sha256": "07c070f74e4ddb0ff7b4f5c9877c07dfde2587bfdcc113236d7c16bf278f912c"
+        }
+      }
+    },
+    {
+      "case": "perf-b/f01_rmsnorm_2048x4096",
+      "entry": "k_mean_cbd1de",
+      "ir_sha256": "7085df97fe3b9be02ecf37e141993476c0b3fe78d5b26a7b2b8ffbda329e5825",
+      "source_ptx_sha256": "d4f99862f258b615b7019334c3211aa49dc449b63b30a796bb90b1df59a99524",
+      "targets": {
+        "sm_89": {
+          "ptx_sha256": "d4f99862f258b615b7019334c3211aa49dc449b63b30a796bb90b1df59a99524",
+          "cubin_sha256": "8b9b7aef93124e694d4ad4054df73512885b1e79c624b1667046ff78d6652d09",
+          "sass_sha256": "f46e6031966a604f19c17a64abc7518cd9ef0d76bcca9dc1405fe09f0695f995",
+          "sass_instructions": 624,
+          "sass_op_counts": {
+            "BAR": 3,
+            "BRA": 30,
+            "BSSY": 5,
+            "BSYNC": 5,
+            "CALL": 3,
+            "EXIT": 2,
+            "FADD": 13,
+            "FFMA": 96,
+            "FMUL": 71,
+            "FSETP": 4,
+            "IADD3": 82,
+            "IMAD": 75,
+            "ISETP": 21,
+            "LDG": 67,
+            "LDS": 5,
+            "LEA": 8,
+            "LOP3": 31,
+            "MOV": 31,
+            "MUFU": 8,
+            "NOP": 10,
+            "PLOP3": 6,
+            "RET": 2,
+            "S2R": 2,
+            "SEL": 2,
+            "SHF": 20,
+            "SHFL": 5,
+            "STG": 9,
+            "STS": 3,
+            "ULDC": 4,
+            "VOTE": 1
+          },
+          "memory_ops": {
+            "LDG": 67,
+            "STG": 9,
+            "LDS": 5,
+            "STS": 3
+          },
+          "registers": 80,
+          "spill_store_bytes": 0,
+          "spill_load_bytes": 0,
+          "barriers": 1,
+          "shared_bytes": 16,
+          "ptxas_command": [
+            "ptxas",
+            "-arch=sm_89",
+            "-v",
+            "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/two-target/perf-b/f01_rmsnorm_2048x4096/kernel-0-sm_89.ptx",
+            "-o",
+            "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/two-target/perf-b/f01_rmsnorm_2048x4096/kernel-0-sm_89.sm_89.cubin"
+          ],
+          "nvdisasm_command": [
+            "nvdisasm",
+            "-c",
+            "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/two-target/perf-b/f01_rmsnorm_2048x4096/kernel-0-sm_89.sm_89.cubin"
+          ],
+          "ptxas_log_sha256": "9e823e6e27c60c4f7a935050d9f89aab028abf1b0ca95c0458db9dc5e37e6831"
+        },
+        "sm_120": {
+          "ptx_sha256": "d4f99862f258b615b7019334c3211aa49dc449b63b30a796bb90b1df59a99524",
+          "cubin_sha256": "16a39874edb8d4a63bd9d3418bfb10aff8e116324b446fc887df67614ac90ed6",
+          "sass_sha256": "1b4eb0457229ef37ca17fe1534b1170f7472d6cfa054ba35c307e097724ff1e2",
+          "sass_instructions": 656,
+          "sass_op_counts": {
+            "BAR": 3,
+            "BRA": 32,
+            "BSSY": 7,
+            "BSYNC": 7,
+            "CALL": 3,
+            "EXIT": 2,
+            "FADD": 13,
+            "FFMA": 96,
+            "FMUL": 71,
+            "FSETP": 4,
+            "HFMA2": 3,
+            "IADD": 82,
+            "IMAD": 75,
+            "ISETP": 21,
+            "LDC": 15,
+            "LDCU": 7,
+            "LDG": 67,
+            "LDS": 5,
+            "LEA": 14,
+            "LOP3": 25,
+            "MOV": 14,
+            "MUFU": 8,
+            "NOP": 21,
+            "PLOP3": 4,
+            "RET": 2,
+            "S2R": 2,
+            "S2UR": 4,
+            "SEL": 2,
+            "SHF": 15,
+            "SHFL": 5,
+            "STG": 9,
+            "STS": 3,
+            "ULEA": 3,
+            "ULOP3": 6,
+            "UMOV": 3,
+            "UPLOP3": 2,
+            "VOTE": 1
+          },
+          "memory_ops": {
+            "LDG": 67,
+            "STG": 9,
+            "LDS": 5,
+            "STS": 3
+          },
+          "registers": 80,
+          "spill_store_bytes": 0,
+          "spill_load_bytes": 0,
+          "barriers": 1,
+          "shared_bytes": 16,
+          "ptxas_command": [
+            "ptxas",
+            "-arch=sm_120",
+            "-v",
+            "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/two-target/perf-b/f01_rmsnorm_2048x4096/kernel-0-sm_120.ptx",
+            "-o",
+            "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/two-target/perf-b/f01_rmsnorm_2048x4096/kernel-0-sm_120.sm_120.cubin"
+          ],
+          "nvdisasm_command": [
+            "nvdisasm",
+            "-c",
+            "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/two-target/perf-b/f01_rmsnorm_2048x4096/kernel-0-sm_120.sm_120.cubin"
+          ],
+          "ptxas_log_sha256": "5a084c9e9c2c358d9e9df65c9bf43f5a34bda5e98485011a4cb1c63ea26f1399"
+        }
+      }
+    },
+    {
+      "case": "perf-a/f03_l2norm_3072x2048",
+      "entry": "k_div_reduce",
+      "ir_sha256": "a70e21a7879fa456c44a5c4bd3933cdfedfb3637ac348d290c75bba263e2bc80",
+      "source_ptx_sha256": "00ef91df42112dac72010982e2b3a8d93c1c327effffe15ffce8ef1b99226afd",
+      "targets": {
+        "sm_89": {
+          "ptx_sha256": "00ef91df42112dac72010982e2b3a8d93c1c327effffe15ffce8ef1b99226afd",
+          "cubin_sha256": "920e1c237ad05eed63fb029087b5c6839639f8fa8d001ec2132b385d137a27d9",
+          "sass_sha256": "00599292eee146ea332b48d25f96ff3721e8fe42aa2f4e964093564fac311034",
+          "sass_instructions": 488,
+          "sass_op_counts": {
+            "BAR": 3,
+            "BRA": 28,
+            "BSSY": 5,
+            "BSYNC": 5,
+            "CALL": 2,
+            "EXIT": 2,
+            "FADD": 12,
+            "FFMA": 77,
+            "FMUL": 22,
+            "FSETP": 4,
+            "IADD3": 66,
+            "IMAD": 63,
+            "ISETP": 20,
+            "LDG": 52,
+            "LDS": 5,
+            "LEA": 7,
+            "LOP3": 28,
+            "MOV": 24,
+            "MUFU": 7,
+            "NOP": 12,
+            "PLOP3": 6,
+            "RET": 2,
+            "S2R": 2,
+            "SEL": 2,
+            "SHF": 17,
+            "SHFL": 5,
+            "STG": 5,
+            "STS": 3,
+            "ULDC": 1,
+            "VOTE": 1
+          },
+          "memory_ops": {
+            "LDG": 52,
+            "STG": 5,
+            "LDS": 5,
+            "STS": 3
+          },
+          "registers": 40,
+          "spill_store_bytes": 0,
+          "spill_load_bytes": 0,
+          "barriers": 1,
+          "shared_bytes": 16,
+          "ptxas_command": [
+            "ptxas",
+            "-arch=sm_89",
+            "-v",
+            "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/two-target/perf-a/f03_l2norm_3072x2048/kernel-0-sm_89.ptx",
+            "-o",
+            "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/two-target/perf-a/f03_l2norm_3072x2048/kernel-0-sm_89.sm_89.cubin"
+          ],
+          "nvdisasm_command": [
+            "nvdisasm",
+            "-c",
+            "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/two-target/perf-a/f03_l2norm_3072x2048/kernel-0-sm_89.sm_89.cubin"
+          ],
+          "ptxas_log_sha256": "ffc86f6968fe296d54ef3c51d5c3ba9be30d50c64201c1bc57db55922eab61a0"
+        },
+        "sm_120": {
+          "ptx_sha256": "00ef91df42112dac72010982e2b3a8d93c1c327effffe15ffce8ef1b99226afd",
+          "cubin_sha256": "7a106474777ef210ef1a1d6f916bebba3723bc168a2a9de82e12472c5c1c01a9",
+          "sass_sha256": "63b1072ee14c3515164fcd61b33f4df85c6e686039c823764ce2ed12a0909cc9",
+          "sass_instructions": 520,
+          "sass_op_counts": {
+            "BAR": 3,
+            "BRA": 30,
+            "BSSY": 7,
+            "BSYNC": 7,
+            "CALL": 2,
+            "EXIT": 2,
+            "FADD": 12,
+            "FFMA": 77,
+            "FMUL": 22,
+            "FSETP": 4,
+            "HFMA2": 3,
+            "IADD": 66,
+            "IMAD": 58,
+            "ISETP": 20,
+            "LDC": 11,
+            "LDCU": 5,
+            "LDG": 52,
+            "LDS": 5,
+            "LEA": 14,
+            "LOP3": 24,
+            "MOV": 12,
+            "MUFU": 7,
+            "NOP": 22,
+            "PLOP3": 4,
+            "RET": 2,
+            "S2R": 2,
+            "S2UR": 4,
+            "SEL": 2,
+            "SHF": 15,
+            "SHFL": 5,
+            "STG": 5,
+            "STS": 3,
+            "ULEA": 3,
+            "ULOP3": 4,
+            "UMOV": 3,
+            "UPLOP3": 2,
+            "VOTE": 1
+          },
+          "memory_ops": {
+            "LDG": 52,
+            "STG": 5,
+            "LDS": 5,
+            "STS": 3
+          },
+          "registers": 40,
+          "spill_store_bytes": 0,
+          "spill_load_bytes": 0,
+          "barriers": 1,
+          "shared_bytes": 16,
+          "ptxas_command": [
+            "ptxas",
+            "-arch=sm_120",
+            "-v",
+            "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/two-target/perf-a/f03_l2norm_3072x2048/kernel-0-sm_120.ptx",
+            "-o",
+            "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/two-target/perf-a/f03_l2norm_3072x2048/kernel-0-sm_120.sm_120.cubin"
+          ],
+          "nvdisasm_command": [
+            "nvdisasm",
+            "-c",
+            "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/two-target/perf-a/f03_l2norm_3072x2048/kernel-0-sm_120.sm_120.cubin"
+          ],
+          "ptxas_log_sha256": "d93623c4bd4e77387e99decd48bd7c2f1aec94ffe7f2d7c1e1356f1a6d4cdc9e"
+        }
+      }
+    },
+    {
+      "case": "perf-b/f03_l2norm_2048x4096",
+      "entry": "k_div_reduce",
+      "ir_sha256": "67a3d2f7809db1debfb3f5901988c7245afdcfa83ea694337679261e3ef836fc",
+      "source_ptx_sha256": "faee8f9b5285172dc89208962d5ec7e0918e346cff7fe53d04d8b7ae53498a13",
+      "targets": {
+        "sm_89": {
+          "ptx_sha256": "faee8f9b5285172dc89208962d5ec7e0918e346cff7fe53d04d8b7ae53498a13",
+          "cubin_sha256": "33c6d7ef23097858aa4c07f97515e94ca0ce5839be86b9846ef8708798b373b3",
+          "sass_sha256": "8cbc6d3642db73293b4db81c60427ea6d0cbac7888a0d32f7a5a4016c39e0b8b",
+          "sass_instructions": 544,
+          "sass_op_counts": {
+            "BAR": 3,
+            "BRA": 28,
+            "BSSY": 5,
+            "BSYNC": 5,
+            "CALL": 2,
+            "EXIT": 2,
+            "FADD": 12,
+            "FFMA": 93,
+            "FMUL": 38,
+            "FSETP": 4,
+            "IADD3": 74,
+            "IMAD": 66,
+            "ISETP": 20,
+            "LDG": 56,
+            "LDS": 5,
+            "LEA": 8,
+            "LOP3": 28,
+            "MOV": 25,
+            "MUFU": 7,
+            "NOP": 12,
+            "PLOP3": 6,
+            "RET": 2,
+            "S2R": 2,
+            "SEL": 2,
+            "SHF": 20,
+            "SHFL": 5,
+            "STG": 9,
+            "STS": 3,
+            "ULDC": 1,
+            "VOTE": 1
+          },
+          "memory_ops": {
+            "LDG": 56,
+            "STG": 9,
+            "LDS": 5,
+            "STS": 3
+          },
+          "registers": 48,
+          "spill_store_bytes": 0,
+          "spill_load_bytes": 0,
+          "barriers": 1,
+          "shared_bytes": 16,
+          "ptxas_command": [
+            "ptxas",
+            "-arch=sm_89",
+            "-v",
+            "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/two-target/perf-b/f03_l2norm_2048x4096/kernel-0-sm_89.ptx",
+            "-o",
+            "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/two-target/perf-b/f03_l2norm_2048x4096/kernel-0-sm_89.sm_89.cubin"
+          ],
+          "nvdisasm_command": [
+            "nvdisasm",
+            "-c",
+            "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/two-target/perf-b/f03_l2norm_2048x4096/kernel-0-sm_89.sm_89.cubin"
+          ],
+          "ptxas_log_sha256": "b265f74eaa6b39a520f73b3740f883f34b8b4a71c6e79d4b1c8b391227d4a0a5"
+        },
+        "sm_120": {
+          "ptx_sha256": "faee8f9b5285172dc89208962d5ec7e0918e346cff7fe53d04d8b7ae53498a13",
+          "cubin_sha256": "5b833b2ba5a8c14f45217327c31ce596b83d12ca5c5da8f388d4fb0bcdc847a6",
+          "sass_sha256": "c1f81996e860810d15d069dae356496671054af0883495087528c43c5f072dc5",
+          "sass_instructions": 576,
+          "sass_op_counts": {
+            "BAR": 3,
+            "BRA": 30,
+            "BSSY": 7,
+            "BSYNC": 7,
+            "CALL": 2,
+            "EXIT": 2,
+            "FADD": 12,
+            "FFMA": 93,
+            "FMUL": 38,
+            "FSETP": 4,
+            "HFMA2": 3,
+            "IADD": 74,
+            "IMAD": 66,
+            "ISETP": 20,
+            "LDC": 11,
+            "LDCU": 5,
+            "LDG": 56,
+            "LDS": 5,
+            "LEA": 14,
+            "LOP3": 24,
+            "MOV": 12,
+            "MUFU": 7,
+            "NOP": 22,
+            "PLOP3": 4,
+            "RET": 2,
+            "S2R": 2,
+            "S2UR": 4,
+            "SEL": 2,
+            "SHF": 15,
+            "SHFL": 5,
+            "STG": 9,
+            "STS": 3,
+            "ULEA": 3,
+            "ULOP3": 4,
+            "UMOV": 3,
+            "UPLOP3": 2,
+            "VOTE": 1
+          },
+          "memory_ops": {
+            "LDG": 56,
+            "STG": 9,
+            "LDS": 5,
+            "STS": 3
+          },
+          "registers": 48,
+          "spill_store_bytes": 0,
+          "spill_load_bytes": 0,
+          "barriers": 1,
+          "shared_bytes": 16,
+          "ptxas_command": [
+            "ptxas",
+            "-arch=sm_120",
+            "-v",
+            "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/two-target/perf-b/f03_l2norm_2048x4096/kernel-0-sm_120.ptx",
+            "-o",
+            "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/two-target/perf-b/f03_l2norm_2048x4096/kernel-0-sm_120.sm_120.cubin"
+          ],
+          "nvdisasm_command": [
+            "nvdisasm",
+            "-c",
+            "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/two-target/perf-b/f03_l2norm_2048x4096/kernel-0-sm_120.sm_120.cubin"
+          ],
+          "ptxas_log_sha256": "f1dbf600c2d83e03ee9efdfb8b2f57380b575388f0194a1e66447fc3aa41b703"
+        }
+      }
+    },
+    {
+      "case": "perf-a/r04_row_sum_3072x4096",
+      "entry": "k_sum_1_reduce",
+      "ir_sha256": "31aeec485849a126614c6e99a0590f45a3629fb0548f728474bcf9e676b2cbbe",
+      "source_ptx_sha256": "ef24fd875256d0605879ff96094beed304a9cd43b4a0438dc142cd0e6db8388e",
+      "targets": {
+        "sm_89": {
+          "ptx_sha256": "ef24fd875256d0605879ff96094beed304a9cd43b4a0438dc142cd0e6db8388e",
+          "cubin_sha256": "e9c5f8ef6e977c4a79052ebb66d6b2e45c267763ea4d043feb9c1c570815495c",
+          "sass_sha256": "b83d6315b20d85bd3408d39183cca85e6ec504e5a8be619fad6dfeae119e0e45",
+          "sass_instructions": 376,
+          "sass_op_counts": {
+            "BAR": 3,
+            "BRA": 13,
+            "BSSY": 5,
+            "BSYNC": 5,
+            "EXIT": 2,
+            "FADD": 86,
+            "IADD3": 59,
+            "IMAD": 57,
+            "ISETP": 14,
+            "LDG": 55,
+            "LDS": 5,
+            "LEA": 6,
+            "LOP3": 13,
+            "MOV": 11,
+            "NOP": 12,
+            "PLOP3": 3,
+            "S2R": 2,
+            "SHF": 13,
+            "SHFL": 5,
+            "STG": 1,
+            "STS": 3,
+            "ULDC": 2,
+            "VOTE": 1
+          },
+          "memory_ops": {
+            "LDG": 55,
+            "STG": 1,
+            "LDS": 5,
+            "STS": 3
+          },
+          "registers": 40,
+          "spill_store_bytes": 0,
+          "spill_load_bytes": 0,
+          "barriers": 1,
+          "shared_bytes": 16,
+          "ptxas_command": [
+            "ptxas",
+            "-arch=sm_89",
+            "-v",
+            "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/two-target/perf-a/r04_row_sum_3072x4096/kernel-0-sm_89.ptx",
+            "-o",
+            "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/two-target/perf-a/r04_row_sum_3072x4096/kernel-0-sm_89.sm_89.cubin"
+          ],
+          "nvdisasm_command": [
+            "nvdisasm",
+            "-c",
+            "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/two-target/perf-a/r04_row_sum_3072x4096/kernel-0-sm_89.sm_89.cubin"
+          ],
+          "ptxas_log_sha256": "4b4939f16d7bf9f09567b4ceca0b8f586e498b8d02b05135bde48d651e450c18"
+        },
+        "sm_120": {
+          "ptx_sha256": "ef24fd875256d0605879ff96094beed304a9cd43b4a0438dc142cd0e6db8388e",
+          "cubin_sha256": "b826c72736fd820e40623485aaa9c31df79ae726ca00814ec91ad89c81d93d54",
+          "sass_sha256": "ea399d4a72973053feafb00f88cc697d85e3f6d21424b69653ee1333743a805d",
+          "sass_instructions": 400,
+          "sass_op_counts": {
+            "BAR": 3,
+            "BRA": 15,
+            "BSSY": 7,
+            "BSYNC": 7,
+            "EXIT": 2,
+            "FADD": 86,
+            "HFMA2": 1,
+            "IADD": 59,
+            "IMAD": 57,
+            "ISETP": 14,
+            "LDC": 9,
+            "LDCU": 2,
+            "LDG": 55,
+            "LDS": 5,
+            "LEA": 12,
+            "LOP3": 12,
+            "MOV": 2,
+            "NOP": 18,
+            "PLOP3": 3,
+            "S2R": 2,
+            "S2UR": 4,
+            "SHF": 8,
+            "SHFL": 5,
+            "STG": 1,
+            "STS": 3,
+            "ULEA": 3,
+            "ULOP3": 1,
+            "UMOV": 3,
+            "VOTE": 1
+          },
+          "memory_ops": {
+            "LDG": 55,
+            "STG": 1,
+            "LDS": 5,
+            "STS": 3
+          },
+          "registers": 40,
+          "spill_store_bytes": 0,
+          "spill_load_bytes": 0,
+          "barriers": 1,
+          "shared_bytes": 16,
+          "ptxas_command": [
+            "ptxas",
+            "-arch=sm_120",
+            "-v",
+            "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/two-target/perf-a/r04_row_sum_3072x4096/kernel-0-sm_120.ptx",
+            "-o",
+            "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/two-target/perf-a/r04_row_sum_3072x4096/kernel-0-sm_120.sm_120.cubin"
+          ],
+          "nvdisasm_command": [
+            "nvdisasm",
+            "-c",
+            "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/two-target/perf-a/r04_row_sum_3072x4096/kernel-0-sm_120.sm_120.cubin"
+          ],
+          "ptxas_log_sha256": "dcc254e3b12a14fbc7c1e3652e4f29653e930f5073bc629ae3025a9d6b97c440"
+        }
+      }
+    },
+    {
+      "case": "perf-b/r04_row_sum_4096x4096",
+      "entry": "k_sum_1_reduce",
+      "ir_sha256": "28692954b5c30b2dc180b676dc246c8cb43aa52c3befdd1c40e9403229784fa2",
+      "source_ptx_sha256": "a6428a5dec1940460de32cda03f7a00e1024f2333a5cce6eb606f15a8019f5f4",
+      "targets": {
+        "sm_89": {
+          "ptx_sha256": "a6428a5dec1940460de32cda03f7a00e1024f2333a5cce6eb606f15a8019f5f4",
+          "cubin_sha256": "e9c5f8ef6e977c4a79052ebb66d6b2e45c267763ea4d043feb9c1c570815495c",
+          "sass_sha256": "b83d6315b20d85bd3408d39183cca85e6ec504e5a8be619fad6dfeae119e0e45",
+          "sass_instructions": 376,
+          "sass_op_counts": {
+            "BAR": 3,
+            "BRA": 13,
+            "BSSY": 5,
+            "BSYNC": 5,
+            "EXIT": 2,
+            "FADD": 86,
+            "IADD3": 59,
+            "IMAD": 57,
+            "ISETP": 14,
+            "LDG": 55,
+            "LDS": 5,
+            "LEA": 6,
+            "LOP3": 13,
+            "MOV": 11,
+            "NOP": 12,
+            "PLOP3": 3,
+            "S2R": 2,
+            "SHF": 13,
+            "SHFL": 5,
+            "STG": 1,
+            "STS": 3,
+            "ULDC": 2,
+            "VOTE": 1
+          },
+          "memory_ops": {
+            "LDG": 55,
+            "STG": 1,
+            "LDS": 5,
+            "STS": 3
+          },
+          "registers": 40,
+          "spill_store_bytes": 0,
+          "spill_load_bytes": 0,
+          "barriers": 1,
+          "shared_bytes": 16,
+          "ptxas_command": [
+            "ptxas",
+            "-arch=sm_89",
+            "-v",
+            "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/two-target/perf-b/r04_row_sum_4096x4096/kernel-0-sm_89.ptx",
+            "-o",
+            "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/two-target/perf-b/r04_row_sum_4096x4096/kernel-0-sm_89.sm_89.cubin"
+          ],
+          "nvdisasm_command": [
+            "nvdisasm",
+            "-c",
+            "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/two-target/perf-b/r04_row_sum_4096x4096/kernel-0-sm_89.sm_89.cubin"
+          ],
+          "ptxas_log_sha256": "b6e556f71305650c26d011a5ddbe5c5c6c563d4a060d091f5441734221c2653f"
+        },
+        "sm_120": {
+          "ptx_sha256": "a6428a5dec1940460de32cda03f7a00e1024f2333a5cce6eb606f15a8019f5f4",
+          "cubin_sha256": "b826c72736fd820e40623485aaa9c31df79ae726ca00814ec91ad89c81d93d54",
+          "sass_sha256": "ea399d4a72973053feafb00f88cc697d85e3f6d21424b69653ee1333743a805d",
+          "sass_instructions": 400,
+          "sass_op_counts": {
+            "BAR": 3,
+            "BRA": 15,
+            "BSSY": 7,
+            "BSYNC": 7,
+            "EXIT": 2,
+            "FADD": 86,
+            "HFMA2": 1,
+            "IADD": 59,
+            "IMAD": 57,
+            "ISETP": 14,
+            "LDC": 9,
+            "LDCU": 2,
+            "LDG": 55,
+            "LDS": 5,
+            "LEA": 12,
+            "LOP3": 12,
+            "MOV": 2,
+            "NOP": 18,
+            "PLOP3": 3,
+            "S2R": 2,
+            "S2UR": 4,
+            "SHF": 8,
+            "SHFL": 5,
+            "STG": 1,
+            "STS": 3,
+            "ULEA": 3,
+            "ULOP3": 1,
+            "UMOV": 3,
+            "VOTE": 1
+          },
+          "memory_ops": {
+            "LDG": 55,
+            "STG": 1,
+            "LDS": 5,
+            "STS": 3
+          },
+          "registers": 40,
+          "spill_store_bytes": 0,
+          "spill_load_bytes": 0,
+          "barriers": 1,
+          "shared_bytes": 16,
+          "ptxas_command": [
+            "ptxas",
+            "-arch=sm_120",
+            "-v",
+            "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/two-target/perf-b/r04_row_sum_4096x4096/kernel-0-sm_120.ptx",
+            "-o",
+            "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/two-target/perf-b/r04_row_sum_4096x4096/kernel-0-sm_120.sm_120.cubin"
+          ],
+          "nvdisasm_command": [
+            "nvdisasm",
+            "-c",
+            "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/two-target/perf-b/r04_row_sum_4096x4096/kernel-0-sm_120.sm_120.cubin"
+          ],
+          "ptxas_log_sha256": "0923269c38ee1ef7396f2ae7b0b3e226dbdf09ae032e0f9d236f18eeaa65fe6a"
+        }
+      }
+    },
+    {
+      "case": "perf-a/m01_matmul_1024x1024x512",
+      "entry": "k_matmul_2967be",
+      "ir_sha256": "23b80966aa3a227e587739891efab265095a58a8591aa9fc59bb56d9f2878b94",
+      "source_ptx_sha256": "b366b7bfd37f626ff907b633da0e0c8b3398e4b6cb0fa0c8fee4a41ee077e393",
+      "targets": {
+        "sm_89": {
+          "ptx_sha256": "b366b7bfd37f626ff907b633da0e0c8b3398e4b6cb0fa0c8fee4a41ee077e393",
+          "cubin_sha256": "8752f0a6d7a34b8b15ac17e94344b215fb925df34242e863ebcab6e7af3fa419",
+          "sass_sha256": "b2287afbd3bed3f536252017857470cbf2903a7f0a4376aadde067ce3deb5bac",
+          "sass_instructions": 2632,
+          "sass_op_counts": {
+            "BAR": 18,
+            "BRA": 1,
+            "DEPBAR": 16,
+            "EXIT": 2,
+            "FADD": 28,
+            "FFMA": 2048,
+            "IADD3": 32,
+            "IMAD": 4,
+            "ISETP": 2,
+            "LDGDEPBAR": 18,
+            "LDGSTS": 160,
+            "LDS": 242,
+            "LEA": 16,
+            "LOP3": 9,
+            "MOV": 4,
+            "NOP": 8,
+            "S2R": 2,
+            "SHF": 8,
+            "STG": 5,
+            "STS": 8,
+            "ULDC": 1
+          },
+          "memory_ops": {
+            "STG": 5,
+            "LDS": 242,
+            "STS": 8,
+            "LDGSTS": 160,
+            "LDGDEPBAR": 18
+          },
+          "registers": 94,
+          "spill_store_bytes": 0,
+          "spill_load_bytes": 0,
+          "barriers": 16,
+          "shared_bytes": 0,
+          "ptxas_command": [
+            "ptxas",
+            "-arch=sm_89",
+            "-v",
+            "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/two-target/perf-a/m01_matmul_1024x1024x512/kernel-0-sm_89.ptx",
+            "-o",
+            "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/two-target/perf-a/m01_matmul_1024x1024x512/kernel-0-sm_89.sm_89.cubin"
+          ],
+          "nvdisasm_command": [
+            "nvdisasm",
+            "-c",
+            "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/two-target/perf-a/m01_matmul_1024x1024x512/kernel-0-sm_89.sm_89.cubin"
+          ],
+          "ptxas_log_sha256": "05dfd3a977376b4e29634481cfdf2afb66debf8bf7ac6eec549c92975edea044"
+        },
+        "sm_120": {
+          "ptx_sha256": "b366b7bfd37f626ff907b633da0e0c8b3398e4b6cb0fa0c8fee4a41ee077e393",
+          "cubin_sha256": "666a817b1303f268441fb504e0f21e71f57a223059915bbbeb079e26fc098fe2",
+          "sass_sha256": "ac4e815583fa7c2ba42c058bc57c23f6e2d9cf1ed497f392e8c33a86095b3ea8",
+          "sass_instructions": 2688,
+          "sass_op_counts": {
+            "BAR": 18,
+            "BRA": 1,
+            "DEPBAR": 16,
+            "EXIT": 2,
+            "FADD": 28,
+            "FFMA": 2048,
+            "IADD": 77,
+            "IMAD": 4,
+            "ISETP": 2,
+            "LDC": 7,
+            "LDCU": 1,
+            "LDGDEPBAR": 18,
+            "LDGSTS": 160,
+            "LDS": 245,
+            "LEA": 19,
+            "LOP3": 8,
+            "MOV": 1,
+            "NOP": 9,
+            "S2R": 3,
+            "SHF": 8,
+            "STG": 5,
+            "STS": 8
+          },
+          "memory_ops": {
+            "STG": 5,
+            "LDS": 245,
+            "STS": 8,
+            "LDGSTS": 160,
+            "LDGDEPBAR": 18
+          },
+          "registers": 98,
+          "spill_store_bytes": 0,
+          "spill_load_bytes": 0,
+          "barriers": 16,
+          "shared_bytes": 0,
+          "ptxas_command": [
+            "ptxas",
+            "-arch=sm_120",
+            "-v",
+            "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/two-target/perf-a/m01_matmul_1024x1024x512/kernel-0-sm_120.ptx",
+            "-o",
+            "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/two-target/perf-a/m01_matmul_1024x1024x512/kernel-0-sm_120.sm_120.cubin"
+          ],
+          "nvdisasm_command": [
+            "nvdisasm",
+            "-c",
+            "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/two-target/perf-a/m01_matmul_1024x1024x512/kernel-0-sm_120.sm_120.cubin"
+          ],
+          "ptxas_log_sha256": "17cf161107484bff01172d074aa804dbd11946d3ddc3561a7dfc072b0597c8de"
+        }
+      }
+    },
+    {
+      "case": "perf-b/m01_matmul_2048x2048x512",
+      "entry": "k_matmul_2967be",
+      "ir_sha256": "983adb29913b1ce05257a21af224c167bda76d9843dfe4eb6ea9d69c3abdb256",
+      "source_ptx_sha256": "7151cd89ff647671f32e0159808eb1ed4595bb6e608219e53167222cef903018",
+      "targets": {
+        "sm_89": {
+          "ptx_sha256": "7151cd89ff647671f32e0159808eb1ed4595bb6e608219e53167222cef903018",
+          "cubin_sha256": "3b3bfc32d983b4e712e09a772fb3b8832aecd2389338a8c92d92b6dc525248c0",
+          "sass_sha256": "5623abcc54715b36bdea89e51a00642b7d15be2b82ea1c91685cff1d199a9931",
+          "sass_instructions": 2632,
+          "sass_op_counts": {
+            "BAR": 18,
+            "BRA": 1,
+            "DEPBAR": 16,
+            "EXIT": 2,
+            "FADD": 28,
+            "FFMA": 2048,
+            "IADD3": 32,
+            "IMAD": 4,
+            "ISETP": 2,
+            "LDGDEPBAR": 18,
+            "LDGSTS": 160,
+            "LDS": 242,
+            "LEA": 16,
+            "LOP3": 9,
+            "MOV": 4,
+            "NOP": 8,
+            "S2R": 2,
+            "SHF": 8,
+            "STG": 5,
+            "STS": 8,
+            "ULDC": 1
+          },
+          "memory_ops": {
+            "STG": 5,
+            "LDS": 242,
+            "STS": 8,
+            "LDGSTS": 160,
+            "LDGDEPBAR": 18
+          },
+          "registers": 94,
+          "spill_store_bytes": 0,
+          "spill_load_bytes": 0,
+          "barriers": 16,
+          "shared_bytes": 0,
+          "ptxas_command": [
+            "ptxas",
+            "-arch=sm_89",
+            "-v",
+            "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/two-target/perf-b/m01_matmul_2048x2048x512/kernel-0-sm_89.ptx",
+            "-o",
+            "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/two-target/perf-b/m01_matmul_2048x2048x512/kernel-0-sm_89.sm_89.cubin"
+          ],
+          "nvdisasm_command": [
+            "nvdisasm",
+            "-c",
+            "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/two-target/perf-b/m01_matmul_2048x2048x512/kernel-0-sm_89.sm_89.cubin"
+          ],
+          "ptxas_log_sha256": "ac494924e4225d5cee00e36d03448c5dcb2813bff0a8e3a93edb1ab1f78c4522"
+        },
+        "sm_120": {
+          "ptx_sha256": "7151cd89ff647671f32e0159808eb1ed4595bb6e608219e53167222cef903018",
+          "cubin_sha256": "bb2bbfca8693ebb02b2b4c6f06c8477ea4d56a33a37d4c292d688fbd2c75ed38",
+          "sass_sha256": "a955f575dba377b93b3481e21766eb2f4b766ce4ba7afd7c27b87525e3e159b5",
+          "sass_instructions": 2688,
+          "sass_op_counts": {
+            "BAR": 18,
+            "BRA": 1,
+            "DEPBAR": 16,
+            "EXIT": 2,
+            "FADD": 28,
+            "FFMA": 2048,
+            "IADD": 77,
+            "IMAD": 4,
+            "ISETP": 2,
+            "LDC": 7,
+            "LDCU": 1,
+            "LDGDEPBAR": 18,
+            "LDGSTS": 160,
+            "LDS": 245,
+            "LEA": 19,
+            "LOP3": 8,
+            "MOV": 1,
+            "NOP": 9,
+            "S2R": 3,
+            "SHF": 8,
+            "STG": 5,
+            "STS": 8
+          },
+          "memory_ops": {
+            "STG": 5,
+            "LDS": 245,
+            "STS": 8,
+            "LDGSTS": 160,
+            "LDGDEPBAR": 18
+          },
+          "registers": 98,
+          "spill_store_bytes": 0,
+          "spill_load_bytes": 0,
+          "barriers": 16,
+          "shared_bytes": 0,
+          "ptxas_command": [
+            "ptxas",
+            "-arch=sm_120",
+            "-v",
+            "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/two-target/perf-b/m01_matmul_2048x2048x512/kernel-0-sm_120.ptx",
+            "-o",
+            "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/two-target/perf-b/m01_matmul_2048x2048x512/kernel-0-sm_120.sm_120.cubin"
+          ],
+          "nvdisasm_command": [
+            "nvdisasm",
+            "-c",
+            "/home/ada/Projects/emmy-p5-generic-cse/.emmy/p5-inventory/two-target/perf-b/m01_matmul_2048x2048x512/kernel-0-sm_120.sm_120.cubin"
+          ],
+          "ptxas_log_sha256": "e9359115cddda11f9c8de005f2df7320623802a940d90f4fc7a0343a1cb461a0"
+        }
+      }
+    }
+  ]
+}

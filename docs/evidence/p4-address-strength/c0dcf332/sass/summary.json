@@ -1,0 +1,138 @@
+[
+  {
+    "case": "p02_scale_shift_8m-k_add_pointwise",
+    "arch": "sm_89",
+    "arm": "candidate",
+    "sass_sha256": "e8f55943a983bb7e71a1db3982011f0aa3b417fab9413b942d6c410564fde36e",
+    "decoded_instructions": 48,
+    "non_nop_instructions": 35,
+    "LDG": 7,
+    "STG": 5,
+    "IMAD": 3,
+    "SHF": 0,
+    "registers": 16,
+    "spill_bytes": [
+      0,
+      0
+    ]
+  },
+  {
+    "case": "p02_scale_shift_8m-k_add_pointwise",
+    "arch": "sm_89",
+    "arm": "fallback",
+    "sass_sha256": "36e2cb0d3fdfe5af8f7c6c4bc75077669ff6a7b05fe6958b89dd2a5447ff32da",
+    "decoded_instructions": 48,
+    "non_nop_instructions": 36,
+    "LDG": 7,
+    "STG": 5,
+    "IMAD": 3,
+    "SHF": 1,
+    "registers": 16,
+    "spill_bytes": [
+      0,
+      0
+    ]
+  },
+  {
+    "case": "p02_scale_shift_8m-k_add_pointwise",
+    "arch": "sm_120",
+    "arm": "candidate",
+    "sass_sha256": "ec833ef6327a378f42f07120557a32663e90c13b1c78aefcf4abc18f3c5af085",
+    "decoded_instructions": 48,
+    "non_nop_instructions": 35,
+    "LDG": 7,
+    "STG": 5,
+    "IMAD": 3,
+    "SHF": 0,
+    "registers": 18,
+    "spill_bytes": [
+      0,
+      0
+    ]
+  },
+  {
+    "case": "p02_scale_shift_8m-k_add_pointwise",
+    "arch": "sm_120",
+    "arm": "fallback",
+    "sass_sha256": "315f7e239754624aedf9b69456271fc360d50c17dad32d181586c09801ea1fd0",
+    "decoded_instructions": 48,
+    "non_nop_instructions": 36,
+    "LDG": 7,
+    "STG": 5,
+    "IMAD": 3,
+    "SHF": 1,
+    "registers": 18,
+    "spill_bytes": [
+      0,
+      0
+    ]
+  },
+  {
+    "case": "p03_relu_mul_4m-k_mul_pointwise",
+    "arch": "sm_89",
+    "arm": "candidate",
+    "sass_sha256": "8fe5309a5ceaa3308bc915acf14c27696334a400e2456055f31eed22becc1b9f",
+    "decoded_instructions": 48,
+    "non_nop_instructions": 40,
+    "LDG": 10,
+    "STG": 5,
+    "IMAD": 4,
+    "SHF": 0,
+    "registers": 20,
+    "spill_bytes": [
+      0,
+      0
+    ]
+  },
+  {
+    "case": "p03_relu_mul_4m-k_mul_pointwise",
+    "arch": "sm_89",
+    "arm": "fallback",
+    "sass_sha256": "3c3c6b65d587564e8acfa40c80bb03669e9b3793011cc6ba59164aedb4161aaa",
+    "decoded_instructions": 56,
+    "non_nop_instructions": 41,
+    "LDG": 10,
+    "STG": 5,
+    "IMAD": 4,
+    "SHF": 1,
+    "registers": 20,
+    "spill_bytes": [
+      0,
+      0
+    ]
+  },
+  {
+    "case": "p03_relu_mul_4m-k_mul_pointwise",
+    "arch": "sm_120",
+    "arm": "candidate",
+    "sass_sha256": "620f26b1cf2b8f67f755f07df3e9c2a1b254f338810a787b8496a33548ea26f0",
+    "decoded_instructions": 56,
+    "non_nop_instructions": 43,
+    "LDG": 10,
+    "STG": 5,
+    "IMAD": 4,
+    "SHF": 0,
+    "registers": 20,
+    "spill_bytes": [
+      0,
+      0
+    ]
+  },
+  {
+    "case": "p03_relu_mul_4m-k_mul_pointwise",
+    "arch": "sm_120",
+    "arm": "fallback",
+    "sass_sha256": "bc13694ab3735a769fcfa437f409b087f61f4254f83e041d5a60d4d45769330c",
+    "decoded_instructions": 56,
+    "non_nop_instructions": 44,
+    "LDG": 10,
+    "STG": 5,
+    "IMAD": 4,
+    "SHF": 1,
+    "registers": 20,
+    "spill_bytes": [
+      0,
+      0
+    ]
+  }
+]

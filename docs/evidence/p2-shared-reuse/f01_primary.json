@@ -1,0 +1,284 @@
+{
+  "case": "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/cases-v3/perf-a/f01_rmsnorm_3072x2048",
+  "case_id": "f01_rmsnorm_3072x2048",
+  "arch": "sm_120",
+  "server": "http://runner.riftstack.ai:48701",
+  "aa": false,
+  "warmup": 10,
+  "iters": 50,
+  "repetitions": 7,
+  "baseline_source": "/home/ada/Projects/emmy-hackathon-2026/compile.py",
+  "baseline_sha256": "067ef9c4ce31a4bf5ccda90a8d13e9bd1b71b89aff19abe7598cdba4c77e2921",
+  "candidate_source": "/home/ada/Projects/emmy-p2-shared-reuse/compile.py",
+  "candidate_sha256": "0a6f12033a942f4da9176ebf1e963c16193d8883610d3d4807bbc9870ab0de2a",
+  "local_correctness_receipt": "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/p2-gates-0a6f1203/scale8/results.json",
+  "local_correctness_sha256": "cbffcc5cecf6df445cb6735cd5a14d0a14df3513a24c950889be611a813ebfc0",
+  "ptx": {
+    "baseline": [
+      {
+        "kernel": {
+          "arg_order": [
+            "mean_count",
+            "add_c1",
+            "x",
+            "w",
+            "mul_1"
+          ],
+          "args": [
+            {
+              "data": [
+                2048.0
+              ],
+              "dtype": "f32",
+              "name": "mean_count",
+              "shape": [
+                1
+              ]
+            },
+            {
+              "data": [
+                1e-05
+              ],
+              "dtype": "f32",
+              "name": "add_c1",
+              "shape": [
+                1
+              ]
+            },
+            {
+              "dtype": "f32",
+              "name": "x",
+              "seed": 11007,
+              "shape": [
+                3072,
+                2048
+              ]
+            },
+            {
+              "dtype": "f32",
+              "name": "w",
+              "seed": 11008,
+              "shape": [
+                2048
+              ]
+            },
+            {
+              "dtype": "f32",
+              "name": "mul_1",
+              "output": true,
+              "shape": [
+                3072,
+                2048
+              ]
+            }
+          ],
+          "block": [
+            128,
+            1,
+            1
+          ],
+          "entry": "k_mean_cbd1de",
+          "final": true,
+          "grid": [
+            3072,
+            1,
+            1
+          ],
+          "node": "mul_1",
+          "smem_bytes": 0,
+          "zero_outputs": []
+        },
+        "ptx": ".emmy/research/performance-v1/hosted-p2p5/p2-f01-v2/compile-f01_rmsnorm_3072x2048-k_mean_cbd1de.ptx",
+        "ptx_sha256": "fb03da810c79387de89cda8fdab1111bb47310cb48ddfd3b476f203957f12a98",
+        "cubin_id": "7428450572406a909d3f02059190300e8156999bfcadb77936ef863ecc747336",
+        "registers": 48
+      }
+    ],
+    "candidate": [
+      {
+        "kernel": {
+          "arg_order": [
+            "mean_count",
+            "add_c1",
+            "x",
+            "w",
+            "mul_1"
+          ],
+          "args": [
+            {
+              "data": [
+                2048.0
+              ],
+              "dtype": "f32",
+              "name": "mean_count",
+              "shape": [
+                1
+              ]
+            },
+            {
+              "data": [
+                1e-05
+              ],
+              "dtype": "f32",
+              "name": "add_c1",
+              "shape": [
+                1
+              ]
+            },
+            {
+              "dtype": "f32",
+              "name": "x",
+              "seed": 11007,
+              "shape": [
+                3072,
+                2048
+              ]
+            },
+            {
+              "dtype": "f32",
+              "name": "w",
+              "seed": 11008,
+              "shape": [
+                2048
+              ]
+            },
+            {
+              "dtype": "f32",
+              "name": "mul_1",
+              "output": true,
+              "shape": [
+                3072,
+                2048
+              ]
+            }
+          ],
+          "block": [
+            128,
+            1,
+            1
+          ],
+          "entry": "k_mean_cbd1de",
+          "final": true,
+          "grid": [
+            3072,
+            1,
+            1
+          ],
+          "node": "mul_1",
+          "smem_bytes": 0,
+          "zero_outputs": []
+        },
+        "ptx": ".emmy/research/performance-v1/hosted-p2p5/p2-f01-v2/compile-f01_rmsnorm_3072x2048-k_mean_cbd1de.ptx",
+        "ptx_sha256": "fb03da810c79387de89cda8fdab1111bb47310cb48ddfd3b476f203957f12a98",
+        "cubin_id": "7428450572406a909d3f02059190300e8156999bfcadb77936ef863ecc747336",
+        "registers": 48
+      }
+    ]
+  },
+  "blocks": [
+    {
+      "block": 0,
+      "order": [
+        "baseline",
+        "candidate"
+      ],
+      "samples_us": {
+        "baseline": 12.992,
+        "candidate": 13.152
+      },
+      "ratio": 1.0123152709359604
+    },
+    {
+      "block": 1,
+      "order": [
+        "candidate",
+        "baseline"
+      ],
+      "samples_us": {
+        "candidate": 13.472,
+        "baseline": 12.992
+      },
+      "ratio": 1.0369458128078817
+    },
+    {
+      "block": 2,
+      "order": [
+        "baseline",
+        "candidate"
+      ],
+      "samples_us": {
+        "baseline": 12.96,
+        "candidate": 12.992
+      },
+      "ratio": 1.002469135802469
+    },
+    {
+      "block": 3,
+      "order": [
+        "candidate",
+        "baseline"
+      ],
+      "samples_us": {
+        "candidate": 12.992,
+        "baseline": 13.024
+      },
+      "ratio": 0.9975429975429977
+    },
+    {
+      "block": 4,
+      "order": [
+        "baseline",
+        "candidate"
+      ],
+      "samples_us": {
+        "baseline": 12.992,
+        "candidate": 13.024
+      },
+      "ratio": 1.002463054187192
+    },
+    {
+      "block": 5,
+      "order": [
+        "candidate",
+        "baseline"
+      ],
+      "samples_us": {
+        "candidate": 12.992,
+        "baseline": 13.056
+      },
+      "ratio": 0.9950980392156864
+    },
+    {
+      "block": 6,
+      "order": [
+        "baseline",
+        "candidate"
+      ],
+      "samples_us": {
+        "baseline": 13.024,
+        "candidate": 13.072
+      },
+      "ratio": 1.0036855036855037
+    }
+  ],
+  "ratios": [
+    1.0123152709359604,
+    1.0369458128078817,
+    1.002469135802469,
+    0.9975429975429977,
+    1.002463054187192,
+    0.9950980392156864,
+    1.0036855036855037
+  ],
+  "ratio_median": 1.002469135802469,
+  "ratio_spread": {
+    "min": 0.9950980392156864,
+    "max": 1.0369458128078817,
+    "median": 1.002469135802469
+  },
+  "direction": "unresolved",
+  "request_count": 16,
+  "deadband": 0.0525,
+  "aa_noise": null,
+  "timing_note": "Hosted RTX 5090, max_return=0; correctness comes from the local full-output receipt."
+}

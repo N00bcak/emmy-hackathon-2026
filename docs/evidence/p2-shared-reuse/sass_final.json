@@ -1,0 +1,372 @@
+{
+  "f01_scaled": {
+    "baseline": {
+      "compiler_sha256": "067ef9c4ce31a4bf5ccda90a8d13e9bd1b71b89aff19abe7598cdba4c77e2921",
+      "ptx_sha256": "fb03da810c79387de89cda8fdab1111bb47310cb48ddfd3b476f203957f12a98",
+      "targets": {
+        "sm_89": {
+          "cubin_sha256": "c48b224177b74e0be607ac01aadd637009700d4d5bb1ad266c5db8d9c32f0c61",
+          "sass_sha256": "5b8ec69956093edb2b46112be4cb747d6978a0338d01c4e8a785d99b91f9041f",
+          "registers": 48,
+          "spill_stores": 0,
+          "spill_loads": 0,
+          "sass_insns": 536,
+          "non_nop_insns": 528,
+          "LDG": 59,
+          "STG": 5,
+          "SHF": 25,
+          "NOP": 8
+        },
+        "sm_120": {
+          "cubin_sha256": "77fb052128a26db379161a16a689dd586c49e25c3662bc60a7e64e8dd33cb218",
+          "sass_sha256": "72815eaa7c9e8428d41523f8b1df64022e211eb59f85d9adc18da1783df60e18",
+          "registers": 48,
+          "spill_stores": 0,
+          "spill_loads": 0,
+          "sass_insns": 568,
+          "non_nop_insns": 549,
+          "LDG": 59,
+          "STG": 5,
+          "SHF": 20,
+          "NOP": 19
+        }
+      }
+    },
+    "p2": {
+      "compiler_sha256": "0a6f12033a942f4da9176ebf1e963c16193d8883610d3d4807bbc9870ab0de2a",
+      "ptx_sha256": "fb03da810c79387de89cda8fdab1111bb47310cb48ddfd3b476f203957f12a98",
+      "targets": {
+        "sm_89": {
+          "cubin_sha256": "c48b224177b74e0be607ac01aadd637009700d4d5bb1ad266c5db8d9c32f0c61",
+          "sass_sha256": "5b8ec69956093edb2b46112be4cb747d6978a0338d01c4e8a785d99b91f9041f",
+          "registers": 48,
+          "spill_stores": 0,
+          "spill_loads": 0,
+          "sass_insns": 536,
+          "non_nop_insns": 528,
+          "LDG": 59,
+          "STG": 5,
+          "SHF": 25,
+          "NOP": 8,
+          "identical_to_baseline": {
+            "cubin_sha256": true,
+            "sass_sha256": true
+          }
+        },
+        "sm_120": {
+          "cubin_sha256": "77fb052128a26db379161a16a689dd586c49e25c3662bc60a7e64e8dd33cb218",
+          "sass_sha256": "72815eaa7c9e8428d41523f8b1df64022e211eb59f85d9adc18da1783df60e18",
+          "registers": 48,
+          "spill_stores": 0,
+          "spill_loads": 0,
+          "sass_insns": 568,
+          "non_nop_insns": 549,
+          "LDG": 59,
+          "STG": 5,
+          "SHF": 20,
+          "NOP": 19,
+          "identical_to_baseline": {
+            "cubin_sha256": true,
+            "sass_sha256": true
+          }
+        }
+      }
+    }
+  },
+  "f02_scaled": {
+    "baseline": {
+      "compiler_sha256": "067ef9c4ce31a4bf5ccda90a8d13e9bd1b71b89aff19abe7598cdba4c77e2921",
+      "ptx_sha256": "34b9ae9b9c7701cc73c81b025efddf9b987096d49b91d3a192211972de10d3d6",
+      "targets": {
+        "sm_89": {
+          "cubin_sha256": "8bc3fb4318e558de84f9567cbe0e390af327d2dd79656899e2ee94bcb3f23f52",
+          "sass_sha256": "9930e109a7dd0e0c057db396f58b8ea81431db939630bea7f04f157f01a3f7f3",
+          "registers": 40,
+          "spill_stores": 0,
+          "spill_loads": 0,
+          "sass_insns": 1120,
+          "non_nop_insns": 1111,
+          "LDG": 48,
+          "STG": 1,
+          "SHF": 29,
+          "NOP": 9
+        },
+        "sm_120": {
+          "cubin_sha256": "b4c66738621f3cfaf04b2427fac53ad6f2892de35324271acb426b754cf9cd97",
+          "sass_sha256": "1fdb236e61a5799ba004ae24fb5ddada5ef0bb5812ee6f6cfdd90a854df1ae7e",
+          "registers": 40,
+          "spill_stores": 0,
+          "spill_loads": 0,
+          "sass_insns": 1160,
+          "non_nop_insns": 1138,
+          "LDG": 48,
+          "STG": 1,
+          "SHF": 24,
+          "NOP": 22
+        }
+      }
+    },
+    "p2": {
+      "compiler_sha256": "0a6f12033a942f4da9176ebf1e963c16193d8883610d3d4807bbc9870ab0de2a",
+      "ptx_sha256": "947277c7a11500b4e8cb2b737999749bb6571b55595957169f7bd388f9a75e50",
+      "targets": {
+        "sm_89": {
+          "cubin_sha256": "358e946acac6924bbe238bd97caa367519ecc66945faa6d680ad10181035de22",
+          "sass_sha256": "b4f77e0c6047af56c7e218767ad35052d52a94b053bb4f755e3ab228d95d9da3",
+          "registers": 40,
+          "spill_stores": 0,
+          "spill_loads": 0,
+          "sass_insns": 688,
+          "non_nop_insns": 679,
+          "LDG": 16,
+          "STG": 16,
+          "SHF": 29,
+          "NOP": 9,
+          "identical_to_baseline": {
+            "cubin_sha256": false,
+            "sass_sha256": false
+          }
+        },
+        "sm_120": {
+          "cubin_sha256": "a02885c0876eec1002ceb672ff001e8cd1fd2a65f95fd2b90cf1661c39f35dc3",
+          "sass_sha256": "0fa2db8d6b76dd81fcd065db2bfaec4a4361833bce608095c80bd9d6585e8dee",
+          "registers": 40,
+          "spill_stores": 0,
+          "spill_loads": 0,
+          "sass_insns": 720,
+          "non_nop_insns": 707,
+          "LDG": 16,
+          "STG": 16,
+          "SHF": 24,
+          "NOP": 13,
+          "identical_to_baseline": {
+            "cubin_sha256": false,
+            "sass_sha256": false
+          }
+        }
+      }
+    }
+  },
+  "f03_scaled": {
+    "baseline": {
+      "compiler_sha256": "067ef9c4ce31a4bf5ccda90a8d13e9bd1b71b89aff19abe7598cdba4c77e2921",
+      "ptx_sha256": "00ef91df42112dac72010982e2b3a8d93c1c327effffe15ffce8ef1b99226afd",
+      "targets": {
+        "sm_89": {
+          "cubin_sha256": "920e1c237ad05eed63fb029087b5c6839639f8fa8d001ec2132b385d137a27d9",
+          "sass_sha256": "b68ffa9250a040368e113955f677430aac48d3807516db77b3e85cb81db7d73b",
+          "registers": 40,
+          "spill_stores": 0,
+          "spill_loads": 0,
+          "sass_insns": 488,
+          "non_nop_insns": 476,
+          "LDG": 52,
+          "STG": 5,
+          "SHF": 22,
+          "NOP": 12
+        },
+        "sm_120": {
+          "cubin_sha256": "9223ca27da780982570466433c507aa3e6076903688eec82fa938808330d97d2",
+          "sass_sha256": "daab72cc78ae3e33e4c41a3089ab734286482caf2ffcc6a7bd82594434184e36",
+          "registers": 40,
+          "spill_stores": 0,
+          "spill_loads": 0,
+          "sass_insns": 520,
+          "non_nop_insns": 498,
+          "LDG": 52,
+          "STG": 5,
+          "SHF": 20,
+          "NOP": 22
+        }
+      }
+    },
+    "p2": {
+      "compiler_sha256": "0a6f12033a942f4da9176ebf1e963c16193d8883610d3d4807bbc9870ab0de2a",
+      "ptx_sha256": "00ef91df42112dac72010982e2b3a8d93c1c327effffe15ffce8ef1b99226afd",
+      "targets": {
+        "sm_89": {
+          "cubin_sha256": "920e1c237ad05eed63fb029087b5c6839639f8fa8d001ec2132b385d137a27d9",
+          "sass_sha256": "b68ffa9250a040368e113955f677430aac48d3807516db77b3e85cb81db7d73b",
+          "registers": 40,
+          "spill_stores": 0,
+          "spill_loads": 0,
+          "sass_insns": 488,
+          "non_nop_insns": 476,
+          "LDG": 52,
+          "STG": 5,
+          "SHF": 22,
+          "NOP": 12,
+          "identical_to_baseline": {
+            "cubin_sha256": true,
+            "sass_sha256": true
+          }
+        },
+        "sm_120": {
+          "cubin_sha256": "9223ca27da780982570466433c507aa3e6076903688eec82fa938808330d97d2",
+          "sass_sha256": "daab72cc78ae3e33e4c41a3089ab734286482caf2ffcc6a7bd82594434184e36",
+          "registers": 40,
+          "spill_stores": 0,
+          "spill_loads": 0,
+          "sass_insns": 520,
+          "non_nop_insns": 498,
+          "LDG": 52,
+          "STG": 5,
+          "SHF": 20,
+          "NOP": 22,
+          "identical_to_baseline": {
+            "cubin_sha256": true,
+            "sass_sha256": true
+          }
+        }
+      }
+    }
+  },
+  "p02_scaled": {
+    "baseline": {
+      "compiler_sha256": "067ef9c4ce31a4bf5ccda90a8d13e9bd1b71b89aff19abe7598cdba4c77e2921",
+      "ptx_sha256": "fadb770a9f65ad5365ed54e98f6cad17bcc053a2525799deb57e92b29536d766",
+      "targets": {
+        "sm_89": {
+          "cubin_sha256": "76477660b552d3ff0580ea151b723bf58e10dee993f3edfa8f8ff0b4a0340916",
+          "sass_sha256": "36e2cb0d3fdfe5af8f7c6c4bc75077669ff6a7b05fe6958b89dd2a5447ff32da",
+          "registers": 16,
+          "spill_stores": 0,
+          "spill_loads": 0,
+          "sass_insns": 48,
+          "non_nop_insns": 36,
+          "LDG": 7,
+          "STG": 5,
+          "SHF": 1,
+          "NOP": 12
+        },
+        "sm_120": {
+          "cubin_sha256": "a6d9f2d33c891e6ec085badf2ae278e965deeaf19abd1893b9cd1627d33306c6",
+          "sass_sha256": "66a583f26e0b644b91084551fbf7d5d207ed454b7a14a1154acded8b33ed475e",
+          "registers": 18,
+          "spill_stores": 0,
+          "spill_loads": 0,
+          "sass_insns": 48,
+          "non_nop_insns": 36,
+          "LDG": 7,
+          "STG": 5,
+          "SHF": 1,
+          "NOP": 12
+        }
+      }
+    },
+    "p2": {
+      "compiler_sha256": "0a6f12033a942f4da9176ebf1e963c16193d8883610d3d4807bbc9870ab0de2a",
+      "ptx_sha256": "fadb770a9f65ad5365ed54e98f6cad17bcc053a2525799deb57e92b29536d766",
+      "targets": {
+        "sm_89": {
+          "cubin_sha256": "76477660b552d3ff0580ea151b723bf58e10dee993f3edfa8f8ff0b4a0340916",
+          "sass_sha256": "36e2cb0d3fdfe5af8f7c6c4bc75077669ff6a7b05fe6958b89dd2a5447ff32da",
+          "registers": 16,
+          "spill_stores": 0,
+          "spill_loads": 0,
+          "sass_insns": 48,
+          "non_nop_insns": 36,
+          "LDG": 7,
+          "STG": 5,
+          "SHF": 1,
+          "NOP": 12,
+          "identical_to_baseline": {
+            "cubin_sha256": true,
+            "sass_sha256": true
+          }
+        },
+        "sm_120": {
+          "cubin_sha256": "a6d9f2d33c891e6ec085badf2ae278e965deeaf19abd1893b9cd1627d33306c6",
+          "sass_sha256": "66a583f26e0b644b91084551fbf7d5d207ed454b7a14a1154acded8b33ed475e",
+          "registers": 18,
+          "spill_stores": 0,
+          "spill_loads": 0,
+          "sass_insns": 48,
+          "non_nop_insns": 36,
+          "LDG": 7,
+          "STG": 5,
+          "SHF": 1,
+          "NOP": 12,
+          "identical_to_baseline": {
+            "cubin_sha256": true,
+            "sass_sha256": true
+          }
+        }
+      }
+    }
+  },
+  "p03_scaled": {
+    "baseline": {
+      "compiler_sha256": "067ef9c4ce31a4bf5ccda90a8d13e9bd1b71b89aff19abe7598cdba4c77e2921",
+      "ptx_sha256": "611a44bd34cc3c0efe411de207be53b5092520df8946792920df0905fe7dd415",
+      "targets": {
+        "sm_89": {
+          "cubin_sha256": "265d1778d8ff5057899adf58884ca5dfce4b46e1debf9ccce42f100c962d0a92",
+          "sass_sha256": "3c3c6b65d587564e8acfa40c80bb03669e9b3793011cc6ba59164aedb4161aaa",
+          "registers": 20,
+          "spill_stores": 0,
+          "spill_loads": 0,
+          "sass_insns": 56,
+          "non_nop_insns": 41,
+          "LDG": 10,
+          "STG": 5,
+          "SHF": 1,
+          "NOP": 15
+        },
+        "sm_120": {
+          "cubin_sha256": "3a41f54672d46d23098a95756f4426e7404316ad5688744303a7a3fd0972f60d",
+          "sass_sha256": "903c6195ceee95aaf8a99a0b283e0216e06dd143b4e47af0de848a765abe966f",
+          "registers": 20,
+          "spill_stores": 0,
+          "spill_loads": 0,
+          "sass_insns": 56,
+          "non_nop_insns": 44,
+          "LDG": 10,
+          "STG": 5,
+          "SHF": 1,
+          "NOP": 12
+        }
+      }
+    },
+    "p2": {
+      "compiler_sha256": "0a6f12033a942f4da9176ebf1e963c16193d8883610d3d4807bbc9870ab0de2a",
+      "ptx_sha256": "611a44bd34cc3c0efe411de207be53b5092520df8946792920df0905fe7dd415",
+      "targets": {
+        "sm_89": {
+          "cubin_sha256": "265d1778d8ff5057899adf58884ca5dfce4b46e1debf9ccce42f100c962d0a92",
+          "sass_sha256": "3c3c6b65d587564e8acfa40c80bb03669e9b3793011cc6ba59164aedb4161aaa",
+          "registers": 20,
+          "spill_stores": 0,
+          "spill_loads": 0,
+          "sass_insns": 56,
+          "non_nop_insns": 41,
+          "LDG": 10,
+          "STG": 5,
+          "SHF": 1,
+          "NOP": 15,
+          "identical_to_baseline": {
+            "cubin_sha256": true,
+            "sass_sha256": true
+          }
+        },
+        "sm_120": {
+          "cubin_sha256": "3a41f54672d46d23098a95756f4426e7404316ad5688744303a7a3fd0972f60d",
+          "sass_sha256": "903c6195ceee95aaf8a99a0b283e0216e06dd143b4e47af0de848a765abe966f",
+          "registers": 20,
+          "spill_stores": 0,
+          "spill_loads": 0,
+          "sass_insns": 56,
+          "non_nop_insns": 44,
+          "LDG": 10,
+          "STG": 5,
+          "SHF": 1,
+          "NOP": 12,
+          "identical_to_baseline": {
+            "cubin_sha256": true,
+            "sass_sha256": true
+          }
+        }
+      }
+    }
+  }
+}

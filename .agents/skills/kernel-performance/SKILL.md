@@ -94,6 +94,11 @@ Use wall-clock latency as the performance criterion. SASS issue/instruction and
 memory counts, spills and occupancy are diagnostic proxies: they can explain or
 prioritize a measurement, but cannot establish or overturn its speed verdict.
 
+Before profiling or timing an optimization, verify that its intended effect
+survived `ptxas` into final SASS on every target. If `ptxas` removed, rebuilt or
+cancelled it, return it for re-implementation or mark it inactive; do not credit
+latency to a PTX-only change.
+
 Where available, compare against (1) straightforward reference code preserving
 the exact launch/ABI/numerics and (2) an optimized implementation as an explicitly
 different scheduling/algorithm ceiling. Keep reference code isolated from compiler

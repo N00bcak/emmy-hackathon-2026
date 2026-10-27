@@ -1,0 +1,921 @@
+{
+  "compiler_sha256": "c0dcf3321d209ef5de1205a8e592890810a155c6b9aa687abb38b434b88d62e7",
+  "source_unchanged": true,
+  "cases": [
+    {
+      "id": "2feed43c8085a9ce0a90ae785afb150dd9914eb8a2cb54b4ba2934ab53c467d3",
+      "name": "p02_scale_shift_8m",
+      "ok": true,
+      "cubins": [
+        "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/p4-on-p3-c0dcf332-gates-20261027/scaled-p02_scale_shift_8m-kernel-0/module.cubin"
+      ],
+      "result": {
+        "ok": true,
+        "batches": [
+          {
+            "batch_id": 0,
+            "membership": [
+              {
+                "id": "2feed43c8085a9ce0a90ae785afb150dd9914eb8a2cb54b4ba2934ab53c467d3",
+                "variant": "perf-a"
+              }
+            ],
+            "quarantined": false,
+            "results": [
+              {
+                "id": "2feed43c8085a9ce0a90ae785afb150dd9914eb8a2cb54b4ba2934ab53c467d3",
+                "variant": "perf-a",
+                "ok": true,
+                "checks": [
+                  {
+                    "repetition": 0,
+                    "ok": true,
+                    "buffers": {
+                      "mul_c1": {
+                        "prefix_ok": true,
+                        "suffix_ok": true,
+                        "input_ok": true
+                      },
+                      "add_c1": {
+                        "prefix_ok": true,
+                        "suffix_ok": true,
+                        "input_ok": true
+                      },
+                      "x": {
+                        "prefix_ok": true,
+                        "suffix_ok": true,
+                        "input_ok": true
+                      },
+                      "add": {
+                        "prefix_ok": true,
+                        "suffix_ok": true,
+                        "input_ok": true
+                      }
+                    },
+                    "outputs": {
+                      "add": {
+                        "ok": true,
+                        "elements": 8000000,
+                        "mismatched": 0,
+                        "max_abs_error": 0.0,
+                        "rtol": 1e-06,
+                        "atol": 1e-06
+                      }
+                    }
+                  },
+                  {
+                    "repetition": 1,
+                    "ok": true,
+                    "buffers": {
+                      "mul_c1": {
+                        "prefix_ok": true,
+                        "suffix_ok": true,
+                        "input_ok": true
+                      },
+                      "add_c1": {
+                        "prefix_ok": true,
+                        "suffix_ok": true,
+                        "input_ok": true
+                      },
+                      "x": {
+                        "prefix_ok": true,
+                        "suffix_ok": true,
+                        "input_ok": true
+                      },
+                      "add": {
+                        "prefix_ok": true,
+                        "suffix_ok": true,
+                        "input_ok": true
+                      }
+                    },
+                    "outputs": {
+                      "add": {
+                        "ok": true,
+                        "elements": 8000000,
+                        "mismatched": 0,
+                        "max_abs_error": 0.0,
+                        "rtol": 1e-06,
+                        "atol": 1e-06
+                      }
+                    }
+                  },
+                  {
+                    "repetition": 2,
+                    "ok": true,
+                    "buffers": {
+                      "mul_c1": {
+                        "prefix_ok": true,
+                        "suffix_ok": true,
+                        "input_ok": true
+                      },
+                      "add_c1": {
+                        "prefix_ok": true,
+                        "suffix_ok": true,
+                        "input_ok": true
+                      },
+                      "x": {
+                        "prefix_ok": true,
+                        "suffix_ok": true,
+                        "input_ok": true
+                      },
+                      "add": {
+                        "prefix_ok": true,
+                        "suffix_ok": true,
+                        "input_ok": true
+                      }
+                    },
+                    "outputs": {
+                      "add": {
+                        "ok": true,
+                        "elements": 8000000,
+                        "mismatched": 0,
+                        "max_abs_error": 0.0,
+                        "rtol": 1e-06,
+                        "atol": 1e-06
+                      }
+                    }
+                  }
+                ],
+                "resources": [
+                  {
+                    "entry": "k_add_pointwise",
+                    "dynamic_shared_bytes": 0,
+                    "block_threads": 256,
+                    "max_threads_per_block": 256,
+                    "static_shared_bytes": 0,
+                    "local_bytes": 0,
+                    "registers": 16,
+                    "max_active_blocks_per_sm": 6,
+                    "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+                  }
+                ],
+                "quarantined": false,
+                "trusted": true
+              }
+            ],
+            "wall_seconds": 0.2906194230017718,
+            "requires_all_batchmates_isolated": false,
+            "isolated": true
+          }
+        ],
+        "launch_count": 3,
+        "width": 1,
+        "repetitions": 3,
+        "promotion_eligible": false,
+        "note": "Concurrent results are screening only; fresh isolated confirmation is mandatory.",
+        "mode": "correctness",
+        "device": {
+          "name": "NVIDIA GeForce RTX 4060 Laptop GPU",
+          "worker_pid": 685532,
+          "context_identity": "685532:94527208810848",
+          "driver_version": 13040,
+          "clock_rate_khz": 1890000,
+          "multiprocessors": 24,
+          "memory_clock_khz": 8001000,
+          "compute_major": 8,
+          "compute_minor": 9,
+          "uuid": "GPU-01c8f1da-9f9f-fa3e-bbe2-0771199ab74a",
+          "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry."
+        },
+        "benchmark_qualified": false,
+        "qualification_note": "Raw diagnostics; benchmark validity requires evaluator-issued source/suite all-15 gates.",
+        "phase_seconds": {
+          "case_loading": 0.17499666700314265,
+          "cuda_initialization": 0.24113364399818238,
+          "execution_and_checks": 0.3458792169985827,
+          "total": 0.7620107149996329
+        },
+        "identities": [
+          {
+            "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/cases-v3/perf-a/p02_scale_shift_8m/meta.json": "ff9a840ee40873b5edbf44943421fc3c0f8d4315fbab77a2083048d627e350f6",
+            "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/cases-v3/perf-a/p02_scale_shift_8m/expected.npz": "010ee33c1c86d122b4a4c69f27579c47749edb5c13ced271b39c1a17e0534cb0",
+            "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/cases-v3/perf-a/p02_scale_shift_8m/inputs.npz": "b1be10892ccc5d6d59baffefa443721f9a1531e95c3026d8ff7543d9449a8d34",
+            "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/p4-on-p3-c0dcf332-gates-20261027/scaled-p02_scale_shift_8m-kernel-0/module.cubin": "29ff3c1ac1af7a0e719413872ea96d83a971f68cfe6a89773ae74e7893b16a92"
+          }
+        ]
+      },
+      "full_outputs_pass": true,
+      "case_id": "p02_scale_shift_8m"
+    },
+    {
+      "id": "18c1f7e9e097fa918cefe8a858269be460ba684ef3eab1d6f996cbf4c861fdd6",
+      "name": "p03_relu_mul_4m",
+      "ok": true,
+      "cubins": [
+        "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/p4-on-p3-c0dcf332-gates-20261027/scaled-p03_relu_mul_4m-kernel-0/module.cubin"
+      ],
+      "result": {
+        "ok": true,
+        "batches": [
+          {
+            "batch_id": 0,
+            "membership": [
+              {
+                "id": "18c1f7e9e097fa918cefe8a858269be460ba684ef3eab1d6f996cbf4c861fdd6",
+                "variant": "perf-a"
+              }
+            ],
+            "quarantined": false,
+            "results": [
+              {
+                "id": "18c1f7e9e097fa918cefe8a858269be460ba684ef3eab1d6f996cbf4c861fdd6",
+                "variant": "perf-a",
+                "ok": true,
+                "checks": [
+                  {
+                    "repetition": 0,
+                    "ok": true,
+                    "buffers": {
+                      "x": {
+                        "prefix_ok": true,
+                        "suffix_ok": true,
+                        "input_ok": true
+                      },
+                      "y": {
+                        "prefix_ok": true,
+                        "suffix_ok": true,
+                        "input_ok": true
+                      },
+                      "mul": {
+                        "prefix_ok": true,
+                        "suffix_ok": true,
+                        "input_ok": true
+                      }
+                    },
+                    "outputs": {
+                      "mul": {
+                        "ok": true,
+                        "elements": 4000000,
+                        "mismatched": 0,
+                        "max_abs_error": 0.0,
+                        "rtol": 0.0,
+                        "atol": 0.0
+                      }
+                    }
+                  },
+                  {
+                    "repetition": 1,
+                    "ok": true,
+                    "buffers": {
+                      "x": {
+                        "prefix_ok": true,
+                        "suffix_ok": true,
+                        "input_ok": true
+                      },
+                      "y": {
+                        "prefix_ok": true,
+                        "suffix_ok": true,
+                        "input_ok": true
+                      },
+                      "mul": {
+                        "prefix_ok": true,
+                        "suffix_ok": true,
+                        "input_ok": true
+                      }
+                    },
+                    "outputs": {
+                      "mul": {
+                        "ok": true,
+                        "elements": 4000000,
+                        "mismatched": 0,
+                        "max_abs_error": 0.0,
+                        "rtol": 0.0,
+                        "atol": 0.0
+                      }
+                    }
+                  },
+                  {
+                    "repetition": 2,
+                    "ok": true,
+                    "buffers": {
+                      "x": {
+                        "prefix_ok": true,
+                        "suffix_ok": true,
+                        "input_ok": true
+                      },
+                      "y": {
+                        "prefix_ok": true,
+                        "suffix_ok": true,
+                        "input_ok": true
+                      },
+                      "mul": {
+                        "prefix_ok": true,
+                        "suffix_ok": true,
+                        "input_ok": true
+                      }
+                    },
+                    "outputs": {
+                      "mul": {
+                        "ok": true,
+                        "elements": 4000000,
+                        "mismatched": 0,
+                        "max_abs_error": 0.0,
+                        "rtol": 0.0,
+                        "atol": 0.0
+                      }
+                    }
+                  }
+                ],
+                "resources": [
+                  {
+                    "entry": "k_mul_pointwise",
+                    "dynamic_shared_bytes": 0,
+                    "block_threads": 256,
+                    "max_threads_per_block": 256,
+                    "static_shared_bytes": 0,
+                    "local_bytes": 0,
+                    "registers": 20,
+                    "max_active_blocks_per_sm": 6,
+                    "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+                  }
+                ],
+                "quarantined": false,
+                "trusted": true
+              }
+            ],
+            "wall_seconds": 0.10016127000562847,
+            "requires_all_batchmates_isolated": false,
+            "isolated": true
+          }
+        ],
+        "launch_count": 3,
+        "width": 1,
+        "repetitions": 3,
+        "promotion_eligible": false,
+        "note": "Concurrent results are screening only; fresh isolated confirmation is mandatory.",
+        "mode": "correctness",
+        "device": {
+          "name": "NVIDIA GeForce RTX 4060 Laptop GPU",
+          "worker_pid": 685558,
+          "context_identity": "685558:94438794034992",
+          "driver_version": 13040,
+          "clock_rate_khz": 1890000,
+          "multiprocessors": 24,
+          "memory_clock_khz": 8001000,
+          "compute_major": 8,
+          "compute_minor": 9,
+          "uuid": "GPU-01c8f1da-9f9f-fa3e-bbe2-0771199ab74a",
+          "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry."
+        },
+        "benchmark_qualified": false,
+        "qualification_note": "Raw diagnostics; benchmark validity requires evaluator-issued source/suite all-15 gates.",
+        "phase_seconds": {
+          "case_loading": 0.12837355400552042,
+          "cuda_initialization": 0.14858082198770717,
+          "execution_and_checks": 0.14029796700924635,
+          "total": 0.41725353100628126
+        },
+        "identities": [
+          {
+            "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/cases-v3/perf-a/p03_relu_mul_4m/meta.json": "2fc397e283a692883ec35e5165991a165572b8008530925e3e438e9dce66c9e0",
+            "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/cases-v3/perf-a/p03_relu_mul_4m/expected.npz": "8ccaa6873a5822c98fb45a8c12dc3c6ac9dd5a234d150822b07052d230430a3b",
+            "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/cases-v3/perf-a/p03_relu_mul_4m/inputs.npz": "9c7314528956235b5125ce37162aef7a7fdffd7b6b73c9386d8778803a1e1077",
+            "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/p4-on-p3-c0dcf332-gates-20261027/scaled-p03_relu_mul_4m-kernel-0/module.cubin": "ea7b7472f607f4026e9bdf741aec6358b9553ce2eb88ddfee7a62ea112495f50"
+          }
+        ]
+      },
+      "full_outputs_pass": true,
+      "case_id": "p03_relu_mul_4m"
+    },
+    {
+      "id": "03e78f3970ce4d768df324efc9e2555e289139e6649cedd8ee71b6d319294f44",
+      "name": "f01_rmsnorm_3072x2048",
+      "ok": true,
+      "cubins": [
+        "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/p4-on-p3-c0dcf332-gates-20261027/scaled-f01_rmsnorm_3072x2048-kernel-0/module.cubin"
+      ],
+      "result": {
+        "ok": true,
+        "batches": [
+          {
+            "batch_id": 0,
+            "membership": [
+              {
+                "id": "03e78f3970ce4d768df324efc9e2555e289139e6649cedd8ee71b6d319294f44",
+                "variant": "perf-a"
+              }
+            ],
+            "quarantined": false,
+            "results": [
+              {
+                "id": "03e78f3970ce4d768df324efc9e2555e289139e6649cedd8ee71b6d319294f44",
+                "variant": "perf-a",
+                "ok": true,
+                "checks": [
+                  {
+                    "repetition": 0,
+                    "ok": true,
+                    "buffers": {
+                      "mean_count": {
+                        "prefix_ok": true,
+                        "suffix_ok": true,
+                        "input_ok": true
+                      },
+                      "add_c1": {
+                        "prefix_ok": true,
+                        "suffix_ok": true,
+                        "input_ok": true
+                      },
+                      "x": {
+                        "prefix_ok": true,
+                        "suffix_ok": true,
+                        "input_ok": true
+                      },
+                      "w": {
+                        "prefix_ok": true,
+                        "suffix_ok": true,
+                        "input_ok": true
+                      },
+                      "mul_1": {
+                        "prefix_ok": true,
+                        "suffix_ok": true,
+                        "input_ok": true
+                      }
+                    },
+                    "outputs": {
+                      "mul_1": {
+                        "ok": true,
+                        "elements": 6291456,
+                        "mismatched": 0,
+                        "max_abs_error": 1.9073486328125e-06,
+                        "rtol": 0.001,
+                        "atol": 0.0001
+                      }
+                    }
+                  },
+                  {
+                    "repetition": 1,
+                    "ok": true,
+                    "buffers": {
+                      "mean_count": {
+                        "prefix_ok": true,
+                        "suffix_ok": true,
+                        "input_ok": true
+                      },
+                      "add_c1": {
+                        "prefix_ok": true,
+                        "suffix_ok": true,
+                        "input_ok": true
+                      },
+                      "x": {
+                        "prefix_ok": true,
+                        "suffix_ok": true,
+                        "input_ok": true
+                      },
+                      "w": {
+                        "prefix_ok": true,
+                        "suffix_ok": true,
+                        "input_ok": true
+                      },
+                      "mul_1": {
+                        "prefix_ok": true,
+                        "suffix_ok": true,
+                        "input_ok": true
+                      }
+                    },
+                    "outputs": {
+                      "mul_1": {
+                        "ok": true,
+                        "elements": 6291456,
+                        "mismatched": 0,
+                        "max_abs_error": 1.9073486328125e-06,
+                        "rtol": 0.001,
+                        "atol": 0.0001
+                      }
+                    }
+                  },
+                  {
+                    "repetition": 2,
+                    "ok": true,
+                    "buffers": {
+                      "mean_count": {
+                        "prefix_ok": true,
+                        "suffix_ok": true,
+                        "input_ok": true
+                      },
+                      "add_c1": {
+                        "prefix_ok": true,
+                        "suffix_ok": true,
+                        "input_ok": true
+                      },
+                      "x": {
+                        "prefix_ok": true,
+                        "suffix_ok": true,
+                        "input_ok": true
+                      },
+                      "w": {
+                        "prefix_ok": true,
+                        "suffix_ok": true,
+                        "input_ok": true
+                      },
+                      "mul_1": {
+                        "prefix_ok": true,
+                        "suffix_ok": true,
+                        "input_ok": true
+                      }
+                    },
+                    "outputs": {
+                      "mul_1": {
+                        "ok": true,
+                        "elements": 6291456,
+                        "mismatched": 0,
+                        "max_abs_error": 1.9073486328125e-06,
+                        "rtol": 0.001,
+                        "atol": 0.0001
+                      }
+                    }
+                  }
+                ],
+                "resources": [
+                  {
+                    "entry": "k_mean_cbd1de",
+                    "dynamic_shared_bytes": 0,
+                    "block_threads": 128,
+                    "max_threads_per_block": 128,
+                    "static_shared_bytes": 16,
+                    "local_bytes": 0,
+                    "registers": 48,
+                    "max_active_blocks_per_sm": 10,
+                    "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+                  }
+                ],
+                "quarantined": false,
+                "trusted": true
+              }
+            ],
+            "wall_seconds": 0.15638636700168718,
+            "requires_all_batchmates_isolated": false,
+            "isolated": true
+          }
+        ],
+        "launch_count": 3,
+        "width": 1,
+        "repetitions": 3,
+        "promotion_eligible": false,
+        "note": "Concurrent results are screening only; fresh isolated confirmation is mandatory.",
+        "mode": "correctness",
+        "device": {
+          "name": "NVIDIA GeForce RTX 4060 Laptop GPU",
+          "worker_pid": 685586,
+          "context_identity": "685586:94535385761312",
+          "driver_version": 13040,
+          "clock_rate_khz": 1890000,
+          "multiprocessors": 24,
+          "memory_clock_khz": 8001000,
+          "compute_major": 8,
+          "compute_minor": 9,
+          "uuid": "GPU-01c8f1da-9f9f-fa3e-bbe2-0771199ab74a",
+          "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry."
+        },
+        "benchmark_qualified": false,
+        "qualification_note": "Raw diagnostics; benchmark validity requires evaluator-issued source/suite all-15 gates.",
+        "phase_seconds": {
+          "case_loading": 0.14149598899530247,
+          "cuda_initialization": 0.14197923500614706,
+          "execution_and_checks": 0.2060241250001127,
+          "total": 0.4895005360012874
+        },
+        "identities": [
+          {
+            "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/cases-v3/perf-a/f01_rmsnorm_3072x2048/meta.json": "5d5ee76bb0ecc09384a4418fef662e8ed8cc485b747e83d74fb2eb6a2433c38a",
+            "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/cases-v3/perf-a/f01_rmsnorm_3072x2048/expected.npz": "28f4188c799534d3b5b64cb7367e7bf50bac1fa018b1734de1ee43df9e51c77d",
+            "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/cases-v3/perf-a/f01_rmsnorm_3072x2048/inputs.npz": "d7a2f79a831c0eca51215812fdc1d68203af5c43983bdc760f1a366e0ec44026",
+            "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/p4-on-p3-c0dcf332-gates-20261027/scaled-f01_rmsnorm_3072x2048-kernel-0/module.cubin": "c48b224177b74e0be607ac01aadd637009700d4d5bb1ad266c5db8d9c32f0c61"
+          }
+        ]
+      },
+      "full_outputs_pass": true,
+      "case_id": "f01_rmsnorm_3072x2048"
+    },
+    {
+      "id": "815a144f7fad94875544b70db18f5e891c6b070f83f333173c300a1a897d2b46",
+      "name": "f03_l2norm_3072x2048",
+      "ok": true,
+      "cubins": [
+        "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/p4-on-p3-c0dcf332-gates-20261027/scaled-f03_l2norm_3072x2048-kernel-0/module.cubin"
+      ],
+      "result": {
+        "ok": true,
+        "batches": [
+          {
+            "batch_id": 0,
+            "membership": [
+              {
+                "id": "815a144f7fad94875544b70db18f5e891c6b070f83f333173c300a1a897d2b46",
+                "variant": "perf-a"
+              }
+            ],
+            "quarantined": false,
+            "results": [
+              {
+                "id": "815a144f7fad94875544b70db18f5e891c6b070f83f333173c300a1a897d2b46",
+                "variant": "perf-a",
+                "ok": true,
+                "checks": [
+                  {
+                    "repetition": 0,
+                    "ok": true,
+                    "buffers": {
+                      "x": {
+                        "prefix_ok": true,
+                        "suffix_ok": true,
+                        "input_ok": true
+                      },
+                      "div": {
+                        "prefix_ok": true,
+                        "suffix_ok": true,
+                        "input_ok": true
+                      }
+                    },
+                    "outputs": {
+                      "div": {
+                        "ok": true,
+                        "elements": 6291456,
+                        "mismatched": 0,
+                        "max_abs_error": 1.4901161193847656e-08,
+                        "rtol": 0.001,
+                        "atol": 0.0001
+                      }
+                    }
+                  },
+                  {
+                    "repetition": 1,
+                    "ok": true,
+                    "buffers": {
+                      "x": {
+                        "prefix_ok": true,
+                        "suffix_ok": true,
+                        "input_ok": true
+                      },
+                      "div": {
+                        "prefix_ok": true,
+                        "suffix_ok": true,
+                        "input_ok": true
+                      }
+                    },
+                    "outputs": {
+                      "div": {
+                        "ok": true,
+                        "elements": 6291456,
+                        "mismatched": 0,
+                        "max_abs_error": 1.4901161193847656e-08,
+                        "rtol": 0.001,
+                        "atol": 0.0001
+                      }
+                    }
+                  },
+                  {
+                    "repetition": 2,
+                    "ok": true,
+                    "buffers": {
+                      "x": {
+                        "prefix_ok": true,
+                        "suffix_ok": true,
+                        "input_ok": true
+                      },
+                      "div": {
+                        "prefix_ok": true,
+                        "suffix_ok": true,
+                        "input_ok": true
+                      }
+                    },
+                    "outputs": {
+                      "div": {
+                        "ok": true,
+                        "elements": 6291456,
+                        "mismatched": 0,
+                        "max_abs_error": 1.4901161193847656e-08,
+                        "rtol": 0.001,
+                        "atol": 0.0001
+                      }
+                    }
+                  }
+                ],
+                "resources": [
+                  {
+                    "entry": "k_div_reduce",
+                    "dynamic_shared_bytes": 0,
+                    "block_threads": 128,
+                    "max_threads_per_block": 128,
+                    "static_shared_bytes": 16,
+                    "local_bytes": 0,
+                    "registers": 40,
+                    "max_active_blocks_per_sm": 12,
+                    "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+                  }
+                ],
+                "quarantined": false,
+                "trusted": true
+              }
+            ],
+            "wall_seconds": 0.1444667030009441,
+            "requires_all_batchmates_isolated": false,
+            "isolated": true
+          }
+        ],
+        "launch_count": 3,
+        "width": 1,
+        "repetitions": 3,
+        "promotion_eligible": false,
+        "note": "Concurrent results are screening only; fresh isolated confirmation is mandatory.",
+        "mode": "correctness",
+        "device": {
+          "name": "NVIDIA GeForce RTX 4060 Laptop GPU",
+          "worker_pid": 685612,
+          "context_identity": "685612:93909706006576",
+          "driver_version": 13040,
+          "clock_rate_khz": 1890000,
+          "multiprocessors": 24,
+          "memory_clock_khz": 8001000,
+          "compute_major": 8,
+          "compute_minor": 9,
+          "uuid": "GPU-01c8f1da-9f9f-fa3e-bbe2-0771199ab74a",
+          "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry."
+        },
+        "benchmark_qualified": false,
+        "qualification_note": "Raw diagnostics; benchmark validity requires evaluator-issued source/suite all-15 gates.",
+        "phase_seconds": {
+          "case_loading": 0.13893134400132112,
+          "cuda_initialization": 0.14432897199003492,
+          "execution_and_checks": 0.18967451200296637,
+          "total": 0.4729372029978549
+        },
+        "identities": [
+          {
+            "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/cases-v3/perf-a/f03_l2norm_3072x2048/meta.json": "143f59d4bdb215ec605dce836d9a516952a8415b8249aa5c1a430ba2f7722345",
+            "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/cases-v3/perf-a/f03_l2norm_3072x2048/expected.npz": "f6dd9ab4f259f791da3351fd1d39fc04b4396cd620cb419a75317e0be2eafba6",
+            "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/cases-v3/perf-a/f03_l2norm_3072x2048/inputs.npz": "d032bdc14830aa1718c373509c1f19338811aa226af76d1ae4c50e12435cc45d",
+            "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/p4-on-p3-c0dcf332-gates-20261027/scaled-f03_l2norm_3072x2048-kernel-0/module.cubin": "920e1c237ad05eed63fb029087b5c6839639f8fa8d001ec2132b385d137a27d9"
+          }
+        ]
+      },
+      "full_outputs_pass": true,
+      "case_id": "f03_l2norm_3072x2048"
+    },
+    {
+      "id": "7c2c332fde05ec1b6caa7862c5b30b8a1993f50284871a886caad24bff53f566",
+      "name": "r04_row_sum_3072x4096",
+      "ok": true,
+      "cubins": [
+        "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/p4-on-p3-c0dcf332-gates-20261027/scaled-r04_row_sum_3072x4096-kernel-0/module.cubin"
+      ],
+      "result": {
+        "ok": true,
+        "batches": [
+          {
+            "batch_id": 0,
+            "membership": [
+              {
+                "id": "7c2c332fde05ec1b6caa7862c5b30b8a1993f50284871a886caad24bff53f566",
+                "variant": "perf-a"
+              }
+            ],
+            "quarantined": false,
+            "results": [
+              {
+                "id": "7c2c332fde05ec1b6caa7862c5b30b8a1993f50284871a886caad24bff53f566",
+                "variant": "perf-a",
+                "ok": true,
+                "checks": [
+                  {
+                    "repetition": 0,
+                    "ok": true,
+                    "buffers": {
+                      "x": {
+                        "prefix_ok": true,
+                        "suffix_ok": true,
+                        "input_ok": true
+                      },
+                      "sum_1": {
+                        "prefix_ok": true,
+                        "suffix_ok": true,
+                        "input_ok": true
+                      }
+                    },
+                    "outputs": {
+                      "sum_1": {
+                        "ok": true,
+                        "elements": 3072,
+                        "mismatched": 0,
+                        "max_abs_error": 3.0517578125e-05,
+                        "rtol": 0.0001,
+                        "atol": 0.0001
+                      }
+                    }
+                  },
+                  {
+                    "repetition": 1,
+                    "ok": true,
+                    "buffers": {
+                      "x": {
+                        "prefix_ok": true,
+                        "suffix_ok": true,
+                        "input_ok": true
+                      },
+                      "sum_1": {
+                        "prefix_ok": true,
+                        "suffix_ok": true,
+                        "input_ok": true
+                      }
+                    },
+                    "outputs": {
+                      "sum_1": {
+                        "ok": true,
+                        "elements": 3072,
+                        "mismatched": 0,
+                        "max_abs_error": 3.0517578125e-05,
+                        "rtol": 0.0001,
+                        "atol": 0.0001
+                      }
+                    }
+                  },
+                  {
+                    "repetition": 2,
+                    "ok": true,
+                    "buffers": {
+                      "x": {
+                        "prefix_ok": true,
+                        "suffix_ok": true,
+                        "input_ok": true
+                      },
+                      "sum_1": {
+                        "prefix_ok": true,
+                        "suffix_ok": true,
+                        "input_ok": true
+                      }
+                    },
+                    "outputs": {
+                      "sum_1": {
+                        "ok": true,
+                        "elements": 3072,
+                        "mismatched": 0,
+                        "max_abs_error": 3.0517578125e-05,
+                        "rtol": 0.0001,
+                        "atol": 0.0001
+                      }
+                    }
+                  }
+                ],
+                "resources": [
+                  {
+                    "entry": "k_sum_1_reduce",
+                    "dynamic_shared_bytes": 0,
+                    "block_threads": 128,
+                    "max_threads_per_block": 128,
+                    "static_shared_bytes": 16,
+                    "local_bytes": 0,
+                    "registers": 40,
+                    "max_active_blocks_per_sm": 12,
+                    "note": "Driver occupancy/resource feasibility, not a throughput prediction."
+                  }
+                ],
+                "quarantined": false,
+                "trusted": true
+              }
+            ],
+            "wall_seconds": 0.09045836199948099,
+            "requires_all_batchmates_isolated": false,
+            "isolated": true
+          }
+        ],
+        "launch_count": 3,
+        "width": 1,
+        "repetitions": 3,
+        "promotion_eligible": false,
+        "note": "Concurrent results are screening only; fresh isolated confirmation is mandatory.",
+        "mode": "correctness",
+        "device": {
+          "name": "NVIDIA GeForce RTX 4060 Laptop GPU",
+          "worker_pid": 685638,
+          "context_identity": "685638:94643402827248",
+          "driver_version": 13040,
+          "clock_rate_khz": 1890000,
+          "multiprocessors": 24,
+          "memory_clock_khz": 8001000,
+          "compute_major": 8,
+          "compute_minor": 9,
+          "uuid": "GPU-01c8f1da-9f9f-fa3e-bbe2-0771199ab74a",
+          "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry."
+        },
+        "benchmark_qualified": false,
+        "qualification_note": "Raw diagnostics; benchmark validity requires evaluator-issued source/suite all-15 gates.",
+        "phase_seconds": {
+          "case_loading": 0.14146155699563678,
+          "cuda_initialization": 0.1480583939992357,
+          "execution_and_checks": 0.1457312160055153,
+          "total": 0.435252354000113
+        },
+        "identities": [
+          {
+            "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/cases-v3/perf-a/r04_row_sum_3072x4096/meta.json": "e86b4c2e35efbb36abb63118896006b8d2b18aa9d0e6a2919c805b5c4c9dfb5b",
+            "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/cases-v3/perf-a/r04_row_sum_3072x4096/expected.npz": "451acc29791318c0ac5f0e08d0ff20862f91e9bb079e32926cf3c4bf18f52ae5",
+            "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/cases-v3/perf-a/r04_row_sum_3072x4096/inputs.npz": "e1a6a2de060c3d52c67909487899f206d15a939fc2e8c40b3bda60e1e7da1c43",
+            "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/p4-on-p3-c0dcf332-gates-20261027/scaled-r04_row_sum_3072x4096-kernel-0/module.cubin": "e9c5f8ef6e977c4a79052ebb66d6b2e45c267763ea4d043feb9c1c570815495c"
+          }
+        ]
+      },
+      "full_outputs_pass": true,
+      "case_id": "r04_row_sum_3072x4096"
+    }
+  ]
+}

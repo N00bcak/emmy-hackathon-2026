@@ -1,0 +1,4 @@
+compile.py: plan SIMT fallback: ModuleNotFoundError: No module named 'tensor_core'
+compile.py: tensor-core fallback: ModuleNotFoundError: No module named 'tensor_core'
+a95 True 0
+a95_sanitizer True 0

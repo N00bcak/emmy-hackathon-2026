@@ -1,0 +1,6 @@
+ptxas info    : 0 bytes gmem
+ptxas info    : Compiling entry function 'k_matmul_softmax_reduce_b55365' for 'sm_89'
+ptxas info    : Function properties for k_matmul_softmax_reduce_b55365
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 128 registers, used 1 barriers, 16544 bytes smem, 392 bytes cmem[0], 8 bytes cmem[2]
+ptxas info    : Compile time = 231.125 ms

@@ -1,0 +1,684 @@
+{
+  "schema": "p5-noop-sass-inventory-v1",
+  "compiler_sha256": "067ef9c4ce31a4bf5ccda90a8d13e9bd1b71b89aff19abe7598cdba4c77e2921",
+  "cases": [
+    {
+      "case": "perf-a/p02_scale_shift_8m",
+      "entry": "k_add_pointwise",
+      "ptx_sha256": "fadb770a9f65ad5365ed54e98f6cad17bcc053a2525799deb57e92b29536d766",
+      "cubin_sha256": "76477660b552d3ff0580ea151b723bf58e10dee993f3edfa8f8ff0b4a0340916",
+      "sass_instructions": 48,
+      "sass_ops": {
+        "BRA": 1,
+        "EXIT": 3,
+        "FFMA": 4,
+        "IMAD": 3,
+        "ISETP": 1,
+        "LDG": 7,
+        "LOP3": 2,
+        "MOV": 6,
+        "NOP": 12,
+        "S2R": 2,
+        "SHF": 1,
+        "STG": 5,
+        "ULDC": 1
+      },
+      "memory_ops": {
+        "LDG": 7,
+        "STG": 5
+      },
+      "barriers": 0,
+      "registers": 16,
+      "spill_store_bytes": 0,
+      "spill_load_bytes": 0,
+      "ptx_loops": []
+    },
+    {
+      "case": "perf-b/p02_scale_shift_16m",
+      "entry": "k_add_pointwise",
+      "ptx_sha256": "a183da215aa4f208c5f415347fadebdd6b71c45cc0eb8688eb5fe06f261badf8",
+      "cubin_sha256": "56da410a9b2a409db688c2cec364a72b494d25d0f4410ce9eae6ddb026531c27",
+      "sass_instructions": 48,
+      "sass_ops": {
+        "BRA": 1,
+        "EXIT": 3,
+        "FFMA": 4,
+        "IMAD": 3,
+        "ISETP": 1,
+        "LDG": 7,
+        "LOP3": 2,
+        "MOV": 6,
+        "NOP": 12,
+        "S2R": 2,
+        "SHF": 1,
+        "STG": 5,
+        "ULDC": 1
+      },
+      "memory_ops": {
+        "LDG": 7,
+        "STG": 5
+      },
+      "barriers": 0,
+      "registers": 16,
+      "spill_store_bytes": 0,
+      "spill_load_bytes": 0,
+      "ptx_loops": []
+    },
+    {
+      "case": "perf-a/p03_relu_mul_4m",
+      "entry": "k_mul_pointwise",
+      "ptx_sha256": "611a44bd34cc3c0efe411de207be53b5092520df8946792920df0905fe7dd415",
+      "cubin_sha256": "265d1778d8ff5057899adf58884ca5dfce4b46e1debf9ccce42f100c962d0a92",
+      "sass_instructions": 56,
+      "sass_ops": {
+        "BRA": 1,
+        "EXIT": 3,
+        "FMNMX": 4,
+        "FMUL": 4,
+        "IMAD": 4,
+        "ISETP": 1,
+        "LDG": 10,
+        "LOP3": 3,
+        "MOV": 2,
+        "NOP": 15,
+        "S2R": 2,
+        "SHF": 1,
+        "STG": 5,
+        "ULDC": 1
+      },
+      "memory_ops": {
+        "LDG": 10,
+        "STG": 5
+      },
+      "barriers": 0,
+      "registers": 20,
+      "spill_store_bytes": 0,
+      "spill_load_bytes": 0,
+      "ptx_loops": []
+    },
+    {
+      "case": "perf-b/p03_relu_mul_16m",
+      "entry": "k_mul_pointwise",
+      "ptx_sha256": "35e667a960d7c12a035f6ae31aeb41a65270cf6650fd8e921045fe854eeaf8df",
+      "cubin_sha256": "41cf212acd910d135ac8eec488d3bfd71320bb5481292405a0aa56ad5010e9eb",
+      "sass_instructions": 56,
+      "sass_ops": {
+        "BRA": 1,
+        "EXIT": 3,
+        "FMNMX": 4,
+        "FMUL": 4,
+        "IMAD": 4,
+        "ISETP": 1,
+        "LDG": 10,
+        "LOP3": 3,
+        "MOV": 2,
+        "NOP": 15,
+        "S2R": 2,
+        "SHF": 1,
+        "STG": 5,
+        "ULDC": 1
+      },
+      "memory_ops": {
+        "LDG": 10,
+        "STG": 5
+      },
+      "barriers": 0,
+      "registers": 20,
+      "spill_store_bytes": 0,
+      "spill_load_bytes": 0,
+      "ptx_loops": []
+    },
+    {
+      "case": "perf-a/f01_rmsnorm_3072x2048",
+      "entry": "k_mean_cbd1de",
+      "ptx_sha256": "fb03da810c79387de89cda8fdab1111bb47310cb48ddfd3b476f203957f12a98",
+      "cubin_sha256": "c48b224177b74e0be607ac01aadd637009700d4d5bb1ad266c5db8d9c32f0c61",
+      "sass_instructions": 536,
+      "sass_ops": {
+        "BAR": 3,
+        "BRA": 30,
+        "BSSY": 5,
+        "BSYNC": 5,
+        "CALL": 3,
+        "EXIT": 2,
+        "FADD": 13,
+        "FFMA": 80,
+        "FMUL": 39,
+        "FSETP": 4,
+        "IADD3": 70,
+        "IMAD": 63,
+        "ISETP": 21,
+        "LDG": 59,
+        "LDS": 5,
+        "LEA": 8,
+        "LOP3": 31,
+        "MOV": 29,
+        "MUFU": 8,
+        "NOP": 8,
+        "PLOP3": 6,
+        "RET": 2,
+        "S2R": 2,
+        "SEL": 2,
+        "SHF": 20,
+        "SHFL": 5,
+        "STG": 5,
+        "STS": 3,
+        "ULDC": 4,
+        "VOTE": 1
+      },
+      "memory_ops": {
+        "LDG": 59,
+        "STG": 5,
+        "LDS": 5,
+        "STS": 3
+      },
+      "barriers": 3,
+      "registers": 48,
+      "spill_store_bytes": 0,
+      "spill_load_bytes": 0,
+      "ptx_loops": [
+        {
+          "label": "loop_unrolled_5",
+          "uniform_repeated_groups": 2,
+          "uniform_repeated_instructions": 62,
+          "examples": [
+            "mad.lo.s32 %r23, %r17, 2048, 0;",
+            "add.s32 %r21, %r21, 128;"
+          ]
+        },
+        {
+          "label": "loop_unrolled_7",
+          "uniform_repeated_groups": 2,
+          "uniform_repeated_instructions": 14,
+          "examples": [
+            "mad.lo.s32 %r88, %r17, 2048, 0;",
+            "add.s32 %r21, %r21, 128;"
+          ]
+        },
+        {
+          "label": "loop_3",
+          "uniform_repeated_groups": 0,
+          "uniform_repeated_instructions": 0,
+          "examples": []
+        },
+        {
+          "label": "loop_15",
+          "uniform_repeated_groups": 1,
+          "uniform_repeated_instructions": 1,
+          "examples": [
+            "mad.lo.s32 %r169, %r17, 2048, 0;"
+          ]
+        }
+      ]
+    },
+    {
+      "case": "perf-b/f01_rmsnorm_2048x4096",
+      "entry": "k_mean_cbd1de",
+      "ptx_sha256": "d4f99862f258b615b7019334c3211aa49dc449b63b30a796bb90b1df59a99524",
+      "cubin_sha256": "8b9b7aef93124e694d4ad4054df73512885b1e79c624b1667046ff78d6652d09",
+      "sass_instructions": 624,
+      "sass_ops": {
+        "BAR": 3,
+        "BRA": 30,
+        "BSSY": 5,
+        "BSYNC": 5,
+        "CALL": 3,
+        "EXIT": 2,
+        "FADD": 13,
+        "FFMA": 96,
+        "FMUL": 71,
+        "FSETP": 4,
+        "IADD3": 82,
+        "IMAD": 75,
+        "ISETP": 21,
+        "LDG": 67,
+        "LDS": 5,
+        "LEA": 8,
+        "LOP3": 31,
+        "MOV": 31,
+        "MUFU": 8,
+        "NOP": 10,
+        "PLOP3": 6,
+        "RET": 2,
+        "S2R": 2,
+        "SEL": 2,
+        "SHF": 20,
+        "SHFL": 5,
+        "STG": 9,
+        "STS": 3,
+        "ULDC": 4,
+        "VOTE": 1
+      },
+      "memory_ops": {
+        "LDG": 67,
+        "STG": 9,
+        "LDS": 5,
+        "STS": 3
+      },
+      "barriers": 3,
+      "registers": 80,
+      "spill_store_bytes": 0,
+      "spill_load_bytes": 0,
+      "ptx_loops": [
+        {
+          "label": "loop_unrolled_5",
+          "uniform_repeated_groups": 2,
+          "uniform_repeated_instructions": 62,
+          "examples": [
+            "mad.lo.s32 %r23, %r17, 4096, 0;",
+            "add.s32 %r21, %r21, 128;"
+          ]
+        },
+        {
+          "label": "loop_unrolled_7",
+          "uniform_repeated_groups": 2,
+          "uniform_repeated_instructions": 14,
+          "examples": [
+            "mad.lo.s32 %r88, %r17, 4096, 0;",
+            "add.s32 %r21, %r21, 128;"
+          ]
+        },
+        {
+          "label": "loop_3",
+          "uniform_repeated_groups": 0,
+          "uniform_repeated_instructions": 0,
+          "examples": []
+        },
+        {
+          "label": "loop_15",
+          "uniform_repeated_groups": 1,
+          "uniform_repeated_instructions": 1,
+          "examples": [
+            "mad.lo.s32 %r209, %r17, 4096, 0;"
+          ]
+        }
+      ]
+    },
+    {
+      "case": "perf-a/f03_l2norm_3072x2048",
+      "entry": "k_div_reduce",
+      "ptx_sha256": "00ef91df42112dac72010982e2b3a8d93c1c327effffe15ffce8ef1b99226afd",
+      "cubin_sha256": "920e1c237ad05eed63fb029087b5c6839639f8fa8d001ec2132b385d137a27d9",
+      "sass_instructions": 488,
+      "sass_ops": {
+        "BAR": 3,
+        "BRA": 28,
+        "BSSY": 5,
+        "BSYNC": 5,
+        "CALL": 2,
+        "EXIT": 2,
+        "FADD": 12,
+        "FFMA": 77,
+        "FMUL": 22,
+        "FSETP": 4,
+        "IADD3": 66,
+        "IMAD": 63,
+        "ISETP": 20,
+        "LDG": 52,
+        "LDS": 5,
+        "LEA": 7,
+        "LOP3": 28,
+        "MOV": 24,
+        "MUFU": 7,
+        "NOP": 12,
+        "PLOP3": 6,
+        "RET": 2,
+        "S2R": 2,
+        "SEL": 2,
+        "SHF": 17,
+        "SHFL": 5,
+        "STG": 5,
+        "STS": 3,
+        "ULDC": 1,
+        "VOTE": 1
+      },
+      "memory_ops": {
+        "LDG": 52,
+        "STG": 5,
+        "LDS": 5,
+        "STS": 3
+      },
+      "barriers": 3,
+      "registers": 40,
+      "spill_store_bytes": 0,
+      "spill_load_bytes": 0,
+      "ptx_loops": [
+        {
+          "label": "loop_unrolled_5",
+          "uniform_repeated_groups": 2,
+          "uniform_repeated_instructions": 62,
+          "examples": [
+            "mad.lo.s32 %r21, %r17, 2048, 0;",
+            "add.s32 %r19, %r19, 128;"
+          ]
+        },
+        {
+          "label": "loop_unrolled_7",
+          "uniform_repeated_groups": 2,
+          "uniform_repeated_instructions": 14,
+          "examples": [
+            "mad.lo.s32 %r86, %r17, 2048, 0;",
+            "add.s32 %r19, %r19, 128;"
+          ]
+        },
+        {
+          "label": "loop_3",
+          "uniform_repeated_groups": 0,
+          "uniform_repeated_instructions": 0,
+          "examples": []
+        },
+        {
+          "label": "loop_15",
+          "uniform_repeated_groups": 1,
+          "uniform_repeated_instructions": 1,
+          "examples": [
+            "mad.lo.s32 %r163, %r17, 2048, 0;"
+          ]
+        }
+      ]
+    },
+    {
+      "case": "perf-b/f03_l2norm_2048x4096",
+      "entry": "k_div_reduce",
+      "ptx_sha256": "faee8f9b5285172dc89208962d5ec7e0918e346cff7fe53d04d8b7ae53498a13",
+      "cubin_sha256": "33c6d7ef23097858aa4c07f97515e94ca0ce5839be86b9846ef8708798b373b3",
+      "sass_instructions": 544,
+      "sass_ops": {
+        "BAR": 3,
+        "BRA": 28,
+        "BSSY": 5,
+        "BSYNC": 5,
+        "CALL": 2,
+        "EXIT": 2,
+        "FADD": 12,
+        "FFMA": 93,
+        "FMUL": 38,
+        "FSETP": 4,
+        "IADD3": 74,
+        "IMAD": 66,
+        "ISETP": 20,
+        "LDG": 56,
+        "LDS": 5,
+        "LEA": 8,
+        "LOP3": 28,
+        "MOV": 25,
+        "MUFU": 7,
+        "NOP": 12,
+        "PLOP3": 6,
+        "RET": 2,
+        "S2R": 2,
+        "SEL": 2,
+        "SHF": 20,
+        "SHFL": 5,
+        "STG": 9,
+        "STS": 3,
+        "ULDC": 1,
+        "VOTE": 1
+      },
+      "memory_ops": {
+        "LDG": 56,
+        "STG": 9,
+        "LDS": 5,
+        "STS": 3
+      },
+      "barriers": 3,
+      "registers": 48,
+      "spill_store_bytes": 0,
+      "spill_load_bytes": 0,
+      "ptx_loops": [
+        {
+          "label": "loop_unrolled_5",
+          "uniform_repeated_groups": 2,
+          "uniform_repeated_instructions": 62,
+          "examples": [
+            "mad.lo.s32 %r21, %r17, 4096, 0;",
+            "add.s32 %r19, %r19, 128;"
+          ]
+        },
+        {
+          "label": "loop_unrolled_7",
+          "uniform_repeated_groups": 2,
+          "uniform_repeated_instructions": 14,
+          "examples": [
+            "mad.lo.s32 %r86, %r17, 4096, 0;",
+            "add.s32 %r19, %r19, 128;"
+          ]
+        },
+        {
+          "label": "loop_3",
+          "uniform_repeated_groups": 0,
+          "uniform_repeated_instructions": 0,
+          "examples": []
+        },
+        {
+          "label": "loop_15",
+          "uniform_repeated_groups": 1,
+          "uniform_repeated_instructions": 1,
+          "examples": [
+            "mad.lo.s32 %r199, %r17, 4096, 0;"
+          ]
+        }
+      ]
+    },
+    {
+      "case": "perf-a/r04_row_sum_3072x4096",
+      "entry": "k_sum_1_reduce",
+      "ptx_sha256": "ef24fd875256d0605879ff96094beed304a9cd43b4a0438dc142cd0e6db8388e",
+      "cubin_sha256": "e9c5f8ef6e977c4a79052ebb66d6b2e45c267763ea4d043feb9c1c570815495c",
+      "sass_instructions": 376,
+      "sass_ops": {
+        "BAR": 3,
+        "BRA": 13,
+        "BSSY": 5,
+        "BSYNC": 5,
+        "EXIT": 2,
+        "FADD": 86,
+        "IADD3": 59,
+        "IMAD": 57,
+        "ISETP": 14,
+        "LDG": 55,
+        "LDS": 5,
+        "LEA": 6,
+        "LOP3": 13,
+        "MOV": 11,
+        "NOP": 12,
+        "PLOP3": 3,
+        "S2R": 2,
+        "SHF": 13,
+        "SHFL": 5,
+        "STG": 1,
+        "STS": 3,
+        "ULDC": 2,
+        "VOTE": 1
+      },
+      "memory_ops": {
+        "LDG": 55,
+        "STG": 1,
+        "LDS": 5,
+        "STS": 3
+      },
+      "barriers": 3,
+      "registers": 40,
+      "spill_store_bytes": 0,
+      "spill_load_bytes": 0,
+      "ptx_loops": [
+        {
+          "label": "loop_unrolled_5",
+          "uniform_repeated_groups": 2,
+          "uniform_repeated_instructions": 62,
+          "examples": [
+            "mad.lo.s32 %r21, %r17, 4096, 0;",
+            "add.s32 %r19, %r19, 128;"
+          ]
+        },
+        {
+          "label": "loop_unrolled_7",
+          "uniform_repeated_groups": 2,
+          "uniform_repeated_instructions": 14,
+          "examples": [
+            "mad.lo.s32 %r86, %r17, 4096, 0;",
+            "add.s32 %r19, %r19, 128;"
+          ]
+        },
+        {
+          "label": "loop_3",
+          "uniform_repeated_groups": 0,
+          "uniform_repeated_instructions": 0,
+          "examples": []
+        }
+      ]
+    },
+    {
+      "case": "perf-b/r04_row_sum_4096x4096",
+      "entry": "k_sum_1_reduce",
+      "ptx_sha256": "a6428a5dec1940460de32cda03f7a00e1024f2333a5cce6eb606f15a8019f5f4",
+      "cubin_sha256": "e9c5f8ef6e977c4a79052ebb66d6b2e45c267763ea4d043feb9c1c570815495c",
+      "sass_instructions": 376,
+      "sass_ops": {
+        "BAR": 3,
+        "BRA": 13,
+        "BSSY": 5,
+        "BSYNC": 5,
+        "EXIT": 2,
+        "FADD": 86,
+        "IADD3": 59,
+        "IMAD": 57,
+        "ISETP": 14,
+        "LDG": 55,
+        "LDS": 5,
+        "LEA": 6,
+        "LOP3": 13,
+        "MOV": 11,
+        "NOP": 12,
+        "PLOP3": 3,
+        "S2R": 2,
+        "SHF": 13,
+        "SHFL": 5,
+        "STG": 1,
+        "STS": 3,
+        "ULDC": 2,
+        "VOTE": 1
+      },
+      "memory_ops": {
+        "LDG": 55,
+        "STG": 1,
+        "LDS": 5,
+        "STS": 3
+      },
+      "barriers": 3,
+      "registers": 40,
+      "spill_store_bytes": 0,
+      "spill_load_bytes": 0,
+      "ptx_loops": [
+        {
+          "label": "loop_unrolled_5",
+          "uniform_repeated_groups": 2,
+          "uniform_repeated_instructions": 62,
+          "examples": [
+            "mad.lo.s32 %r21, %r17, 4096, 0;",
+            "add.s32 %r19, %r19, 128;"
+          ]
+        },
+        {
+          "label": "loop_unrolled_7",
+          "uniform_repeated_groups": 2,
+          "uniform_repeated_instructions": 14,
+          "examples": [
+            "mad.lo.s32 %r86, %r17, 4096, 0;",
+            "add.s32 %r19, %r19, 128;"
+          ]
+        },
+        {
+          "label": "loop_3",
+          "uniform_repeated_groups": 0,
+          "uniform_repeated_instructions": 0,
+          "examples": []
+        }
+      ]
+    },
+    {
+      "case": "perf-a/m01_matmul_1024x1024x512",
+      "entry": "k_matmul_2967be",
+      "ptx_sha256": "b366b7bfd37f626ff907b633da0e0c8b3398e4b6cb0fa0c8fee4a41ee077e393",
+      "cubin_sha256": "8752f0a6d7a34b8b15ac17e94344b215fb925df34242e863ebcab6e7af3fa419",
+      "sass_instructions": 2632,
+      "sass_ops": {
+        "BAR": 18,
+        "BRA": 1,
+        "DEPBAR": 16,
+        "EXIT": 2,
+        "FADD": 28,
+        "FFMA": 2048,
+        "IADD3": 32,
+        "IMAD": 4,
+        "ISETP": 2,
+        "LDGDEPBAR": 18,
+        "LDGSTS": 160,
+        "LDS": 242,
+        "LEA": 16,
+        "LOP3": 9,
+        "MOV": 4,
+        "NOP": 8,
+        "S2R": 2,
+        "SHF": 8,
+        "STG": 5,
+        "STS": 8,
+        "ULDC": 1
+      },
+      "memory_ops": {
+        "STG": 5,
+        "LDS": 242,
+        "STS": 8,
+        "LDGSTS": 160,
+        "LDGDEPBAR": 18
+      },
+      "barriers": 18,
+      "registers": 94,
+      "spill_store_bytes": 0,
+      "spill_load_bytes": 0,
+      "ptx_loops": []
+    },
+    {
+      "case": "perf-b/m01_matmul_2048x2048x512",
+      "entry": "k_matmul_2967be",
+      "ptx_sha256": "7151cd89ff647671f32e0159808eb1ed4595bb6e608219e53167222cef903018",
+      "cubin_sha256": "3b3bfc32d983b4e712e09a772fb3b8832aecd2389338a8c92d92b6dc525248c0",
+      "sass_instructions": 2632,
+      "sass_ops": {
+        "BAR": 18,
+        "BRA": 1,
+        "DEPBAR": 16,
+        "EXIT": 2,
+        "FADD": 28,
+        "FFMA": 2048,
+        "IADD3": 32,
+        "IMAD": 4,
+        "ISETP": 2,
+        "LDGDEPBAR": 18,
+        "LDGSTS": 160,
+        "LDS": 242,
+        "LEA": 16,
+        "LOP3": 9,
+        "MOV": 4,
+        "NOP": 8,
+        "S2R": 2,
+        "SHF": 8,
+        "STG": 5,
+        "STS": 8,
+        "ULDC": 1
+      },
+      "memory_ops": {
+        "STG": 5,
+        "LDS": 242,
+        "STS": 8,
+        "LDGSTS": 160,
+        "LDGDEPBAR": 18
+      },
+      "barriers": 18,
+      "registers": 94,
+      "spill_store_bytes": 0,
+      "spill_load_bytes": 0,
+      "ptx_loops": []
+    }
+  ]
+}

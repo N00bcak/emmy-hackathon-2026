@@ -1,0 +1,93 @@
+.version 8.0
+.target sm_89
+.address_size 64
+
+.visible .entry k_mul_pointwise(
+    .param .u64 param_0,
+    .param .u64 param_1,
+    .param .u64 param_2
+)
+.maxntid 256, 1, 1
+{
+    .reg .b32 %r<18>;
+    .reg .b16 %rh<1>;
+    .reg .b64 %rd<13>;
+    .reg .f32 %f<17>;
+    .reg .f64 %fd<1>;
+    .reg .pred %p<5>;
+    ld.param.u64 %rd1, [param_0];
+    cvta.to.global.u64 %rd1, %rd1;
+    ld.param.u64 %rd2, [param_1];
+    cvta.to.global.u64 %rd2, %rd2;
+    ld.param.u64 %rd3, [param_2];
+    cvta.to.global.u64 %rd3, %rd3;
+    mov.u32 %r1, %tid.x;
+    mov.u32 %r2, %ctaid.x;
+    mov.u32 %r3, %ntid.x;
+    mad.lo.u32 %r4, %r2, %r3, %r1;
+    and.b32 %r5, %r1, 31;
+    shr.u32 %r6, %r1, 5;
+    mov.b32 %r7, %r1;
+    mov.b32 %r8, %r2;
+    mov.b32 %r9, %r3;
+    mov.b32 %r10, %r4;
+    mov.b32 %r11, %r5;
+    mov.b32 %r12, %r6;
+    mov.b32 %r13, 0;
+    mov.b32 %r14, 0;
+    mov.b32 %r15, 0;
+    mov.b32 %r16, 0;
+    setp.ge.u32 %p1, %r4, 1000000;
+    @%p1 bra tile_done_1;
+    mov.b32 %r17, %r4;
+    mul.wide.s32 %rd4, %r17, 16;
+    add.u64 %rd5, %rd1, %rd4;
+    and.b64 %rd6, %rd5, 15;
+    setp.eq.u64 %p2, %rd6, 0;
+    @!%p2 bra access_scalar_2;
+    ld.global.v4.f32 {%f1, %f2, %f3, %f4}, [%rd5];
+    bra access_vector_done_3;
+access_scalar_2:
+    ld.global.f32 %f1, [%rd5+0];
+    ld.global.f32 %f2, [%rd5+4];
+    ld.global.f32 %f3, [%rd5+8];
+    ld.global.f32 %f4, [%rd5+12];
+access_vector_done_3:
+    max.NaN.f32 %f5, %f1, 0f00000000;
+    mul.wide.s32 %rd7, %r17, 16;
+    add.u64 %rd8, %rd2, %rd7;
+    and.b64 %rd9, %rd8, 15;
+    setp.eq.u64 %p3, %rd9, 0;
+    @!%p3 bra access_scalar_4;
+    ld.global.v4.f32 {%f6, %f7, %f8, %f9}, [%rd8];
+    bra access_vector_done_5;
+access_scalar_4:
+    ld.global.f32 %f6, [%rd8+0];
+    ld.global.f32 %f7, [%rd8+4];
+    ld.global.f32 %f8, [%rd8+8];
+    ld.global.f32 %f9, [%rd8+12];
+access_vector_done_5:
+    mul.f32 %f10, %f6, %f5;
+    max.NaN.f32 %f11, %f2, 0f00000000;
+    mul.f32 %f12, %f7, %f11;
+    max.NaN.f32 %f13, %f3, 0f00000000;
+    mul.f32 %f14, %f8, %f13;
+    max.NaN.f32 %f15, %f4, 0f00000000;
+    mul.f32 %f16, %f9, %f15;
+    mul.wide.s32 %rd10, %r17, 16;
+    add.u64 %rd11, %rd3, %rd10;
+    and.b64 %rd12, %rd11, 15;
+    setp.eq.u64 %p4, %rd12, 0;
+    @!%p4 bra access_store_scalar_6;
+    st.global.v4.f32 [%rd11], {%f10, %f12, %f14, %f16};
+    bra access_store_done_7;
+access_store_scalar_6:
+    st.global.f32 [%rd11+0], %f10;
+    st.global.f32 [%rd11+4], %f12;
+    st.global.f32 [%rd11+8], %f14;
+    st.global.f32 [%rd11+12], %f16;
+access_store_done_7:
+tile_done_1:
+kernel_done:
+    ret;
+}

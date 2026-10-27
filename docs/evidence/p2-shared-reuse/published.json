@@ -1,0 +1,168 @@
+{
+  "schema": "emmy-local-gate-v1",
+  "created": "2026-10-26T23:18:31Z",
+  "device": "NVIDIA GeForce RTX 4060 Laptop GPU, 8.9",
+  "source": "/home/ada/Projects/emmy-hackathon-2026",
+  "compiler_sha256": "0a6f12033a942f4da9176ebf1e963c16193d8883610d3d4807bbc9870ab0de2a",
+  "case_list_sha256": "5fcc93cafaa707fd9576b9a96c51ab9b402e789bb8020132c1c7330519d2df07",
+  "part": 0,
+  "parts": 1,
+  "cases": [
+    {
+      "index": 0,
+      "id": "c10866af73f820553331b01c52e042e5d724c275a6f5fedd9348170ba75d382c",
+      "case_dir": "/home/ada/Projects/emmy-hackathon-2026/tests/gpu-cases/cases/c10866af73f820553331b01c52e042e5d724c275a6f5fedd9348170ba75d382c",
+      "requires_sanitizer": false,
+      "requires_isolated_first": false,
+      "ok": true,
+      "exit_code": 0,
+      "launch_count": 3
+    },
+    {
+      "index": 1,
+      "id": "69db4e7f597c41b0684fb30c3204e197cf56c8647d9a63dc0adb77f2a8a0d867",
+      "case_dir": "/home/ada/Projects/emmy-hackathon-2026/tests/gpu-cases/cases/69db4e7f597c41b0684fb30c3204e197cf56c8647d9a63dc0adb77f2a8a0d867",
+      "requires_sanitizer": false,
+      "requires_isolated_first": false,
+      "ok": true,
+      "exit_code": 0,
+      "launch_count": 3
+    },
+    {
+      "index": 2,
+      "id": "6ab09ab4acc384ee252370a564a13965ece1ad21a3e64d6615f0de1a39b8c665",
+      "case_dir": "/home/ada/Projects/emmy-hackathon-2026/tests/gpu-cases/cases/6ab09ab4acc384ee252370a564a13965ece1ad21a3e64d6615f0de1a39b8c665",
+      "requires_sanitizer": false,
+      "requires_isolated_first": false,
+      "ok": true,
+      "exit_code": 0,
+      "launch_count": 3
+    },
+    {
+      "index": 3,
+      "id": "89d56c168a0b04373ef8d50096c48534c70019b8d2f87371b79aee2289922b44",
+      "case_dir": "/home/ada/Projects/emmy-hackathon-2026/tests/gpu-cases/cases/89d56c168a0b04373ef8d50096c48534c70019b8d2f87371b79aee2289922b44",
+      "requires_sanitizer": false,
+      "requires_isolated_first": false,
+      "ok": true,
+      "exit_code": 0,
+      "launch_count": 3
+    },
+    {
+      "index": 4,
+      "id": "1e82d7e58a53e8795ea9d05e3759dfe201e42308efd08dd2a51e79c769dc2fbc",
+      "case_dir": "/home/ada/Projects/emmy-hackathon-2026/tests/gpu-cases/cases/1e82d7e58a53e8795ea9d05e3759dfe201e42308efd08dd2a51e79c769dc2fbc",
+      "requires_sanitizer": false,
+      "requires_isolated_first": false,
+      "ok": true,
+      "exit_code": 0,
+      "launch_count": 3
+    },
+    {
+      "index": 5,
+      "id": "cd9a29496fccd9e421c1cfbe14347cb45003f38681e3b4b2e703f5dbbfdd6c5d",
+      "case_dir": "/home/ada/Projects/emmy-hackathon-2026/tests/gpu-cases/cases/cd9a29496fccd9e421c1cfbe14347cb45003f38681e3b4b2e703f5dbbfdd6c5d",
+      "requires_sanitizer": false,
+      "requires_isolated_first": false,
+      "ok": true,
+      "exit_code": 0,
+      "launch_count": 3
+    },
+    {
+      "index": 6,
+      "id": "aeb1568894b7afb50ea0b1b6c6fe94b57419452643ec87c5c6561f9ebfc58bbe",
+      "case_dir": "/home/ada/Projects/emmy-hackathon-2026/tests/gpu-cases/cases/aeb1568894b7afb50ea0b1b6c6fe94b57419452643ec87c5c6561f9ebfc58bbe",
+      "requires_sanitizer": true,
+      "requires_isolated_first": true,
+      "ok": true,
+      "exit_code": 0,
+      "launch_count": 3
+    },
+    {
+      "index": 7,
+      "id": "4035b0c010105ed7be8aa1a889fe2754d498fc4a27c1719bf547ddad66e48403",
+      "case_dir": "/home/ada/Projects/emmy-hackathon-2026/tests/gpu-cases/cases/4035b0c010105ed7be8aa1a889fe2754d498fc4a27c1719bf547ddad66e48403",
+      "requires_sanitizer": false,
+      "requires_isolated_first": false,
+      "ok": true,
+      "exit_code": 0,
+      "launch_count": 3
+    },
+    {
+      "index": 8,
+      "id": "5e973341ada3e33f701293be5a3e6195badb7290a5471f4c6cefa86634d1b168",
+      "case_dir": "/home/ada/Projects/emmy-hackathon-2026/tests/gpu-cases/cases/5e973341ada3e33f701293be5a3e6195badb7290a5471f4c6cefa86634d1b168",
+      "requires_sanitizer": false,
+      "requires_isolated_first": false,
+      "ok": true,
+      "exit_code": 0,
+      "launch_count": 3
+    },
+    {
+      "index": 9,
+      "id": "3145aa57f753f64551cd4b83c3d430e6e2375a9feb4819accbfd5e55c39da560",
+      "case_dir": "/home/ada/Projects/emmy-hackathon-2026/tests/gpu-cases/cases/3145aa57f753f64551cd4b83c3d430e6e2375a9feb4819accbfd5e55c39da560",
+      "requires_sanitizer": false,
+      "requires_isolated_first": false,
+      "ok": true,
+      "exit_code": 0,
+      "launch_count": 3
+    },
+    {
+      "index": 10,
+      "id": "aeeffce3a36b8cf1b27173b8c1644fc517a24d992173e06bb1664784b009b6ba",
+      "case_dir": "/home/ada/Projects/emmy-hackathon-2026/tests/gpu-cases/cases/aeeffce3a36b8cf1b27173b8c1644fc517a24d992173e06bb1664784b009b6ba",
+      "requires_sanitizer": false,
+      "requires_isolated_first": false,
+      "ok": true,
+      "exit_code": 0,
+      "launch_count": 3
+    },
+    {
+      "index": 11,
+      "id": "2ffefe7fee88d864b3ac97cd70fe9711643f3551fba367299df52f329649154d",
+      "case_dir": "/home/ada/Projects/emmy-hackathon-2026/tests/gpu-cases/cases/2ffefe7fee88d864b3ac97cd70fe9711643f3551fba367299df52f329649154d",
+      "requires_sanitizer": false,
+      "requires_isolated_first": false,
+      "ok": true,
+      "exit_code": 0,
+      "launch_count": 3
+    },
+    {
+      "index": 12,
+      "id": "a56bdb784a46a763c2b633ebb5d16ee1ffd4287cb0984168b4f80909c323ce22",
+      "case_dir": "/home/ada/Projects/emmy-hackathon-2026/tests/gpu-cases/cases/a56bdb784a46a763c2b633ebb5d16ee1ffd4287cb0984168b4f80909c323ce22",
+      "requires_sanitizer": false,
+      "requires_isolated_first": false,
+      "ok": true,
+      "exit_code": 0,
+      "launch_count": 3
+    },
+    {
+      "index": 13,
+      "id": "6dfbe2bc925e2b31ceb8eb84bb5016cca8af143ca55cf93078d09decc26a0fd3",
+      "case_dir": "/home/ada/Projects/emmy-hackathon-2026/tests/gpu-cases/cases/6dfbe2bc925e2b31ceb8eb84bb5016cca8af143ca55cf93078d09decc26a0fd3",
+      "requires_sanitizer": false,
+      "requires_isolated_first": false,
+      "ok": true,
+      "exit_code": 0,
+      "launch_count": 3
+    },
+    {
+      "index": 14,
+      "id": "5c2ba872d36e6526a79b9799c059e237f65a34019cd94f1c85da4f0b9f930d3f",
+      "case_dir": "/home/ada/Projects/emmy-hackathon-2026/tests/gpu-cases/cases/5c2ba872d36e6526a79b9799c059e237f65a34019cd94f1c85da4f0b9f930d3f",
+      "requires_sanitizer": false,
+      "requires_isolated_first": false,
+      "ok": true,
+      "exit_code": 0,
+      "launch_count": 3
+    }
+  ],
+  "sanitizers": [],
+  "limitation": "Owner-authorized local run without compiler UID/seccomp isolation. Not an evaluator-issued receipt.",
+  "seconds": 12.295986142009497,
+  "all_passed": true,
+  "sanitizers_passed": true,
+  "compiler_unchanged": true
+}

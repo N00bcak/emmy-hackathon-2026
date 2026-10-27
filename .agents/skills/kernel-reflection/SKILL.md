@@ -36,6 +36,12 @@ raw logs stay in the configured durable research store. Storage and execution
 details come from private runtime configuration, not this skill.
 Do not emit hidden reasoning transcripts.
 
+An optimization is activated only when its intended effect appears in final
+post-`ptxas` SASS on every timing target, not merely in PTX. If `ptxas` removed,
+rebuilt or cancelled it, the worker must re-implement the lowering to preserve
+the mechanism or fail closed and report it inactive; do not attribute timing to
+a non-surviving change.
+
 Only the coordinator records shortlist/promotion with evaluator-issued evidence.
 Require the source/evaluator-bound all-15 published correctness gate for baseline
 and candidate before accepting any performance evidence; no partial-family or

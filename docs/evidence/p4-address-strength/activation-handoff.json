@@ -1,0 +1,137 @@
+{
+  "schema": "emmy-p4-rebased-handoff-v1",
+  "compiler_sha256": "74164ed51aff8fc3886e4b5daa029f526d26d4fe5e2d0cf86ac706ec1cfb602d",
+  "tests_sha256": "9a6a2d2112a309250160eb636e5a3229d0b3a12f66baa89ae90d945ce3247f0a",
+  "published_gate": {
+    "path": "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/p4-rebased-74164ed5-published-20261027/results.json",
+    "sha256": "b831bde376721f403a48da7f50a15c98fb8209f0c75611ee3a0a55b102c25caa",
+    "all15_passed": {
+      "required": [
+        "p00_scalar_add",
+        "p01_vector_add",
+        "p02_scale_shift",
+        "p03_relu_mul",
+        "r01_array_sum",
+        "r02_big_sum",
+        "r03_mean",
+        "r04_row_sum",
+        "m01_matmul_512",
+        "m02_matmul_rect",
+        "f01_rmsnorm",
+        "f02_row_softmax",
+        "f03_l2norm",
+        "a01_attention",
+        "a02_attention_128"
+      ],
+      "missing": [],
+      "failed": [],
+      "source_unchanged": true,
+      "all15_passed": true,
+      "scope": "Published correctness only; hidden-set correctness is unverified"
+    }
+  },
+  "core65": {
+    "path": "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/p4-rebased-74164ed5-gates-20261027/core65-results.json",
+    "sha256": "a5e5a7fb1f77453d27c31bf9db8053494ff62d6d0d36c359fde3d89d7c2348f6",
+    "all_passed": true,
+    "sanitizers_passed": true,
+    "case_count": 65,
+    "sanitizer_count": 16
+  },
+  "guards": {
+    "path": "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/p4-rebased-74164ed5-gates-20261027/guards.json",
+    "sha256": "3253f473fa502a009221a91e5d6014b05ada4404753f33eaceaa27f3649124e7",
+    "all_passed": true
+  },
+  "a95": {
+    "path": "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/p4-rebased-74164ed5-gates-20261027/a95.json",
+    "sha256": "9906db875e1b76d2ae42db1db31618d02e9404b2fed8782f95d4689c85c3132d",
+    "ok": true,
+    "sanitizer_path": "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/p4-rebased-74164ed5-gates-20261027/a95-sanitizer.json",
+    "sanitizer_sha256": "935b9e113f8427e07d02f70d062044ca3eb723f0cd305fd0e5d10913d9df520e",
+    "sanitizer_ok": true
+  },
+  "scaled_correctness": {
+    "path": "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/p4-rebased-74164ed5-gates-20261027/scaled-results.json",
+    "sha256": "221923dd5298a2292ed7a8e773ea1ba28b0d72799323310e76ff21cce0e33e78",
+    "all_passed": true
+  },
+  "timing": {
+    "path": "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/p4-rebased-74164ed5-gates-20261027/paired-proxy.json",
+    "sha256": "a3891a618a66214210bb0d67ab74bc801dbb700269b7c357b0db274df18b89a5",
+    "label": "local RTX 4060 proxy only; unresolved; hosted 5090 confirmation required",
+    "cases": {
+      "p02_scale_shift_8m": {
+        "ok": true,
+        "completed_pairs": 21,
+        "median_ratio": 1.0031949125388044,
+        "min_ratio": 0.675409839194177,
+        "max_ratio": 1.0346720925478001,
+        "p10_ratio": 0.9811911713762106,
+        "p90_ratio": 1.0129032300463436,
+        "candidate_cubins": [
+          "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/p4-rebased-74164ed5-candidate-suite-20261027/perf-a/artifacts/perf-a/p02_scale_shift_8m/kernel-0-k_add_pointwise.sm_89.cubin"
+        ],
+        "baseline_cubins": [
+          "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/p4-rebased-74164ed5-gates-20261027/fallback-cubin/p02_scale_shift_8m-kernel-0/module.cubin"
+        ],
+        "candidate_compiler_sha256": "74164ed51aff8fc3886e4b5daa029f526d26d4fe5e2d0cf86ac706ec1cfb602d",
+        "device": {
+          "name": "NVIDIA GeForce RTX 4060 Laptop GPU",
+          "worker_pid": 643001,
+          "context_identity": "643001:94798510364624",
+          "driver_version": 13040,
+          "clock_rate_khz": 1890000,
+          "multiprocessors": 24,
+          "memory_clock_khz": 8001000,
+          "compute_major": 8,
+          "compute_minor": 9,
+          "uuid": "GPU-01c8f1da-9f9f-fa3e-bbe2-0771199ab74a",
+          "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry."
+        },
+        "timing_protocol": "cuda-graph-paired-v2",
+        "result_path": "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/p4-rebased-74164ed5-gates-20261027/paired-p02_scale_shift_8m.json"
+      },
+      "p03_relu_mul_4m": {
+        "ok": true,
+        "completed_pairs": 21,
+        "median_ratio": 0.991341988342215,
+        "min_ratio": 0.7508971185885673,
+        "max_ratio": 1.1594202348383809,
+        "p10_ratio": 0.9037338701157173,
+        "p90_ratio": 1.0410959386533765,
+        "candidate_cubins": [
+          "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/p4-rebased-74164ed5-candidate-suite-20261027/perf-a/artifacts/perf-a/p03_relu_mul_4m/kernel-0-k_mul_pointwise.sm_89.cubin"
+        ],
+        "baseline_cubins": [
+          "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/p4-rebased-74164ed5-gates-20261027/fallback-cubin/p03_relu_mul_4m-kernel-0/module.cubin"
+        ],
+        "candidate_compiler_sha256": "74164ed51aff8fc3886e4b5daa029f526d26d4fe5e2d0cf86ac706ec1cfb602d",
+        "device": {
+          "name": "NVIDIA GeForce RTX 4060 Laptop GPU",
+          "worker_pid": 643193,
+          "context_identity": "643193:93959844349040",
+          "driver_version": 13040,
+          "clock_rate_khz": 1890000,
+          "multiprocessors": 24,
+          "memory_clock_khz": 8001000,
+          "compute_major": 8,
+          "compute_minor": 9,
+          "uuid": "GPU-01c8f1da-9f9f-fa3e-bbe2-0771199ab74a",
+          "telemetry_note": "Driver attributes are nominal limits, not live clocks or temperature; host wrapper retains admission telemetry."
+        },
+        "timing_protocol": "cuda-graph-paired-v2",
+        "result_path": "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/p4-rebased-74164ed5-gates-20261027/paired-p03_relu_mul_4m.json"
+      }
+    }
+  },
+  "sass_activation": {
+    "manifest": "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/p4-rebased-74164ed5-20261027/manifest.json",
+    "sha256": "b9f955e1881007de6bbf1beb9ad02ed98e3fe4e0c2059871e538e143a8d62ce8"
+  },
+  "limitations": [
+    "Hosted timing not run by subagent.",
+    "P4 local proxy does not resolve a win or regression.",
+    "SASS activation is mechanism evidence, not performance evidence."
+  ]
+}

@@ -1,0 +1,30 @@
+compile.py: plan SIMT fallback: ModuleNotFoundError: No module named 'tensor_core'
+compile.py: tensor-core fallback: ModuleNotFoundError: No module named 'tensor_core'
+A24 case-31 PASS
+compile.py: plan SIMT fallback: ModuleNotFoundError: No module named 'tensor_core'
+compile.py: tensor-core fallback: ModuleNotFoundError: No module named 'tensor_core'
+A25 case-4 PASS
+compile.py: plan SIMT fallback: ModuleNotFoundError: No module named 'tensor_core'
+compile.py: tensor-core fallback: ModuleNotFoundError: No module named 'tensor_core'
+A30 04-nested-restore PASS
+compile.py: plan SIMT fallback: ModuleNotFoundError: No module named 'tensor_core'
+compile.py: tensor-core fallback: ModuleNotFoundError: No module named 'tensor_core'
+A31 07-loop-axis-shadow PASS
+compile.py: plan SIMT fallback: ModuleNotFoundError: No module named 'tensor_core'
+compile.py: tensor-core fallback: ModuleNotFoundError: No module named 'tensor_core'
+A50 scalar-shadow PASS
+compile.py: plan SIMT fallback: ModuleNotFoundError: No module named 'tensor_core'
+compile.py: tensor-core fallback: ModuleNotFoundError: No module named 'tensor_core'
+A51 grouped-simultaneous PASS
+compile.py: plan SIMT fallback: ModuleNotFoundError: No module named 'tensor_core'
+compile.py: tensor-core fallback: ModuleNotFoundError: No module named 'tensor_core'
+A58 rmsnorm-0 PASS
+compile.py: plan SIMT fallback: ModuleNotFoundError: No module named 'tensor_core'
+compile.py: tensor-core fallback: ModuleNotFoundError: No module named 'tensor_core'
+A59 l2norm-0 PASS
+compile.py: plan SIMT fallback: ModuleNotFoundError: No module named 'tensor_core'
+compile.py: tensor-core fallback: ModuleNotFoundError: No module named 'tensor_core'
+A90 pointwise-3 PASS
+compile.py: plan SIMT fallback: ModuleNotFoundError: No module named 'tensor_core'
+compile.py: tensor-core fallback: ModuleNotFoundError: No module named 'tensor_core'
+A91 pointwise-1 PASS

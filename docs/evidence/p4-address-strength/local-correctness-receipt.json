@@ -1,0 +1,107 @@
+{
+  "schema": "emmy-p4-hosted-correctness-binding-v1",
+  "compiler_sha256": "74164ed51aff8fc3886e4b5daa029f526d26d4fe5e2d0cf86ac706ec1cfb602d",
+  "source_unchanged": true,
+  "derived_from": {
+    "path": "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/p4-hosted-74164ed5-vs-p2-20261027/local_scaled_correctness.json",
+    "sha256": "075789540a87534e75df041cd7e2ca61940036936099489b745427f2078366ac"
+  },
+  "cases": [
+    {
+      "id": "2feed43c8085a9ce0a90ae785afb150dd9914eb8a2cb54b4ba2934ab53c467d3",
+      "name": "p02_scale_shift_8m",
+      "case_id": "p02_scale_shift_8m",
+      "case_dir": "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/cases-v3/perf-a/p02_scale_shift_8m",
+      "full_outputs_pass": true,
+      "checks": 3,
+      "outputs": {
+        "add": {
+          "ok": true,
+          "elements": 8000000,
+          "mismatched": 0,
+          "max_abs_error": 0.0
+        }
+      },
+      "cubins": [
+        "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/p4-rebased-74164ed5-gates-20261027/scaled-p02_scale_shift_8m-kernel-0/module.cubin"
+      ]
+    },
+    {
+      "id": "18c1f7e9e097fa918cefe8a858269be460ba684ef3eab1d6f996cbf4c861fdd6",
+      "name": "p03_relu_mul_4m",
+      "case_id": "p03_relu_mul_4m",
+      "case_dir": "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/cases-v3/perf-a/p03_relu_mul_4m",
+      "full_outputs_pass": true,
+      "checks": 3,
+      "outputs": {
+        "mul": {
+          "ok": true,
+          "elements": 4000000,
+          "mismatched": 0,
+          "max_abs_error": 0.0
+        }
+      },
+      "cubins": [
+        "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/p4-rebased-74164ed5-gates-20261027/scaled-p03_relu_mul_4m-kernel-0/module.cubin"
+      ]
+    },
+    {
+      "id": "03e78f3970ce4d768df324efc9e2555e289139e6649cedd8ee71b6d319294f44",
+      "name": "f01_rmsnorm_3072x2048",
+      "case_id": "f01_rmsnorm_3072x2048",
+      "case_dir": "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/cases-v3/perf-a/f01_rmsnorm_3072x2048",
+      "full_outputs_pass": true,
+      "checks": 3,
+      "outputs": {
+        "mul_1": {
+          "ok": true,
+          "elements": 6291456,
+          "mismatched": 0,
+          "max_abs_error": 1.9073486328125e-06
+        }
+      },
+      "cubins": [
+        "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/p4-rebased-74164ed5-gates-20261027/scaled-f01_rmsnorm_3072x2048-kernel-0/module.cubin"
+      ]
+    },
+    {
+      "id": "815a144f7fad94875544b70db18f5e891c6b070f83f333173c300a1a897d2b46",
+      "name": "f03_l2norm_3072x2048",
+      "case_id": "f03_l2norm_3072x2048",
+      "case_dir": "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/cases-v3/perf-a/f03_l2norm_3072x2048",
+      "full_outputs_pass": true,
+      "checks": 3,
+      "outputs": {
+        "div": {
+          "ok": true,
+          "elements": 6291456,
+          "mismatched": 0,
+          "max_abs_error": 1.4901161193847656e-08
+        }
+      },
+      "cubins": [
+        "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/p4-rebased-74164ed5-gates-20261027/scaled-f03_l2norm_3072x2048-kernel-0/module.cubin"
+      ]
+    },
+    {
+      "id": "7c2c332fde05ec1b6caa7862c5b30b8a1993f50284871a886caad24bff53f566",
+      "name": "r04_row_sum_3072x4096",
+      "case_id": "r04_row_sum_3072x4096",
+      "case_dir": "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/cases-v3/perf-a/r04_row_sum_3072x4096",
+      "full_outputs_pass": true,
+      "checks": 3,
+      "outputs": {
+        "sum_1": {
+          "ok": true,
+          "elements": 3072,
+          "mismatched": 0,
+          "max_abs_error": 3.0517578125e-05
+        }
+      },
+      "cubins": [
+        "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/p4-rebased-74164ed5-gates-20261027/scaled-r04_row_sum_3072x4096-kernel-0/module.cubin"
+      ]
+    }
+  ],
+  "limitation": "Derived view of the frozen local full-output receipt; no hosted correctness claim."
+}

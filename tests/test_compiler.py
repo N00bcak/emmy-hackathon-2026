@@ -112,6 +112,68 @@ class CompilerTests(unittest.TestCase):
             self.assertEqual(assembled.returncode,0,arch+': '+assembled.stderr)
         return result.stdout
 
+    def emitter_for(self, problem):
+        source = next((ROOT/problem).glob('*.ir.json'))
+        graph = Graph.from_dict(json.loads(source.read_text()))
+        meta = json.loads(source.with_name('meta.json').read_text())['kernels'][0]
+        return mod.Emitter(graph, graph.nodes[meta['node']], meta)
+
+    def scaled_softmax(self, destination, rows=3072, columns=2048):
+        """A same-graph softmax at a wider row than the published fixture."""
+        source = next((ROOT/'f02_row_softmax').glob('*.ir.json'))
+        graph = Graph.from_dict(json.loads(source.read_text()))
+        meta = json.loads(source.with_name('meta.json').read_text())
+        shape = (Dim(rows), Dim(columns))
+        for node in graph.nodes.values():
+            node.outputs = tuple(replace(tensor, shape=shape) for tensor in node.outputs)
+        kernel = next(node for node in graph.nodes.values()
+                      if type(node.op).__name__ == 'KernelOp')
+        tile = kernel.op.body[0]
+        tile = replace(tile, axes=(
+            replace(tile.axes[0], extent=Dim(rows)),
+            replace(tile.axes[1], extent=Dim(128))))
+        row_loops = [statement for statement in tile.body
+                     if type(statement).__name__ == 'StridedLoop']
+        self.assertEqual(2, len(row_loops))
+        tile = replace(tile, body=tuple(
+            replace(statement, axis=replace(statement.axis, extent=Dim(columns)))
+            if type(statement).__name__ == 'StridedLoop' else statement
+            for statement in tile.body))
+        kernel.op = replace(kernel.op, body=(tile,))
+        kernel_meta = meta['kernels'][0]
+        kernel_meta['grid'] = [rows, 1, 1]
+        for arg in kernel_meta['args']:
+            arg['shape'] = [rows, columns]
+        destination.mkdir(parents=True)
+        path = destination/source.name
+        path.write_text(json.dumps(graph.to_dict(), indent=2, default=repr))
+        path.with_name('meta.json').write_text(json.dumps(meta, indent=2))
+        return path
+
+    def sass_hashes(self, path, ptx_text):
+        ptx = path.with_suffix('.ptx')
+        ptx.write_text(ptx_text)
+        result = {}
+        for arch in ('sm_89', 'sm_120'):
+            target_ptx = ptx.with_suffix('.'+arch+'.ptx')
+            target_ptx.write_text(re.sub(
+                r'^\.target\s+sm_\d+', '.target '+arch,
+                re.sub(r'^\.version\s+[\d.]+', '.version 8.7', ptx_text,
+                       flags=re.M), flags=re.M))
+            cubin = target_ptx.with_suffix('.cubin')
+            assembled = subprocess.run(['ptxas', '-v', '-arch='+arch, str(target_ptx),
+                                        '-o', str(cubin)], capture_output=True,
+                                       text=True, timeout=30)
+            self.assertEqual(assembled.returncode, 0, arch+': '+assembled.stderr)
+            self.assertRegex(assembled.stderr, r'\b0 bytes spill stores\b')
+            self.assertRegex(assembled.stderr, r'\b0 bytes spill loads\b')
+            sass = subprocess.run(['cuobjdump', '-sass', str(cubin)],
+                                  capture_output=True, text=True, check=True).stdout
+            result[arch] = (hashlib.sha256(cubin.read_bytes()).hexdigest(),
+                            hashlib.sha256(sass.encode()).hexdigest(),
+                            len(re.findall(r'\bLDG\b', sass)))
+        return result
+
     def test_nonfixture_pointwise_tail_and_reordered_abi(self):
         p=fixture('p00_scalar_add',self.out/'pointwise14',tile_extent=7,data_extent=14,arg_reverse=True)
         out=self.assemble(p)
@@ -682,6 +744,153 @@ class CompilerTests(unittest.TestCase):
                     mod.strided_access_groups = original
                 self.assertNotIn('row_map_fallback_', rejected_out)
 
+    def test_scalar_second_pass_reuses_f02_scores(self):
+        """f02 keeps each thread's pass-one scores for the numerator map."""
+        source = next((ROOT/'f02_row_softmax').glob('*.ir.json'))
+        out = mod.compile_path(source)
+        self.assertEqual(2, out.count('ld.global.f32'))
+        self.assertNotRegex(out, r'\bbra\s+(?:loop|loop_done)_\d+;')
+        self.assertEqual(1, out.count('rcp.rn.f32'))
+        emitter = self.emitter_for('f02_row_softmax')
+        emitter.render()
+        self.assertEqual({}, emitter.row_caches)
+        self.assertEqual(1, len(emitter.scalar_row_caches))
+        self.assertEqual(1, len(emitter.scalar_row_maps))
+        _source, loads, trips, plan, registers = next(iter(emitter.scalar_row_caches.values()))
+        self.assertEqual(2, trips)
+        self.assertEqual(1, len(loads))
+        self.assertEqual([2], [len(registers[id(load)]) for load in loads])
+        self.assertEqual(1, sum(how == 'cached' for _, how, _ in plan))
+
+    def test_scaled_softmax_reuse_survives_ptxas(self):
+        """A 2048-wide row activates the scalar cache in final SASS."""
+        path = self.scaled_softmax(self.out/'scaled-softmax')
+        graph = Graph.from_dict(json.loads(path.read_text()))
+        meta = json.loads(path.with_name('meta.json').read_text())['kernels'][0]
+        emitter = mod.Emitter(graph, graph.nodes[meta['node']], meta)
+        candidate_ptx = emitter.render()
+        self.assertEqual(1, len(emitter.scalar_row_caches))
+        self.assertEqual(1, len(emitter.scalar_row_maps))
+        _source, loads, trips, plan, registers = next(iter(emitter.scalar_row_caches.values()))
+        self.assertEqual(16, trips)
+        self.assertEqual([16], [len(registers[id(load)]) for load in loads])
+        self.assertEqual(1, sum(how == 'cached' for _, how, _ in plan))
+        candidate_hashes = self.sass_hashes(path, candidate_ptx)
+        original = mod.Emitter.scalar_phase_loop
+        mod.Emitter.scalar_phase_loop = lambda *args: False
+        try:
+            fallback_path = self.scaled_softmax(self.out/'scaled-softmax-fallback')
+            fallback_graph = Graph.from_dict(json.loads(fallback_path.read_text()))
+            fallback_meta = json.loads(
+                fallback_path.with_name('meta.json').read_text())['kernels'][0]
+            fallback_emitter = mod.Emitter(
+                fallback_graph, fallback_graph.nodes[fallback_meta['node']], fallback_meta)
+            fallback_ptx = fallback_emitter.render()
+            fallback_hashes = self.sass_hashes(fallback_path, fallback_ptx)
+        finally:
+            mod.Emitter.scalar_phase_loop = original
+        self.assertEqual({}, fallback_emitter.scalar_row_caches)
+        self.assertLess(len(candidate_ptx.splitlines()), len(fallback_ptx.splitlines()))
+        self.assertLess(len(candidate_ptx.splitlines()), len(fallback_ptx.splitlines()))
+        for arch in ('sm_89', 'sm_120'):
+            self.assertNotEqual(candidate_hashes[arch], fallback_hashes[arch])
+            self.assertLess(candidate_hashes[arch][2], fallback_hashes[arch][2])
+
+    def test_scalar_phase_cache_fails_closed(self):
+        """Mismatched, rewritten, remapped and over-budget caches stay scalar."""
+        from emmy.compiler.dtype import F32
+        from emmy.compiler.ir.axis import Axis
+        from emmy.compiler.ir.expr import BinaryExpr, Literal, Var
+        from emmy.compiler.ir.kernel.ir import Load, StridedLoop, Write
+        from emmy.compiler.ir.stmt.leaves import Assign, Let
+
+        uniform = {'row', 'lane_co'}.__contains__
+        buffers = {'x': ((64, 256), 'f32'), 'out': ((64, 256), 'f32')}
+        # A cache whose address depends on a rewritten name cannot substitute
+        # the reduction load later in the map.
+        shifted = (Load('source_value', 'x', (Var('row'), Var('lane')), dtype=F32),)
+        map_body = (Load('value', 'x', (Var('row'), BinaryExpr('+', Var('lane'), Literal(1, 'int'))), dtype=F32),
+                    Write('out', (Var('row'), Var('lane')), 'value', value_dtype=F32))
+        map_loop = StridedLoop(Axis('lane', 256), Var('lane_co'), Literal(128, 'int'), map_body)
+        self.assertIsNone(mod.strided_access_groups(
+            map_loop, StridedLoop(Axis('lane', 256), Var('lane_co'), Literal(128, 'int'), shifted),
+            shifted, buffers, {'x', 'out'}, set(), {'row': 64, 'lane_co': 128}, uniform))
+        builtin_loads = (Load('value', 'x', (Var('row'), Var('lane')), dtype=F32),)
+        self.assertFalse(mod.scalar_cache_fits(
+            (Load('value', 'x', (Var('row'), Var('lane')), dtype=F32),),
+            map_body, builtin_loads, 33))
+        self.assertFalse(mod.scalar_cache_fits(
+            (Load('value', 'x', (Var('row'), Var('lane')), dtype=F32),), map_body,
+            builtin_loads, 0))
+
+    def test_scalar_cache_rejects_mismatched_map_headers(self):
+        """Only an identical start/step/bound may consume the live cache."""
+        from emmy.compiler.ir.axis import Axis
+        from emmy.compiler.ir.expr import Literal, Var
+        from emmy.compiler.ir.kernel.ir import StridedLoop
+        source = StridedLoop(Axis('lane', 256), Var('lane_co'), Literal(128, 'int'), ())
+        header = mod.Emitter.same_strided_header
+        emitter = mod.Emitter.__new__(mod.Emitter)
+        for start, step, bound, label in [
+                (Var('other'), Literal(128, 'int'), 256, 'start'),
+                (Var('lane_co'), Literal(64, 'int'), 256, 'step'),
+                (Var('lane_co'), Literal(128, 'int'), 384, 'bound')]:
+            with self.subTest(label=label):
+                map_loop = StridedLoop(Axis('lane', bound), start, step, ())
+                self.assertFalse(header(emitter, map_loop, source))
+
+    def test_reuse_analysis_separates_independent_query_graphs(self):
+        """A79's distinct query offsets must not share a structural key."""
+        case = self.out/'a79'
+        case.mkdir()
+        source = next((HERE/'tests/gpu-cases/cases/c974ec730c3e361d5a62608aa954478a6cea10d6f9183d7f03bd9f45a6a125c8').glob('*.ir.json'))
+        graph = Graph.from_dict(json.loads(source.read_text()))
+        node = next(n for n in graph.nodes.values() if type(n.op).__name__ == 'KernelOp')
+        tile = node.op.body[0]
+        outer = next(s for s in tile.body if type(s).__name__ == 'Loop')
+        inner = [s for s in outer.body if type(s).__name__ == 'Loop']
+        prefix = []
+        for statement in tile.body:
+            if statement is outer:
+                break
+            prefix.append(statement)
+        left = mod.ReuseAnalysis((*prefix, *inner[0].body),
+                                 uniform=lambda name: name in {'row', 'col'},
+                                 readonly={'q_622558', 'kt_340851', 'scale_938863'},
+                                 serial_axes={outer.axis.name, inner[0].axis.name})
+        right = mod.ReuseAnalysis((*prefix, *inner[1].body),
+                                  uniform=lambda name: name in {'row', 'col'},
+                                  readonly={'q_622558', 'kt_340851', 'scale_938863'},
+                                  serial_axes={outer.axis.name, inner[1].axis.name})
+        self.assertNotEqual(left.value('qval0').key, right.value('qval1').key)
+        self.assertFalse(left.equivalent('qval0', 'qval1'))
+
+    def test_reuse_analysis_matches_equivalent_duplicate_graphs(self):
+        """A83's repeated value loads share a key; distinct columns do not."""
+        source = next((HERE/'tests/gpu-cases/cases/274cb67281df56837bc7b9c4acf1ab1f3c08fcdfc957790eb7e64d6140c8e2f4').glob('*.ir.json'))
+        graph = Graph.from_dict(json.loads(source.read_text()))
+        node = next(n for n in graph.nodes.values() if type(n.op).__name__ == 'KernelOp')
+        tile = node.op.body[0]
+        outer = next(s for s in tile.body if type(s).__name__ == 'Loop')
+        prefix = []
+        for statement in tile.body:
+            if statement is outer:
+                break
+            prefix.append(statement)
+        statements = (*prefix, *(s for statement in outer.body for s in
+                                 (statement.body if type(statement).__name__ == 'Loop' else (statement,))))
+        analysis = mod.ReuseAnalysis(
+            statements, uniform=lambda name: name in {'row', 'col'},
+            readonly={'q_382391', 'kt_340795', 'scale_727427', 'v_685395'},
+            serial_axes={outer.axis.name, *(s.axis.name for s in outer.body
+                                             if type(s).__name__ == 'Loop')})
+        self.assertTrue(analysis.equivalent('value0', 'value0'))
+        self.assertNotEqual(analysis.value('value0').key, analysis.value('value1').key)
+        self.assertEqual(('v_685395', ('keys', 'col')),
+                         analysis.transitive_loads(['value0'])[0][:1]
+                         + (tuple(coordinate.name if hasattr(coordinate, 'name') else coordinate
+                                  for coordinate in analysis.transitive_loads(['value0'])[0][1]),))
+
     def test_collective_tree_reuses_its_root_slot(self):
         """A CTA total is read from shared slot zero once, not re-read."""
         source=next((ROOT/'r04_row_sum').glob('*.ir.json'))
@@ -1062,6 +1271,175 @@ class CompilerTests(unittest.TestCase):
         self.assertNotEqual(result.returncode,0)
         self.assertEqual(result.stdout,'')
         self.assertIn('Unsupported',result.stderr)
+
+    def sibling_emitter(self, loops, *, writes=(), body_tail=()):
+        """A live Emitter with one Tile and no launch-hoist candidates."""
+        from emmy.compiler.ir.axis import Axis
+        from emmy.compiler.ir.base import InputOp
+        from emmy.compiler.ir.expr import Literal, Var
+        from emmy.compiler.ir.kernel.ir import KernelOp, Tile
+        from emmy.compiler.ir.stmt.leaves import Let
+        from emmy.compiler.tensor import Tensor
+        graph=Graph()
+        shape=(8,16)
+        graph.add_node(InputOp(),[],Tensor('q',shape),node_id='q')
+        graph.add_node(InputOp(),[],Tensor('kt',shape),node_id='kt')
+        graph.add_node(InputOp(),[],Tensor('other',shape),node_id='other')
+        graph.add_node(KernelOp(body=(Tile((Axis('i',4),),(*loops,*writes,*body_tail),
+                    block_threads=4),),name='k'),['q','kt','other'],Tensor('out',(4,),),node_id='out')
+        meta={'block':[4,1,1],'grid':[1,1,1],'arg_order':['q','kt','other','out'],
+              'args':[{'name':'q','dtype':'f32','shape':list(shape)},
+                      {'name':'kt','dtype':'f32','shape':list(shape)},
+                      {'name':'other','dtype':'f32','shape':list(shape)},
+                      {'name':'out','dtype':'f32','shape':[4],'output':True}]}
+        emitter=mod.Emitter(graph,graph.nodes['out'],meta)
+        emitter.global_dot_candidates={id(loop) for loop in loops}
+        emitter.global_dot_alignments={}
+        emitter.global_dot_prologue_end=len(emitter.lines)
+        return emitter
+
+    def sibling_dot(self, index, *, extent=8, other='kt', other_index=None,
+                    axis='k', accumulator='acc', product='prod', with_let=False):
+        from emmy.compiler.dtype import F32
+        from emmy.compiler.ir.axis import Axis
+        from emmy.compiler.ir.elementwise import ElementwiseImpl
+        from emmy.compiler.ir.expr import Literal, Var
+        from emmy.compiler.ir.kernel.ir import Accum, Load, Loop
+        from emmy.compiler.ir.stmt.leaves import Assign, Let
+        body=[Load(product+'a','q',(Literal(index,'int'),Var(axis)),dtype=F32),
+              Load(product+'b',other,tuple(other_index or (Var(axis),)),dtype=F32)]
+        if with_let:
+            body.append(Let(axis,Literal(0,'int')))
+        body.extend((Assign(product,ElementwiseImpl('multiply'),
+                            (product+'a',product+'b'),F32),
+                     Accum(accumulator,product,ElementwiseImpl('add'),F32,
+                           axes=(axis,),base=None)))
+        return Loop(Axis(axis,extent),tuple(body),seed=True)
+
+    def sibling_groups(self, loops, **kwargs):
+        from emmy.compiler.ir.expr import Literal, Var
+        from emmy.compiler.ir.kernel.ir import Write
+        emitter=self.sibling_emitter(loops,**kwargs)
+        tail=kwargs.get('body_tail',())
+        return emitter, mod.Emitter.sibling_dot_groups(
+            emitter,[*loops,*tail])
+
+    def test_sibling_fusion_admits_equal_bounds_and_independent_state(self):
+        """Equal extents, one shared readonly operand, distinct accumulators."""
+        from emmy.compiler.ir.expr import Literal
+        first=self.sibling_dot(0,other_index=(Literal(0,'int'),),
+                               accumulator='acc0',product='p0')
+        second=self.sibling_dot(1,other_index=(Literal(0,'int'),),
+                                accumulator='acc1',product='p1')
+        _emitter,(groups,_members)=self.sibling_groups((first,second))
+        self.assertEqual(1,len(groups))
+        group=next(iter(groups.values()))
+        self.assertEqual([first,second],[shape['loop'] for shape in group])
+        self.assertEqual({'acc0','acc1'},
+                         {shape['update'].name for shape in group})
+        self.assertEqual(group[0]['other_key'],group[1]['other_key'])
+        self.assertNotEqual(group[0]['vector_key'],group[1]['vector_key'])
+
+    def test_sibling_fusion_rejects_unequal_bounds(self):
+        """Identical static start/step/bound is an admission requirement."""
+        from emmy.compiler.ir.expr import Literal
+        first=self.sibling_dot(0,other_index=(Literal(0,'int'),),
+                               accumulator='acc0',product='p0')
+        second=self.sibling_dot(1,extent=12,other_index=(Literal(0,'int'),),
+                                accumulator='acc1',product='p1')
+        _emitter,(groups,members)=self.sibling_groups((first,second))
+        self.assertEqual({},groups)
+        self.assertFalse(members)
+
+    def test_sibling_fusion_rejects_distinct_shared_operands(self):
+        """Distinct B identities may not be substituted for one another."""
+        from emmy.compiler.ir.expr import Literal
+        first=self.sibling_dot(0,other_index=(Literal(0,'int'),),
+                               accumulator='acc0',product='p0')
+        second=self.sibling_dot(1,other_index=(Literal(1,'int'),),
+                                accumulator='acc1',product='p1')
+        _emitter,(groups,members)=self.sibling_groups((first,second))
+        self.assertEqual({},groups)
+        self.assertFalse(members)
+        # A different buffer identity also declines even at the same index.
+        third=self.sibling_dot(2,other='other',other_index=(Literal(0,'int'),),
+                               accumulator='acc2',product='p2')
+        _emitter,(groups,members)=self.sibling_groups((first,third))
+        self.assertEqual({},groups)
+        self.assertFalse(members)
+
+    def test_sibling_fusion_rejects_aliasing_write_and_carried_state(self):
+        """A possibly-aliasing store or cross-iteration carrier fails closed."""
+        from emmy.compiler.dtype import F32
+        from emmy.compiler.ir.expr import Literal, Var
+        from emmy.compiler.ir.kernel.ir import Write
+        first=self.sibling_dot(0,other_index=(Literal(0,'int'),),
+                               accumulator='acc0',product='p0')
+        second=self.sibling_dot(1,other_index=(Literal(0,'int'),),
+                                accumulator='acc1',product='p1')
+        store=Write('q',(Var('i'),),'p0',value_dtype=F32)
+        emitter=self.sibling_emitter((first,second),body_tail=(store,))
+        # The write lies outside the candidate run, but still aliases its read.
+        groups,members=mod.Emitter.sibling_dot_groups(
+            emitter,[*emitter.node.op.body[0].body])
+        self.assertEqual({},groups)
+        self.assertFalse(members)
+        # A body-local rebinding of the induction axis makes the address
+        # identity stale, so the whole run is declined.
+        rebinding=self.sibling_dot(2,other_index=(Literal(0,'int'),),
+                                   accumulator='acc2',product='p2',with_let=True)
+        _emitter,(groups,members)=self.sibling_groups((first,rebinding))
+        self.assertEqual({},groups)
+        self.assertFalse(members)
+        # Shared accumulators are not independent carried state.
+        same=self.sibling_dot(3,other_index=(Literal(0,'int'),),
+                              accumulator='acc0',product='p3')
+        _emitter,(groups,members)=self.sibling_groups((first,same))
+        self.assertEqual({},groups)
+        self.assertFalse(members)
+
+    def test_sibling_fusion_keeps_per_accumulator_fold_order(self):
+        """Each fused dot still emits its own product/fold in source order."""
+        from emmy.compiler.ir.expr import Literal
+        first=self.sibling_dot(0,other_index=(Literal(0,'int'),),
+                               accumulator='acc0',product='p0')
+        second=self.sibling_dot(1,other_index=(Literal(0,'int'),),
+                                accumulator='acc1',product='p1')
+        emitter,(groups,_members)=self.sibling_groups((first,second))
+        group=next(iter(groups.values()))
+        for shape in group:
+            self.assertEqual(['Load','Load','Assign','Accum'],
+                             [type(s).__name__ for s in shape['body']])
+            self.assertEqual(shape['product'].name,shape['update'].value)
+
+    def test_sibling_work_fusion_fails_closed(self):
+        """Only aligned, divisible, bounded hoisted sibling batches fuse."""
+        lead=type('Lead',(),{'configs':8,'extent':256,
+                             'used':[('axis',8)]})()
+        emitter=emitter_fixture()
+        emitter.inactive=[]
+        # A partial batch leaves a residual work loop and is not admitted.
+        self.assertEqual(1,mod.Emitter.sibling_work_batch(
+            emitter,lead,[None]*3,4,128,64))
+        # The same configuration extent with one member and a complete batch
+        # fits the value budget and is admitted in full.
+        lead512=type('Lead',(),{'configs':8,'extent':512,
+                                'used':[('axis',8)]})()
+        self.assertEqual(8,mod.Emitter.sibling_work_batch(
+            emitter,lead512,[None],4,128,128))
+        self.assertEqual(1,mod.Emitter.sibling_work_batch(
+            emitter,lead,[None]*3,4,127,64))
+        odd=type('Lead',(),{'configs':7,'extent':256,
+                            'used':[('axis',8)]})()
+        self.assertEqual(1,mod.Emitter.sibling_work_batch(
+            emitter,odd,[None],4,128,64))
+        wide=type('Lead',(),{'configs':64,'extent':256,
+                             'used':[('axis',8)]})()
+        self.assertEqual(1,mod.Emitter.sibling_work_batch(
+            emitter,wide,[None]*8,4,128,64))
+        emitter.sibling_fusion_disabled=True
+        self.assertEqual(1,mod.Emitter.sibling_work_batch(
+            emitter,lead,[None]*3,4,128,64))
 
 
 def generate_cases(destination):

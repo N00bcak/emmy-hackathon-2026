@@ -1,0 +1,59 @@
+{
+  "schema": "emmy-p3-scaled-full-output-v1",
+  "compiler_sha256": "1f220a4dabcc436c49ab933bcc505e0e4d6ad1e04aef347a14a0b6cbd2fd0d1d",
+  "source": "/home/ada/Projects/emmy-p3-sibling-fusion",
+  "source_unchanged": true,
+  "generated": "2026-10-26T23:53:41Z",
+  "device": "NVIDIA GeForce RTX 4060 Laptop GPU, 8.9",
+  "case_list_sha256": "d7f545259414658e21f971fa5fdd0daef0b01e3b3802d23d7108e427f6e6eda1",
+  "results_sha256": "09d6c09bea825d96bec981cc4809cd514203cb155e7dbe5ea9176251a201da4d",
+  "cases": [
+    {
+      "id": "3906185c81c902e5056a52a979844e8f885350cfad17cb54c9a22207d3a5d2e6",
+      "case_id": "a01_attention_256x64",
+      "case_dir": "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/cases-v3/perf-a/a01_attention_256x64",
+      "ok": true,
+      "full_outputs_pass": true,
+      "expected_output_names": [
+        "matmul_1"
+      ],
+      "covered_output_names": [
+        "matmul_1"
+      ],
+      "output_elements": {
+        "matmul_1": 16384
+      },
+      "max_abs_error": {
+        "matmul_1": 3.2782554626464844e-07
+      },
+      "repetitions": 3,
+      "launch_count": 3,
+      "prepared_case_dir": "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/cases-v3/perf-a/a01_attention_256x64",
+      "source_compiler_sha256": "1f220a4dabcc436c49ab933bcc505e0e4d6ad1e04aef347a14a0b6cbd2fd0d1d"
+    },
+    {
+      "id": "a4675f27cb8673770b112f96fdd95f4409476dd49c6d0bf31f31836575ef03c3",
+      "case_id": "a01_attention_512x64",
+      "case_dir": "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/cases-v3/perf-b/a01_attention_512x64",
+      "ok": true,
+      "full_outputs_pass": true,
+      "expected_output_names": [
+        "matmul_1"
+      ],
+      "covered_output_names": [
+        "matmul_1"
+      ],
+      "output_elements": {
+        "matmul_1": 32768
+      },
+      "max_abs_error": {
+        "matmul_1": 3.8743019104003906e-07
+      },
+      "repetitions": 3,
+      "launch_count": 3,
+      "prepared_case_dir": "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/cases-v3/perf-b/a01_attention_512x64",
+      "source_compiler_sha256": "1f220a4dabcc436c49ab933bcc505e0e4d6ad1e04aef347a14a0b6cbd2fd0d1d"
+    }
+  ],
+  "limitation": "Owner-authorized local run without compiler UID/seccomp isolation. Not an evaluator-issued receipt."
+}

@@ -1,0 +1,710 @@
+{
+ "schema": "emmy-p2-p4-final-sass-recheck-v1",
+ "date": "2026-10-27",
+ "scope": "independent rebuild of stored P2 and P4 PTX with local CUDA 13.4 ptxas",
+ "source_audit_root": ".emmy/research/performance-v1/coordinator-final-sass-audit-20261027",
+ "compiler_under_audit": "1f220a4dabcc436c49ab933bcc505e0e4d6ad1e04aef347a14a0b6cbd2fd0d1d",
+ "p2_candidate_compile_py": "0a6f12033a942f4da9176ebf1e963c16193d8883610d3d4807bbc9870ab0de2a",
+ "p4_candidate_compile_py": "c0dcf3321d209ef5de1205a8e592890810a155c6b9aa687abb38b434b88d62e7",
+ "p4_fallback_compile_py": "488e135d211ea4661f60d344c888076caa5150aa4d41e7fc0ea99e68b12f6654",
+ "ptxas": {
+  "version": "NVIDIA ptxas 13.4.92",
+  "flags": "ptxas -arch=<sm_89|sm_120> -v <arm>.ptx -o <arm>.cubin"
+ },
+ "disassembly": "cuobjdump -sass",
+ "normalization": "keep only decoded instruction lines; drop header, addresses, encoding words and comments; extract the opcode; join with newline",
+ "normalization_note": "raw_sass_sha256 is comparable only within one header/build mode. P2 has two valid build modes: the integrated coordinator PTX declares sm_89 with PTX .version 8.0 and is assembled for both targets, while the older sass-final PTX declares each target with .version 8.7. Their sm_89 bytes agree; their sm_120 bytes differ only in the headerflag EF_CUDA_VIRTUAL_SM(...) while the decoded opcode streams and all counts agree. normalized_ops_sha256 compares decoded opcodes across modes.",
+ "p2_finding": "f02 3072x2048 is active on both targets: LDG 48->16, instructions 1120/1160->688/720, 40 registers, zero spills. Candidate emits 16 scalar STG versus 1 vector STG because it retains and maps 16 row values; total global store instructions rise 1->16 while loads fall 48->16. That is the recorded P2 trade, not a hidden extra load.",
+ "p4_finding": "both primaries remove exactly one SHF.L.U32 on both targets; the byte-scale immediate changes 0x4->0x10. f01/f03/r04 map follow-ons are byte-identical candidate vs fallback on both targets.",
+ "limitation": "hosted cubin bytes remain unavailable; this audit recompiles stored candidate/fallback PTX locally and does not execute on sm_120 hardware.",
+ "rows": [
+  {
+   "scope": "p2",
+   "case": "f02_row_softmax_3072x2048",
+   "arm": "candidate",
+   "target": "sm_120",
+   "raw_sass_sha256": "1c8a56a2c4694c9bf461187e25915d61bbd905e0cbc810ba95bf604f3e4a1642",
+   "normalized_ops_sha256": "3bf337aedd57a430b9864143bcf3ba86987474307dabc354e7abf2016385aff8",
+   "insns": 720,
+   "non_nop_insns": 707,
+   "LDG": 16,
+   "STG": 16,
+   "LDS": 10,
+   "STS": 6,
+   "SHF": 24,
+   "IMAD": 33,
+   "LEA": 12,
+   "audit_sass_path": "<recheck-root>/p2-candidate-sm_120.sass",
+   "kernel_count": 1,
+   "registers_by_kernel": [
+    40
+   ],
+   "spill_store_bytes_by_kernel": [
+    0
+   ],
+   "spill_load_bytes_by_kernel": [
+    0
+   ]
+  },
+  {
+   "scope": "p2",
+   "case": "f02_row_softmax_3072x2048",
+   "arm": "candidate",
+   "target": "sm_89",
+   "raw_sass_sha256": "b4f77e0c6047af56c7e218767ad35052d52a94b053bb4f755e3ab228d95d9da3",
+   "normalized_ops_sha256": "63858a16eb432547e4088195f18f4b8ec41021fba5b6cceae0929690d3491440",
+   "insns": 688,
+   "non_nop_insns": 679,
+   "LDG": 16,
+   "STG": 16,
+   "LDS": 10,
+   "STS": 6,
+   "SHF": 29,
+   "IMAD": 33,
+   "LEA": 2,
+   "audit_sass_path": "<recheck-root>/p2-candidate-sm_89.sass",
+   "kernel_count": 1,
+   "registers_by_kernel": [
+    40
+   ],
+   "spill_store_bytes_by_kernel": [
+    0
+   ],
+   "spill_load_bytes_by_kernel": [
+    0
+   ]
+  },
+  {
+   "scope": "p2",
+   "case": "f02_row_softmax_3072x2048",
+   "arm": "fallback",
+   "target": "sm_120",
+   "raw_sass_sha256": "2d163882d1d856d64450d32f505f79865dba16aab416b6265fa575af2bd771b5",
+   "normalized_ops_sha256": "02d21c34a8366a278a26eb4aa0c2a2615e18496e8404c36158982d47316dcd96",
+   "insns": 1160,
+   "non_nop_insns": 1138,
+   "LDG": 48,
+   "STG": 1,
+   "LDS": 10,
+   "STS": 6,
+   "SHF": 24,
+   "IMAD": 50,
+   "LEA": 16,
+   "audit_sass_path": "<recheck-root>/p2-fallback-sm_120.sass",
+   "kernel_count": 1,
+   "registers_by_kernel": [
+    40
+   ],
+   "spill_store_bytes_by_kernel": [
+    0
+   ],
+   "spill_load_bytes_by_kernel": [
+    0
+   ]
+  },
+  {
+   "scope": "p2",
+   "case": "f02_row_softmax_3072x2048",
+   "arm": "fallback",
+   "target": "sm_89",
+   "raw_sass_sha256": "9930e109a7dd0e0c057db396f58b8ea81431db939630bea7f04f157f01a3f7f3",
+   "normalized_ops_sha256": "1b5fd5a06883015b02211f9e90dd6e22d5104a15cf39d856cc425faf4e5de490",
+   "insns": 1120,
+   "non_nop_insns": 1111,
+   "LDG": 48,
+   "STG": 1,
+   "LDS": 10,
+   "STS": 6,
+   "SHF": 29,
+   "IMAD": 50,
+   "LEA": 6,
+   "audit_sass_path": "<recheck-root>/p2-fallback-sm_89.sass",
+   "kernel_count": 1,
+   "registers_by_kernel": [
+    40
+   ],
+   "spill_store_bytes_by_kernel": [
+    0
+   ],
+   "spill_load_bytes_by_kernel": [
+    0
+   ]
+  },
+  {
+   "scope": "p4",
+   "case": "f01_rmsnorm_3072x2048",
+   "arm": "candidate",
+   "target": "sm_120",
+   "raw_sass_sha256": "55c5607a38a2d2e73a314b3a99d67fa6303c664e8831601fdcbef1c4554e6294",
+   "normalized_ops_sha256": "d2b87986309e9c60266343a8dfc5ff1c57784787984a9d14b06712dee35e7e07",
+   "insns": 568,
+   "non_nop_insns": 549,
+   "LDG": 59,
+   "STG": 5,
+   "LDS": 5,
+   "STS": 3,
+   "SHF": 20,
+   "IMAD": 63,
+   "LEA": 14,
+   "audit_sass_path": "<recheck-root>/p4-f01_rmsnorm_3072x2048-candidate-sm_120.sass",
+   "kernel_count": 1,
+   "registers_by_kernel": [
+    48
+   ],
+   "spill_store_bytes_by_kernel": [
+    0
+   ],
+   "spill_load_bytes_by_kernel": [
+    0
+   ]
+  },
+  {
+   "scope": "p4",
+   "case": "f01_rmsnorm_3072x2048",
+   "arm": "candidate",
+   "target": "sm_89",
+   "raw_sass_sha256": "5b8ec69956093edb2b46112be4cb747d6978a0338d01c4e8a785d99b91f9041f",
+   "normalized_ops_sha256": "266f3c8e9014010b8dbb82b2f836e1d7dd8488e49092493a46d90216cf4f4bdb",
+   "insns": 536,
+   "non_nop_insns": 528,
+   "LDG": 59,
+   "STG": 5,
+   "LDS": 5,
+   "STS": 3,
+   "SHF": 25,
+   "IMAD": 63,
+   "LEA": 8,
+   "audit_sass_path": "<recheck-root>/p4-f01_rmsnorm_3072x2048-candidate-sm_89.sass",
+   "kernel_count": 1,
+   "registers_by_kernel": [
+    48
+   ],
+   "spill_store_bytes_by_kernel": [
+    0
+   ],
+   "spill_load_bytes_by_kernel": [
+    0
+   ]
+  },
+  {
+   "scope": "p4",
+   "case": "f01_rmsnorm_3072x2048",
+   "arm": "fallback",
+   "target": "sm_120",
+   "raw_sass_sha256": "55c5607a38a2d2e73a314b3a99d67fa6303c664e8831601fdcbef1c4554e6294",
+   "normalized_ops_sha256": "d2b87986309e9c60266343a8dfc5ff1c57784787984a9d14b06712dee35e7e07",
+   "insns": 568,
+   "non_nop_insns": 549,
+   "LDG": 59,
+   "STG": 5,
+   "LDS": 5,
+   "STS": 3,
+   "SHF": 20,
+   "IMAD": 63,
+   "LEA": 14,
+   "audit_sass_path": "<recheck-root>/p4-f01_rmsnorm_3072x2048-fallback-sm_120.sass",
+   "kernel_count": 1,
+   "registers_by_kernel": [
+    48
+   ],
+   "spill_store_bytes_by_kernel": [
+    0
+   ],
+   "spill_load_bytes_by_kernel": [
+    0
+   ]
+  },
+  {
+   "scope": "p4",
+   "case": "f01_rmsnorm_3072x2048",
+   "arm": "fallback",
+   "target": "sm_89",
+   "raw_sass_sha256": "5b8ec69956093edb2b46112be4cb747d6978a0338d01c4e8a785d99b91f9041f",
+   "normalized_ops_sha256": "266f3c8e9014010b8dbb82b2f836e1d7dd8488e49092493a46d90216cf4f4bdb",
+   "insns": 536,
+   "non_nop_insns": 528,
+   "LDG": 59,
+   "STG": 5,
+   "LDS": 5,
+   "STS": 3,
+   "SHF": 25,
+   "IMAD": 63,
+   "LEA": 8,
+   "audit_sass_path": "<recheck-root>/p4-f01_rmsnorm_3072x2048-fallback-sm_89.sass",
+   "kernel_count": 1,
+   "registers_by_kernel": [
+    48
+   ],
+   "spill_store_bytes_by_kernel": [
+    0
+   ],
+   "spill_load_bytes_by_kernel": [
+    0
+   ]
+  },
+  {
+   "scope": "p4",
+   "case": "f03_l2norm_3072x2048",
+   "arm": "candidate",
+   "target": "sm_120",
+   "raw_sass_sha256": "32763ea569fa1193074d3695a2e36389db96b1cce16e40ec998e2cac6c3093e5",
+   "normalized_ops_sha256": "019b3f7d017d10fec79503740cc1ec3a6df714f3bf0684ed8c0f15d0fee750d9",
+   "insns": 520,
+   "non_nop_insns": 498,
+   "LDG": 52,
+   "STG": 5,
+   "LDS": 5,
+   "STS": 3,
+   "SHF": 20,
+   "IMAD": 58,
+   "LEA": 14,
+   "audit_sass_path": "<recheck-root>/p4-f03_l2norm_3072x2048-candidate-sm_120.sass",
+   "kernel_count": 1,
+   "registers_by_kernel": [
+    40
+   ],
+   "spill_store_bytes_by_kernel": [
+    0
+   ],
+   "spill_load_bytes_by_kernel": [
+    0
+   ]
+  },
+  {
+   "scope": "p4",
+   "case": "f03_l2norm_3072x2048",
+   "arm": "candidate",
+   "target": "sm_89",
+   "raw_sass_sha256": "b68ffa9250a040368e113955f677430aac48d3807516db77b3e85cb81db7d73b",
+   "normalized_ops_sha256": "1e510a432c34ccef7e1b2b7bf2f6449dd35d72f68b78c187861c75d18012abd6",
+   "insns": 488,
+   "non_nop_insns": 476,
+   "LDG": 52,
+   "STG": 5,
+   "LDS": 5,
+   "STS": 3,
+   "SHF": 22,
+   "IMAD": 63,
+   "LEA": 7,
+   "audit_sass_path": "<recheck-root>/p4-f03_l2norm_3072x2048-candidate-sm_89.sass",
+   "kernel_count": 1,
+   "registers_by_kernel": [
+    40
+   ],
+   "spill_store_bytes_by_kernel": [
+    0
+   ],
+   "spill_load_bytes_by_kernel": [
+    0
+   ]
+  },
+  {
+   "scope": "p4",
+   "case": "f03_l2norm_3072x2048",
+   "arm": "fallback",
+   "target": "sm_120",
+   "raw_sass_sha256": "32763ea569fa1193074d3695a2e36389db96b1cce16e40ec998e2cac6c3093e5",
+   "normalized_ops_sha256": "019b3f7d017d10fec79503740cc1ec3a6df714f3bf0684ed8c0f15d0fee750d9",
+   "insns": 520,
+   "non_nop_insns": 498,
+   "LDG": 52,
+   "STG": 5,
+   "LDS": 5,
+   "STS": 3,
+   "SHF": 20,
+   "IMAD": 58,
+   "LEA": 14,
+   "audit_sass_path": "<recheck-root>/p4-f03_l2norm_3072x2048-fallback-sm_120.sass",
+   "kernel_count": 1,
+   "registers_by_kernel": [
+    40
+   ],
+   "spill_store_bytes_by_kernel": [
+    0
+   ],
+   "spill_load_bytes_by_kernel": [
+    0
+   ]
+  },
+  {
+   "scope": "p4",
+   "case": "f03_l2norm_3072x2048",
+   "arm": "fallback",
+   "target": "sm_89",
+   "raw_sass_sha256": "b68ffa9250a040368e113955f677430aac48d3807516db77b3e85cb81db7d73b",
+   "normalized_ops_sha256": "1e510a432c34ccef7e1b2b7bf2f6449dd35d72f68b78c187861c75d18012abd6",
+   "insns": 488,
+   "non_nop_insns": 476,
+   "LDG": 52,
+   "STG": 5,
+   "LDS": 5,
+   "STS": 3,
+   "SHF": 22,
+   "IMAD": 63,
+   "LEA": 7,
+   "audit_sass_path": "<recheck-root>/p4-f03_l2norm_3072x2048-fallback-sm_89.sass",
+   "kernel_count": 1,
+   "registers_by_kernel": [
+    40
+   ],
+   "spill_store_bytes_by_kernel": [
+    0
+   ],
+   "spill_load_bytes_by_kernel": [
+    0
+   ]
+  },
+  {
+   "scope": "p4",
+   "case": "p02_scale_shift_8m",
+   "arm": "candidate",
+   "target": "sm_120",
+   "raw_sass_sha256": "ec833ef6327a378f42f07120557a32663e90c13b1c78aefcf4abc18f3c5af085",
+   "normalized_ops_sha256": "36f0ca5292d92b4de5dd315eeb64d1ff118c61663c5dafb04e8dab09c2f84e30",
+   "insns": 48,
+   "non_nop_insns": 35,
+   "LDG": 7,
+   "STG": 5,
+   "LDS": 0,
+   "STS": 0,
+   "SHF": 0,
+   "IMAD": 3,
+   "LEA": 0,
+   "audit_sass_path": "<recheck-root>/p4-p02_scale_shift_8m-candidate-sm_120.sass",
+   "kernel_count": 1,
+   "registers_by_kernel": [
+    18
+   ],
+   "spill_store_bytes_by_kernel": [
+    0
+   ],
+   "spill_load_bytes_by_kernel": [
+    0
+   ]
+  },
+  {
+   "scope": "p4",
+   "case": "p02_scale_shift_8m",
+   "arm": "candidate",
+   "target": "sm_89",
+   "raw_sass_sha256": "e8f55943a983bb7e71a1db3982011f0aa3b417fab9413b942d6c410564fde36e",
+   "normalized_ops_sha256": "67d30cef28c29322242d98a2396f6b33c3d7a8181d832afcb3670d715792dd65",
+   "insns": 48,
+   "non_nop_insns": 35,
+   "LDG": 7,
+   "STG": 5,
+   "LDS": 0,
+   "STS": 0,
+   "SHF": 0,
+   "IMAD": 3,
+   "LEA": 0,
+   "audit_sass_path": "<recheck-root>/p4-p02_scale_shift_8m-candidate-sm_89.sass",
+   "kernel_count": 1,
+   "registers_by_kernel": [
+    16
+   ],
+   "spill_store_bytes_by_kernel": [
+    0
+   ],
+   "spill_load_bytes_by_kernel": [
+    0
+   ]
+  },
+  {
+   "scope": "p4",
+   "case": "p02_scale_shift_8m",
+   "arm": "fallback",
+   "target": "sm_120",
+   "raw_sass_sha256": "315f7e239754624aedf9b69456271fc360d50c17dad32d181586c09801ea1fd0",
+   "normalized_ops_sha256": "9096a772a3edefac7b63f4c255aeaf86a189a3f294de44e1f8c97ed0fa6a17a7",
+   "insns": 48,
+   "non_nop_insns": 36,
+   "LDG": 7,
+   "STG": 5,
+   "LDS": 0,
+   "STS": 0,
+   "SHF": 1,
+   "IMAD": 3,
+   "LEA": 0,
+   "audit_sass_path": "<recheck-root>/p4-p02_scale_shift_8m-fallback-sm_120.sass",
+   "kernel_count": 1,
+   "registers_by_kernel": [
+    18
+   ],
+   "spill_store_bytes_by_kernel": [
+    0
+   ],
+   "spill_load_bytes_by_kernel": [
+    0
+   ]
+  },
+  {
+   "scope": "p4",
+   "case": "p02_scale_shift_8m",
+   "arm": "fallback",
+   "target": "sm_89",
+   "raw_sass_sha256": "36e2cb0d3fdfe5af8f7c6c4bc75077669ff6a7b05fe6958b89dd2a5447ff32da",
+   "normalized_ops_sha256": "4f2fead1023dd342fbde696ecbd69434c20bbda31c23aa30fe74ac44e1f3bc0c",
+   "insns": 48,
+   "non_nop_insns": 36,
+   "LDG": 7,
+   "STG": 5,
+   "LDS": 0,
+   "STS": 0,
+   "SHF": 1,
+   "IMAD": 3,
+   "LEA": 0,
+   "audit_sass_path": "<recheck-root>/p4-p02_scale_shift_8m-fallback-sm_89.sass",
+   "kernel_count": 1,
+   "registers_by_kernel": [
+    16
+   ],
+   "spill_store_bytes_by_kernel": [
+    0
+   ],
+   "spill_load_bytes_by_kernel": [
+    0
+   ]
+  },
+  {
+   "scope": "p4",
+   "case": "p03_relu_mul_4m",
+   "arm": "candidate",
+   "target": "sm_120",
+   "raw_sass_sha256": "620f26b1cf2b8f67f755f07df3e9c2a1b254f338810a787b8496a33548ea26f0",
+   "normalized_ops_sha256": "96f2e6291103fc198088d5a6ed552b0fb1363e41d0c5a556bb6d012d98ddf14c",
+   "insns": 56,
+   "non_nop_insns": 43,
+   "LDG": 10,
+   "STG": 5,
+   "LDS": 0,
+   "STS": 0,
+   "SHF": 0,
+   "IMAD": 4,
+   "LEA": 0,
+   "audit_sass_path": "<recheck-root>/p4-p03_relu_mul_4m-candidate-sm_120.sass",
+   "kernel_count": 1,
+   "registers_by_kernel": [
+    20
+   ],
+   "spill_store_bytes_by_kernel": [
+    0
+   ],
+   "spill_load_bytes_by_kernel": [
+    0
+   ]
+  },
+  {
+   "scope": "p4",
+   "case": "p03_relu_mul_4m",
+   "arm": "candidate",
+   "target": "sm_89",
+   "raw_sass_sha256": "8fe5309a5ceaa3308bc915acf14c27696334a400e2456055f31eed22becc1b9f",
+   "normalized_ops_sha256": "330bc3c45774a6725d83dc20581ef9b6320b6bd22223670c2cdbe7ee411c6597",
+   "insns": 48,
+   "non_nop_insns": 40,
+   "LDG": 10,
+   "STG": 5,
+   "LDS": 0,
+   "STS": 0,
+   "SHF": 0,
+   "IMAD": 4,
+   "LEA": 0,
+   "audit_sass_path": "<recheck-root>/p4-p03_relu_mul_4m-candidate-sm_89.sass",
+   "kernel_count": 1,
+   "registers_by_kernel": [
+    20
+   ],
+   "spill_store_bytes_by_kernel": [
+    0
+   ],
+   "spill_load_bytes_by_kernel": [
+    0
+   ]
+  },
+  {
+   "scope": "p4",
+   "case": "p03_relu_mul_4m",
+   "arm": "fallback",
+   "target": "sm_120",
+   "raw_sass_sha256": "bc13694ab3735a769fcfa437f409b087f61f4254f83e041d5a60d4d45769330c",
+   "normalized_ops_sha256": "ff0f8bb05dcf03fb1b1d6f7bf6cc79c996b1f784e3e11e2f99ea26c1a4993380",
+   "insns": 56,
+   "non_nop_insns": 44,
+   "LDG": 10,
+   "STG": 5,
+   "LDS": 0,
+   "STS": 0,
+   "SHF": 1,
+   "IMAD": 4,
+   "LEA": 0,
+   "audit_sass_path": "<recheck-root>/p4-p03_relu_mul_4m-fallback-sm_120.sass",
+   "kernel_count": 1,
+   "registers_by_kernel": [
+    20
+   ],
+   "spill_store_bytes_by_kernel": [
+    0
+   ],
+   "spill_load_bytes_by_kernel": [
+    0
+   ]
+  },
+  {
+   "scope": "p4",
+   "case": "p03_relu_mul_4m",
+   "arm": "fallback",
+   "target": "sm_89",
+   "raw_sass_sha256": "3c3c6b65d587564e8acfa40c80bb03669e9b3793011cc6ba59164aedb4161aaa",
+   "normalized_ops_sha256": "f2ee0a30140e3393d72b8ad4206806ce3892136de66934d46061d03b42e99a73",
+   "insns": 56,
+   "non_nop_insns": 41,
+   "LDG": 10,
+   "STG": 5,
+   "LDS": 0,
+   "STS": 0,
+   "SHF": 1,
+   "IMAD": 4,
+   "LEA": 0,
+   "audit_sass_path": "<recheck-root>/p4-p03_relu_mul_4m-fallback-sm_89.sass",
+   "kernel_count": 1,
+   "registers_by_kernel": [
+    20
+   ],
+   "spill_store_bytes_by_kernel": [
+    0
+   ],
+   "spill_load_bytes_by_kernel": [
+    0
+   ]
+  },
+  {
+   "scope": "p4",
+   "case": "r04_row_sum_3072x4096",
+   "arm": "candidate",
+   "target": "sm_120",
+   "raw_sass_sha256": "c7303914219c1b93ce369fa7857e1c5d03802f685a24e6ae16dbab0af2e5a216",
+   "normalized_ops_sha256": "ebea21292a1aa41487afb8a910b558804b788ab2506db02d8064cf02892a42a8",
+   "insns": 400,
+   "non_nop_insns": 382,
+   "LDG": 55,
+   "STG": 1,
+   "LDS": 5,
+   "STS": 3,
+   "SHF": 13,
+   "IMAD": 57,
+   "LEA": 12,
+   "audit_sass_path": "<recheck-root>/p4-r04_row_sum_3072x4096-candidate-sm_120.sass",
+   "kernel_count": 1,
+   "registers_by_kernel": [
+    40
+   ],
+   "spill_store_bytes_by_kernel": [
+    0
+   ],
+   "spill_load_bytes_by_kernel": [
+    0
+   ]
+  },
+  {
+   "scope": "p4",
+   "case": "r04_row_sum_3072x4096",
+   "arm": "candidate",
+   "target": "sm_89",
+   "raw_sass_sha256": "7e007cbb32a73ebd36ea98861b08d083915b95e5a33375ca66a3fce4363b08b3",
+   "normalized_ops_sha256": "db001abc519d4a8ed14c3c136a8a70302456b71bf06e61add516416419a93c47",
+   "insns": 376,
+   "non_nop_insns": 364,
+   "LDG": 55,
+   "STG": 1,
+   "LDS": 5,
+   "STS": 3,
+   "SHF": 18,
+   "IMAD": 57,
+   "LEA": 6,
+   "audit_sass_path": "<recheck-root>/p4-r04_row_sum_3072x4096-candidate-sm_89.sass",
+   "kernel_count": 1,
+   "registers_by_kernel": [
+    40
+   ],
+   "spill_store_bytes_by_kernel": [
+    0
+   ],
+   "spill_load_bytes_by_kernel": [
+    0
+   ]
+  },
+  {
+   "scope": "p4",
+   "case": "r04_row_sum_3072x4096",
+   "arm": "fallback",
+   "target": "sm_120",
+   "raw_sass_sha256": "c7303914219c1b93ce369fa7857e1c5d03802f685a24e6ae16dbab0af2e5a216",
+   "normalized_ops_sha256": "ebea21292a1aa41487afb8a910b558804b788ab2506db02d8064cf02892a42a8",
+   "insns": 400,
+   "non_nop_insns": 382,
+   "LDG": 55,
+   "STG": 1,
+   "LDS": 5,
+   "STS": 3,
+   "SHF": 13,
+   "IMAD": 57,
+   "LEA": 12,
+   "audit_sass_path": "<recheck-root>/p4-r04_row_sum_3072x4096-fallback-sm_120.sass",
+   "kernel_count": 1,
+   "registers_by_kernel": [
+    40
+   ],
+   "spill_store_bytes_by_kernel": [
+    0
+   ],
+   "spill_load_bytes_by_kernel": [
+    0
+   ]
+  },
+  {
+   "scope": "p4",
+   "case": "r04_row_sum_3072x4096",
+   "arm": "fallback",
+   "target": "sm_89",
+   "raw_sass_sha256": "7e007cbb32a73ebd36ea98861b08d083915b95e5a33375ca66a3fce4363b08b3",
+   "normalized_ops_sha256": "db001abc519d4a8ed14c3c136a8a70302456b71bf06e61add516416419a93c47",
+   "insns": 376,
+   "non_nop_insns": 364,
+   "LDG": 55,
+   "STG": 1,
+   "LDS": 5,
+   "STS": 3,
+   "SHF": 18,
+   "IMAD": 57,
+   "LEA": 6,
+   "audit_sass_path": "<recheck-root>/p4-r04_row_sum_3072x4096-fallback-sm_89.sass",
+   "kernel_count": 1,
+   "registers_by_kernel": [
+    40
+   ],
+   "spill_store_bytes_by_kernel": [
+    0
+   ],
+   "spill_load_bytes_by_kernel": [
+    0
+   ]
+  }
+ ],
+ "p2_build_mode": {
+  "sm_89": "raw SASS hashes agree across both build modes",
+  "sm_120": "raw bytes differ only in headerflag; normalized opcode hashes and counts agree",
+  "older_sass_final_sm_120_candidate": "0fa2db8d6b76dd81fcd065db2bfaec4a4361833bce608095c80bd9d6585e8dee",
+  "older_sass_final_sm_120_fallback": "1fdb236e61a5799ba004ae24fb5ddada5ef0bb5812ee6f6cfdd90a854df1ae7e",
+  "integrated_build_sm_120_candidate": "1c8a56a2c4694c9bf461187e25915d61bbd905e0cbc810ba95bf604f3e4a1642",
+  "integrated_build_sm_120_fallback": "2d163882d1d856d64450d32f505f79865dba16aab416b6265fa575af2bd771b5"
+ },
+ "commands": {
+  "ptxas": "ptxas -arch=<sm_89|sm_120> -v <recheck-root>/<scope>-<case>-<arm>-<target>.ptx -o <recheck-root>/....cubin",
+  "disasm": "cuobjdump -sass <recheck-root>/<scope>-<case>-<arm>-<target>.cubin > <recheck-root>/....sass",
+  "p4": "same, over <audit-root>/p4/<case>.<arm>.ptx",
+  "verification": "sha256sum -c SHA256SUMS in the audit root, and normalized opcode comparison for P2 sm_120 build modes"
+ },
+ "resource_note": "registers_by_kernel lists ptxas -v register use once per compiled kernel in source order; spill_store_bytes_by_kernel and spill_load_bytes_by_kernel are the matching arrays.",
+ "recheck_root": ".emmy/research/performance-v1/coordinator-final-sass-recheck-20261027"
+}

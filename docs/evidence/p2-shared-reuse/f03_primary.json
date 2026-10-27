@@ -1,0 +1,222 @@
+{
+  "case": "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/cases-v3/perf-a/f03_l2norm_3072x2048",
+  "case_id": "f03_l2norm_3072x2048",
+  "arch": "sm_120",
+  "server": "http://runner.riftstack.ai:48701",
+  "aa": false,
+  "warmup": 10,
+  "iters": 50,
+  "repetitions": 7,
+  "baseline_source": "/home/ada/Projects/emmy-hackathon-2026/compile.py",
+  "baseline_sha256": "0a6f12033a942f4da9176ebf1e963c16193d8883610d3d4807bbc9870ab0de2a",
+  "candidate_source": "/home/ada/Projects/emmy-p2-shared-reuse/compile.py",
+  "candidate_sha256": "0a6f12033a942f4da9176ebf1e963c16193d8883610d3d4807bbc9870ab0de2a",
+  "local_correctness_receipt": "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/p2-gates-0a6f1203/scale8/results.json",
+  "local_correctness_sha256": "cbffcc5cecf6df445cb6735cd5a14d0a14df3513a24c950889be611a813ebfc0",
+  "ptx": {
+    "baseline": [
+      {
+        "kernel": {
+          "arg_order": [
+            "x",
+            "div"
+          ],
+          "args": [
+            {
+              "dtype": "f32",
+              "name": "x",
+              "seed": 11009,
+              "shape": [
+                3072,
+                2048
+              ]
+            },
+            {
+              "dtype": "f32",
+              "name": "div",
+              "output": true,
+              "shape": [
+                3072,
+                2048
+              ]
+            }
+          ],
+          "block": [
+            128,
+            1,
+            1
+          ],
+          "entry": "k_div_reduce",
+          "final": true,
+          "grid": [
+            3072,
+            1,
+            1
+          ],
+          "node": "div",
+          "smem_bytes": 0,
+          "zero_outputs": []
+        },
+        "ptx": ".emmy/research/performance-v1/hosted-p2p5/p2-f03-v2/compile-f03_l2norm_3072x2048-k_div_reduce.ptx",
+        "ptx_sha256": "00ef91df42112dac72010982e2b3a8d93c1c327effffe15ffce8ef1b99226afd",
+        "cubin_id": "17adb4e48471c4f73e1378cc0a3e3adff17b3a4740dcc471857664560b1c903c",
+        "registers": 40
+      }
+    ],
+    "candidate": [
+      {
+        "kernel": {
+          "arg_order": [
+            "x",
+            "div"
+          ],
+          "args": [
+            {
+              "dtype": "f32",
+              "name": "x",
+              "seed": 11009,
+              "shape": [
+                3072,
+                2048
+              ]
+            },
+            {
+              "dtype": "f32",
+              "name": "div",
+              "output": true,
+              "shape": [
+                3072,
+                2048
+              ]
+            }
+          ],
+          "block": [
+            128,
+            1,
+            1
+          ],
+          "entry": "k_div_reduce",
+          "final": true,
+          "grid": [
+            3072,
+            1,
+            1
+          ],
+          "node": "div",
+          "smem_bytes": 0,
+          "zero_outputs": []
+        },
+        "ptx": ".emmy/research/performance-v1/hosted-p2p5/p2-f03-v2/compile-f03_l2norm_3072x2048-k_div_reduce.ptx",
+        "ptx_sha256": "00ef91df42112dac72010982e2b3a8d93c1c327effffe15ffce8ef1b99226afd",
+        "cubin_id": "17adb4e48471c4f73e1378cc0a3e3adff17b3a4740dcc471857664560b1c903c",
+        "registers": 40
+      }
+    ]
+  },
+  "blocks": [
+    {
+      "block": 0,
+      "order": [
+        "baseline",
+        "candidate"
+      ],
+      "samples_us": {
+        "baseline": 12.96,
+        "candidate": 12.96
+      },
+      "ratio": 1.0
+    },
+    {
+      "block": 1,
+      "order": [
+        "candidate",
+        "baseline"
+      ],
+      "samples_us": {
+        "candidate": 12.96,
+        "baseline": 12.96
+      },
+      "ratio": 1.0
+    },
+    {
+      "block": 2,
+      "order": [
+        "baseline",
+        "candidate"
+      ],
+      "samples_us": {
+        "baseline": 12.96,
+        "candidate": 12.944
+      },
+      "ratio": 0.9987654320987654
+    },
+    {
+      "block": 3,
+      "order": [
+        "candidate",
+        "baseline"
+      ],
+      "samples_us": {
+        "candidate": 12.96,
+        "baseline": 12.96
+      },
+      "ratio": 1.0
+    },
+    {
+      "block": 4,
+      "order": [
+        "baseline",
+        "candidate"
+      ],
+      "samples_us": {
+        "baseline": 12.96,
+        "candidate": 12.96
+      },
+      "ratio": 1.0
+    },
+    {
+      "block": 5,
+      "order": [
+        "candidate",
+        "baseline"
+      ],
+      "samples_us": {
+        "candidate": 12.96,
+        "baseline": 12.96
+      },
+      "ratio": 1.0
+    },
+    {
+      "block": 6,
+      "order": [
+        "baseline",
+        "candidate"
+      ],
+      "samples_us": {
+        "baseline": 12.944,
+        "candidate": 12.896
+      },
+      "ratio": 0.9962917181705809
+    }
+  ],
+  "ratios": [
+    1.0,
+    1.0,
+    0.9987654320987654,
+    1.0,
+    1.0,
+    1.0,
+    0.9962917181705809
+  ],
+  "ratio_median": 1.0,
+  "ratio_spread": {
+    "min": 0.9962917181705809,
+    "max": 1.0,
+    "median": 1.0
+  },
+  "direction": "unresolved",
+  "request_count": 16,
+  "deadband": 0.01,
+  "aa_noise": null,
+  "timing_note": "Hosted RTX 5090, max_return=0; correctness comes from the local full-output receipt."
+}

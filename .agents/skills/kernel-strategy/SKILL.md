@@ -38,6 +38,12 @@ null finding. A bounded sweep can explore internal choices (default at most 16),
 not change prescribed launch metadata. Do not exhaust arbitrary parameter grids
 or manufacture candidates to fill the GPU. Generalize from IR, never fixture IDs.
 
+Every optimization assigned to a worker must be re-implemented until its intended
+effect is visible in final post-`ptxas` SASS on every timing target. A PTX-only
+delta is not activation: if `ptxas` removes, rebuilds or cancels it, revise the
+lowering or fail closed and record the mechanism as inactive. Require the worker
+to return both-target SASS hashes, resource counts and the exact surviving delta.
+
 Coordinator-owned, independently reviewed generators and fixed tolerance policies
 must precede coverage compiler research. Mathematical references must not share
 online-softmax/contraction lowering logic. Keep five-gap campaign progress separate
