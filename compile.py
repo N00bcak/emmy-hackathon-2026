@@ -6606,7 +6606,8 @@ class Emitter:
         (nothing emitted) when the shape does not qualify.
         """
         ctx = self.hoist_ctx
-        if ctx is None or self.inactive:
+        if (ctx is None or self.inactive
+                or id(loop) in self.producer_probability_ready):
             return False
         body = list(loop.body)
         serial = loop.axis.name
@@ -6669,6 +6670,11 @@ class Emitter:
             starts[g] = total
             total += groups[g][0].configs
         launched = ctx['launched']
+        lanes = 1
+        while lanes * 2 <= 32 and lanes * 2 * total <= launched:
+            lanes *= 2
+        if extent % lanes or extent // lanes > SOFTMAX_FUSED_VALUES:
+            return False
         nbytes = 4 * total
         # The maximum pass gives every row its own lane group in one sweep.
         if total > launched or self.shared_bytes + self.hoist_bytes + nbytes > 48 * 1024:
@@ -8663,8 +8669,7 @@ class Emitter:
                         for name, rep in carried.items():
                             self.values[name] = self.values[rep]
                             self.mutable[name] = self.mutable[rep]
-                        if online and not (not self.shared_probability_enabled
-                                           and self.hoisted_softmax(s, online)):
+                        if online and not self.hoisted_softmax(s, online):
                             self.two_pass_softmax(s, online)
                     loop_init_frame = self.init_scope_frame(s.body)
                     extent = static(s.axis.extent)
