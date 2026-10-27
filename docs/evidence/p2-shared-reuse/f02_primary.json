@@ -10,9 +10,9 @@
   "baseline_source": "/home/ada/Projects/emmy-hackathon-2026/compile.py",
   "baseline_sha256": "067ef9c4ce31a4bf5ccda90a8d13e9bd1b71b89aff19abe7598cdba4c77e2921",
   "candidate_source": "/home/ada/Projects/emmy-p2-shared-reuse/compile.py",
-  "candidate_sha256": "4479b8523799050521469b475f4826c658b0bdde11f60a08e087150d1b63d79f",
-  "local_correctness_receipt": "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/p2-scale-gate-20261027/results.json",
-  "local_correctness_sha256": "efaeaaa0efe54ee8ce7ddb0b0e653c2e23b1892194a853177bb5b334a4b44d60",
+  "candidate_sha256": "0a6f12033a942f4da9176ebf1e963c16193d8883610d3d4807bbc9870ab0de2a",
+  "local_correctness_receipt": "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/p2-gates-0a6f1203/scale8/results.json",
+  "local_correctness_sha256": "cbffcc5cecf6df445cb6735cd5a14d0a14df3513a24c950889be611a813ebfc0",
   "ptx": {
     "baseline": [
       {
@@ -57,7 +57,7 @@
           "smem_bytes": 0,
           "zero_outputs": []
         },
-        "ptx": ".emmy/research/performance-v1/hosted-p2p5/p2-f02-primary/compile-f02_row_softmax_3072x2048-k_softmax_05263d.ptx",
+        "ptx": ".emmy/research/performance-v1/hosted-p2p5/p2-f02-primary-v2/compile-f02_row_softmax_3072x2048-k_softmax_05263d.ptx",
         "ptx_sha256": "34b9ae9b9c7701cc73c81b025efddf9b987096d49b91d3a192211972de10d3d6",
         "cubin_id": "c1d0fafda7934b330aa260a7d02acabb55190a672618b119834ad0371955844c",
         "registers": 40
@@ -106,9 +106,9 @@
           "smem_bytes": 0,
           "zero_outputs": []
         },
-        "ptx": ".emmy/research/performance-v1/hosted-p2p5/p2-f02-primary/compile-f02_row_softmax_3072x2048-k_softmax_05263d.ptx",
-        "ptx_sha256": "34b9ae9b9c7701cc73c81b025efddf9b987096d49b91d3a192211972de10d3d6",
-        "cubin_id": "c1d0fafda7934b330aa260a7d02acabb55190a672618b119834ad0371955844c",
+        "ptx": ".emmy/research/performance-v1/hosted-p2p5/p2-f02-primary-v2/compile-f02_row_softmax_3072x2048-k_softmax_05263d.ptx",
+        "ptx_sha256": "947277c7a11500b4e8cb2b737999749bb6571b55595957169f7bd388f9a75e50",
+        "cubin_id": "e7f268506a115708e515e3e2371f1bfe110e651c79033f688447df3c7ba65b52",
         "registers": 40
       }
     ]
@@ -121,10 +121,10 @@
         "candidate"
       ],
       "samples_us": {
-        "baseline": 16.848,
-        "candidate": 17.056
+        "baseline": 16.944,
+        "candidate": 12.928
       },
-      "ratio": 1.0123456790123457
+      "ratio": 0.7629839471199246
     },
     {
       "block": 1,
@@ -133,10 +133,10 @@
         "baseline"
       ],
       "samples_us": {
-        "candidate": 17.024,
-        "baseline": 17.04
+        "candidate": 12.128,
+        "baseline": 16.944
       },
-      "ratio": 0.9990610328638498
+      "ratio": 0.7157695939565628
     },
     {
       "block": 2,
@@ -145,10 +145,10 @@
         "candidate"
       ],
       "samples_us": {
-        "baseline": 17.04,
-        "candidate": 17.024
+        "baseline": 16.976,
+        "candidate": 12.928
       },
-      "ratio": 0.9990610328638498
+      "ratio": 0.761545711592837
     },
     {
       "block": 3,
@@ -157,10 +157,10 @@
         "baseline"
       ],
       "samples_us": {
-        "candidate": 17.024,
-        "baseline": 17.024
+        "candidate": 12.96,
+        "baseline": 16.944
       },
-      "ratio": 1.0
+      "ratio": 0.764872521246459
     },
     {
       "block": 4,
@@ -169,10 +169,10 @@
         "candidate"
       ],
       "samples_us": {
-        "baseline": 16.976,
-        "candidate": 17.056
+        "baseline": 17.04,
+        "candidate": 12.96
       },
-      "ratio": 1.0047125353440152
+      "ratio": 0.7605633802816902
     },
     {
       "block": 5,
@@ -181,10 +181,10 @@
         "baseline"
       ],
       "samples_us": {
-        "candidate": 17.024,
-        "baseline": 16.992
+        "candidate": 12.992,
+        "baseline": 16.432
       },
-      "ratio": 1.0018832391713748
+      "ratio": 0.7906523855890946
     },
     {
       "block": 6,
@@ -193,30 +193,30 @@
         "candidate"
       ],
       "samples_us": {
-        "baseline": 17.008,
-        "candidate": 17.088
+        "baseline": 15.872,
+        "candidate": 12.976
       },
-      "ratio": 1.0047036688617121
+      "ratio": 0.8175403225806452
     }
   ],
   "ratios": [
-    1.0123456790123457,
-    0.9990610328638498,
-    0.9990610328638498,
-    1.0,
-    1.0047125353440152,
-    1.0018832391713748,
-    1.0047036688617121
+    0.7629839471199246,
+    0.7157695939565628,
+    0.761545711592837,
+    0.764872521246459,
+    0.7605633802816902,
+    0.7906523855890946,
+    0.8175403225806452
   ],
-  "ratio_median": 1.0018832391713748,
+  "ratio_median": 0.7629839471199246,
   "ratio_spread": {
-    "min": 0.9990610328638498,
-    "max": 1.0123456790123457,
-    "median": 1.0018832391713748
+    "min": 0.7157695939565628,
+    "max": 0.8175403225806452,
+    "median": 0.7629839471199246
   },
-  "direction": "unresolved",
+  "direction": "candidate-faster",
   "request_count": 16,
-  "deadband": 0.01,
+  "deadband": 0.016885553470919357,
   "aa_noise": null,
   "timing_note": "Hosted RTX 5090, max_return=0; correctness comes from the local full-output receipt."
 }

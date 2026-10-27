@@ -1,0 +1,123 @@
+{
+ "schema": "p2-hard-sass-acceptance-v1",
+ "candidate_sha256": "0a6f12033a942f4da9176ebf1e963c16193d8883610d3d4807bbc9870ab0de2a",
+ "candidate_tests_sha256": "68fd01fba10f84c7978d19b933f2d2ee805d333c7a2f93613963fb585d8ecdfd",
+ "forced_fallback": {
+  "no_scalar_sha256": "9a169d0406ad9ce0806020c7424ccf8d09405671491d4af5e72d28f8c80014c4",
+  "no_p2_sha256": "b9b1d5be73c8ccab8b298bd149f504bc0d002d915f1207288812ea9c17b90b4d"
+ },
+ "ptxas": {
+  "command": [
+   "ptxas",
+   "-v",
+   "-arch=<sm_89|sm_120>",
+   "<ptx>",
+   "-o",
+   "<cubin>"
+  ],
+  "version": "NVIDIA ptxas 13.4.92"
+ },
+ "correctness": {
+  "cpu": {
+   "command": [
+    ".venv/bin/python",
+    "-m",
+    "unittest",
+    "tests.test_compiler",
+    "-v"
+   ],
+   "tests": 50,
+   "result": "OK"
+  },
+  "published": {
+   "path": "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/p2-gates-0a6f1203/published15-run/results.json",
+   "cases": "15/15",
+   "compiler_sha256": "0a6f12033a942f4da9176ebf1e963c16193d8883610d3d4807bbc9870ab0de2a"
+  },
+  "a79_a83": {
+   "path": "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/p2-gates-0a6f1203/a79-a83/results.json",
+   "cases": "2/2",
+   "compiler_sha256": "0a6f12033a942f4da9176ebf1e963c16193d8883610d3d4807bbc9870ab0de2a"
+  },
+  "core65": {
+   "path": "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/p2-gates-0a6f1203/core65/results.json",
+   "cases": "65/65",
+   "sanitizers": "16/16",
+   "compiler_sha256": "0a6f12033a942f4da9176ebf1e963c16193d8883610d3d4807bbc9870ab0de2a"
+  },
+  "scale8": {
+   "path": "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/p2-gates-0a6f1203/scale8/results.json",
+   "cases": "8/8",
+   "compiler_sha256": "0a6f12033a942f4da9176ebf1e963c16193d8883610d3d4807bbc9870ab0de2a"
+  }
+ },
+ "hosted_timing": {
+  "f02_primary_v2": {
+   "path": "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/hosted-p2p5/p2-f02-primary-v2/result.json",
+   "candidate_sha256": "0a6f12033a942f4da9176ebf1e963c16193d8883610d3d4807bbc9870ab0de2a",
+   "ratio_median": 0.7629839471199246,
+   "direction": "candidate-faster",
+   "ptx_sha256": "947277c7a11500b4e8cb2b737999749bb6571b55595957169f7bd388f9a75e50",
+   "cubin_id": "e7f268506a115708e515e3e2371f1bfe110e651c79033f688447df3c7ba65b52"
+  },
+  "f02_confirm_v2": {
+   "path": "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/hosted-p2p5/p2-f02-confirm-v2/result.json",
+   "candidate_sha256": "0a6f12033a942f4da9176ebf1e963c16193d8883610d3d4807bbc9870ab0de2a",
+   "ratio_median": 0.7629839471199246,
+   "direction": "candidate-faster",
+   "ptx_sha256": "947277c7a11500b4e8cb2b737999749bb6571b55595957169f7bd388f9a75e50",
+   "cubin_id": "e7f268506a115708e515e3e2371f1bfe110e651c79033f688447df3c7ba65b52"
+  },
+  "qualification": "timing source/PTX-bound; hosted cubin bytes and SASS unavailable, so hosted SASS is unverified"
+ },
+ "activation": {
+  "f02_3072x2048": {
+   "targets": [
+    "sm_89",
+    "sm_120"
+   ],
+   "active": true,
+   "sass_ldg": "48->16",
+   "sass_insns": "1120->688 (sm_89), 1160->720 (sm_120)",
+   "registers": "40->40",
+   "spills": "0/0 both arms",
+   "sass_global_loads": "candidate LDG 16, STG 16; fallback/baseline LDG 48, STG 1; map-phase LDG eliminated",
+   "sass_sequence": "fallback reloads x in numerator pass; candidate maps retained reduction registers"
+  },
+  "f01_3072x2048": {
+   "targets": [
+    "sm_89",
+    "sm_120"
+   ],
+   "active_vs_baseline": false,
+   "active_vs_forced_row_cache_off": true,
+   "note": "pre-existing four-wide row cache; P2 preserves it"
+  },
+  "f03_3072x2048": {
+   "targets": [
+    "sm_89",
+    "sm_120"
+   ],
+   "active_vs_baseline": false,
+   "active_vs_forced_row_cache_off": true,
+   "note": "pre-existing four-wide row cache; P2 preserves it"
+  },
+  "f02_4096x4096": {
+   "targets": [
+    "sm_89",
+    "sm_120"
+   ],
+   "active": false,
+   "note": "fails closed at ROW_CACHE_VALUES=32; not timed as P2 activation"
+  },
+  "a01_256x64": {
+   "targets": [
+    "sm_89",
+    "sm_120"
+   ],
+   "active": false,
+   "note": "no final-SASS difference vs baseline; P3 timing blocked"
+  }
+ },
+ "gap": "Hosted receipts identify cubins only by hashed compile identity and do not retain cubin bytes or SASS. Local final-SASS activation is confirmed on both targets from the same candidate PTX; hosted final-SASS confirmation remains a coordinator action."
+}

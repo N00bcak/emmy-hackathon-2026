@@ -1,10 +1,10 @@
 {
   "schema": "emmy-local-gate-v1",
-  "created": "2026-10-26T22:47:37Z",
+  "created": "2026-10-26T23:15:48Z",
   "device": "NVIDIA GeForce RTX 4060 Laptop GPU, 8.9",
-  "source": "/home/ada/Projects/emmy-p2-shared-reuse",
-  "compiler_sha256": "4479b8523799050521469b475f4826c658b0bdde11f60a08e087150d1b63d79f",
-  "case_list_sha256": "654d81e30a88a9ee78009736d0437fd93fb0c3a12ca4d445732eb99aa435143d",
+  "source": "/home/ada/Projects/emmy-hackathon-2026",
+  "compiler_sha256": "0a6f12033a942f4da9176ebf1e963c16193d8883610d3d4807bbc9870ab0de2a",
+  "case_list_sha256": "3f8579c6ee51e80b63377064e0735f48833b7a9a2da39275143f9547abe15127",
   "part": 0,
   "parts": 1,
   "cases": [
@@ -686,10 +686,10 @@
         "memcheck",
         "--error-exitcode",
         "99",
-        "/home/ada/Projects/emmy-hackathon-2026/.venv/bin/python",
+        "/usr/sbin/python3.14",
         "-m",
         "tools.research_gpu",
-        ".emmy/research/performance-v1/p2-core65-20261027/sanitizer-6-job.json"
+        ".emmy/research/performance-v1/merged-p2-gates-20261027/core65/sanitizer-6-job.json"
       ],
       "result": {
         "ok": true,
@@ -708,10 +708,10 @@
         "memcheck",
         "--error-exitcode",
         "99",
-        "/home/ada/Projects/emmy-hackathon-2026/.venv/bin/python",
+        "/usr/sbin/python3.14",
         "-m",
         "tools.research_gpu",
-        ".emmy/research/performance-v1/p2-core65-20261027/sanitizer-18-job.json"
+        ".emmy/research/performance-v1/merged-p2-gates-20261027/core65/sanitizer-18-job.json"
       ],
       "result": {
         "ok": true,
@@ -730,10 +730,10 @@
         "memcheck",
         "--error-exitcode",
         "99",
-        "/home/ada/Projects/emmy-hackathon-2026/.venv/bin/python",
+        "/usr/sbin/python3.14",
         "-m",
         "tools.research_gpu",
-        ".emmy/research/performance-v1/p2-core65-20261027/sanitizer-19-job.json"
+        ".emmy/research/performance-v1/merged-p2-gates-20261027/core65/sanitizer-19-job.json"
       ],
       "result": {
         "ok": true,
@@ -752,10 +752,10 @@
         "memcheck",
         "--error-exitcode",
         "99",
-        "/home/ada/Projects/emmy-hackathon-2026/.venv/bin/python",
+        "/usr/sbin/python3.14",
         "-m",
         "tools.research_gpu",
-        ".emmy/research/performance-v1/p2-core65-20261027/sanitizer-20-job.json"
+        ".emmy/research/performance-v1/merged-p2-gates-20261027/core65/sanitizer-20-job.json"
       ],
       "result": {
         "ok": true,
@@ -774,10 +774,10 @@
         "memcheck",
         "--error-exitcode",
         "99",
-        "/home/ada/Projects/emmy-hackathon-2026/.venv/bin/python",
+        "/usr/sbin/python3.14",
         "-m",
         "tools.research_gpu",
-        ".emmy/research/performance-v1/p2-core65-20261027/sanitizer-21-job.json"
+        ".emmy/research/performance-v1/merged-p2-gates-20261027/core65/sanitizer-21-job.json"
       ],
       "result": {
         "ok": true,
@@ -796,10 +796,10 @@
         "memcheck",
         "--error-exitcode",
         "99",
-        "/home/ada/Projects/emmy-hackathon-2026/.venv/bin/python",
+        "/usr/sbin/python3.14",
         "-m",
         "tools.research_gpu",
-        ".emmy/research/performance-v1/p2-core65-20261027/sanitizer-25-job.json"
+        ".emmy/research/performance-v1/merged-p2-gates-20261027/core65/sanitizer-25-job.json"
       ],
       "result": {
         "ok": true,
@@ -818,10 +818,10 @@
         "memcheck",
         "--error-exitcode",
         "99",
-        "/home/ada/Projects/emmy-hackathon-2026/.venv/bin/python",
+        "/usr/sbin/python3.14",
         "-m",
         "tools.research_gpu",
-        ".emmy/research/performance-v1/p2-core65-20261027/sanitizer-26-job.json"
+        ".emmy/research/performance-v1/merged-p2-gates-20261027/core65/sanitizer-26-job.json"
       ],
       "result": {
         "ok": true,
@@ -840,10 +840,10 @@
         "memcheck",
         "--error-exitcode",
         "99",
-        "/home/ada/Projects/emmy-hackathon-2026/.venv/bin/python",
+        "/usr/sbin/python3.14",
         "-m",
         "tools.research_gpu",
-        ".emmy/research/performance-v1/p2-core65-20261027/sanitizer-28-job.json"
+        ".emmy/research/performance-v1/merged-p2-gates-20261027/core65/sanitizer-28-job.json"
       ],
       "result": {
         "ok": true,
@@ -862,10 +862,10 @@
         "memcheck",
         "--error-exitcode",
         "99",
-        "/home/ada/Projects/emmy-hackathon-2026/.venv/bin/python",
+        "/usr/sbin/python3.14",
         "-m",
         "tools.research_gpu",
-        ".emmy/research/performance-v1/p2-core65-20261027/sanitizer-29-job.json"
+        ".emmy/research/performance-v1/merged-p2-gates-20261027/core65/sanitizer-29-job.json"
       ],
       "result": {
         "ok": true,
@@ -884,10 +884,10 @@
         "memcheck",
         "--error-exitcode",
         "99",
-        "/home/ada/Projects/emmy-hackathon-2026/.venv/bin/python",
+        "/usr/sbin/python3.14",
         "-m",
         "tools.research_gpu",
-        ".emmy/research/performance-v1/p2-core65-20261027/sanitizer-35-job.json"
+        ".emmy/research/performance-v1/merged-p2-gates-20261027/core65/sanitizer-35-job.json"
       ],
       "result": {
         "ok": true,
@@ -906,10 +906,10 @@
         "memcheck",
         "--error-exitcode",
         "99",
-        "/home/ada/Projects/emmy-hackathon-2026/.venv/bin/python",
+        "/usr/sbin/python3.14",
         "-m",
         "tools.research_gpu",
-        ".emmy/research/performance-v1/p2-core65-20261027/sanitizer-39-job.json"
+        ".emmy/research/performance-v1/merged-p2-gates-20261027/core65/sanitizer-39-job.json"
       ],
       "result": {
         "ok": true,
@@ -928,10 +928,10 @@
         "memcheck",
         "--error-exitcode",
         "99",
-        "/home/ada/Projects/emmy-hackathon-2026/.venv/bin/python",
+        "/usr/sbin/python3.14",
         "-m",
         "tools.research_gpu",
-        ".emmy/research/performance-v1/p2-core65-20261027/sanitizer-47-job.json"
+        ".emmy/research/performance-v1/merged-p2-gates-20261027/core65/sanitizer-47-job.json"
       ],
       "result": {
         "ok": true,
@@ -950,10 +950,10 @@
         "memcheck",
         "--error-exitcode",
         "99",
-        "/home/ada/Projects/emmy-hackathon-2026/.venv/bin/python",
+        "/usr/sbin/python3.14",
         "-m",
         "tools.research_gpu",
-        ".emmy/research/performance-v1/p2-core65-20261027/sanitizer-48-job.json"
+        ".emmy/research/performance-v1/merged-p2-gates-20261027/core65/sanitizer-48-job.json"
       ],
       "result": {
         "ok": true,
@@ -972,10 +972,10 @@
         "memcheck",
         "--error-exitcode",
         "99",
-        "/home/ada/Projects/emmy-hackathon-2026/.venv/bin/python",
+        "/usr/sbin/python3.14",
         "-m",
         "tools.research_gpu",
-        ".emmy/research/performance-v1/p2-core65-20261027/sanitizer-59-job.json"
+        ".emmy/research/performance-v1/merged-p2-gates-20261027/core65/sanitizer-59-job.json"
       ],
       "result": {
         "ok": true,
@@ -994,10 +994,10 @@
         "memcheck",
         "--error-exitcode",
         "99",
-        "/home/ada/Projects/emmy-hackathon-2026/.venv/bin/python",
+        "/usr/sbin/python3.14",
         "-m",
         "tools.research_gpu",
-        ".emmy/research/performance-v1/p2-core65-20261027/sanitizer-63-job.json"
+        ".emmy/research/performance-v1/merged-p2-gates-20261027/core65/sanitizer-63-job.json"
       ],
       "result": {
         "ok": true,
@@ -1016,10 +1016,10 @@
         "memcheck",
         "--error-exitcode",
         "99",
-        "/home/ada/Projects/emmy-hackathon-2026/.venv/bin/python",
+        "/usr/sbin/python3.14",
         "-m",
         "tools.research_gpu",
-        ".emmy/research/performance-v1/p2-core65-20261027/sanitizer-64-job.json"
+        ".emmy/research/performance-v1/merged-p2-gates-20261027/core65/sanitizer-64-job.json"
       ],
       "result": {
         "ok": true,
@@ -1030,7 +1030,7 @@
     }
   ],
   "limitation": "Owner-authorized local run without compiler UID/seccomp isolation. Not an evaluator-issued receipt.",
-  "seconds": 126.11460539799009,
+  "seconds": 116.69608708699525,
   "all_passed": true,
   "sanitizers_passed": true,
   "compiler_unchanged": true

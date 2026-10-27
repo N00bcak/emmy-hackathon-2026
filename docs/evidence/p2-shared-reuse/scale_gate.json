@@ -1,10 +1,10 @@
 {
   "schema": "emmy-local-gate-v1",
-  "created": "2026-10-26T22:49:46Z",
+  "created": "2026-10-26T23:18:49Z",
   "device": "NVIDIA GeForce RTX 4060 Laptop GPU, 8.9",
-  "source": "/home/ada/Projects/emmy-p2-shared-reuse",
-  "compiler_sha256": "4479b8523799050521469b475f4826c658b0bdde11f60a08e087150d1b63d79f",
-  "case_list_sha256": "74e689b434606d0bc0aefa7d1ac2b8404e9e952a904151879a7fa24e1746d842",
+  "source": "/home/ada/Projects/emmy-hackathon-2026",
+  "compiler_sha256": "0a6f12033a942f4da9176ebf1e963c16193d8883610d3d4807bbc9870ab0de2a",
+  "case_list_sha256": "06048ca3e771a047afec4eb158faa7c6018d29c5bc252507d0592b2b3338f2b4",
   "part": 0,
   "parts": 1,
   "cases": [
@@ -91,7 +91,7 @@
   ],
   "sanitizers": [],
   "limitation": "Owner-authorized local run without compiler UID/seccomp isolation. Not an evaluator-issued receipt.",
-  "seconds": 24.409994082991034,
+  "seconds": 21.793018217998906,
   "all_passed": true,
   "sanitizers_passed": true,
   "compiler_unchanged": true

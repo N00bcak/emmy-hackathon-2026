@@ -8,11 +8,11 @@
   "iters": 50,
   "repetitions": 7,
   "baseline_source": "/home/ada/Projects/emmy-hackathon-2026/compile.py",
-  "baseline_sha256": "067ef9c4ce31a4bf5ccda90a8d13e9bd1b71b89aff19abe7598cdba4c77e2921",
+  "baseline_sha256": "0a6f12033a942f4da9176ebf1e963c16193d8883610d3d4807bbc9870ab0de2a",
   "candidate_source": "/home/ada/Projects/emmy-p2-shared-reuse/compile.py",
-  "candidate_sha256": "4479b8523799050521469b475f4826c658b0bdde11f60a08e087150d1b63d79f",
-  "local_correctness_receipt": "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/p2-scale-gate-20261027/results.json",
-  "local_correctness_sha256": "efaeaaa0efe54ee8ce7ddb0b0e653c2e23b1892194a853177bb5b334a4b44d60",
+  "candidate_sha256": "0a6f12033a942f4da9176ebf1e963c16193d8883610d3d4807bbc9870ab0de2a",
+  "local_correctness_receipt": "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/p2-gates-0a6f1203/scale8/results.json",
+  "local_correctness_sha256": "cbffcc5cecf6df445cb6735cd5a14d0a14df3513a24c950889be611a813ebfc0",
   "ptx": {
     "baseline": [
       {
@@ -57,7 +57,7 @@
           "smem_bytes": 0,
           "zero_outputs": []
         },
-        "ptx": ".emmy/research/performance-v1/hosted-p2p5/p2-f03-primary/compile-f03_l2norm_3072x2048-k_div_reduce.ptx",
+        "ptx": ".emmy/research/performance-v1/hosted-p2p5/p2-f03-v2/compile-f03_l2norm_3072x2048-k_div_reduce.ptx",
         "ptx_sha256": "00ef91df42112dac72010982e2b3a8d93c1c327effffe15ffce8ef1b99226afd",
         "cubin_id": "17adb4e48471c4f73e1378cc0a3e3adff17b3a4740dcc471857664560b1c903c",
         "registers": 40
@@ -106,7 +106,7 @@
           "smem_bytes": 0,
           "zero_outputs": []
         },
-        "ptx": ".emmy/research/performance-v1/hosted-p2p5/p2-f03-primary/compile-f03_l2norm_3072x2048-k_div_reduce.ptx",
+        "ptx": ".emmy/research/performance-v1/hosted-p2p5/p2-f03-v2/compile-f03_l2norm_3072x2048-k_div_reduce.ptx",
         "ptx_sha256": "00ef91df42112dac72010982e2b3a8d93c1c327effffe15ffce8ef1b99226afd",
         "cubin_id": "17adb4e48471c4f73e1378cc0a3e3adff17b3a4740dcc471857664560b1c903c",
         "registers": 40
@@ -121,8 +121,8 @@
         "candidate"
       ],
       "samples_us": {
-        "baseline": 12.928,
-        "candidate": 12.928
+        "baseline": 12.96,
+        "candidate": 12.96
       },
       "ratio": 1.0
     },
@@ -134,9 +134,9 @@
       ],
       "samples_us": {
         "candidate": 12.96,
-        "baseline": 12.08
+        "baseline": 12.96
       },
-      "ratio": 1.0728476821192054
+      "ratio": 1.0
     },
     {
       "block": 2,
@@ -145,10 +145,10 @@
         "candidate"
       ],
       "samples_us": {
-        "baseline": 12.944,
-        "candidate": 12.88
+        "baseline": 12.96,
+        "candidate": 12.944
       },
-      "ratio": 0.9950556242274413
+      "ratio": 0.9987654320987654
     },
     {
       "block": 3,
@@ -157,8 +157,8 @@
         "baseline"
       ],
       "samples_us": {
-        "candidate": 12.928,
-        "baseline": 12.928
+        "candidate": 12.96,
+        "baseline": 12.96
       },
       "ratio": 1.0
     },
@@ -169,10 +169,10 @@
         "candidate"
       ],
       "samples_us": {
-        "baseline": 12.928,
-        "candidate": 12.992
+        "baseline": 12.96,
+        "candidate": 12.96
       },
-      "ratio": 1.004950495049505
+      "ratio": 1.0
     },
     {
       "block": 5,
@@ -182,9 +182,9 @@
       ],
       "samples_us": {
         "candidate": 12.96,
-        "baseline": 12.928
+        "baseline": 12.96
       },
-      "ratio": 1.0024752475247525
+      "ratio": 1.0
     },
     {
       "block": 6,
@@ -193,26 +193,26 @@
         "candidate"
       ],
       "samples_us": {
-        "baseline": 12.928,
-        "candidate": 12.992
+        "baseline": 12.944,
+        "candidate": 12.896
       },
-      "ratio": 1.004950495049505
+      "ratio": 0.9962917181705809
     }
   ],
   "ratios": [
     1.0,
-    1.0728476821192054,
-    0.9950556242274413,
     1.0,
-    1.004950495049505,
-    1.0024752475247525,
-    1.004950495049505
+    0.9987654320987654,
+    1.0,
+    1.0,
+    1.0,
+    0.9962917181705809
   ],
-  "ratio_median": 1.0024752475247525,
+  "ratio_median": 1.0,
   "ratio_spread": {
-    "min": 0.9950556242274413,
-    "max": 1.0728476821192054,
-    "median": 1.0024752475247525
+    "min": 0.9962917181705809,
+    "max": 1.0,
+    "median": 1.0
   },
   "direction": "unresolved",
   "request_count": 16,

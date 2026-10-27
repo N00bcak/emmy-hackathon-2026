@@ -118,6 +118,62 @@ class CompilerTests(unittest.TestCase):
         meta = json.loads(source.with_name('meta.json').read_text())['kernels'][0]
         return mod.Emitter(graph, graph.nodes[meta['node']], meta)
 
+    def scaled_softmax(self, destination, rows=3072, columns=2048):
+        """A same-graph softmax at a wider row than the published fixture."""
+        source = next((ROOT/'f02_row_softmax').glob('*.ir.json'))
+        graph = Graph.from_dict(json.loads(source.read_text()))
+        meta = json.loads(source.with_name('meta.json').read_text())
+        shape = (Dim(rows), Dim(columns))
+        for node in graph.nodes.values():
+            node.outputs = tuple(replace(tensor, shape=shape) for tensor in node.outputs)
+        kernel = next(node for node in graph.nodes.values()
+                      if type(node.op).__name__ == 'KernelOp')
+        tile = kernel.op.body[0]
+        tile = replace(tile, axes=(
+            replace(tile.axes[0], extent=Dim(rows)),
+            replace(tile.axes[1], extent=Dim(128))))
+        row_loops = [statement for statement in tile.body
+                     if type(statement).__name__ == 'StridedLoop']
+        self.assertEqual(2, len(row_loops))
+        tile = replace(tile, body=tuple(
+            replace(statement, axis=replace(statement.axis, extent=Dim(columns)))
+            if type(statement).__name__ == 'StridedLoop' else statement
+            for statement in tile.body))
+        kernel.op = replace(kernel.op, body=(tile,))
+        kernel_meta = meta['kernels'][0]
+        kernel_meta['grid'] = [rows, 1, 1]
+        for arg in kernel_meta['args']:
+            arg['shape'] = [rows, columns]
+        destination.mkdir(parents=True)
+        path = destination/source.name
+        path.write_text(json.dumps(graph.to_dict(), indent=2, default=repr))
+        path.with_name('meta.json').write_text(json.dumps(meta, indent=2))
+        return path
+
+    def sass_hashes(self, path, ptx_text):
+        ptx = path.with_suffix('.ptx')
+        ptx.write_text(ptx_text)
+        result = {}
+        for arch in ('sm_89', 'sm_120'):
+            target_ptx = ptx.with_suffix('.'+arch+'.ptx')
+            target_ptx.write_text(re.sub(
+                r'^\.target\s+sm_\d+', '.target '+arch,
+                re.sub(r'^\.version\s+[\d.]+', '.version 8.7', ptx_text,
+                       flags=re.M), flags=re.M))
+            cubin = target_ptx.with_suffix('.cubin')
+            assembled = subprocess.run(['ptxas', '-v', '-arch='+arch, str(target_ptx),
+                                        '-o', str(cubin)], capture_output=True,
+                                       text=True, timeout=30)
+            self.assertEqual(assembled.returncode, 0, arch+': '+assembled.stderr)
+            self.assertRegex(assembled.stderr, r'\b0 bytes spill stores\b')
+            self.assertRegex(assembled.stderr, r'\b0 bytes spill loads\b')
+            sass = subprocess.run(['cuobjdump', '-sass', str(cubin)],
+                                  capture_output=True, text=True, check=True).stdout
+            result[arch] = (hashlib.sha256(cubin.read_bytes()).hexdigest(),
+                            hashlib.sha256(sass.encode()).hexdigest(),
+                            len(re.findall(r'\bLDG\b', sass)))
+        return result
+
     def test_nonfixture_pointwise_tail_and_reordered_abi(self):
         p=fixture('p00_scalar_add',self.out/'pointwise14',tile_extent=7,data_extent=14,arg_reverse=True)
         out=self.assemble(p)
@@ -705,6 +761,40 @@ class CompilerTests(unittest.TestCase):
         self.assertEqual(1, len(loads))
         self.assertEqual([2], [len(registers[id(load)]) for load in loads])
         self.assertEqual(1, sum(how == 'cached' for _, how, _ in plan))
+
+    def test_scaled_softmax_reuse_survives_ptxas(self):
+        """A 2048-wide row activates the scalar cache in final SASS."""
+        path = self.scaled_softmax(self.out/'scaled-softmax')
+        graph = Graph.from_dict(json.loads(path.read_text()))
+        meta = json.loads(path.with_name('meta.json').read_text())['kernels'][0]
+        emitter = mod.Emitter(graph, graph.nodes[meta['node']], meta)
+        candidate_ptx = emitter.render()
+        self.assertEqual(1, len(emitter.scalar_row_caches))
+        self.assertEqual(1, len(emitter.scalar_row_maps))
+        _source, loads, trips, plan, registers = next(iter(emitter.scalar_row_caches.values()))
+        self.assertEqual(16, trips)
+        self.assertEqual([16], [len(registers[id(load)]) for load in loads])
+        self.assertEqual(1, sum(how == 'cached' for _, how, _ in plan))
+        candidate_hashes = self.sass_hashes(path, candidate_ptx)
+        original = mod.Emitter.scalar_phase_loop
+        mod.Emitter.scalar_phase_loop = lambda *args: False
+        try:
+            fallback_path = self.scaled_softmax(self.out/'scaled-softmax-fallback')
+            fallback_graph = Graph.from_dict(json.loads(fallback_path.read_text()))
+            fallback_meta = json.loads(
+                fallback_path.with_name('meta.json').read_text())['kernels'][0]
+            fallback_emitter = mod.Emitter(
+                fallback_graph, fallback_graph.nodes[fallback_meta['node']], fallback_meta)
+            fallback_ptx = fallback_emitter.render()
+            fallback_hashes = self.sass_hashes(fallback_path, fallback_ptx)
+        finally:
+            mod.Emitter.scalar_phase_loop = original
+        self.assertEqual({}, fallback_emitter.scalar_row_caches)
+        self.assertLess(len(candidate_ptx.splitlines()), len(fallback_ptx.splitlines()))
+        self.assertLess(len(candidate_ptx.splitlines()), len(fallback_ptx.splitlines()))
+        for arch in ('sm_89', 'sm_120'):
+            self.assertNotEqual(candidate_hashes[arch], fallback_hashes[arch])
+            self.assertLess(candidate_hashes[arch][2], fallback_hashes[arch][2])
 
     def test_scalar_phase_cache_fails_closed(self):
         """Mismatched, rewritten, remapped and over-budget caches stay scalar."""

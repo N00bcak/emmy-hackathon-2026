@@ -704,10 +704,12 @@ ROW_CACHE_VALUES = 32
 def scalar_cache_fits(reduction_body, map_body, loads, trips):
     """Conservative f32 register budget for scalar cross-phase row reuse.
 
-    The retained row values and the coordinate used to address them stay live
-    through the map. Count those, every reduction accumulator, and every value
-    the map may materialize. This is intentionally a value-count bound rather
-    than an occupancy model; declining an uncertain cache is always safe.
+    The retained row values stay live through the map; the reduction's start
+    binding and the current induction coordinate are the only address values
+    kept live because the phase is emitted trip by trip. Count those, every
+    reduction accumulator, and every value the map may materialize. This is
+    intentionally a value-count bound rather than an occupancy model;
+    declining an uncertain cache is always safe.
     """
     if trips <= 0:
         return False
@@ -726,7 +728,8 @@ def scalar_cache_fits(reduction_body, map_body, loads, trips):
         elif kind in ('Assign', 'Let') and is_f32(statement):
             map_values.add(statement.name)
     retained = trips * len(loads)
-    return retained + trips + len(accumulators) + len(map_values) <= ROW_CACHE_VALUES
+    address_values = 2
+    return retained + address_values + len(accumulators) + len(map_values) <= ROW_CACHE_VALUES
 
 
 def straight_line(statements):
@@ -4564,21 +4567,24 @@ class Emitter:
         if not scalar_cache_fits(loop.body, later.body, loads, trips):
             return False
         # Fully unroll this thread's trips in their original order and retain
-        # only the analyzed load results. No element moves between threads, so
-        # the reduction merge's grouping is irrelevant to this substitution.
+        # only the analyzed load results. Coordinates are materialized one at
+        # a time, so a wide row does not keep every induction value live. No
+        # element moves between threads, so the reduction merge's grouping is
+        # irrelevant to this substitution.
         if loop.seed:
             self.init_accums(loop.body)
         previous_axis = self.values.get(loop.axis.name)
         registers = {id(load): [] for load in loads}
         try:
             first, _ = self.expr(loop.start)
-            coordinates = []
+            start_value = self.reg('r')
+            self.emit(f'mov.s32 {start_value}, {first};')
             for k in range(trips):
-                coordinate = first if k == 0 else self.reg('r')
-                if k:
-                    self.emit(f'add.s32 {coordinate}, {first}, {k * stride};')
-                coordinates.append(coordinate)
-            for coordinate in coordinates:
+                if k == 0:
+                    coordinate = start_value
+                else:
+                    coordinate = self.reg('r')
+                    self.emit(f'add.s32 {coordinate}, {start_value}, {k * stride};')
                 self.values[loop.axis.name] = (coordinate, 'i32')
                 self.rebind(loop.axis.name)
                 self.statements(loop.body)
