@@ -1,0 +1,45 @@
+{
+  "status": "independently_confirmed_local_promotion",
+  "source_id": "1f85c2f6165772e262c4aa69819a52d2cfe4351cab9fd7c71935690291f241a9",
+  "compile_py_sha256": "2a4401e9edb4f7c1ade216234b95c63bbc09ad31b62d337a237a1243c2e056da",
+  "suite_id": "046ebd0be6bb00be8fe251668732c8633e9a59a3108841291fe955ce27b63a34",
+  "plan_id": "7c908b3e8218e285572c6435ce274b29d7a6eb90595b0f18bf0746eb3bdf320d",
+  "checks": {
+    "gpu": 66,
+    "published": 15,
+    "additional_cpu_leaves": 34,
+    "total": 100,
+    "tolerances_changed": false,
+    "new_cases": 0,
+    "screen_gpu_evidence_id": "8e777ef515f61c08ada1023cb5c3489366842d071d53b0ffeef0e3ee50284225",
+    "independent_gpu_evidence_id": "c4c8ab9fe508fa2b361d1c4ee5ba2538a1af335df282e10bd407ed50589edba5"
+  },
+  "comparison": {
+    "case": "f02_row_softmax",
+    "case_id": "89d56c168a0b04373ef8d50096c48534c70019b8d2f87371b79aee2289922b44",
+    "metric": "cuda-graph-grouped32-v1 warm repeated graph time per invocation",
+    "device": "NVIDIA GeForce RTX 4090",
+    "screen": {
+      "attested_evidence_id": "84b9b9de113b233478c7893bebfd6263a92e52bd920b4397e695a681994815de",
+      "candidate_over_baseline_block_medians": [0.900000036379789, 0.900000036379789],
+      "noise_margin": 0.06000002182787323,
+      "resolved_gain": true
+    },
+    "independent": {
+      "attested_evidence_id": "144a210a87008e3ede11657b927a26d44072cc769cc1c52b0c8b3f5a3c4e97b3",
+      "candidate_over_baseline_block_medians": [0.9183673908793789, 0.900000036379789],
+      "noise_margin": 0.06061226717584495,
+      "resolved_gain": true
+    },
+    "changed_native_cases": ["f02_row_softmax"],
+    "resolved_regressions": []
+  },
+  "assembly": ["sm_89", "sm_120"],
+  "execution_device": "RTX 4090 only",
+  "limitations": [
+    "The latency result uses a qualified warm 32-replay graph protocol; it is not a standalone single-invocation latency claim.",
+    "sm_120 assembly does not establish RTX 5090 correctness or speed.",
+    "One of five required new independent speed promotions is complete; no official grading batch or commit has occurred."
+  ],
+  "durable_handoff": "/mnt/nfs/bcy/emmy/research/campaigns/campaign-20261026-speed-cont-v3/HANDOFF.md"
+}

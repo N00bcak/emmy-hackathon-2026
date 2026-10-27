@@ -1,0 +1,266 @@
+{
+  "status": "consolidated100 gate passed for unchanged retained source",
+  "source_id": "b4d3b3238c85e619f59dc7954c8518d90f8bfcd0152c5d9a8005ba9580101143",
+  "compile_sha256": "712fb81b24d332b80348cd24a2ef00e3ca328fea9684095fefab36033e7243cf",
+  "plan_id": "7c908b3e8218e285572c6435ce274b29d7a6eb90595b0f18bf0746eb3bdf320d",
+  "runner_sha256": "84da6e34ac8ec7e57f9e8852c25885b1b499e920e6a9a1d234d3cec80223b6ed",
+  "policy_sha256": "28f9010fb71690a4724454490ea8b9c37e6fb6b067791293b802b55af9193266",
+  "compiler_tests_sha256": "1c2efe1b7d9b1378715892a0df101c008cb682333beeb4d89207ac31524c37b6",
+  "previous_compiler_tests_sha256": "f3024d745f721651f3cb991941ce636bc94d4c171ed340ea80c74a79f967e88b",
+  "counting": {
+    "previous_total": 118,
+    "unchanged_GPU_cases": 66,
+    "published_case_executions_shared": 15,
+    "additional_m01_m02_case_executions_shared": 2,
+    "log_scalar_math_fixtures_consolidated": 1,
+    "additional_CPU_leaf_checks": 34,
+    "total": 100,
+    "six_copy_address_inputs_counted_separately": true,
+    "all_original_GPU_cases_retained": true
+  },
+  "assertion_preservation": {
+    "previous_sites": 111,
+    "current_sites": 111,
+    "AST_multiset_identical": true,
+    "deleted_assertions": 0,
+    "source_change": "Same assertions extracted into reusable validators; natural-log operation and assertions combined with the existing scalar-math fixture."
+  },
+  "verification": {
+    "budget_tests_passed": 8,
+    "source_bound_CPU_case_workers_passed": 44,
+    "shared_published_case_checks_passed": 15,
+    "additional_CPU_leaf_checks_passed": 34,
+    "restricted_uid": 65534,
+    "CPU_results_sha256": "4d81649ce3c2a7abe2710395186d45f4bdd84710f078ef999fae2f14697bdc48",
+    "shared_checks_artifact": "f037c046196d7ff497fb0a1cc423c4eb83aaf237530b51a88b9ffff447f0c233",
+    "GPU_evidence_id": "41c85e5f9a59004938486a10d892bdaca4d3ae7586785d46e46883a9410f21be",
+    "GPU_evidence_reused": true,
+    "new_GPU_executions": 0,
+    "original_GPU_evaluator_unchanged": true,
+    "new_official_requests": 0,
+    "compiler_source_unchanged": true,
+    "fixture_tolerances_unchanged": true,
+    "budget_tests_platforms": [
+      "macOS",
+      "Linux"
+    ],
+    "linux_budget_test_log_sha256": "6bae7b62a653af458df08d351f8153895d536555dcba29133148b58aaf07c73c",
+    "budget_test_executions": 24,
+    "CPU_case_check_executions": 49,
+    "software_verification_total_check_executions": 73,
+    "software_verification_limit": 100
+  },
+  "additional_cpu_results": [
+    {
+      "method": "test_nonfixture_pointwise_tail_and_reordered_abi",
+      "ok": true,
+      "leaf_checks": 1,
+      "parameters": []
+    },
+    {
+      "method": "test_nonfixture_reduction_tail",
+      "ok": true,
+      "leaf_checks": 1,
+      "parameters": []
+    },
+    {
+      "method": "test_partial_collective_tile_keeps_all_threads_in_barrier",
+      "ok": true,
+      "leaf_checks": 1,
+      "parameters": []
+    },
+    {
+      "method": "test_nested_collective_partial_cta_masks_memory",
+      "ok": true,
+      "leaf_checks": 1,
+      "parameters": []
+    },
+    {
+      "method": "test_reject_tree_indexed_by_lane",
+      "ok": true,
+      "leaf_checks": 1,
+      "parameters": []
+    },
+    {
+      "method": "test_reject_invalid_abi",
+      "ok": true,
+      "leaf_checks": 1,
+      "parameters": []
+    },
+    {
+      "method": "test_scalar_by_value_argument_binds_as_ssa",
+      "ok": true,
+      "leaf_checks": 1,
+      "parameters": []
+    },
+    {
+      "method": "test_nonunit_block_and_grid_dimensions_flatten",
+      "ok": true,
+      "leaf_checks": 1,
+      "parameters": []
+    },
+    {
+      "method": "test_partial_cta_non_sum_reduction_masks_fold",
+      "ok": true,
+      "leaf_checks": 1,
+      "parameters": []
+    },
+    {
+      "method": "test_reduce_aliases_canonicalize",
+      "ok": true,
+      "leaf_checks": 1,
+      "parameters": []
+    },
+    {
+      "method": "test_integer_copy_is_a_typed_register_move",
+      "ok": true,
+      "leaf_checks": 1,
+      "parameters": []
+    },
+    {
+      "method": "test_write_uses_output_width_and_converts_value_dtype",
+      "ok": true,
+      "leaf_checks": 1,
+      "parameters": []
+    },
+    {
+      "method": "test_cp_async_destination_address_arithmetic",
+      "ok": true,
+      "leaf_checks": 6,
+      "parameters": [
+        {
+          "dynamic": false,
+          "base": 0,
+          "offset": 48
+        },
+        {
+          "dynamic": false,
+          "base": 1024,
+          "offset": 48
+        },
+        {
+          "dynamic": false,
+          "base": 6144,
+          "offset": 256
+        },
+        {
+          "dynamic": true,
+          "base": 0,
+          "offset": 48
+        },
+        {
+          "dynamic": true,
+          "base": 1024,
+          "offset": 48
+        },
+        {
+          "dynamic": true,
+          "base": 6144,
+          "offset": 256
+        }
+      ]
+    },
+    {
+      "method": "test_unaligned_copy_index_stays_scalar",
+      "ok": true,
+      "leaf_checks": 1,
+      "parameters": []
+    },
+    {
+      "method": "test_cond_definitions_participate_in_hoist_analysis",
+      "ok": true,
+      "leaf_checks": 1,
+      "parameters": []
+    },
+    {
+      "method": "test_cond_ssa_bindings_do_not_leak_to_join",
+      "ok": true,
+      "leaf_checks": 1,
+      "parameters": []
+    },
+    {
+      "method": "test_cond_false_arm_uses_outer_binding",
+      "ok": true,
+      "leaf_checks": 1,
+      "parameters": []
+    },
+    {
+      "method": "test_let_rebinding_invalidates_cached_address",
+      "ok": true,
+      "leaf_checks": 1,
+      "parameters": []
+    },
+    {
+      "method": "test_residue_rejects_non_multiple_product",
+      "ok": true,
+      "leaf_checks": 1,
+      "parameters": []
+    },
+    {
+      "method": "test_unsupported_errors_do_not_emit_partial_ptx",
+      "ok": true,
+      "leaf_checks": 1,
+      "parameters": []
+    },
+    {
+      "method": "test_numeric_mask_comparison_and_where",
+      "ok": true,
+      "leaf_checks": 1,
+      "parameters": []
+    },
+    {
+      "method": "test_integer_arithmetic_and_bitwise_are_typed",
+      "ok": true,
+      "leaf_checks": 1,
+      "parameters": []
+    },
+    {
+      "method": "test_int64_floor_division_uses_64bit_scratch_registers",
+      "ok": true,
+      "leaf_checks": 1,
+      "parameters": []
+    },
+    {
+      "method": "test_bitcast_preserves_bits_across_dtype",
+      "ok": true,
+      "leaf_checks": 1,
+      "parameters": []
+    },
+    {
+      "method": "test_select_tail_identity_and_warp_barrier",
+      "ok": true,
+      "leaf_checks": 1,
+      "parameters": []
+    },
+    {
+      "method": "test_unsigned_negation_and_absolute_use_valid_ptx",
+      "ok": true,
+      "leaf_checks": 1,
+      "parameters": []
+    },
+    {
+      "method": "test_f16_storage_uses_b16_carrier_and_promoted_arithmetic",
+      "ok": true,
+      "leaf_checks": 1,
+      "parameters": []
+    },
+    {
+      "method": "test_scalar_math_ops_lower_without_external_calls",
+      "ok": true,
+      "leaf_checks": 1,
+      "parameters": []
+    },
+    {
+      "method": "test_pow_support_or_clean_rejection",
+      "ok": true,
+      "leaf_checks": 1,
+      "parameters": []
+    }
+  ],
+  "limits": [
+    "The original118-check campaign execution remains historical and is not relabeled as compliant.",
+    "This qualification combines unchanged source-bound66GPU results with newly executed CPU checks and shared PTX assertions; it is not a fresh GPU execution receipt.",
+    "An edited compiler must supply exact-source GPU evidence; stale-source or changed case inventories fail closed.",
+    "The one official batch is spent; this supporting test consolidation does not authorize another batch."
+  ]
+}

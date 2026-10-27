@@ -5,6 +5,12 @@ core witnesses**. [The policy](../tests/gpu-regression.json) binds the original
 case-record hashes. [The scope ledger](../tests/gpu-regression-scope-v6.json)
 accounts for every case in the 100-case bundle and records its role and trigger.
 
+For a complete compiler experiment, use the [consolidated 100-check
+gate](experiment-gate.md): these same 65 cases, the existing scaled-score alias
+regression, and 34 additional CPU leaf checks. Published assembly and the m01/m02
+PTX assertions are integrated into their corresponding GPU cases, not rerun as
+separate CPU fixtures. The standalone GPU archive selection below is unchanged.
+
 Floating-point acceptance is final-output error within the case's unchanged
 rtol/atol. Selective FTZ, approximate math, FMA and reassociation are permitted
 when they meet that budget. Correct ABI, output membership, indices, masks,

@@ -1,0 +1,20 @@
+{
+  "status": "staged_not_gpu_evaluated",
+  "origin_main_commit": "40b132105fb38b2a5570923730e880d2d4bf4b4b",
+  "suite_introduced_commit": "d8f65f0",
+  "scope": "tests/performance/ only",
+  "archive_sha256": "883655e1a84e8857eab07dcd1065d0afacdad095deb9f62f05914080c28726b4",
+  "suite_version": "perf-v1",
+  "cases": 22,
+  "perf_a_cases": 11,
+  "perf_b_cases": 11,
+  "retained_compile_sha256": "95e7f559708135ba59e6105c4570c321df91ded711c06188cd4c1a64f31574a4",
+  "remote_worker_sha256": "de559ea9f9e0baa64735662128d7dab4eb84abf2c3b2c6cf4840cd19ccee9e57",
+  "remote_workspace": "/home/bcy/bcy/emmy/research-workspaces/performance-main-40b1321-retained2014",
+  "remote_provenance": "/mnt/nfs/bcy/emmy/research/incoming-main-suites/main-40b132105fb38b2a5570923730e880d2d4bf4b4b/provenance.json",
+  "remote_handoff": "/mnt/nfs/bcy/emmy/research/incoming-main-suites/main-40b132105fb38b2a5570923730e880d2d4bf4b4b/HANDOFF.md",
+  "cpu_static_validation_receipt": "/mnt/nfs/bcy/emmy/measurements/20261027T054212Z-research-cpu-kq4DK1",
+  "gpu_tests_executed": 0,
+  "new_tests_written": false,
+  "reason_gpu_not_run": "The original 12-hour campaign deadline elapsed before the updated local main reference was supplied."
+}

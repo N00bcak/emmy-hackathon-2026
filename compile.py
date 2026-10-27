@@ -902,6 +902,55 @@ def substitute_axis(value, mapping):
     return value
 
 
+def unique_retile_writes(tile, meta, names, extents):
+    """Prove that changing lane ownership cannot reorder colliding writes.
+
+    This intentionally accepts only direct scalar writes with affine Tile-axis
+    coordinates. Exhaustive static enumeration is bounded; large/opaque Tiles
+    keep the original lowering.
+    """
+    writes = [item for item in tile.body if type(item).__name__ == 'Write']
+    if (not writes or any(type(item).__name__ != 'Write'
+                          and written_buffers((item,)) for item in tile.body)
+            or math.prod(extents) * len(writes) > 262144):
+        return False
+    outputs = {arg['name']: tuple(arg['shape']) for arg in meta['args']
+               if arg.get('output') and all(isinstance(d, int) and d > 0
+                                            for d in arg['shape'])}
+    definitions = []
+    axis_terms = {('var', name) for name in names}
+    for write in writes:
+        shape = outputs.get(write.output)
+        if (shape is None or write.atomic or len(write.values) != 1
+                or len(write.index) != len(shape)):
+            return False
+        coords = []
+        for part in write.index:
+            form = affine_form(part)
+            if form is None or not set(form[1]) <= axis_terms:
+                return False
+            coords.append(form)
+        definitions.append((write.output, shape, coords))
+    seen = {name: set() for name in outputs}
+    # Decode each Tile point in the same row-major order as the generic Tile.
+    for flat in range(math.prod(extents)):
+        values, remainder = {}, flat
+        for name, extent in reversed(list(zip(names, extents))):
+            values[name], remainder = remainder % extent, remainder // extent
+        for output, shape, coords in definitions:
+            linear = 0
+            for index, (constant, terms) in enumerate(coords):
+                coordinate = constant + sum(coef * values[term[1]]
+                                            for term, coef in terms.items())
+                if coordinate < 0 or coordinate >= shape[index]:
+                    return False
+                linear += coordinate * math.prod(shape[index + 1:])
+            if linear in seen[output]:
+                return False
+            seen[output].add(linear)
+    return True
+
+
 def retile_redundant_hoists(node, meta):
     """Reorder a Tile's axes so each CTA owns whole rows of a hoisted reduction
     (e.g. attention's QK^T scores) instead of recomputing rows another CTA also
@@ -914,13 +963,27 @@ def retile_redundant_hoists(node, meta):
     # Without raster_group, raster_axes is only a tag; the decode is row-major.
     if tile.aux_threads or tile.raster_group is not None or cta_cooperative(tile.body):
         return node
+    # Reordering independent cells is legal only if global writes cannot
+    # affect any load, and the Tile has no atomic side effect.
+    def accesses(items):
+        for item in items:
+            yield item
+            for nested in statement_bodies(item):
+                yield from accesses(nested)
+    items = list(accesses(tile.body))
+    writes = [item for item in items if type(item).__name__ == 'Write']
+    if (not writes or any(item.atomic for item in writes)
+            or any(type(item).__name__ == 'Load' and item.input in written_buffers(tile.body)
+                   for item in items)):
+        return node
     names = [axis.name for axis in tile.axes]
     extents = [static_or_none(axis.extent) for axis in tile.axes]
     launched, grid = math.prod(meta['block']), math.prod(meta['grid'])
     if (None in extents or len(set(names)) != len(names) or any(e <= 0 for e in extents)
             or any(d != 1 for d in (*meta['block'][1:], *meta['grid'][1:]))
             or tile.block_threads not in (None, launched)
-            or math.prod(extents) != launched * grid):
+            or math.prod(extents) != launched * grid
+            or not unique_retile_writes(tile, meta, names, extents)):
         return node
     axis_extent = dict(zip(names, extents))
     dependent = set()
@@ -1943,6 +2006,7 @@ class Emitter:
         self.vector_rows, self.hoist_vector = set(), None
         # Called by a staged hoisted matmul once its operands are staged.
         self.hoist_overlap = None
+        self.shared_probability_enabled = False
         self.vn_skip, self.vn_record, self.vn_registers = {}, {}, {}
         self.vector_loops = 0
         self.tile_extents = {}
@@ -2600,7 +2664,24 @@ class Emitter:
             # This deliberately preserves typed native integer/wide copies.
             register, result = self.emit_operation(op, typed, result)
         elif result == 'f32' or (native_op and (all_at_result or integer_promotion)):
-            register, result = self.emit_operation(op, typed, result)
+            if (operation == 'reciprocal' and result == 'f32' and len(args) == 1
+                    and args[0] == getattr(self, 'softmax_pair_sum_name', None)
+                    and getattr(self, 'allow_softmax_approx_rcp', False)):
+                denominator = typed[0][0]
+                normal, finite, fast = self.reg('p'), self.reg('p'), self.reg('p')
+                fallback, joined = self.label('softmax_rcp_exact'), self.label('softmax_rcp_join')
+                register = self.reg('f')
+                self.emit(f'setp.ge.f32 {normal}, {denominator}, {f32(2.0**-126)};')
+                self.emit(f'setp.lt.f32 {finite}, {denominator}, {f32(float("inf"))};')
+                self.emit(f'and.pred {fast}, {normal}, {finite};')
+                self.emit(f'@!{fast} bra {fallback};')
+                self.emit(f'rcp.approx.f32 {register}, {denominator};')
+                self.emit(f'bra {joined};')
+                self.mark(fallback)
+                self.emit(f'rcp.rn.f32 {register}, {denominator};')
+                self.mark(joined)
+            else:
+                register, result = self.emit_operation(op, typed, result)
         else:
             if any(t in ('f64','i64','u64') for t in argument_types):
                 raise Unsupported('Mixed/non-native wide stamped arithmetic has no established computation law')
@@ -3038,18 +3119,22 @@ class Emitter:
         self.mark(joined)
         return signed
 
+    @staticmethod
+    def reduction_identity_literal(op, dtype):
+        identities = {'add': 0.0, 'multiply': 1.0, 'maximum': -1e30, 'minimum': 1e30}
+        if op not in identities:
+            raise Unsupported(f'Unsupported reduction {op}')
+        return literal(identities[op], dtype)
+
     def init_accums(self, statements):
         for s in statements:
             if type(s).__name__ == 'Accum':
                 op = reduce_canon(s.op.name)
-                identities = {'add': 0.0, 'multiply': 1.0, 'maximum': -1e30, 'minimum': 1e30}
-                if op not in identities:
-                    raise Unsupported(f'Unsupported reduction {op}')
                 dtype = dtype_name(s.dtype) if s.dtype is not None else 'f32'
                 if dtype not in FLOAT_DTYPES:
                     raise Unsupported(f'Only floating reductions supported: {dtype}')
                 reg = self.reg(reg_suffix(dtype))
-                self.emit(f'mov.{select_type(dtype)} {reg}, {literal(identities[op], dtype)};')
+                self.emit(f'mov.{select_type(dtype)} {reg}, {self.reduction_identity_literal(op, dtype)};')
                 self.values[s.name] = (reg, dtype)
                 self.mutable[s.name] = reg
                 self.accum_ops[s.name] = op
@@ -3592,6 +3677,203 @@ class Emitter:
             plans[id(loop)] = (step, trips, end, load, accum)
         return plans
 
+
+    def find_rms_input_replay(self, tile, extents, launched):
+        """Prove a complete eight-value F32 row reduction and later row map.
+
+        Repartition each 1024-element row into two four-wide groups per CTA
+        lane. Every output element keeps its original input values, while the
+        reduction's summation order may differ at the unchanged final tolerance.
+        """
+        if (self.inactive or self.geometry_3d or tile.aux_threads
+                or len(tile.axes) != 2 or len(extents) != 2
+                or extents[1] != launched or tile.block_threads != launched
+                or math.prod(extents) != launched * math.prod(self.meta['grid'])):
+            return None
+        loops = [item for item in tile.body if type(item).__name__ == 'StridedLoop']
+        if len(loops) != 2 or tile.body[-1] is not loops[1]:
+            return None
+        first, second = loops
+        if (first is second or not first.seed or not second.seed
+                or first.unroll or second.unroll or first.end is not None or second.end is not None
+                or first.axis.name == second.axis.name
+                or first.axis.name in (tile.axes[0].name, tile.axes[1].name)
+                or second.axis.name in (tile.axes[0].name, tile.axes[1].name)
+                or static(first.axis.extent) != static(second.axis.extent)
+                or static(first.axis.extent) != 8 * launched):
+            return None
+        for item in loops:
+            if (type(item.start).__name__ != 'Var'
+                    or item.start.name != tile.axes[1].name
+                    or type(item.step).__name__ != 'Literal'
+                    or type(item.step.value) is not int
+                    or item.step.dtype not in ('int', 'i32')
+                    or item.step.value != launched):
+                return None
+        one, two = list(first.body), list(second.body)
+        if ([type(item).__name__ for item in one] != ['Load', 'Assign', 'Accum']
+                or [type(item).__name__ for item in two]
+                != ['Load', 'Assign', 'Load', 'Assign', 'Write']):
+            return None
+        x1, square, fold = one
+        x2, scale, weight, product, write = two
+        if (len(x1.names) != 1 or len(x2.names) != 1 or len(weight.names) != 1
+                or x1.input != x2.input or x1.input not in self.ptrs
+                or x1.input in self.shared or x1.input in self.scalar_parameters
+                or x1.input in written_buffers(tile.body)
+                or weight.input in written_buffers(tile.body)
+                or weight.input not in self.ptrs or weight.input in self.shared
+                or x1.input not in self.buffers or write.output not in self.ptrs
+                or dtype_name(self.buffers[x1.input][1]) != 'f32'
+                or dtype_name(self.buffers[weight.input][1]) != 'f32'
+                or dtype_name(self.buffers[write.output][1]) != 'f32'
+                or any(item.dtype is not None and dtype_name(item.dtype) != 'f32'
+                       for item in (x1, x2, square, fold, scale, weight, product))
+                or square.op.name != 'multiply'
+                or tuple(square.args) != (x1.names[0], x1.names[0])
+                or reduce_canon(fold.op.name) != 'add'
+                or fold.value != square.name or fold.base is not None
+                or tuple(fold.axes) != (first.axis.name,)
+                or scale.op.name != 'multiply' or len(scale.args) != 2
+                or x2.names[0] not in scale.args
+                or product.op.name != 'multiply' or len(product.args) != 2
+                or set(product.args) != {weight.names[0], scale.name}
+                or write.atomic or write.swizzle not in ('NONE', None)
+                or len(write.values) != 1 or write.values[0] != product.name
+                or write.output in (x1.input, weight.input)
+                or write.output not in {arg['name'] for arg in self.meta['args']
+                                        if arg.get('output')}
+                or (write.value_dtype is not None
+                    and dtype_name(write.value_dtype) != 'f32')):
+            return None
+        shape = self.buffers[x1.input][0]
+        wshape = self.buffers[weight.input][0]
+        oshape = self.buffers[write.output][0]
+        if (len(shape) != 2 or shape[0] < extents[0] or shape[1] != 8 * launched
+                or len(wshape) != 1 or wshape[0] < 8 * launched
+                or len(oshape) != 2 or oshape[0] < extents[0]
+                or oshape[1] != 8 * launched):
+            return None
+        def row_column(index, axis):
+            return (len(index) == 2
+                    and all(type(part).__name__ == 'Var' for part in index)
+                    and tuple(part.name for part in index)
+                    == (tile.axes[0].name, axis))
+        if (not row_column(x1.index, first.axis.name)
+                or not row_column(x2.index, second.axis.name)
+                or not row_column(write.index, second.axis.name)
+                or len(weight.index) != 1
+                or type(weight.index[0]).__name__ != 'Var'
+                or weight.index[0].name != second.axis.name):
+            return None
+        # The second Load has exactly one consumer. The first Load's square
+        # and fold remain in their original order; all Tile statements between
+        # the loops, including WarpShuffle, shared tree and barriers, stay put.
+        if (sum(x2.names[0] in item.deps() for item in two[1:]) != 1
+                or any(x2.names[0] in item.deps() for item in two[2:])):
+            return None
+        return {'first': first, 'second': second, 'load1': x1, 'load2': x2,
+                'scale': scale, 'weight': weight, 'product': product, 'write': write,
+                'bank': None, 'step': launched, 'align': {}}
+
+    def rms_replay_alignment(self, name, plan):
+        predicate = plan['align'].get(name)
+        if predicate is None:
+            low, predicate = self.reg('rd'), self.reg('p')
+            self.emit(f'and.b64 {low}, {self.ptrs[name]}, 15;')
+            self.emit(f'setp.eq.u64 {predicate}, {low}, 0;')
+            plan['align'][name] = predicate
+        return predicate
+
+    def rms_replay_vector_load(self, load, axis, base, plan):
+        self.values[axis] = (base, 'i32')
+        self.rebind(axis)
+        address, space = self.address(load.input, load.index)
+        if space != 'global':
+            raise Unsupported('RMS row replay requires global inputs')
+        registers = [self.reg('f') for _ in range(4)]
+        predicate = self.rms_replay_alignment(load.input, plan)
+        self.emit(f'@{predicate} ld.global.v4.f32 '
+                  f'{{{", ".join(registers)}}}, [{address}];')
+        for offset, register in enumerate(registers):
+            self.emit(f'@!{predicate} ld.global.f32 {register}, '
+                      f'[{address}+{4 * offset}];')
+        return registers
+
+    def rms_replay_vector_store(self, write, axis, base, values, plan):
+        self.values[axis] = (base, 'i32')
+        self.rebind(axis)
+        address, space = self.address(write.output, write.index)
+        if space != 'global':
+            raise Unsupported('RMS row replay requires global output')
+        predicate = self.rms_replay_alignment(write.output, plan)
+        self.emit(f'@{predicate} st.global.v4.f32 [{address}], '
+                  f'{{{", ".join(values)}}};')
+        for offset, value in enumerate(values):
+            self.emit(f'@!{predicate} st.global.f32 '
+                      f'[{address}+{4 * offset}], {value};')
+
+    def rms_input_replay_loop(self, loop, frame):
+        plan = getattr(self, 'rms_input_replay', None)
+        if plan is None or (loop is not plan['first'] and loop is not plan['second']):
+            return False
+        first = loop is plan['first']
+        if not first and (plan['bank'] is None or len(plan['bank']) != 2):
+            raise Unsupported('RMS row replay must follow its certified producer')
+        start, dtype = self.expr(loop.start)
+        if dtype != 'i32':
+            raise Unsupported('RMS row replay requires an I32 tile coordinate')
+        step = plan['step']
+        groups = []
+        for group in range(2):
+            base = self.reg('r')
+            self.emit(f'mad.lo.u32 {base}, {start}, 4, {group * 4 * step};')
+            self.set_integer_range(base, checked_i32_interval(group * 4 * step,
+                                                               (group + 1) * 4 * step - 1))
+            if first:
+                values = self.rms_replay_vector_load(
+                    plan['load1'], loop.axis.name, base, plan)
+            else:
+                values = plan['bank'][group][1]
+            groups.append((base, values))
+        if first:
+            # Both global requests precede the first dependent multiply.
+            plan['bank'] = groups
+        for group, (base, xvalues) in enumerate(groups):
+            wvalues = None
+            if not first:
+                wvalues = self.rms_replay_vector_load(
+                    plan['weight'], loop.axis.name, base, plan)
+            output = []
+            for offset, xvalue in enumerate(xvalues):
+                axis = base
+                if offset:
+                    axis = self.reg('r')
+                    self.emit(f'add.s32 {axis}, {base}, {offset};')
+                self.set_integer_range(axis, checked_i32_interval(
+                    group * 4 * step + offset,
+                    (group + 1) * 4 * step - 4 + offset))
+                self.values[loop.axis.name] = (axis, 'i32')
+                self.rebind(loop.axis.name)
+                load_name = plan['load1'].names[0] if first else plan['load2'].names[0]
+                self.values[load_name] = (xvalue, 'f32')
+                self.mutable.pop(load_name, None)
+                self.rebind(load_name)
+                if first:
+                    self.statements_with_init_scope(loop.body[1:], frame)
+                else:
+                    weight_name = plan['weight'].names[0]
+                    self.values[weight_name] = (wvalues[offset], 'f32')
+                    self.mutable.pop(weight_name, None)
+                    self.rebind(weight_name)
+                    self.statements_with_init_scope(
+                        (plan['scale'], plan['product']), frame)
+                    output.append(self.value(plan['product'].name))
+            if not first:
+                self.rms_replay_vector_store(
+                    plan['write'], loop.axis.name, base, output, plan)
+        return True
+
     def serial_read_pipeline(self, loop):
         plan = self.serial_read_plans.get(id(loop))
         if plan is None or self.inactive:
@@ -3607,6 +3889,15 @@ class Emitter:
         current_axis = self.reg('r')
         self.emit(f'mov.s32 {current_axis}, {start};')
         self.set_integer_range(current_axis, checked_i32_interval(0, end - 1))
+        # The typed serial plan has a single readonly 1D F32 global input,
+        # complete Tile participation and an in-bounds uniform trip count.
+        # Keep each original load and fold in order; only advance its address.
+        pointer_bank = trips >= 16 and 0 < step and 7 * step * 4 < 4096
+        if pointer_bank:
+            start_byte = self.reg('rd')
+            self.emit(f'mul.wide.s32 {start_byte}, {start}, 4;')
+            stream_pointer = self.reg('rd')
+            self.emit(f'add.u64 {stream_pointer}, {self.ptrs[load.input]}, {start_byte};')
 
         def load_at(offset):
             point = current_axis
@@ -3616,7 +3907,14 @@ class Emitter:
             self.set_integer_range(point, checked_i32_interval(0, end - 1))
             self.values[loop.axis.name] = (point, 'i32')
             self.rebind(loop.axis.name)
-            self.statements((load,))
+            if pointer_bank:
+                value = self.reg('f')
+                self.emit(f'ld.global.f32 {value}, [{stream_pointer}+{offset * 4}];')
+                self.values[load.names[0]] = (value, 'f32')
+                self.mutable.pop(load.names[0], None)
+                self.rebind(load.names[0])
+            else:
+                self.statements((load,))
             value, dtype = self.values[load.names[0]]
             if dtype != 'f32':
                 raise Unsupported('Serial prefetch requires an F32 load')
@@ -3649,6 +3947,8 @@ class Emitter:
         for destination, value in zip(current, future, strict=True):
             self.emit(f'mov.f32 {destination}, {value};')
         self.emit(f'add.s32 {current_axis}, {current_axis}, {4 * step};')
+        if pointer_bank:
+            self.emit(f'add.u64 {stream_pointer}, {stream_pointer}, {4 * step * 4};')
         self.emit(f'add.s32 {group}, {group}, 1;')
         self.rebind(loop.axis.name)
         self.emit(f'bra {begin};')
@@ -4049,7 +4349,8 @@ class Emitter:
 
     def sibling_dot_groups(self, statements):
         """Admit same-position sibling dots that may share scalar B loads."""
-        if self.inactive or getattr(self, 'sibling_fusion_disabled', False):
+        if (self.inactive or self.shared_probability_enabled
+                or getattr(self, 'sibling_fusion_disabled', False)):
             return {}, set()
         groups, members = {}, set()
         position = 0
@@ -5311,6 +5612,157 @@ class Emitter:
         self.mark(joined)
         return True
 
+    def small_strided_softmax_pair(self, loop):
+        """Collapse a complete two-trip F32 online local max/sum state.
+
+        The typed body and bounds prove two unconditional read-only scores per
+        lane. Only its final max/sum carriers may escape to later collectives;
+        no prefix or temporary is observable. The collective code is untouched.
+        """
+        if (self.inactive or not loop.seed or loop.end is not None
+                or len(self.node.op.body) != 1
+                or type(self.node.op.body[0]).__name__ != 'Tile'):
+            return False
+        tile = self.node.op.body[0]
+        if loop not in tile.body:
+            return False
+        stride = static_or_none(loop.step)
+        extent = static_or_none(loop.axis.extent)
+        if (stride is None or extent is None or stride <= 0
+                or extent != 2 * stride or extent > I32_MAX):
+            return False
+        body = tuple(loop.body)
+        if [type(x).__name__ for x in body] != [
+                'Let', 'Load', 'Assign', 'Assign', 'Assign', 'Assign',
+                'Assign', 'Assign', 'Assign', 'Accum', 'Accum']:
+            return False
+        one, load, maximum, old_delta, alpha, new_delta, beta, old_scale, new_scale, sum_fold, max_fold = body
+        if (type(one.value).__name__ != 'Literal' or one.value.value != 1.0
+                or len(load.names) != 1 or load.input not in self.ptrs
+                or load.input in self.shared or load.input in self.scalar_parameters
+                or load.input in written_buffers(tile.body)
+                or load.input not in self.buffers
+                or dtype_name(self.buffers[load.input][1]) != 'f32'
+                or any(x.dtype is not None and dtype_name(x.dtype) != 'f32'
+                       for x in body)):
+            return False
+        score = load.names[0]
+        max_name, sum_name = max_fold.name, sum_fold.name
+        def assign(statement, op, args):
+            return statement.op.name == op and tuple(statement.args) == tuple(args)
+        if (not assign(maximum, 'maximum', (max_name, score))
+                or not assign(old_delta, 'subtract', (max_name, maximum.name))
+                or not assign(alpha, 'exp', (old_delta.name,))
+                or not assign(new_delta, 'subtract', (score, maximum.name))
+                or not assign(beta, 'exp', (new_delta.name,))
+                or not assign(old_scale, 'multiply', (sum_name, alpha.name))
+                or tuple(new_scale.args) not in ((beta.name, one.name), (one.name, beta.name))
+                or new_scale.op.name != 'multiply'
+                or reduce_canon(sum_fold.op.name) != 'add'
+                or sum_fold.base != old_scale.name or sum_fold.value != new_scale.name
+                or reduce_canon(max_fold.op.name) != 'maximum'
+                or max_fold.base is not None or max_fold.value != score
+                or tuple(sum_fold.axes) != (loop.axis.name,)
+                or tuple(max_fold.axes) != (loop.axis.name,)):
+            return False
+        defined = defined_names(body)
+        if (len(defined) != 11 or loop.axis.name in defined
+                or set(loop.start.free_vars()) & defined
+                or any(set(index.free_vars()) & defined for index in load.index)):
+            return False
+        outside = touched_names([item for item in tile.body if item is not loop])
+        if (outside & (defined - {max_name, sum_name})):
+            return False
+        start, dtype = self.expr(loop.start)
+        bounds = self.integer_range(start) if dtype == 'i32' else None
+        if bounds is None or not (0 <= bounds[0] <= bounds[1] < stride):
+            return False
+        if (max_name not in self.values or sum_name not in self.values
+                or self.values[max_name][1] != 'f32'
+                or self.values[sum_name][1] != 'f32'):
+            return False
+        self.values[loop.axis.name] = (start, 'i32')
+        self.rebind(loop.axis.name)
+        self.statements((load,))
+        first = self.value(score)
+        second_index = self.reg('r')
+        self.emit(f'add.s32 {second_index}, {start}, {stride};')
+        self.set_integer_range(second_index,
+                               checked_i32_interval(bounds[0] + stride, bounds[1] + stride))
+        self.values[loop.axis.name] = (second_index, 'i32')
+        self.rebind(loop.axis.name)
+        self.statements((load,))
+        second = self.value(score)
+        local_first = self.reg('f')
+        local_max = self.reg('f')
+        self.emit(f'max.f32 {local_first}, {self.value(max_name)}, {first};')
+        self.emit(f'max.f32 {local_max}, {local_first}, {second};')
+        delta_first, _ = self.emit_operation('subtract', [(first, 'f32'), (local_max, 'f32')], 'f32')
+        delta_second, _ = self.emit_operation('subtract', [(second, 'f32'), (local_max, 'f32')], 'f32')
+        exp_first, _ = self.emit_operation('exp', [(delta_first, 'f32')], 'f32')
+        exp_second, _ = self.emit_operation('exp', [(delta_second, 'f32')], 'f32')
+        total, _ = self.emit_operation('add', [(exp_first, 'f32'), (exp_second, 'f32')], 'f32')
+        old_max, old_sum = self.value(max_name), self.value(sum_name)
+        self.emit(f'mov.f32 {old_max}, {local_max};')
+        self.emit(f'mov.f32 {old_sum}, {total};')
+        self.values[max_name] = (old_max, 'f32')
+        self.values[sum_name] = (old_sum, 'f32')
+        self.softmax_pair_sum_name = sum_name
+        self.mutable[max_name] = old_max
+        self.mutable[sum_name] = old_sum
+        self.rebind(max_name)
+        self.rebind(sum_name)
+        return True
+
+    def exact_short_strided_loop(self, loop, init_frame):
+        """Emit each proven trip once when a Tile lane owns a short stripe.
+
+        The start is the Tile axis itself, ranging from zero to step-1.  A
+        static extent divisible by step gives every physical lane exactly the
+        same number of trips.  Emit the original body and fold updates in
+        textual order; only induction and control instructions disappear.
+        """
+        if (self.inactive or self.geometry_3d or len(self.node.op.body) != 1
+                or type(self.node.op.body[0]).__name__ != 'Tile'):
+            return False
+        tile = self.node.op.body[0]
+        if (not tile.body or tile.body[0] is not loop
+                or tile.aux_threads or tile.raster_axes
+                or tile.block_threads != self.block_threads
+                or math.prod(static(axis.extent) for axis in tile.axes)
+                   != self.block_threads * self.grid_blocks
+                or type(loop.start).__name__ != 'Var'
+                or type(loop.step).__name__ != 'Literal'
+                or type(loop.step.value) is not int
+                or loop.step.dtype not in ('int', 'i32')
+                or loop.end is not None or loop.unroll):
+            return False
+        step, extent = loop.step.value, static(loop.axis.extent)
+        if (step <= 0 or extent <= 0 or extent > I32_MAX - step
+                or extent % step or not 2 <= extent // step <= 8
+                or self.tile_extents.get(loop.start.name) != step
+                or loop.axis.name == loop.start.name
+                or loop.axis.name in defined_names(loop.body)
+                or not straight_line(loop.body)
+                or any(id(x) in self.hoisted or id(x) in self.hoist_plans
+                       for x in loop.body)):
+            return False
+        start, dtype = self.binding(loop.start.name)
+        if dtype != 'i32':
+            return False
+        for trip in range(extent // step):
+            index = self.reg('r')
+            if trip:
+                self.emit(f'add.s32 {index}, {start}, {trip * step};')
+            else:
+                self.emit(f'mov.s32 {index}, {start};')
+            self.set_integer_range(index, checked_i32_interval(trip * step,
+                                                               (trip + 1) * step - 1))
+            self.values[loop.axis.name] = (index, 'i32')
+            self.rebind(loop.axis.name)
+            self.statements_with_init_scope(loop.body, init_frame)
+        return True
+
     def strided_main_loop(self, s, r, step, end):
         """Run whole groups of iterations of a thread-strided loop back to
         back, largest STRIDED_UNROLL group first; the caller's loop then
@@ -5357,6 +5809,7 @@ class Emitter:
         self.emit(f'setp.eq.u64 {predicate}, {low}, 0;')
         return address, space, predicate
 
+
     def emit_vector_load(self, address, space, predicate):
         """128-bit f32 load with an exact scalar fallback for a misaligned base."""
         registers = [self.reg('f') for _ in range(4)]
@@ -5374,6 +5827,7 @@ class Emitter:
         else:
             self.emit(f'ld.{space}.v4.f32 {{{operands}}}, [{address}];')
         return registers
+
 
     def vector_load_group(self, descriptor):
         """Load four proven-contiguous f32 lanes at the leader statement."""
@@ -5412,6 +5866,7 @@ class Emitter:
         leader_id = id(descriptor.lanes[0].statement)
         self.access_plan.registers[leader_id] = registers
 
+
     def vector_store_group(self, descriptor):
         """Store four proven-contiguous f32 lanes as one aligned tuple store."""
         address, space, predicate = self.vector_group_base(descriptor)
@@ -5443,7 +5898,8 @@ class Emitter:
         descriptor is immutable and keyed by statement identity.
         """
         special = (self.skip_ids, self.subst_load, self.hoisted, self.subst, self.vn_skip,
-                   self.vn_record, self.hoist_plans)
+                   self.vn_record, self.hoist_plans, self.shared_probability_skip,
+                   self.shared_probability_betas, self.prescaled_assignments)
         blocked = {id(s) for s in statements
                    if any(id(s) in table for table in special)}
         blocked.update(id(statements[position]) for position in prefetched
@@ -5572,6 +6028,415 @@ class Emitter:
                 self.rebind(s.names[0])
 
 
+
+    def find_shared_probability_plan(self, loop, online, planned=None):
+        """Certify dead scaled scores and identical row maxima before reuse."""
+        if not getattr(self, 'shared_probability_enabled', False) or self.inactive:
+            return None
+        if len(self.node.op.body) != 1:
+            return None
+        tile = self.node.op.body[0]
+        if (type(tile).__name__ != 'Tile' or len(tile.axes) != 4
+                or loop not in tile.body or not loop.seed or tile.aux_threads
+                or self.geometry_3d or tile.block_threads != self.block_threads):
+            return None
+        extents = [static(a.extent) for a in tile.axes]
+        width = extents[-1]
+        if (not 2 <= width <= 32 or width & (width - 1)
+                or extents[-2] * width != self.block_threads
+                or math.prod(extents) != self.grid_blocks * self.block_threads
+                or not 0 < static(loop.axis.extent) <= I32_MAX - width):
+            return None
+        def flat(body):
+            for x in body:
+                yield x
+                for child in statement_bodies(x):
+                    yield from flat(child)
+        whole = list(flat(tile.body))
+        if any(type(x).__name__ not in {'Loop','Load','Assign','Accum','Let','Write'}
+               for x in whole):
+            return None
+        # Unique leaf bindings exclude mutable snapshots, builtin/axis shadows,
+        # and the demonstrated dead Assign/Accum probe (which retains parent).
+        axes = {a.name for a in tile.axes} | {x.axis.name for x in whole
+                if type(x).__name__ == 'Loop'} | {'lane','warp','tid','bid','ntid'}
+        definitions = {}
+        leaves = [x for x in whole if not statement_bodies(x)]
+        for x in leaves:
+            for name in defined_names((x,)):
+                if name in axes or name in definitions:
+                    return None
+                definitions[name] = x
+        def uses(x):
+            names = set(x.deps())
+            for expr in x.exprs():
+                names.update(expr.free_vars())
+            return names
+        def readers(name):
+            return {id(x) for x in leaves if name in uses(x)}
+        body = list(loop.body)
+        dots = []
+        for x in body:
+            if type(x).__name__ != 'Loop':
+                break
+            dots.append(x)
+        if not dots or any(type(x).__name__ == 'Loop' for x in body[len(dots):]):
+            return None
+        if ({id(x) for x in whole if type(x).__name__ == 'Loop'}
+                != {id(loop), *(id(x) for x in dots)}):
+            return None
+        after = tile.body[list(tile.body).index(loop) + 1:]
+        if any(type(x).__name__ not in ('Assign', 'Write') for x in after):
+            return None
+        outputs = set(self.node.buffer_names())
+        if (any(x.atomic or x.output not in outputs or x.swizzle not in ('NONE', None)
+                for x in whole if type(x).__name__ == 'Write')
+                or any(x.input in outputs for x in whole if type(x).__name__ == 'Load')
+                or tile.axes[-1].name not in self.values
+                or self.values[tile.axes[-1].name][1] != 'i32'):
+            return None
+        expected_used = ((tile.axes[-2].name, extents[-2]),)
+        descriptors = ({identity: item[0] for identity, item in self.hoisted.items()}
+                       if planned is None else planned)
+        groups, skip, betas = {}, set(), {}
+        for fold, score, maximum, delta, alpha, needed in online:
+            score_assign = definitions.get(score)
+            if (score_assign is None or id(score_assign) not in self.prescaled_assignments
+                    or score_assign not in loop.body or alpha is None):
+                return None
+            raw = self.prescaled_assignments[id(score_assign)]
+            choices = [dot for dot in dots if id(dot) in self.prescaled_hoists
+                       and id(dot) in descriptors
+                       and tuple(descriptors[id(dot)].exports) == (raw,)]
+            if len(choices) != 1:
+                return None
+            dot = choices[0]
+            plan = descriptors[id(dot)]
+            serial, rows = ((loop.axis.name, ()) if planned is not None
+                            else self.hoisted[id(dot)][1:])
+            if (tuple(plan.used) != expected_used or plan.configs != extents[-2]
+                    or plan.extent != static(loop.axis.extent)
+                    or serial != loop.axis.name or (planned is None and len(rows) != 1)
+                    or len(plan.exports) != 1):
+                return None
+            differences = [x for x in loop.body if type(x).__name__ == 'Assign'
+                           and x.op.name == 'subtract'
+                           and tuple(x.args) == (score, maximum.name)]
+            if len(differences) != 1:
+                return None
+            difference = differences[0]
+            exponentials = [x for x in loop.body if type(x).__name__ == 'Assign'
+                            and x.op.name == 'exp'
+                            and tuple(x.args) == (difference.name,)]
+            if len(exponentials) != 1:
+                return None
+            beta = exponentials[0]
+            if (readers(score) != {id(fold), id(maximum), id(difference)}
+                    or readers(difference.name) != {id(beta)}
+                    or any(x.dtype is not None and dtype_name(x.dtype) != 'f32'
+                           for x in (score_assign, maximum, difference, beta, fold))):
+                return None
+            row = rows[0] if planned is None else None
+            groups.setdefault(id(dot), (row, fold.name))
+            betas[id(beta)] = (row, loop.axis.name)
+            skip.update((id(dot), id(score_assign), id(difference)))
+        # Every raw score and every score-scale consumer must be accounted for.
+        # A single unknown observer causes the whole new phase to decline.
+        if set(groups) != {id(x) for x in dots}:
+            return None
+        scale_consumers = {id(x) for x in body if id(x) in self.prescaled_assignments}
+        if scale_consumers != {id(definitions[p[1]]) for p in online}:
+            return None
+        return width, groups, skip, betas, tile.axes[-1].name
+
+    def install_shared_probabilities(self, loop, online, seeds):
+        if id(loop) in self.producer_probability_ready:
+            _, _, skip, betas, _ = self.require_producer_probability_binding(loop, online)
+            self.shared_probability_frames[id(loop)] = (
+                set(self.shared_probability_skip), dict(self.shared_probability_betas),
+                dict(self.vn_registers))
+            self.shared_probability_skip.update(skip)
+            self.shared_probability_betas.update(betas)
+            return
+        plan = self.find_shared_probability_plan(loop, online)
+        if plan is None:
+            return
+        width, groups, skip, betas, column = plan
+        # Finish ALL original raw-score observers before any thread overwrites.
+        self.emit('bar.sync 0;')
+        key = self.reg('r')
+        self.emit(f'mov.u32 {key}, {self.value(column)};')
+        begin, done = self.label('shared_probability'), self.label('shared_probability_done')
+        self.mark(begin)
+        stop = self.reg('p')
+        self.emit(f'setp.ge.u32 {stop}, {key}, {static(loop.axis.extent)};')
+        self.emit(f'@{stop} bra {done};')
+        offset = self.reg('rd')
+        self.emit(f'mul.wide.u32 {offset}, {key}, 4;')
+        for row, maximum in groups.values():
+            address, score = self.reg('rd'), self.reg('f')
+            self.emit(f'add.u64 {address}, {row}, {offset};')
+            self.emit(f'ld.shared.f32 {score}, [{address}];')
+            difference, dtype = self.emit_operation(
+                'subtract', [(score, 'f32'), (seeds[maximum], 'f32')], 'f32')
+            probability, dtype = self.emit_operation('exp', [(difference, dtype)], 'f32')
+            self.emit(f'st.shared.f32 [{address}], {probability};')
+        self.emit(f'add.u32 {key}, {key}, {width};')
+        self.emit(f'bra {begin};')
+        self.mark(done)
+        # Tail lanes still join: no barrier was placed inside the producer loop.
+        self.emit('bar.sync 0;')
+        self.shared_probability_frames[id(loop)] = (
+            set(self.shared_probability_skip), dict(self.shared_probability_betas),
+            dict(self.vn_registers))
+        self.shared_probability_skip.update(skip)
+        self.shared_probability_betas.update(betas)
+
+    def scalar_shared_address_packet_loop(self, loop, init_frame):
+        """Keep scalar shared reads, sharing only each packet's address base."""
+        extent = static(loop.axis.extent)
+        if (id(loop) not in self.shared_probability_frames or self.inactive
+                or not 4 <= extent <= I32_MAX - 3
+                or loop.axis.name in defined_names(loop.body)):
+            return False
+        # The installed shared-P phase already proved the full closed Tile,
+        # readonly allocations, unique leaf definitions and no axis shadows.
+        # Recheck the executable body: only certified eliminated prefixes,
+        # synthetic P reads and already allocated hoisted F32 reads may load.
+        known_rows = set()
+        for plan, serial, rows in self.hoisted.values():
+            if (serial == loop.axis.name and plan.extent == extent
+                    and plan.row_words >= extent
+                    and 0 < plan.nbytes < (1 << 32)
+                    and len(rows) == len(plan.exports)):
+                known_rows.update(rows)
+        streams = set()
+        for statement in loop.body:
+            identity = id(statement)
+            if identity in self.shared_probability_skip:
+                continue
+            if identity in self.shared_probability_betas:
+                row, serial = self.shared_probability_betas[identity]
+                if serial != loop.axis.name or row not in known_rows:
+                    return False
+                streams.add((row, serial))
+            elif identity in self.hoisted:
+                plan, serial, rows = self.hoisted[identity]
+                if (serial != loop.axis.name or plan.extent != extent
+                        or len(rows) != len(plan.exports)
+                        or any(row not in known_rows for row in rows)):
+                    return False
+                streams.update((row, serial) for row in rows)
+            elif (type(statement).__name__ not in ('Let', 'Assign', 'Accum')
+                    or statement_bodies(statement)):
+                return False
+        if not streams:
+            return False
+        # Every allocation/row is immutable after the dominating producer
+        # barriers. Bounds are inherited from HoistedValue's complete typed
+        # row construction; scalar loads require only its original 4B alignment.
+        streams = sorted(streams)
+        limit = extent - extent % 4
+        induction = self.reg('r')
+        self.emit(f'mov.s32 {induction}, 0;')
+        self.set_integer_range(induction, checked_i32_interval(0, limit - 4))
+        self.values[loop.axis.name] = (induction, 'i32')
+        self.rebind(loop.axis.name)
+        self.hoist_invariants(loop.body, defined_names(loop.body) | {loop.axis.name})
+        begin, done = self.label('shared_address_packet'), self.label('shared_address_packet_done')
+        self.mark(begin)
+        stop = self.reg('p')
+        self.emit(f'setp.ge.s32 {stop}, {induction}, {limit};')
+        self.emit(f'@{stop} bra {done};')
+        offset = self.reg('rd')
+        self.emit(f'mul.wide.u32 {offset}, {induction}, 4;')
+        pointers = {}
+        for stream in streams:
+            pointer = self.reg('rd')
+            self.emit(f'add.u64 {pointer}, {stream[0]}, {offset};')
+            pointers[stream] = pointer
+        previous = getattr(self, 'shared_scalar_packet', None)
+        try:
+            for copy in range(4):
+                axis = induction
+                if copy:
+                    axis = self.reg('r')
+                    self.emit(f'add.s32 {axis}, {induction}, {copy};')
+                    self.set_integer_range(axis, checked_i32_interval(copy, limit - 4 + copy))
+                self.values[loop.axis.name] = (axis, 'i32')
+                self.rebind(loop.axis.name)
+                self.shared_scalar_packet = {
+                    stream: (pointer, 4 * copy) for stream, pointer in pointers.items()}
+                self.statements_with_init_scope(loop.body, init_frame)
+        finally:
+            self.shared_scalar_packet = previous
+        self.emit(f'add.s32 {induction}, {induction}, 4;')
+        self.rebind(loop.axis.name)
+        self.emit(f'bra {begin};')
+        self.mark(done)
+        for coordinate in range(limit, extent):
+            self.values[loop.axis.name] = (str(coordinate), 'i32')
+            self.rebind(loop.axis.name)
+            self.statements_with_init_scope(loop.body, init_frame)
+        self.emit(f'mov.s32 {induction}, {extent};')
+        self.set_integer_range(induction, checked_i32_interval(extent, extent))
+        return True
+
+
+    def load_shared_probability(self, statement):
+        row, serial = self.shared_probability_betas[id(statement)]
+        packet = (getattr(self, 'shared_scalar_packet', None) or {}).get((row, serial))
+        if packet is None:
+            offset, address = self.reg('rd'), self.reg('rd')
+            self.emit(f'mul.wide.u32 {offset}, {self.value(serial)}, 4;')
+            self.emit(f'add.u64 {address}, {row}, {offset};')
+            operand = address
+        else:
+            address, immediate = packet
+            operand = f'{address}+{immediate}'
+        probability, snapshot = self.reg('f'), self.reg('f')
+        self.emit(f'ld.shared.f32 {probability}, [{operand}];')
+        self.emit(f'mov.f32 {snapshot}, {probability};')
+        self.values[statement.name] = (snapshot, 'f32')
+        self.mutable.pop(statement.name, None)
+        self.rebind(statement.name)
+
+    def restore_shared_probability_phase(self, loop):
+        frame = self.shared_probability_frames.pop(id(loop), None)
+        if frame is not None:
+            self.shared_probability_skip, self.shared_probability_betas, self.vn_registers = frame
+
+
+    def find_distributed_maximum_plan(self, loop, online, seed_names, planned=None):
+        """Exact finite-seeded max over complete physical column subgroups."""
+        plan = self.find_shared_probability_plan(loop, online, planned)
+        if plan is None:
+            return None
+        width, groups, _, _, column = plan
+        tile = self.node.op.body[0]
+        extents = [static(axis.extent) for axis in tile.axes]
+        if (width not in (16, 32) or self.block_threads % 32
+                or extents[-2] * width != self.block_threads
+                or math.prod(extents) != self.grid_blocks * self.block_threads
+                or self.geometry_3d or self.inactive):
+            return None
+        # Tile decodes the physical hardware_gid row-major. The last axis is
+        # gid%W=physical_tid%W because the complete CTA size is divisible by W;
+        # the preceding row axis is floor(tid/W), constant in each aligned
+        # subgroup. Do not use any rebindable logical tid/lane name.
+        def leaves(body):
+            for statement in body:
+                children = statement_bodies(statement)
+                if not children:
+                    yield statement
+                for child in children:
+                    yield from leaves(child)
+        whole = list(leaves(tile.body))
+        def reads(statement, name):
+            return (name in statement.deps()
+                    or any(name in expr.free_vars() for expr in statement.exprs()))
+        for fold, _, maximum, delta, _, _ in online:
+            if {id(x) for x in whole if x is not fold and reads(x, fold.name)} != {
+                    id(maximum), id(delta)}:
+                return None
+        # Reconstruct EVERY online fold's canonical typed dot/row membership.
+        # find_shared_probability_plan intentionally retains only the first fold
+        # per dot; dropping its cardinality guard alone would lose duplicate seeds.
+        descriptors = ({identity: item[0] for identity, item in self.hoisted.items()}
+                       if planned is None else planned)
+        members = {identity: [] for identity in groups}
+        signatures = {}
+        seen = set()
+        for fold, score, maximum, delta, alpha, needed in online:
+            assignments = [x for x in loop.body if type(x).__name__ == 'Assign'
+                           and x.name == score and id(x) in self.prescaled_assignments]
+            if len(assignments) != 1 or fold.name in seen or fold.name not in seed_names:
+                return None
+            statement = assignments[0]
+            raw = self.prescaled_assignments[id(statement)]
+            choices = [x for x in loop.body if type(x).__name__ == 'Loop'
+                       and id(x) in groups and id(x) in self.prescaled_hoists
+                       and id(x) in descriptors
+                       and tuple(descriptors[id(x)].exports) == (raw,)]
+            if len(choices) != 1:
+                return None
+            identity = id(choices[0])
+            signature = (raw, tuple(statement.args))
+            if identity in signatures and signatures[identity] != signature:
+                return None
+            signatures[identity] = signature
+            members[identity].append(fold.name)
+            seen.add(fold.name)
+        if (seen != set(seed_names) or len(seen) != len(online)
+                or any(not names or groups[identity][1] not in names
+                       for identity, names in members.items())):
+            return None
+        return width, groups, members
+
+    def distributed_shared_maximum(self, loop, online, seeds):
+        """Exact finite-seeded max over complete physical column subgroups."""
+        if id(loop) in self.producer_probability_ready:
+            self.require_producer_probability_binding(loop, online)
+        plan = self.find_distributed_maximum_plan(loop, online, seeds)
+        if plan is None:
+            return False
+        width, groups, members = plan
+        cached = self.producer_maxima.get(id(loop))
+        signature = (width, tuple((identity, tuple(names))
+                                  for identity, names in members.items()))
+        if (cached is not None and cached[0] == signature
+                and set(cached[1]) == set(groups)
+                and all(identity in self.hoisted
+                        and self.hoisted[identity][0] is item
+                        for identity, item in cached[2].items())):
+            for identity, (_, maximum) in groups.items():
+                self.emit(f'mov.f32 {seeds[maximum]}, {cached[1][identity]};')
+        else:
+            # This phase uses only fresh private registers and immutable score
+            # row pointers. It publishes no partial bindings or VN facts.
+            key = self.reg('r')
+            self.emit(f'and.b32 {key}, {self.hardware_tid}, {width - 1};')
+            begin, done = self.label('distributed_max'), self.label('distributed_max_done')
+            self.mark(begin)
+            stop = self.reg('p')
+            self.emit(f'setp.ge.u32 {stop}, {key}, {static(loop.axis.extent)};')
+            self.emit(f'@{stop} bra {done};')
+            offset = self.reg('rd')
+            self.emit(f'mul.wide.u32 {offset}, {key}, 4;')
+            for row, maximum in groups.values():
+                address, score = self.reg('rd'), self.reg('f')
+                self.emit(f'add.u64 {address}, {row}, {offset};')
+                self.emit(f'ld.shared.f32 {score}, [{address}];')
+                self.emit(f'max.f32 {seeds[maximum]}, {seeds[maximum]}, {score};')
+            self.emit(f'add.u32 {key}, {key}, {width};')
+            self.emit(f'bra {begin};')
+            self.mark(done)
+            # Every full-warp thread reaches every shuffle. The segment mask keeps
+            # W16 half-warps in separate rows; XOR offsets never leave the segment.
+            clamp = ((32 - width) << 8) | (width - 1)
+            offset = width // 2
+            while offset:
+                for _, maximum in groups.values():
+                    peer = self.reg('f')
+                    self.emit(f'shfl.sync.bfly.b32 {peer}, {seeds[maximum]}, {offset}, {clamp}, 0xffffffff;')
+                    self.emit(f'max.f32 {seeds[maximum]}, {seeds[maximum]}, {peer};')
+                offset //= 2
+        # Preserve distinct mutable carrier publication even when MAX values
+        # coincide. Copy the canonical completed value into a fresh register for
+        # EVERY duplicate member, including the canonical member itself. The
+        # single-member path emits exactly the parent's original instructions.
+        for identity, names in members.items():
+            if len(names) == 1:
+                continue
+            canonical = seeds[groups[identity][1]]
+            for name in names:
+                snapshot = self.reg('f')
+                self.emit(f'mov.f32 {snapshot}, {canonical};')
+                seeds[name] = snapshot
+        # Original fold/gn/delta publication follows in two_pass_softmax;
+        # shared-P's original pre-overwrite CTA barrier remains after that.
+        return True
+
     def two_pass_softmax(self, loop, online):
         """Seed online-softmax maxima with their final values.
 
@@ -5585,25 +6450,26 @@ class Emitter:
         seeds = {}
         for fold, x, gn, dg, alpha, _ in online:
             m = self.reg('f')
-            self.emit(f'mov.f32 {m}, {literal(-1e30, "f32")};')
+            self.emit(f'mov.f32 {m}, {self.reduction_identity_literal(reduce_canon(fold.op.name), "f32")};')
             seeds[fold.name] = m
-        needed = {id(s) for *_, statements in online for s in statements}
-        r = self.reg('r')
-        self.emit(f'mov.s32 {r}, 0;')
-        self.values[loop.axis.name] = (r, 'i32')
-        self.rebind(loop.axis.name)
-        begin, done = self.label('maxpass'), self.label('maxpass_done')
-        self.mark(begin)
-        p = self.reg('p')
-        self.emit(f'setp.ge.s32 {p}, {r}, {static(loop.axis.extent)};')
-        self.emit(f'@{p} bra {done};')
-        self.statements([s for s in loop.body if id(s) in needed])
-        for fold, x, *_ in online:
-            self.emit(f'max.f32 {seeds[fold.name]}, {seeds[fold.name]}, {self.value(x)};')
-        self.emit(f'add.s32 {r}, {r}, 1;')
-        self.rebind(loop.axis.name)
-        self.emit(f'bra {begin};')
-        self.mark(done)
+        if not self.distributed_shared_maximum(loop, online, seeds):
+            needed = {id(s) for *_, statements in online for s in statements}
+            r = self.reg('r')
+            self.emit(f'mov.s32 {r}, 0;')
+            self.values[loop.axis.name] = (r, 'i32')
+            self.rebind(loop.axis.name)
+            begin, done = self.label('maxpass'), self.label('maxpass_done')
+            self.mark(begin)
+            p = self.reg('p')
+            self.emit(f'setp.ge.s32 {p}, {r}, {static(loop.axis.extent)};')
+            self.emit(f'@{p} bra {done};')
+            self.statements([s for s in loop.body if id(s) in needed])
+            for fold, x, *_ in online:
+                self.emit(f'max.f32 {seeds[fold.name]}, {seeds[fold.name]}, {self.value(x)};')
+            self.emit(f'add.s32 {r}, {r}, 1;')
+            self.rebind(loop.axis.name)
+            self.emit(f'bra {begin};')
+            self.mark(done)
         zero, one = self.reg('f'), self.reg('f')
         self.emit(f'mov.f32 {zero}, {literal(0.0, "f32")};')
         self.emit(f'mov.f32 {one}, {literal(1.0, "f32")};')
@@ -5617,6 +6483,7 @@ class Emitter:
             self.subst[id(dg)] = [(dg.name, zero)]
             if alpha is not None:
                 self.subst[id(alpha)] = [(alpha.name, one)]
+        self.install_shared_probabilities(loop, online, seeds)
 
 
     def cta_uniform(self, name, loop, seen=frozenset()):
@@ -5959,14 +6826,15 @@ class Emitter:
             self.subst_load[id(beta)] = (beta.name, row_ptr, serial)
         return True
 
-    def normalized_softmax_plans(self, loop):
+    def normalized_softmax_plans(self, loop, hoisted_ids=None):
         """Require the complete rescaled numerator/denominator recurrence.
 
         Matching a running maximum alone is insufficient: prefix maxima and
         raw rescaled sums are observable. Only ratios of equally rescaled
         states may leave this loop; intermediate max/exp values may not escape.
         """
-        plans = online_max_carriers(loop.body, set(self.hoisted))
+        plans = online_max_carriers(loop.body, set(self.hoisted)
+                                    if hoisted_ids is None else set(hoisted_ids))
         if not plans:
             return []
         body = list(loop.body)
@@ -6167,7 +7035,8 @@ class Emitter:
                 # are worth a shared round trip; an unshared scalar load can
                 # still be requested early into registers.
                 if math.prod(axis_extent[name] for name in cta_axes if name not in free) < 2:
-                    if (inner_kind == 'Load' and len(inner.names) == 1
+                    if (not self.shared_probability_enabled
+                            and inner_kind == 'Load' and len(inner.names) == 1
                             and extent <= REGISTER_PREFETCH_MAX):
                         self.prefetch_plans.setdefault(id(outer), []).append(
                             (list(outer.body).index(inner), inner))
@@ -6199,8 +7068,247 @@ class Emitter:
             values[name] = r
         return values
 
+
+    def plan_hoisted_score_scales(self, outer, plans):
+        """Accept only private scores whose sole consumers share one uniform scale."""
+        if len(self.node.op.body) != 1:
+            return
+        tile = self.node.op.body[0]
+        if type(tile).__name__ != 'Tile' or outer not in tile.body:
+            return
+        def flat(body):
+            for statement in body:
+                yield statement
+                for nested in statement_bodies(statement):
+                    yield from flat(nested)
+        whole = list(flat(tile.body))
+        allowed = {'Tile', 'Loop', 'Load', 'Write', 'Assign', 'Let', 'Init', 'Accum'}
+        if any(type(x).__name__ not in allowed for x in whole):
+            return
+        written = {x.output for x in whole if type(x).__name__ == 'Write'}
+        uniform = set()
+        prefix = list(tile.body[:list(tile.body).index(outer)])
+        # A uniform literal-index load is invariant even while producer coordinates
+        # are rebound. Requiring unique global definitions closes all shadow paths.
+        definitions = {}
+        for x in whole:
+            for name in defined_names((x,)) if not statement_bodies(x) else ():
+                definitions.setdefault(name, []).append(x)
+        for x in prefix:
+            kind = type(x).__name__
+            if kind == 'Load':
+                if (x.input in written or x.input not in self.buffers
+                        or dtype_name(self.buffers[x.input][1]) != 'f32'
+                        or x.input in self.shared or len(x.names) != 1
+                        or (x.dtype is not None and dtype_name(x.dtype) != 'f32')
+                        or any(type(e).__name__ != 'Literal' or type(e.value) is not int
+                               for e in x.index)):
+                    return
+                uniform.update(x.names)
+            elif kind == 'Assign':
+                if (x.op.name != 'reciprocal' or len(x.args) != 1
+                        or x.args[0] not in uniform
+                        or (x.dtype is not None and dtype_name(x.dtype) != 'f32')):
+                    return
+                uniform.add(x.name)
+            else:
+                return
+        axes = {a.name for a in tile.axes} | {x.axis.name for x in whole
+                if type(x).__name__ in ('Loop', 'StridedLoop')}
+        axes.update({'tid', 'bid', 'ntid', 'lane', 'warp'})
+        uniform = {name for name in uniform if name not in axes
+                   and len(definitions.get(name, ())) == 1
+                   and name in self.values and self.values[name][1] == 'f32'
+                   and name not in self.mutable}
+        for plan in plans:
+            if type(plan.statement).__name__ != 'Loop' or len(plan.exports) != 1:
+                continue
+            score = plan.exports[0]
+            if score in axes:
+                continue
+            body = list(plan.statement.body)
+            if ([type(x).__name__ for x in body] != ['Load', 'Load', 'Assign', 'Accum']
+                    or body[-1].name != score or body[-1].base is not None
+                    or body[-1].op.name != 'add'
+                    or (body[-1].dtype is not None and dtype_name(body[-1].dtype) != 'f32')):
+                continue
+            consumers = []
+            for x in whole:
+                if statement_bodies(x) or x is body[-1]:
+                    continue
+                uses = set(x.deps())
+                for expr in x.exprs():
+                    uses.update(expr.free_vars())
+                if score in uses:
+                    consumers.append(x)
+            if not consumers:
+                continue
+            scales = []
+            valid = True
+            for x in consumers:
+                if (type(x).__name__ != 'Assign' or x not in outer.body
+                        or x.op.name != 'multiply' or len(x.args) != 2
+                        or x.args.count(score) != 1
+                        or (x.dtype is not None and dtype_name(x.dtype) != 'f32')):
+                    valid = False
+                    break
+                other = x.args[1] if x.args[0] == score else x.args[0]
+                scales.append((other, x.args[0] == score))
+            if (not valid or len(set(scales)) != 1 or scales[0][0] not in uniform
+                    or len(definitions.get(score, ())) != 1):
+                continue
+            scale, score_first = scales[0]
+            self.prescaled_hoists[id(plan.statement)] = (self.values[scale][0], score_first)
+            for x in consumers:
+                self.prescaled_assignments[id(x)] = score
+
+    def prescale_hoisted_score(self, plan, value):
+        scale = self.prescaled_hoists.get(id(plan.statement))
+        if scale is None:
+            return value
+        register, score_first = scale
+        x, y = (value, register) if score_first else (register, value)
+        result = self.reg('f')
+        self.emit(f'mul.rn.f32 {result}, {x}, {y};')
+        return result
+
+    def certify_producer_maxima(self, outer, plans, groups, launched):
+        """Pure typed proof of staged one-item/thread and identical row groups."""
+        if launched != self.block_threads or self.inactive or self.geometry_3d:
+            return None
+        planned = {id(plan.statement): plan for plan in plans}
+        online = self.normalized_softmax_plans(outer, planned)
+        if not online:
+            return None
+        certified = self.find_distributed_maximum_plan(
+            outer, online, {item[0].name for item in online}, planned)
+        if certified is None:
+            return None
+        width, rows, members = certified
+        loops = [items for key, items in groups.items() if key[0] == 'Loop']
+        if len(loops) != 1:
+            return None
+        items = loops[0]
+        if {id(item.statement) for item in items} != set(rows):
+            return None
+        lead = items[0]
+        extent = static(outer.axis.extent)
+        shape = self.matmul_members(items, outer)
+        if shape is None or extent % 4 or extent // 4 != width:
+            return None
+        k_extent = static(lead.statement.axis.extent)
+        staged = 4 * (len(items) * lead.configs * k_extent + k_extent * extent)
+        if (k_extent % 4 or lead.configs * len(items) < 2
+                or self.shared_bytes + self.hoist_bytes + staged > 48 * 1024
+                or lead.configs * width != launched
+                or any(item.configs != lead.configs
+                       or tuple(item.used) != tuple(lead.used)
+                       or item.extent != extent or len(item.exports) != 1
+                       or id(item.statement) not in self.prescaled_hoists
+                       for item in items)):
+            return None
+        # Shared-P proves the sole used axis is the physical preceding row axis.
+        # width==extent/4 makes producer config=floor(physical_tid/width);
+        # work==T gives exactly one item to every physical thread. The full
+        # row-major Tile proof in the shared matcher applies to every CTA.
+        signature = (width, tuple((identity, tuple(names))
+                                  for identity, names in members.items()))
+        return signature, set(rows)
+
+    @staticmethod
+    def producer_online_signature(online):
+        return tuple((id(fold), score, id(maximum), id(delta), id(alpha),
+                      tuple(id(item) for item in needed))
+                     for fold, score, maximum, delta, alpha, needed in online)
+
+    def certify_producer_probabilities(self, outer, plans, maximum_certificate):
+        """Pure whole-phase admission before raw score stores can be removed."""
+        if maximum_certificate is None:
+            return None
+        tile = self.node.op.body[0]
+        axis_names = [axis.name for axis in tile.axes]
+        if (len(axis_names) != len(set(axis_names))
+                or outer.axis.name in axis_names
+                or id(outer) in self.vn_skip or id(outer) in self.subst
+                or id(outer) in self.shared_probability_skip
+                or id(outer) in self.shared_probability_betas):
+            return None
+        planned = {id(item.statement): item for item in plans}
+        online = self.normalized_softmax_plans(outer, planned)
+        shared = self.find_shared_probability_plan(outer, online, planned)
+        if shared is None:
+            return None
+        width, groups, skip, betas, column = shared
+        if (set(groups) != maximum_certificate[1]
+                or width != maximum_certificate[0][0]
+                or any(item.extent != static(outer.axis.extent)
+                       or len(item.exports) != 1
+                       for identity, item in planned.items() if identity in groups)):
+            return None
+        # All conditions below are immutable typed descriptors or saved physical
+        # axis bindings. emit_hoisted restores these exact bindings after its
+        # producer work, registers these same descriptors, and executes the final
+        # P/V publication barrier before the consumer can be entered.
+        return {
+            'outer': outer, 'planned': planned,
+            'online': self.producer_online_signature(online),
+            'maximum': maximum_certificate,
+            'groups': tuple((identity, fold) for identity, (_, fold) in groups.items()),
+            'skip': set(skip), 'betas': set(betas), 'column': column,
+            'column_binding': self.values[column],
+            'scales': {identity: self.prescaled_hoists[identity] for identity in groups},
+            'seeds': tuple((fold.name, self.reduction_identity_literal(
+                reduce_canon(fold.op.name), 'f32')) for fold, *_ in online)
+        }
+
+    def require_producer_probability_binding(self, outer, online):
+        """Commit the preproved phase; never reinterpret P cells as raw scores."""
+        certificate = self.producer_probability_ready[id(outer)]
+        valid = (certificate['outer'] is outer
+                 and certificate['online'] == self.producer_online_signature(online)
+                 and self.values.get(certificate['column']) == certificate['column_binding']
+                 and all(identity in self.hoisted
+                         and self.hoisted[identity][0] is item
+                         and self.hoisted[identity][1] == outer.axis.name
+                         for identity, item in certificate['planned'].items())
+                 and all(self.prescaled_hoists.get(identity) == scale
+                         for identity, scale in certificate['scales'].items())
+                 and certificate['seeds'] == tuple(
+                     (fold.name, self.reduction_identity_literal(
+                         reduce_canon(fold.op.name), 'f32')) for fold, *_ in online))
+        plan = self.find_shared_probability_plan(outer, online) if valid else None
+        distributed = (self.find_distributed_maximum_plan(
+            outer, online, {fold.name for fold, *_ in online}) if valid else None)
+        if plan is not None and distributed is not None:
+            width, groups, skip, betas, column = plan
+            members = distributed[2]
+            valid = (width == certificate['maximum'][0][0]
+                     and tuple((identity, fold) for identity, (_, fold) in groups.items())
+                         == certificate['groups']
+                     and set(skip) == certificate['skip']
+                     and set(betas) == certificate['betas']
+                     and column == certificate['column']
+                     and (width, tuple((identity, tuple(names))
+                                       for identity, names in members.items()))
+                         == certificate['maximum'][0])
+        else:
+            valid = False
+        cached = self.producer_maxima.get(id(outer))
+        if (not valid or cached is None
+                or cached[0] != certificate['maximum'][0]
+                or set(cached[1]) != certificate['maximum'][1]
+                or any(cached[2].get(identity) is not item
+                       for identity, item in certificate['planned'].items()
+                       if identity in certificate['maximum'][1])):
+            # This is an internal construction invariant, not a fallback for
+            # unknown IR: all unknown conditions declined before producer emit.
+            # Returning PTX with the raw-score path would be incorrect here.
+            raise Unsupported('Internal direct probability phase binding mismatch')
+        return plan
+
     def emit_hoisted(self, outer, plans, launched):
         """Evaluate each hoisted reduction across the CTA, then barrier."""
+        self.plan_hoisted_score_scales(outer, plans)
         extent = static(outer.axis.extent)
         names = {outer.axis.name} | {name for plan in plans for name, _ in plan.used}
         saved = {name: self.values.get(name) for name in names}
@@ -6219,7 +7327,8 @@ class Emitter:
         # once a staged matmul's operands are in shared memory, so their
         # latency overlaps its arithmetic; they are stored after it.
         overlap, issued = {}, {}
-        if any(key[0] == 'Loop' for key in groups):
+        if (not self.shared_probability_enabled
+                and any(key[0] == 'Loop' for key in groups)):
             budget = HOIST_OVERLAP_VALUES
             for key, members in groups.items():
                 lead = members[0]
@@ -6242,6 +7351,10 @@ class Emitter:
                 issued[key] = self.evaluate_hoist_items(members, coords)
 
         self.hoist_overlap = issue_overlap
+        self.producer_maximum_certificates[id(outer)] = self.certify_producer_maxima(
+            outer, plans, groups, launched)
+        self.producer_probability_certificates[id(outer)] = self.certify_producer_probabilities(
+            outer, plans, self.producer_maximum_certificates[id(outer)])
         for key, members in groups.items():
             lead = members[0]
             if key in overlap:
@@ -6333,6 +7446,7 @@ class Emitter:
         for config, serial, results in items:
             for plan, values in results:
                 for k, value in enumerate(values):
+                    value = self.prescale_hoisted_score(plan, value)
                     word = self.reg('r')
                     self.emit(f'mad.lo.u32 {word}, {config}, {plan.row_words}, {serial};')
                     self.emit(f'add.u32 {word}, {word}, {k * plan.configs * plan.row_words};')
@@ -6597,7 +7711,26 @@ class Emitter:
         self.emit('bar.sync 0;')
         if self.hoist_overlap is not None:
             self.hoist_overlap()
-        cw = next((c for c in (4, 2, 1) if extent % c == 0 and lead.configs * (extent // c) >= launched), 4)
+        certificate = self.producer_maximum_certificates.get(id(outer))
+        direct = self.producer_probability_certificates.get(id(outer))
+        if direct is not None and (
+                certificate != direct['maximum']
+                or {id(item.statement) for item in members} != direct['maximum'][1]
+                or any(direct['planned'].get(id(item.statement)) is not item
+                       for item in members)):
+            raise Unsupported('Internal direct probability producer route mismatch')
+        maxima = {}
+        if (certificate is not None
+                and {id(item.statement) for item in members} == certificate[1]):
+            for item in members:
+                register = self.reg('f')
+                fold = next(x for x in outer.body if type(x).__name__ == 'Accum'
+                            and x.name in dict(certificate[0][1])[id(item.statement)])
+                seed = self.reduction_identity_literal(reduce_canon(fold.op.name), 'f32')
+                self.emit(f'mov.f32 {register}, {seed};')
+                maxima[id(item.statement)] = register
+        cw = 4 if certificate is not None else next((c for c in (4, 2, 1)
+            if extent % c == 0 and lead.configs * (extent // c) >= launched), 4)
         blocks = extent // cw
         work = lead.configs * blocks
         w = self.reg('r')
@@ -6647,7 +7780,7 @@ class Emitter:
                         self.emit(f'mul.f32 {product}, {x}, {y};')
                         self.emit(f'add.f32 {acc}, {acc}, {product};')
 
-        if k_extent <= HOISTED_UNROLL_MAX:
+        if k_extent <= HOISTED_UNROLL_MAX and not self.shared_probability_enabled:
             # Straight-line k: every operand address is a constant offset.
             for k0 in range(0, k_extent, 4):
                 k_step(b_col, 4 * k0 * extent, a_rows, 4 * k0)
@@ -6674,19 +7807,64 @@ class Emitter:
             self.emit(f'add.u32 {k}, {k}, 4;')
             self.emit(f'bra {k_begin};')
             self.mark(k_done)
+        scores = []
         for plan, row in zip(members, accs):
-            word = self.reg('r')
-            self.emit(f'mad.lo.u32 {word}, {config}, {plan.row_words}, {serial};')
-            sa = self.reg('rd')
-            self.emit(f'mul.wide.u32 {sa}, {word}, 4;')
-            sbase = self.reg('rd')
-            self.emit(f'mov.u64 {sbase}, {plan.symbol};')
-            self.emit(f'add.u64 {sa}, {sbase}, {sa};')
+            if direct is None:
+                word = self.reg('r')
+                self.emit(f'mad.lo.u32 {word}, {config}, {plan.row_words}, {serial};')
+                sa = self.reg('rd')
+                self.emit(f'mul.wide.u32 {sa}, {word}, 4;')
+                sbase = self.reg('rd')
+                self.emit(f'mov.u64 {sbase}, {plan.symbol};')
+                self.emit(f'add.u64 {sa}, {sbase}, {sa};')
+            retained = []
             for j, acc in enumerate(row):
-                self.emit(f'st.shared.f32 [{sa}+{4 * j}], {acc};')
+                acc = self.prescale_hoisted_score(plan, acc)
+                if direct is None:
+                    self.emit(f'st.shared.f32 [{sa}+{4 * j}], {acc};')
+                else:
+                    retained.append(acc)
+                if id(plan.statement) in maxima:
+                    maximum = maxima[id(plan.statement)]
+                    self.emit(f'max.f32 {maximum}, {maximum}, {acc};')
+            if direct is not None:
+                scores.append((plan, retained))
         self.emit(f'add.u32 {w}, {w}, {launched};')
         self.emit(f'bra {begin};')
         self.mark(done)
+        if maxima:
+            # work==T proves all physical lanes reach this join together; the
+            # XOR tree never leaves its aligned W16/W32 physical row subgroup.
+            width = certificate[0][0]
+            clamp = ((32 - width) << 8) | (width - 1)
+            offset = width // 2
+            while offset:
+                for maximum in maxima.values():
+                    peer = self.reg('f')
+                    self.emit(f'shfl.sync.bfly.b32 {peer}, {maximum}, {offset}, {clamp}, 0xffffffff;')
+                    self.emit(f'max.f32 {maximum}, {maximum}, {peer};')
+                offset //= 2
+            self.producer_maxima[id(outer)] = (
+                certificate[0], maxima, {id(item.statement): item for item in members})
+            if direct is not None:
+                # Fullwork==T proves EVERY lane initialized its four scores per
+                # member before this join. Each row's full MAX is now complete.
+                # Scores expire here, before subsequent V hoist work.
+                for item, retained in scores:
+                    word = self.reg('r')
+                    self.emit(f'mad.lo.u32 {word}, {config}, {item.row_words}, {serial};')
+                    address, base = self.reg('rd'), self.reg('rd')
+                    self.emit(f'mul.wide.u32 {address}, {word}, 4;')
+                    self.emit(f'mov.u64 {base}, {item.symbol};')
+                    self.emit(f'add.u64 {address}, {base}, {address};')
+                    maximum = maxima[id(item.statement)]
+                    for component, score in enumerate(retained):
+                        difference, dtype = self.emit_operation(
+                            'subtract', [(score, 'f32'), (maximum, 'f32')], 'f32')
+                        probability, dtype = self.emit_operation(
+                            'exp', [(difference, dtype)], 'f32')
+                        self.emit(f'st.shared.f32 [{address}+{4 * component}], {probability};')
+                self.producer_probability_ready[id(outer)] = direct
 
     def matmul_work_loop(self, shape, members, outer, launched, tn):
         b, operands = shape
@@ -6751,6 +7929,7 @@ class Emitter:
         self.loop_expressions.pop()
         for plan, row in zip(members, accs):
             for j, acc in enumerate(row):
+                acc = self.prescale_hoisted_score(plan, acc)
                 word = self.reg('r')
                 self.emit(f'mad.lo.u32 {word}, {config}, {plan.row_words}, {serial};')
                 if j:
@@ -6872,6 +8051,7 @@ class Emitter:
         for item_config, member_rows in zip(configs, accs):
             for plan, row in zip(members, member_rows):
                 for j, acc in enumerate(row):
+                    acc = self.prescale_hoisted_score(plan, acc)
                     word = self.reg('r')
                     self.emit(f'mad.lo.u32 {word}, {item_config}, {plan.row_words}, {serial};')
                     if j:
@@ -7070,6 +8250,12 @@ class Emitter:
                 self.emit('ld.shared.v4.f32 {' + ', '.join(vector) + f'}}, [{address}];')
                 vectors[row] = vector
             return vectors[row][position]
+        packet = (getattr(self, 'shared_scalar_packet', None) or {}).get((row, serial))
+        if packet is not None:
+            address, immediate = packet
+            r = self.reg('f')
+            self.emit(f'ld.shared.f32 {r}, [{address}+{immediate}];')
+            return r
         offset, address, r = self.reg('rd'), self.reg('rd'), self.reg('f')
         self.emit(f'mul.wide.u32 {offset}, {self.value(serial)}, 4;')
         self.emit(f'add.u64 {address}, {row}, {offset};')
@@ -7118,7 +8304,8 @@ class Emitter:
 
     def statements(self, statements, shared_prefetch=None):
         pending = []
-        sibling_groups, sibling_members = self.sibling_dot_groups(statements)
+        sibling_groups, sibling_members = (({}, set()) if self.shared_probability_enabled
+                                           else self.sibling_dot_groups(statements))
         deferred = self.deferred_before_hoists(statements)
         waiting = {id(x) for chosen in deferred.values() for x in chosen}
         plan = self.access_plan_for(statements, shared_prefetch or ())
@@ -7131,14 +8318,21 @@ class Emitter:
         for position, s in enumerate(statements):
             for name, key in pending:
                 self.vn_registers[key] = self.values[name]
+            if id(s) in self.shared_probability_skip:
+                pending = []
+                continue
             pending = self.vn_record.get(id(s), [])
             if id(s) in waiting:
                 pending = []
+                continue
                 continue
             if id(s) in sibling_members:
                 if id(s) in sibling_groups:
                     self.emit_sibling_dot_group(sibling_groups[id(s)])
                 pending = []
+                continue
+            if id(s) in self.shared_probability_betas:
+                self.load_shared_probability(s)
                 continue
             if id(s) in self.hoist_plans:
                 self.emit_hoisted(*self.hoist_plans.pop(id(s)))
@@ -7161,6 +8355,14 @@ class Emitter:
                 for name, reg in self.subst[id(s)]:
                     self.values[name] = (reg, 'f32')
                     self.rebind(name)
+                continue
+            if id(s) in self.prescaled_assignments:
+                score = self.prescaled_assignments[id(s)]
+                snapshot = self.reg('f')
+                self.emit(f'mov.f32 {snapshot}, {self.value(score)};')
+                self.values[s.name] = (snapshot, 'f32')
+                self.mutable.pop(s.name, None)
+                self.rebind(s.name)
                 continue
             if id(s) in self.vn_skip:
                 # Value-numbered redundant: reuse the earlier register.
@@ -7261,9 +8463,14 @@ class Emitter:
                     self.tile_extents = {axis.name: extent for axis, extent in zip(s.axes, extents)}
                     if not inactive and not self.inactive and not self.dynamic_shared:
                         self.plan_hoists(s, extents, launched)
+                    previous_replay = getattr(self, 'rms_input_replay', None)
+                    self.rms_input_replay = (
+                        self.find_rms_input_replay(s, extents, launched)
+                        if not inactive and not self.inactive else None)
                     try:
                         self.statements_with_init_scope(s.body, self.init_scope_frame(s.body))
                     finally:
+                        self.rms_input_replay = previous_replay
                         if inactive and collective:
                             self.inactive.pop()
                 finally:
@@ -7441,6 +8648,8 @@ class Emitter:
                         fixed, removed = {}, set()
                         online = (self.normalized_softmax_plans(s)
                                   if kind == 'Loop' and not self.inactive else [])
+                        if id(s) in self.producer_probability_ready:
+                            self.require_producer_probability_binding(s, online)
                         for fold, x, gn, dg, alpha, _ in online:
                             removed.add(id(fold))
                             fixed[id(gn)] = lambda vn, gn=gn, x=x: [(gn.name, ('maxof', vn(x)))]
@@ -7454,10 +8663,17 @@ class Emitter:
                         for name, rep in carried.items():
                             self.values[name] = self.values[rep]
                             self.mutable[name] = self.mutable[rep]
-                        if online and not self.hoisted_softmax(s, online):
+                        if online and not (not self.shared_probability_enabled
+                                           and self.hoisted_softmax(s, online)):
                             self.two_pass_softmax(s, online)
                     loop_init_frame = self.init_scope_frame(s.body)
                     extent = static(s.axis.extent)
+                    if kind == 'StridedLoop' and self.rms_input_replay_loop(s, loop_init_frame):
+                        continue
+                    if kind == 'StridedLoop' and self.small_strided_softmax_pair(s):
+                        continue
+                    if kind == 'StridedLoop' and self.exact_short_strided_loop(s, loop_init_frame):
+                        continue
                     if kind == 'Loop' and id(s) in self.register_prefetch:
                         prefetched = self.register_prefetch.pop(id(s))
                         try:
@@ -7476,9 +8692,12 @@ class Emitter:
                         finally:
                             self.hoist_vector = None
                         continue
-                    if kind == 'Loop' and self.hoisted_vector_loop(s, extent, loop_init_frame):
+                    if (kind == 'Loop' and not self.shared_probability_enabled
+                            and self.hoisted_vector_loop(s, extent, loop_init_frame)):
                         continue
                     if kind == 'StridedLoop' and self.serial_read_pipeline(s):
+                        continue
+                    if kind == 'Loop' and self.scalar_shared_address_packet_loop(s, loop_init_frame):
                         continue
                     if kind == 'Loop' and self.ordered_key_batch(s):
                         # KEY replays this loop body without the generic wrapper.
@@ -7624,6 +8843,7 @@ class Emitter:
                 finally:
                     # Loop induction names are lexical, including empty loops and shadowed Tile axes.
                     # Preserve data/mutable facts computed by the body; only the axis binding is restored.
+                    self.restore_shared_probability_phase(s)
                     del self.loop_invariants[previous_invariant_depth:]
                     del self.loop_expressions[previous_expression_depth:]
                     if previous_axis is None:
@@ -7945,6 +9165,15 @@ class Emitter:
 
 
     def render(self):
+        self.shared_probability_skip = set()
+        self.shared_probability_betas = {}
+        self.shared_probability_frames = {}
+        self.producer_probability_certificates = {}
+        self.producer_probability_ready = {}
+        self.producer_maximum_certificates = {}
+        self.producer_maxima = {}
+        self.prescaled_hoists = {}
+        self.prescaled_assignments = {}
         self.serial_read_plans = self.find_serial_read_plans(self.node.op.body)
         self.global_dot_alignments = {}
         self.global_dot_prologue_end = len(self.lines)
@@ -8317,6 +9546,30 @@ def compile_path(path):
     # vector loads computes in exact fp32 and, on the RTX 5090, beat the
     # three-term TF32 path on m01 (17.0 vs 21.1 us); prefer it outright.
     simt = Emitter(graph, retile_redundant_hoists(node, matches[0]), matches[0])
+    # Approximate reciprocal is eligible only for a single final F32
+    # normalized output with an explicit, sufficiently broad error budget.
+    # The typed two-trip matcher and sum-carrier check gate activation below.
+    outputs = list(graph.outputs)
+    simt.allow_softmax_approx_rcp = (
+        len(kernels) == len(metadata['kernels']) == len(outputs) == 1
+        and matches[0].get('final') is True
+        and metadata.get('graph_outputs') == outputs
+        and isinstance(metadata.get('rtol'), (int, float))
+        and isinstance(metadata.get('atol'), (int, float))
+        and metadata['rtol'] >= 1e-4 and metadata['atol'] >= 1e-6
+        and len(metadata.get('kernels', ())) == 1
+        and len(matches[0].get('args', ())) == 2
+        and sum(bool(a.get('output')) for a in matches[0]['args']) == 1
+        and all(a.get('dtype') == 'f32' for a in matches[0]['args']))
+    own = tuple(node.buffer_names())
+    simt.shared_probability_enabled = (
+        len(kernels) == len(metadata['kernels']) == 1 and len(own) == 1
+        and matches[0].get('final') is True
+        and list(graph.outputs) == list(own) and metadata.get('graph_outputs') == list(own)
+        and all(isinstance(n.inputs, (list, tuple))
+                and all(isinstance(x, str) for x in n.inputs) for n in graph.nodes.values())
+        and all(own[0] not in n.inputs for n in graph.nodes.values() if n is not node)
+        and sum(own[0] in n.buffer_names() for n in graph.nodes.values()) == 1)
     simt_ptx = simt.render()
     planned = plan_simt_route(graph, node, matches[0])
     if planned is not None:

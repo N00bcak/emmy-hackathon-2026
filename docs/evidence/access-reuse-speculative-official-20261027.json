@@ -1,0 +1,159 @@
+{
+  "status": "completed",
+  "plan": {
+    "schema": 1,
+    "cases": [
+      {
+        "case": "p03_relu_mul_4m",
+        "arm": "p1",
+        "source_sha256": "5da1941927c226d2c53dd274b9749cd5b03ff3261cfe5444fb16fa12066fb281",
+        "case_hashes": {
+          "meta.json": "2fc397e283a692883ec35e5165991a165572b8008530925e3e438e9dce66c9e0",
+          "inputs.npz": "7f535b5328b35909c6f2cbed61704580828a8e07aa614e38590ac8e65b1b623b",
+          "expected.npz": "101f0ed19a3d595bcf45ba64f8ea9ac27a8d118cd68ed42c153221632656ac98"
+        },
+        "ir_sha256": "cd262f51bfcb9f0150e0fb2ae83c5155be69e94b11ef9feb4568475c1c691f33",
+        "ptx_sha256": {
+          "baseline": "98bb8eea9ff0019c5d177e290b3e248b0b888ea8ebaac4f5e534b832ce34c74a",
+          "candidate": "497f90d9ae17ebcef817f1eda8426cfd8161c5e3da3d5906df6e8b3376ab616d"
+        }
+      },
+      {
+        "case": "a01_attention_512x64",
+        "arm": "p3",
+        "source_sha256": "1412ce6a5f0d29594c00ee0e7201c627fb12782160c7686b2146a6c2f92f3295",
+        "case_hashes": {
+          "meta.json": "b50e138f1b6cfdbd0db369e1d982adb88b714d956e8f1f5c37b73d02cbf4194d",
+          "inputs.npz": "d051be51451d2e7469fbefac7aab80f75cfd4dd3407c31358147e40a2b09163b",
+          "expected.npz": "98c142b005c7b0fcd27c9cc0aa8d1367e8a7d6f42e261a50c5712f8fe5b098b6"
+        },
+        "ir_sha256": "df5d5515ffa5733c3f3aaeb0395971ead25177df32cfc8fb192b3d64b5861b0b",
+        "ptx_sha256": {
+          "baseline": "9e84994d05d6d1fb71b14cf98af789c20460237c78c83b1147aa78a2fead574d",
+          "candidate": "a9f8a6f5fb9f4bb6080192578d97a30b82f672b45d8b45b0a167874d9855b402"
+        }
+      }
+    ],
+    "baseline_source_sha256": "8ce9868462003fd5d44db861e21cd94165438ceeb5f10eed5544a4a5f0bb2410",
+    "attempt_cap": 25,
+    "planned_attempts": 17,
+    "schedule": "health; each case AA2 then three alternating AB pairs",
+    "warmup": 5,
+    "iters": 20
+  },
+  "cases": [
+    {
+      "case": "p03_relu_mul_4m",
+      "arm": "p1",
+      "aa": [
+        10.896,
+        10.88
+      ],
+      "ab": [
+        {
+          "order": [
+            "baseline",
+            "candidate"
+          ],
+          "times_us": {
+            "baseline": 10.896,
+            "candidate": 8.912
+          },
+          "candidate_over_baseline": 0.8179148311306902
+        },
+        {
+          "order": [
+            "candidate",
+            "baseline"
+          ],
+          "times_us": {
+            "candidate": 8.928,
+            "baseline": 10.912
+          },
+          "candidate_over_baseline": 0.8181818181818182
+        },
+        {
+          "order": [
+            "baseline",
+            "candidate"
+          ],
+          "times_us": {
+            "baseline": 10.864,
+            "candidate": 8.896
+          },
+          "candidate_over_baseline": 0.8188512518409425
+        }
+      ],
+      "full_output_passed": {
+        "baseline": true,
+        "candidate": true
+      },
+      "median_ratio": 0.8181818181818182,
+      "noise_margin": 0.02,
+      "verdict": "faster"
+    },
+    {
+      "case": "a01_attention_512x64",
+      "arm": "p3",
+      "aa": [
+        115.344,
+        115.36
+      ],
+      "ab": [
+        {
+          "order": [
+            "baseline",
+            "candidate"
+          ],
+          "times_us": {
+            "baseline": 115.328,
+            "candidate": 113.312
+          },
+          "candidate_over_baseline": 0.9825194228634849
+        },
+        {
+          "order": [
+            "candidate",
+            "baseline"
+          ],
+          "times_us": {
+            "candidate": 113.28,
+            "baseline": 115.328
+          },
+          "candidate_over_baseline": 0.9822419533851277
+        },
+        {
+          "order": [
+            "baseline",
+            "candidate"
+          ],
+          "times_us": {
+            "baseline": 115.296,
+            "candidate": 113.328
+          },
+          "candidate_over_baseline": 0.9829308909242298
+        }
+      ],
+      "full_output_passed": {
+        "baseline": true,
+        "candidate": true
+      },
+      "median_ratio": 0.9825194228634849,
+      "noise_margin": 0.02,
+      "verdict": "unresolved"
+    }
+  ],
+  "requests_attempted": 17,
+  "health": {
+    "ok": true,
+    "arch_ok": true,
+    "ptxas": "/usr/local/cuda/bin/ptxas",
+    "default_arch": "sm_120",
+    "cache_dir": "/home/riftuser/.cache/ptxserver",
+    "can_compile": true,
+    "can_run": true,
+    "gpu": "NVIDIA GeForce RTX 5090 (compute capability 12.0, sm_120)"
+  },
+  "completed_at": 1793103300.086942,
+  "sources_unchanged": true
+}

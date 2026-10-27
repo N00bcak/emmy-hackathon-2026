@@ -295,21 +295,6 @@ class CompilerTests(unittest.TestCase):
         self.assertRegex(out, r'@%p\d+ max(?:\.NaN)?\.f32')
         self.assertRegex(out, r'@%p\d+ mov\.f32')
 
-    def test_log_lowering_is_natural_log(self):
-        from emmy.compiler.ir.elementwise import ElementwiseImpl
-        p=fixture('p00_scalar_add',self.out/'log-natural',tile_extent=1,data_extent=1)
-        graph=Graph.from_dict(json.loads(p.read_text()))
-        node=graph.nodes['add']
-        tile=node.op.body[0]
-        load=tile.body[0]
-        from emmy.compiler.ir.stmt.leaves import Assign
-        logv=Assign('logv',ElementwiseImpl('log'),(load.names[0],),None)
-        node.op=replace(node.op,body=(replace(tile,body=(load,logv)),))
-        p.write_text(json.dumps(graph.to_dict(),indent=2,default=repr))
-        out=self.assemble(p)
-        self.assertIn('lg2.approx.f32',out)
-        self.assertIn('0f3f317218',out)  # ln(2), not a base-2 result
-
     def test_reduce_aliases_canonicalize(self):
         from emmy.compiler.ir.elementwise import ElementwiseImpl
         p=fixture('r01_array_sum',self.out/'reduce-alias',tile_extent=127,data_extent=127)
@@ -387,7 +372,9 @@ class CompilerTests(unittest.TestCase):
 
     def test_vector_copy_has_runtime_fallback_and_scalar_negative(self):
         aligned=fixture('m02_matmul_rect',self.out/'vector-copy-aligned')
-        out=self.assemble(aligned)
+        self.check_vector_copy_runtime_fallback(self.assemble(aligned))
+
+    def check_vector_copy_runtime_fallback(self, out):
         self.assertIn('cp.async.cg.shared.global',out)
         self.assertIn('cp.async.commit_group',out)
         self.assertIn('cp.async.wait_group 0',out)
@@ -396,6 +383,8 @@ class CompilerTests(unittest.TestCase):
         # assumption; it branches to the scalar path on either address.
         self.assertIn('and.b64',out)
         self.assertIn('setp.eq.u64',out)
+
+    def test_cp_async_destination_address_arithmetic(self):
         # Evaluate emitted address arithmetic independently of register names.
         # The shared-state destination must be base+offset, including when the
         # assembler assigns a nonzero dynamic slab position (SM120 regression).
@@ -618,6 +607,134 @@ class CompilerTests(unittest.TestCase):
         self.assertNotRegex(rendered, r'\bbra\s+(?:loop|loop_done)_\d+;')
         self.assertRegex(rendered, r'ld\.shared\.v4\.f32')
         self.assertRegex(rendered, r'st\.global\.v4\.f32')
+
+    def test_m01_generic_inner_loop_hoists_invariant_index_division(self):
+        """m01's loop-invariant index quotient and remainder are not duplicated.
+
+        m01 reuses the staging quotient/remainder through multiple shared-memory
+        addresses. The preheader must compute that maximal index once, and the
+        inner body must not recompute it; indices that depend on the induction
+        variable legitimately remain in the body.
+        """
+        source=next((ROOT/'m01_matmul_512').glob('*.ir.json'))
+        graph=Graph.from_dict(json.loads(source.read_text()))
+        meta=json.loads(source.with_name('meta.json').read_text())['kernels'][0]
+        emitter=mod.Emitter(graph, mod.retile_redundant_hoists(graph.nodes[meta['node']], meta), meta)
+        self.check_m01_invariant_index_division(source, emitter.render())
+
+    def check_m01_invariant_index_division(self, source, text):
+        import re
+        graph=Graph.from_dict(json.loads(source.read_text()))
+        node=next(n for n in graph.nodes.values() if type(n.op).__name__=='KernelOp')
+        tile=next(s for s in node.op.body if type(s).__name__=='Tile')
+        outer=next(s for s in tile.body if type(s).__name__ in ('Loop','StridedLoop'))
+        inner=next(s for s in outer.body if type(s).__name__ in ('Loop','StridedLoop'))
+
+        def uses_division(expr):
+            kind=type(expr).__name__
+            if kind=='BinaryExpr':
+                return (expr.op in ('/','//','%') or uses_division(expr.left)
+                        or uses_division(expr.right))
+            if kind=='TernaryExpr':
+                return (uses_division(expr.cond) or uses_division(expr.if_true)
+                        or uses_division(expr.if_false))
+            return False
+
+        names=mod.defined_names(inner.body)|{inner.axis.name}
+        expressions=[coord for _buffer,index,_offsets in mod.index_addresses(inner.body)
+                     for coord in index]
+        counts={}
+        by_key={}
+        for expression in mod.invariant_occurrences(expressions,names):
+            key=mod.structural_key(expression)
+            counts[key]=counts.get(key,0)+1
+            by_key.setdefault(key,expression)
+        division_counts={key:count for key,count in counts.items()
+                         if uses_division(by_key[key])}
+        self.assertEqual(1,sum(count>1 for count in division_counts.values()))
+        single_use=sum(count==1 for count in division_counts.values())
+
+        lines=text.splitlines()
+        labels={}
+        for index,line in enumerate(lines):
+            match=re.fullmatch(r'\s*([A-Za-z_]\w*):\s*',line)
+            if match:
+                labels[match.group(1)]=index
+        backedges=[]
+        for index,line in enumerate(lines):
+            match=re.fullmatch(r'\s*bra\s+([A-Za-z_]\w*);\s*',line)
+            if match and match.group(1) in labels and labels[match.group(1)]<index:
+                backedges.append((labels[match.group(1)],index))
+        self.assertGreaterEqual(len(backedges),2)
+        start,end=min(backedges,key=lambda span:span[1]-span[0])
+        preheader_start=max((i for i in labels.values() if i<start),default=-1)+1
+        preheader=lines[preheader_start:start]
+        body='\n'.join(lines[start+1:end])
+
+        # Dynamic shared memory has a nonzero window base on sm_120. Retain it
+        # when adding the destination's offset; subtracting only the slab base
+        # silently writes through a different address on that target.
+        rendered='\n'.join(lines)
+        self.assertRegex(rendered, r'mov\.u64 %rd\d+, __emmy_smem;')
+        self.assertRegex(rendered, r'mov\.u32 %r\d+, __emmy_smem;')
+
+        div_re=re.compile(r'\bdiv\.[su]32\s+(%r\d+)\s*,\s*(%r\d+)\s*,\s*(%r\d+|\d+);')
+        rem_re=re.compile(r'\brem\.[su]32\s+(%r\d+)\s*,\s*(%r\d+)\s*,\s*(%r\d+|\d+);')
+        divisions=[match.groups() for line in preheader
+                   if (match:=div_re.search(line))]
+        remainders=[match.groups() for line in preheader
+                    if (match:=rem_re.search(line))]
+        self.assertLessEqual(len(divisions),1)
+        self.assertLessEqual(len(remainders),1)
+        if not divisions and not remainders:
+            # The merged integer-range lowering replaces a power-of-two
+            # quotient with shifts. Its loop-invariant result still stays
+            # outside the innermost backedge.
+            self.assertRegex(rendered, r'\bshr\.[su]32\b')
+            self.assertNotRegex(body, r'\b(?:shr|div|rem)\.[su]32\b')
+            return
+        if not divisions:
+            # Nonnegative integer range proofs can lower a remainder directly,
+            # without computing an unused quotient or a sign correction.
+            self.assertEqual(1,len(remainders))
+            remainder=remainders[0][0]
+            preheader_results=(remainder,)
+        elif remainders:
+            self.assertEqual(divisions[0][1:],remainders[0][1:])
+            remainder=remainders[0][0]
+        else:
+            # A floor-division lowering can reconstruct the remainder as
+            # dividend - quotient*divisor, then apply its sign correction.
+            quotient,dividend,divisor=divisions[0]
+            product=next((match.group(1) for line in preheader
+                          if (match:=re.search(rf'mul\.lo\.s32\s+(%r\d+)\s*,\s*{re.escape(quotient)}\s*,\s*{re.escape(divisor)};',line))),None)
+            self.assertIsNotNone(product)
+            remainder=next((match.group(1) for line in preheader
+                            if (match:=re.search(rf'sub\.s32\s+(%r\d+)\s*,\s*{re.escape(dividend)}\s*,\s*{re.escape(product)};',line))),None)
+            self.assertIsNotNone(remainder)
+        if divisions:
+            preheader_results=(divisions[0][0],remainder)
+        for register in preheader_results:
+            self.assertNotRegex(body,rf'{re.escape(register)}(?!\w)')
+
+        derived=set(preheader_results)
+        changed=True
+        while changed:
+            changed=False
+            for line in preheader:
+                registers=re.findall(r'%r(?:d)?\d+',line)
+                if len(registers)>1 and any(reg in derived for reg in registers[1:]):
+                    if registers[0] not in derived:
+                        derived.add(registers[0])
+                        changed=True
+        # Strength-reduced address bases may feed a single vector load.
+        self.assertTrue(any(len(re.findall(rf'{re.escape(reg)}(?!\w)',body))>=1
+                            for reg in derived))
+        self.assertLessEqual(sum(bool(re.search(r'\bdiv\.[su]32\b',line))
+                                 for line in lines[start+1:end]),single_use)
+        self.assertLessEqual(sum(bool(re.search(r'\brem\.[su]32\b',line))
+                                 for line in lines[start+1:end]),single_use)
+
 
     def test_generic_loop_hoists_invariant_index_division(self):
         """The generic loop analysis hoists a repeated invariant quotient."""
@@ -1177,12 +1294,15 @@ class CompilerTests(unittest.TestCase):
                 ptx=self.out/(problem+'.ptx')
                 ptx.write_text(text,encoding='ascii')
                 meta=json.loads(source.with_name('meta.json').read_text())
-                for kernel in meta['kernels']:
-                    self.assertIn('.entry '+kernel['entry']+'(',text)
+                self.check_published_entries(meta, text)
                 for arch in ('sm_89','sm_120'):
                     result=subprocess.run(['ptxas','-arch='+arch,str(ptx),'-o',str(self.out/(problem+arch+'.cubin'))],
                                           capture_output=True,text=True,timeout=30)
                     self.assertEqual(result.returncode,0,result.stderr)
+
+    def check_published_entries(self, meta, text):
+        for kernel in meta['kernels']:
+            self.assertIn('.entry '+kernel['entry']+'(',text)
 
     def test_f16_storage_uses_b16_carrier_and_promoted_arithmetic(self):
         from emmy.compiler.dtype import F16
@@ -1232,6 +1352,7 @@ class CompilerTests(unittest.TestCase):
         path=self.out/'scalar-math'
         path.mkdir()
         path=typed_pointwise((Load('v','x',(Var('i'),)),
+                              Assign('logv',ElementwiseImpl('log'),('v',)),
                               Assign('s',ElementwiseImpl('sin'),('v',)),
                               Assign('c',ElementwiseImpl('cos'),('v',)),
                               Assign('e',ElementwiseImpl('erf'),('v',)),
@@ -1245,6 +1366,8 @@ class CompilerTests(unittest.TestCase):
             {'name':'two','dtype':'f32','shape':[],'scalar':True,'value':2.0})
         path.with_name('meta.json').write_text(json.dumps(meta))
         out=self.assemble(path)
+        self.assertIn('lg2.approx.f32',out)
+        self.assertIn('0f3f317218',out)  # Natural logarithm: retain ln(2).
         self.assertRegex(out, r'ex2\.approx(?:\.ftz)?\.f32')
         for instruction in ('sin.approx.f32','cos.approx.f32',
                             'tanh.approx.f32','setp.gt.f32'):

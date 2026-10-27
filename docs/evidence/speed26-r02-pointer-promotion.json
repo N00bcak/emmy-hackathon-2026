@@ -1,0 +1,42 @@
+{
+  "decision": "retain_serial_pointer_source_as_fourth_independently_confirmed_speed_promotion",
+  "source_id": "2014ed08fee3dcde855ec5d4bb9d492ce729f08d59cb7c024a34a81544adf399",
+  "compile_sha256": "95e7f559708135ba59e6105c4570c321df91ded711c06188cd4c1a64f31574a4",
+  "comparison_source_id": "c0d2700cc9d905eb472b766d2df7cbb1316b861985c90d6fb5ab713baadb3323",
+  "patch_sha256": "a8deabeb394f0e68e0f1ae6742138eceeb87cbd8a2b9f114b1464eadf29af61a",
+  "suite_id": "9c3e5fe486ce9465ed70df41d873d32ed84647caab11b0e0ed1d1260adaa87ca",
+  "gpu_case_count": 66,
+  "published_case_count": 15,
+  "fixed_experiment_check_count": 100,
+  "tolerances_changed": false,
+  "new_cases": false,
+  "candidate_fresh_all15_evidence": "6e7f2e0a4fa8c790b70892774438b4c1680e58dc0713428d5283dce9b1bab260",
+  "candidate_published_gate": "9d0cac5f556e0d7b52a3c584db660d42dc09572600c79e6ca18548db0451894f",
+  "comparison_fresh_all15_evidence": "3b65ac7a283394fbe9d9c58bfe1e8b93b922b6590aef1e87ada059b12c892732",
+  "comparison_published_gate": "76c638bba45f72a800d0a9d45ade796456c0b81cff321dbd8f904f367ad2bd03",
+  "candidate_fixed100": "campaign-20261026-speed-cont-v16/cpu100/pointer-independent-v1/results/results.json",
+  "comparison_fixed100": "campaign-20261026-speed-cont-v16/cpu100/retained-pointer-independent-v1/results/results.json",
+  "qualification_policy_sha256": "e7b8600a5987af2a6ad8a83d54cd320dc64a1bb3ef6981532fdae372de8e19f1",
+  "qualification_audit": "campaign-20261026-speed-cont-v15/r02-grouped32-v1/independent-audit.json",
+  "screen_accepted_evidence": "7becca49475f375b353c3c6bd32230a9bdbfd231c389ae06bde23080b8166aeb",
+  "independent_accepted_evidence": "0ef825fad142fd6150f236ae206c3e36c35e0cfa082f1d5708568a4bd78ab575",
+  "timing_protocol": "cuda-graph-grouped32-v1",
+  "device": "local RTX 4090",
+  "metric": "warm grouped 32 replay, candidate time / retained time",
+  "screen_block_ratios": [0.9421965940273722, 0.9418604454408934],
+  "independent_block_ratios": [0.9421965940273722, 0.9421965940273722],
+  "independent_aa_margin": 0.01744173946149452,
+  "preregistered_extra_margin": 0.01,
+  "robust_gain": true,
+  "per_case_review": {
+    "r02_big_sum": "confirmed approximately 5.78% lower warm R32 time; both independent blocks passed controls",
+    "r03_mean": "correctness passed; compiled image changes and sm89 registers fall from 40 to 38 with no spills; latency is unmeasured",
+    "other_published_cases": "compiled images unchanged by this source change; all published correctness cases passed"
+  },
+  "limits": [
+    "The measured r02 result is warm grouped replay on a 4090, not isolated launch latency.",
+    "sm120 assembly passed; no RTX 5090 execution or correctness claim.",
+    "r03 latency remains unresolved; no measured per-case regression was established."
+  ],
+  "research_root": "/mnt/nfs/bcy/emmy/research"
+}

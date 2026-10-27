@@ -301,6 +301,105 @@ def validate_pairs(root, descriptors):
                       "planned_requests": planned, "omitted_cases": len(prepared) - len(selected)}
 
 
+def validate_attested_direct_pair(root, descriptors):
+    """Validate one frozen, independently repeated local comparison.
+
+    This path is for an existing suite case. It does not draw confirmation cases
+    or treat a diagnostic receipt alone as a promotion.
+    """
+    if not isinstance(descriptors, list) or len(descriptors) != 1:
+        raise CalibrationError("supply exactly one attested direct comparison")
+    descriptor = descriptors[0]
+    store = Store(root)
+    experiment_id = component(descriptor["experiment_id"])
+    screen_id = component(descriptor["screen_experiment_id"])
+    source_id = descriptor["source_id"]
+    baseline_id = descriptor["comparison_source_id"]
+    suite_id = descriptor["suite_id"]
+    reports = []
+    retained_hashes = set()
+    for name in (screen_id, experiment_id):
+        manifest = store._manifest(name)
+        if manifest["source_id"] != source_id or manifest["confirmation"]["suite_id"] != suite_id:
+            raise CalibrationError("direct comparison source or suite changed")
+        receipts = [store.verify_object(e, "evaluation")["payload"] for e in manifest["evidence_ids"]]
+        matches = [r["report"] for r in receipts if r["report"].get("admission_status") == "observed_no_contention"]
+        if len(matches) != 1:
+            raise CalibrationError("one clean host-attested receipt required per independent run")
+        report = matches[0]
+        if report.get("comparison_baseline_source_id") != baseline_id or \
+                report.get("direct_timing", {}).get("resolved_gain") is not True or \
+                report.get("direct_timing", {}).get("aa", {}).get("pass") is not True:
+            raise CalibrationError("independent direct timing or gate binding failed")
+        store.require_published_gate(source_id, suite_id, report.get("published_gate_id"))
+        store.require_published_gate(baseline_id, suite_id, report.get("comparison_baseline_gate_id"))
+        if name == experiment_id and (report["published_gate_id"] != descriptor["candidate_gate_id"] or
+                                      report["comparison_baseline_gate_id"] != descriptor["baseline_gate_id"]):
+            raise CalibrationError("fresh independent gates differ from descriptor")
+        if report.get("local_device", {}).get("name") != "NVIDIA GeForce RTX 4090":
+            raise CalibrationError("direct comparison did not execute on the RTX 4090")
+        if len(report.get("cases", [])) != 1 or report["cases"][0].get("case_id") != descriptor["case_id"] or \
+                report["cases"][0].get("status") != "pass":
+            raise CalibrationError("direct comparison case mismatch or correctness failure")
+        for artifact_id in report.get("artifact_ids", []):
+            artifact = store.verify_object(artifact_id)
+            retained_hashes.update(entry["sha256"] for entry in artifact["files"].values())
+        reports.append(report)
+    store.require_published_gate(source_id, suite_id, descriptor["candidate_gate_id"])
+    store.require_published_gate(baseline_id, suite_id, descriptor["baseline_gate_id"])
+    store.verify_object(source_id, "source")
+    store.verify_object(baseline_id, "source")
+    folder = Path(descriptor["case_dir"]).resolve()
+    files = [folder / name for name in ("meta.json", "inputs.npz", "expected.npz")]
+    if any(not p.is_file() for p in files):
+        raise CalibrationError("exact direct comparison case files missing")
+    meta = json.loads(files[0].read_text())
+    count = len(meta["kernels"])
+    baseline = _ptx_paths(descriptor, "baseline_ptx", count)
+    candidate = _ptx_paths(descriptor, "candidate_ptx", count)
+    identities = {str(p): sha(p) for p in files + baseline + candidate}
+    binding = store.verify_object(descriptor["retained_inputs_id"])
+    retained_hashes.update(entry["sha256"] for entry in binding["files"].values())
+    if not set(identities.values()).issubset(retained_hashes):
+        raise CalibrationError("case and PTX bytes were not retained")
+    if descriptor["independent_result_id"] not in reports[1]["artifact_ids"]:
+        raise CalibrationError("independent timing object is not in attested evidence")
+    raw = store.verify_object(descriptor["independent_result_id"])["payload"]
+    if raw.get("result") != reports[1]["direct_timing"] or raw.get("host_job_dir") not in reports[1]["host_job_dirs"]:
+        raise CalibrationError("independent timing result differs from attested receipt")
+    blocks = [r for r in raw["rows"] if r["mode"] == "ab"]
+    if len(blocks) != 2 or any(len(b["raw"].get("pairs", [])) != 32 for b in blocks):
+        raise CalibrationError("independent paired blocks missing")
+    # Use one frozen paired burst, as in the ordinary calibration path.
+    block = blocks[0]
+    pairs = block["raw"]["pairs"]
+    if any(p.get("complete") is not True for p in pairs) or len({p.get("burst_id") for p in pairs}) != 1:
+        raise CalibrationError("incomplete or mixed paired burst")
+    medians = {"local_" + arm + "_us": statistics.median(p["samples_us"][arm] for p in pairs)
+               for arm in ("baseline", "candidate")}
+    if any(not math.isfinite(v) or v <= 0 for v in medians.values()):
+        raise CalibrationError("invalid local paired median")
+    with np.load(files[1], allow_pickle=False) as archive:
+        inputs = {name: np.array(archive[name]) for name in archive.files}
+    with np.load(files[2], allow_pickle=False) as archive:
+        expected = {name: np.array(archive[name]) for name in archive.files}
+    if not expected or not set(meta.get("graph_outputs", expected)).issubset(expected):
+        raise CalibrationError("direct case final outputs missing")
+    for key in ("rtol", "atol"):
+        value = meta[key]
+        if type(value) not in (int, float) or not math.isfinite(value) or value < 0:
+            raise CalibrationError("fixed tolerance required")
+    _arguments(meta, inputs, {}, preflight=True)
+    planned = 1 + 2 * count * (1 + REPETITIONS)
+    if planned > PLANNED_REQUEST_CAP:
+        raise CalibrationError("direct case exceeds planned request budget")
+    selected = [{"descriptor": {**descriptor, **medians}, "meta": meta, "inputs": inputs,
+                 "expected": expected, "baseline": baseline, "candidate": candidate,
+                 "identities": identities, "suite_id": suite_id}]
+    return selected, {"evidence": {screen_id: reports[0], experiment_id: reports[1]},
+                      "suite_ids": [suite_id], "planned_requests": planned, "omitted_cases": 0}
+
+
 def _arguments(meta, inputs, produced, preflight=False, upto=None):
     all_args = []
     earlier = set()
@@ -383,7 +482,7 @@ def _check_outputs(response, kernel, case):
 
 def run_calibration(root, run_id, mechanism, prepared_pair, transport=None,
                     sleep=time.sleep, clock=time.monotonic, wall_clock=time.time,
-                    architecture_sensitive=False):
+                    architecture_sensitive=False, attested_direct=False):
     """Explicit executor; transport(method,path,body)->(HTTP status, decoded JSON).
 
     prepared_pair entries: experiment_id, case_dir, baseline_ptx, candidate_ptx,
@@ -395,7 +494,8 @@ def run_calibration(root, run_id, mechanism, prepared_pair, transport=None,
     if not isinstance(mechanism, str) or not mechanism.strip():
         raise CalibrationError("mechanism required")
     with exclusive(root / "control/calibration.lock"):
-        selected, provenance = validate_pairs(root, prepared_pair)
+        selected, provenance = (validate_attested_direct_pair(root, prepared_pair)
+                                if attested_direct else validate_pairs(root, prepared_pair))
         batch = root / "calibration" / run_id
         if batch.exists():
             raise CalibrationError("this run already consumed its singleton calibration batch")
@@ -487,16 +587,20 @@ def main():
     parser.add_argument("--prepared-pair", type=Path, required=True)
     parser.add_argument("--url", default=DEFAULT_URL)
     parser.add_argument("--architecture-sensitive", action="store_true")
+    parser.add_argument("--attested-direct", action="store_true",
+                        help="Use two independently host-attested runs of one frozen suite case")
     parser.add_argument("--execute", action="store_true", help="Required explicit authorization to contact hosted endpoint")
     args = parser.parse_args()
     descriptors = json.loads(args.prepared_pair.read_text())
     if not args.execute:
-        selected, provenance = validate_pairs(args.root, descriptors)
+        selected, provenance = (validate_attested_direct_pair(args.root, descriptors)
+                                if args.attested_direct else validate_pairs(args.root, descriptors))
         print(json.dumps({"status": "validated_no_requests", "cases": len(selected), **provenance,
                           "trigger": calibration_due(args.root, args.mechanism, args.architecture_sensitive)}, indent=2))
         return 0
     result = run_calibration(args.root, args.run_id, args.mechanism, descriptors,
-                             transport=HTTPTransport(args.url), architecture_sensitive=args.architecture_sensitive)
+                             transport=HTTPTransport(args.url), architecture_sensitive=args.architecture_sensitive,
+                             attested_direct=args.attested_direct)
     print(json.dumps(result, indent=2))
     return 0 if result["status"] in {"completed", "not_due"} else 1
 

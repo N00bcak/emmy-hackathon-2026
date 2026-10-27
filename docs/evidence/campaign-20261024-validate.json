@@ -1,0 +1,247 @@
+{
+  "artifact_id": "b2ed659f127f7fb949be0caa42e7432025849b0332779e3cbb2ece6257335562",
+  "payload": {
+    "Git_network_operations": 0,
+    "all_assertion_sites_preserved": 111,
+    "broader_unsigned_decode_performance_unverified_case_count": 65,
+    "checks_per_source": 100,
+    "compiler_variants": 3,
+    "conservative_session_bound": 128,
+    "execution_device": "RTX4090",
+    "live_GPU_jobs": 0,
+    "local_commits_this_round": 0,
+    "metric_audit_sha256": "259e7f7f518d3e1121e2f8242cfde944abc65140bc90c6533efaf448c51d74e6",
+    "new_5090_execution": false,
+    "new_cases": 0,
+    "new_official_attempts": 0,
+    "new_promotions": 0,
+    "official_attempts_total": 9,
+    "official_batch_spent": true,
+    "original_hard_deadline_utc": "2026-10-24T16:22:58Z",
+    "previous_confirmed_promotions_retained": 5,
+    "profiles": [
+      {
+        "CPU_results_sha256": "f3613b8dbfb3bf545a2fbb637c35af0316733b2e34bcc76c15e403d1dbfdbafb",
+        "GPU_cases": 66,
+        "GPU_evidence": "7a2635d931102fac3b40869abb58a8346ea06d7efabce8843528be91756e35c5",
+        "additional_CPU_leaves": 34,
+        "all15_gate": "2b23d6ca37d6612c9c1a65b2f86e8c87cbe1baa976d4e0760db764ca1f433cf8",
+        "all_assertions_preserved": 111,
+        "cases": 100,
+        "compile_sha256": "712fb81b24d332b80348cd24a2ef00e3ca328fea9684095fefab36033e7243cf",
+        "label": "baseline-initial",
+        "shared_checks_id": "c20e3322dfe5dee65189a11cdd59af902fee0c396304a5f015e546a760c0d5f4",
+        "source_id": "b4d3b3238c85e619f59dc7954c8518d90f8bfcd0152c5d9a8005ba9580101143"
+      },
+      {
+        "CPU_results_sha256": "386036738cd48ebd36ee56c0557ea8a3105820e8c6ed967af6746b83804125b7",
+        "GPU_cases": 66,
+        "GPU_evidence": "75739f8f2aa1140aa28035685412aa15355a4dd0016057224a8e2641a625e530",
+        "additional_CPU_leaves": 34,
+        "all15_gate": "82770d56da0b53c947c4436ea6c64e9e34a453aba9fe00b274bc281c3caf7230",
+        "all_assertions_preserved": 111,
+        "cases": 100,
+        "compile_sha256": "c5062fb1c7f78745417eb828445369c476f324a4667124b688615f0ef2e703cd",
+        "label": "combined-initial",
+        "shared_checks_id": "1064fc331188919dcd064f4366ddb0f19aea40e453c73e6e14d04a6c7b231a85",
+        "source_id": "ddbe6f6acb151ef3a7b1f18de44954c385134d8f420d2fa1f2948553c7288a04"
+      },
+      {
+        "CPU_results_sha256": "e58504d2836ff40c1afc1e12db489ecd924b35179a42bf1a3a7916b7880f105c",
+        "GPU_cases": 66,
+        "GPU_evidence": "2bfe764bf22d5b8240cd5d567cb80cd6a18e11ca5ed260931753b6b036b81994",
+        "additional_CPU_leaves": 34,
+        "all15_gate": "9854451a43c5303d838fe554c982417795e9329d4647981c6581d2b5f2d0d442",
+        "all_assertions_preserved": 111,
+        "cases": 100,
+        "compile_sha256": "a1cf361b4bab09b29785899b57a0010887d0e8d9b037e2f677d69476e462e168",
+        "label": "input-packet-initial",
+        "shared_checks_id": "67479af89dd25c534f09c9377cc7940ebf8afda037907ea26468116479818835",
+        "source_id": "9e4dd2f13e3442f659597d760cd4ab8a16f83df88d8f4022cf07f2c63d691351"
+      },
+      {
+        "CPU_results_sha256": "b291ba1e2d24e6671ae412ce14d1182ed4daf37604732315c26838f40816e709",
+        "GPU_cases": 66,
+        "GPU_evidence": "9e82d79fc698e033e443aef50363462f01f0c271a92d849581fe3c976dbe5e72",
+        "additional_CPU_leaves": 34,
+        "all15_gate": "836521002a026a8d946eb6af87306a4b5d8f38a829103dfa7f410ff67fa2f1e1",
+        "all_assertions_preserved": 111,
+        "cases": 100,
+        "compile_sha256": "d97eb233e4011bee46b21a50a8d50bc05c7a541477d7a35f493459c1e10e99c0",
+        "label": "tile-decode-initial",
+        "shared_checks_id": "8b42095ccabbdee7f86560318f7be48c7ce97411aa5f07349549d15dcf138fd4",
+        "source_id": "2fadc9ee256f4ab44c499337a6cf9e3bc0816da407c30d344b31c7937270f5ec"
+      }
+    ],
+    "projection_audit_sha256": "34d84076eb47c3696c3a6ed3c33f905ba87c23727d6af9bd5d004ed2b7f95807",
+    "published": false,
+    "published_case_count": 15,
+    "reflection_sha256": "74dfca04a8fdd174af1f48f84b2bae5b8c2ea636aa30237654987062e6d541be",
+    "retained_source_id": "b4d3b3238c85e619f59dc7954c8518d90f8bfcd0152c5d9a8005ba9580101143",
+    "run": {
+      "closed": true,
+      "closed_at": 1792857401.8858328,
+      "closed_reason": "All three justified compiler sources passed100; all seven fixed first screens inconclusive; retain existing five promotions without redraw.",
+      "evaluated": [
+        "c4-e6-baseline-initial",
+        "c4-combined-input-decode-v2",
+        "c4-e6-baseline-initial-e6-pointwise32-initial",
+        "c4-global-input-packet-v3",
+        "c4-e6-baseline-fresh",
+        "c4-tile-unsigned-decode-v1",
+        "c4-e6-baseline-fresh-e6-pointwise32-fresh",
+        "c4-ddbe6f6acb15-screen-3145aa57f753",
+        "c4-ddbe6f6acb15-screen-5e973341ada3",
+        "c4-ddbe6f6acb15-screen-aeeffce3a36b",
+        "c4-9e4dd2f13e34-screen-3145aa57f753",
+        "c4-9e4dd2f13e34-screen-5e973341ada3",
+        "c4-9e4dd2f13e34-screen-aeeffce3a36b",
+        "c4-2fadc9ee256f-screen-3145aa57f753"
+      ],
+      "id": "campaign-20261024-validate-v4",
+      "max_variants": 96,
+      "mode": "research",
+      "seconds": 3600,
+      "started_at": 1792854208.7884812
+    },
+    "runtime_repaired": true,
+    "screen_audit_sha256": "3b9cb29abba09044e45b7e9e798226fc3251e043442e04fbc7e2f3209ab0048e",
+    "screens": [
+      {
+        "AA_margin": 0.08571431244229255,
+        "AB_block_medians": [
+          0.9714285625192358,
+          0.9714285625192358
+        ],
+        "blocked_source_cases": [
+          "aeb1568894b7afb50ea0b1b6c6fe94b57419452643ec87c5c6561f9ebfc58bbe"
+        ],
+        "case_id": "3145aa57f753f64551cd4b83c3d430e6e2375a9feb4819accbfd5e55c39da560",
+        "center_ratio": 0.9714285625192358,
+        "closing_control_pass": true,
+        "evidence_id": "47a60cd8f973fdcf703c3bc564944b0f50c0794a3483c5053d699d0c93726d9d",
+        "experiment": "c4-2fadc9ee256f-screen-3145aa57f753",
+        "percent_change": -2.8571437480764184,
+        "protocol": "cuda-graph-grouped32-v1",
+        "resolved_gain": false,
+        "resolved_regression": false,
+        "source_id": "2fadc9ee256f4ab44c499337a6cf9e3bc0816da407c30d344b31c7937270f5ec"
+      },
+      {
+        "AA_margin": 0.08571431244229255,
+        "AB_block_medians": [
+          1.0571428749615284,
+          1.0571428749615284
+        ],
+        "blocked_source_cases": [],
+        "case_id": "3145aa57f753f64551cd4b83c3d430e6e2375a9feb4819accbfd5e55c39da560",
+        "center_ratio": 1.0571428749615284,
+        "closing_control_pass": true,
+        "evidence_id": "0db9f84886554abea0d0e5fb09a68b3711fbe7d7392cee9d869eacff2bc814fd",
+        "experiment": "c4-9e4dd2f13e34-screen-3145aa57f753",
+        "percent_change": 5.714287496152837,
+        "protocol": "cuda-graph-grouped32-v1",
+        "resolved_gain": false,
+        "resolved_regression": false,
+        "source_id": "9e4dd2f13e3442f659597d760cd4ab8a16f83df88d8f4022cf07f2c63d691351"
+      },
+      {
+        "AA_margin": 0.9999998484175552,
+        "AB_block_medians": [
+          1.0,
+          1.0
+        ],
+        "blocked_source_cases": [],
+        "case_id": "5e973341ada3e33f701293be5a3e6195badb7290a5471f4c6cefa86634d1b168",
+        "center_ratio": 1.0,
+        "closing_control_pass": true,
+        "evidence_id": "378c0a04b97b05be39089b3571548e8dc80b616d8a3f2c2aa867deb013a636a0",
+        "experiment": "c4-9e4dd2f13e34-screen-5e973341ada3",
+        "percent_change": 0.0,
+        "protocol": "cuda-graph-paired-v2",
+        "resolved_gain": false,
+        "resolved_regression": false,
+        "source_id": "9e4dd2f13e3442f659597d760cd4ab8a16f83df88d8f4022cf07f2c63d691351"
+      },
+      {
+        "AA_margin": 0.9999998484175552,
+        "AB_block_medians": [
+          1.0,
+          1.0
+        ],
+        "blocked_source_cases": [],
+        "case_id": "aeeffce3a36b8cf1b27173b8c1644fc517a24d992173e06bb1664784b009b6ba",
+        "center_ratio": 1.0,
+        "closing_control_pass": true,
+        "evidence_id": "416d89bae03e6e5dfe8ce143581d05a90a0496774e207b092e86c74d18cda21d",
+        "experiment": "c4-9e4dd2f13e34-screen-aeeffce3a36b",
+        "percent_change": 0.0,
+        "protocol": "cuda-graph-paired-v2",
+        "resolved_gain": false,
+        "resolved_regression": false,
+        "source_id": "9e4dd2f13e3442f659597d760cd4ab8a16f83df88d8f4022cf07f2c63d691351"
+      },
+      {
+        "AA_margin": 0.08571431244229255,
+        "AB_block_medians": [
+          0.9428571250384716,
+          0.9428571250384716
+        ],
+        "blocked_source_cases": [],
+        "case_id": "3145aa57f753f64551cd4b83c3d430e6e2375a9feb4819accbfd5e55c39da560",
+        "center_ratio": 0.9428571250384716,
+        "closing_control_pass": true,
+        "evidence_id": "5817590c138a52fa8b2ed241f71f7de6dc0d99139fb651862f2669fad70603aa",
+        "experiment": "c4-ddbe6f6acb15-screen-3145aa57f753",
+        "percent_change": -5.714287496152837,
+        "protocol": "cuda-graph-grouped32-v1",
+        "resolved_gain": false,
+        "resolved_regression": false,
+        "source_id": "ddbe6f6acb151ef3a7b1f18de44954c385134d8f420d2fa1f2948553c7288a04"
+      },
+      {
+        "AA_margin": 0.9999998484175552,
+        "AB_block_medians": [
+          1.0,
+          1.0
+        ],
+        "blocked_source_cases": [],
+        "case_id": "5e973341ada3e33f701293be5a3e6195badb7290a5471f4c6cefa86634d1b168",
+        "center_ratio": 1.0,
+        "closing_control_pass": true,
+        "evidence_id": "d27c2270e025483d261624b12b3c6f5ab2393c4d96998423a1380b1d9321fd46",
+        "experiment": "c4-ddbe6f6acb15-screen-5e973341ada3",
+        "percent_change": 0.0,
+        "protocol": "cuda-graph-paired-v2",
+        "resolved_gain": false,
+        "resolved_regression": false,
+        "source_id": "ddbe6f6acb151ef3a7b1f18de44954c385134d8f420d2fa1f2948553c7288a04"
+      },
+      {
+        "AA_margin": 0.9999998484175552,
+        "AB_block_medians": [
+          1.0,
+          1.0
+        ],
+        "blocked_source_cases": [],
+        "case_id": "aeeffce3a36b8cf1b27173b8c1644fc517a24d992173e06bb1664784b009b6ba",
+        "center_ratio": 1.0,
+        "closing_control_pass": true,
+        "evidence_id": "6621f96464ba8308f95f1c195b30eb4923eb55aea86529476d0f5c11690c00ac",
+        "experiment": "c4-ddbe6f6acb15-screen-aeeffce3a36b",
+        "percent_change": 0.0,
+        "protocol": "cuda-graph-paired-v2",
+        "resolved_gain": false,
+        "resolved_regression": false,
+        "source_id": "ddbe6f6acb151ef3a7b1f18de44954c385134d8f420d2fa1f2948553c7288a04"
+      }
+    ],
+    "session_cap": 300,
+    "status": "completed_no_new_compiler_promotion",
+    "suite_id": "046ebd0be6bb00be8fe251668732c8633e9a59a3108841291fe955ce27b63a34",
+    "targets_assembled": [
+      "sm89",
+      "sm120"
+    ]
+  }
+}

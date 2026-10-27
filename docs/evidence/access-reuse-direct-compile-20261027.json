@@ -1,0 +1,62 @@
+[
+  {
+    "arm": "n00bcak",
+    "case": "f02_row_softmax_3072x2048",
+    "entry": "k_softmax_05263d",
+    "source_sha256": "8ce9868462003fd5d44db861e21cd94165438ceeb5f10eed5544a4a5f0bb2410",
+    "ir_sha256": "136f2516d5ccf47f0d2ff5776a5cab65c4769d96d29f364f3ed2080355f260dc",
+    "ptx_sha256": "f28a296fe045a1ccc98b1918fe70e2fdf179adf3f3ba4c67dc927c2046d36a1e",
+    "ptx_chars": 49290,
+    "path": "/private/tmp/access-reuse-hosted-compare/ptx/n00bcak/f02_row_softmax_3072x2048/k_softmax_05263d.ptx"
+  },
+  {
+    "arm": "access_reuse",
+    "case": "f02_row_softmax_3072x2048",
+    "entry": "k_softmax_05263d",
+    "source_sha256": "1f220a4dabcc436c49ab933bcc505e0e4d6ad1e04aef347a14a0b6cbd2fd0d1d",
+    "ir_sha256": "136f2516d5ccf47f0d2ff5776a5cab65c4769d96d29f364f3ed2080355f260dc",
+    "ptx_sha256": "947277c7a11500b4e8cb2b737999749bb6571b55595957169f7bd388f9a75e50",
+    "ptx_chars": 32277,
+    "path": "/private/tmp/access-reuse-hosted-compare/ptx/access_reuse/f02_row_softmax_3072x2048/k_softmax_05263d.ptx"
+  },
+  {
+    "arm": "n00bcak",
+    "case": "p03_relu_mul_4m",
+    "entry": "k_mul_pointwise",
+    "source_sha256": "8ce9868462003fd5d44db861e21cd94165438ceeb5f10eed5544a4a5f0bb2410",
+    "ir_sha256": "cd262f51bfcb9f0150e0fb2ae83c5155be69e94b11ef9feb4568475c1c691f33",
+    "ptx_sha256": "98bb8eea9ff0019c5d177e290b3e248b0b888ea8ebaac4f5e534b832ce34c74a",
+    "ptx_chars": 3438,
+    "path": "/private/tmp/access-reuse-hosted-compare/ptx/n00bcak/p03_relu_mul_4m/k_mul_pointwise.ptx"
+  },
+  {
+    "arm": "access_reuse",
+    "case": "p03_relu_mul_4m",
+    "entry": "k_mul_pointwise",
+    "source_sha256": "1f220a4dabcc436c49ab933bcc505e0e4d6ad1e04aef347a14a0b6cbd2fd0d1d",
+    "ir_sha256": "cd262f51bfcb9f0150e0fb2ae83c5155be69e94b11ef9feb4568475c1c691f33",
+    "ptx_sha256": "611a44bd34cc3c0efe411de207be53b5092520df8946792920df0905fe7dd415",
+    "ptx_chars": 2800,
+    "path": "/private/tmp/access-reuse-hosted-compare/ptx/access_reuse/p03_relu_mul_4m/k_mul_pointwise.ptx"
+  },
+  {
+    "arm": "n00bcak",
+    "case": "a01_attention_512x64",
+    "entry": "k_matmul_softmax_reduce_b55365",
+    "source_sha256": "8ce9868462003fd5d44db861e21cd94165438ceeb5f10eed5544a4a5f0bb2410",
+    "ir_sha256": "df5d5515ffa5733c3f3aaeb0395971ead25177df32cfc8fb192b3d64b5861b0b",
+    "ptx_sha256": "9e84994d05d6d1fb71b14cf98af789c20460237c78c83b1147aa78a2fead574d",
+    "ptx_chars": 25377,
+    "path": "/private/tmp/access-reuse-hosted-compare/ptx/n00bcak/a01_attention_512x64/k_matmul_softmax_reduce_b55365.ptx"
+  },
+  {
+    "arm": "access_reuse",
+    "case": "a01_attention_512x64",
+    "entry": "k_matmul_softmax_reduce_b55365",
+    "source_sha256": "1f220a4dabcc436c49ab933bcc505e0e4d6ad1e04aef347a14a0b6cbd2fd0d1d",
+    "ir_sha256": "df5d5515ffa5733c3f3aaeb0395971ead25177df32cfc8fb192b3d64b5861b0b",
+    "ptx_sha256": "63476e5e6c28886e2bcf54c7d43a9dcb11816831d183695403f601c41f88fe24",
+    "ptx_chars": 89427,
+    "path": "/private/tmp/access-reuse-hosted-compare/ptx/access_reuse/a01_attention_512x64/k_matmul_softmax_reduce_b55365.ptx"
+  }
+]

@@ -1,0 +1,257 @@
+{
+  "version": "combined-compiler-gate-v1",
+  "max_checks": 100,
+  "compiler_tests": "tests/test_compiler.py",
+  "compiler_tests_sha256": "1c2efe1b7d9b1378715892a0df101c008cb682333beeb4d89207ac31524c37b6",
+  "gpu_policy": "tests/gpu-regression.json",
+  "gpu_policy_sha256": "1822bb1dd5bc30bb1bd824b424d36004402cda92216a921f8a27ef5dc0c21f54",
+  "additional_gpu_cases": [
+    {
+      "path": "tests/variants/scaled_score_mutable_alias",
+      "id": "e41dbf0c789e8ae5d9e2cc4b31f2e5b4ee1f04cc66551c937d44454dadf54c53",
+      "record_sha256": "cf8764f41a3a6d9889da937eae3d237fabe2071f0610d240be78cedf3946b16b",
+      "reason": "Existing demonstrated performance-essential mutable prescaled-score alias bug; unchanged exported case, inputs, oracle and tolerances."
+    }
+  ],
+  "shared_cpu_methods": {
+    "test_all_published_lower_and_assemble_for_both_targets": [
+      "p00_scalar_add",
+      "p01_vector_add",
+      "p02_scale_shift",
+      "p03_relu_mul",
+      "r01_array_sum",
+      "r02_big_sum",
+      "r03_mean",
+      "r04_row_sum",
+      "m01_matmul_512",
+      "m02_matmul_rect",
+      "f01_rmsnorm",
+      "f02_row_softmax",
+      "f03_l2norm",
+      "a01_attention",
+      "a02_attention_128"
+    ],
+    "test_m01_inner_loop_hoists_invariant_index_division": [
+      "m01_matmul_512"
+    ],
+    "test_vector_copy_has_runtime_fallback_and_scalar_negative": [
+      "m02_matmul_rect"
+    ]
+  },
+  "additional_cpu_checks": [
+    {
+      "method": "test_nonfixture_pointwise_tail_and_reordered_abi",
+      "cases": [
+        {}
+      ]
+    },
+    {
+      "method": "test_nonfixture_reduction_tail",
+      "cases": [
+        {}
+      ]
+    },
+    {
+      "method": "test_partial_collective_tile_keeps_all_threads_in_barrier",
+      "cases": [
+        {}
+      ]
+    },
+    {
+      "method": "test_nested_collective_partial_cta_masks_memory",
+      "cases": [
+        {}
+      ]
+    },
+    {
+      "method": "test_reject_tree_indexed_by_lane",
+      "cases": [
+        {}
+      ]
+    },
+    {
+      "method": "test_reject_invalid_abi",
+      "cases": [
+        {}
+      ]
+    },
+    {
+      "method": "test_scalar_by_value_argument_binds_as_ssa",
+      "cases": [
+        {}
+      ]
+    },
+    {
+      "method": "test_nonunit_block_and_grid_dimensions_flatten",
+      "cases": [
+        {}
+      ]
+    },
+    {
+      "method": "test_partial_cta_non_sum_reduction_masks_fold",
+      "cases": [
+        {}
+      ]
+    },
+    {
+      "method": "test_reduce_aliases_canonicalize",
+      "cases": [
+        {}
+      ]
+    },
+    {
+      "method": "test_integer_copy_is_a_typed_register_move",
+      "cases": [
+        {}
+      ]
+    },
+    {
+      "method": "test_write_uses_output_width_and_converts_value_dtype",
+      "cases": [
+        {}
+      ]
+    },
+    {
+      "method": "test_cp_async_destination_address_arithmetic",
+      "cases": [
+        {
+          "dynamic": false,
+          "base": 0,
+          "offset": 48
+        },
+        {
+          "dynamic": false,
+          "base": 1024,
+          "offset": 48
+        },
+        {
+          "dynamic": false,
+          "base": 6144,
+          "offset": 256
+        },
+        {
+          "dynamic": true,
+          "base": 0,
+          "offset": 48
+        },
+        {
+          "dynamic": true,
+          "base": 1024,
+          "offset": 48
+        },
+        {
+          "dynamic": true,
+          "base": 6144,
+          "offset": 256
+        }
+      ]
+    },
+    {
+      "method": "test_unaligned_copy_index_stays_scalar",
+      "cases": [
+        {}
+      ]
+    },
+    {
+      "method": "test_cond_definitions_participate_in_hoist_analysis",
+      "cases": [
+        {}
+      ]
+    },
+    {
+      "method": "test_cond_ssa_bindings_do_not_leak_to_join",
+      "cases": [
+        {}
+      ]
+    },
+    {
+      "method": "test_cond_false_arm_uses_outer_binding",
+      "cases": [
+        {}
+      ]
+    },
+    {
+      "method": "test_let_rebinding_invalidates_cached_address",
+      "cases": [
+        {}
+      ]
+    },
+    {
+      "method": "test_residue_rejects_non_multiple_product",
+      "cases": [
+        {}
+      ]
+    },
+    {
+      "method": "test_unsupported_errors_do_not_emit_partial_ptx",
+      "cases": [
+        {}
+      ]
+    },
+    {
+      "method": "test_numeric_mask_comparison_and_where",
+      "cases": [
+        {}
+      ]
+    },
+    {
+      "method": "test_integer_arithmetic_and_bitwise_are_typed",
+      "cases": [
+        {}
+      ]
+    },
+    {
+      "method": "test_int64_floor_division_uses_64bit_scratch_registers",
+      "cases": [
+        {}
+      ]
+    },
+    {
+      "method": "test_bitcast_preserves_bits_across_dtype",
+      "cases": [
+        {}
+      ]
+    },
+    {
+      "method": "test_select_tail_identity_and_warp_barrier",
+      "cases": [
+        {}
+      ]
+    },
+    {
+      "method": "test_unsigned_negation_and_absolute_use_valid_ptx",
+      "cases": [
+        {}
+      ]
+    },
+    {
+      "method": "test_f16_storage_uses_b16_carrier_and_promoted_arithmetic",
+      "cases": [
+        {}
+      ]
+    },
+    {
+      "method": "test_scalar_math_ops_lower_without_external_calls",
+      "cases": [
+        {}
+      ]
+    },
+    {
+      "method": "test_pow_support_or_clean_rejection",
+      "cases": [
+        {}
+      ]
+    }
+  ],
+  "consolidation": {
+    "prior_gpu_cases": 66,
+    "prior_cpu_leaf_checks": 52,
+    "same_published_program_cases_shared": 15,
+    "additional_m01_m02_program_cases_shared": 2,
+    "log_and_scalar_math_fixtures_merged": 1,
+    "remaining_cpu_leaf_checks": 34,
+    "combined_cases": 100,
+    "preserved": "All65 original GPU cases plus the existing alias case; all CPU assertions, both assembly targets, and all6 distinct copy-address inputs.",
+    "merged_log_reason": "Natural-log opcode and ln(2) assertions now run in the existing scalar-math program, retaining the same F32 operation and both-target assembly. No new independent scenario or GPU oracle was introduced."
+  }
+}

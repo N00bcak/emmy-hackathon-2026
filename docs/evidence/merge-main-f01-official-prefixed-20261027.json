@@ -1,0 +1,198 @@
+{
+  "status": "completed",
+  "plan": {
+    "schema": 1,
+    "case": "f01_rmsnorm_3072x2048",
+    "case_hashes": {
+      "meta.json": "5d5ee76bb0ecc09384a4418fef662e8ed8cc485b747e83d74fb2eb6a2433c38a",
+      "case.json": "84647ea19184658f2201069e8bcec055635d5ceb022cbea3f0459e382aece85d",
+      "k_mean_cbd1de.ir.json": "db9cbbb4837daf8134dc96880cd9591b2d9cd229e5b4127077c4f9b5b7aaabda"
+    },
+    "source_hashes": {
+      "n00bcak": "713fa03fd2d348aa63e9b5cbc5c222e9fbf1b8a3ff0eb92a4b9351d3b64a7379",
+      "main": "3bce4a88b5f1d708e00034e7c097d0072a25b1a5258da7b4ad66bb3661e47c05",
+      "merged": "633525402a07f47eb651de2788415c84bcaab974d47bac3b6ab25056b0f40e84"
+    },
+    "ptx_hashes": {
+      "n00bcak": "fee636f80e46e90055d09fb234ab8e396801e4578641ff629f9dfdd84ac9caba",
+      "main": "fb03da810c79387de89cda8fdab1111bb47310cb48ddfd3b476f203957f12a98",
+      "merged": "201fd30cd3f576396d7cfe3b1d850fe66255e2eef81e3c665071259573002fc7"
+    },
+    "schedule": "health, baseline AA, three alternating main/baseline pairs, three alternating merged/baseline pairs",
+    "attempt_cap": 25,
+    "planned_attempts": 15,
+    "output_limit": "4096 prefix out of 6291456; all three arms passed full output on local 4090"
+  },
+  "aa": [
+    {
+      "arm": "n00bcak",
+      "time_us": 17.056,
+      "prefix_ok": true,
+      "output_sum": 784.6215209960938,
+      "truncated": true
+    },
+    {
+      "arm": "n00bcak",
+      "time_us": 17.072,
+      "prefix_ok": true,
+      "output_sum": 784.6215209960938,
+      "truncated": true
+    }
+  ],
+  "comparisons": {
+    "main": [
+      {
+        "order": [
+          "n00bcak",
+          "main"
+        ],
+        "samples": {
+          "n00bcak": {
+            "arm": "n00bcak",
+            "time_us": 17.056,
+            "prefix_ok": true,
+            "output_sum": 784.6215209960938,
+            "truncated": true
+          },
+          "main": {
+            "arm": "main",
+            "time_us": 13.376,
+            "prefix_ok": true,
+            "output_sum": 784.6215209960938,
+            "truncated": true
+          }
+        },
+        "ratio": 0.7842401500938085
+      },
+      {
+        "order": [
+          "main",
+          "n00bcak"
+        ],
+        "samples": {
+          "main": {
+            "arm": "main",
+            "time_us": 13.744,
+            "prefix_ok": true,
+            "output_sum": 784.6215209960938,
+            "truncated": true
+          },
+          "n00bcak": {
+            "arm": "n00bcak",
+            "time_us": 17.104,
+            "prefix_ok": true,
+            "output_sum": 784.6215209960938,
+            "truncated": true
+          }
+        },
+        "ratio": 0.80355472404116
+      },
+      {
+        "order": [
+          "n00bcak",
+          "main"
+        ],
+        "samples": {
+          "n00bcak": {
+            "arm": "n00bcak",
+            "time_us": 17.088,
+            "prefix_ok": true,
+            "output_sum": 784.6215209960938,
+            "truncated": true
+          },
+          "main": {
+            "arm": "main",
+            "time_us": 13.936,
+            "prefix_ok": true,
+            "output_sum": 784.6215209960938,
+            "truncated": true
+          }
+        },
+        "ratio": 0.8155430711610486
+      }
+    ],
+    "merged": [
+      {
+        "order": [
+          "n00bcak",
+          "merged"
+        ],
+        "samples": {
+          "n00bcak": {
+            "arm": "n00bcak",
+            "time_us": 17.088,
+            "prefix_ok": true,
+            "output_sum": 784.6215209960938,
+            "truncated": true
+          },
+          "merged": {
+            "arm": "merged",
+            "time_us": 24.16,
+            "prefix_ok": true,
+            "output_sum": 784.6215209960938,
+            "truncated": true
+          }
+        },
+        "ratio": 1.4138576779026217
+      },
+      {
+        "order": [
+          "merged",
+          "n00bcak"
+        ],
+        "samples": {
+          "merged": {
+            "arm": "merged",
+            "time_us": 24.192,
+            "prefix_ok": true,
+            "output_sum": 784.6215209960938,
+            "truncated": true
+          },
+          "n00bcak": {
+            "arm": "n00bcak",
+            "time_us": 17.072,
+            "prefix_ok": true,
+            "output_sum": 784.6215209960938,
+            "truncated": true
+          }
+        },
+        "ratio": 1.4170571696344894
+      },
+      {
+        "order": [
+          "n00bcak",
+          "merged"
+        ],
+        "samples": {
+          "n00bcak": {
+            "arm": "n00bcak",
+            "time_us": 17.056,
+            "prefix_ok": true,
+            "output_sum": 784.6215209960938,
+            "truncated": true
+          },
+          "merged": {
+            "arm": "merged",
+            "time_us": 24.224,
+            "prefix_ok": true,
+            "output_sum": 784.6215209960938,
+            "truncated": true
+          }
+        },
+        "ratio": 1.420262664165103
+      }
+    ]
+  },
+  "health": {
+    "ok": true,
+    "arch_ok": true,
+    "ptxas": "/usr/local/cuda/bin/ptxas",
+    "default_arch": "sm_120",
+    "cache_dir": "/home/riftuser/.cache/ptxserver",
+    "can_compile": true,
+    "can_run": true,
+    "gpu": "NVIDIA GeForce RTX 5090 (compute capability 12.0, sm_120)"
+  },
+  "attempts": 15,
+  "sources_unchanged": true
+}
