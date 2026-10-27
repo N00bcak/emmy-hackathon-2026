@@ -1,0 +1,38 @@
+{
+  "schema": "emmy-local-gate-v1",
+  "created": "2026-10-26T23:53:41Z",
+  "device": "NVIDIA GeForce RTX 4060 Laptop GPU, 8.9",
+  "source": "/home/ada/Projects/emmy-p3-sibling-fusion",
+  "compiler_sha256": "1f220a4dabcc436c49ab933bcc505e0e4d6ad1e04aef347a14a0b6cbd2fd0d1d",
+  "case_list_sha256": "d7f545259414658e21f971fa5fdd0daef0b01e3b3802d23d7108e427f6e6eda1",
+  "part": 0,
+  "parts": 1,
+  "cases": [
+    {
+      "index": 0,
+      "id": "3906185c81c902e5056a52a979844e8f885350cfad17cb54c9a22207d3a5d2e6",
+      "case_dir": "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/cases-v3/perf-a/a01_attention_256x64",
+      "requires_sanitizer": false,
+      "requires_isolated_first": false,
+      "ok": true,
+      "exit_code": 0,
+      "launch_count": 3
+    },
+    {
+      "index": 1,
+      "id": "a4675f27cb8673770b112f96fdd95f4409476dd49c6d0bf31f31836575ef03c3",
+      "case_dir": "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/cases-v3/perf-b/a01_attention_512x64",
+      "requires_sanitizer": false,
+      "requires_isolated_first": false,
+      "ok": true,
+      "exit_code": 0,
+      "launch_count": 3
+    }
+  ],
+  "sanitizers": [],
+  "limitation": "Owner-authorized local run without compiler UID/seccomp isolation. Not an evaluator-issued receipt.",
+  "seconds": 2.884025485996972,
+  "all_passed": true,
+  "sanitizers_passed": true,
+  "compiler_unchanged": true
+}

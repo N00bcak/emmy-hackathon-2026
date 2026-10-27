@@ -1,0 +1,284 @@
+{
+  "case": "/home/ada/Projects/emmy-hackathon-2026/.emmy/research/performance-v1/cases-v3/perf-a/a01_attention_256x64",
+  "case_id": "a01_attention_256x64",
+  "arch": "sm_120",
+  "server": "http://runner.riftstack.ai:48701",
+  "aa": false,
+  "warmup": 10,
+  "iters": 50,
+  "repetitions": 7,
+  "baseline_source": "/home/ada/Projects/emmy-hackathon-2026/compile.py",
+  "baseline_sha256": "0a6f12033a942f4da9176ebf1e963c16193d8883610d3d4807bbc9870ab0de2a",
+  "candidate_source": "/home/ada/Projects/emmy-p3-sibling-fusion/compile.py",
+  "candidate_sha256": "1f220a4dabcc436c49ab933bcc505e0e4d6ad1e04aef347a14a0b6cbd2fd0d1d",
+  "local_correctness_receipt": "/home/ada/Projects/emmy-p3-sibling-fusion/.emmy/evidence/p3-sibling-fusion/scaled-correctness-1f220a4d/scale-gate.json",
+  "local_correctness_sha256": "ef4cbc82b7896f323a2455d4b90fb90aa102939d6998a7cde55116ebf15ee7df",
+  "ptx": {
+    "baseline": [
+      {
+        "kernel": {
+          "arg_order": [
+            "div_c1",
+            "q",
+            "kt",
+            "v",
+            "matmul_1"
+          ],
+          "args": [
+            {
+              "data": [
+                8.0
+              ],
+              "dtype": "f32",
+              "name": "div_c1",
+              "shape": [
+                1
+              ]
+            },
+            {
+              "dtype": "f32",
+              "name": "q",
+              "seed": 11010,
+              "shape": [
+                256,
+                64
+              ]
+            },
+            {
+              "dtype": "f32",
+              "name": "kt",
+              "seed": 11011,
+              "shape": [
+                64,
+                256
+              ]
+            },
+            {
+              "dtype": "f32",
+              "name": "v",
+              "seed": 11012,
+              "shape": [
+                256,
+                64
+              ]
+            },
+            {
+              "dtype": "f32",
+              "name": "matmul_1",
+              "output": true,
+              "shape": [
+                256,
+                64
+              ]
+            }
+          ],
+          "block": [
+            128,
+            1,
+            1
+          ],
+          "entry": "k_matmul_softmax_reduce_b55365",
+          "final": true,
+          "grid": [
+            16,
+            1,
+            1
+          ],
+          "node": "matmul_1",
+          "smem_bytes": 0,
+          "zero_outputs": []
+        },
+        "ptx": "/home/ada/Projects/emmy-p3-sibling-fusion/.emmy/evidence/p3-sibling-fusion/hosted-primary-256-1f220a4d/compile-a01_attention_256x64-k_matmul_softmax_reduce_b55365.ptx",
+        "ptx_sha256": "44333c2098c5dcc1784bcf041359655fb9a3cb659d0ae9620f4e1ba5c090f675",
+        "cubin_id": "68b17951f301bd85a21105b39b5d0b67a8024013a1749ed89e51c35d53bac74e",
+        "registers": 184
+      }
+    ],
+    "candidate": [
+      {
+        "kernel": {
+          "arg_order": [
+            "div_c1",
+            "q",
+            "kt",
+            "v",
+            "matmul_1"
+          ],
+          "args": [
+            {
+              "data": [
+                8.0
+              ],
+              "dtype": "f32",
+              "name": "div_c1",
+              "shape": [
+                1
+              ]
+            },
+            {
+              "dtype": "f32",
+              "name": "q",
+              "seed": 11010,
+              "shape": [
+                256,
+                64
+              ]
+            },
+            {
+              "dtype": "f32",
+              "name": "kt",
+              "seed": 11011,
+              "shape": [
+                64,
+                256
+              ]
+            },
+            {
+              "dtype": "f32",
+              "name": "v",
+              "seed": 11012,
+              "shape": [
+                256,
+                64
+              ]
+            },
+            {
+              "dtype": "f32",
+              "name": "matmul_1",
+              "output": true,
+              "shape": [
+                256,
+                64
+              ]
+            }
+          ],
+          "block": [
+            128,
+            1,
+            1
+          ],
+          "entry": "k_matmul_softmax_reduce_b55365",
+          "final": true,
+          "grid": [
+            16,
+            1,
+            1
+          ],
+          "node": "matmul_1",
+          "smem_bytes": 0,
+          "zero_outputs": []
+        },
+        "ptx": "/home/ada/Projects/emmy-p3-sibling-fusion/.emmy/evidence/p3-sibling-fusion/hosted-primary-256-1f220a4d/compile-a01_attention_256x64-k_matmul_softmax_reduce_b55365.ptx",
+        "ptx_sha256": "44333c2098c5dcc1784bcf041359655fb9a3cb659d0ae9620f4e1ba5c090f675",
+        "cubin_id": "68b17951f301bd85a21105b39b5d0b67a8024013a1749ed89e51c35d53bac74e",
+        "registers": 184
+      }
+    ]
+  },
+  "blocks": [
+    {
+      "block": 0,
+      "order": [
+        "baseline",
+        "candidate"
+      ],
+      "samples_us": {
+        "baseline": 148.096,
+        "candidate": 148.096
+      },
+      "ratio": 1.0
+    },
+    {
+      "block": 1,
+      "order": [
+        "candidate",
+        "baseline"
+      ],
+      "samples_us": {
+        "candidate": 148.096,
+        "baseline": 148.08
+      },
+      "ratio": 1.0001080497028632
+    },
+    {
+      "block": 2,
+      "order": [
+        "baseline",
+        "candidate"
+      ],
+      "samples_us": {
+        "baseline": 148.096,
+        "candidate": 148.096
+      },
+      "ratio": 1.0
+    },
+    {
+      "block": 3,
+      "order": [
+        "candidate",
+        "baseline"
+      ],
+      "samples_us": {
+        "candidate": 148.096,
+        "baseline": 148.096
+      },
+      "ratio": 1.0
+    },
+    {
+      "block": 4,
+      "order": [
+        "baseline",
+        "candidate"
+      ],
+      "samples_us": {
+        "baseline": 148.096,
+        "candidate": 148.096
+      },
+      "ratio": 1.0
+    },
+    {
+      "block": 5,
+      "order": [
+        "candidate",
+        "baseline"
+      ],
+      "samples_us": {
+        "candidate": 148.064,
+        "baseline": 148.128
+      },
+      "ratio": 0.9995679412400087
+    },
+    {
+      "block": 6,
+      "order": [
+        "baseline",
+        "candidate"
+      ],
+      "samples_us": {
+        "baseline": 148.064,
+        "candidate": 148.096
+      },
+      "ratio": 1.0002161227577264
+    }
+  ],
+  "ratios": [
+    1.0,
+    1.0001080497028632,
+    1.0,
+    1.0,
+    1.0,
+    0.9995679412400087,
+    1.0002161227577264
+  ],
+  "ratio_median": 1.0,
+  "ratio_spread": {
+    "min": 0.9995679412400087,
+    "max": 1.0002161227577264,
+    "median": 1.0
+  },
+  "direction": "unresolved",
+  "request_count": 16,
+  "deadband": 0.01,
+  "aa_noise": null,
+  "timing_note": "Hosted RTX 5090, max_return=0; correctness comes from the local full-output receipt."
+}

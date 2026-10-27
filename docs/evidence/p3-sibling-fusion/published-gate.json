@@ -1,0 +1,319 @@
+{
+  "compiler": "/home/ada/Projects/emmy-p3-sibling-fusion/compile.py",
+  "compiler_sha256": "1f220a4dabcc436c49ab933bcc505e0e4d6ad1e04aef347a14a0b6cbd2fd0d1d",
+  "python": "3.14.8 (main, Oct 13 2026, 10:43:33) [GCC 16.2.1 20260810]",
+  "cases": [
+    {
+      "problem": "a01_attention",
+      "meta_sha256": "c280c572744016ecf6ca2971312ad2ce8a10b28c0f3e38561c1a096c2ea7352f",
+      "command": [
+        "/home/ada/Projects/emmy-p3-sibling-fusion/.venv/bin/python",
+        "/home/ada/Projects/emmy-p3-sibling-fusion/emmy-hackathon-2026/submit.py",
+        "a01_attention",
+        "--compiler",
+        "/home/ada/Projects/emmy-p3-sibling-fusion/compile.py",
+        "--server",
+        "http://127.0.0.1:48702"
+      ],
+      "status": "pass",
+      "exit_code": 0,
+      "wall_seconds": 0.8154040169902146
+    },
+    {
+      "problem": "a02_attention_128",
+      "meta_sha256": "adcc08994786076e7cb9835ab3bab19b0dc9c0d00a999adea124380f8300de18",
+      "command": [
+        "/home/ada/Projects/emmy-p3-sibling-fusion/.venv/bin/python",
+        "/home/ada/Projects/emmy-p3-sibling-fusion/emmy-hackathon-2026/submit.py",
+        "a02_attention_128",
+        "--compiler",
+        "/home/ada/Projects/emmy-p3-sibling-fusion/compile.py",
+        "--server",
+        "http://127.0.0.1:48702"
+      ],
+      "status": "pass",
+      "exit_code": 0,
+      "wall_seconds": 0.7160928800003603
+    },
+    {
+      "problem": "f01_rmsnorm",
+      "meta_sha256": "f45014c6b0963ec9727fc0f1c9bb585319c4ac94292260bc8f7c10557c1b8e1d",
+      "command": [
+        "/home/ada/Projects/emmy-p3-sibling-fusion/.venv/bin/python",
+        "/home/ada/Projects/emmy-p3-sibling-fusion/emmy-hackathon-2026/submit.py",
+        "f01_rmsnorm",
+        "--compiler",
+        "/home/ada/Projects/emmy-p3-sibling-fusion/compile.py",
+        "--server",
+        "http://127.0.0.1:48702"
+      ],
+      "status": "pass",
+      "exit_code": 0,
+      "wall_seconds": 0.764371138997376
+    },
+    {
+      "problem": "f02_row_softmax",
+      "meta_sha256": "ddbe97ea42c7b077d30d140b751f8062caf47b5620cb423a02c1dd848cd61900",
+      "command": [
+        "/home/ada/Projects/emmy-p3-sibling-fusion/.venv/bin/python",
+        "/home/ada/Projects/emmy-p3-sibling-fusion/emmy-hackathon-2026/submit.py",
+        "f02_row_softmax",
+        "--compiler",
+        "/home/ada/Projects/emmy-p3-sibling-fusion/compile.py",
+        "--server",
+        "http://127.0.0.1:48702"
+      ],
+      "status": "pass",
+      "exit_code": 0,
+      "wall_seconds": 0.7653827489994001
+    },
+    {
+      "problem": "f03_l2norm",
+      "meta_sha256": "cbf67c2d198f4fea1bb140083ec65c4bf14202090daaa4aac77f1514ecc60b95",
+      "command": [
+        "/home/ada/Projects/emmy-p3-sibling-fusion/.venv/bin/python",
+        "/home/ada/Projects/emmy-p3-sibling-fusion/emmy-hackathon-2026/submit.py",
+        "f03_l2norm",
+        "--compiler",
+        "/home/ada/Projects/emmy-p3-sibling-fusion/compile.py",
+        "--server",
+        "http://127.0.0.1:48702"
+      ],
+      "status": "pass",
+      "exit_code": 0,
+      "wall_seconds": 0.766399108004407
+    },
+    {
+      "problem": "m01_matmul_512",
+      "meta_sha256": "3324370a2d29614c6c7ff7cf549563f9afb22bab0ed31ed62d8ffd27c59dcd57",
+      "command": [
+        "/home/ada/Projects/emmy-p3-sibling-fusion/.venv/bin/python",
+        "/home/ada/Projects/emmy-p3-sibling-fusion/emmy-hackathon-2026/submit.py",
+        "m01_matmul_512",
+        "--compiler",
+        "/home/ada/Projects/emmy-p3-sibling-fusion/compile.py",
+        "--server",
+        "http://127.0.0.1:48702"
+      ],
+      "status": "pass",
+      "exit_code": 0,
+      "wall_seconds": 3.1666268310073065
+    },
+    {
+      "problem": "m02_matmul_rect",
+      "meta_sha256": "a82fd8d7f5933749868035254537b962d3d0140c8bf3e22f7f8a54a289a9c365",
+      "command": [
+        "/home/ada/Projects/emmy-p3-sibling-fusion/.venv/bin/python",
+        "/home/ada/Projects/emmy-p3-sibling-fusion/emmy-hackathon-2026/submit.py",
+        "m02_matmul_rect",
+        "--compiler",
+        "/home/ada/Projects/emmy-p3-sibling-fusion/compile.py",
+        "--server",
+        "http://127.0.0.1:48702"
+      ],
+      "status": "pass",
+      "exit_code": 0,
+      "wall_seconds": 1.6656492140027694
+    },
+    {
+      "problem": "p00_scalar_add",
+      "meta_sha256": "67f4c80a5c78c9fa571f4088633acc56cae0a758d2a65e7c89c07a96e665709c",
+      "command": [
+        "/home/ada/Projects/emmy-p3-sibling-fusion/.venv/bin/python",
+        "/home/ada/Projects/emmy-p3-sibling-fusion/emmy-hackathon-2026/submit.py",
+        "p00_scalar_add",
+        "--compiler",
+        "/home/ada/Projects/emmy-p3-sibling-fusion/compile.py",
+        "--server",
+        "http://127.0.0.1:48702"
+      ],
+      "status": "pass",
+      "exit_code": 0,
+      "wall_seconds": 0.714696573006222
+    },
+    {
+      "problem": "p01_vector_add",
+      "meta_sha256": "4607a6a14553ec256b2073ff8fef18a850e315033f4fdace21f26fdcc2a867c6",
+      "command": [
+        "/home/ada/Projects/emmy-p3-sibling-fusion/.venv/bin/python",
+        "/home/ada/Projects/emmy-p3-sibling-fusion/emmy-hackathon-2026/submit.py",
+        "p01_vector_add",
+        "--compiler",
+        "/home/ada/Projects/emmy-p3-sibling-fusion/compile.py",
+        "--server",
+        "http://127.0.0.1:48702"
+      ],
+      "status": "pass",
+      "exit_code": 0,
+      "wall_seconds": 0.7176815350103425
+    },
+    {
+      "problem": "p02_scale_shift",
+      "meta_sha256": "7c1c3ea69e4d61128d72fbaf3a82a76125a5273c3ced6197ac2f150d03d121e1",
+      "command": [
+        "/home/ada/Projects/emmy-p3-sibling-fusion/.venv/bin/python",
+        "/home/ada/Projects/emmy-p3-sibling-fusion/emmy-hackathon-2026/submit.py",
+        "p02_scale_shift",
+        "--compiler",
+        "/home/ada/Projects/emmy-p3-sibling-fusion/compile.py",
+        "--server",
+        "http://127.0.0.1:48702"
+      ],
+      "status": "pass",
+      "exit_code": 0,
+      "wall_seconds": 0.7163992120040348
+    },
+    {
+      "problem": "p03_relu_mul",
+      "meta_sha256": "a2dbbe3a3cec7c45fcdde2c08f0d3276647c2a4b56ede3345be16404d1ded8c9",
+      "command": [
+        "/home/ada/Projects/emmy-p3-sibling-fusion/.venv/bin/python",
+        "/home/ada/Projects/emmy-p3-sibling-fusion/emmy-hackathon-2026/submit.py",
+        "p03_relu_mul",
+        "--compiler",
+        "/home/ada/Projects/emmy-p3-sibling-fusion/compile.py",
+        "--server",
+        "http://127.0.0.1:48702"
+      ],
+      "status": "pass",
+      "exit_code": 0,
+      "wall_seconds": 0.7152474960021209
+    },
+    {
+      "problem": "r01_array_sum",
+      "meta_sha256": "46cf07073f4e612e811decbc2ca900ea210811194a1e336053a6f179ecb4b00e",
+      "command": [
+        "/home/ada/Projects/emmy-p3-sibling-fusion/.venv/bin/python",
+        "/home/ada/Projects/emmy-p3-sibling-fusion/emmy-hackathon-2026/submit.py",
+        "r01_array_sum",
+        "--compiler",
+        "/home/ada/Projects/emmy-p3-sibling-fusion/compile.py",
+        "--server",
+        "http://127.0.0.1:48702"
+      ],
+      "status": "pass",
+      "exit_code": 0,
+      "wall_seconds": 0.7659669179993216
+    },
+    {
+      "problem": "r02_big_sum",
+      "meta_sha256": "db364be00e35402a3d6f10fcd55562115c7604dea94f8126a02179a80476d19e",
+      "command": [
+        "/home/ada/Projects/emmy-p3-sibling-fusion/.venv/bin/python",
+        "/home/ada/Projects/emmy-p3-sibling-fusion/emmy-hackathon-2026/submit.py",
+        "r02_big_sum",
+        "--compiler",
+        "/home/ada/Projects/emmy-p3-sibling-fusion/compile.py",
+        "--server",
+        "http://127.0.0.1:48702"
+      ],
+      "status": "pass",
+      "exit_code": 0,
+      "wall_seconds": 0.7150848320015939
+    },
+    {
+      "problem": "r03_mean",
+      "meta_sha256": "d7ab661c388ad447f5661a3b36cba448cf5142402756f1e1c35d110db06c84fe",
+      "command": [
+        "/home/ada/Projects/emmy-p3-sibling-fusion/.venv/bin/python",
+        "/home/ada/Projects/emmy-p3-sibling-fusion/emmy-hackathon-2026/submit.py",
+        "r03_mean",
+        "--compiler",
+        "/home/ada/Projects/emmy-p3-sibling-fusion/compile.py",
+        "--server",
+        "http://127.0.0.1:48702"
+      ],
+      "status": "pass",
+      "exit_code": 0,
+      "wall_seconds": 0.7176625370047987
+    },
+    {
+      "problem": "r04_row_sum",
+      "meta_sha256": "803cb710590156ad319eb44b2d2aa6c1ee9b0e3a666ebc09de259e50d83a3ba1",
+      "command": [
+        "/home/ada/Projects/emmy-p3-sibling-fusion/.venv/bin/python",
+        "/home/ada/Projects/emmy-p3-sibling-fusion/emmy-hackathon-2026/submit.py",
+        "r04_row_sum",
+        "--compiler",
+        "/home/ada/Projects/emmy-p3-sibling-fusion/compile.py",
+        "--server",
+        "http://127.0.0.1:48702"
+      ],
+      "status": "pass",
+      "exit_code": 0,
+      "wall_seconds": 0.71628879000491
+    }
+  ],
+  "timing_is_smoke_only": true,
+  "source_hashes": {
+    "compile.py": "1f220a4dabcc436c49ab933bcc505e0e4d6ad1e04aef347a14a0b6cbd2fd0d1d",
+    "requirements.txt": "0511f272c13e886704a7fa8f9234aed69b53af755958a47a57e5575d84bf090e",
+    "tensor_core.py": "57e533ebd4d9b263f7eea03a218c8e0cce41b7a529c4d25a4662d512a0933506",
+    "tf32_emitter.py": "72292107ce1c60cd8dae57a8f3081d81c8cc2358d3a390ba7df338ec704adef2",
+    ".agents/skills/kernel-performance/scripts/metrics.py": "66ad5a1751dea0e7b4ac3c8859111a7f61fe98cb6c46e47015361618d0a39517",
+    "docs/evidence/main-merge-comparison/sources/cached-main/compile.py": "6436b729336c7e5e1cbeab6e104745adb8d1b0f68a36906e496c1d08b51abed9",
+    "docs/evidence/main-merge-comparison/sources/current-and-merged/compile.py": "233768bcc4f105e49d2084357516b20a33052c71f0e88c8d889a5685e7fcf5be",
+    "docs/evidence/main-merge-comparison/sources/current-and-merged/tensor_core.py": "23473557893eeb7b141d78a3ee1f13a33aa3cc4a50f2c09d792931af27b608b2",
+    "docs/evidence/main-merge-comparison/sources/current-and-merged/tf32_emitter.py": "72292107ce1c60cd8dae57a8f3081d81c8cc2358d3a390ba7df338ec704adef2",
+    "tests/test_compiler.py": "d8ce01b75d73db8ec4a1a3422e0398d43cc335a9ebbb7d3a61470cac3360e64c",
+    "tests/test_local_runner.py": "55b0272c7b0ae6e5062d7959cc95d3e56d010bc6a827a25f3d41535bf228959b",
+    "tests/test_published.py": "ade6fb110e6a9ce0c66868f81556a367f7337fdc6b2f2d90403c7beeddef7b2c",
+    "tests/test_regression_suite.py": "a8b3328cbd65d9b4775d6c87f4fe867883fbf1a9085dddbe9852e69b88e71599",
+    "tests/test_research_calibrate.py": "c8b51bfa1407137e56d9cc8d5c82b2a800deaf5e7f9e5989faee5507a9a09d80",
+    "tests/test_research_cases.py": "1ccac318b3cbd476ab475a8367b38ac40e676d4e4330de0b38d287ed5f10fe41",
+    "tests/test_research_control.py": "596d539f0d90d7024741419edf4b2a19c4fd63c3c7f8b23d13a4f6fec32218f7",
+    "tests/test_research_gpu.py": "b49787be2c821e17b1f5e4c8bf9c883908baaca5fc7a3d4906a599033b302e61",
+    "tests/test_research_pipeline.py": "658a650c612dbc023e1b507470613b1877a4a9c38017a0e2c0de586e420081b9",
+    "tests/test_research_prepare.py": "98dcef64cef0563965cfacd4778432dc51eaa17e4f623d5625fb94bf746b9df4",
+    "tests/test_research_verify.py": "d411431ef9ce4660437ccc9a028e80ccd7afde361f652ed024df81acbda8f8be",
+    "tests/performance/runner.py": "b6fd96fdd36fc4d31f5637dcc7dd7a9b6dc0cc8fc87d62d81e325110fbb23d0f",
+    "tests/performance/test_suite.py": "3c05e53af8dad96637cc49b403abd0520e5d440ef312f7738c1b77bdffa0e06e",
+    "tests/performance/generators/__init__.py": "e7549e2954856f35a36213e8257e7f68f42f01926681001df5660abcfdd4ba3d",
+    "tests/performance/generators/suite.py": "42c945f06c9443e1db5e8438d3730db0a509e378136a22def6fbd6a4ed0121da",
+    "tools/bundled_regressions.py": "165d92f611edc9ceb472c0e45864dcefcb4c6a73fc049bbd83e62c1ef85df3b2",
+    "tools/check_contract.py": "fd2e8dc35c80366775b28ce167809836f8c2bcc93139842727645bfe2b9d7f22",
+    "tools/check_local.py": "bdc287f5fab27e115cc85f84aee8113fa8c029700c6e183c258c29b8966c87aa",
+    "tools/evaluate.py": "271ed24d10db00dd4e3df96e3c40fc33f533b4bc2df24178def9beac05f419c6",
+    "tools/local_runner.py": "8160aa3a757581372b562b3d8bf3a30a861750eb2dce178bf657af12646cda6c",
+    "tools/prepare_timing.py": "b2f5cb24555cda1153db35f25139053a8ef2c8681257cac74676b62c13ea81d5",
+    "tools/probe_endpoint.py": "db5b4561830826ebf6de63ec7c97cd02cc3df206dab6b12ea30f0859f4e9770d",
+    "tools/published.py": "22b71e6c76f8d71516506d21fbbeda8342165a99530793f1df382130518d8192",
+    "tools/regression_suite.py": "1cea71ee84f821a34c4f67dc0af123be6c1af10ac30068f0d9b90320ef85ad15",
+    "tools/research.py": "43e074ce3837510982b20aab4023e406aa5c2539c46f202ebc1ad684bc4033bd",
+    "tools/research_calibrate.py": "af9e19b8ed6bba34ae1ff6afc3deac517ca48d2ba776a51d66bf84edae347bae",
+    "tools/research_cases.py": "cc3956c52988e96a37ca8f303e60ca7bb0d3aa518c010483cf8fbcfbfa6a2ec2",
+    "tools/research_gpu.py": "de559ea9f9e0baa64735662128d7dab4eb84abf2c3b2c6cf4840cd19ccee9e57",
+    "tools/research_pipeline.py": "d6c80aea69d907631b26f614aa03444b9e18b5168975e86c4ba31fde8f9c4576",
+    "tools/research_prepare.py": "5c53f3259b3750d6a0fe7a9c15295b240448dd5aa49732ea47d68b0836c58170",
+    "tools/research_store.py": "fc2b7f02a454a61f6c7a3a64dd6844ea730ab1c7cdb675e1151f0b4fd50a4416",
+    "tools/research_verify.py": "fc06c5a4d34f96aaa9682db79aca8cb76ac243582938d7e904f3968f4217da95",
+    "tools/variant_suite.py": "7aabc32724c97d66d4cb34ea6e5800b562474cda4f5e3e82d6b3326d0c76b0c6"
+  },
+  "source_revision_label": null,
+  "published_correctness": {
+    "required": [
+      "p00_scalar_add",
+      "p01_vector_add",
+      "p02_scale_shift",
+      "p03_relu_mul",
+      "r01_array_sum",
+      "r02_big_sum",
+      "r03_mean",
+      "r04_row_sum",
+      "m01_matmul_512",
+      "m02_matmul_rect",
+      "f01_rmsnorm",
+      "f02_row_softmax",
+      "f03_l2norm",
+      "a01_attention",
+      "a02_attention_128"
+    ],
+    "missing": [],
+    "failed": [],
+    "source_unchanged": true,
+    "all15_passed": true,
+    "scope": "Published correctness only; hidden-set correctness is unverified"
+  },
+  "valid_for_benchmarking": false,
+  "qualification_note": "Standalone correctness smoke only; research benchmarks require exact frozen-source/suite Store gates."
+}
