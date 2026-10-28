@@ -751,8 +751,10 @@ def static_or_none(value):
 REGISTER_PREFETCH_MAX = 128
 # Most x values per lane the fused softmax pass keeps in registers.
 SOFTMAX_FUSED_VALUES = 32
-# Shared bytes one Tile may spend on cooperatively hoisted values.
+# Shared bytes one Tile may spend on cooperatively hoisted values. Hoisted
+# reductions, which remove recomputation, may use the whole static allocation.
 HOIST_SHARED_LIMIT = 32 * 1024
+HOIST_REDUCTION_LIMIT = 48 * 1024
 # Work items a thread evaluates together in one hoisted reduction trip.
 HOIST_REDUCTION_BATCH = 4
 # Most elements per thread a staged copy issues straight-line.
@@ -1004,8 +1006,21 @@ def retile_redundant_hoists(node, meta):
     if cuts and all(n in names[cuts[-1]:] for n in independent):
         return node  # already no cross-CTA recompute
     inner_size = math.prod(axis_extent[n] for n in independent)
+    column_split = None
     if launched % inner_size:
-        return node
+        # Keep part of one independent axis per CTA; the rest moves to the
+        # grid. A row is then recomputed by a few CTAs, not by every thread.
+        for name in independent:
+            rest = inner_size // axis_extent[name]
+            factors = [f for f in range(2, axis_extent[name])
+                       if axis_extent[name] % f == 0 and launched % (rest * f) == 0]
+            if factors:
+                factor = max(factors)
+                column_split = (name, axis_extent[name] // factor, factor)
+                inner_size = rest * factor
+                break
+        if column_split is None:
+            return node
     want = launched // inner_size
     order = [n for n in names if n in dependent]
     lo, size, split = [], 1, None
@@ -1027,18 +1042,32 @@ def retile_redundant_hoists(node, meta):
         return node
     by_name = {axis.name: axis for axis in tile.axes}
     hi = [n for n in order if n not in lo and (split is None or n != split[0])]
-    axes, mapping = [by_name[n] for n in hi], {}
-    if split is not None:
-        name, upper, factor = split
-        taken = touched_names(tile.body) | set(names)
+    axes, mapping = [], {}
+    taken = touched_names(tile.body) | set(names)
+
+    def split_axis(name, upper, factor):
         high, low = f'{name}__hi', f'{name}__lo'
         if high in taken or low in taken:
-            return node
+            return None
         Dim = type(by_name[name].extent)
-        axes.append(dataclasses.replace(by_name[name], name=high, extent=Dim(upper), window=None))
-        axes.append(dataclasses.replace(by_name[name], name=low, extent=Dim(factor), window=None))
         mapping[name] = _typed_expr.Var(high) * _typed_expr.Literal(factor, 'int') + _typed_expr.Var(low)
-    axes += [by_name[n] for n in lo] + [by_name[n] for n in independent]
+        return (dataclasses.replace(by_name[name], name=high, extent=Dim(upper), window=None),
+                dataclasses.replace(by_name[name], name=low, extent=Dim(factor), window=None))
+
+    inner = [by_name[n] for n in independent]
+    if column_split is not None:
+        parts = split_axis(*column_split)
+        if parts is None:
+            return node
+        axes.append(parts[0])
+        inner[independent.index(column_split[0])] = parts[1]
+    axes += [by_name[n] for n in hi]
+    if split is not None:
+        parts = split_axis(*split)
+        if parts is None:
+            return node
+        axes += parts
+    axes += [by_name[n] for n in lo] + inner
     try:
         new_body = substitute_axis(tile.body, mapping) if mapping else tile.body
     except Unsupported:
@@ -1828,11 +1857,14 @@ class HoistedValue:
     statement reads contiguously varies across adjacent threads.
     """
 
-    def __init__(self, statement, exports, used, configs, extent, symbol, serial_fastest):
+    def __init__(self, statement, exports, used, configs, extent, symbol, serial_fastest,
+                 padded=True):
         self.statement, self.exports, self.used = statement, exports, used
         self.configs, self.extent, self.symbol = configs, extent, symbol
         self.serial_fastest = serial_fastest
-        self.row_words = extent + 4 if extent % 4 == 0 else extent + 1
+        # Unpadded rows trade bank conflicts for fitting a whole loop's rows.
+        pad = (4 if extent % 4 == 0 else 1) if padded else 0
+        self.row_words = extent + pad
         self.nbytes = len(exports) * configs * self.row_words * 4
 
 
@@ -2007,6 +2039,9 @@ class Emitter:
         # Called by a staged hoisted matmul once its operands are staged.
         self.hoist_overlap = None
         self.shared_probability_enabled = False
+        # Dot loops that stream both operands from global memory; counted so
+        # compile_path can tell when attention scores were not kept resident.
+        self.global_dots = 0
         self.vn_skip, self.vn_record, self.vn_registers = {}, {}, {}
         self.vector_loops = 0
         self.tile_extents = {}
@@ -3963,10 +3998,20 @@ class Emitter:
         self.rebind(loop.axis.name)
         return True
 
-    def shared_compute_body(self, loop):
+    def global_compute_body(self, loop):
+        """The same proof for a loop reading only unwritten global F32 inputs.
+
+        Unrolled copies keep every operation in order; only the loads of
+        several iterations become visible to ptxas at once.
+        """
+        return self.shared_compute_body(loop, space='global')
+
+    def shared_compute_body(self, loop, space='shared'):
         """Prove a flat, active, shared-F32 compute loop without emitting code."""
         if self.inactive or loop.axis.name in defined_names(loop.body):
             return None
+        written = written_buffers(self.node.op.body) | {
+            arg['name'] for arg in self.meta['args'] if arg.get('output')}
         types = {name: dtype for name, (_, dtype) in self.scalar_parameters.items()}
         types.update({name: dtype for name, (_, dtype) in self.values.items()})
         def i32_index(expr):
@@ -3984,7 +4029,12 @@ class Emitter:
         for statement in loop.body:
             kind = type(statement).__name__
             if kind == 'Load':
-                if (statement.input not in self.shared
+                if space == 'shared':
+                    misplaced = statement.input not in self.shared
+                else:
+                    misplaced = (statement.input in self.shared or statement.input not in self.ptrs
+                                 or statement.input in written)
+                if (misplaced
                         or dtype_name(self.buffers[statement.input][1]) != 'f32'
                         or (statement.dtype is not None and dtype_name(statement.dtype) != 'f32')
                         or not all(i32_index(index) for index in statement.index)):
@@ -4213,6 +4263,7 @@ class Emitter:
             both = self.reg('p')
             self.emit(f'and.pred {both}, {aligned}, {pred};')
             aligned = both
+        self.global_dots += 1
         scalar, joined = self.label('dot_scalar'), self.label('dot_complete')
         self.emit(f'@!{aligned} bra {scalar};')
         r = self.reg('r')
@@ -4433,6 +4484,7 @@ class Emitter:
             both = self.reg('p')
             self.emit(f'and.pred {both}, {aligned}, {predicate};')
             aligned = both
+        self.global_dots += 1
         scalar, joined = self.label('sibling_scalar'), self.label('sibling_complete')
         self.emit(f'@!{aligned} bra {scalar};')
         r = self.reg('r')
@@ -6976,7 +7028,7 @@ class Emitter:
         self.hoist_ctx = {'tile': tile, 'cta_axes': set(cta_axes), 'launched': launched}
         outputs = {arg['name'] for arg in self.meta['args'] if arg.get('output')}
         written = written_buffers(tile.body) | outputs
-        budget = HOIST_SHARED_LIMIT
+        budget, reduction_budget = HOIST_SHARED_LIMIT, HOIST_REDUCTION_LIMIT
         for outer in tile.body:
             if type(outer).__name__ != 'Loop':
                 continue
@@ -7048,19 +7100,60 @@ class Emitter:
                             (list(outer.body).index(inner), inner))
                     continue
                 configs = math.prod(axis_extent[name] for name in used)
-                plan = HoistedValue(inner, exports, [(name, axis_extent[name]) for name in used],
-                                    configs, extent, f'__hoist{len(self.declarations)}',
-                                    any(contiguous_on_serial(x) for x in loads))
-                if plan.nbytes > budget or plan.nbytes + self.shared_bytes > 48 * 1024:
-                    continue
+                candidates.append((inner, exports, [(name, axis_extent[name]) for name in used],
+                                   configs, extent, any(contiguous_on_serial(x) for x in loads)))
+
+            def fit(padded):
+                # Reductions are placed first. Staged loads take what remains
+                # after the shared tile a hoisted matmul of them would stage.
+                spent, chosen = 0, {}
+                room = 48 * 1024 - self.shared_bytes - self.hoist_bytes
+                for position, args in enumerate(candidates):
+                    if type(args[0]).__name__ == 'Loop':
+                        plan = HoistedValue(*args[:5], None, args[5], padded)
+                        if spent + plan.nbytes <= min(reduction_budget, room):
+                            spent += plan.nbytes
+                            chosen[position] = plan
+                reserve = self.staged_matmul_bytes(list(chosen.values()), outer)
+                if spent + reserve > room:
+                    reserve = 0
+                for position, args in enumerate(candidates):
+                    if type(args[0]).__name__ != 'Loop':
+                        plan = HoistedValue(*args[:5], None, args[5], padded)
+                        if spent + plan.nbytes <= min(reduction_budget, room - reserve):
+                            spent += plan.nbytes
+                            chosen[position] = plan
+                return [chosen[position] for position in sorted(chosen)]
+
+            # A loop whose rows fit only unpadded still gets every value staged:
+            # one recomputed row costs far more than bank conflicts.
+            padded, unpadded = fit(True), fit(False)
+            candidates = unpadded if len(unpadded) > len(padded) else padded
+            for plan in candidates:
+                plan.symbol = f'__hoist{len(self.declarations)}'
                 budget -= plan.nbytes
+                reduction_budget -= plan.nbytes
                 self.hoist_bytes += plan.nbytes
                 self.declarations.append(f'.shared .align 16 .b8 {plan.symbol}[{plan.nbytes}];')
-                candidates.append(plan)
             if candidates:
                 self.hoist_plans[id(outer)] = (outer, candidates, launched)
             else:
                 self.prefetch_plans.pop(id(outer), None)
+
+    def staged_matmul_bytes(self, plans, outer):
+        """Shared bytes emit_hoisted_matmul would stage for these reductions."""
+        groups = {}
+        for plan in plans:
+            key = (tuple(plan.used), plan.serial_fastest, static(plan.statement.axis.extent))
+            groups.setdefault(key, []).append(plan)
+        total = 0
+        for members in groups.values():
+            lead = members[0]
+            k_extent = static(lead.statement.axis.extent)
+            if (lead.extent % 4 == 0 and k_extent % 4 == 0 and lead.configs * len(members) >= 2
+                    and self.matmul_members(members, outer) is not None):
+                total += 4 * (len(members) * lead.configs * k_extent + k_extent * lead.extent)
+        return total
 
     def decode_config(self, index, used):
         """Row-major axis values of a hoist configuration index."""
@@ -8711,11 +8804,17 @@ class Emitter:
                         continue
                     if kind == 'Loop' and self.global_dot_vector_loop(s, loop_init_frame):
                         continue
-                    if (kind == 'Loop' and 8 <= extent <= I32_MAX and self.shared_compute_body(s)
+                    shared_body = (kind == 'Loop' and 8 <= extent <= I32_MAX
+                                   and self.shared_compute_body(s))
+                    if (kind == 'Loop' and 8 <= extent <= I32_MAX
+                            and (shared_body or self.global_compute_body(s))
                             and self.vector_load_plan(s) is None):
-                        self.vector_loops += 1
                         factor = 8
-                        vector_plan = self.shared_vector_plan(s)
+                        if shared_body:
+                            self.vector_loops += 1
+                            vector_plan = self.shared_vector_plan(s)
+                        else:
+                            vector_plan = {}
                         limit = extent - extent % factor
                         r = self.reg('r')
                         self.emit(f'mov.s32 {r}, 0;')
@@ -9547,15 +9646,11 @@ def compile_path(path):
         raise Unsupported('Expected exactly one metadata kernel matching node and entry')
     if len(set(matches[0]['arg_order'])) != len(matches[0]['arg_order']):
         raise Unsupported('Duplicate argument names in metadata')
-    # A SIMT reduction loop whose shared operands lower to strength-reduced
-    # vector loads computes in exact fp32 and, on the RTX 5090, beat the
-    # three-term TF32 path on m01 (17.0 vs 21.1 us); prefer it outright.
-    simt = Emitter(graph, retile_redundant_hoists(node, matches[0]), matches[0])
     # Approximate reciprocal is eligible only for a single final F32
     # normalized output with an explicit, sufficiently broad error budget.
     # The typed two-trip matcher and sum-carrier check gate activation below.
     outputs = list(graph.outputs)
-    simt.allow_softmax_approx_rcp = (
+    approx_rcp = (
         len(kernels) == len(metadata['kernels']) == len(outputs) == 1
         and matches[0].get('final') is True
         and metadata.get('graph_outputs') == outputs
@@ -9567,7 +9662,7 @@ def compile_path(path):
         and sum(bool(a.get('output')) for a in matches[0]['args']) == 1
         and all(a.get('dtype') == 'f32' for a in matches[0]['args']))
     own = tuple(node.buffer_names())
-    simt.shared_probability_enabled = (
+    shared_probability = (
         len(kernels) == len(metadata['kernels']) == 1 and len(own) == 1
         and matches[0].get('final') is True
         and list(graph.outputs) == list(own) and metadata.get('graph_outputs') == list(own)
@@ -9575,7 +9670,29 @@ def compile_path(path):
                 and all(isinstance(x, str) for x in n.inputs) for n in graph.nodes.values())
         and all(own[0] not in n.inputs for n in graph.nodes.values() if n is not node)
         and sum(own[0] in n.buffer_names() for n in graph.nodes.values()) == 1)
+
+    def simt_emitter(shared_probabilities):
+        emitter = Emitter(graph, retile_redundant_hoists(node, matches[0]), matches[0])
+        emitter.allow_softmax_approx_rcp = approx_rcp
+        emitter.shared_probability_enabled = shared_probabilities
+        return emitter
+
+    # A SIMT reduction loop whose shared operands lower to strength-reduced
+    # vector loads computes in exact fp32 and, on the RTX 5090, beat the
+    # three-term TF32 path on m01 (17.0 vs 21.1 us); prefer it outright.
+    simt = simt_emitter(False)
     simt_ptx = simt.render()
+    # The default route keeps score rows resident in shared memory or
+    # registers. When rows are too long for that, it streams every score dot
+    # from global memory once per output column; materialising the
+    # probabilities in shared memory instead is 2-5x faster there and slower
+    # whenever the rows do fit, so switch only on that evidence.
+    if shared_probability and simt.global_dots:
+        try:
+            alternative = simt_emitter(True)
+            simt_ptx, simt = alternative.render(), alternative
+        except Unsupported as exc:
+            print(f'compile.py: shared-probability route rejected: {exc}', file=sys.stderr)
     planned = plan_simt_route(graph, node, matches[0])
     if planned is not None:
         return planned
